@@ -26,12 +26,14 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.14.8</version>
-			<scope>provided</scope>
-		</dependency>
+<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok-maven</artifactId>
+    <version>1.16.20.0</version>
+    <scope>provided</scope>
+</dependency>
+
         <dependency>
         	<groupId>ec.gob.ambiente</groupId>
         	<artifactId>sis-ejb</artifactId>

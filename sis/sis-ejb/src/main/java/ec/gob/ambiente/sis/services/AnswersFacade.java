@@ -7,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.Answers;
 
@@ -15,6 +17,7 @@ public class AnswersFacade extends AbstractFacade<Answers, Integer> implements S
 
 
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(AnswersFacade.class);
 
 	public AnswersFacade() {
 		super(Answers.class, Integer.class);

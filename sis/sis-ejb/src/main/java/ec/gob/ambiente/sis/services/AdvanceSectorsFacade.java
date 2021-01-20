@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
+import org.apache.log4j.Logger;
+
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
 
@@ -12,6 +14,7 @@ public class AdvanceSectorsFacade extends AbstractFacade<AdvanceSectors,Integer>
 
 	
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(AdvanceSectorsFacade.class);
 
 	public AdvanceSectorsFacade() {
 		super(AdvanceSectors.class,Integer.class);

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
+import org.apache.log4j.Logger;
+
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 
@@ -12,6 +14,7 @@ public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> im
 
 
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(ValueAnswersFacade.class);
 
 	public ValueAnswersFacade() {
 		super(ValueAnswers.class,Integer.class);

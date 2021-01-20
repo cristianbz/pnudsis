@@ -5,6 +5,9 @@
         <dependent-module archiveName="sis-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/sis-ejb/sis-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="log4j-1.2.17.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.17/log4j-1.2.17.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="sis-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/sis-web/sis-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>

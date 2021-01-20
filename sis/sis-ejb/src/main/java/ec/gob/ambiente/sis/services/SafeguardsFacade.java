@@ -7,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.Safeguards;
 
@@ -15,6 +17,7 @@ public class SafeguardsFacade extends AbstractFacade<Safeguards, Integer> implem
 
 	
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(SafeguardsFacade.class);
 
 	public SafeguardsFacade() {
 		super(Safeguards.class,Integer.class);
