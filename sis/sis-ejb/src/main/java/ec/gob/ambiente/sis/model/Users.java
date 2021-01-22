@@ -1,9 +1,16 @@
 package ec.gob.ambiente.sis.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,10 +21,10 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "users", schema = "sis")
-public class Users implements Serializable {
+public class Users {
 
 	
-	private static final long serialVersionUID = 1L;
+	
 
 	@Getter
 	@Setter

@@ -1,9 +1,18 @@
 package ec.gob.ambiente.sis.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +27,10 @@ import lombok.Setter;
 	@NamedQuery(name = Safeguards.CARGAR_TODAS_SALVAGUARDAS,query = "SELECT S FROM Safeguards S")
 	
 })
-public class Safeguards implements Serializable {
+public class Safeguards  {
 
 	
-	private static final long serialVersionUID = 1L;
+	
 	public static final String CARGAR_TODAS_SALVAGUARDAS="cargarTodasSalvaguardas";
 
 	@Getter

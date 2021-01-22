@@ -1,7 +1,5 @@
 package ec.gob.ambiente.sis.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,10 +25,10 @@ import lombok.Setter;
 @NamedQueries({
 	@NamedQuery(name = ProjectsSafeguards.CARGAR_SALVAGUARDAS_POR_PROYECTO,query = "SELECT PS FROM ProjectsSafeguards PS WHERE PS.projects.projId=:codigoProyecto")	
 })
-public class ProjectsSafeguards implements Serializable {
+public class ProjectsSafeguards  {
 
 	
-	private static final long serialVersionUID = 1L;
+	
 	public static final String CARGAR_SALVAGUARDAS_POR_PROYECTO="cargarSalvaguardasPorProyecto";
 
 	@Getter

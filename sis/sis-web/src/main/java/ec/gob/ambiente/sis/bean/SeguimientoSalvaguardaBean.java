@@ -1,8 +1,9 @@
 package ec.gob.ambiente.sis.bean;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -13,9 +14,14 @@ import ec.gob.ambiente.sis.model.Questions;
 
 @ManagedBean
 @ViewScoped
-public class SeguimientoSalvaguardaBean implements Serializable {
+public class SeguimientoSalvaguardaBean  {
 
-	private static final long serialVersionUID = 1L;
+	
+	
+	@Getter
+	@Setter
+	public Integer codigoProyecto;
+	
 	@Getter
 	@Setter
 	public List<Projects> listaProyectos;
@@ -48,5 +54,9 @@ public class SeguimientoSalvaguardaBean implements Serializable {
 	@Setter
 	public List<Questions> preguntasSalvaguardaG;
 	
+	@PostConstruct
+	public void init(){
+		listaProyectos=new ArrayList<>();
+	}
 
 }
