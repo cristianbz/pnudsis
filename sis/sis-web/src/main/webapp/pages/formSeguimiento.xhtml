@@ -5,13 +5,120 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html"> 
 
-<h:head></h:head> 
+<h:head>
+	<link rel="stylesheet" type="text/css" href="../resources/css/estilos.css"/>
+	<link rel="stylesheet" type="text/css" href="../resources/css/primeflex/primeflex.css"/>
+</h:head> 
 <body> 
 <h:form>
-	<p:growl id="growl" life="3000" showDetail="true" />
-	<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}">
-		<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projName}"/>
-	</p:selectOneMenu>
+	<p:growl id="growl" life="3000" showDetail="true" />	
+	<div class="card">
+	<div class="ui-fluid p-formgrid p-grid">
+		<div class="p-field p-col-12 p-md-5">
+		</div>
+		<div class="p-field p-col-12 p-md-5">
+	               
+	    </div>
+	    <div class="p-field p-col-12 p-md-2">
+	        <p:outputLabel value="#{etiquetas['cambiarIdioma']}"/>
+	 		<p:selectOneMenu value="#{seleccionaIdiomaController.lenguaje}"   >
+               <f:selectItem itemValue="es" itemLabel="Español"/>
+               <f:selectItem itemValue="en" itemLabel="English" />
+               <p:ajax process="@this" update="@form" listener="#{seleccionaIdiomaController.cambiarIdioma}"/>
+			</p:selectOneMenu>
+	    </div>
+	</div>
+
+	<div class="ui-fluid p-formgrid p-grid">	    
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	        <p:outputLabel for="proyecto" value="* #{etiquetas['proyectos']}"/>
+	        <p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto">
+				<f:selectItem itemLabel=""/>
+				<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>
+				<p:ajax event="change" process="@this proyecto" update="socio" listener="#{seguimientoSalvaguardaController.buscaSocioProyecto()}"/>
+			</p:selectOneMenu>
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>	    
+	</div>
+	<div class="ui-fluid p-formgrid p-grid">	    
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	        <p:outputLabel for="socio" value="* #{etiquetas['socioImplementador']}"/>
+	        <p:outputLabel id="socio" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}"/>
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>	    
+	</div>
+	<div class="ui-fluid p-formgrid p-grid">	    
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	        <p:outputLabel for="fecha" value="* #{etiquetas['fecha']}"/>
+	        <p:calendar id="fecha" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
+	        	locale="es" pattern="yyyy-MM-dd" navigator="true">
+	        
+	        </p:calendar>	        
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>	    
+	</div>
+	<div class="ui-fluid p-formgrid p-grid">	    
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	        <p:outputLabel for="fecha" value="* #{etiquetas['elaboradoPor']}"/>
+	        <p:outputLabel value="Christian"/>	        
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>	    
+	</div>
+	<div class="ui-fluid p-formgrid p-grid">	    
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	        <p:outputLabel value="* #{etiquetas['sectorIdentifica']}"/>
+	        <div class="p-formgroup-inline">
+			    <p:selectManyCheckbox id="sectores" value="#{checkboxView.selectedCities2}" layout="responsive"
+		                              columns="3">
+		            <f:selectItems value="#{checkboxView.cities}" var="city" itemLabel="#{city}" itemValue="#{city}"/>
+		        </p:selectManyCheckbox>
+			</div>
+	    </div>
+	    <div class="p-field p-col-12 p-md-4">
+	    </div>	    
+	</div>	
+	<div class="ui-fluid p-formgrid p-grid">	    
+	    <div class="p-field p-col-12 p-md-3">
+	    </div>
+	    <div class="p-field p-col-12 p-md-6">
+	        <p:tabView>
+            	<p:tab title="Salvaguarda A">
+            	</p:tab>
+            	<p:tab title="Salvaguarda B">
+            	</p:tab>
+            	<p:tab title="Salvaguarda C">
+            	</p:tab>
+            	<p:tab title="Salvaguarda D">
+            	</p:tab>
+            	<p:tab title="Salvaguarda E">
+            	</p:tab>
+            	<p:tab title="Salvaguarda F">
+            	</p:tab>
+            	<p:tab title="Salvaguarda G">
+            	</p:tab>
+            </p:tabView>	
+	    </div>
+	    <div class="p-field p-col-12 p-md-3">
+	    </div>	    
+	</div>		
+	</div>
+
+	
+	
 </h:form>
 </body> 
 </html>

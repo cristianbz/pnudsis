@@ -1,12 +1,16 @@
-package ec.gob.ambiente.sis.controller;
+package ec.gob.ambiente.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-public class ObtenerPropiedades {
+public class ObtenerPropiedades implements Serializable {
+	
+
+	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ObtenerPropiedades.class);
 	private Properties properties = null;
 

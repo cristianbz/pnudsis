@@ -1,4 +1,4 @@
-package ec.gob.ambiente.sis.model;
+package ec.gob.ambiente.sigma.model;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -16,13 +18,15 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
+import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
+import ec.gob.ambiente.sis.model.ProjectsSafeguards;
 
 /**
  * Entity implementation class for Entity: Projects
  *
  */
 @Entity
-@Table(name = "projects", schema = "sis")
+@Table(name = "projects", schema = "sigma")
 @NamedQueries({
 	@NamedQuery(name = Projects.CARGAR_TODOS_LOS_PROYECTOS,query = "SELECT P FROM Projects P")
 	
@@ -43,8 +47,9 @@ public class Projects {
 	
 	@Getter
 	@Setter
-	@Column(name = "proj_name")
-	private String projName;
+	@Column(name = "proj_title")
+	private String projTitle;
+	
 	
 	@Getter
 	@Setter
@@ -55,5 +60,11 @@ public class Projects {
 	@Setter
 	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
 	private List<AdvanceExecutionSafeguards> advanceExecutionSafeguardsList;
+	
+	@Getter
+	@Setter
+	@JoinColumn(name = "part_id")
+	@ManyToOne(fetch = FetchType.LAZY)	
+	private Partners partners;
    
 }

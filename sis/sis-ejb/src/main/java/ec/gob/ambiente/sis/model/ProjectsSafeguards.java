@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import ec.gob.ambiente.sigma.model.Projects;
 import lombok.Getter;
 import lombok.Setter;
 

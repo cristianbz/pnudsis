@@ -3,11 +3,12 @@
 	<persistence-unit name="sisPU" transaction-type="JTA">
 <provider>org.hibernate.ejb.HibernatePersistence</provider>
 <jta-data-source>java:jboss/datasources/sisDS</jta-data-source>
+<class>ec.gob.ambiente.sigma.model.Partners</class>
+<class>ec.gob.ambiente.sigma.model.Projects</class>
 <class>ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards</class>
 <class>ec.gob.ambiente.sis.model.AdvanceSectors</class>
 <class>ec.gob.ambiente.sis.model.Answers</class>
 <class>ec.gob.ambiente.sis.model.ExecutiveSummaries</class>
-<class>ec.gob.ambiente.sis.model.Projects</class>
 <class>ec.gob.ambiente.sis.model.ProjectsSafeguards</class>
 <class>ec.gob.ambiente.sis.model.Questions</class>
 <class>ec.gob.ambiente.sis.model.QuestionsAnswers</class>
