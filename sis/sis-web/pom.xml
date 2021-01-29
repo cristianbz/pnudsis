@@ -61,12 +61,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-<!-- https://mvnrepository.com/artifact/org.primefaces.themes/south-street -->
-<dependency>
-    <groupId>org.primefaces.themes</groupId>
-    <artifactId>south-street</artifactId>
-    <version>1.0.10</version>
-</dependency>
+
 
     </dependencies>
 

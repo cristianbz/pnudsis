@@ -1,4 +1,4 @@
-package ec.gob.ambiente.sis.model;
+package ec.gob.ambiente.suia.model;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,7 @@ import lombok.Setter;
  *
  */
 @Entity
-@Table(name = "users", schema = "sis")
+@Table(name = "users", schema = "public")
 public class Users {
 
 	

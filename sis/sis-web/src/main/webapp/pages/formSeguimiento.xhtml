@@ -10,9 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/primeflex/primeflex.css"/>
 </h:head> 
 <body> 
-<h:form>
+<h:form prependId="false">
 	<p:growl id="growl" life="3000" showDetail="true" />	
-	<div class="card">
+	
 	<div class="ui-fluid p-formgrid p-grid">
 		<div class="p-field p-col-12 p-md-5">
 		</div>
@@ -34,10 +34,10 @@
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
 	        <p:outputLabel for="proyecto" value="* #{etiquetas['proyectos']}"/>
-	        <p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto">
-				<f:selectItem itemLabel=""/>
-				<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>
-				<p:ajax event="change" process="@this proyecto" update="socio" listener="#{seguimientoSalvaguardaController.buscaSocioProyecto()}"/>
+	        <p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
+	        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
+			 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
+				<p:ajax partialSubmit="true" event="itemSelect" process="@this" listener="#{seguimientoSalvaguardaController.buscaSocioProyecto}"/>
 			</p:selectOneMenu>
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
@@ -115,7 +115,7 @@
 	    <div class="p-field p-col-12 p-md-3">
 	    </div>	    
 	</div>		
-	</div>
+	
 
 	
 	

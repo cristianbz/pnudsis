@@ -1,4 +1,4 @@
-package ec.gob.ambiente.sis.services;
+package ec.gob.ambiente.sigma.services;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,8 +9,8 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
+import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
-import ec.gob.ambiente.sis.model.Safeguards;
 
 @Stateless
 public class SafeguardsFacade extends AbstractFacade<Safeguards, Integer> implements Serializable {

@@ -7,6 +7,14 @@
 
 <h:head></h:head> 
 <body> 
-	<p:outputLabel value="HOLA"/>
+<h:form id="form" prependId="false">
+		        <p:selectOneMenu value="#{seguimientoSalvaguardaController.codigo}" id="proyecto" >	
+	        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
+			 	<f:selectItem itemValue="4" itemLabel="Datos"/>
+			 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
+				<p:ajax partialSubmit="true" process="@this proyecto" listener="#{seguimientoSalvaguardaController.buscaSocioProyecto}"/>
+			</p:selectOneMenu>
+			<p:commandButton process="@this" actionListener="#{seguimientoSalvaguardaController.buscaSocioProyecto()}" value="OK"/>
+		</h:form>	
 </body> 
 </html>

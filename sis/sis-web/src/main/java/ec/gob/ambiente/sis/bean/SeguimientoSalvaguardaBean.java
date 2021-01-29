@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import ec.gob.ambiente.sigma.model.Partners;
@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-@Named
+@Named(value="seguimientoSalvaguardaBean")
 @ViewScoped
 public class SeguimientoSalvaguardaBean  implements Serializable{
 
@@ -25,47 +25,47 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 
 	@Getter
 	@Setter
-	public Integer codigoProyecto;
+	private Integer codigoProyecto;
 	
 	@Getter
 	@Setter
-	public Partners socioImplementador;
+	private Partners socioImplementador;
 	
 	@Getter
 	@Setter
-	public AdvanceExecutionSafeguards advanceExecutionSafeguards;
+	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
 	
 	@Getter
 	@Setter
-	public List<Projects> listaProyectos;
+	private List<Projects> listaProyectos;
 	
 	@Getter
 	@Setter
-	public List<Questions> preguntasSalvaguardaA;
+	private List<Questions> preguntasSalvaguardaA;
 	
 	@Getter
 	@Setter
-	public List<Questions> preguntasSalvaguardaB;
+	private List<Questions> preguntasSalvaguardaB;
 	
 	@Getter
 	@Setter
-	public List<Questions> preguntasSalvaguardaC;
+	private List<Questions> preguntasSalvaguardaC;
 	
 	@Getter
 	@Setter
-	public List<Questions> preguntasSalvaguardaD;
+	private List<Questions> preguntasSalvaguardaD;
 	
 	@Getter
 	@Setter
-	public List<Questions> preguntasSalvaguardaE;
+	private List<Questions> preguntasSalvaguardaE;
 	
 	@Getter
 	@Setter
-	public List<Questions> preguntasSalvaguardaF;
+	private List<Questions> preguntasSalvaguardaF;
 	
 	@Getter
 	@Setter
-	public List<Questions> preguntasSalvaguardaG;
+	private List<Questions> preguntasSalvaguardaG;
 	
 	@PostConstruct
 	public void init(){

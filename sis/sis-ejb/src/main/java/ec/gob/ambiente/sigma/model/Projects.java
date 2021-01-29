@@ -19,7 +19,6 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
-import ec.gob.ambiente.sis.model.ProjectsSafeguards;
 
 /**
  * Entity implementation class for Entity: Projects
@@ -28,7 +27,7 @@ import ec.gob.ambiente.sis.model.ProjectsSafeguards;
 @Entity
 @Table(name = "projects", schema = "sigma")
 @NamedQueries({
-	@NamedQuery(name = Projects.CARGAR_TODOS_LOS_PROYECTOS,query = "SELECT P FROM Projects P")
+	@NamedQuery(name = Projects.CARGAR_TODOS_LOS_PROYECTOS,query = "SELECT P FROM Projects P WHERE P.projStatus=true")
 	
 })
 public class Projects {
@@ -41,7 +40,7 @@ public class Projects {
 	@Setter
 	@Column(name = "proj_id")
 	@Id
-	@SequenceGenerator(name = "PROJECTS_GENERATOR", initialValue = 1, sequenceName = "projects_proj_id_seq", schema = "sis")
+	@SequenceGenerator(name = "PROJECTS_GENERATOR", initialValue = 1, sequenceName = "projects_proj_id_seq", schema = "sigma")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECTS_GENERATOR")
 	private Integer projId;
 	
@@ -50,11 +49,16 @@ public class Projects {
 	@Column(name = "proj_title")
 	private String projTitle;
 	
+	@Getter
+	@Setter
+	@Column(name = "proj_status")
+	private boolean projStatus;
+	
 	
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
-	private List<ProjectsSafeguards> projectsSaveguardsList;
+	private List<ProjectsCobenefits> projectsCobenefitsList;
 	
 	@Getter
 	@Setter
@@ -66,5 +70,11 @@ public class Projects {
 	@JoinColumn(name = "part_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
 	private Partners partners;
+	
+	@Getter
+	@Setter
+	@JoinColumn(name = "acpl_id")
+	@ManyToOne(fetch = FetchType.LAZY)	
+	private ActionPlans actionPlans;
    
 }

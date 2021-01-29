@@ -5,9 +5,7 @@ import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,16 +18,17 @@ import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.services.PartnersFacade;
 import ec.gob.ambiente.sigma.services.ProjectsFacade;
 import ec.gob.ambiente.sis.bean.SeguimientoSalvaguardaBean;
-import ec.gob.ambiente.utils.Mensaje;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class SeguimientoSalvaguardaController  implements Serializable{
 
 
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(SeguimientoSalvaguardaController.class);
+	
+    
 	
     @Getter
     @Setter
@@ -63,8 +62,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void cargarProyectos(){
 		try{
 			
-			getSeguimientoSalvaguardaBean().listaProyectos=new ArrayList<>();
-			getSeguimientoSalvaguardaBean().listaProyectos=getProjectsFacade().findAll();
+			getSeguimientoSalvaguardaBean().setListaProyectos(new ArrayList<Projects>());
+			getSeguimientoSalvaguardaBean().setListaProyectos(getProjectsFacade().findAll());
 //			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.cargarProyectos"));
 		}catch(Exception e){
 //			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.cargarProyectos"));			
@@ -75,17 +74,19 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 * Busca el socio implementador del proyecto
 	 */
 	public void buscaSocioProyecto(){
-		if(getSeguimientoSalvaguardaBean().getListaProyectos()!=null){
-			Projects objetoProyecto=new Projects();
-			System.out.println(getSeguimientoSalvaguardaBean().codigoProyecto);
-			for (Projects proyecto : getSeguimientoSalvaguardaBean().getListaProyectos()) {
-				if(proyecto.getProjId()==getSeguimientoSalvaguardaBean().getCodigoProyecto())
-					objetoProyecto=proyecto;
-			}	
-			System.out.println(objetoProyecto);
-			getSeguimientoSalvaguardaBean().setSocioImplementador(getPartnersFacade().findByCode(objetoProyecto.getPartners().getPartId()) );
-			
-		}
+		System.out.println(getSeguimientoSalvaguardaBean().getCodigoProyecto());
+//		System.out.println(getSeguimientoSalvaguardaBean().getListaProyectos().size());
+//		System.out.println(getSeguimientoSalvaguardaBean().getListaProyectos().get(0).getProjId());
+//		if(getSeguimientoSalvaguardaBean().getListaProyectos()!=null){
+//			Projects objetoProyecto=new Projects();
+//			
+//			for (Projects proyecto : getSeguimientoSalvaguardaBean().getListaProyectos()) {
+//				if(proyecto.getProjId()==getSeguimientoSalvaguardaBean().getCodigoProyecto())
+//					objetoProyecto=proyecto;
+//			}				
+//			getSeguimientoSalvaguardaBean().setSocioImplementador(getPartnersFacade().findByCode(objetoProyecto.getPartners().getPartId()) );
+//			
+//		}
 	}
 	public void inicializacion(){
 		
