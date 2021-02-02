@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,10 +25,13 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "questions_answers", schema = "sis")
+@NamedQueries({
+	@NamedQuery(name = QuestionsAnswers.CARGA_PREGUNTAS_RESPUESTAS_POR_SALVAGUARDA,query = "SELECT QA FROM QuestionsAnswers QA WHERE QA.quanRemoveState=TRUE AND QA.questions.safeguards.safeId IN(:codigoSalvaguarda) ORDER BY QA.questions.quesQuestionOrder")	
+})
 public class QuestionsAnswers  {
 
 	
-	
+	public static final String CARGA_PREGUNTAS_RESPUESTAS_POR_SALVAGUARDA="cargaPreguntasRespuestasPorSalvaguarda"; 
 
 	@Getter
 	@Setter

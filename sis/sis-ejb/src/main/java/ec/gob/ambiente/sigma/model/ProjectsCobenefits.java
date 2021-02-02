@@ -13,7 +13,11 @@ import lombok.Setter;
  *
  */
 @Entity
-
+@Table(name = "projects_cobenefits", schema = "sigma")
+@NamedQueries({
+	
+	
+})
 public class ProjectsCobenefits implements Serializable {
 
 	
@@ -26,6 +30,11 @@ public class ProjectsCobenefits implements Serializable {
 	@SequenceGenerator(name = "PROJECTSCOBENEFITS_GENERATOR", initialValue = 1, sequenceName = "projects_cobenefits_prco_id_seq", schema = "sigma")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECTSCOBENEFITS_GENERATOR")
 	private Integer prcoId;
+	
+	@Getter
+	@Setter
+	@Column(name="prco_status")
+	private boolean prcoStatus;
 	
 	
 	@Getter

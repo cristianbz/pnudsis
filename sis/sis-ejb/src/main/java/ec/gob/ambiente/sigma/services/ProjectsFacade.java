@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.hibernate.validator.HibernateValidator;
 
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
@@ -27,7 +28,7 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer> implements
 	@SuppressWarnings("unchecked")
 	public List<Projects> findAll(){
 		try{
-			Query query=getEntityManager().createNamedQuery(Projects.CARGAR_TODOS_LOS_PROYECTOS);
+			Query query=getEntityManager().createNamedQuery(Projects.CARGAR_TODOS_LOS_PROYECTOS);			
 			return query.getResultList();
 		}catch(NoResultException e){
 			return null;

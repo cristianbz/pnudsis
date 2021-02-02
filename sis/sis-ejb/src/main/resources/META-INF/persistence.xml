@@ -6,6 +6,8 @@
 <class>ec.gob.ambiente.sigma.model.ActionPlans</class>
 <class>ec.gob.ambiente.sigma.model.Partners</class>
 <class>ec.gob.ambiente.sigma.model.Projects</class>
+<class>ec.gob.ambiente.sigma.model.ProjectsCobenefits</class>
+<class>ec.gob.ambiente.sigma.model.ProjectsSafeguards</class>
 <class>ec.gob.ambiente.sigma.model.Safeguards</class>
 <class>ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards</class>
 <class>ec.gob.ambiente.sis.model.AdvanceSectors</class>
@@ -15,7 +17,7 @@
 <class>ec.gob.ambiente.sis.model.QuestionsAnswers</class>
 <class>ec.gob.ambiente.sis.model.Sectors</class>
 <class>ec.gob.ambiente.sis.model.TableResponses</class>
-<class>ec.gob.ambiente.suia.model.Users</class>
 <class>ec.gob.ambiente.sis.model.ValueAnswers</class>
+<class>ec.gob.ambiente.suia.model.Users</class>
 </persistence-unit>
 </persistence>

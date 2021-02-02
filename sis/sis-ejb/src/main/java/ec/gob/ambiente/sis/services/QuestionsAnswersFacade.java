@@ -1,8 +1,11 @@
 package ec.gob.ambiente.sis.services;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
@@ -18,6 +21,20 @@ public class QuestionsAnswersFacade extends AbstractFacade<QuestionsAnswers, Int
 
 	public QuestionsAnswersFacade() {
 		super(QuestionsAnswers.class,Integer.class);
+	}
+	/**
+	 * Consulta preguntas_respuestas por salvaguardas
+	 * @param codigoSalvaguarda
+	 * @return
+	 */
+	public List<QuestionsAnswers> findBySafegaurd(List<Integer> codigoSalvaguarda){
+		try{
+			Query query=getEntityManager().createNamedQuery(QuestionsAnswers.CARGA_PREGUNTAS_RESPUESTAS_POR_SALVAGUARDA);
+			query.setParameter("codigoSalvaguarda", codigoSalvaguarda);
+			return query.getResultList();
+		}catch(NoResultException e){
+			return null;
+		}
 	}
 
 }

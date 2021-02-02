@@ -51,6 +51,12 @@ public class Partners implements Serializable {
 	
 	@Getter
 	@Setter
+	@Column(name = "part_status")
+	private boolean partStatus;
+	
+	
+	@Getter
+	@Setter
 	@OneToMany(mappedBy = "partners", fetch = FetchType.LAZY)
 	private List<Projects> projectsList;
 }

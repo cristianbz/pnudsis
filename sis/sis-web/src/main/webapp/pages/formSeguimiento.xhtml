@@ -37,7 +37,7 @@
 	        <p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
 	        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
 			 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
-				<p:ajax partialSubmit="true" event="itemSelect" process="@this" listener="#{seguimientoSalvaguardaController.buscaSocioProyecto}"/>
+				<p:ajax partialSubmit="true" event="itemSelect" process="@this sectores panelsalvaguarda" update="socio sectores panelsalvaguarda" listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}"/>
 			</p:selectOneMenu>
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
@@ -82,9 +82,10 @@
 	    <div class="p-field p-col-12 p-md-4">
 	        <p:outputLabel value="* #{etiquetas['sectorIdentifica']}"/>
 	        <div class="p-formgroup-inline">
-			    <p:selectManyCheckbox id="sectores" value="#{checkboxView.selectedCities2}" layout="responsive"
-		                              columns="3">
-		            <f:selectItems value="#{checkboxView.cities}" var="city" itemLabel="#{city}" itemValue="#{city}"/>
+			    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="responsive"
+		                              columns="4">
+		            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
+		            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sect_id}"/>
 		        </p:selectManyCheckbox>
 			</div>
 	    </div>
@@ -95,22 +96,25 @@
 	    <div class="p-field p-col-12 p-md-3">
 	    </div>
 	    <div class="p-field p-col-12 p-md-6">
-	        <p:tabView>
-            	<p:tab title="Salvaguarda A">
+	    <p:outputPanel id="panelsalvaguarda">
+	        <p:tabView id="salvaguardas">
+            	<p:tab title="Salvaguarda A" rendered="true">
             	</p:tab>
-            	<p:tab title="Salvaguarda B">
+            	<p:tab title="Salvaguarda B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(2).booleanValue()}">
+            		
             	</p:tab>
-            	<p:tab title="Salvaguarda C">
+            	<p:tab title="Salvaguarda C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(3)}">
             	</p:tab>
-            	<p:tab title="Salvaguarda D">
+            	<p:tab title="Salvaguarda D" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(4)}">
             	</p:tab>
-            	<p:tab title="Salvaguarda E">
+            	<p:tab title="Salvaguarda E" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(5)}">
             	</p:tab>
-            	<p:tab title="Salvaguarda F">
+            	<p:tab title="Salvaguarda F" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(6)}">
             	</p:tab>
-            	<p:tab title="Salvaguarda G">
+            	<p:tab title="Salvaguarda G" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(7)}">
             	</p:tab>
-            </p:tabView>	
+            </p:tabView>
+        </p:outputPanel>    
 	    </div>
 	    <div class="p-field p-col-12 p-md-3">
 	    </div>	    

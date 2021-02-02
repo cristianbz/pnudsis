@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ import lombok.Setter;
  *
  */
 @Entity
-
+@Table(name = "action_plans", schema = "sigma")
 public class ActionPlans implements Serializable {
 
 	
@@ -43,6 +44,12 @@ public class ActionPlans implements Serializable {
 	@Setter
 	@Column(name = "acpl_iscurrent")
 	private boolean acplIscurrent;
+	
+	@Getter
+	@Setter
+	@Column(name = "acpl_status")
+	private boolean acplStatus;
+	
 	
 	@Getter
 	@Setter

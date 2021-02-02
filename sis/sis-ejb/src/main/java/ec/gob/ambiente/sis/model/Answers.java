@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -45,6 +46,33 @@ public class Answers  {
 	@Setter
 	@Column(name="answ_answer_label")
 	private String answAnswerLabel;
+	
+	@Getter
+	@Setter
+	@Column(name="answ_drop_state")
+	private boolean answDropState;
+	
+	@Getter
+	@Setter
+	@Column(name="answ_creator_user")
+	private String answCreatorUser;
+	
+	@Getter
+	@Setter
+	@Column(name="answ_update_user")
+	private String answUpdateUser;
+	
+	
+	@Getter
+	@Setter
+	@Column(name="answ_creation_date")
+	private Date answCreationDate;
+	
+	@Getter
+	@Setter
+	@Column(name="answ_update_date")
+	private Date answUpdateDate;
+	
 	
 	@Getter
 	@Setter

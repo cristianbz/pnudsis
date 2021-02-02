@@ -3,6 +3,8 @@ package ec.gob.ambiente.sis.services;
 import java.io.Serializable;
 
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 
@@ -18,6 +20,22 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 
 	public AdvanceExecutionSafeguardsFacade() {
 		super(AdvanceExecutionSafeguards.class,Integer.class);
+	}
+	
+	/**
+	 * Devuelve el avance de ejecucion por proyecto
+	 * @param codigoProyecto
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public AdvanceExecutionSafeguards findByProject(int codigoProyecto){
+		try{
+			Query query=getEntityManager().createNamedQuery(AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO);
+			query.setParameter("codigoProyecto", codigoProyecto);
+			return (AdvanceExecutionSafeguards)query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
 	}
 
 }

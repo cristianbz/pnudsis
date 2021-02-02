@@ -47,6 +47,27 @@ public class ExecutiveSummaries  {
 	
 	@Getter
 	@Setter
+	@Column(name="exsu_creator_user")
+	private String exsuCreatorUser;
+	
+	@Getter
+	@Setter
+	@Column(name="exsu_update_user")
+	private String exsuUpdateUser;
+	
+	
+	@Getter
+	@Setter
+	@Column(name="exsu_creation_date")
+	private Date exsuCreationDate;
+	
+	@Getter
+	@Setter
+	@Column(name="exsu_update_date")
+	private Date exsuUpdateDate;
+	
+	@Getter
+	@Setter
 	@JoinColumn(name = "adex_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
 	private AdvanceExecutionSafeguards advanceExecutionSaveguards;

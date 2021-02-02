@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -59,6 +60,27 @@ public class Questions  {
 	@Setter
 	@Column(name = "ques_question_order")
 	private Integer quesQuestionOrder;
+	
+	@Getter
+	@Setter
+	@Column(name="ques_creator_user")
+	private String quesCreatorUser;
+	
+	@Getter
+	@Setter
+	@Column(name="ques_update_user")
+	private String quesUpdateUser;
+	
+	
+	@Getter
+	@Setter
+	@Column(name="ques_creation_date")
+	private Date quesCreationDate;
+	
+	@Getter
+	@Setter
+	@Column(name="ques_update_date")
+	private Date quesUpdateDate;
 	
 	@Getter
 	@Setter

@@ -29,7 +29,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "advance_execution_safeguards", schema = "sis")
 @NamedQueries({
-	@NamedQuery(name = AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO,query = "SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto")	
+	@NamedQuery(name = AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO,query = "SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsReported=false")	
 })
 public class AdvanceExecutionSafeguards {
 
@@ -54,6 +54,33 @@ public class AdvanceExecutionSafeguards {
 	@Setter
 	@Column(name = "adex_is_reported")
 	private boolean adexIsReported;
+	
+	@Getter
+	@Setter
+	@Column(name = "adex_drop_state")
+	private boolean adexDropState;
+	
+	@Getter
+	@Setter
+	@Column(name = "adex_creator_user")
+	private String adexCreatorUser;
+	
+	@Getter
+	@Setter
+	@Column(name = "adex_creation_date")
+	private Date adexCreationDate;
+	
+	@Getter
+	@Setter
+	@Column(name = "adex_update_user")
+	private String adexUpdateUser;
+	
+	@Getter
+	@Setter
+	@Column(name = "adex_update_date")
+	private Date adexUpdateDate;
+	
+	
 	
 	@Getter
 	@Setter

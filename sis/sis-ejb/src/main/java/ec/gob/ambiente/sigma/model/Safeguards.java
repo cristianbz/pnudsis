@@ -27,7 +27,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "safeguards", schema = "sigma")
 @NamedQueries({
-	@NamedQuery(name = Safeguards.CARGAR_TODAS_SALVAGUARDAS,query = "SELECT S FROM Safeguards S WHERE S.safeStatus=true")
+	@NamedQuery(name = Safeguards.CARGAR_TODAS_SALVAGUARDAS,query = "SELECT S FROM Safeguards S WHERE S.safeStatus=true AND S.actionPlans.acplIscurrent=TRUE AND S.actionPlans.acplStatus=TRUE")
 	
 })
 public class Safeguards  {

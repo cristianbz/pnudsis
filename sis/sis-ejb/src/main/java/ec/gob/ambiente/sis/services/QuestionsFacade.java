@@ -33,4 +33,17 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer> implemen
 			return null;
 		}
 	}
+	/**
+	 * Consulta preguntas por salvaguarda
+	 * @return
+	 */
+	public List<Questions> findBySafeguard(int codigoSalvaguarda){
+		try{
+			Query query= getEntityManager().createNamedQuery(Questions.CARGAR_PREGUNTAS_POR_SALVAGUARDA);
+			query.setParameter("codigoSalvaguarda", codigoSalvaguarda);
+			return query.getResultList();
+		}catch(NoResultException e){
+			return null;
+		}
+	}
 }

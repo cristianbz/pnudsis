@@ -10,8 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
 import lombok.Getter;
-import ec.gob.ambiente.utils.Mensaje;
-import ec.gob.ambiente.utils.ObtenerPropiedades;
+import ec.gob.ambiente.sis.utils.Mensaje;
+import ec.gob.ambiente.sis.utils.ObtenerPropiedades;
 
 @Named
 @ApplicationScoped
