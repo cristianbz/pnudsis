@@ -63,6 +63,16 @@ public class Questions  {
 	
 	@Getter
 	@Setter
+	@Column(name="ques_content_question")
+	private String	quesContentQuestion;
+	
+	@Getter
+	@Setter
+	@Column(name="ques_content_question_english")
+	private String	quesContentQuestionEnglish;
+	
+	@Getter
+	@Setter
 	@Column(name="ques_creator_user")
 	private String quesCreatorUser;
 	

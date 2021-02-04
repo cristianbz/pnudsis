@@ -1,3 +1,16 @@
 .containter{
 	justify-content: center;
 }
+.titulos{
+	color: blue;
+	font-style: oblique;
+	font-size: 13px;
+}
+.preguntaPrincipal{
+	font-style: normal;
+	font-size: 11px;
+}
+.preguntaSecundaria{
+	font-style: normal;
+	font-size: 10px;
+}

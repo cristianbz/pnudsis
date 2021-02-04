@@ -49,13 +49,13 @@ public class QuestionsAnswers  {
 	@Getter
 	@Setter
 	@JoinColumn(name = "answ_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private Answers answers;
 	
 	@Getter
 	@Setter
 	@JoinColumn(name = "ques_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private Questions questions;
 	
 	@Getter

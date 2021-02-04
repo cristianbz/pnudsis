@@ -8,6 +8,7 @@
 <h:head>
 	<link rel="stylesheet" type="text/css" href="../resources/css/estilos.css"/>
 	<link rel="stylesheet" type="text/css" href="../resources/css/primeflex/primeflex.css"/>
+	<link rel="stylesheet" type="text/css" href="../resources/css/primeflex-master/primeflex.css"/>
 </h:head> 
 <body> 
 <h:form prependId="false">
@@ -48,6 +49,7 @@
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
 	        <p:outputLabel for="socio" value="* #{etiquetas['socioImplementador']}"/>
+	        <br/>
 	        <p:outputLabel id="socio" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}"/>
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
@@ -71,6 +73,7 @@
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
 	        <p:outputLabel for="fecha" value="* #{etiquetas['elaboradoPor']}"/>
+	        <br/>
 	        <p:outputLabel value="Christian"/>	        
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
@@ -96,9 +99,54 @@
 	    <div class="p-field p-col-12 p-md-3">
 	    </div>
 	    <div class="p-field p-col-12 p-md-6">
-	    <p:outputPanel id="panelsalvaguarda">
-	        <p:tabView id="salvaguardas">
-            	<p:tab title="Salvaguarda A" rendered="true">
+	    <p:outputPanel id="panelsalvaguarda" >
+	        <p:tabView id="salvaguardas" >
+            	<p:tab title="#{titulos['salvaguardaA']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}">
+	            	<div class="ui-fluid p-formgrid p-grid">
+	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']} "/>  	            		          		
+	            	</div>
+	            	<br/>	
+	            	<div class="ui-fluid p-formgrid p-grid">         	
+	            		<p:outputLabel value="#{titulos['resumenSalvaguardaA']}"/>
+	            	</div>	
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+	            		<p:outputLabel styleClass="preguntaPrincipal" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(0).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(0).questions.quesContentQuestionEnglish}"/>
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+	            		<p:selectOneRadio id="radio1" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(0).quanRemoveState}" unselectable="true">
+				            <f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true"/>
+				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>				            
+				        </p:selectOneRadio>
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta2" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(1).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(1).questions.quesContentQuestionEnglish}"/>	            		
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+	            		<p:inputTextarea autoResize="true"/>
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta3" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(2).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(2).questions.quesContentQuestionEnglish}"/>	            		
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+	            		<p:selectOneRadio id="radio2" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(2).quanRemoveState}" unselectable="true">
+				            <f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true"/>
+				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>				            
+				        </p:selectOneRadio>
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta4" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(3).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(3).questions.quesContentQuestionEnglish}"/>	            		
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+	            		<p:inputTextarea autoResize="true"/>
+	            	</div>
             	</p:tab>
             	<p:tab title="Salvaguarda B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(2).booleanValue()}">
             		
@@ -114,7 +162,9 @@
             	<p:tab title="Salvaguarda G" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(7)}">
             	</p:tab>
             </p:tabView>
-        </p:outputPanel>    
+            <p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}"/>
+        </p:outputPanel> 
+           
 	    </div>
 	    <div class="p-field p-col-12 p-md-3">
 	    </div>	    

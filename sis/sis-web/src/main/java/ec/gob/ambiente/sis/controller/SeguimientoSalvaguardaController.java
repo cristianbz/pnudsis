@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -38,7 +41,7 @@ import ec.gob.ambiente.sis.utils.Mensaje;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoRespuestaEnum;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class SeguimientoSalvaguardaController  implements Serializable{
 
 
@@ -130,6 +133,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					cargaSalvaguardasProyecto();
 					cargarAvanceEjecucionSalvaguarda();
 					cargaValoresRespuestas();
+					
 					break;
 				}
 			}				
@@ -156,6 +160,13 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			if(getSeguimientoSalvaguardaBean().getListaSalvaguardasplanAccion()==null || getSeguimientoSalvaguardaBean().getListaSalvaguardasProyecto()==null){
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.cargarProyectos"));
 			}else{
+				for(ProjectsSafeguards salvaguarda:getSeguimientoSalvaguardaBean().getListaSalvaguardasProyecto()){
+					if(salvaguarda.getSafeguards().getSafeDescription().equals("A")){
+						getSeguimientoSalvaguardaBean().setSalvaguardaA(true);
+					}
+				}
+
+				
 //				for(ProjectsSafeguards salvaguarda:getSeguimientoSalvaguardaBean().getListaSalvaguardasProyecto()){
 //					getSeguimientoSalvaguardaBean().getSalvaguardasActivas().remove(salvaguarda.getSafeguards().getSafeId());
 //					getSeguimientoSalvaguardaBean().getSalvaguardasActivas().put(salvaguarda.getSafeguards().getSafeId(), true);
@@ -166,6 +177,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 //					System.out.println(orden + " " + getSeguimientoSalvaguardaBean().getSalvaguardasActivas().get(orden));
 //				}
 			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -186,7 +198,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 */
 	public void cargarAvanceEjecucionSalvaguarda(){
 		try{
-			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getAdvanceExecutionSafeguardsFacade().findByProject(getSeguimientoSalvaguardaBean().getCodigoProyecto()));
+			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getAdvanceExecutionSafeguardsFacade().findByProject(getSeguimientoSalvaguardaBean().getCodigoProyecto()));			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -196,30 +208,51 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 */
 	public void cargaValoresRespuestas(){
 		try{
+			getSeguimientoSalvaguardaBean().setListaValoresRespuestas(new ArrayList<ValueAnswers>());
+			getSeguimientoSalvaguardaBean().setListaValoresRespuestasTabla(new ArrayList<TableResponses>());
 			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null){
 				getSeguimientoSalvaguardaBean().setListaValoresRespuestas(getValueAnswersFacade().findByAdvanceExecution(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
 				getSeguimientoSalvaguardaBean().setListaValoresRespuestasTabla(getTableResponsesFacade().findByAdvanceExecution(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
 			}
 			if(getSeguimientoSalvaguardaBean().getListaValoresRespuestas()==null || getSeguimientoSalvaguardaBean().getListaValoresRespuestas().isEmpty()){				
 				List<Integer> lista=new ArrayList<>();
+				getSeguimientoSalvaguardaBean().setListaValoresRespuestas(new ArrayList<ValueAnswers>());
+				getSeguimientoSalvaguardaBean().setListaValoresRespuestasTabla(new ArrayList<TableResponses>());
 				for (ProjectsSafeguards salvaguarda : getSeguimientoSalvaguardaBean().getListaSalvaguardasProyecto()) {				
 					lista.add(salvaguarda.getSafeguards().getSafeId());
 				}
 				getSeguimientoSalvaguardaBean().setListaPreguntasRespuestas(getQuestionsAnswersFacade().findBySafegaurd(lista));
+//				getSeguimientoSalvaguardaBean().setListaPreguntasRespuestas(getSeguimientoSalvaguardaBean().getListaPreguntasRespuestas().stream().sorted((pq1,pq2)->pq1.getQuestions().getQuesContentQuestion().compareTo( pq2.getQuestions().getQuesContentQuestion())).collect(Collectors.toList()));
+				
 				for(QuestionsAnswers preguntasRespuestas: getSeguimientoSalvaguardaBean().getListaPreguntasRespuestas()){
+//					System.out.println(preguntasRespuestas.getQuestions().getQuesId());
+//					System.out.println(preguntasRespuestas.getQuestions().getQuesContentQuestion());
 					if(preguntasRespuestas.getAnswers().getAnswResponseTypeFormat().equals(TipoRespuestaEnum.TABLA.getCodigo())){
 						TableResponses respuestasTabla=new TableResponses();
 						respuestasTabla.setQuestionsAnswers(preguntasRespuestas);
 						respuestasTabla.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
+						respuestasTabla.setTareColumnOne("");
+						respuestasTabla.setTareColumnTwo("");
+						respuestasTabla.setTareColumnTree("");
+						respuestasTabla.setTareColumnFour("");
+						respuestasTabla.setTareColumnFive("");
+						respuestasTabla.setTareColumnSix("");
+						respuestasTabla.setTareColumnSeven("");
 						getSeguimientoSalvaguardaBean().getListaValoresRespuestasTabla().add(respuestasTabla);
 					}else{
 						ValueAnswers valoresRespuestas=new ValueAnswers();
 						valoresRespuestas.setQuestionsAnswers(preguntasRespuestas);
 						valoresRespuestas.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
+						valoresRespuestas.setVaanRemoveState(true);
+						valoresRespuestas.setVaanNumericAnswerValue(0);
+						valoresRespuestas.setVaanTextAnswerValue("");
+						valoresRespuestas.setVaanYesnoAnswer(false);
 						getSeguimientoSalvaguardaBean().getListaValoresRespuestas().add(valoresRespuestas);
 					}
 				}
+				
 			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -8,6 +8,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.hibernate.validator.HibernateValidator;
+
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.QuestionsAnswers;
@@ -32,6 +34,7 @@ public class QuestionsAnswersFacade extends AbstractFacade<QuestionsAnswers, Int
 			Query query=getEntityManager().createNamedQuery(QuestionsAnswers.CARGA_PREGUNTAS_RESPUESTAS_POR_SALVAGUARDA);
 			query.setParameter("codigoSalvaguarda", codigoSalvaguarda);
 			return query.getResultList();
+			
 		}catch(NoResultException e){
 			return null;
 		}

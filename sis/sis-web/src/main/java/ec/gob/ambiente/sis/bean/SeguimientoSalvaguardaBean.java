@@ -23,7 +23,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-@Named(value="seguimientoSalvaguardaBean")
+@Named
 @ViewScoped
 public class SeguimientoSalvaguardaBean  implements Serializable{
 
@@ -106,6 +106,18 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private List<TableResponses> listaValoresRespuestasTabla;
 	
+	@Getter
+	@Setter
+	private boolean salvaguardaA;
+	
+	@Getter
+	@Setter
+	private boolean salvaguardaB;
+	
+	@Getter
+	@Setter
+	private boolean salvaguardaC;
+	
 	@PostConstruct
 	public void init(){
 		listaProyectos=new ArrayList<>();
@@ -113,6 +125,11 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		for(int contador=1;contador<8;contador++){
 			salvaguardasActivas.put(contador, true);
 		}
+		listaValoresRespuestas= new ArrayList<>();
+		listaValoresRespuestasTabla= new ArrayList<>();
+		salvaguardaA=false;
+		
+		
 	}
 
 }

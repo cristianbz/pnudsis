@@ -10,5 +10,13 @@
    <base-name>resources.etiquetas</base-name>
    <var>etiquetas</var>
   </resource-bundle>
+    <resource-bundle>
+   <base-name>resources.titulos</base-name>
+   <var>titulos</var>
+  </resource-bundle>
+  <resource-bundle>
+   <base-name>resources.botones</base-name>
+   <var>botones</var>
+  </resource-bundle>
  </application>
 </faces-config>
