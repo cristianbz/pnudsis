@@ -60,7 +60,7 @@ public class QuestionsAnswers  {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "questionsAnswers", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "questionsAnswers", fetch = FetchType.EAGER)
 	private List<TableResponses> tableResponsesList;
 	
 	@Getter

@@ -100,12 +100,20 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	@PostConstruct
 	public void init(){
 		try{
-			
+			encerarSalvaguardas();			
 			cargarProyectos();
 			cargaSalvaguardasPlanAccion();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * Pone en estado false los tabs de las salvaguardas
+	 */
+	public void encerarSalvaguardas(){
+		getSeguimientoSalvaguardaBean().setSalvaguardaA(false);
+		getSeguimientoSalvaguardaBean().setSalvaguardaB(false);
+		getSeguimientoSalvaguardaBean().setSalvaguardaC(false);
 	}
 	/**
 	 * Carga los proyectos, programas o pdi
@@ -152,6 +160,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 	public void cargaSalvaguardasProyecto(){
 		try{
+			encerarSalvaguardas();
 			getSeguimientoSalvaguardaBean().setListaSalvaguardasProyecto(new ArrayList<ProjectsSafeguards>());
 			getSeguimientoSalvaguardaBean().setListaSalvaguardasProyecto(getProjectsSafeguardsFacade().findByProjectsCobenefits(getSeguimientoSalvaguardaBean().getCodigoProyecto()));
 			if (getSeguimientoSalvaguardaBean().getListaSalvaguardasProyecto()==null){
@@ -161,8 +170,10 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.cargarProyectos"));
 			}else{
 				for(ProjectsSafeguards salvaguarda:getSeguimientoSalvaguardaBean().getListaSalvaguardasProyecto()){
-					if(salvaguarda.getSafeguards().getSafeDescription().equals("A")){
+					if(salvaguarda.getSafeguards().getSafeOrder()==1 && salvaguarda.getSafeguards().getSafeLevel()==1){
 						getSeguimientoSalvaguardaBean().setSalvaguardaA(true);
+					}else if(salvaguarda.getSafeguards().getSafeOrder()==1 && salvaguarda.getSafeguards().getSafeLevel()==2){
+						getSeguimientoSalvaguardaBean().setSalvaguardaB(true);
 					}
 				}
 
@@ -258,6 +269,12 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		}
 	}
 	
-	
+	public void ordenarPreguntasRespuestasPorSalvaguarda(List<QuestionsAnswers> listaPreguntasRespuestas){
+		try{
+			
+		}catch(Exception e){
+			
+		}
+	}
 	
 }

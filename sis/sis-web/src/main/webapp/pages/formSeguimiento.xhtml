@@ -8,7 +8,9 @@
 <h:head>
 	<link rel="stylesheet" type="text/css" href="../resources/css/estilos.css"/>
 	<link rel="stylesheet" type="text/css" href="../resources/css/primeflex/primeflex.css"/>
-	<link rel="stylesheet" type="text/css" href="../resources/css/primeflex-master/primeflex.css"/>
+	<link rel="stylesheet" type="text/css" href="../resources/css/primeicons-master/primeicons.css"/>
+	<h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
 </h:head> 
 <body> 
 <h:form prependId="false">
@@ -25,80 +27,52 @@
 	 		<p:selectOneMenu value="#{seleccionaIdiomaController.lenguaje}"   >
                <f:selectItem itemValue="es" itemLabel="Español"/>
                <f:selectItem itemValue="en" itemLabel="English" />
-               <p:ajax process="@this" update="@form" listener="#{seleccionaIdiomaController.cambiarIdioma}"/>
+               <p:ajax process="@this" update="@form" listener="#{seleccionaIdiomaController.cambiarIdioma}" />
 			</p:selectOneMenu>
 	    </div>
 	</div>
-
-	<div class="ui-fluid p-formgrid p-grid">	    
+	<div class="ui-fluid p-formgrid p-grid">	
+   
 	    <div class="p-field p-col-12 p-md-4">
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
-	        <p:outputLabel for="proyecto" value="* #{etiquetas['proyectos']}"/>
-	        <p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
-	        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
-			 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
-				<p:ajax partialSubmit="true" event="itemSelect" process="@this sectores panelsalvaguarda" update="socio sectores panelsalvaguarda" listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}"/>
-			</p:selectOneMenu>
+	    	<p:fieldset legend="#{titulos['datosProyecto']}">
+		    	<h:panelGrid columns="1">
+		    		<p:outputLabel for="proyecto" value="* #{etiquetas['proyectos']}" styleClass="titulos"/>
+			        <p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
+			        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
+					 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
+						<p:ajax partialSubmit="true" event="itemSelect" process="@this sectores panelsalvaguarda" update="socio sectores panelsalvaguarda" listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}"/>
+					</p:selectOneMenu>
+					<p:outputLabel for="socio" value="* #{etiquetas['socioImplementador']}" styleClass="titulos"/>		        
+			        <p:outputLabel id="socio" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}"/>
+			        <p:outputLabel for="fecha" value="* #{etiquetas['fecha']}" styleClass="titulos"/>
+			        <p:calendar id="fecha" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
+			        	locale="es" pattern="yyyy-MM-dd" navigator="true">
+			        
+			        </p:calendar>
+			        <p:outputLabel for="fecha" value="* #{etiquetas['elaboradoPor']}" styleClass="titulos"/>		    
+			        <p:outputLabel value="Christian"/>
+			        <p:outputLabel value="* #{etiquetas['sectorIdentifica']}" styleClass="titulos"/>
+			        <div class="p-formgroup-inline">
+					    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="responsive"
+				                              columns="4">
+				            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
+				            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sect_id}"/>
+				        </p:selectManyCheckbox>
+					</div>
+		    	</h:panelGrid>
+	    	</p:fieldset>
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
-	    </div>	    
-	</div>
-	<div class="ui-fluid p-formgrid p-grid">	    
-	    <div class="p-field p-col-12 p-md-4">
 	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	        <p:outputLabel for="socio" value="* #{etiquetas['socioImplementador']}"/>
-	        <br/>
-	        <p:outputLabel id="socio" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}"/>
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>	    
-	</div>
-	<div class="ui-fluid p-formgrid p-grid">	    
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	        <p:outputLabel for="fecha" value="* #{etiquetas['fecha']}"/>
-	        <p:calendar id="fecha" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
-	        	locale="es" pattern="yyyy-MM-dd" navigator="true">
-	        
-	        </p:calendar>	        
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>	    
-	</div>
-	<div class="ui-fluid p-formgrid p-grid">	    
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	        <p:outputLabel for="fecha" value="* #{etiquetas['elaboradoPor']}"/>
-	        <br/>
-	        <p:outputLabel value="Christian"/>	        
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>	    
-	</div>
-	<div class="ui-fluid p-formgrid p-grid">	    
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	        <p:outputLabel value="* #{etiquetas['sectorIdentifica']}"/>
-	        <div class="p-formgroup-inline">
-			    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="responsive"
-		                              columns="4">
-		            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
-		            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sect_id}"/>
-		        </p:selectManyCheckbox>
-			</div>
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>	    
-	</div>	
+	</div>    
+	
 	<div class="ui-fluid p-formgrid p-grid">	    
 	    <div class="p-field p-col-12 p-md-3">
 	    </div>
 	    <div class="p-field p-col-12 p-md-6">
+	    <p:outputLabel value="#{titulos['salvaguardasDisponibles']}" styleClass="titulos"/>
 	    <p:outputPanel id="panelsalvaguarda" >
 	        <p:tabView id="salvaguardas" >
             	<p:tab title="#{titulos['salvaguardaA']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}">
@@ -147,9 +121,33 @@
 	            	<div class="ui-fluid p-formgrid p-grid">
 	            		<p:inputTextarea autoResize="true"/>
 	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+						<p:outputLabel styleClass="preguntaSecundaria" value="#{titulos['mensajeSalvaguardaA']}"/>	            		
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta5" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(4).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(4).questions.quesContentQuestionEnglish}"/>	            		
+	            	</div>
+	            	<br/>
+	            	<div class="ui-fluid p-formgrid p-grid">
+	            		<div class="p-field p-col-12 p-md-10">
+		            		<p:dataTable value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(4).tableResponsesList}" var="tablarespuestas">
+		            			<p:column headerText="#{etiquetas['planProyGobierno']}">
+		            				<p:inputText value="#{tablarespuestas.tareColumnOne}"/>
+		            			</p:column>
+		            			<p:column headerText="#{etiquetas['presupuestoAsignado']}">
+		            				<p:inputText value="#{tablarespuestas.tareColumnTwo}"/>
+		            			</p:column>
+		            		</p:dataTable>
+		            	</div>
+		            	<div class="p-field p-col-12 p-md-2">
+		            		<p:commandButton value="#{botones['agregar']}" icon="#{botones['icono.mas']}"/>
+		            	</div>	
+	            	</div>
             	</p:tab>
-            	<p:tab title="Salvaguarda B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(2).booleanValue()}">
-            		
+            	<p:tab title="#{titulos['salvaguardaB']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaB}">
+            		salvaguarda B
             	</p:tab>
             	<p:tab title="Salvaguarda C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(3)}">
             	</p:tab>
@@ -162,7 +160,15 @@
             	<p:tab title="Salvaguarda G" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(7)}">
             	</p:tab>
             </p:tabView>
-            <p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}"/>
+            <div class="ui-fluid p-formgrid p-grid">	    
+	    		<div class="p-field p-col-12 p-md-4">
+            		<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}"/>
+            	</div>
+            	<div class="p-field p-col-12 p-md-4">
+            	</div>
+            	<div class="p-field p-col-12 p-md-4">
+            	</div>
+            </div>		
         </p:outputPanel> 
            
 	    </div>

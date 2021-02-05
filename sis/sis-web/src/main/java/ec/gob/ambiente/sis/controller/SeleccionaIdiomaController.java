@@ -6,12 +6,13 @@ import java.util.Locale;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class SeleccionaIdiomaController implements Serializable {
 

@@ -73,10 +73,6 @@ public class TableResponses  {
 	@Column(name = "tare_column_seven")
 	private String tareColumnSeven;
 	
-	@Getter
-	@Setter
-	@Column(name = "tare_remove_state")
-	private boolean tareRemoveState;
 	
 	@Getter
 	@Setter
