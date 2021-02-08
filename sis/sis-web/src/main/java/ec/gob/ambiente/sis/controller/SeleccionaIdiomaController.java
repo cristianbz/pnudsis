@@ -12,7 +12,7 @@ import javax.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 
-@ViewScoped
+@SessionScoped
 @Named
 public class SeleccionaIdiomaController implements Serializable {
 

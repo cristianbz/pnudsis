@@ -15,6 +15,16 @@
 <body> 
 <h:form prependId="false">
 	<p:growl id="growl" life="3000" showDetail="true" />	
+	<p:dialog widgetVar="dlgGrabaReporte" showEffect="fade" 
+				hideEffect="fade" modal="true" appendTo="@(body)" 
+				header="#{titulos['grabarReporteSalvaguarda']}" width="250"
+				closable="true" resizable="false">
+					<h:panelGrid columns="2" id="panelBotones">
+						<p:commandButton value="#{botones['grabar']}" update="@form" id="btngrabar" actionListener="#{seguimientoSalvaguardaController.grabarAvanceEjecucion()}"
+							oncomplete="PF('dlgGrabaReporte').hide();" process="@this" icon="#{botones['icono.grabar']}"/>
+						<p:commandButton icon="#{botones['icono.cancelar']}" value="#{botones['cancelar']}" oncomplete="PF('dlgGrabaReporte').hide();" process="@this"/>
+					</h:panelGrid>					
+	</p:dialog>
 	
 	<div class="ui-fluid p-formgrid p-grid">
 		<div class="p-field p-col-12 p-md-5">
@@ -37,30 +47,37 @@
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
 	    	<p:fieldset legend="#{titulos['datosProyecto']}">
-		    	<h:panelGrid columns="1">
+		    	<h:panelGrid columns="1" id="panelDatos">
 		    		<p:outputLabel for="proyecto" value="* #{etiquetas['proyectos']}" styleClass="titulos"/>
-			        <p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
+			        <p:selectOneMenu filter="true" effect="fade" filterMatchMode="contains" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
 			        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
 					 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
-						<p:ajax partialSubmit="true" event="itemSelect" process="@this sectores panelsalvaguarda" update="socio sectores panelsalvaguarda" listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}"/>
+						<p:ajax partialSubmit="true" event="itemSelect" process="@this sectores panelsalvaguarda panelDatos" update="socio sectores panelsalvaguarda fechaSeguimiento seguimientoReportado" 
+							listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}"/>
 					</p:selectOneMenu>
 					<p:outputLabel for="socio" value="* #{etiquetas['socioImplementador']}" styleClass="titulos"/>		        
 			        <p:outputLabel id="socio" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}"/>
-			        <p:outputLabel for="fecha" value="* #{etiquetas['fecha']}" styleClass="titulos"/>
-			        <p:calendar id="fecha" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
-			        	locale="es" pattern="yyyy-MM-dd" navigator="true">
 			        
-			        </p:calendar>
-			        <p:outputLabel for="fecha" value="* #{etiquetas['elaboradoPor']}" styleClass="titulos"/>		    
-			        <p:outputLabel value="Christian"/>
-			        <p:outputLabel value="* #{etiquetas['sectorIdentifica']}" styleClass="titulos"/>
-			        <div class="p-formgroup-inline">
-					    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="responsive"
-				                              columns="4">
-				            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
-				            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sect_id}"/>
-				        </p:selectManyCheckbox>
-					</div>
+			        	<p:outputLabel for="fechaSeguimiento" value="* #{etiquetas['fecha']}" styleClass="titulos"/>
+				        <p:calendar id="fechaSeguimiento" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
+				        	disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}" 
+				        	locale="es" pattern="yyyy-MM-dd" navigator="true">
+				        
+				        </p:calendar>
+				        <p:outputLabel value="* #{etiquetas['elaboradoPor']}" styleClass="titulos"/>		    
+				        <p:outputLabel value="Christian"/>
+				        <p:outputLabel value="* #{etiquetas['sectorIdentifica']}" styleClass="titulos"/>
+				        <div class="p-formgroup-inline">
+						    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="responsive"
+					                              columns="4" disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}">
+					            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
+					            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sect_id}"/>
+					        </p:selectManyCheckbox>
+						</div>
+						<p:outputLabel value="*#{etiquetas['salvaguardaReportada']}" styleClass="titulos"/>
+						<p:toggleSwitch id="seguimientoReportado" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported}" 
+							disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}"/>
+			        
 		    	</h:panelGrid>
 	    	</p:fieldset>
 	    </div>
@@ -77,7 +94,8 @@
 	        <p:tabView id="salvaguardas" >
             	<p:tab title="#{titulos['salvaguardaA']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}">
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']} "/>  	            		          		
+	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}" styleClass="titulos"/>
+	            		<hr/>  	            		          		
 	            	</div>
 	            	<br/>	
 	            	<div class="ui-fluid p-formgrid p-grid">         	
@@ -162,7 +180,11 @@
             </p:tabView>
             <div class="ui-fluid p-formgrid p-grid">	    
 	    		<div class="p-field p-col-12 p-md-4">
-            		<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}"/>
+            		<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" process="@this"
+            			actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabar()}"
+            			disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}"
+            			
+            			/>
             	</div>
             	<div class="p-field p-col-12 p-md-4">
             	</div>

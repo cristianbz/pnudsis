@@ -118,6 +118,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private boolean salvaguardaC;
 	
+	@Getter
+	@Setter
+	private boolean datosAvanceEjecucion;
+	
 	@PostConstruct
 	public void init(){
 		listaProyectos=new ArrayList<>();
