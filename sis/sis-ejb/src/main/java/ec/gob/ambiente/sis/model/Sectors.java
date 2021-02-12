@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -26,7 +27,13 @@ import lombok.Setter;
 @NamedQueries({
 	@NamedQuery(name = Sectors.CARGA_SECTORES,query = "SELECT S FROM Sectors S WHERE S.sectDropState=true")	
 })
-public class Sectors {
+public class Sectors implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	public static final String CARGA_SECTORES="cargaSectores";
 	

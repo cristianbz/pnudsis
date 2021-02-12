@@ -1,18 +1,19 @@
 package ec.gob.ambiente.sigma.services;
 
-import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 @Stateless
-public class PartnersFacade extends AbstractFacade<Partners, Integer> implements Serializable{
+@LocalBean
+public class PartnersFacade extends AbstractFacade<Partners, Integer>{
 
 
-	private static final long serialVersionUID = 1L;
+	
 	public PartnersFacade(){
 		super(Partners.class,Integer.class);
 	}
@@ -20,14 +21,11 @@ public class PartnersFacade extends AbstractFacade<Partners, Integer> implements
 	/***
 	 * Busca socio por codigo
 	 */
-	public Partners findByCode(Integer codigoSocio){
-		try{
-			Query query=getEntityManager().createNamedQuery(Partners.CARGAR_SOCIOS_POR_CODIGO);
-			query.setParameter("codigoSocio", codigoSocio);
-			return (Partners) query.getSingleResult();
-		}catch(NoResultException e){
-			return null;
-		}
+	public Partners buscarPartnerPorCodigo(Integer codigoSocio) throws Exception{
+		String sql="SELECT PA FROM Partners PA WHERE PA.partId=:codigoSocio";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoSocio", codigoSocio);
+		return findByCreateQuerySingleResult(sql, camposCondicion);
 	}
 
 }

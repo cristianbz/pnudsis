@@ -44,7 +44,7 @@ public class AdvanceSectors  {
 	@Getter
 	@Setter
 	@JoinColumn(name = "sect_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private Sectors sectors;
    
 }

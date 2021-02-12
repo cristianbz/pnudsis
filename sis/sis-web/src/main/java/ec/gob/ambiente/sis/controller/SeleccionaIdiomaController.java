@@ -3,10 +3,10 @@ package ec.gob.ambiente.sis.controller;
 import java.io.Serializable;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import lombok.Getter;
@@ -22,6 +22,10 @@ public class SeleccionaIdiomaController implements Serializable {
 	@Setter
 	private String lenguaje;
 	
+	@PostConstruct
+	public void init(){
+		setLenguaje("es");
+	}
 	/**
 	 * Permite cambiar el idioma
 	 */

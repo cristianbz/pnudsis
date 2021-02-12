@@ -64,31 +64,31 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<Questions> preguntasSalvaguardaA;
+	private List<QuestionsAnswers> listaPreguntasRespuestasA;
 	
 	@Getter
 	@Setter
-	private List<Questions> preguntasSalvaguardaB;
+	private List<QuestionsAnswers> listaPreguntasRespuestasB;
 	
 	@Getter
 	@Setter
-	private List<Questions> preguntasSalvaguardaC;
+	private List<QuestionsAnswers> listaPreguntasRespuestasC;
 	
 	@Getter
 	@Setter
-	private List<Questions> preguntasSalvaguardaD;
+	private List<QuestionsAnswers> listaPreguntasRespuestasD;
 	
 	@Getter
 	@Setter
-	private List<Questions> preguntasSalvaguardaE;
+	private List<QuestionsAnswers> listaPreguntasRespuestasE;
 	
 	@Getter
 	@Setter
-	private List<Questions> preguntasSalvaguardaF;
+	private List<QuestionsAnswers> listaPreguntasRespuestasF;
 	
 	@Getter
 	@Setter
-	private List<Questions> preguntasSalvaguardaG;
+	private List<QuestionsAnswers> listaPreguntasRespuestasG;
 	
 	@Getter
 	@Setter
@@ -104,7 +104,43 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<ValueAnswers> listaValoresRespuestasA;
+	
+	@Getter
+	@Setter
+	private List<ValueAnswers> listaValoresRespuestasB;
+	
+	@Getter
+	@Setter
+	private List<ValueAnswers> listaValoresRespuestasC;
+	
+	@Getter
+	@Setter
+	private List<ValueAnswers> listaValoresRespuestasD;
+	
+	@Getter
+	@Setter
+	private List<ValueAnswers> listaValoresRespuestasE;
+	
+	@Getter
+	@Setter
+	private List<ValueAnswers> listaValoresRespuestasF;
+	
+	@Getter
+	@Setter
+	private List<ValueAnswers> listaValoresRespuestasG;
+	
+	@Getter
+	@Setter
 	private List<TableResponses> listaValoresRespuestasTabla;
+	
+	@Getter
+	@Setter
+	private List<List<QuestionsAnswers>> listaDeListasPreguntasRespuestas;
+	
+	@Getter
+	@Setter
+	private List<List<ValueAnswers>> listaDeListasValoresRespuestas;
 	
 	@Getter
 	@Setter
@@ -125,14 +161,28 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@PostConstruct
 	public void init(){
 		listaProyectos=new ArrayList<>();
-		salvaguardasActivas=new Hashtable<Integer,Boolean>();
-		for(int contador=1;contador<8;contador++){
-			salvaguardasActivas.put(contador, true);
-		}
+//		salvaguardasActivas=new Hashtable<Integer,Boolean>();
+//		for(int contador=1;contador<8;contador++){
+//			salvaguardasActivas.put(contador, true);
+//		}
 		listaValoresRespuestas= new ArrayList<>();
 		listaValoresRespuestasTabla= new ArrayList<>();
 		salvaguardaA=false;
-		
+		listaValoresRespuestasA= new ArrayList<>();
+		listaValoresRespuestasB= new ArrayList<>();
+		listaValoresRespuestasC= new ArrayList<>();
+		listaValoresRespuestasD= new ArrayList<>();
+		listaValoresRespuestasE= new ArrayList<>();
+		listaValoresRespuestasF= new ArrayList<>();
+		listaValoresRespuestasG= new ArrayList<>();
+		listaDeListasPreguntasRespuestas=new ArrayList<>();
+		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasA());
+		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasB());
+		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasC());
+		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasD());
+		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasE());
+		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasF());
+		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasG());
 		
 	}
 

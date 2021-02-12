@@ -3,6 +3,7 @@ package ec.gob.ambiente.sis.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -84,7 +85,7 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY,cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	private List<ValueAnswers> valueAnswersList;
    
 	@Getter
@@ -99,7 +100,7 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.EAGER)
 	private List<AdvanceSectors> advanceSectorsList;
 	
 	@Getter

@@ -95,7 +95,7 @@ public class Questions  {
 	@Getter
 	@Setter
 	@JoinColumn(name = "safe_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private Safeguards safeguards;
 	
 	@Getter

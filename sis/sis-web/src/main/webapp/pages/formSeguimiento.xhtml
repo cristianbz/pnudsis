@@ -20,8 +20,8 @@
 				header="#{titulos['grabarReporteSalvaguarda']}" width="250"
 				closable="true" resizable="false">
 					<h:panelGrid columns="2" id="panelBotones">
-						<p:commandButton value="#{botones['grabar']}" update="@form" id="btngrabar" actionListener="#{seguimientoSalvaguardaController.grabarAvanceEjecucion()}"
-							oncomplete="PF('dlgGrabaReporte').hide();" process="@this" icon="#{botones['icono.grabar']}"/>
+						<p:commandButton value="#{botones['grabar']}" update="@form growl" id="btngrabar" actionListener="#{seguimientoSalvaguardaController.grabarAvanceEjecucion()}"
+							oncomplete="PF('dlgGrabaReporte').hide();" process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}"/>
 						<p:commandButton icon="#{botones['icono.cancelar']}" value="#{botones['cancelar']}" oncomplete="PF('dlgGrabaReporte').hide();" process="@this"/>
 					</h:panelGrid>					
 	</p:dialog>
@@ -47,35 +47,51 @@
 	    </div>
 	    <div class="p-field p-col-12 p-md-4">
 	    	<p:fieldset legend="#{titulos['datosProyecto']}">
-		    	<h:panelGrid columns="1" id="panelDatos">
-		    		<p:outputLabel for="proyecto" value="* #{etiquetas['proyectos']}" styleClass="titulos"/>
-			        <p:selectOneMenu filter="true" effect="fade" filterMatchMode="contains" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
+		    	<h:panelGrid columns="1" id="panelDatos" >
+		    		<i class="fas fa-project-diagram"></i>
+		    		<p:outputLabel for="proyecto" value="#{etiquetas['proyectos']}" styleClass="titulos"/>
+			        <p:selectOneMenu filter="true" effect="fade" filterMatchMode="contains" 
+			        	required="true" requiredMessage="#{mensajes['campoRequerido']}"
+			        	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
 			        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
 					 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
-						<p:ajax partialSubmit="true" event="itemSelect" process="@this sectores panelsalvaguarda panelDatos" update="socio sectores panelsalvaguarda fechaSeguimiento seguimientoReportado" 
-							listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}"/>
+						<p:ajax partialSubmit="true" event="itemSelect" process="@this  panelsalvaguarda socio sectores fechaSeguimiento" update="socio sectores  panelsalvaguarda fechaSeguimiento  seguimientoReportado growl" 
+							listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}" />
 					</p:selectOneMenu>
-					<p:outputLabel for="socio" value="* #{etiquetas['socioImplementador']}" styleClass="titulos"/>		        
+					<p:message for="proyecto"/>
+					<i class="fas fa-handshake"></i>
+					<p:outputLabel for="socio" value="#{etiquetas['socioImplementador']}" styleClass="titulos"/>		        
 			        <p:outputLabel id="socio" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}"/>
-			        
-			        	<p:outputLabel for="fechaSeguimiento" value="* #{etiquetas['fecha']}" styleClass="titulos"/>
+			        <br/>
+			        <i class="far fa-calendar-alt"></i>
+			        	<p:outputLabel for="fechaSeguimiento" value="#{etiquetas['fecha']}" styleClass="titulos"/>
 				        <p:calendar id="fechaSeguimiento" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
 				        	disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}" 
+				        	required="true" requiredMessage="#{mensajes['campoRequerido']}"
 				        	locale="es" pattern="yyyy-MM-dd" navigator="true">
-				        
+				        	<p:ajax process="@this"/>
 				        </p:calendar>
-				        <p:outputLabel value="* #{etiquetas['elaboradoPor']}" styleClass="titulos"/>		    
+				        <p:message for="fechaSeguimiento"/>
+				        <i class="fas fa-file-signature"></i>
+				        <p:outputLabel value="#{etiquetas['elaboradoPor']}" styleClass="titulos"/>		    
 				        <p:outputLabel value="Christian"/>
-				        <p:outputLabel value="* #{etiquetas['sectorIdentifica']}" styleClass="titulos"/>
+				        <br/>
+				        <i class="fas fa-users"></i>
+				        <p:outputLabel value="#{etiquetas['sectorIdentifica']}" styleClass="titulos" for="sectores"/>
 				        <div class="p-formgroup-inline">
-						    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="responsive"
+						    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="pageDirection" 
+					                              converter="sectorsConverter" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 					                              columns="4" disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}">
 					            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
-					            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sect_id}"/>
+					            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector}"/>
+					            <p:ajax event="change" process="@this"/>	
 					        </p:selectManyCheckbox>
+					        <p:message for="sectores"/>
 						</div>
-						<p:outputLabel value="*#{etiquetas['salvaguardaReportada']}" styleClass="titulos"/>
-						<p:toggleSwitch id="seguimientoReportado" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported}" 
+						
+						<i class="fas fa-people-carry"></i>
+						<p:outputLabel value="#{etiquetas['salvaguardaReportada']}" styleClass="titulos"/>
+						<p:toggleSwitch id="seguimientoReportado" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported}" 							
 							disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}"/>
 			        
 		    	</h:panelGrid>
@@ -89,83 +105,103 @@
 	    <div class="p-field p-col-12 p-md-3">
 	    </div>
 	    <div class="p-field p-col-12 p-md-6">
+	    <center>
 	    <p:outputLabel value="#{titulos['salvaguardasDisponibles']}" styleClass="titulos"/>
+	    </center>
+	    <br/>
 	    <p:outputPanel id="panelsalvaguarda" >
-	        <p:tabView id="salvaguardas" >
-            	<p:tab title="#{titulos['salvaguardaA']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}">
+	        <p:tabView id="salvaguardas"  >
+	        	<!-- SALVAGUARDA A -->
+            	<p:tab title="#{titulos['salvaguardaA']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}" >
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}" styleClass="titulos"/>
-	            		<hr/>  	            		          		
-	            	</div>
+	            		
+	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}" styleClass="titulos"/>	            		          		          		
+	            	</div>	            	
 	            	<br/>	
 	            	<div class="ui-fluid p-formgrid p-grid">         	
 	            		<p:outputLabel value="#{titulos['resumenSalvaguardaA']}"/>
 	            	</div>	
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:outputLabel styleClass="preguntaPrincipal" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(0).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(0).questions.quesContentQuestionEnglish}"/>
+	            		<p:outputLabel styleClass="preguntaPrincipal" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(0).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(0).questions.quesContentQuestionEnglish}"/>
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:selectOneRadio id="radio1" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(0).quanRemoveState}" unselectable="true">
+	            		<p:selectOneRadio id="radiop1" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(0).vaanYesnoAnswerValue}" unselectable="true">
 				            <f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true"/>
-				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>				            
+				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>	
+				            <p:ajax process="radiop1 @this"  event="change" partialSubmit="true" />			            
 				        </p:selectOneRadio>
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta2" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(1).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(1).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta2" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(1).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(1).questions.quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:inputTextarea autoResize="true"/>
+	            		<p:inputTextarea autoResize="true" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(1).vaanTextAnswerValue}"/>
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta3" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(2).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(2).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="preguntaPrincipal" id="pregunta3" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(2).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(2).questions.quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:selectOneRadio id="radio2" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(2).quanRemoveState}" unselectable="true">
+	            		<p:selectOneRadio id="radiop2" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(2).vaanYesnoAnswerValue}" unselectable="true">
 				            <f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true"/>
-				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>				            
+				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>	
+				            <p:ajax process="radiop2 @this"  event="change" partialSubmit="true" />				            
 				        </p:selectOneRadio>
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta4" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(3).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(3).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta4" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(3).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(3).questions.quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:inputTextarea autoResize="true"/>
+	            		<p:inputTextarea autoResize="true" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(3).vaanTextAnswerValue}"/>
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" value="#{titulos['mensajeSalvaguardaA']}"/>	            		
+						<p:outputLabel styleClass="importante" value="#{titulos['mensajeSalvaguardaA']}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta5" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(4).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(4).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta5" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(4).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(4).questions.quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
 	            		<div class="p-field p-col-12 p-md-10">
-		            		<p:dataTable value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestas.get(4).tableResponsesList}" var="tablarespuestas">
-		            			<p:column headerText="#{etiquetas['planProyGobierno']}">
-		            				<p:inputText value="#{tablarespuestas.tareColumnOne}"/>
-		            			</p:column>
-		            			<p:column headerText="#{etiquetas['presupuestoAsignado']}">
-		            				<p:inputText value="#{tablarespuestas.tareColumnTwo}"/>
-		            			</p:column>
-		            		</p:dataTable>
+	            			<h:panelGrid id="panelTabla1A">
+			            		<p:dataTable value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(4).tableResponsesList}" var="tablarespuestas">
+			            			<p:column headerText="#{etiquetas['planProyGobierno']}">
+			            				<p:inputText value="#{tablarespuestas.tareColumnOne}">
+			            					<p:ajax process="@this"/>
+			            				</p:inputText>
+			            			</p:column>
+			            			<p:column headerText="#{etiquetas['presupuestoAsignado']}">
+			            				<p:inputText value="#{tablarespuestas.tareColumnTwo}">
+			            					<p:ajax process="@this"/>
+			            				</p:inputText>
+			            			</p:column>
+			            		</p:dataTable>
+		            		</h:panelGrid>
 		            	</div>
 		            	<div class="p-field p-col-12 p-md-2">
-		            		<p:commandButton value="#{botones['agregar']}" icon="#{botones['icono.mas']}"/>
+		            		<p:commandButton value="#{botones['agregar']}" icon="#{botones['icono.mas']}" process="@this panelTabla1A" update="panelTabla1A" actionListener="#{seguimientoSalvaguardaController.agregaFilaTablaSalvaguardaA()}"/>
 		            	</div>	
 	            	</div>
             	</p:tab>
+            	<!-- SALVAGUARDA B -->
             	<p:tab title="#{titulos['salvaguardaB']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaB}">
-            		salvaguarda B
+            		<div class="ui-fluid p-formgrid p-grid">
+            			
+	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaB']}" styleClass="titulos"/>	            		          		          		
+	            	</div>	            	
+	            	<br/>	
+	            	<div class="ui-fluid p-formgrid p-grid">         	
+	            		<p:outputLabel value="#{titulos['resumenSalvaguardaB']}"/>
+	            	</div>
             	</p:tab>
             	<p:tab title="Salvaguarda C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(3)}">
             	</p:tab>
@@ -178,10 +214,11 @@
             	<p:tab title="Salvaguarda G" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(7)}">
             	</p:tab>
             </p:tabView>
-            <div class="ui-fluid p-formgrid p-grid">	    
+            <br/>
+            <div class="ui-fluid p-formgrid p-grid">            		   
 	    		<div class="p-field p-col-12 p-md-4">
-            		<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" process="@this"
-            			actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabar()}"
+            		<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" process="@this panelDatos"
+            			actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabar()}" update="panelDatos "
             			disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}"
             			
             			/>

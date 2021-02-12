@@ -1,23 +1,32 @@
 package ec.gob.ambiente.sis.services;
 
-import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-import org.apache.log4j.Logger;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.Sectors;
 
 @Stateless
-public class SectorsFacade extends AbstractFacade<Sectors, Integer> implements Serializable{
+@LocalBean
+public class SectorsFacade extends AbstractFacade<Sectors, Integer> {
 
-
-	private static final long serialVersionUID = 1L;
-	private static Logger log = Logger.getLogger(SectorsFacade.class);
 
 	public SectorsFacade() {
 		super(Sectors.class,Integer.class);
+	}
+	/**
+	 * Carga todos los sectores
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Sectors> buscarTodosLosSectores() throws Exception{
+		String sql="SELECT S FROM Sectors S WHERE S.sectDropState=true";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		return findByCreateQuery(sql, camposCondicion);
 	}
 
 }

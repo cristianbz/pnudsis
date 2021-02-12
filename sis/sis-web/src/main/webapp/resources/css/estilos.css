@@ -9,8 +9,20 @@
 .preguntaPrincipal{
 	font-style: normal;
 	font-size: 11px;
+	color:#0063FA;
 }
 .preguntaSecundaria{
 	font-style: normal;
 	font-size: 10px;
+	color:#5986CB;
+}
+.importante{
+	font-style: normal;
+	font-size: 10px;
+	color:red;
+}
+.fondoColorSigma{
+	background: #00AAC3;
+	color: #fff;
+	
 }

@@ -1,23 +1,22 @@
 package ec.gob.ambiente.sigma.services;
 
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
-import org.apache.log4j.Logger;
-import org.hibernate.validator.HibernateValidator;
 
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+
 @Stateless
-public class ProjectsFacade extends AbstractFacade<Projects, Integer> implements Serializable {
+@LocalBean
+public class ProjectsFacade extends AbstractFacade<Projects, Integer>  {
 
 
-	private static final long serialVersionUID = 1L;
-	private static Logger log = Logger.getLogger(ProjectsFacade.class);
+
+
 
 	public ProjectsFacade() {
 		super(Projects.class,Integer.class);
@@ -25,13 +24,9 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer> implements
 	/**
 	 * Carga todos los proyectos
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Projects> findAll(){
-		try{
-			Query query=getEntityManager().createNamedQuery(Projects.CARGAR_TODOS_LOS_PROYECTOS);			
-			return query.getResultList();
-		}catch(NoResultException e){
-			return null;
-		}
+
+	public List<Projects> buscarTodosLosProyectos() throws Exception{
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		return findByCreateQuery("SELECT P FROM Projects P WHERE P.projStatus=true", camposCondicion);
 	}
 }

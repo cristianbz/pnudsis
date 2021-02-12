@@ -1,25 +1,19 @@
 package ec.gob.ambiente.sis.services;
 
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
-import org.apache.log4j.Logger;
-import org.hibernate.validator.HibernateValidator;
-
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.QuestionsAnswers;
 
 @Stateless
-public class QuestionsAnswersFacade extends AbstractFacade<QuestionsAnswers, Integer> implements Serializable{
-
+@LocalBean
+public class QuestionsAnswersFacade extends AbstractFacade<QuestionsAnswers, Integer> {
 	
-	private static final long serialVersionUID = 1L;
-	private static Logger log = Logger.getLogger(QuestionsAnswersFacade.class);
 
 	public QuestionsAnswersFacade() {
 		super(QuestionsAnswers.class,Integer.class);
@@ -29,15 +23,11 @@ public class QuestionsAnswersFacade extends AbstractFacade<QuestionsAnswers, Int
 	 * @param codigoSalvaguarda
 	 * @return
 	 */
-	public List<QuestionsAnswers> findBySafegaurd(List<Integer> codigoSalvaguarda){
-		try{
-			Query query=getEntityManager().createNamedQuery(QuestionsAnswers.CARGA_PREGUNTAS_RESPUESTAS_POR_SALVAGUARDA);
-			query.setParameter("codigoSalvaguarda", codigoSalvaguarda);
-			return query.getResultList();
-			
-		}catch(NoResultException e){
-			return null;
-		}
+	public List<QuestionsAnswers> buscarPorSalvaguarda(List<Integer> codigoSalvaguarda) throws Exception{
+		String sql="SELECT QA FROM QuestionsAnswers QA WHERE QA.quanRemoveState=TRUE AND QA.questions.safeguards.safeId IN(:codigoSalvaguarda) ORDER BY QA.questions.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
+		return findByCreateQuery(sql, camposCondicion);
 	}
 
 }

@@ -1,23 +1,18 @@
 package ec.gob.ambiente.sis.services;
 
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
-import org.apache.log4j.Logger;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 
 @Stateless
-public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> implements Serializable {
-
-
-	private static final long serialVersionUID = 1L;
-	private static Logger log = Logger.getLogger(ValueAnswersFacade.class);
+@LocalBean
+public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> {
 
 	public ValueAnswersFacade() {
 		super(ValueAnswers.class,Integer.class);
@@ -27,14 +22,11 @@ public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> im
 	 * @param codigoAvanceEjecucion
 	 * @return
 	 */
-	public List<ValueAnswers> findByAdvanceExecution(int codigoAvanceEjecucion){
-		try{
-			Query query=getEntityManager().createNamedQuery(ValueAnswers.CARGA_POR_AVANCE_EJECUCION);
-			query.setParameter("codigoAvanceEjecucion", codigoAvanceEjecucion);
-			return query.getResultList();
-		}catch(NoResultException e){
-			return null;
-		}
+	public List<ValueAnswers> buscarPorAvanceEjecucion(int codigoAvanceEjecucion) throws Exception{
+		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.advanceExecutionSaveguards.adexDropState=TRUE";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
+		return findByCreateQuery(sql, camposCondicion);
 	}
 
 }

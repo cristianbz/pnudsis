@@ -1,6 +1,5 @@
 package ec.gob.ambiente.sis.controller;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.Properties;
 
@@ -9,9 +8,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
-import lombok.Getter;
 import ec.gob.ambiente.sis.utils.Mensaje;
 import ec.gob.ambiente.sis.utils.ObtenerPropiedades;
+import lombok.Getter;
 
 @Named
 @ApplicationScoped
@@ -29,11 +28,10 @@ public class MensajesController implements Serializable{
 	}
 	@PostConstruct
 	public void init() {
-		System.out.println("INICIANDO");
+		
 		try{
-//		filePath = "/WEB-INF/classes/ec/gob/ambiente/sis/resources/errores_es.properties";
-//		properties = retrieveProperties.retrievePropertiesFromClasspath(filePath);
-			Properties properties = new Properties(); properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("errores_es.properties"));
+			filePath = "../resources/errores.properties";
+			properties = retrieveProperties.retrievePropertiesFromClasspath(filePath);
 
 
 		}catch(Exception e){

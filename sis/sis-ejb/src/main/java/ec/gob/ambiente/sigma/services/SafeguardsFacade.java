@@ -1,23 +1,19 @@
 package ec.gob.ambiente.sigma.services;
 
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
-import org.apache.log4j.Logger;
 
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 
 @Stateless
-public class SafeguardsFacade extends AbstractFacade<Safeguards, Integer> implements Serializable {
+@LocalBean
+public class SafeguardsFacade extends AbstractFacade<Safeguards, Integer> {
 
-	
-	private static final long serialVersionUID = 1L;
-	private static Logger log = Logger.getLogger(SafeguardsFacade.class);
 
 	public SafeguardsFacade() {
 		super(Safeguards.class,Integer.class);
@@ -26,13 +22,9 @@ public class SafeguardsFacade extends AbstractFacade<Safeguards, Integer> implem
 	/**
 	 * Carga todas las salvaguardas registradas
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Safeguards> findAll(){
-		try{
-			Query query=getEntityManager().createNamedQuery(Safeguards.CARGAR_TODAS_SALVAGUARDAS);
-			return query.getResultList();
-		}catch(NoResultException e){
-			return null;
-		}
+	public List<Safeguards> buscarTodosLosProyectos() throws Exception{
+		String sql="SELECT S FROM Safeguards S WHERE S.safeStatus=true AND S.actionPlans.acplIscurrent=TRUE AND S.actionPlans.acplStatus=TRUE";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
+		return findByCreateQuery(sql, camposCondicion);
 	}
 }

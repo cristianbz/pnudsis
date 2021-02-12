@@ -18,5 +18,9 @@
    <base-name>resources.botones</base-name>
    <var>botones</var>
   </resource-bundle>
+  <resource-bundle>
+   <base-name>resources.mensajes</base-name>
+   <var>mensajes</var>
+  </resource-bundle>
  </application>
 </faces-config>
