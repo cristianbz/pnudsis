@@ -2,6 +2,7 @@ package ec.gob.ambiente.sigma.model;
 
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,12 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import lombok.Getter;
 import lombok.Setter;
-import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 
 /**
  * Entity implementation class for Entity: Projects
@@ -41,11 +41,11 @@ public class Projects {
 
 	@Getter
 	@Setter
-	@Column(name = "proj_id")
-	@Id
-	@SequenceGenerator(name = "PROJECTS_GENERATOR", initialValue = 1, sequenceName = "projects_proj_id_seq", schema = "sigma")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECTS_GENERATOR")
-	private Integer projId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "proj_id")
+    private Integer projId;
 	
 	@Getter
 	@Setter

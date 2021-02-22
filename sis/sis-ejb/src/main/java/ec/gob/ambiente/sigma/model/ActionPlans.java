@@ -3,6 +3,7 @@ package ec.gob.ambiente.sigma.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -29,11 +29,11 @@ public class ActionPlans implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(name = "acpl_id")
-	@Id
-	@SequenceGenerator(name = "ACTIONPLANS_GENERATOR", initialValue = 1, sequenceName = "action_plans_acpl_id_seq", schema = "sigma")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACTIONPLANS_GENERATOR")
-	private Integer acplId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "acpl_id")
+    private Integer acplId;
 	
 	@Getter
 	@Setter

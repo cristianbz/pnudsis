@@ -3,6 +3,7 @@ package ec.gob.ambiente.sigma.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -38,11 +38,11 @@ public class Partners implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(name = "part_id")
-	@Id
-	@SequenceGenerator(name = "PARTNERS_GENERATOR", initialValue = 1, sequenceName = "partners_part_id_seq", schema = "sigma")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARTNERS_GENERATOR")
-	private Integer partId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "part_id")
+    private Integer partId;
    
 	@Getter
 	@Setter

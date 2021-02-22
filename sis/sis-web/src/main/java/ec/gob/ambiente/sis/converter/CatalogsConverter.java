@@ -1,7 +1,3 @@
-/**
-@autor proamazonia [Christian Báez]  18 feb. 2021
-
-**/
 package ec.gob.ambiente.sis.converter;
 
 import javax.faces.component.UIComponent;
@@ -9,10 +5,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.Sectors;
 
-@FacesConverter(value = "sectorsConverter", forClass = SectorsConverter.class)
-public class SectorsConverter implements Converter{
+@FacesConverter(value = "catalogsConverter", forClass = CatalogsConverter.class)
+public class CatalogsConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
@@ -25,15 +22,14 @@ public class SectorsConverter implements Converter{
 	@Override
 	public String getAsString(FacesContext ctx, UIComponent component, Object value) {
 		if (value != null && value instanceof Sectors) {
-			Sectors sectors = (Sectors) value;
+			Catalogs catalogs = (Catalogs) value;
 
-            if (sectors.getSectName() != null) {
-                component.getAttributes().put(sectors.getSectName(), value);
-                return sectors.getSectName();
+            if (catalogs.getCataText1() != null) {
+                component.getAttributes().put(catalogs.getCataText1(), value);
+                return catalogs.getCataText1();
             }
         }
         return null;
 	}
 
 }
-

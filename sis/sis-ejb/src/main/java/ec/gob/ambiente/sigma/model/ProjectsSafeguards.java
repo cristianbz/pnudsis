@@ -2,7 +2,17 @@ package ec.gob.ambiente.sigma.model;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,11 +35,11 @@ public class ProjectsSafeguards implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(name = "prsa_id")
-	@Id
-	@SequenceGenerator(name = "PROJECTSSAVEGUARDS_GENERATOR", initialValue = 1, sequenceName = "projects_safeguards_prsa_id_seq", schema = "sigma")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECTSSAVEGUARDS_GENERATOR")
-	private Integer prsaId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "prsa_id")
+    private Integer prsaId;
 	
 	@Getter
 	@Setter

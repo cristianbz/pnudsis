@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.model;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -32,11 +32,11 @@ public class ValueAnswers  {
 
 	@Getter
 	@Setter
-	@Column(name = "vaan_id")
-	@Id
-	@SequenceGenerator(name = "VALUEANSWERS_GENERATOR", initialValue = 1, sequenceName = "value_answers_vaan_id_seq", schema = "sis")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VALUEANSWERS_GENERATOR")
-	private Integer vaanId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "vaan_id")
+    private Integer vaanId;
 	
 	@Getter
 	@Setter
@@ -62,7 +62,7 @@ public class ValueAnswers  {
 	@Getter
 	@Setter
 	@JoinColumn(name = "quan_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private QuestionsAnswers questionsAnswers;
 	
 	@Getter

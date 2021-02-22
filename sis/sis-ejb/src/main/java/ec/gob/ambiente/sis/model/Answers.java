@@ -3,16 +3,18 @@ package ec.gob.ambiente.sis.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -36,11 +38,11 @@ public class Answers  {
 	
 	@Getter
 	@Setter
-	@Column(name = "answ_id")
-	@Id
-	@SequenceGenerator(name = "ANSWERS_GENERATOR", initialValue = 1, sequenceName = "answers_answ_id_seq", schema = "sis")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANSWERS_GENERATOR")
-	private Integer answId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "answ_id")
+    private Integer answId;
 	
 	@Getter
 	@Setter
@@ -72,16 +74,16 @@ public class Answers  {
 	@Setter
 	@Column(name="answ_update_date")
 	private Date answUpdateDate;
-	
-	
-	@Getter
-	@Setter
-	@Column(name="answ_response_type_format")
-	private String answResponseTypeFormat;
-	
+		
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "answers", fetch = FetchType.LAZY)
 	private List<QuestionsAnswers> questionsAnswersList;
 	
+	@Getter
+	@Setter
+    @JoinColumn(name = "cata_id", referencedColumnName = "cata_id")
+    @ManyToOne(optional = false)
+    private Catalogs cataId;
+
 }

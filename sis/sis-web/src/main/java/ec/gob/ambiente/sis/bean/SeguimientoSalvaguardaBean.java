@@ -14,7 +14,7 @@ import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
-import ec.gob.ambiente.sis.model.Questions;
+import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.QuestionsAnswers;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
@@ -33,6 +33,22 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private Integer codigoProyecto;
+		
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoPoliticas;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoPoliticasSeleccionado;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoAcciones;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoAccionesSeleccionado;
 	
 	@Getter
 	@Setter

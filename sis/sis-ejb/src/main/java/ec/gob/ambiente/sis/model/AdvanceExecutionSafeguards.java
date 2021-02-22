@@ -3,6 +3,7 @@ package ec.gob.ambiente.sis.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ec.gob.ambiente.sigma.model.Projects;
@@ -40,11 +40,11 @@ public class AdvanceExecutionSafeguards {
 
 	@Getter
 	@Setter
-	@Column(name = "adex_id")
-	@Id
-	@SequenceGenerator(name = "ADVANCEEXECUTIONSAFEGUARDS_GENERATOR", initialValue = 1, sequenceName = "advance_execution_safeguards_adex_id_seq", schema = "sis")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADVANCEEXECUTIONSAFEGUARDS_GENERATOR")
-	private Integer adexId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "adex_id")
+    private Integer adexId;
 	
 	@Getter
 	@Setter
@@ -85,7 +85,7 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY,cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private List<ValueAnswers> valueAnswersList;
    
 	@Getter
@@ -100,7 +100,7 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.EAGER,cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
 	private List<AdvanceSectors> advanceSectorsList;
 	
 	@Getter

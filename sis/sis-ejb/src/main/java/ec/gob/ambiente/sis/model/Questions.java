@@ -3,6 +3,7 @@ package ec.gob.ambiente.sis.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ec.gob.ambiente.sigma.model.Safeguards;
@@ -40,11 +40,11 @@ public class Questions  {
 
 	@Getter
 	@Setter
-	@Column(name = "ques_id")
-	@Id
-	@SequenceGenerator(name = "QUESTIONS_GENERATOR", initialValue = 1, sequenceName = "questions_ques_id_seq", schema = "sis")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QUESTIONS_GENERATOR")
-	private Integer quesId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ques_id")
+    private Integer quesId;
 	
 	@Getter
 	@Setter

@@ -2,6 +2,7 @@ package ec.gob.ambiente.sis.model;
 
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -35,11 +35,11 @@ public class QuestionsAnswers  {
 
 	@Getter
 	@Setter
-	@Column(name = "quan_id")
-	@Id
-	@SequenceGenerator(name = "QUESTIONSANSWERS_GENERATOR", initialValue = 1, sequenceName = "questions_answers_quan_id_seq", schema = "sis")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QUESTIONSANSWERS_GENERATOR")
-	private Integer quanId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "quan_id")
+    private Integer quanId;
 	
 	@Getter
 	@Setter

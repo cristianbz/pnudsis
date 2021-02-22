@@ -3,6 +3,7 @@ package ec.gob.ambiente.sis.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -40,12 +40,12 @@ public class Sectors implements Serializable {
 
 	@Getter
 	@Setter
-	@Column(name = "sect_id")
-	@Id
-	@SequenceGenerator(name = "SECTORS_GENERATOR", initialValue = 1, sequenceName = "sectors_sect_id_seq", schema = "sis")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SECTORS_GENERATOR")
-	private Integer sect_id;
-   
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "sect_id")
+    private Integer sectId;
+    
 	@Getter
 	@Setter
 	@Column(name = "sect_name")

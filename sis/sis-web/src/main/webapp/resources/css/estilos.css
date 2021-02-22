@@ -26,3 +26,51 @@
 	color: #fff;
 	
 }
+.etiquetaFormulario{
+	display: block;
+	background: #00AAC3;
+	color: #FFFFFF;
+	font-size:12px !important;
+	text-align:right;
+}
+
+.etiquetaTitulo{
+	display: block;
+	background: #00AAC3;
+	color: #FFFFFF;
+	font-size:12px !important;
+	text-align: center;
+}
+
+.sinBordesAncho100 tbody td{
+	border:none;
+}
+
+
+.etiquetaSubtitulo{
+	font-weight:bold;
+	font-size:13px !important;
+}
+
+.botonRegistroProyecto{
+	width: 150px !important;
+	height: 50px !important;
+	font-size: 14px !important;
+}
+
+.estiloMenuItemSeccionActual{
+	color:#ffffff !important;
+	background: #00AAC3 !important;
+}
+
+.ui-button {
+	background-color: #00b9f5!important;
+}
+
+
+.ui-state-highlight {
+	background-color: #00b9f5!important;
+}
+.ui-state-active {
+	background-color: #00b9f5!important;
+}
