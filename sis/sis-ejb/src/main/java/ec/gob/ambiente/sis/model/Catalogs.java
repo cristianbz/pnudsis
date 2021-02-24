@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +30,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "catalogs", schema = "sis")
 
-public class Catalogs {
+public class Catalogs implements Serializable{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Getter
 	@Setter
     @Id

@@ -40,15 +40,19 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<Catalogs> catalogoPoliticasSeleccionado;
+	private List<String> catalogoPoliticasSeleccionado;
 	
 	@Getter
 	@Setter
-	private List<Catalogs> catalogoAcciones;
+	private List<Catalogs> catalogoLeyes;
 	
 	@Getter
 	@Setter
-	private List<Catalogs> catalogoAccionesSeleccionado;
+	private List<String> ejemploLista;
+	
+	@Getter
+	@Setter
+	private List<String> catalogoLeyesSeleccionado;
 	
 	@Getter
 	@Setter
@@ -149,7 +153,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<TableResponses> listaValoresRespuestasTabla;
-	
+		
 	@Getter
 	@Setter
 	private List<List<QuestionsAnswers>> listaDeListasPreguntasRespuestas;

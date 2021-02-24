@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+ <converter>
+  <converter-id>catalogsConverter</converter-id>
+  <converter-class>ec.gob.ambiente.sis.converter.CatalogsConverter</converter-class>
+ </converter>
  <application>
   <locale-config>
    <default-locale>es</default-locale>
@@ -10,7 +14,7 @@
    <base-name>resources.etiquetas</base-name>
    <var>etiquetas</var>
   </resource-bundle>
-    <resource-bundle>
+  <resource-bundle>
    <base-name>resources.titulos</base-name>
    <var>titulos</var>
   </resource-bundle>

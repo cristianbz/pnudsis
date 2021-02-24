@@ -90,7 +90,7 @@ public class AdvanceExecutionSafeguards {
    
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	private List<TableResponses> tableResponsesList;
 	
 	@Getter

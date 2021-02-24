@@ -21,7 +21,7 @@
 				closable="true" resizable="false">
 					<h:panelGrid columns="2" id="panelBotones">
 						<p:commandButton value="#{botones['grabar']}" update="@form growl" id="btngrabar" actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
-							oncomplete="PF('dlgGrabaReporte').hide();" process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}"/>
+							oncomplete="PF('dlgGrabaReporteA').hide();" process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}"/>
 						<p:commandButton icon="#{botones['icono.cancelar']}" value="#{botones['cancelar']}" oncomplete="PF('dlgGrabaReporteA').hide();" process="@this"/>
 					</h:panelGrid>					
 	</p:dialog>
@@ -138,11 +138,11 @@
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
 	            		<p:selectManyMenu id="advanced" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticasSeleccionado}"
-						                            converter="#{catalogsConverter}"
-						                            var="c" filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="titulos">
+						                            
+						                            filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="titulos">
 						            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticas}" var="catalogs" itemLabel="#{catalogs.cataText1}"
-						                            itemValue="#{catalogs}"/>	
-						            <p:ajax process="@this"/>                					
+						                            itemValue="#{catalogs.cataId}"/>	
+						            <p:ajax process="@this" event="change"/>                					
 						</p:selectManyMenu>
 							            		            		
 	            	</div>
@@ -164,17 +164,16 @@
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-
+	            				
 								<p:selectManyMenu
-									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoAccionesSeleccionado}"
-									converter="#{catalogsConverter}" var="c" filter="true"
-									filterMatchMode="contains" showCheckbox="true"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyesSeleccionado}"
+									showCheckbox="true"
 									styleClass="manymenu-advanced">
 									<f:selectItems
-										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoAcciones}"
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyes}"
 										var="catalogs" itemLabel="#{catalogs.cataText1}"
-										itemValue="#{catalogs}" />
-									<p:ajax process="@this"/>	
+										itemValue="#{catalogs.cataId}" />
+									<p:ajax process="@this" event="change"/>	
 								</p:selectManyMenu>
 
 					</div>
