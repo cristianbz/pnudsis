@@ -6,7 +6,8 @@ public enum TipoRespuestaEnum {
 	RADIOBUTTON(1,"Radio Button"),
 	CHECKBOX(2,"Check Box"),
 	TEXTO(3,"Texto"),
-	TABLA(4,"Tabla");	
+	TABLA(4,"Tabla"),
+	LISTA(4,"Tabla");	
 	@Getter
 	private final int codigo;
 

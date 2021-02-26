@@ -1,8 +1,11 @@
 package ec.gob.ambiente.sis.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -10,11 +13,17 @@ import javax.persistence.NoResultException;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
+import ec.gob.ambiente.sis.model.AdvanceSectors;
+import ec.gob.ambiente.sis.model.TableResponses;
 
 @Stateless
 @LocalBean
 public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExecutionSafeguards, Integer>{
 
+	@EJB
+	private TableResponsesFacade tableResponsesFacade;
+	@EJB
+	private AdvanceSectorsFacade advanceSectorsFacade;
 
 	public AdvanceExecutionSafeguardsFacade() {
 		super(AdvanceExecutionSafeguards.class,Integer.class);
@@ -42,12 +51,32 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @param avanceEjecucion
 	 * @throws Exception
 	 */
-	public AdvanceExecutionSafeguards grabarAvanceEjecucionSalvaguarda(AdvanceExecutionSafeguards avanceEjecucion) throws Exception{		
+	public AdvanceExecutionSafeguards grabarAvanceEjecucionSalvaguarda(AdvanceExecutionSafeguards avanceEjecucion) throws Exception{
 		if(avanceEjecucion.getAdexId()==null)
-				create(avanceEjecucion);			
-		else
-				edit(avanceEjecucion);	
+			create(avanceEjecucion);			
+		else{
+			List<AdvanceSectors> listaSectores=new ArrayList<>();
+			List<TableResponses> listaAux=new ArrayList<>();			
+			listaSectores = advanceSectorsFacade.listaAvanceSectoresPorAvanceEjecucion(avanceEjecucion.getAdexId());
+			listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId());			
+			listaSectores.stream().forEach(s->{
+				try {
+					advanceSectorsFacade.eliminarAvanceSectores(s);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});						
+			listaAux.stream().forEach(tr->{
+				try {
+					tableResponsesFacade.eliminarRespuestasTabla(tr);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+			edit(avanceEjecucion);
+		}
 		return avanceEjecucion;
+
 	}
 
 }

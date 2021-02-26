@@ -100,7 +100,7 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.EAGER,cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.EAGER,cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
 	private List<AdvanceSectors> advanceSectorsList;
 	
 	@Getter

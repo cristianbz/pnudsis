@@ -100,7 +100,18 @@ public class Questions  {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "questions", fetch = FetchType.LAZY)
-	private List<QuestionsAnswers> questionsAnswersList;
+	@JoinColumn(name = "cata_id")
+	@ManyToOne(fetch = FetchType.EAGER)	
+	private Catalogs catalogs;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "questions", fetch = FetchType.EAGER)
+	private List<ValueAnswers> valueAnswersList;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "questions", fetch = FetchType.EAGER)
+	private List<TableResponses> tableResponsesList;
    
 }

@@ -58,12 +58,17 @@ public class ValueAnswers  {
 	@Column(name = "vaan_remove_state")
 	private boolean vaanRemoveState;
 	
+	@Getter
+	@Setter
+	@Column(name = "vaan_answer_ord")
+	private Integer vaanAnswerOrd;
+	
 	
 	@Getter
 	@Setter
-	@JoinColumn(name = "quan_id")
+	@JoinColumn(name = "ques_id")
 	@ManyToOne(fetch = FetchType.EAGER)	
-	private QuestionsAnswers questionsAnswers;
+	private Questions questions;
 	
 	@Getter
 	@Setter

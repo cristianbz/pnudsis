@@ -127,7 +127,7 @@ public class Catalogs implements Serializable{
     @ManyToOne(optional = false)
     private CatalogsType catalogsType;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cataId")
-    private List<Answers> answersList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogs")
+    private List<Questions> questionsList;
 
 }

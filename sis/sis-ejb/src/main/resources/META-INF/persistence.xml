@@ -12,12 +12,10 @@
 <class>ec.gob.ambiente.sigma.model.Safeguards</class>
 <class>ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards</class>
 <class>ec.gob.ambiente.sis.model.AdvanceSectors</class>
-<class>ec.gob.ambiente.sis.model.Answers</class>
 <class>ec.gob.ambiente.sis.model.Catalogs</class>
 <class>ec.gob.ambiente.sis.model.CatalogsType</class>
 <class>ec.gob.ambiente.sis.model.ExecutiveSummaries</class>
 <class>ec.gob.ambiente.sis.model.Questions</class>
-<class>ec.gob.ambiente.sis.model.QuestionsAnswers</class>
 <class>ec.gob.ambiente.sis.model.Sectors</class>
 <class>ec.gob.ambiente.sis.model.TableResponses</class>
 <class>ec.gob.ambiente.sis.model.ValueAnswers</class>

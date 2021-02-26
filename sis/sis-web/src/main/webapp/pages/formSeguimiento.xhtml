@@ -55,7 +55,7 @@
 			        	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
 			        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
 					 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
-						<p:ajax partialSubmit="false" event="change" process="@this  panelsalvaguarda socio sectores fechaSeguimiento" update="socio panelDatos  panelsalvaguarda fechaSeguimiento  growl" 
+						<p:ajax partialSubmit="false" event="change" process="@this  panelsalvaguarda socio sectores fechaSeguimiento salvaguardas" update="salvaguardas socio panelDatos  panelsalvaguarda fechaSeguimiento  growl" 
 							listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}" />							
 					</p:selectOneMenu>
 					<p:message for="proyecto"/>
@@ -81,10 +81,10 @@
 				        <div class="p-formgroup-inline">
 						    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="pageDirection" 	
 						    										    	
-					                              converter="sectorsConverter" required="true" requiredMessage="#{mensajes['campoRequerido']}" styleClass="etiquetaSubtitulo"
+					                              required="true" requiredMessage="#{mensajes['campoRequerido']}" styleClass="etiquetaSubtitulo"
 					                              columns="4" disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}">
 					            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
-					            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector}"/>
+					            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sectId}"/>
 					            <p:ajax event="change" process="@this"/>	
 					        </p:selectManyCheckbox>
 					        <p:message for="sectores"/>
@@ -113,15 +113,15 @@
             	<p:tab title="#{titulos['salvaguardaA']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}" >
 	            	<div class="ui-fluid p-formgrid p-grid">
 	            		
-	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}" styleClass="titulos"/>	            		          		          		
+	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}" styleClass="etiquetaSubtitulo"/>	            		          		          		
 	            	</div>	            	
 	            	<br/>	
 	            	<div class="ui-fluid p-formgrid p-grid">         	
-	            		<p:outputLabel value="#{titulos['resumenSalvaguardaA']}"/>
+	            		<p:outputLabel value="#{titulos['resumenSalvaguardaA']}" styleClass="etiquetaSubtitulo"/>
 	            	</div>	
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:outputLabel styleClass="preguntaPrincipal" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(0).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(0).questions.quesContentQuestionEnglish}"/>
+	            		<p:outputLabel value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestionEnglish}" styleClass="etiquetaSubtitulo"/>
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
@@ -133,22 +133,25 @@
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta2" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(1).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(1).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta2" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:selectManyMenu id="advanced" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticasSeleccionado}"
-						                            
-						                            filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="titulos">
-						            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticas}" var="catalogs" itemLabel="#{catalogs.cataText1}"
-						                            itemValue="#{catalogs.cataId}"/>	
-						            <p:ajax process="@this" event="change"/>                					
-						</p:selectManyMenu>
+	            		<p:selectManyMenu id="leyes"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyesSeleccionado}"
+									showCheckbox="true"
+									styleClass="manymenu-advanced">
+									<f:selectItems
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyes}"
+										var="catalogs" itemLabel="#{catalogs.cataText1}"
+										itemValue="#{catalogs.cataId}" />
+									<p:ajax process="@this" event="change"/>	
+								</p:selectManyMenu>
 							            		            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaPrincipal" id="pregunta3" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(2).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(2).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta3" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
@@ -160,21 +163,18 @@
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta4" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(3).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(3).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta4" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-	            				
-								<p:selectManyMenu
-									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyesSeleccionado}"
-									showCheckbox="true"
-									styleClass="manymenu-advanced">
-									<f:selectItems
-										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyes}"
-										var="catalogs" itemLabel="#{catalogs.cataText1}"
-										itemValue="#{catalogs.cataId}" />
-									<p:ajax process="@this" event="change"/>	
-								</p:selectManyMenu>
+	            				<p:selectManyMenu id="politicas" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticasSeleccionado}"
+						                            
+						                            filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="titulos">
+						            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticas}" var="catalogs" itemLabel="#{catalogs.cataText1}"
+						                            itemValue="#{catalogs.cataId}"/>	
+						            <p:ajax process="@this" event="change"/>                					
+						</p:selectManyMenu>
+								
 
 					</div>
 	            	<br/>
@@ -183,22 +183,28 @@
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="preguntaSecundaria" id="pregunta5" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(4).questions.quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(4).questions.quesContentQuestionEnglish}"/>	            		
+						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta5" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestionEnglish}"/>	            		
 	            	</div>
 	            	<br/>
 	            	<div class="ui-fluid p-formgrid p-grid">
 	            		<div class="p-field p-col-12 p-md-10">
 	            			<h:panelGrid id="panelTabla1A">
-			            		<p:dataTable styleClass="sinBordesAncho100" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasRespuestasA.get(4).tableResponsesList}" var="tablarespuestas">
+			            		<p:dataTable styleClass="sinBordesAncho100" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaA}" 
+			            			var="tablarespuestas">
 			            			<p:column headerText="#{etiquetas['planProyGobierno']}">
 			            				<p:inputText value="#{tablarespuestas.tareColumnOne}">
 			            					<p:ajax process="@this"/>
 			            				</p:inputText>
 			            			</p:column>
 			            			<p:column headerText="#{etiquetas['presupuestoAsignado']}">
-			            				<p:inputText value="#{tablarespuestas.tareColumnTwo}">
+			            				<p:inputNumber value="#{tablarespuestas.tareColumnTwo}" modifyValueOnWheel="false" >
 			            					<p:ajax process="@this"/>
-			            				</p:inputText>
+			            				</p:inputNumber>
+			            			</p:column>
+			            			<p:column>
+			            				<p:commandButton icon="#{botones['icono.borrar']}" process="@this" title="#{tooltip['eliminar']}">
+			            				
+			            				</p:commandButton>
 			            			</p:column>
 			            		</p:dataTable>
 		            		</h:panelGrid>

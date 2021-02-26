@@ -73,16 +73,20 @@ public class TableResponses  {
 	@Column(name = "tare_column_seven")
 	private String tareColumnSeven;
 	
+	@Getter
+	@Setter
+	@Column(name = "tare_answer_ord")
+	private Integer tareAnswerOrd;
 	
 	@Getter
 	@Setter
-	@JoinColumn(name = "quan_id")
+	@JoinColumn(name = "ques_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
-	private QuestionsAnswers questionsAnswers;
+	private Questions questions;
 	
 	@Getter
 	@Setter
 	@JoinColumn(name = "adex_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private AdvanceExecutionSafeguards advanceExecutionSaveguards;
 }

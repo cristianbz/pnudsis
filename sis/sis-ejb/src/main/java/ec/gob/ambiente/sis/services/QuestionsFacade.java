@@ -28,13 +28,25 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 		return findByCreateQuery(sql, camposCondicion);
 	}
 	/**
-	 * Consulta preguntas por salvaguarda
+	 * Consulta pregunta por codigo salvaguarda
 	 * @return
 	 */
-	public List<Questions> buscaPreguntasPorSalvaguarda(int codigoSalvaguarda) throws Exception{
+	public List<Questions> buscaPreguntaPorSalvaguarda(int codigoSalvaguarda) throws Exception{
 		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Consulta preguntas por codigos de salvaguardas
+	 * @param codigosSalvaguardas
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Questions> buscarPreguntasPorSalvaguardas(List<Integer> codigosSalvaguardas) throws Exception{
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId IN(:codigoSalvaguarda) ORDER BY Q.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoSalvaguarda", codigosSalvaguardas);
 		return findByCreateQuery(sql, camposCondicion);
 	}
 }

@@ -21,6 +21,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "advance_sectors", schema = "sis")
+
 public class AdvanceSectors  {
 
 	
@@ -39,7 +40,7 @@ public class AdvanceSectors  {
 	@Setter
 	@JoinColumn(name = "adex_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
-	private AdvanceExecutionSafeguards advanceExecutionSaveguards;
+	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
 	
 	@Getter
 	@Setter

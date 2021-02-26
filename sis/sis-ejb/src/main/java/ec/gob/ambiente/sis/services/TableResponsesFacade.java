@@ -32,5 +32,13 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		return findByCreateQuery(sql, camposCondicion);
 	}
+	/**
+	 * Eliminar registro de TableResponses
+	 * @param tableResponses
+	 * @throws Exception
+	 */
+	public void eliminarRespuestasTabla(TableResponses tableResponses) throws Exception{
+		remove(tableResponses);
+	}
 
 }

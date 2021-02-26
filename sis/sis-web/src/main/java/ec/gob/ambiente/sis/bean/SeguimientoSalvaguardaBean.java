@@ -15,7 +15,7 @@ import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
-import ec.gob.ambiente.sis.model.QuestionsAnswers;
+import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
@@ -80,39 +80,43 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestas;
+	private List<Questions> listaPreguntas;
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestasA;
+	private List<Questions> listaPreguntasRespuestas;
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestasB;
+	private List<Questions> listaPreguntasA;
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestasC;
+	private List<Questions> listaPreguntasB;
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestasD;
+	private List<Questions> listaPreguntasC;
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestasE;
+	private List<Questions> listaPreguntasD;
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestasF;
+	private List<Questions> listaPreguntasE;
 	
 	@Getter
 	@Setter
-	private List<QuestionsAnswers> listaPreguntasRespuestasG;
+	private List<Questions> listaPreguntasF;
 	
 	@Getter
 	@Setter
-	private List<Sectors> listaSectoresSeleccionados;
+	private List<Questions> listaPreguntasG;
+	
+	@Getter
+	@Setter
+	private List<String> listaSectoresSeleccionados;
 	
 	@Getter
 	@Setter
@@ -153,15 +157,15 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<TableResponses> listaValoresRespuestasTabla;
-		
-	@Getter
-	@Setter
-	private List<List<QuestionsAnswers>> listaDeListasPreguntasRespuestas;
 	
 	@Getter
 	@Setter
-	private List<List<ValueAnswers>> listaDeListasValoresRespuestas;
+	private List<TableResponses> tablaSalvaguardaA;
 	
+	@Getter
+	@Setter
+	private List<List<Questions>> listaDeListasPreguntas;
+			
 	@Getter
 	@Setter
 	private boolean salvaguardaA;
@@ -181,10 +185,6 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@PostConstruct
 	public void init(){
 		listaProyectos=new ArrayList<>();
-//		salvaguardasActivas=new Hashtable<Integer,Boolean>();
-//		for(int contador=1;contador<8;contador++){
-//			salvaguardasActivas.put(contador, true);
-//		}
 		listaValoresRespuestas= new ArrayList<>();
 		listaValoresRespuestasTabla= new ArrayList<>();
 		salvaguardaA=false;
@@ -195,15 +195,15 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		listaValoresRespuestasE= new ArrayList<>();
 		listaValoresRespuestasF= new ArrayList<>();
 		listaValoresRespuestasG= new ArrayList<>();
-		listaDeListasPreguntasRespuestas=new ArrayList<>();
-		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasA());
-		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasB());
-		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasC());
-		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasD());
-		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasE());
-		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasF());
-		listaDeListasPreguntasRespuestas.add(getListaPreguntasRespuestasG());
-		
+		listaDeListasPreguntas=new ArrayList<>();
+		listaDeListasPreguntas.add(getListaPreguntasA());
+		listaDeListasPreguntas.add(getListaPreguntasB());
+		listaDeListasPreguntas.add(getListaPreguntasC());
+		listaDeListasPreguntas.add(getListaPreguntasD());
+		listaDeListasPreguntas.add(getListaPreguntasE());
+		listaDeListasPreguntas.add(getListaPreguntasF());
+		listaDeListasPreguntas.add(getListaPreguntasG());
+		tablaSalvaguardaA=new ArrayList<>();
 	}
 
 }
