@@ -28,5 +28,19 @@ public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> {
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		return findByCreateQuery(sql, camposCondicion);
 	}
+	/**
+	 * Busca valoresRespuesta por avance de ejecucion y salvaguarda
+	 * @param codigoAvanceEjecucion
+	 * @param codigoSalvaguarda
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ValueAnswers> buscarPorAvanceEjecucionYSalvaguarda(int codigoAvanceEjecucion,int codigoSalvaguarda) throws Exception{
+		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.advanceExecutionSaveguards.adexDropState=TRUE AND VA.questions.safeguards.safeId=:codigoSalvaguarda";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
+		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
+		return findByCreateQuery(sql, camposCondicion);
+	}
 
 }

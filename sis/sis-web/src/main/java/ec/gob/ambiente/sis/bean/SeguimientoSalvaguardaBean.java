@@ -36,6 +36,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		
 	@Getter
 	@Setter
+	private Catalogs nuevaLeySA;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevaPoliticaSA;
+	
+	@Getter
+	@Setter
 	private List<Catalogs> catalogoPoliticas;
 	
 	@Getter
@@ -164,8 +172,60 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<List<Questions>> listaDeListasPreguntas;
-			
+	private List<TableResponses> tablaActividadesSalvaguardaB;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaAccionesSalvaguardaB;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaInstrumentosSalvaguardaB;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB81;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB102;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB103;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB121;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB131;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB142;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB16;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB171;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB181;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB191;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB192;
+	
 	@Getter
 	@Setter
 	private boolean salvaguardaA;
@@ -182,6 +242,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private boolean datosAvanceEjecucion;
 	
+	@Getter
+	@Setter
+	private boolean nuevaLey;
+	
+	@Getter
+	@Setter
+	private boolean nuevaPolitica;
+	
 	@PostConstruct
 	public void init(){
 		listaProyectos=new ArrayList<>();
@@ -195,15 +263,8 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		listaValoresRespuestasE= new ArrayList<>();
 		listaValoresRespuestasF= new ArrayList<>();
 		listaValoresRespuestasG= new ArrayList<>();
-		listaDeListasPreguntas=new ArrayList<>();
-		listaDeListasPreguntas.add(getListaPreguntasA());
-		listaDeListasPreguntas.add(getListaPreguntasB());
-		listaDeListasPreguntas.add(getListaPreguntasC());
-		listaDeListasPreguntas.add(getListaPreguntasD());
-		listaDeListasPreguntas.add(getListaPreguntasE());
-		listaDeListasPreguntas.add(getListaPreguntasF());
-		listaDeListasPreguntas.add(getListaPreguntasG());
 		tablaSalvaguardaA=new ArrayList<>();
+		
 	}
 
 }

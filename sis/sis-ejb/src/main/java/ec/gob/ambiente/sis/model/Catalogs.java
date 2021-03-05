@@ -1,6 +1,5 @@
 package ec.gob.ambiente.sis.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -30,13 +29,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "catalogs", schema = "sis")
 
-public class Catalogs implements Serializable{
+public class Catalogs {
 
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
 
 	@Getter
 	@Setter
@@ -53,9 +49,9 @@ public class Catalogs implements Serializable{
 
 	@Getter
 	@Setter
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+//    @Basic(optional = false)
+//    @NotNull
+//    @Size(min = 1, max = 100)
     @Column(name = "cata_text1")
     private String cataText1;
     
@@ -123,6 +119,8 @@ public class Catalogs implements Serializable{
     @ManyToOne
     private Catalogs cataParentId;
     
+	@Getter
+	@Setter
     @JoinColumn(name = "caty_id", referencedColumnName = "caty_id")
     @ManyToOne(optional = false)
     private CatalogsType catalogsType;

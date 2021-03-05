@@ -1,271 +1,1522 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<link rel="stylesheet" type="text/css" href="../resources/css/estilos.css"/>
-	<link rel="stylesheet" type="text/css" href="../resources/css/primeflex/primeflex.css"/>
-	<link rel="stylesheet" type="text/css" href="../resources/css/primeicons-master/primeicons.css"/>
-	<h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
-	<h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
-</h:head> 
-<body> 
-<h:form prependId="false">
-	<p:growl id="growl" life="3000" showDetail="true" />	
-	<p:dialog widgetVar="dlgGrabaReporteA" showEffect="fade" 
-				hideEffect="fade" modal="true" appendTo="@(body)" 
-				header="#{titulos['grabarReporteSalvaguardaA']}" width="250"
-				closable="true" resizable="false">
-					<h:panelGrid columns="2" id="panelBotones">
-						<p:commandButton value="#{botones['grabar']}" update="@form growl" id="btngrabar" actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
-							oncomplete="PF('dlgGrabaReporteA').hide();" process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}"/>
-						<p:commandButton icon="#{botones['icono.cancelar']}" value="#{botones['cancelar']}" oncomplete="PF('dlgGrabaReporteA').hide();" process="@this"/>
-					</h:panelGrid>					
-	</p:dialog>
-	
-	<div class="ui-fluid p-formgrid p-grid">
-		<div class="p-field p-col-12 p-md-5">
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeflex/primeflex.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeicons-master/primeicons.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+</h:head>
+<body>
+	<h:form prependId="false">
+		<p:growl id="growl" life="3000" showDetail="true" />
+		<!-- DIALOGO GRABAR SALVAGUARDA A -->
+		<p:dialog widgetVar="dlgGrabaReporteA" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['grabarReporteSalvaguardaA']}" width="250"
+			closable="true" resizable="false">
+			<h:panelGrid columns="2" id="panelBotones">
+				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+					id="btngrabar"
+					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
+					oncomplete="PF('dlgGrabaReporteA').hide();"
+					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgGrabaReporteA').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-5"></div>
+			<div class="p-field p-col-12 p-md-5"></div>
+			<div class="p-field p-col-12 p-md-2">
+				<p:outputLabel value="#{etiquetas['cambiarIdioma']}" />
+				<p:selectOneMenu value="#{seleccionaIdiomaController.lenguaje}">
+					<f:selectItem itemValue="es" itemLabel="Español" />
+					<f:selectItem itemValue="en" itemLabel="English" />
+					<p:ajax process="@this" update="@form"
+						listener="#{seleccionaIdiomaController.cambiarIdioma}" />
+				</p:selectOneMenu>
+			</div>
 		</div>
-		<div class="p-field p-col-12 p-md-5">
-	               
-	    </div>
-	    <div class="p-field p-col-12 p-md-2">
-	        <p:outputLabel value="#{etiquetas['cambiarIdioma']}"/>
-	 		<p:selectOneMenu value="#{seleccionaIdiomaController.lenguaje}"   >
-               <f:selectItem itemValue="es" itemLabel="Español"/>
-               <f:selectItem itemValue="en" itemLabel="English" />
-               <p:ajax process="@this" update="@form" listener="#{seleccionaIdiomaController.cambiarIdioma}" />
-			</p:selectOneMenu>
-	    </div>
-	</div>
-	<div class="ui-fluid p-formgrid p-grid" >	
-   
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	    	<p:fieldset legend="#{titulos['datosProyecto']}" styleClass="fondoColorSigma">
-		    	<h:panelGrid columns="1" id="panelDatos" >
-		    		<i class="fas fa-project-diagram"></i>
-		    		<p:outputLabel for="proyecto" value="#{etiquetas['proyectos']}" styleClass="etiquetaSubtitulo"/>
-			        <p:selectOneMenu filter="true" effect="fade" filterMatchMode="contains" 
-			        	required="true" requiredMessage="#{mensajes['campoRequerido']}" styleClass="estiloMenuItemSeccionActual"
-			        	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}" id="proyecto" >	
-			        	<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}" itemValue="#{null}" noSelectionOption="true"/>			
-					 	<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyectos" itemValue="#{proyectos.projId}" itemLabel="#{proyectos.projTitle}"/>  
-						<p:ajax partialSubmit="false" event="change" process="@this  panelsalvaguarda socio sectores fechaSeguimiento salvaguardas" update="salvaguardas socio panelDatos  panelsalvaguarda fechaSeguimiento  growl" 
-							listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}" />							
-					</p:selectOneMenu>
-					<p:message for="proyecto"/>
-					<i class="fas fa-handshake"></i>
-					<p:outputLabel for="socio" value="#{etiquetas['socioImplementador']}" styleClass="etiquetaSubtitulo"/>		        
-			        <p:outputLabel id="socio" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}" styleClass="etiquetaSubtitulo"/>
-			        <br/>
-			        <i class="far fa-calendar-alt"></i>
-			        	<p:outputLabel for="fechaSeguimiento" value="#{etiquetas['fecha']}" styleClass="etiquetaSubtitulo"/>
-				        <p:calendar id="fechaSeguimiento" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
-				        	disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}" 
-				        	required="true" requiredMessage="#{mensajes['campoRequerido']}"
-				        	locale="es" pattern="yyyy-MM-dd" navigator="true">
-				        	<p:ajax process="@this"/>
-				        </p:calendar>
-				        <p:message for="fechaSeguimiento"/>
-				        <i class="fas fa-file-signature"></i>
-				        <p:outputLabel value="#{etiquetas['elaboradoPor']}" styleClass="etiquetaSubtitulo"/>		    
-				        <p:outputLabel value="Christian" styleClass="etiquetaSubtitulo"/>
-				        <br/>
-				        <i class="fas fa-users"></i>
-				        <p:outputLabel value="#{etiquetas['sectorIdentifica']}" styleClass="etiquetaSubtitulo" for="sectores"/>
-				        <div class="p-formgroup-inline">
-						    <p:selectManyCheckbox id="sectores" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}" layout="pageDirection" 	
-						    										    	
-					                              required="true" requiredMessage="#{mensajes['campoRequerido']}" styleClass="etiquetaSubtitulo"
-					                              columns="4" disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}">
-					            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}" 
-					            	var="sector" itemLabel="#{sector.sectName}" itemValue="#{sector.sectId}"/>
-					            <p:ajax event="change" process="@this"/>	
-					        </p:selectManyCheckbox>
-					        <p:message for="sectores"/>
+		<div class="ui-fluid p-formgrid p-grid">
+
+			<div class="p-field p-col-12 p-md-4"></div>
+			<div class="p-field p-col-12 p-md-4">
+				<p:fieldset legend="#{titulos['datosProyecto']}"
+					styleClass="fondoColorSigma">
+					<h:panelGrid columns="1" id="panelDatos">
+						<i class="fas fa-project-diagram"></i>
+						<p:outputLabel for="proyecto" value="#{etiquetas['proyectos']}"
+							styleClass="etiquetaSubtitulo" />
+						<p:selectOneMenu filter="true" effect="fade"
+							filterMatchMode="contains" required="true"
+							requiredMessage="#{mensajes['campoRequerido']}"
+							styleClass="estiloMenuItemSeccionActual"
+							value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}"
+							id="proyecto">
+							<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}"
+								itemValue="#{null}" noSelectionOption="true" />
+							<f:selectItems
+								value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}"
+								var="proyectos" itemValue="#{proyectos.projId}"
+								itemLabel="#{proyectos.projTitle}" />
+							<p:ajax partialSubmit="false" event="change"
+								process="@this  panelsalvaguarda socio sectores fechaSeguimiento salvaguardas"
+								update="salvaguardas socio panelDatos  panelsalvaguarda fechaSeguimiento  growl"
+								listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}" />
+						</p:selectOneMenu>
+						<p:message for="proyecto" />
+						<i class="fas fa-handshake"></i>
+						<p:outputLabel for="socio"
+							value="#{etiquetas['socioImplementador']}"
+							styleClass="etiquetaSubtitulo" />
+						<p:outputLabel id="socio"
+							value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.socioImplementador.partName}"
+							styleClass="etiquetaSubtitulo" />
+						<br />
+						<i class="far fa-calendar-alt"></i>
+						<p:outputLabel for="fechaSeguimiento"
+							value="#{etiquetas['fecha']}" styleClass="etiquetaSubtitulo" />
+						<p:calendar id="fechaSeguimiento"
+							value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
+							disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}"
+							
+							locale="es" pattern="yyyy-MM-dd" navigator="true">
+							<p:ajax process="@this" />
+						</p:calendar>
+						<p:message for="fechaSeguimiento" />
+						<i class="fas fa-file-signature"></i>
+						<p:outputLabel value="#{etiquetas['elaboradoPor']}"
+							styleClass="etiquetaSubtitulo" />
+						<p:outputLabel value="Christian" styleClass="etiquetaSubtitulo" />
+						<br />
+						<i class="fas fa-users"></i>
+						<p:outputLabel value="#{etiquetas['sectorIdentifica']}"
+							styleClass="etiquetaSubtitulo" for="sectores" />
+						<div class="p-formgroup-inline">
+							<p:selectManyCheckbox id="sectores"
+								value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}"
+								layout="pageDirection" 
+								styleClass="etiquetaSubtitulo" columns="4"
+								disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}">
+								<f:selectItems
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSectoresDisponibles}"
+									var="sector" itemLabel="#{sector.sectName}"
+									itemValue="#{sector.sectId}" />
+								<p:ajax event="change" process="@this" />
+							</p:selectManyCheckbox>
+							<p:message for="sectores" />
 						</div>
-						
-						
-			        
-		    	</h:panelGrid>
-	    	</p:fieldset>
-	    </div>
-	    <div class="p-field p-col-12 p-md-4">
-	    </div>
-	</div>    
-	
-	<div class="ui-fluid p-formgrid p-grid">	    
-	    <div class="p-field p-col-12 p-md-3">
-	    </div>
-	    <div class="p-field p-col-12 p-md-6">
-	    <center>
-	    <p:outputLabel value="#{titulos['salvaguardasDisponibles']}" styleClass="etiquetaTitulo"/>
-	    </center>
-	    <br/>
-	    <p:outputPanel id="panelsalvaguarda" >
-	        <p:tabView id="salvaguardas" styleClass="fondoColorSigma" >
-	        	<!-- SALVAGUARDA A -->
-            	<p:tab title="#{titulos['salvaguardaA']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}" >
-	            	<div class="ui-fluid p-formgrid p-grid">
-	            		
-	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}" styleClass="etiquetaSubtitulo"/>	            		          		          		
-	            	</div>	            	
-	            	<br/>	
-	            	<div class="ui-fluid p-formgrid p-grid">         	
-	            		<p:outputLabel value="#{titulos['resumenSalvaguardaA']}" styleClass="etiquetaSubtitulo"/>
-	            	</div>	
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:outputLabel value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestionEnglish}" styleClass="etiquetaSubtitulo"/>
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:selectOneRadio id="radiop1" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(0).vaanYesnoAnswerValue}" unselectable="true">
-				            <f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true"/>
-				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>	
-				            <p:ajax process="radiop1 @this"  event="change" partialSubmit="true" />			            
-				        </p:selectOneRadio>
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta2" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestionEnglish}"/>	            		
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:selectManyMenu id="leyes"
-									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyesSeleccionado}"
-									showCheckbox="true"
-									styleClass="manymenu-advanced">
-									<f:selectItems
-										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyes}"
-										var="catalogs" itemLabel="#{catalogs.cataText1}"
-										itemValue="#{catalogs.cataId}" />
-									<p:ajax process="@this" event="change"/>	
-								</p:selectManyMenu>
-							            		            		
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta3" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestionEnglish}"/>	            		
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<p:selectOneRadio id="radiop2" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(1).vaanYesnoAnswerValue}" unselectable="true">
-				            <f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true"/>
-				            <f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}" itemValue="false"/>	
-				            <p:ajax process="radiop2 @this"  event="change" partialSubmit="true" />				            
-				        </p:selectOneRadio>
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta4" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestionEnglish}"/>	            		
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-	            				<p:selectManyMenu id="politicas" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticasSeleccionado}"
-						                            
-						                            filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="titulos">
-						            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticas}" var="catalogs" itemLabel="#{catalogs.cataText1}"
-						                            itemValue="#{catalogs.cataId}"/>	
-						            <p:ajax process="@this" event="change"/>                					
-						</p:selectManyMenu>
+
+
+
+					</h:panelGrid>
+				</p:fieldset>
+			</div>
+			<div class="p-field p-col-12 p-md-4"></div>
+		</div>
+
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-3"></div>
+			<div class="p-field p-col-12 p-md-6">
+				<center>
+					<p:outputLabel value="#{titulos['salvaguardasDisponibles']}"
+						styleClass="etiquetaTitulo" />
+				</center>
+				<br />
+				<p:outputPanel id="panelsalvaguarda">
+					<p:tabView id="salvaguardas" styleClass="fondoColorSigma">
+						<!-- SALVAGUARDA A -->
+						<p:tab title="#{titulos['salvaguardaA']}"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}">
+							<div class="ui-fluid p-formgrid p-grid">
+
+								<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['resumenSalvaguardaA']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiop1" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(0).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}"
+										itemValue="false" />
+									<p:ajax process="radiop1 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta2"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestionEnglish}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-12">
+								<p:outputPanel id="panelSeleccionLeyes">
+									<p:selectManyMenu id="leyes" 
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyesSeleccionado}"
+										showCheckbox="true" filter="true" filterMatchMode="contains"
+										styleClass="manymenu-advanced">
+										<f:selectItems 
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyes}"
+											var="catalogs" itemLabel="#{catalogs.cataText1}"
+											itemValue="#{catalogs.cataId}" />
+										<p:ajax process="@this" event="change" />
+									</p:selectManyMenu>
+								</p:outputPanel>	
+								</div>								
+							</div>
+							<div class="ui-fluid p-formgrid p-grid">
+							<p:outputLabel value="#{etiquetas['nuevaLey']}" styleClass="etiquetaSubtitulo"/>
+							<p:selectBooleanCheckbox value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLey}" id="chkNuevaLey">
+								<p:ajax event="change" process="@this panelLey panelBotonesLey" partialSubmit="true" immediate="true"
+									update="panelLey panelBotonesLey" listener="#{seguimientoSalvaguardaController.nuevaLeySA()}"/>
+							</p:selectBooleanCheckbox>
+							</div>
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-12">
+								<p:outputPanel id="panelLey">
+									<p:inputTextarea id="textNuevaLey" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLeySA.cataText1}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLey}">
+									
+									</p:inputTextarea>								
+									
+								</p:outputPanel>	
+								</div>
+							</div>	
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-2">
+									<p:outputPanel id="panelBotonesLey">
+										<p:commandButton id="btnNuevaLey" process="@this textNuevaLey chkNuevaLey panelLey panelBotonesLey panelSeleccionLeyes" 
+											value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" actionListener="#{seguimientoSalvaguardaController.grabarNuevaLeyPoliticaSA(1)}" 
+											update="textNuevaLey chkNuevaLey panelLey panelBotonesLey panelSeleccionLeyes" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLey}">
+									
+									</p:commandButton>	
+									</p:outputPanel>
+								</div>
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta3"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestionEnglish}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiop2" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasA.get(1).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}"
+										itemValue="false" />
+									<p:ajax process="radiop2 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta4"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestionEnglish}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-11">
+								<p:outputPanel id="panelSeleccionPolitica">
+									<p:selectManyMenu id="politicas"
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticasSeleccionado}"
+										filter="true" filterMatchMode="contains" showCheckbox="true"
+										styleClass="manymenu-advanced">>
+							            <f:selectItems
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticas}"
+											var="catalogs" itemLabel="#{catalogs.cataText1}"
+											itemValue="#{catalogs.cataId}" />
+										<p:ajax process="@this" event="change" />
+									</p:selectManyMenu>
+								</p:outputPanel>
+								</div>	
+							</div>
+							<div class="ui-fluid p-formgrid p-grid">
+							<p:outputLabel value="#{etiquetas['nuevaPolitica']}" styleClass="etiquetaSubtitulo"/>
+							<p:selectBooleanCheckbox value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPolitica}" id="chkNuevaPolitica">
+								<p:ajax event="change" process="@this panelPolitica panelBotonesPolitica" partialSubmit="true" immediate="true"
+									update="panelPolitica panelBotonesPolitica" listener="#{seguimientoSalvaguardaController.nuevaLeySA()}"/>
+							</p:selectBooleanCheckbox>
+							</div>
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-12">
+								<p:outputPanel id="panelPolitica">
+									<p:inputTextarea id="textNuevaPolitica" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPoliticaSA.cataText1}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPolitica}">
+									
+									</p:inputTextarea>								
+									
+								</p:outputPanel>	
+								</div>
+							</div>	
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-2">
+									<p:outputPanel id="panelBotonesPolitica">
+										<p:commandButton id="btnNuevaPolitica" process="@this textNuevaLey panelPolitica panelBotonesPolitica panelSeleccionPolitica chkNuevaPolitica" 
+											value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" actionListener="#{seguimientoSalvaguardaController.grabarNuevaLeyPoliticaSA(2)}" 
+											update="textNuevaLey panelPolitica panelBotonesPolitica panelSeleccionPolitica chkNuevaPolitica" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPolitica}">
+									
+									</p:commandButton>	
+									</p:outputPanel>
+								</div>
+							</div>	
+							
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaTitulo"
+									value="#{titulos['mensajeSalvaguardaA']}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta5"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestionEnglish}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla1A">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaA}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['planProyGobierno']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['presupuestoAsignado']}">
+												<p:inputNumber value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}"
+													modifyValueOnWheel="false">
+													<p:ajax process="@this" />
+												</p:inputNumber>
+											</p:column>
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton value="#{botones['agregar']}"
+										icon="#{botones['icono.mas']}" process="@this panelTabla1A"
+										update="panelTabla1A"
+										actionListener="#{seguimientoSalvaguardaController.agregaFilaTablaSalvaguardaA()}" />
+								</div>
+							</div>
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton value="#{botones['grabar']}"
+										icon="#{botones['icono.grabar']}" process="@this panelDatos"
+										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabar(1)}"
+										update="panelDatos "
+										disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}" />
+								</div>
+								<div class="p-field p-col-12 p-md-10"></div>
+							</div>
+						</p:tab>
+						<!-- SALVAGUARDA B -->
+						<p:tab title="#{titulos['salvaguardaB']}"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaB}">
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['abordajeSalvaguardaB']}"
+									styleClass="titulos" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['resumenSalvaguardaB']}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(0).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB1" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(0).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noTieneRegistro']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB1 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(1).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla1B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaActividadesSalvaguardaB}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['modalidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['fecha']}">
+												<p:datePicker>
+												</p:datePicker>
+											</p:column>
+											<p:column headerText="#{etiquetas['provincia']}">
+											
+											</p:column>
+											<p:column headerText="#{etiquetas['canton']}">
+											
+											</p:column>
+											<p:column headerText="#{etiquetas['parroquia']}">
+											
+											</p:column>
+											<p:column headerText="#{etiquetas['comunidad']}">
+											
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroHombres']}">
+											
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroMujeres']}">
+											
+											</p:column>
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton value="#{botones['agregar']}"
+										icon="#{botones['icono.mas']}" process="@this panelTabla1A"
+										update="panelTabla1A"
+										actionListener="#{seguimientoSalvaguardaController.agregaFilaTablaSalvaguardaA()}" />
+								</div>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(2).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB2" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(1).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noAcciones']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB2 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(3).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(3).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla2B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaAccionesSalvaguardaB}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['instituciones']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['actividadesCoordinacion']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton value="#{botones['agregar']}"
+										icon="#{botones['icono.mas']}" process="@this panelTabla2B"
+										update="panelTabla2B"
+										 />
+								</div>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(4).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB3" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(2).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noRegistro']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB3 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(5).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(5).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(3).vaanTextAnswerValue}">
 								
+								</p:inputTextarea>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(6).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(6).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(4).vaanTextAnswerValue}">
+								
+								</p:inputTextarea>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(7).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(7).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB4" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(3).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noAcciones']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB4 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(8).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(8).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla3B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaInstrumentosSalvaguardaB}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['instrumento']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['mecanismoInstitucion']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
 
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla3B"
+										update="panelTabla3B"
+										 />
+								</div>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(9).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(9).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB5" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(4).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['no']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB5 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(10).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(10).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla4B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB81}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['fecha']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['provincia']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['canton']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['parroquia']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['comunidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['actividad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['hectareas']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroHombres']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroMujeres']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla4B"
+										update="panelTabla4B"
+										 />
+								</div>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(11).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(11).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB6" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(5).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['no']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB6 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(12).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(12).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB7" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(6).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noIniciadoProcesos']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB7 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(13).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(13).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-4">
+									<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(7).vaanNumericAnswerValue}">
+									
+									</p:inputNumber>
+								</div>
+								<div class="p-field p-col-12 p-md-8"></div>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(14).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(14).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla5B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB102}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['provincia']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['canton']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['parroquia']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['comunidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['hectareas']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla5B"
+										update="panelTabla5B"
+										 />
+								</div>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(15).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(15).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla6B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB103}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['hombresIndigenas']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['mujeresIndigenas']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['hombresMestizos']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['mujeresMestizas']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['hombresAfroecuatoriano']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFive}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['mujeresAfroecuatorianas']}">
+												<p:inputText value="#{tablarespuestas.tareColumnSix}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['hombresMontubios']}">
+												<p:inputText value="#{tablarespuestas.tareColumnSeven}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['mujeresMontubios']}">
+												<p:inputText value="#{tablarespuestas.tareColumnSeven}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla6B"
+										update="panelTabla6B"
+										 />
+								</div>
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['salvaguardaB23']}"
+									styleClass="etiquetaTitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(16).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(16).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB8" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(8).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['siMecanismo']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noMecanismo']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB8 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(9).vaanTextAnswerValue}">
+								
+								</p:inputTextarea>
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(18).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(18).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(10).vaanTextAnswerValue}">
+								
+								</p:inputTextarea>
+							</div>		
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(19).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(19).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(11).vaanTextAnswerValue}">
+								
+								</p:inputTextarea>
+							</div>		
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['salvaguardaB24']}"
+									styleClass="etiquetaTitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(20).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(20).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB9" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(12).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noAcciones']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB9 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla7B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB121}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['nombreOrganizacion']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['accionesImplementadas']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['autoIdentificacionMiembros']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['conformacionOrganizacion']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroHombres']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFive}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroMujeres']}">
+												<p:inputText value="#{tablarespuestas.tareColumnSix}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla7B"
+										update="panelTabla7B"
+										 />
+								</div>
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['salvaguardaB25']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(22).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(22).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB10" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(13).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['no']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB10 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(23).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(23).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla8B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB131}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['fecha']}">
+												<p:datePicker value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:datePicker>
+											</p:column>
+											<p:column headerText="#{etiquetas['actividad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['canalMecanismo']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['personasInformacion']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFive}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+																						
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla8B"
+										update="panelTabla8B"
+										 />
+								</div>
+							</div>	
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['salvaguardaB26']}"
+									styleClass="etiquetaTitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(24).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(24).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB11" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(14).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noRendicion']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB11 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(25).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(25).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br/>							
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-8">
+									<p:selectManyCheckbox id="infoBeneficiario" layout="pageDirection">
+							            <f:selectItem itemLabel="Montos ejecutados" itemValue="1"/>
+							            <f:selectItem itemLabel="Actividades ejecutadas" itemValue="2"/>
+							            <f:selectItem itemLabel="Logros alcanzados" itemValue="3"/>
+							            <f:selectItem itemLabel="Número de beneficiarios" itemValue="4"/>
+							            <f:selectItem itemLabel="Número de beneficiarios desagregado por genero y etnia" itemValue="5"/>
+							            <f:selectItem itemLabel="Localidades o comunidades con las que se trabaja" itemValue="6"/>
+							            <f:selectItem itemLabel="Otros" itemValue="7"/>
+							        </p:selectManyCheckbox>
+								</div>
+								<div class="p-field p-col-12 p-md-4"></div>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(26).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(26).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br/>							
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-8">
+									<p:selectManyCheckbox id="infoEjecucion" layout="pageDirection">
+							            <f:selectItem itemLabel="Evento público de rendición de cuentas" itemValue="1"/>
+							            <f:selectItem itemLabel="Entrega formal de informe de rendición de cuentas a comunidades" itemValue="2"/>
+							            <f:selectItem itemLabel="Publicación de informe de rendición de cuentas en la web (redes sociales, pagina web)" itemValue="3"/>
+							            <f:selectItem itemLabel="Otros" itemValue="4"/>
+							        </p:selectManyCheckbox>
+								</div>
+								<div class="p-field p-col-12 p-md-4"></div>
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['salvaguardaB27']}"
+									styleClass="etiquetaTitulo" />
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(27).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(27).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB12" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(15).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['no']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB12 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(28).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(28).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla9B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB16}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['presupuesto']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}">
+												
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['lineaAccion']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['beneficiarias']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+																						
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla9B"
+										update="panelTabla9B"
+										 />
+								</div>
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(29).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(29).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB13" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(16).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noEspacio']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB13 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(30).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(30).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla10B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB171}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['provincia']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}">
+												
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['nacionalidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['comunidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['espacioAsociaciones']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['paraque']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFive}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+																						
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla9B"
+										update="panelTabla10B"
+										 />
+								</div>
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(31).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(31).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB14" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(17).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['no']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB14 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(32).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(32).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla11B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB181}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['acciones']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}">
+												
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['colectivoOrganizacion']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroBeneficiarias']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+																						
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla11B"
+										update="panelTabla11B"
+										 />
+								</div>
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(33).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(33).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:selectOneRadio id="radiopSB15" styleClass="etiquetaSubtitulo"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(18).vaanYesnoAnswerValue}"
+									unselectable="true">
+									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+									<f:selectItem itemLabel="#{etiquetas['noDesarrollo']}"
+										itemValue="false" />
+									<p:ajax process="radiopSB15 @this" event="change"
+										partialSubmit="true" />
+								</p:selectOneRadio>
+							</div>
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(34).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(34).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla12B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB191}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['provincia']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}">
+												
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['canton']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['parroquia']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['comunidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['beneficiarias']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFive}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											
+																						
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla12B"
+										update="panelTabla12B"
+										 />
+								</div>
+							</div>	
+							<br/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(35).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(35).quesContentQuestionEnglish}"
+									styleClass="etiquetaSubtitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTabla13B">
+										<p:dataTable styleClass="sinBordesAncho100"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB192}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['comunidad']}">
+												<p:inputText value="#{tablarespuestas.tareColumnOne}">
+												
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['nudoCritico']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['medida']}">
+												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+											<p:column headerText="#{etiquetas['numeroMujeresAcceden']}">
+												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+													<p:ajax process="@this" />
+												</p:inputText>
+											</p:column>
+																					
+																						
+											<p:column>
+												<p:commandButton icon="#{botones['icono.borrar']}"
+													process="@this" title="#{tooltip['eliminar']}">
+
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton 
+										icon="#{botones['icono.mas']}" process="@this panelTabla13B"
+										update="panelTabla13B"
+										 />
+								</div>
+							</div>	
+
+								
+							<br/>							
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-2">
+									<p:commandButton value="#{botones['grabar']}"
+										icon="#{botones['icono.grabar']}" process="@this"																				
+										/>
+								</div>
+								<div class="p-field p-col-12 p-md-10"></div>
+							</div>
+						</p:tab>
+						<!-- SALVAGUARDA C -->
+						<p:tab title="Salvaguarda C"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(3)}">
+						</p:tab>
+						<p:tab title="Salvaguarda D"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(4)}">
+						</p:tab>
+						<p:tab title="Salvaguarda E"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(5)}">
+						</p:tab>
+						<p:tab title="Salvaguarda F"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(6)}">
+						</p:tab>
+						<p:tab title="Salvaguarda G"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(7)}">
+						</p:tab>
+					</p:tabView>
+					<br />
+					<div class="ui-fluid p-formgrid p-grid">
+						<div class="p-field p-col-12 p-md-4"></div>
+						<div class="p-field p-col-12 p-md-4"></div>
+						<div class="p-field p-col-12 p-md-4"></div>
 					</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="importante" value="#{titulos['mensajeSalvaguardaA']}"/>	            		
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel styleClass="etiquetaSubtitulo" id="pregunta5" value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestionEnglish}"/>	            		
-	            	</div>
-	            	<br/>
-	            	<div class="ui-fluid p-formgrid p-grid">
-	            		<div class="p-field p-col-12 p-md-10">
-	            			<h:panelGrid id="panelTabla1A">
-			            		<p:dataTable styleClass="sinBordesAncho100" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaA}" 
-			            			var="tablarespuestas">
-			            			<p:column headerText="#{etiquetas['planProyGobierno']}">
-			            				<p:inputText value="#{tablarespuestas.tareColumnOne}">
-			            					<p:ajax process="@this"/>
-			            				</p:inputText>
-			            			</p:column>
-			            			<p:column headerText="#{etiquetas['presupuestoAsignado']}">
-			            				<p:inputNumber value="#{tablarespuestas.tareColumnTwo}" modifyValueOnWheel="false" >
-			            					<p:ajax process="@this"/>
-			            				</p:inputNumber>
-			            			</p:column>
-			            			<p:column>
-			            				<p:commandButton icon="#{botones['icono.borrar']}" process="@this" title="#{tooltip['eliminar']}">
-			            				
-			            				</p:commandButton>
-			            			</p:column>
-			            		</p:dataTable>
-		            		</h:panelGrid>
-		            	</div>
-		            	<div class="p-field p-col-12 p-md-2">
-		            		<p:commandButton value="#{botones['agregar']}" icon="#{botones['icono.mas']}" process="@this panelTabla1A" update="panelTabla1A" actionListener="#{seguimientoSalvaguardaController.agregaFilaTablaSalvaguardaA()}"/>
-		            	</div>	
-	            	</div>
-	            	<div class="ui-fluid p-formgrid p-grid">	            		
-	            		<div class="p-field p-col-12 p-md-2">
-	            			<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" process="@this panelDatos"
-		            			actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabar(1)}" update="panelDatos "
-		            			disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}"		            			
-		            			/>
-	            		</div>
-	            		<div class="p-field p-col-12 p-md-10">
-	            		</div>
-	            	</div>	
-            	</p:tab>
-            	<!-- SALVAGUARDA B -->
-            	<p:tab title="#{titulos['salvaguardaB']}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaB}">
-            		<div class="ui-fluid p-formgrid p-grid">
-            			
-	            		<p:outputLabel value="#{titulos['abordajeSalvaguardaB']}" styleClass="titulos"/>	            		          		          		
-	            	</div>	            	
-	            	<br/>	
-	            	<div class="ui-fluid p-formgrid p-grid">         	
-	            		<p:outputLabel value="#{titulos['resumenSalvaguardaB']}"/>
-	            	</div>
-            	</p:tab>
-            	<p:tab title="Salvaguarda C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(3)}">
-            	</p:tab>
-            	<p:tab title="Salvaguarda D" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(4)}">
-            	</p:tab>
-            	<p:tab title="Salvaguarda E" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(5)}">
-            	</p:tab>
-            	<p:tab title="Salvaguarda F" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(6)}">
-            	</p:tab>
-            	<p:tab title="Salvaguarda G" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(7)}">
-            	</p:tab>
-            </p:tabView>
-            <br/>
-            <div class="ui-fluid p-formgrid p-grid">            		   
-	    		<div class="p-field p-col-12 p-md-4">
-            		
-            	</div>
-            	<div class="p-field p-col-12 p-md-4">
-            	</div>
-            	<div class="p-field p-col-12 p-md-4">
-            	</div>
-            </div>		
-        </p:outputPanel> 
-           
-	    </div>
-	    <div class="p-field p-col-12 p-md-3">
-	    </div>	    
-	</div>		
-	
+				</p:outputPanel>
 
-	
-	
-</h:form>
-</body> 
+			</div>
+			<div class="p-field p-col-12 p-md-3"></div>
+		</div>
+
+
+
+
+	</h:form>
+</body>
 </html>
