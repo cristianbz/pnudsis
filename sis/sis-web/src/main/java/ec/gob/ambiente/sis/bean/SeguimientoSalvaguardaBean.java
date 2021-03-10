@@ -19,6 +19,7 @@ import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
+import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +33,23 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 
 	@Getter
 	@Setter
+	private TableResponses registroTabla1SalvaguardaA;
+	
+	@Getter
+	@Setter
 	private Integer codigoProyecto;
+	
+	@Getter
+	@Setter
+	private String codigoProvincia;
+	
+	@Getter
+	@Setter
+	private String codigoCanton;
+	
+	@Getter
+	@Setter
+	private String codigoParroquia;
 		
 	@Getter
 	@Setter
@@ -41,6 +58,22 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private Catalogs nuevaPoliticaSA;
+	
+	@Getter
+	@Setter
+	private List<GeographicalLocations> listaProvincias;
+	
+	@Getter
+	@Setter
+	private List<GeographicalLocations> listaCantones;
+	
+	@Getter
+	@Setter
+	private List<GeographicalLocations> listaParroquias;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoPlanGobierno;
 	
 	@Getter
 	@Setter
@@ -172,15 +205,15 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<TableResponses> tablaActividadesSalvaguardaB;
+	private List<TableResponses> tablaSalvaguardaB41;
 	
 	@Getter
 	@Setter
-	private List<TableResponses> tablaAccionesSalvaguardaB;
+	private List<TableResponses> tablaSalvaguardaB51;
 	
 	@Getter
 	@Setter
-	private List<TableResponses> tablaInstrumentosSalvaguardaB;
+	private List<TableResponses> tablaSalvaguardaB71;
 	
 	@Getter
 	@Setter
@@ -228,6 +261,46 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaC201;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC211;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC241;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC26;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC271;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC28;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC291;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC293;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC30;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaC311;
+	
+	@Getter
+	@Setter
 	private boolean salvaguardaA;
 	
 	@Getter
@@ -264,7 +337,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		listaValoresRespuestasF= new ArrayList<>();
 		listaValoresRespuestasG= new ArrayList<>();
 		tablaSalvaguardaA=new ArrayList<>();
-		
+		tablaSalvaguardaB41=new ArrayList<>();
+		tablaSalvaguardaB51=new ArrayList<>();
+		tablaSalvaguardaB71= new ArrayList<>();
+		tablaSalvaguardaB81= new ArrayList<>();
+		tablaSalvaguardaB102= new ArrayList<>();
+		tablaSalvaguardaB103= new ArrayList<>();
+		tablaSalvaguardaB121= new ArrayList<>();
+		tablaSalvaguardaB131= new ArrayList<>();
 	}
 
 }

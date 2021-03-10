@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum TipoCatalogoEnum {
 	TIPORESPUESTA(1,"TipoRespuesta"),
 	POLITICAS(2,"Politicas"),
-	LEYES(3,"Leyes");
+	LEYES(3,"Leyes"),
+	PLANPROYECTO(4,"PlanProyecto");
 	
 	@Getter
 	private final int codigo;

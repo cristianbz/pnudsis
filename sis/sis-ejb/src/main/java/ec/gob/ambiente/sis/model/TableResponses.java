@@ -1,5 +1,7 @@
 package ec.gob.ambiente.sis.model;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,6 +74,21 @@ public class TableResponses  {
 	@Setter
 	@Column(name = "tare_column_seven")
 	private String tareColumnSeven;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_eight")
+	private String tareColumnEight;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_nine")
+	private Date tareColumnNine;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_ten")
+	private String tareColumnTen;
 	
 	@Getter
 	@Setter

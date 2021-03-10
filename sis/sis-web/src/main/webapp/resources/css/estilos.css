@@ -1,6 +1,9 @@
 .containter{
 	justify-content: center;
 }
+.cabeceraTabla{
+	font-size: 10px;
+}
 .titulos{
 	
 	font-weight: bold;
@@ -38,8 +41,16 @@
 	display: block;
 	background: #00AAC3;
 	color: #FFFFFF;
-	font-size:12px !important;
+	font-size:13px !important;
 	text-align: center;
+}
+.etiquetaSubCategoria{
+	display: block;
+	background: #00AAC3;
+	color: #FFFFFF;
+	font-size:15px !important;
+	font-weight: bold;
+	text-align: left;
 }
 
 .sinBordesAncho100 tbody td{
@@ -73,4 +84,14 @@
 }
 .ui-state-active {
 	background-color: #00b9f5!important;
+}
+
+.goup{
+	background:#00AAC3;
+	bottom:0px;
+	display: block;
+	height: 30px;
+	position: fixed;
+	right:0px;
+	width:25px;
 }
