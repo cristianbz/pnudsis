@@ -51,28 +51,31 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @param avanceEjecucion
 	 * @throws Exception
 	 */
-	public AdvanceExecutionSafeguards grabarAvanceEjecucionSalvaguarda(AdvanceExecutionSafeguards avanceEjecucion) throws Exception{
+	public AdvanceExecutionSafeguards grabarAvanceEjecucionSalvaguarda(AdvanceExecutionSafeguards avanceEjecucion,int salvaguarda) throws Exception{
 		if(avanceEjecucion.getAdexId()==null)
 			create(avanceEjecucion);			
 		else{
 			List<AdvanceSectors> listaSectores=new ArrayList<>();
 			List<TableResponses> listaAux=new ArrayList<>();			
 			listaSectores = advanceSectorsFacade.listaAvanceSectoresPorAvanceEjecucion(avanceEjecucion.getAdexId());
-			listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId());			
+			
 			listaSectores.stream().forEach(s->{
 				try {
 					advanceSectorsFacade.eliminarAvanceSectores(s);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			});						
-			listaAux.stream().forEach(tr->{
-				try {
-					tableResponsesFacade.eliminarRespuestasTabla(tr);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 			});
+			if(salvaguarda==1){
+				listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId());						
+				listaAux.stream().forEach(tr->{
+					try {
+						tableResponsesFacade.eliminarRespuestasTabla(tr);						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+			}
 			edit(avanceEjecucion);
 		}
 		return avanceEjecucion;

@@ -33,7 +33,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 
 	@Getter
 	@Setter
-	private TableResponses registroTabla1SalvaguardaA;
+	private TableResponses registroTabla;
 	
 	@Getter
 	@Setter
@@ -69,6 +69,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<GeographicalLocations> listaTodosCantones;
+	
+	@Getter
+	@Setter
 	private List<GeographicalLocations> listaParroquias;
 	
 	@Getter
@@ -78,6 +82,22 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> catalogoPoliticas;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoInformacionComunica;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoInformacionComunicaSeleccionado;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoInformacionEjecucion;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoInformacionEjecucionSeleccionado;
 	
 	@Getter
 	@Setter
@@ -293,11 +313,19 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<TableResponses> tablaSalvaguardaC30;
+	private List<TableResponses> tablaSalvaguardaC301;
 	
 	@Getter
 	@Setter
 	private List<TableResponses> tablaSalvaguardaC311;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaD321;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaD331;
 	
 	@Getter
 	@Setter
@@ -310,6 +338,22 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private boolean salvaguardaC;
+	
+	@Getter
+	@Setter
+	private boolean salvaguardaD;
+	
+	@Getter
+	@Setter
+	private boolean salvaguardaE;
+	
+	@Getter
+	@Setter
+	private boolean salvaguardaF;
+	
+	@Getter
+	@Setter
+	private boolean salvaguardaG;
 	
 	@Getter
 	@Setter
@@ -345,6 +389,18 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaB103= new ArrayList<>();
 		tablaSalvaguardaB121= new ArrayList<>();
 		tablaSalvaguardaB131= new ArrayList<>();
+		tablaSalvaguardaC201= new ArrayList<>();
+		tablaSalvaguardaC211= new ArrayList<>();
+		tablaSalvaguardaC241= new ArrayList<>();
+		tablaSalvaguardaC26= new ArrayList<>();
+		tablaSalvaguardaC271= new ArrayList<>();
+		tablaSalvaguardaC28= new ArrayList<>();
+		tablaSalvaguardaC291= new ArrayList<>();
+		tablaSalvaguardaC293= new ArrayList<>();
+		tablaSalvaguardaC301= new ArrayList<>();
+		tablaSalvaguardaC311= new ArrayList<>();
+		tablaSalvaguardaD321= new ArrayList<>();
+		tablaSalvaguardaD331= new ArrayList<>();
 	}
 
 }

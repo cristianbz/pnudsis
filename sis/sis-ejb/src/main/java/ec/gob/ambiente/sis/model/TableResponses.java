@@ -31,6 +31,15 @@ public class TableResponses  {
 
 	
 	public static final String CARGA_RESPUESTAS_POR_AVANCE_EJECUCION="cargaRespuestasPorAvanceEjecucion";
+	
+	public TableResponses(){
+		
+	}
+	
+	public TableResponses(Questions pregunta,AdvanceExecutionSafeguards avanceEjecucion) {
+		this.questions=pregunta;
+		this.advanceExecutionSaveguards = avanceEjecucion;
+	}
 
 	@Getter
 	@Setter

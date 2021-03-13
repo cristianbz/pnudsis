@@ -26,7 +26,8 @@ public class AdvanceSectorsFacade extends AbstractFacade<AdvanceSectors,Integer>
 	 * @throws Exception
 	 */
 	public void eliminarAvanceSectores(AdvanceSectors advanceSectors)throws Exception{
-		remove(advanceSectors);
+		AdvanceSectors avanceSectors =getEntityManager().find(AdvanceSectors.class, advanceSectors.getAdseId());
+		remove(avanceSectors);
 	}
 	public List<AdvanceSectors> listaAvanceSectoresPorAvanceEjecucion(int codigoAvanceEjecucion) throws Exception{
 		String sql="SELECT A FROM AdvanceSectors A WHERE A.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion";

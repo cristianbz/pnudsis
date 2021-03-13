@@ -23,7 +23,7 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 */
 	
 	public List<Questions> buscarTodasLasPreguntas() throws Exception{
-		String sql="SELECT Q FROM Questions Q";
+		String sql="SELECT Q FROM Questions Q AND Q.quesDropState=True";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery(sql, camposCondicion);
 	}
@@ -32,7 +32,7 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 * @return
 	 */
 	public List<Questions> buscaPreguntaPorSalvaguarda(int codigoSalvaguarda) throws Exception{
-		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda";
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda AND Q.quesDropState=True";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
 		return findByCreateQuery(sql, camposCondicion);
@@ -44,7 +44,7 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 * @throws Exception
 	 */
 	public List<Questions> buscarPreguntasPorSalvaguardas(List<Integer> codigosSalvaguardas) throws Exception{
-		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId IN(:codigoSalvaguarda) ORDER BY Q.quesQuestionOrder";
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId IN(:codigoSalvaguarda) AND Q.quesDropState=True ORDER BY Q.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoSalvaguarda", codigosSalvaguardas);
 		return findByCreateQuery(sql, camposCondicion);

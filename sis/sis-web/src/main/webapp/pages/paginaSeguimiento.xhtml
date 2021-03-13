@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:comp="http://java.sun.com/jsf/composite/componentes"
+	xmlns:val="http://java.sun.com/jsf/composite/componentes"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeflex/primeflex.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeicons-master/primeicons.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	<script>
+	$(document).ready(function(){
+		$('.goup').hide();
+		$('.goup').click(function(){
+			$('body,html').animate({
+				scrollTop:0
+			},1000)
+		});
+		$(window).scroll(function () {
+			if ($(this).scrollTop() &gt; 200) {
+				$('.goup').fadeIn();
+			}
+			else {
+				$('.goup').fadeOut();
+			}
+		});
+	});
+	</script>	
+</h:head>
+<body>
+	<h:form prependId="true" id="form">
+		<p:growl id="growl" life="3000" showDetail="true" />
+		<!-- DIALOGO GRABAR SALVAGUARDA A -->
+		<p:dialog widgetVar="dlgGrabaReporteA" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['grabarReporteSalvaguardaA']}" width="250"
+			closable="true" resizable="false">
+			<h:panelGrid columns="2" id="panelBotones">
+				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+					id="btngrabar"
+					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
+					oncomplete="PF('dlgGrabaReporteA').hide();"
+					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgGrabaReporteA').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		
+		<!-- DIALOGO ELIMINA ITEM TABLA A -->
+		<p:dialog widgetVar="dlgEliminaItemTablaA" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaRegistro']}" width="250"
+			closable="true" resizable="false">
+			<h:panelGrid columns="2" >
+				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"
+					id="btnelimina"
+					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(1)}"
+					oncomplete="PF('dlgEliminaItemTablaA').hide();"
+					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgEliminaItemTablaA').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		
+		
+		<!-- DIALOGO GRABAR SALVAGUARDA C -->
+		<p:dialog widgetVar="dlgGrabaReporteC" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['grabarReporteSalvaguardaC']}" width="250"
+			closable="true" resizable="false">
+			<h:panelGrid columns="2" >
+				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+					id="btngrabarSVC"
+					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaC}"
+					oncomplete="PF('dlgGrabaReporteC').hide();"
+					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgGrabaReporteC').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		
+		<!-- DIALOGO GRABAR SALVAGUARDA D -->
+		<p:dialog widgetVar="dlgGrabaReporteD" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['grabarReporteSalvaguardaD']}" width="250"
+			closable="true" resizable="false">
+			<h:panelGrid columns="2" >
+				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+					id="btngrabarSVD"
+					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaC}"
+					oncomplete="PF('dlgGrabaReporteC').hide();"
+					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgGrabaReporteC').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		
+		<p:dialog widgetVar="dlgEliminarRegistro" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaRegistro']}" width="250"
+			closable="true" resizable="false">
+			<h:panelGrid columns="2" id="panelBotonesEliminar">
+				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+					id="btngrabarEliminacion"
+					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
+					oncomplete="PF('dlgGrabaReporteA').hide();"
+					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgGrabaReporteA').hide();" process="@this" />
+			</h:panelGrid>
+			
+		</p:dialog>
+		
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-5"></div>
+			<div class="p-field p-col-12 p-md-5"></div>
+			<div class="p-field p-col-12 p-md-2">
+				<p:outputLabel value="#{etiquetas['cambiarIdioma']}" />
+				<p:selectOneMenu value="#{seleccionaIdiomaController.lenguaje}">
+					<f:selectItem itemValue="es" itemLabel="Español" />
+					<f:selectItem itemValue="en" itemLabel="English" />
+					<p:ajax process="@this" update="@form"
+						listener="#{seleccionaIdiomaController.cambiarIdioma}" />
+				</p:selectOneMenu>
+			</div>
+		</div>
+		<div class="ui-fluid p-formgrid p-grid">
+
+			<div class="p-field p-col-12 p-md-4"></div>
+			<div class="p-field p-col-12 p-md-4">
+				<p:fieldset legend="#{titulos['datosProyecto']}"
+					styleClass="fondoColorSigma">
+					<h:panelGrid columns="1" id="panelDatos">
+						<i class="fas fa-project-diagram"></i>
+						<p:outputLabel for="proyecto" value="#{etiquetas['proyectos']}"
+							styleClass="etiquetaTitulo" />
+						<p:selectOneMenu filter="true" effect="fade"
+							filterMatchMode="contains" required="true"
+							requiredMessage="#{mensajes['campoRequerido']}"
+							styleClass="estiloMenuItemSeccionActual"
+							value="#{seguimientoController.seguimientoSalvaguardaBean.codigoProyecto}"
+							id="proyecto">
+							<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}"
+								itemValue="#{null}"  />
+							<f:selectItems
+								value="#{seguimientoController.seguimientoSalvaguardaBean.listaProyectos}"
+								var="proyectos" itemValue="#{proyectos.projId}"
+								itemLabel="#{proyectos.projTitle}" />
+							<p:ajax partialSubmit="true" event="change"
+								process="@this  panelsalvaguarda socio sectores fechaSeguimiento salvaguardas "
+								update="salvaguardas socio panelDatos  panelsalvaguarda fechaSeguimiento  growl "
+								listener="#{seguimientoController.seleccionaProyecto()}" />
+						</p:selectOneMenu>
+						<p:message for="proyecto" />
+						<i class="fas fa-handshake"></i>
+						<p:outputLabel for="socio"
+							value="#{etiquetas['socioImplementador']}"
+							styleClass="etiquetaTitulo" />
+						<p:outputLabel id="socio"
+							value="#{seguimientoController.seguimientoSalvaguardaBean.socioImplementador.partName}"
+							styleClass="etiquetaSubtitulo" />
+						<br />
+						<i class="far fa-calendar-alt"></i>
+						<p:outputLabel for="fechaSeguimiento"
+							value="#{etiquetas['fecha']}" styleClass="etiquetaTitulo" />
+						<p:calendar id="fechaSeguimiento"
+							value="#{seguimientoController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexRegisterDate}"
+							disabled="#{seguimientoController.seguimientoSalvaguardaBean.datosAvanceEjecucion}"
+							
+							locale="es" pattern="yyyy-MM-dd" navigator="true">
+							<p:ajax process="@this" />
+						</p:calendar>
+						<p:message for="fechaSeguimiento" />
+						<i class="fas fa-file-signature"></i>
+						<p:outputLabel value="#{etiquetas['elaboradoPor']}"
+							styleClass="etiquetaTitulo" />
+						<p:outputLabel value="Christian" styleClass="etiquetaSubtitulo" />
+						<br />
+						<i class="fas fa-users"></i>
+						<p:outputLabel value="#{etiquetas['sectorIdentifica']}"
+							styleClass="etiquetaTitulo" for="sectores" />
+						<div class="p-formgroup-inline">
+							<p:selectManyCheckbox id="sectores"
+								value="#{seguimientoController.seguimientoSalvaguardaBean.listaSectoresSeleccionados}"
+								layout="pageDirection" 
+								styleClass="etiquetaSubtitulo" columns="4"
+								disabled="#{seguimientoController.seguimientoSalvaguardaBean.datosAvanceEjecucion}">
+								<f:selectItems
+									value="#{seguimientoController.seguimientoSalvaguardaBean.listaSectoresDisponibles}"
+									var="sector" itemLabel="#{sector.sectName}"
+									itemValue="#{sector.sectId}" />
+								<p:ajax event="change" process="@this" />
+							</p:selectManyCheckbox>
+							<p:message for="sectores" />
+						</div>
+
+
+
+					</h:panelGrid>
+				</p:fieldset>
+			</div>
+			<div class="p-field p-col-12 p-md-4"></div>
+		</div>
+
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-1"></div>
+			<div class="p-field p-col-12 p-md-10">
+				<center>
+					<p:outputLabel value="#{titulos['salvaguardasDisponibles']}"
+						styleClass="etiquetaTitulo" />
+				</center>
+				<br />
+				<p:outputPanel id="panelsalvaguarda">
+					<p:tabView id="salvaguardas" styleClass="fondoColorSigma">
+						<!-- SALVAGUARDA A -->
+						<p:tab title="#{titulos['salvaguardaA']}"
+							rendered="#{seguimientoController.seguimientoSalvaguardaBean.salvaguardaA}">
+					</p:tab>
+						<!-- SALVAGUARDA B -->
+						<p:tab title="#{titulos['salvaguardaB']}"
+							rendered="#{seguimientoController.seguimientoSalvaguardaBean.salvaguardaB}">
+					</p:tab>
+						<!-- SALVAGUARDA C -->
+					<p:tab title="Salvaguarda C"
+							rendered="#{seguimientoController.seguimientoSalvaguardaBean.salvaguardaC}">
+													
+							
+					</p:tab>
+						<!-- SALVAGUARDA D -->
+					<p:tab title="Salvaguarda D"
+							rendered="#{seguimientoController.seguimientoSalvaguardaBean.salvaguardaD}">
+							<comp:salvaguardaD id="salvaguardaD"  componenteSalvaguardaD="#{seguimientoController.componenteSalvaguardaD}"/>
+					</p:tab>
+					<p:tab title="Salvaguarda E"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(5)}">
+					</p:tab>
+					<p:tab title="Salvaguarda F"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(6)}">
+					</p:tab>
+					<p:tab title="Salvaguarda G"
+							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardasActivas.get(7)}">
+					</p:tab>
+					</p:tabView>
+					<br />
+					<div class="ui-fluid p-formgrid p-grid">
+						<div class="p-field p-col-12 p-md-4"></div>
+						<div class="p-field p-col-12 p-md-4"></div>
+						<div class="p-field p-col-12 p-md-4"></div>
+					</div>
+				</p:outputPanel>
+
+			</div>
+			<div class="p-field p-col-12 p-md-1"></div>
+		</div>
+
+
+
+<div class="goup">
+	<i class="fas fa-angle-double-up fa-2x" style="color:white"></i>
+</div>
+	</h:form>
+</body>
+</html>
