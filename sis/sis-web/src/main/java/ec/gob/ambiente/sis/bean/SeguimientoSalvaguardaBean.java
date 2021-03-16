@@ -73,6 +73,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<GeographicalLocations> listaTodasParroquias;
+	
+	@Getter
+	@Setter
 	private List<GeographicalLocations> listaParroquias;
 	
 	@Getter
@@ -367,8 +371,17 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private boolean nuevaPolitica;
 	
+	@Getter
+	@Setter
+	private boolean nuevaRegistroTablaD321;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestas;
+	
 	@PostConstruct
 	public void init(){
+		registroTablaRespuestas= new TableResponses();
 		listaProyectos=new ArrayList<>();
 		listaValoresRespuestas= new ArrayList<>();
 		listaValoresRespuestasTabla= new ArrayList<>();

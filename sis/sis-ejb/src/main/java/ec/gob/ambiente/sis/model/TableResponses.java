@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -98,6 +99,21 @@ public class TableResponses  {
 	@Setter
 	@Column(name = "tare_column_ten")
 	private String tareColumnTen;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String tareProvincia;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String tareCanton;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String tareParroquia;
 	
 	@Getter
 	@Setter
