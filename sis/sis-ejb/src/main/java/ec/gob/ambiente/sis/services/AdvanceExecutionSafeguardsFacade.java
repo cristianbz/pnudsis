@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -15,6 +16,7 @@ import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
 import ec.gob.ambiente.sis.model.TableResponses;
+import ec.gob.ambiente.sis.model.ValueAnswers;
 
 @Stateless
 @LocalBean
@@ -22,6 +24,10 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 
 	@EJB
 	private TableResponsesFacade tableResponsesFacade;
+	
+	@EJB
+	private ValueAnswersFacade valueAnswersFacade;
+	
 	@EJB
 	private AdvanceSectorsFacade advanceSectorsFacade;
 
@@ -52,9 +58,21 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @throws Exception
 	 */
 	public AdvanceExecutionSafeguards grabarAvanceEjecucionSalvaguarda(AdvanceExecutionSafeguards avanceEjecucion,int salvaguarda) throws Exception{
-		if(avanceEjecucion.getAdexId()==null)
-			create(avanceEjecucion);			
-		else{
+		if(avanceEjecucion.getAdexId()==null){
+			create(avanceEjecucion);
+			for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
+				if(respuestaTabla.getTareId()==null)
+					tableResponsesFacade.create(respuestaTabla);
+				else
+					tableResponsesFacade.edit(respuestaTabla);
+			}
+			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
+				if(respuestas.getVaanId()==null)
+					valueAnswersFacade.create(respuestas);
+				else
+					valueAnswersFacade.edit(respuestas);
+			}
+		}else{
 			List<AdvanceSectors> listaSectores=new ArrayList<>();
 			List<TableResponses> listaAux=new ArrayList<>();			
 			listaSectores = advanceSectorsFacade.listaAvanceSectoresPorAvanceEjecucion(avanceEjecucion.getAdexId());
@@ -67,7 +85,8 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 				}
 			});
 			if(salvaguarda==1){
-				listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId());						
+				edit(avanceEjecucion);
+				listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId()).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());				
 				listaAux.stream().forEach(tr->{
 					try {
 						tableResponsesFacade.eliminarRespuestasTabla(tr);						
@@ -75,8 +94,59 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 						e.printStackTrace();
 					}
 				});
+				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
+					if(respuestaTabla.getTareId()==null)
+						tableResponsesFacade.create(respuestaTabla);
+					else
+						tableResponsesFacade.edit(respuestaTabla);
+				}
+				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
+					if(respuestas.getVaanId()==null)
+						valueAnswersFacade.create(respuestas);
+					else
+						valueAnswersFacade.edit(respuestas);
+				}
+			}else if(salvaguarda==2){
+				edit(avanceEjecucion);
+				listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId()).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder() ==26 || tr.getQuestions().getQuesQuestionOrder() ==27).collect(Collectors.toList());				
+				listaAux.stream().forEach(tr->{
+					try {
+						tableResponsesFacade.eliminarRespuestasTabla(tr);	
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+				
+				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
+					if(respuestaTabla.getTareId()==null)
+						tableResponsesFacade.create(respuestaTabla);
+					else
+						tableResponsesFacade.edit(respuestaTabla);
+				}
+				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
+					if(respuestas.getVaanId()==null)
+						valueAnswersFacade.create(respuestas);
+					else
+						valueAnswersFacade.edit(respuestas);
+				}
+				
+			}else if(salvaguarda>2){
+				edit(avanceEjecucion);
+				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
+					if(respuestaTabla.getTareId()==null)
+						tableResponsesFacade.create(respuestaTabla);
+					else
+						tableResponsesFacade.edit(respuestaTabla);
+				}
+				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
+					if(respuestas.getVaanId()==null)
+						valueAnswersFacade.create(respuestas);
+					else
+						valueAnswersFacade.edit(respuestas);
+				}
 			}
-			edit(avanceEjecucion);
+			
 		}
 		return avanceEjecucion;
 

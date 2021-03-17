@@ -85,12 +85,12 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
 	private List<ValueAnswers> valueAnswersList;
    
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
 	private List<TableResponses> tableResponsesList;
 	
 	@Getter
