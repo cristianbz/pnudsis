@@ -117,6 +117,11 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Transient
+	private String tareCatPlanGobierno;
+	
+	@Getter
+	@Setter
 	@Column(name = "tare_answer_ord")
 	private Integer tareAnswerOrd;
 	

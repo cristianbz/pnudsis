@@ -9,8 +9,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.component.tabview.TabView;
-
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
@@ -376,6 +374,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean nuevoRegistroTablaA1;
+	
+	@Getter
+	@Setter
 	private boolean nuevaRegistroTablaD321;
 	
 	@Getter
@@ -384,11 +386,39 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean nuevoRegistroTablaB51;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB71;
+	
+	@Getter
+	@Setter
 	private boolean nuevoRegistroTablaB81;
 	
 	@Getter
 	@Setter
 	private boolean nuevoRegistroTablaB102;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB103;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB121;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB131;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaC201;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaC211;
 	
 	@Getter
 	@Setter
