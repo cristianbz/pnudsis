@@ -751,7 +751,7 @@
 										<p:outputLabel value="#{etiquetas['planProyGobierno']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-											<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}">
+											<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA.tareColumnOne}">
 												<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="null"/>
 												<f:selectItems
 													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPlanGobierno}"
@@ -764,7 +764,7 @@
 										<p:outputLabel value="#{etiquetas['presupuestoAsignado']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTwo}"
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA.tareColumnTwo}"
 												modifyValueOnWheel="false">
 												<p:ajax process="@this" event="blur" />
 											</p:inputNumber>
@@ -808,7 +808,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 													process="@this :form:salvaguardas:panelIngreso1A" update=":form:salvaguardas:panelIngreso1A">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaA1}"/>
 												</p:commandButton>
 											</p:column>
@@ -885,7 +885,7 @@
 							
 							<br/>
 							<p:outputPanel id="panelIngreso41B" >
-							<p:panel id="panel41B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB41}">
+							<p:panel id="panel41B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB41}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
@@ -955,7 +955,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 											<p:inputText
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnOne}"/>
 												
 									</div>									
 									
@@ -964,7 +964,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 											<p:datePicker pattern="yyyy-MM-dd" locale="es"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnNine}">
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnNine}">
 												<p:ajax process="@this" event="blur" />
 											</p:datePicker>
 									</div>
@@ -972,7 +972,7 @@
 										<p:outputLabel value="#{etiquetas['comunidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFive}"/>
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnFive}"/>
 												
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -983,7 +983,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 											<p:inputNumber
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}">
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnSix}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -992,7 +992,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 											<p:inputNumber
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSeven}">
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnSeven}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -1047,7 +1047,7 @@
 								                </p:commandButton>
 												<p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaB41()}"
 													process="@this :form:salvaguardas:panelIngreso41B" update=":form:salvaguardas:panelIngreso41B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB41}"/>
 												</p:commandButton>
 											</p:column>
@@ -1088,26 +1088,26 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelIngreso51B" >
-							<p:panel id="panel51B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB51}">
+							<p:panel id="panel51B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB51}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['instituciones']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB51.tareColumnOne}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['actividadesCoordinacion']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTwo}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB51.tareColumnTwo}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTree}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB51.tareColumnTree}"/>
 									</div>	
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB51 panelIngreso51B"	title="#{tooltip['grabar']}"																						
@@ -1151,7 +1151,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 													process="@this :form:salvaguardas:panelIngreso51B" update=":form:salvaguardas:panelIngreso51B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB51}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB51}"/>
 												</p:commandButton>
 											</p:column>
@@ -1236,20 +1236,20 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelIngreso71B" >
-							<p:panel id="panel71B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB71}">
+							<p:panel id="panel71B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB71}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['instrumento']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB71.tareColumnOne}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:outputLabel value="#{etiquetas['mecanismoInstitucion']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTwo}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB71.tareColumnTwo}"/>
 									</div>
 										
 									<div class="p-field p-col-12 p-md-2">
@@ -1289,7 +1289,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 													process="@this :form:salvaguardas:panelIngreso71B" update=":form:salvaguardas:panelIngreso71B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB71}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB71}"/>
 												</p:commandButton>
 											</p:column>
@@ -1335,7 +1335,7 @@
 							
 							<br/>
 							<p:outputPanel id="panelIngreso81B" >
-							<p:panel id="panel81B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB81}">
+							<p:panel id="panel81B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB81}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
@@ -1352,7 +1352,7 @@
 													var="provincia" itemLabel="#{provincia.geloName}"
 													itemValue="#{provincia.geloCodificationInec}" />
 												<p:ajax process="@this " event="change"
-													update="cantontblB81"
+													update="cantontblB81 parroquiatblB81"
 													listener="#{seguimientoSalvaguardaController.filtraCanton()}" />
 											</p:selectOneMenu>
 										</div>
@@ -1406,7 +1406,7 @@
 										<p:outputLabel value="#{etiquetas['fecha']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-											<p:datePicker pattern="yyyy-MM-dd" locale="es" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnNine}" >
+											<p:datePicker pattern="yyyy-MM-dd" locale="es" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareColumnNine}" >
 														<p:ajax process="@this" event="blur"/>
 											</p:datePicker>
 												
@@ -1417,7 +1417,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 											<p:inputText
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}">
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareColumnFour}">
 												<p:ajax process="@this" event="blur" />
 											</p:inputText>
 									</div>
@@ -1426,7 +1426,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 											<p:inputText
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFive}">
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareColumnFive}">
 												<p:ajax process="@this" />
 											</p:inputText>
 
@@ -1438,7 +1438,7 @@
 										<p:outputLabel value="#{etiquetas['hectareas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}" >
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareColumnSix}" >
 														<p:ajax process="@this" />
 													</p:inputNumber>
 									</div>
@@ -1446,7 +1446,7 @@
 										<p:outputLabel value="#{etiquetas['numeroHombres']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSeven}" >
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareColumnSeven}" >
 														<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -1454,7 +1454,7 @@
 										<p:outputLabel value="#{etiquetas['numeroMujeres']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnEight}" >
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareColumnEight}" >
 														<p:ajax process="@this" />
 													</p:inputNumber>
 									</div>
@@ -1518,7 +1518,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaB81()}"
 													process="@this :form:salvaguardas:panelIngreso81B" update=":form:salvaguardas:panelIngreso81B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB81}"/>
 												</p:commandButton>
 											</p:column>
@@ -1593,7 +1593,7 @@
 							
 							<br/>
 							<p:outputPanel id="panelIngreso102B" >
-							<p:panel id="panel102B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB102}">
+							<p:panel id="panel102B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB102}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
@@ -1610,7 +1610,7 @@
 													var="provincia" itemLabel="#{provincia.geloName}"
 													itemValue="#{provincia.geloCodificationInec}" />
 												<p:ajax process="@this " event="change"
-													update="cantontblB102"
+													update="cantontblB102 parroquiatblB102"
 													listener="#{seguimientoSalvaguardaController.filtraCanton()}" />
 											</p:selectOneMenu>
 										</div>
@@ -1661,7 +1661,7 @@
 										<p:outputLabel value="#{etiquetas['comunidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}" />
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnFour}" />
 												
 									</div>									
 									
@@ -1669,13 +1669,13 @@
 										<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFive}" />
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnFive}" />
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['hectareas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}" />
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnSix}" />
 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -1723,7 +1723,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaB102()}"
 													process="@this :form:salvaguardas:panelIngreso102B" update=":form:salvaguardas:panelIngreso102B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB102}"/>
 												</p:commandButton>
 											</p:column>
@@ -1748,38 +1748,38 @@
 							
 							<br/>
 							<p:outputPanel id="panelIngreso103B" >
-							<p:panel id="panel103B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB103}">
+							<p:panel id="panel103B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB103}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['hombresIndigenas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}"/>
+										<p:inputNumber  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnOne}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['mujeresIndigenas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTwo}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnTwo}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['hombresMestizos']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTree}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnTree}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['mujeresMestizas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnFour}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['hombresAfroecuatoriano']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFive}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnFive}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso103B"																							
@@ -1794,19 +1794,19 @@
 										<p:outputLabel value="#{etiquetas['mujeresAfroecuatorianas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnSix}"/>
 									</div>	
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['hombresMontubios']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSeven}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnSeven}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['mujeresMontubios']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnEight}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103.tareColumnEight}"/>
 									</div>
 									
 								
@@ -1854,7 +1854,7 @@
 								                </p:commandButton>
 												<p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 													process="@this :form:salvaguardas:panelIngreso103B" update=":form:salvaguardas:panelIngreso103B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB103}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB103}"/>
 												</p:commandButton>											</p:column>
 										</p:dataTable>
@@ -1972,20 +1972,20 @@
 							
 							<br/>
 							<p:outputPanel id="panelIngreso121B" >
-							<p:panel id="panel121B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB121}">
+							<p:panel id="panel121B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB121}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-2">
 										<p:outputLabel value="#{etiquetas['nombreOrganizacion']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}" required="true"/>
+										<p:inputText  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnOne}" required="true"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:outputLabel value="#{etiquetas['accionesImplementadas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTwo}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnTwo}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso121B"																							
@@ -2003,7 +2003,7 @@
 										<p:outputLabel value="#{etiquetas['autoIdentificacionMiembros']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTree}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnTree}"/>
 									</div>
 									
 									
@@ -2011,7 +2011,7 @@
 										<p:outputLabel value="#{etiquetas['conformacionOrganizacion']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnFour}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 									</div>
@@ -2020,14 +2020,14 @@
 										<p:outputLabel value="#{etiquetas['numeroHombres']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFive}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnFive}"/>
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2">
 										<p:outputLabel value="#{etiquetas['numeroMujeres']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}"/>
+										<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnSix}"/>
 									</div>	
 									<div class="p-field p-col-12 p-md-2">
 									</div>
@@ -2035,7 +2035,7 @@
 										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSeven}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnSeven}"/>
 									</div>								
 							</div>
 							</p:panel>
@@ -2078,7 +2078,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 													process="@this :form:salvaguardas:panelIngreso121B" update=":form:salvaguardas:panelIngreso121B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB121}"/>
 												</p:commandButton>
 											</p:column>
@@ -2127,26 +2127,26 @@
 							
 							<br/>
 							<p:outputPanel id="panelIngreso131B" >
-							<p:panel id="panel131B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB131}">
+							<p:panel id="panel131B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB131}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['fecha']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:datePicker  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnNine}" pattern="yyyy-MM-dd" locale="es"/>
+										<p:datePicker  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnNine}" pattern="yyyy-MM-dd" locale="es"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['actividad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnOne}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['canalMecanismo']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTwo}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnTwo}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso131B"																							
@@ -2162,7 +2162,7 @@
 										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTree}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnTree}"/>
 									</div>
 									
 									
@@ -2170,7 +2170,7 @@
 										<p:outputLabel value="#{etiquetas['personasInformacion']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}"/>
+										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnFour}"/>
 									</div>
 									
 									
@@ -2212,7 +2212,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 													process="@this :form:salvaguardas:panelIngreso131B" update=":form:salvaguardas:panelIngreso131B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB131}"/>
 												</p:commandButton>
 											</p:column>
@@ -2363,26 +2363,26 @@
 							
 							<br/>
 							<p:outputPanel id="panelIngreso201C" >
-							<p:panel id="panel201C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC201}">
+							<p:panel id="panel201C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC201}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['numeroBeneficiarios']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnOne}"/>
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnOne}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['comunidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTwo}" />
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnTwo}" />
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['nacionalidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTree}" />
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnTree}" />
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla201C panelIngreso201C"																							
@@ -2398,8 +2398,8 @@
 										<p:outputLabel value="#{etiquetas['hectareas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputText
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}"/>
+											<p:inputNumber
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnFour}"/>
 												
 									</div>									
 									
@@ -2425,14 +2425,14 @@
 										<p:outputLabel value="#{etiquetas['inversionRealizada']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}" />												
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnSix}" />												
 									</div>
 																		
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSeven}" />
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnSeven}" />
 									</div>
 									
 									<div class="p-field p-col-12 p-md-5">
@@ -2479,7 +2479,7 @@
 								                </p:commandButton>
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaC201()}"
 													process="@this :form:salvaguardas:panelIngreso201C" update=":form:salvaguardas:panelIngreso201C">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC201}"/>
 												</p:commandButton>
 											</p:column>
@@ -2527,7 +2527,7 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelIngreso211C" >
-							<p:panel id="panel211C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC211}">
+							<p:panel id="panel211C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC211}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-1">
@@ -2544,7 +2544,7 @@
 													var="provincia" itemLabel="#{provincia.geloName}"
 													itemValue="#{provincia.geloCodificationInec}" />
 												<p:ajax process="@this " event="change"
-													update="cantontblC211"
+													update="cantontblC211 parroquiatblC211"
 													listener="#{seguimientoSalvaguardaController.filtraCanton()}" />
 											</p:selectOneMenu>
 									</div>
@@ -2597,7 +2597,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 											<p:inputText
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnFour}"/>
 												
 									</div>									
 									
@@ -2606,13 +2606,13 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 											<p:inputText
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFive}"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnFive}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<p:outputLabel value="#{etiquetas['practica']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}"/>
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnSix}"/>
 												
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -2622,7 +2622,7 @@
 										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSeven}"/>
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnSeven}"/>
 									</div>									
 									<div class="p-field p-col-12 p-md-8">
 									</div>
@@ -2666,9 +2666,9 @@
 								                	process="@this :form:salvaguardas:panelTabla211C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"/>
 								                </p:commandButton>
-								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaC211()}"
 													process="@this :form:salvaguardas:panelIngreso211C" update=":form:salvaguardas:panelIngreso211C">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas}"/>
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211}"/>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC211}"/>
 												</p:commandButton>
 											</p:column>
@@ -2740,6 +2740,58 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(7).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(7).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso241C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel241C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC241}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['fecha']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:datePicker value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnNine}"
+												pattern="yyyy-MM-dd" locale="es">
+											
+											</p:datePicker>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['organizacionParticipa']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnOne}"/> 
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['tematica']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnTwo}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla241C panelIngreso241C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC241()}"
+															update="panelTabla241C :form:growl panelIngreso241C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso241C" update="panelIngreso241C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC241}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnTree}"/>
+												
+									</div>									
+									<div class="p-field p-col-12 p-md-8">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -2748,25 +2800,22 @@
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaC241}"
 											var="tablarespuestas">
 											<p:column headerText="#{etiquetas['fecha']}" styleClass="cabeceraTabla">
-												<p:calendar value="#{tablarespuestas.tareColumnNine}" locale="es" pattern="yyyy-MM-dd">
-													<p:ajax process="@this" event="blur"/>
-												</p:calendar>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNine}" id="fechaC241" >
+													<f:convertDateTime locale="es" pattern="yyyy-MM-dd" for="fechaC241"/>
+												</p:outputLabel>
 												
 											</p:column>
 											<p:column headerText="#{etiquetas['organizacionParticipa']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnOne}" >
-													<p:ajax process="@this" event="blur"/>
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
+													
 											</p:column>
 											<p:column headerText="#{etiquetas['tematica']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTwo}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
+													
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTree}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
+													
 											</p:column>																					
 																						
 											<p:column>
@@ -2775,16 +2824,23 @@
 								                	process="@this :form:salvaguardas:panelTabla241C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+													process="@this :form:salvaguardas:panelIngreso241C" update=":form:salvaguardas:panelIngreso241C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC241}"/>
+												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(4).vaanYesnoAnswerValue}"
-										icon="#{botones['icono.mas']}" process="@this panelTabla241C" id="btntablaC241"
-										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC241()}"
-										update="panelTabla241C"
-										 />
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso241C" id="btntablaC241"
+										update=":form:salvaguardas:panelIngreso241C" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablas()}"
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC241}" />
+									</p:commandButton>	 
 								</div>
 							</div>
 							<br />
@@ -2828,6 +2884,57 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(10).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(10).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso26C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel26C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC26}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnOne}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['representantes']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnTwo}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['cargo']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnTree}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla26C panelIngreso26C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC26()}"
+															update="panelTabla26C :form:growl panelIngreso26C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso26C" update="panelIngreso26C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC26}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnFour}"/>
+												
+									</div>									
+									
+									<div class="p-field p-col-12 p-md-8">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -2837,25 +2944,16 @@
 											var="tablarespuestas">
 											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
 												
-												<p:inputText value="#{tablarespuestas.tareColumnOne}">
-												
-												</p:inputText>
-												
+												<p:outputLabel value="#{tablarespuestas.tareColumnOne}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['representantes']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['cargo']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTree}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 											</p:column>																					
 																						
 											<p:column>
@@ -2864,17 +2962,23 @@
 								                	process="@this :form:salvaguardas:panelTabla26C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+													process="@this :form:salvaguardas:panelIngreso26C" update=":form:salvaguardas:panelIngreso26C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC26}"/>
+												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton 
-										icon="#{botones['icono.mas']}" process="@this panelTabla26C" id="btntablaC26"
-										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(6).vaanYesnoAnswerValue}"
-										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC26()}"
-										update="panelTabla26C"
-										 />
+										 <p:commandButton icon="#{botones['icono.mas']}" id="btntablaC26"
+											process="@this :form:salvaguardas:panelIngreso26C"
+											update=":form:salvaguardas:panelIngreso26C" 
+											title="#{tooltip['nuevoRegistro']}">
+											<f:setPropertyActionListener value="true"
+												target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC26}" />
+										</p:commandButton>
 								</div>
 							</div>
 							<br />
@@ -2901,6 +3005,64 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(12).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(12).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso271C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel271C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC271}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnOne}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['nacionalidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnTwo}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['objetoConvenio']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnTree}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla271C panelIngreso271C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC271()}"
+															update="panelTabla271C :form:growl panelIngreso271C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso271C" update="panelIngreso271C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC271}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['hectareasRed']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputNumber
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnFour}"/>
+												
+									</div>									
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnFive}"/>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-5">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>								
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -2910,50 +3072,46 @@
 											var="tablarespuestas">
 											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
 												
-												<p:inputText value="#{tablarespuestas.tareColumnOne}">
-												
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnOne}"/>
 												
 											</p:column>
 											<p:column headerText="#{etiquetas['nacionalidad']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTwo}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['objetoConvenio']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTree}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['hectareasRed']}" styleClass="cabeceraTabla">
-												<p:inputNumber value="#{tablarespuestas.tareColumnFour}" >
-													<p:ajax process="@this" />
-												</p:inputNumber>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFive}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
 											</p:column>																					
 																						
 											<p:column>
 												<p:commandButton action="#{seguimientoSalvaguardaController.eliminaRegistroTablaSalvaguarda(14)}" 
-								                	update=":form:salvaguardas:panelTabla271C" icon="#{botones['icono.borrar']}"
+								                	update=":form:salvaguardas:panelTabla271C" icon="#{botones['icono.borrar']}" title="#{tooltip['eliminar']}"
 								                	process="@this :form:salvaguardas:panelTabla271C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+													process="@this :form:salvaguardas:panelIngreso271C" update=":form:salvaguardas:panelIngreso271C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC271}"/>
+												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton 
-										icon="#{botones['icono.mas']}" process="@this panelTabla271C"
-										id="btntablaC271"
-										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(7).vaanYesnoAnswerValue}"
-										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC271()}"
-										update="panelTabla271C"
-										 />
+									
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso271C" id="btntablaC271"
+										update=":form:salvaguardas:panelIngreso271C" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablas()}"
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC271}" />
+									</p:commandButton>
 								</div>
 							</div>
 							<br />
@@ -2967,6 +3125,62 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(13).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(13).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso28C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel28C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC28}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['nacionalidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC28.tareColumnOne}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['objetoContratacion']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC28.tareColumnTwo}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['figuraContratacion']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC28.tareColumnTree}">
+													<f:selectItem itemValue="null" itemLabel="#{mensajes['seleccionElemento']}"/>
+													<f:selectItem itemLabel="Personal planta" itemValue="PERSONALPLANTA"/>
+													<f:selectItem itemLabel="Consultoria" itemValue="PERSONALCONSULTORIA"/>
+													<p:ajax event="change" process="@this"/>
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla28C panelIngreso28C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC28()}"
+															update="panelTabla28C :form:growl panelIngreso28C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso28C" update="panelIngreso28C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC28}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['presupuesto']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputNumber
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC28.tareColumnFour}"/>
+												
+									</div>									
+									
+									<div class="p-field p-col-12 p-md-8">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -2976,27 +3190,16 @@
 											var="tablarespuestas">
 											
 											<p:column headerText="#{etiquetas['nacionalidad']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnOne}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['objetoContratacion']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTwo}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['figuraContratacion']}" styleClass="cabeceraTabla">												
-												<p:selectOneMenu value="#{tablarespuestas.tareColumnTree}">
-													<f:selectItem itemValue="null" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItem itemLabel="Personal planta" itemValue="PP"/>
-													<f:selectItem itemLabel="Consultoria" itemValue="PC"/>
-													<p:ajax event="change" process="@this"/>
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree.equals('PERSONALPLANTA')?'Personal planta':'Personal consultoria'}"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['presupuesto']}" styleClass="cabeceraTabla">
-												<p:inputNumber value="#{tablarespuestas.tareColumnFour}" >
-													<p:ajax process="@this" />
-												</p:inputNumber>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}"/>
 											</p:column>																				
 																						
 											<p:column>
@@ -3005,16 +3208,26 @@
 								                	process="@this :form:salvaguardas:panelTabla28C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+													process="@this :form:salvaguardas:panelIngreso28C" update=":form:salvaguardas:panelIngreso28C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC28}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC28}"/>
+												</p:commandButton>
+								                
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton 
-										icon="#{botones['icono.mas']}" process="@this panelTabla28C"
-										id="btntablaC28" actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC28()}"
-										update="panelTabla28C :form:growl"
-										 />
+
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso28C" id="btntablaC28"
+										update=":form:salvaguardas:panelIngreso28C" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablas()}"
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC28}" />
+									</p:commandButton>
+										 
 								</div>
 							</div>
 							<br />
@@ -3046,6 +3259,116 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(15).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(15).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso291C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel291C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC291}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['provincia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProvincia}"
+												id="provinciatblC291">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProvincias}"
+													var="provincia" itemLabel="#{provincia.geloName}"
+													itemValue="#{provincia.geloCodificationInec}" />
+												<p:ajax process="@this " event="change"
+													update="cantontblC291"
+													listener="#{seguimientoSalvaguardaController.filtraCanton()}" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['canton']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoCanton}"
+												id="cantontblC291">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCantones}"
+													var="canton" itemLabel="#{canton.geloName}"
+													itemValue="#{canton.geloCodificationInec}" />
+												<p:ajax process="@this " event="change"
+													update="parroquiatblC291"
+													listener="#{seguimientoSalvaguardaController.filtraParroquia()}" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['parroquia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoParroquia}"
+												id="parroquiatblC291">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaParroquias}"
+													var="parroquia" itemLabel="#{parroquia.geloName}"
+													itemValue="#{parroquia.geloCodificationInec}" />
+												<p:ajax process="@this " event="change" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla291C panelIngreso291C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC291()}"
+															update="panelTabla291C :form:growl panelIngreso291C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso291C" update="panelIngreso291C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC291}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnFour}"/>
+												
+									</div>									
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['nacionalidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnFive}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['resultado']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnSix}"/>
+												
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+									</div>
+									
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkDocRespaldo']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnSeven}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-5">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -3056,46 +3379,26 @@
 											var="tablarespuestas">
 											<p:column headerText="#{etiquetas['provincia']}" styleClass="cabeceraTabla">
 												
-												<p:selectOneMenu value="#{tablarespuestas.tareColumnOne}" id="provinciatblC291">
-													<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProvincias}" var="provincia" itemLabel="#{provincia.geloName}" itemValue="#{provincia.geloCodificationInec}"/>
-													<p:ajax process="@this " event="change" update=":form:salvaguardas:tablaC291:cantontblC291" listener="#{seguimientoSalvaguardaController.filtraCanton(tablarespuestas.tareColumnOne)}"/>
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareProvincia}"/>
 												
 											</p:column>
 											<p:column headerText="#{etiquetas['canton']}" styleClass="cabeceraTabla">
-												<p:selectOneMenu value="#{tablarespuestas.tareColumnTwo}" id="cantontblC291">
-													<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCantones}" var="canton" itemLabel="#{canton.geloName}" itemValue="#{canton.geloCodificationInec}"/>
-													<p:ajax process="@this " event="change" update=":form:salvaguardas:tablaC291:parroquiatblC291" listener="#{seguimientoSalvaguardaController.filtraParroquia(tablarespuestas.tareColumnTwo)}"/>
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareCanton}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['parroquia']}" styleClass="cabeceraTabla">
-												<p:selectOneMenu value="#{tablarespuestas.tareColumnTree}" id="parroquiatblC291">
-													<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaParroquias}" var="parroquia" itemLabel="#{parroquia.geloName}" itemValue="#{parroquia.geloCodificationInec}"/>
-													<p:ajax process="@this " event="change" />
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareParroquia}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFour}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 											</p:column>	
 											<p:column headerText="#{etiquetas['nacionalidad']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFive}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
 											</p:column>																				
 											<p:column headerText="#{etiquetas['resultado']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnSix}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['linkDocRespaldo']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnSeven}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnSeven}" />
 											</p:column>
 																						
 											<p:column>
@@ -3104,20 +3407,26 @@
 								                	process="@this :form:salvaguardas:panelTabla291C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
-								                <p:commandButton icon="#{botones['icono.editar']}">
-												
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaC291()}"
+													process="@this :form:salvaguardas:panelIngreso291C" update=":form:salvaguardas:panelIngreso291C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC291}"/>
 												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton 
-										icon="#{botones['icono.mas']}" process="@this panelTabla291C"
+									
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso291C"
+										update=":form:salvaguardas:panelIngreso291C" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablas()}"
 										id="btntablaC291" disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(8).vaanYesnoAnswerValue}"
-										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC291()}"
-										update="panelTabla291C :form:growl"
-										 />
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC291}" />
+									</p:commandButton>
+										 
 								</div>
 							</div>
 							<br />
@@ -3144,6 +3453,68 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(17).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(17).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso293C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel293C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC293}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																																		
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['canton']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoCanton}"
+												id="cantontblC293">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaTodosCantones}"
+													var="canton" itemLabel="#{canton.geloName}"
+													itemValue="#{canton.geloCodificationInec}" />
+												<p:ajax event="change" process="@this"/>
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC293.tareColumnTwo}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['objetoAcuerdo']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC293.tareColumnTree}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla293C panelIngreso293C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC293()}"
+															update="panelTabla293C :form:growl panelIngreso293C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso293C" update="panelIngreso293C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC293}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC293.tareColumnFour}"/>
+												
+									</div>									
+									
+									
+									<div class="p-field p-col-12 p-md-8">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -3152,27 +3523,17 @@
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaC293}"
 											var="tablarespuestas">
 											<p:column headerText="#{etiquetas['canton']}" styleClass="cabeceraTabla">
-												<p:selectOneMenu value="#{tablarespuestas.tareColumnOne}" id="cantontblC293">
-													<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaTodosCantones}" var="canton" itemLabel="#{canton.geloName}" itemValue="#{canton.geloCodificationInec}"/>
-													
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareCanton}"/>
 												
 											</p:column>
 											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTwo}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['objetoAcuerdo']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTree}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFour}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 											</p:column>	
 											
 																						
@@ -3182,18 +3543,26 @@
 								                	process="@this :form:salvaguardas:panelTabla293C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaC293()}"
+													process="@this :form:salvaguardas:panelIngreso293C" update=":form:salvaguardas:panelIngreso293C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC293}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC293}"/>
+												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton 
-										icon="#{botones['icono.mas']}" process="@this panelTabla293C" 
-										id="btntablaC293"
-										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC293()}"
+									
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso293C" id="btntablaC293"
 										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(9).vaanYesnoAnswerValue}"
-										update="panelTabla293C"
-										 />
+										update=":form:salvaguardas:panelIngreso293C" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablas()}"
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC293}" />
+									</p:commandButton>
+										 
 								</div>
 							</div>
 							<br />
@@ -3225,6 +3594,71 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(19).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(19).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso301C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel301C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC301}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																																		
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnOne}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['accionReportaDanio']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnTwo}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['medidaRemediacion']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnTree}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla301C panelIngreso301C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC301()}"
+															update="panelTabla301C :form:growl panelIngreso301C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso301C" update="panelIngreso301C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC301}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['medidaCompensacion']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnFour}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkDenuncia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnFive}"/>
+												
+									</div>									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkDocRespaldo']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnSix}"/>
+												
+									</div>
+									
+									<div class="p-field p-col-12 p-md-2">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -3234,35 +3668,23 @@
 											var="tablarespuestas">
 											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
 												
-												<p:inputText value="#{tablarespuestas.tareColumnOne}">
-												
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnOne}"/>
 												
 											</p:column>
 											<p:column headerText="#{etiquetas['accionReportaDanio']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTwo}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['medidaRemediacion']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnTree}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 											</p:column>
 											<p:column headerText="#{etiquetas['medidaCompensacion']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFour}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 											</p:column>	
 											<p:column headerText="#{etiquetas['linkDenuncia']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFive}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
 											</p:column>	
 											<p:column headerText="#{etiquetas['linkDocRespaldo']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnSix}" >
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
 											</p:column>	
 																						
 											<p:column>
@@ -3271,18 +3693,26 @@
 								                	process="@this :form:salvaguardas:panelTabla301C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+													process="@this :form:salvaguardas:panelIngreso301C" update=":form:salvaguardas:panelIngreso301C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC301}"/>
+												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton 
-										icon="#{botones['icono.mas']}" process="@this panelTabla301C"
-										id="btntablaC301"
-										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC301()}"
+									
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso301C"
 										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(10).vaanYesnoAnswerValue}"
-										update="panelTabla301C"
-										 />
+										id="btntablaC301"
+										update=":form:salvaguardas:panelIngreso301C" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablas()}"
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC301}" />
+									</p:commandButton>	 
 								</div>
 							</div>
 							<br />
@@ -3309,6 +3739,129 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(21).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(20).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
+							<br/>
+							<p:outputPanel id="panelIngreso311C" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel311C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC311}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['provincia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProvincia}"
+												id="provinciatblC311">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProvincias}"
+													var="provincia" itemLabel="#{provincia.geloName}"
+													itemValue="#{provincia.geloCodificationInec}" />
+												<p:ajax process="@this " event="change"
+													update="cantontblC311 parroquiatblC311"
+													listener="#{seguimientoSalvaguardaController.filtraCanton()}" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['canton']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoCanton}"
+												id="cantontblC311">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCantones}"
+													var="canton" itemLabel="#{canton.geloName}"
+													itemValue="#{canton.geloCodificationInec}" />
+												<p:ajax process="@this " event="change"
+													update="parroquiatblC311"
+													listener="#{seguimientoSalvaguardaController.filtraParroquia()}" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['parroquia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoParroquia}"
+												id="parroquiatblC311">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaParroquias}"
+													var="parroquia" itemLabel="#{parroquia.geloName}"
+													itemValue="#{parroquia.geloCodificationInec}" />
+												<p:ajax process="@this " event="change" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla311C panelIngreso311C"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC311()}"
+															update="panelTabla311C :form:growl panelIngreso311C"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso311C" update="panelIngreso311C">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC311}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['fecha']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:datePicker pattern="yyyy-MM-dd" locale="es"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnNine}">
+												<p:ajax process="@this" event="blur" />
+											</p:datePicker>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnFour}"/>
+												
+									</div>									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['asisteHombres']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputNumber
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnFive}">
+												<p:ajax process="@this" />
+											</p:inputNumber>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+									</div>
+									
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['asisteMujeres']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputNumber
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnSix}">
+												<p:ajax process="@this" />
+											</p:inputNumber>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnSeven}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-5">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -3317,52 +3870,32 @@
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaC311}"
 											id="tablaC311"
 											var="tablarespuestas">
-											<p:column headerText="#{etiquetas['fecha']}" styleClass="cabeceraTabla">												
-												<p:calendar value="#{tablarespuestas.tareColumnNine}" locale="es" pattern="yyyy-MM-dd">
-													<p:ajax process="@this" event="blur"/>
-												</p:calendar>
+											<p:column headerText="#{etiquetas['fecha']}" styleClass="cabeceraTabla">																								
+												<p:outputLabel value="#{tablarespuestas.tareColumnNine}" id="fechaC311">
+													<f:convertDateTime for="fechaC311" pattern="yyyy-MM-dd"/>
+												</p:outputLabel>
 												
 											</p:column>
 											<p:column headerText="#{etiquetas['provincia']}" styleClass="cabeceraTabla">
-												<p:selectOneMenu value="#{tablarespuestas.tareColumnOne}" id="provinciatblC311">
-													<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProvincias}" var="provincia" itemLabel="#{provincia.geloName}" itemValue="#{provincia.geloCodificationInec}"/>
-													<p:ajax process="@this " event="change" update=":form:salvaguardas:tablaC311:cantontblC311" listener="#{seguimientoSalvaguardaController.filtraCanton(tablarespuestas.tareColumnOne)}"/>
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareProvincia}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['canton']}" styleClass="cabeceraTabla">
-												<p:selectOneMenu value="#{tablarespuestas.tareColumnTwo}" id="cantontblC311">
-													<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCantones}" var="canton" itemLabel="#{canton.geloName}" itemValue="#{canton.geloCodificationInec}"/>
-													<p:ajax process="@this " event="change" update=":form:salvaguardas:tablaC311:parroquiatblC311" listener="#{seguimientoSalvaguardaController.filtraParroquia(tablarespuestas.tareColumnTwo)}"/>
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareCanton}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['parroquia']}" styleClass="cabeceraTabla">
-											<p:selectOneMenu value="#{tablarespuestas.tareColumnTree}" id="parroquiatblC311">
-													<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-													<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaParroquias}" var="parroquia" itemLabel="#{parroquia.geloName}" itemValue="#{parroquia.geloCodificationInec}"/>
-													<p:ajax process="@this " event="change" />
-												</p:selectOneMenu>
+												<p:outputLabel value="#{tablarespuestas.tareParroquia}"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFour}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['asisteHombres']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnFive}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFive}"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['asisteMujeres']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnSix}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnSix}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerifcaParticipantes']}" styleClass="cabeceraTabla">
-												<p:inputText value="#{tablarespuestas.tareColumnSeven}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
-													<p:ajax process="@this" />
-												</p:inputText>
+												<p:outputLabel value="#{tablarespuestas.tareColumnSeven}"/>
 											</p:column>		
 											
 																						
@@ -3372,21 +3905,28 @@
 								                	process="@this :form:salvaguardas:panelTabla311C">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
-								                <p:commandButton icon="#{botones['icono.editar']}">
-												
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+								                	action="#{seguimientoSalvaguardaController.editarTablaC311()}"
+													process="@this :form:salvaguardas:panelIngreso311C" update=":form:salvaguardas:panelIngreso311C">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC311}"/>
 												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton 
-										icon="#{botones['icono.mas']}" process="@this panelTabla311C"
+									
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso311C"
 										id="btntablaC311"
 										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(11).vaanYesnoAnswerValue}"
-										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC311()}"
-										update="panelTabla311C :form:growl"
-										 />
+										update=":form:salvaguardas:panelIngreso311C" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablas()}"
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC311}" />
+									</p:commandButton>
+										 
 								</div>
 							</div>
 							
@@ -3446,114 +3986,125 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasD.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasD.get(1).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							
 							<br/>
+							<p:outputPanel id="panelIngreso321D" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel321D" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD321}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-12">
-									<p:outputPanel id="panelIngreso321D">								
-										<p:panelGrid id="gridSeleccionDatos321D" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaRegistroTablaD321}">
-											<p:row>
-												<p:column>
-													<p:outputLabel value="#{etiquetas['provincia']}"/>
-												</p:column>
-												<p:column>
-													<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProvincia}" id="provinciatblD321">
-														<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-														<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProvincias}" var="provincia" itemLabel="#{provincia.geloName}" itemValue="#{provincia.geloCodificationInec}"/>
-														<p:ajax process="@this " event="change" update="cantontblD321" listener="#{seguimientoSalvaguardaController.filtraCanton()}"/>
-													</p:selectOneMenu>
-												</p:column>
-												<p:column>
-													<p:outputLabel value="#{etiquetas['canton']}"/>
-												</p:column>
-												<p:column>
-													<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoCanton}" id="cantontblD321">
-														<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-														<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCantones}" var="canton" itemLabel="#{canton.geloName}" itemValue="#{canton.geloCodificationInec}"/>
-														<p:ajax process="@this " event="change" update="parroquiatblD321"  listener="#{seguimientoSalvaguardaController.filtraParroquia()}"/>
-													</p:selectOneMenu>
-												</p:column>
-												<p:column>
-													<p:outputLabel value="#{etiquetas['parroquia']}"/>
-												</p:column>
-												<p:column>
-													<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoParroquia}" id="parroquiatblD321">
-														<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
-														<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaParroquias}" var="parroquia" itemLabel="#{parroquia.geloName}" itemValue="#{parroquia.geloCodificationInec}"/>
-														<p:ajax process="@this " event="change" />
-													</p:selectOneMenu>
-												</p:column>
-												<p:column>
-													<p:commandButton icon="#{botones['icono.mas']}" process="@this panelTabla321D panelIngreso321D"																							
+																									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['provincia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProvincia}"
+												id="provinciatblD321">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProvincias}"
+													var="provincia" itemLabel="#{provincia.geloName}"
+													itemValue="#{provincia.geloCodificationInec}" />
+												<p:ajax process="@this " event="change"
+													update="cantontblD321 parroquiatblD321"
+													listener="#{seguimientoSalvaguardaController.filtraCanton()}" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['canton']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoCanton}"
+												id="cantontblD321">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCantones}"
+													var="canton" itemLabel="#{canton.geloName}"
+													itemValue="#{canton.geloCodificationInec}" />
+												<p:ajax process="@this " event="change"
+													update="parroquiatblD321"
+													listener="#{seguimientoSalvaguardaController.filtraParroquia()}" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['parroquia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoParroquia}"
+												id="parroquiatblD321">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaParroquias}"
+													var="parroquia" itemLabel="#{parroquia.geloName}"
+													itemValue="#{parroquia.geloCodificationInec}" />
+												<p:ajax process="@this " event="change" />
+											</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla321D panelIngreso321D"																							
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaD321()}"
 															update="panelTabla321D :form:growl panelIngreso321D"/>
-												</p:column>
-											</p:row>
-											<p:row>		
-												<p:column>
-													<p:outputLabel value="#{etiquetas['comunidad']}"/>
-												</p:column>
-												<p:column>
-													<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFour}" >
-														<p:ajax process="@this" />
-													</p:inputTextarea>
-												</p:column>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso321D" update="panelIngreso321D">
 											
-												<p:column>
-													<p:outputLabel value="#{etiquetas['espacio']}"/>
-												</p:column>
-												<p:column>
-													<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnFive}" >
-														<p:ajax process="@this" />
-													</p:inputTextarea>
-												</p:column>
-											
-												<p:column>
-													<p:outputLabel value="#{etiquetas['actor']}"/>
-												</p:column>
-												<p:column>
-													<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSix}" >
-														<p:ajax process="@this" />
-													</p:inputTextarea>
-												</p:column>
-												<p:column>
-													<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso321D" update="panelIngreso321D">
-														<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaRegistroTablaD321}"/>
-													</p:commandButton>
-												</p:column>
-											</p:row>
-											<p:row>		
-												<p:column>
-													<p:outputLabel value="#{etiquetas['nacionalidad']}"/>
-												</p:column>
-												<p:column>
-													<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnSeven}" >
-														<p:ajax process="@this" />
-													</p:inputTextarea>
-												</p:column>
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD321}"/>
+										</p:commandButton>
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnFour}" />
 												
-											
-												<p:column>
-													<p:outputLabel value="#{etiquetas['asisteHombres']}"/>
-												</p:column>
-												<p:column>
-													<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnEight}" >
-														<p:ajax process="@this" />
-													</p:inputNumber>
-												</p:column>
-												<p:column>
-													<p:outputLabel value="#{etiquetas['asisteMujeres']}"/>
-												</p:column>
-												<p:column>
-													<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestas.tareColumnTen}" >
-														<p:ajax process="@this" />
-													</p:inputNumber>
-												</p:column>
-											</p:row>
-										</p:panelGrid>
-									</p:outputPanel>
-								</div>	
-
+									</div>									
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['espacio']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnFive}" />
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['actor']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnSix}" />
+												
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['nacionalidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnSeven}" />
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['asisteHombres']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnEight}" />
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:outputLabel value="#{etiquetas['asisteMujeres']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnTen}" />
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+									</div>
 							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
+							
+							
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
@@ -3600,18 +4151,24 @@
 								                	process="@this :form:salvaguardas:panelTabla321D">
 								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
 								                </p:commandButton>
-								                <p:commandButton icon="#{botones['icono.editar']}">
-												
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaD321()}"
+													process="@this :form:salvaguardas:panelIngreso321D" update=":form:salvaguardas:panelIngreso321D">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD321}"/>
 												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton icon="#{botones['icono.mas']}" process="@this panelIngreso321D" update="panelIngreso321D"
-										actionListener="#{seguimientoSalvaguardaController.nuevaFilaTablaSalvaguardaD321()}">
-										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaRegistroTablaD321}"></f:setPropertyActionListener>
-									</p:commandButton>	 
+ 
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso321D"
+										update=":form:salvaguardas:panelIngreso321D" action="#{seguimientoSalvaguardaController.inicializaNuevoRegistroTablasD321()}"
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD321}" />
+									</p:commandButton>
 								</div>
 							</div>
 							<br />
@@ -3640,6 +4197,53 @@
 							</div>
 							
 							<br/>
+							<p:outputPanel id="panelIngreso331D" >
+							<div class="p-field p-col-12 p-md-10">
+							<p:panel id="panel331D" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD331}" header="#{titulos['datosSolicitados']}">
+							<div class="ui-fluid p-formgrid p-grid">
+																									
+									<div class="p-field p-col-12 p-md-2">
+										<p:outputLabel value="#{etiquetas['actorOrganizacion']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331.tareColumnOne}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331.tareColumnTwo}"/>
+									</div>									
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla331D panelIngreso331D"																							
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaD331()}"
+															update="panelTabla331D :form:growl panelIngreso331D"/>
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso331D" update="panelIngreso331D">
+											
+											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD331}"/>
+										</p:commandButton>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:outputLabel value="#{etiquetas['involucramiento']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331.tareColumnTree}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:outputLabel value="#{etiquetas['inversionRealizada']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331.tareColumnFour}"/>
+												
+									</div>									
+									<div class="p-field p-col-12 p-md-2">
+									</div>
+							</div>
+							</p:panel>
+							</div>
+							</p:outputPanel>									
+							
+							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-10">
 									<h:panelGrid id="panelTabla331D">
@@ -3649,32 +4253,24 @@
 											var="tablarespuestas">
 											
 											<p:column headerText="#{etiquetas['actorOrganizacion']}" styleClass="cabeceraTabla">
-												<p:inputTextarea value="#{tablarespuestas.tareColumnOne}">
-													<p:ajax process="@this" event="blur"/>
-												</p:inputTextarea>
+												<p:outputLabel value="#{tablarespuestas.tareColumnOne}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['autoDeterminaEtnia']}" styleClass="cabeceraTabla">
-												<p:inputTextarea value="#{tablarespuestas.tareColumnTwo}">
-													<p:ajax process="@this" event="blur"/>
-												</p:inputTextarea>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['involucramiento']}" styleClass="cabeceraTabla">
-												<p:inputTextarea value="#{tablarespuestas.tareColumnTree}">
-													<p:ajax process="@this" event="blur"/>
-												</p:inputTextarea>
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['inversionRealizada']}" styleClass="cabeceraTabla">
-												<p:inputNumber value="#{tablarespuestas.tareColumnFour}">
-													<p:ajax process="@this" event="blur"/>
-												</p:inputNumber>
+												<p:outputLabel value="#{tablarespuestas.tareColumnFour}"/>
 											</p:column>																							
 																																	
 											<p:column>
-												<p:commandButton action="#{seguimientoSalvaguardaController.eliminaRegistroTablaSalvaguarda(21)}" 
-								                	update=":form:salvaguardas:panelTabla331D" icon="#{botones['icono.borrar']}"
-								                	process="@this :form:salvaguardas:panelTabla331D">
-								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
-								                </p:commandButton>
+								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
+													process="@this :form:salvaguardas:panelIngreso331D" update=":form:salvaguardas:panelIngreso331D">
+													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331}"/>
+													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD331}"/>
+												</p:commandButton>
 											</p:column>
 										</p:dataTable>
 									</h:panelGrid>
@@ -3687,6 +4283,14 @@
 										actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaD331()}"
 										update="panelTabla331D :form:growl"
 										 />
+																					
+									<p:commandButton icon="#{botones['icono.mas']}"
+										process="@this :form:salvaguardas:panelIngreso331D"
+										update=":form:salvaguardas:panelIngreso331D" 
+										title="#{tooltip['nuevoRegistro']}">
+										<f:setPropertyActionListener value="true"
+											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaD331}" />
+									</p:commandButton>	 
 								</div>
 							</div>
 							<br/>
