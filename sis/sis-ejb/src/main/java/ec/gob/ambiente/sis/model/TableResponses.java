@@ -127,6 +127,12 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Transient
+	@Column(name = "tare_Generico")
+	private String tareGenerico;
+	
+	@Getter
+	@Setter
 	@JoinColumn(name = "ques_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
 	private Questions questions;
