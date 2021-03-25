@@ -12,7 +12,8 @@ public enum TipoCatalogoEnum {
 	LEYES(3,"Leyes"),
 	PLANPROYECTO(4,"PlanProyecto"),
 	INFORMEEJECUCION(5,"InformeEjecucion"),
-	INFORMECOMUNICACION(6,"InformeComunicacion");
+	INFORMECOMUNICACION(6,"InformeComunicacion"),
+	MEDIDATOMADA(7,"MedidaTomada");
 	
 	@Getter
 	private final int codigo;

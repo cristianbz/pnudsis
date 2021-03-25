@@ -42,6 +42,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoMedidaTomada;
+	
+	@Getter
+	@Setter
 	private String codigoProvincia;
 	
 	@Getter
@@ -83,6 +87,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<GeographicalLocations> listaParroquias;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaCatalogoMedidaTomada;
 	
 	@Getter
 	@Setter
@@ -362,6 +370,26 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaF411;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaF421;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaF431;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaF441;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaF452;
+	
+	@Getter
+	@Setter
 	private boolean salvaguardaA;
 	
 	@Getter
@@ -514,6 +542,26 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean nuevoRegistroTablaF411;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaF421;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaF431;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaF441;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaF452;
+	
+	@Getter
+	@Setter
 	private TableResponses registroTablaRespuestas;
 	
 	@Getter
@@ -624,6 +672,26 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private TableResponses registroTablaRespuestasE391;
 	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasF411;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasF421;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasF431;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasF441;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasF452;
+	
 	@PostConstruct
 	public void init(){
 		registroTablaRespuestas= new TableResponses();
@@ -654,6 +722,11 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasE371= new TableResponses();
 		registroTablaRespuestasE381= new TableResponses();
 		registroTablaRespuestasE391= new TableResponses();
+		registroTablaRespuestasF411= new TableResponses();
+		registroTablaRespuestasF421= new TableResponses();
+		registroTablaRespuestasF431= new TableResponses();
+		registroTablaRespuestasF441= new TableResponses();
+		registroTablaRespuestasF452= new TableResponses();
 		
 		listaProyectos=new ArrayList<>();
 		listaValoresRespuestas= new ArrayList<>();
@@ -693,6 +766,11 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaE371= new ArrayList<>();
 		tablaSalvaguardaE381= new ArrayList<>();
 		tablaSalvaguardaE391= new ArrayList<>();
+		tablaSalvaguardaF411= new ArrayList<>();
+		tablaSalvaguardaF421= new ArrayList<>();
+		tablaSalvaguardaF431= new ArrayList<>();
+		tablaSalvaguardaF441= new ArrayList<>();
+		tablaSalvaguardaF452= new ArrayList<>();
 	}
 
 }
