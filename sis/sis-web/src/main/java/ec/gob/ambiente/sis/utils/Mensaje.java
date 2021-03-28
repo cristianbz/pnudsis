@@ -1,7 +1,5 @@
 package ec.gob.ambiente.sis.utils;
 
-import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 

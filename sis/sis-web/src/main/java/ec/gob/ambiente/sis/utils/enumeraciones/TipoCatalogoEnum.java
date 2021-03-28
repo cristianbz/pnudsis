@@ -13,7 +13,9 @@ public enum TipoCatalogoEnum {
 	PLANPROYECTO(4,"PlanProyecto"),
 	INFORMEEJECUCION(5,"InformeEjecucion"),
 	INFORMECOMUNICACION(6,"InformeComunicacion"),
-	MEDIDATOMADA(7,"MedidaTomada");
+	MEDIDATOMADA(7,"MedidaTomada"),
+	MONITOREOREMOTO(8,"MonitoreoRemoto"),
+	MONITOREOINSITU(9,"MonitoreoInSitu");
 	
 	@Getter
 	private final int codigo;

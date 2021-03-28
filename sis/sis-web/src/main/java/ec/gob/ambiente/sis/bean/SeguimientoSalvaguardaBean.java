@@ -19,6 +19,7 @@ import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoParticipanteEnum;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +32,13 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-
+	@Setter
+	private TipoParticipanteEnum[] tipoParticipanteEnum;
+	
+	@Getter
+	@Setter
+	private Integer codigoTipoParticipante;
+	
 	@Getter
 	@Setter
 	private TableResponses registroTabla;
@@ -44,6 +51,18 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private Integer codigoMedidaTomada;
 	
+	@Getter
+	@Setter
+	private Integer codProvincia;
+
+	@Getter
+	@Setter
+	private Integer codCanton;
+
+	@Getter
+	@Setter
+	private Integer codParroquia;
+
 	@Getter
 	@Setter
 	private String codigoProvincia;
@@ -87,6 +106,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<GeographicalLocations> listaParroquias;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoMonitoreoRemoto;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoMonitoreoInSitu;
 	
 	@Getter
 	@Setter
@@ -390,6 +417,34 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaG461;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaG471;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaG472;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaG481;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaG491;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaG501;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaG512;
+	
+	@Getter
+	@Setter
 	private boolean salvaguardaA;
 	
 	@Getter
@@ -562,6 +617,34 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean nuevoRegistroTablaG461;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaG471;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaG472;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaG481;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaG491;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaG501;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaG512;
+	
+	@Getter
+	@Setter
 	private TableResponses registroTablaRespuestas;
 	
 	@Getter
@@ -692,6 +775,34 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private TableResponses registroTablaRespuestasF452;
 	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasG461;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasG471;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasG472;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasG481;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasG491;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasG501;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasG512;
+	
 	@PostConstruct
 	public void init(){
 		registroTablaRespuestas= new TableResponses();
@@ -727,6 +838,13 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasF431= new TableResponses();
 		registroTablaRespuestasF441= new TableResponses();
 		registroTablaRespuestasF452= new TableResponses();
+		registroTablaRespuestasG461= new TableResponses();
+		registroTablaRespuestasG471= new TableResponses();
+		registroTablaRespuestasG472= new TableResponses();
+		registroTablaRespuestasG481= new TableResponses();
+		registroTablaRespuestasG491= new TableResponses();
+		registroTablaRespuestasG501= new TableResponses();
+		registroTablaRespuestasG512= new TableResponses();
 		
 		listaProyectos=new ArrayList<>();
 		listaValoresRespuestas= new ArrayList<>();
@@ -771,6 +889,17 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaF431= new ArrayList<>();
 		tablaSalvaguardaF441= new ArrayList<>();
 		tablaSalvaguardaF452= new ArrayList<>();
+		tablaSalvaguardaG461= new ArrayList<>();
+		tablaSalvaguardaG471= new ArrayList<>();
+		tablaSalvaguardaG472= new ArrayList<>();
+		tablaSalvaguardaG481= new ArrayList<>();
+		tablaSalvaguardaG491= new ArrayList<>();
+		tablaSalvaguardaG501= new ArrayList<>();
+		tablaSalvaguardaG512= new ArrayList<>();
+	}
+
+	public TipoParticipanteEnum[] getTipoParticipanteEnum() {
+		return TipoParticipanteEnum.listaValores();
 	}
 
 }

@@ -7,7 +7,8 @@ public enum TipoRespuestaEnum {
 	CHECKBOX(2,"Check Box"),
 	TEXTO(3,"Texto"),
 	TABLA(4,"Tabla"),
-	LISTA(4,"Tabla");	
+	LISTA(4,"Tabla"),
+	SINRESPUESTA(62,"SinRespuesta");	
 	@Getter
 	private final int codigo;
 
