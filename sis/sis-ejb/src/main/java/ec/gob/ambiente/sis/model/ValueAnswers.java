@@ -55,8 +55,8 @@ public class ValueAnswers  {
 	
 	@Getter
 	@Setter
-	@Column(name = "vaan_remove_state")
-	private boolean vaanRemoveState;
+	@Column(name = "vaan_status")
+	private boolean vaanStatus;
 	
 	@Getter
 	@Setter

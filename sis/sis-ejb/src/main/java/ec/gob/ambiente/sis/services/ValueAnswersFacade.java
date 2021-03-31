@@ -36,11 +36,33 @@ public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> {
 	 * @throws Exception
 	 */
 	public List<ValueAnswers> buscarPorAvanceEjecucionYSalvaguarda(int codigoAvanceEjecucion,int codigoSalvaguarda) throws Exception{
-		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.advanceExecutionSaveguards.adexDropState=TRUE AND VA.questions.safeguards.safeId=:codigoSalvaguarda";
+		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.vaanStatus=TRUE  AND VA.advanceExecutionSaveguards.adexDropState=TRUE AND VA.questions.safeguards.safeId=:codigoSalvaguarda";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
 		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Eliminacion lógica de la informacion de la respuesta
+	 * @param valorRespuesta
+	 */
+	public void eliminaInformacionRespuesta(ValueAnswers valorRespuesta){
+		valorRespuesta.setVaanStatus(false);
+		edit(valorRespuesta);
+	}
+	/**
+	 * Agrega una nueva fila a la tabla ValueAnswers
+	 * @param valorRespuesta
+	 */
+	public void agregarNuevaInformacionRespuesta(ValueAnswers valorRespuesta){
+		create(valorRespuesta);
+	}
+	/**
+	 * Actualiza el registro ValueAnswers
+	 * @param valorRespuesta
+	 */
+	public void editarInformacionRespuestas(ValueAnswers valorRespuesta){
+		edit(valorRespuesta);
 	}
 
 }

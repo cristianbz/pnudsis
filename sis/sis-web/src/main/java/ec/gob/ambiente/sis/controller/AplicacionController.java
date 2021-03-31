@@ -16,6 +16,8 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 
 import ec.gob.ambiente.sis.bean.AplicacionBean;
+import ec.gob.ambiente.sis.services.CatalogsFacade;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
 import ec.gob.ambiente.suia.service.GeographicalLocationsFacade;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +38,10 @@ public class AplicacionController implements Serializable{
     
     @EJB
    	@Getter
+   	private CatalogsFacade catalogsFacade;
+    
+    @EJB
+   	@Getter
    	private GeographicalLocationsFacade geographicalLocationsFacade;
     
     @Getter
@@ -53,6 +59,7 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaProvincias(getGeographicalLocationsFacade().listarProvincias());
     		getAplicacionBean().setListaTodosCantones(getGeographicalLocationsFacade().listarCantones());
     		getAplicacionBean().setListaTodasParroquias(getGeographicalLocationsFacade().listarParroquias());
+    		getAplicacionBean().setListaPueblosNacionalidades(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PUEBLOSNACIONALIDADES.getCodigo()));
     	}catch(Exception e ){
     		e.printStackTrace();
     	}

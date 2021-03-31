@@ -10,6 +10,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
+import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,10 @@ public class AplicacionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Object[]> listaTodasParroquias;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaPueblosNacionalidades;
 
 }
 

@@ -37,7 +37,19 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private String codigoTablaDatos;
+	
+	@Getter
+	@Setter
+	private String codigoValoresRespuestas;
+	
+	@Getter
+	@Setter
 	private Integer codigoTipoParticipante;
+	
+	@Getter
+	@Setter
+	private Integer codigoPuebloNacionalidad;
 	
 	@Getter
 	@Setter
@@ -107,13 +119,13 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private List<GeographicalLocations> listaParroquias;
 	
-	@Getter
-	@Setter
-	private List<Catalogs> catalogoMonitoreoRemoto;
-	
-	@Getter
-	@Setter
-	private List<Catalogs> catalogoMonitoreoInSitu;
+//	@Getter
+//	@Setter
+//	private List<Catalogs> catalogoMonitoreoRemoto;
+//	
+//	@Getter
+//	@Setter
+//	private List<Catalogs> catalogoMonitoreoInSitu;
 	
 	@Getter
 	@Setter

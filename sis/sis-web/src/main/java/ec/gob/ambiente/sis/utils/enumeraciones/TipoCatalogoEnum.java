@@ -14,7 +14,7 @@ public enum TipoCatalogoEnum {
 	INFORMEEJECUCION(5,"InformeEjecucion"),
 	INFORMECOMUNICACION(6,"InformeComunicacion"),
 	MEDIDATOMADA(7,"MedidaTomada"),
-	MONITOREOREMOTO(8,"MonitoreoRemoto"),
+	PUEBLOSNACIONALIDADES(8,"PueblosNacionalidades"),
 	MONITOREOINSITU(9,"MonitoreoInSitu");
 	
 	@Getter
