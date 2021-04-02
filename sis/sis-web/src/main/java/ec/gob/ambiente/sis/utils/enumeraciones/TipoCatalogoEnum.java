@@ -15,7 +15,10 @@ public enum TipoCatalogoEnum {
 	INFORMECOMUNICACION(6,"InformeComunicacion"),
 	MEDIDATOMADA(7,"MedidaTomada"),
 	PUEBLOSNACIONALIDADES(8,"PueblosNacionalidades"),
-	MONITOREOINSITU(9,"MonitoreoInSitu");
+	AUTOIDENTIFICACION(9,"AutoIdentificacion"),
+	HERRAMIENTA(10,"Herramienta"),
+	PUBLICO(11,"Publico"),
+	METODO(12,"Metodo");
 	
 	@Getter
 	private final int codigo;

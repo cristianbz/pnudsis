@@ -51,15 +51,19 @@ public class AplicacionController implements Serializable{
     
     @PostConstruct
     public void ini(){
-    	cargarProvinciaCantonParroquia();    	
+    	cargarCatalogos();    	
     }
     
-    public void cargarProvinciaCantonParroquia(){
+    public void cargarCatalogos(){
     	try{
     		getAplicacionBean().setListaProvincias(getGeographicalLocationsFacade().listarProvincias());
     		getAplicacionBean().setListaTodosCantones(getGeographicalLocationsFacade().listarCantones());
     		getAplicacionBean().setListaTodasParroquias(getGeographicalLocationsFacade().listarParroquias());
     		getAplicacionBean().setListaPueblosNacionalidades(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PUEBLOSNACIONALIDADES.getCodigo()));
+    		getAplicacionBean().setListaAutoIdentificacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.AUTOIDENTIFICACION.getCodigo()));
+    		getAplicacionBean().setListaHerramientas(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.HERRAMIENTA.getCodigo()));
+    		getAplicacionBean().setListaPublico(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PUBLICO.getCodigo()));
+    		getAplicacionBean().setListaMetodo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.METODO.getCodigo()));
     	}catch(Exception e ){
     		e.printStackTrace();
     	}

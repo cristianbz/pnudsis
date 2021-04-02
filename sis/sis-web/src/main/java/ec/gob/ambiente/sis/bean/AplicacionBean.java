@@ -11,7 +11,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
 import ec.gob.ambiente.sis.model.Catalogs;
-import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,6 +35,22 @@ public class AplicacionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> listaPueblosNacionalidades;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaAutoIdentificacion;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaHerramientas;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaMetodo;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaPublico;
 
 }
 

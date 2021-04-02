@@ -19,6 +19,7 @@ import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoConformacionEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoParticipanteEnum;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
@@ -35,6 +36,9 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private TipoParticipanteEnum[] tipoParticipanteEnum;
 	
+	@Setter
+	private TipoConformacionEnum[] tipoConformacionEnum;
+	
 	@Getter
 	@Setter
 	private String codigoTablaDatos;
@@ -49,7 +53,27 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoTipoConformacion;
+	
+	@Getter
+	@Setter
 	private Integer codigoPuebloNacionalidad;
+	
+	@Getter
+	@Setter
+	private Integer codigoHerramienta;
+	
+	@Getter
+	@Setter
+	private Integer codigoPublico;
+	
+	@Getter
+	@Setter
+	private Integer codigoMetodo;
+	
+	@Getter
+	@Setter
+	private Integer codigoAutoIdentificacion;
 	
 	@Getter
 	@Setter
@@ -913,5 +937,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	public TipoParticipanteEnum[] getTipoParticipanteEnum() {
 		return TipoParticipanteEnum.listaValores();
 	}
+	
+	public TipoConformacionEnum[] getTipoConformacionEnum() {
+		return TipoConformacionEnum.listaValores();
+	}
+
 
 }
