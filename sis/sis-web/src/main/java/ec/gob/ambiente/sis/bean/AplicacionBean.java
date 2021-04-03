@@ -51,6 +51,22 @@ public class AplicacionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> listaPublico;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaServicio;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaRecursos;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaPeriodicidad;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaSistemas;
 
 }
 

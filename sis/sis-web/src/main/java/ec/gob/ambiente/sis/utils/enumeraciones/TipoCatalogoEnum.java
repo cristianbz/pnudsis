@@ -18,7 +18,11 @@ public enum TipoCatalogoEnum {
 	AUTOIDENTIFICACION(9,"AutoIdentificacion"),
 	HERRAMIENTA(10,"Herramienta"),
 	PUBLICO(11,"Publico"),
-	METODO(12,"Metodo");
+	METODO(12,"Metodo"),
+	SERVICIO(13,"Servicio"),
+	PERIODICIDAD(14,"Periodicidad"),
+	RECURSOS(15,"Recursos"),
+	SISTEMAS(16,"Sistemas");
 	
 	@Getter
 	private final int codigo;

@@ -69,6 +69,22 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoServicio;
+	
+	@Getter
+	@Setter
+	private Integer codigoRecursos;
+	
+	@Getter
+	@Setter
+	private Integer codigoPeriodicidad;
+	
+	@Getter
+	@Setter
+	private Integer codigoSistemas;
+	
+	@Getter
+	@Setter
 	private Integer codigoMetodo;
 	
 	@Getter
