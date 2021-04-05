@@ -87,6 +87,8 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 			if(salvaguarda==1){
 				edit(avanceEjecucion);
 				listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId()).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());				
+
+				System.out.println(listaAux.size() + " tammmm");
 				listaAux.stream().forEach(tr->{
 					try {
 						tableResponsesFacade.eliminarRespuestasTabla(tr);						

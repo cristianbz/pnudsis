@@ -2,12 +2,17 @@ package ec.gob.ambiente.sis.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+import org.primefaces.component.tabview.TabView;
 
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
@@ -20,6 +25,7 @@ import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoConformacionEnum;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoInstitucionEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoParticipanteEnum;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
@@ -34,10 +40,21 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Setter
+	@Getter
+	private int tabActual;
+	
+	@Getter
+	@Setter
+	private Map<Integer, Integer> mapaTabs; 
+	
+	@Setter
 	private TipoParticipanteEnum[] tipoParticipanteEnum;
 	
 	@Setter
 	private TipoConformacionEnum[] tipoConformacionEnum;
+	
+	@Setter
+	private TipoInstitucionEnum[] tipoInstitucionEnum;
 	
 	@Getter
 	@Setter
@@ -89,6 +106,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoTipoInstitucion;
+	
+	@Getter
+	@Setter
+	private Integer codigoAccion;
+	
+	@Getter
+	@Setter
 	private Integer codigoAutoIdentificacion;
 	
 	@Getter
@@ -115,21 +140,21 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private Integer codParroquia;
 
-	@Getter
-	@Setter
-	private String codigoProvincia;
+//	@Getter
+//	@Setter
+//	private String codigoProvincia;
 	
 	@Getter
 	@Setter
 	private String codigoNivelProCanParr;
 	
-	@Getter
-	@Setter
-	private String codigoCanton;
-	
-	@Getter
-	@Setter
-	private String codigoParroquia;
+//	@Getter
+//	@Setter
+//	private String codigoCanton;
+//	
+//	@Getter
+//	@Setter
+//	private String codigoParroquia;
 		
 	@Getter
 	@Setter
@@ -857,6 +882,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@PostConstruct
 	public void init(){
+		mapaTabs =new TreeMap<Integer,Integer>();
 		registroTablaRespuestas= new TableResponses();
 		registroTablaRespuestasA = new TableResponses();
 		registroTablaRespuestasB102 = new TableResponses();
@@ -958,5 +984,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		return TipoConformacionEnum.listaValores();
 	}
 
-
+	public TipoInstitucionEnum[] getTipoInstitucionEnum() {
+		return TipoInstitucionEnum.listaValores();
+	}
 }
