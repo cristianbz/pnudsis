@@ -183,7 +183,8 @@ public class SeguimientoController implements Serializable{
 		
 		getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(new ArrayList<>());
 		for(AdvanceSectors as:getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdvanceSectorsList()){			
-			getSeguimientoSalvaguardaBean().getListaSectoresSeleccionados().add(as.getSectors().getSectId().toString());
+//			getSeguimientoSalvaguardaBean().getListaSectoresSeleccionados().add(String.valueOf(as.getSectors().getSectId()));
+			getSeguimientoSalvaguardaBean().getListaSectoresSeleccionados().add(as.getSectors().getSectId());
 		}		
 	}
 	/**

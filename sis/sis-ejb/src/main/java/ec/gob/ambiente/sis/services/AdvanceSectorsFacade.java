@@ -30,7 +30,7 @@ public class AdvanceSectorsFacade extends AbstractFacade<AdvanceSectors,Integer>
 		remove(avanceSectors);
 	}
 	public List<AdvanceSectors> listaAvanceSectoresPorAvanceEjecucion(int codigoAvanceEjecucion) throws Exception{
-		String sql="SELECT A FROM AdvanceSectors A WHERE A.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion";
+		String sql="SELECT A FROM AdvanceSectors A WHERE A.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND A.adseSelectedSector = True";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		return findByCreateQuery(sql, camposCondicion);

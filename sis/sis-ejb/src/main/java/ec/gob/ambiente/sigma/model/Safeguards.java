@@ -68,6 +68,16 @@ public class Safeguards  {
 	
 	@Getter
 	@Setter
+	@Column(name = "safe_code")
+	private String safeCode;
+	
+	@Getter
+	@Setter
+	@Column(name = "safe_title")
+	private String safeTitle;
+	 
+	@Getter
+	@Setter
 	@Column(name = "safe_status")
 	private boolean safeStatus;
 	

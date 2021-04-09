@@ -38,8 +38,10 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	 * @throws Exception
 	 */
 	public void eliminarRespuestasTabla(TableResponses tableResponses) throws Exception{
-		TableResponses objetoEliminar = getEntityManager().find(TableResponses.class, tableResponses.getTareId());
-		remove(objetoEliminar);
+//		TableResponses objetoEliminar = getEntityManager().find(TableResponses.class, tableResponses.getTareId());
+//		remove(objetoEliminar);
+		tableResponses.setTareStatus(false);
+		edit(tableResponses);
 	}
 	/**
 	 * Elimina los datos de la tabla (coloca estado de elimancion a false)
@@ -51,6 +53,13 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 			tableResponses.setTareStatus(false);
 			edit(tableResponses);
 		}
+	}
+	public List<TableResponses> buscarPorAvanceEjecucionYSalvaguarda(int codigoAvanceEjecucion, int codigoSalvaguarda) throws Exception{
+		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.safeguards.safeId=:codigoSalvaguarda";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
+		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
+		return findByCreateQuery(sql, camposCondicion);
 	}
 
 }

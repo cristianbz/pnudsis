@@ -66,6 +66,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoAlternativaEconomica;
+	
+	@Getter
+	@Setter
 	private Integer codigoTipoParticipante;
 	
 	@Getter
@@ -210,7 +214,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<String> catalogoInformacionComunicaSeleccionado;
+	private List<Integer> catalogoInformacionComunicaSeleccionado;
 	
 	@Getter
 	@Setter
@@ -218,11 +222,11 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<String> catalogoInformacionEjecucionSeleccionado;
+	private List<Integer> catalogoInformacionEjecucionSeleccionado;
 	
 	@Getter
 	@Setter
-	private List<String> catalogoPoliticasSeleccionado;
+	private List<Integer> catalogoPoliticasSeleccionado;
 	
 	@Getter
 	@Setter
@@ -234,7 +238,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<String> catalogoLeyesSeleccionado;
+	private List<Integer> catalogoLeyesSeleccionado;
 	
 	@Getter
 	@Setter
@@ -298,7 +302,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<String> listaSectoresSeleccionados;
+	private List<Integer> listaSectoresSeleccionados;
 	
 	@Getter
 	@Setter
@@ -522,6 +526,34 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaOPA;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaOPB;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaOPC;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaOPD;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaOPE;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaOPF;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaOPG;
+	
+	@Getter
+	@Setter
 	private boolean salvaguardaA;
 	
 	@Getter
@@ -563,6 +595,34 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private boolean nuevoRegistroTablaA1;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaOPA;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaOPB;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaOPC;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaOPD;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaOPE;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaOPF;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaOPG;
 	
 	@Getter
 	@Setter
@@ -880,6 +940,29 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private TableResponses registroTablaRespuestasG512;
 	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasOPA;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasOPB;
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasOPC;
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasOPD;
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasOPE;
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasOPF;
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasOPG;
+	
 	@PostConstruct
 	public void init(){
 		mapaTabs =new TreeMap<Integer,Integer>();
@@ -923,6 +1006,13 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasG491= new TableResponses();
 		registroTablaRespuestasG501= new TableResponses();
 		registroTablaRespuestasG512= new TableResponses();
+		registroTablaRespuestasOPA= new TableResponses();
+		registroTablaRespuestasOPB= new TableResponses();
+		registroTablaRespuestasOPC= new TableResponses();
+		registroTablaRespuestasOPD= new TableResponses();
+		registroTablaRespuestasOPE= new TableResponses();
+		registroTablaRespuestasOPF= new TableResponses();
+		registroTablaRespuestasOPG= new TableResponses();
 		
 		listaProyectos=new ArrayList<>();
 		listaValoresRespuestas= new ArrayList<>();
@@ -974,6 +1064,13 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaG491= new ArrayList<>();
 		tablaSalvaguardaG501= new ArrayList<>();
 		tablaSalvaguardaG512= new ArrayList<>();
+		tablaSalvaguardaOPA= new ArrayList<>();
+		tablaSalvaguardaOPB= new ArrayList<>();
+		tablaSalvaguardaOPC= new ArrayList<>();
+		tablaSalvaguardaOPD= new ArrayList<>();
+		tablaSalvaguardaOPE= new ArrayList<>();
+		tablaSalvaguardaOPF= new ArrayList<>();
+		tablaSalvaguardaOPG= new ArrayList<>();
 	}
 
 	public TipoParticipanteEnum[] getTipoParticipanteEnum() {

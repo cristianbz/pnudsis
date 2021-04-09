@@ -71,7 +71,7 @@
 
 .estiloMenuItemSeccionActual{
 	color:#ffffff !important;
-	background: #00AAC3 !important;
+	background: #00AAC3 !important;	
 }
 
 .ui-button {
@@ -95,3 +95,6 @@
 	right:0px;
 	width:25px;
 }
+.ui-selectonemenu-label{
+     width: 100% !important;
+}  

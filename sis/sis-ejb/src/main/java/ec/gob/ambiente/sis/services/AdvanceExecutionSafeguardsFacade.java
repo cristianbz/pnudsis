@@ -73,22 +73,22 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 					valueAnswersFacade.edit(respuestas);
 			}
 		}else{
-			List<AdvanceSectors> listaSectores=new ArrayList<>();
-			List<TableResponses> listaAux=new ArrayList<>();			
-			listaSectores = advanceSectorsFacade.listaAvanceSectoresPorAvanceEjecucion(avanceEjecucion.getAdexId());
-			
-			listaSectores.stream().forEach(s->{
-				try {
-					advanceSectorsFacade.eliminarAvanceSectores(s);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			});
+//			List<AdvanceSectors> listaSectores=new ArrayList<>();
+			List<TableResponses> listaAux=new ArrayList<>();
+			List<TableResponses> listaFiltrada=new ArrayList<>();
+//			listaSectores = advanceSectorsFacade.listaAvanceSectoresPorAvanceEjecucion(avanceEjecucion.getAdexId());
+//			
+//			listaSectores.stream().forEach(s->{
+//				try {
+//					advanceSectorsFacade.eliminarAvanceSectores(s);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			});
+			controlaAvencesSectores(avanceEjecucion.getAdvanceSectorsList(), avanceEjecucion.getAdexId());
 			if(salvaguarda==1){
 				edit(avanceEjecucion);
-				listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId()).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());				
-
-				System.out.println(listaAux.size() + " tammmm");
+				listaAux = tableResponsesFacade.buscarPorAvanceEjecucionYSalvaguarda(avanceEjecucion.getAdexId(),salvaguarda).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());				
 				listaAux.stream().forEach(tr->{
 					try {
 						tableResponsesFacade.eliminarRespuestasTabla(tr);						
@@ -96,12 +96,17 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 						e.printStackTrace();
 					}
 				});
-				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
-					if(respuestaTabla.getTareId()==null)
-						tableResponsesFacade.create(respuestaTabla);
-					else
-						tableResponsesFacade.edit(respuestaTabla);
-				}
+				listaFiltrada = avanceEjecucion.getTableResponsesList().stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());
+				listaFiltrada.stream().forEach(tr->{
+					tr.setTareId(null);
+					tableResponsesFacade.create(tr);
+				});
+//				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
+//					if(respuestaTabla.getTareId()==null)
+//						tableResponsesFacade.create(respuestaTabla);
+//					else
+//						tableResponsesFacade.edit(respuestaTabla);
+//				}
 				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
 					if(respuestas.getVaanId()==null)
 						valueAnswersFacade.create(respuestas);
@@ -110,7 +115,7 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 				}
 			}else if(salvaguarda==2){
 				edit(avanceEjecucion);
-				listaAux = tableResponsesFacade.findByAdvanceExecution(avanceEjecucion.getAdexId()).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder() ==26 || tr.getQuestions().getQuesQuestionOrder() ==27).collect(Collectors.toList());				
+				listaAux = tableResponsesFacade.buscarPorAvanceEjecucionYSalvaguarda(avanceEjecucion.getAdexId(),salvaguarda).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder() ==26 || tr.getQuestions().getQuesQuestionOrder() ==27).collect(Collectors.toList());				
 				listaAux.stream().forEach(tr->{
 					try {
 						tableResponsesFacade.eliminarRespuestasTabla(tr);	
@@ -119,13 +124,18 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 						e.printStackTrace();
 					}
 				});
+				listaFiltrada = avanceEjecucion.getTableResponsesList().stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==26 || tr.getQuestions().getQuesQuestionOrder()==27).collect(Collectors.toList());
+				listaFiltrada.stream().forEach(tr->{
+					tr.setTareId(null);
+					tableResponsesFacade.create(tr);
+				});
 				
-				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
-					if(respuestaTabla.getTareId()==null)
-						tableResponsesFacade.create(respuestaTabla);
-					else
-						tableResponsesFacade.edit(respuestaTabla);
-				}
+//				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
+//					if(respuestaTabla.getTareId()==null)
+//						tableResponsesFacade.create(respuestaTabla);
+//					else
+//						tableResponsesFacade.edit(respuestaTabla);
+//				}
 				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
 					if(respuestas.getVaanId()==null)
 						valueAnswersFacade.create(respuestas);
@@ -152,6 +162,37 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 		}
 		return avanceEjecucion;
 
+	}
+	public void controlaAvencesSectores(List<AdvanceSectors> listaAvanceSectores,int codigoAvanceEjecucion) throws Exception{
+		List<AdvanceSectors> listaTemp=advanceSectorsFacade.listaAvanceSectoresPorAvanceEjecucion(codigoAvanceEjecucion);
+		if(listaTemp.size()==listaAvanceSectores.size()){
+			boolean encontrado=false;
+			for (AdvanceSectors asTemp : listaTemp) {
+				encontrado=false;
+				for (AdvanceSectors as : listaAvanceSectores) {
+					if(asTemp.getSectors().getSectId().equals(as.getSectors().getSectId())){
+						as.setAdseId(asTemp.getAdseId());
+						encontrado=true;
+						break;
+					}
+				}
+				if(encontrado==false){
+					break;
+				}
+			}
+			if(encontrado==false){
+				for (AdvanceSectors asTemp : listaTemp) {
+					asTemp.setAdseSelectedSector(false);
+					advanceSectorsFacade.eliminarAvanceSectores(asTemp);
+				}
+			}
+			
+		}else if(listaTemp.size()>=listaAvanceSectores.size() || listaTemp.size()<=listaAvanceSectores.size()){
+			for (AdvanceSectors asTemp : listaTemp) {
+				asTemp.setAdseSelectedSector(false);
+				advanceSectorsFacade.edit(asTemp);
+			}
+		}
 	}
 
 }

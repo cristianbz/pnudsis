@@ -35,6 +35,10 @@ public class AdvanceSectors  {
     @Column(name = "adse_id")
     private Integer adseId;
 	
+	@Getter
+	@Setter
+	@Column(name = "adse_selected_sector")
+	private boolean adseSelectedSector;
 	
 	@Getter
 	@Setter

@@ -23,8 +23,13 @@ public class SafeguardsFacade extends AbstractFacade<Safeguards, Integer> {
 	 * Carga todas las salvaguardas registradas
 	 */
 	public List<Safeguards> buscarTodosLosProyectos() throws Exception{
-		String sql="SELECT S FROM Safeguards S WHERE S.safeStatus=true AND S.actionPlans.acplIscurrent=TRUE AND S.actionPlans.acplStatus=TRUE";
+		String sql="SELECT S FROM Safeguards S WHERE S.safeStatus=true AND S.actionPlans.acplIscurrent=TRUE AND S.actionPlans.acplStatus=TRUE ORDER BY S.safeId";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
 		return findByCreateQuery(sql, camposCondicion);
+	}
+	
+	public List<Object[]> listarSalvaguardas() throws Exception {
+		String sql = "select safe_id,safe_description,safe_order,safe_code from sigma.safeguards WHERE safe_level=1 order by safe_order";
+		return consultaNativa(sql);
 	}
 }

@@ -23,7 +23,9 @@ public enum TipoCatalogoEnum {
 	PERIODICIDAD(14,"Periodicidad"),
 	RECURSOS(15,"Recursos"),
 	SISTEMAS(16,"Sistemas"),
-	ACCION(17,"Accion");
+	ACCION(17,"Accion"),
+	CONTROLVIGILANCIA(18,"ControlVigilancia"),
+	ALTERNATIVAECONOMICA(19,"AlternativaEconomica");
 	
 	@Getter
 	private final int codigo;

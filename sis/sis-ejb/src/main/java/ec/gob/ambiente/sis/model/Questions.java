@@ -106,7 +106,7 @@ public class Questions  {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "questions", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "questions")
 	private List<ValueAnswers> valueAnswersList;
 	
 	@Getter

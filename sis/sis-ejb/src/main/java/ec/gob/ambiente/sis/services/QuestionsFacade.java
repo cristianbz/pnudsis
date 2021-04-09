@@ -43,8 +43,8 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Questions> buscarPreguntasPorSalvaguardas(List<Integer> codigosSalvaguardas) throws Exception{
-		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId IN(:codigoSalvaguarda) AND Q.quesDropState=True ORDER BY Q.quesQuestionOrder";
+	public List<Questions> buscarPreguntasPorSalvaguardas(List<Integer> codigosSalvaguardas) throws Exception{		
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId IN (:codigoSalvaguarda) AND Q.quesDropState=True ORDER BY Q.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoSalvaguarda", codigosSalvaguardas);
 		return findByCreateQuery(sql, camposCondicion);

@@ -8,7 +8,7 @@ public enum TipoRespuestaEnum {
 	TEXTO(3,"Texto"),
 	TABLA(4,"Tabla"),
 	LISTA(4,"Tabla"),
-	SINRESPUESTA(62,"SinRespuesta");	
+	SINRESPUESTA(6,"SinRespuesta");	
 	@Getter
 	private final int codigo;
 
