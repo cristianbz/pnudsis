@@ -25,7 +25,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "sectors", schema = "sis")
 @NamedQueries({
-	@NamedQuery(name = Sectors.CARGA_SECTORES,query = "SELECT S FROM Sectors S WHERE S.sectDropState=true")	
+	@NamedQuery(name = Sectors.CARGA_SECTORES,query = "SELECT S FROM Sectors S WHERE S.sectStatus=true")	
 })
 public class Sectors implements Serializable {
 
@@ -53,8 +53,8 @@ public class Sectors implements Serializable {
 	
 	@Getter
 	@Setter
-	@Column(name = "sect_drop_state")
-	private boolean sectDropState;
+	@Column(name = "sect_status")
+	private boolean sectStatus;
 	
 	@Getter
 	@Setter

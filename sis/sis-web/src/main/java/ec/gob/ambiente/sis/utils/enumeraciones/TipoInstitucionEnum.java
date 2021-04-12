@@ -7,8 +7,8 @@ package ec.gob.ambiente.sis.utils.enumeraciones;
 import lombok.Getter;
 
 public enum TipoInstitucionEnum {
-	POLICIANACIONAL(1,"Policia Nacional"),
-	EJERCITO(2,"Ejercito");
+	POLICIANACIONAL(1,"Policía Nacional"),
+	EJERCITO(2,"Ejército");
 
 	@Getter
 	private final int codigo;

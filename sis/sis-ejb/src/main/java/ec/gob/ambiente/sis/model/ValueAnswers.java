@@ -23,7 +23,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "value_answers", schema = "sis")
 @NamedQueries({
-	@NamedQuery(name = ValueAnswers.CARGA_POR_AVANCE_EJECUCION,query = "SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.advanceExecutionSaveguards.adexDropState=TRUE")	
+	@NamedQuery(name = ValueAnswers.CARGA_POR_AVANCE_EJECUCION,query = "SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.advanceExecutionSaveguards.adexStatus=TRUE")	
 })
 public class ValueAnswers  {
 

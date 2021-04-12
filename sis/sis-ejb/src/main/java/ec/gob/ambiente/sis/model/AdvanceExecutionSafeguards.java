@@ -58,8 +58,8 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@Column(name = "adex_drop_state")
-	private boolean adexDropState;
+	@Column(name = "adex_status")
+	private boolean adexStatus;
 	
 	@Getter
 	@Setter
@@ -95,7 +95,7 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
 	private List<ExecutiveSummaries> executiveSummariesList;
 	
 	@Getter

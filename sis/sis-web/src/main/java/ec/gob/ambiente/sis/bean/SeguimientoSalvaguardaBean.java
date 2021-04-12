@@ -20,6 +20,7 @@ import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
+import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
@@ -42,6 +43,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	@Getter
 	private int tabActual;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> listaTempPregunta141;
 	
 	@Getter
 	@Setter
@@ -144,22 +149,11 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private Integer codParroquia;
 
-//	@Getter
-//	@Setter
-//	private String codigoProvincia;
-	
+
 	@Getter
 	@Setter
 	private String codigoNivelProCanParr;
 	
-//	@Getter
-//	@Setter
-//	private String codigoCanton;
-//	
-//	@Getter
-//	@Setter
-//	private String codigoParroquia;
-		
 	@Getter
 	@Setter
 	private Catalogs nuevaLeySA;
@@ -188,13 +182,6 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private List<GeographicalLocations> listaParroquias;
 	
-//	@Getter
-//	@Setter
-//	private List<Catalogs> catalogoMonitoreoRemoto;
-//	
-//	@Getter
-//	@Setter
-//	private List<Catalogs> catalogoMonitoreoInSitu;
 	
 	@Getter
 	@Setter
@@ -962,6 +949,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private TableResponses registroTablaRespuestasOPG;
+	
+	@Getter
+	@Setter
+	private ExecutiveSummaries resumenEjecutivo;
 	
 	@PostConstruct
 	public void init(){

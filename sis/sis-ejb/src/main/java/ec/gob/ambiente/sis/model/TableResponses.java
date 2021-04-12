@@ -139,6 +139,12 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Transient
+	@Column(name = "tare_GenericoNumerico")
+	private double tareGenericoNumerico;
+	
+	@Getter
+	@Setter
 	@Column(name = "tare_status")
 	private boolean tareStatus;
 	

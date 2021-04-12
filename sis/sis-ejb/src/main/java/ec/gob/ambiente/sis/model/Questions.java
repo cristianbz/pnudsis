@@ -29,7 +29,7 @@ import lombok.Setter;
 @Table(name = "questions", schema = "sis")
 @NamedQueries({
 	@NamedQuery(name = Questions.CARGAR_PREGUNTAS,query = "SELECT Q FROM Questions Q"),
-	@NamedQuery(name = Questions.CARGAR_PREGUNTAS_POR_SALVAGUARDA,query = "SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda AND Q.quesDropState=False")
+	@NamedQuery(name = Questions.CARGAR_PREGUNTAS_POR_SALVAGUARDA,query = "SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda AND Q.quesStatus=False")
 })
 public class Questions  {
 
@@ -53,8 +53,8 @@ public class Questions  {
 	
 	@Getter
 	@Setter
-	@Column(name = "ques_drop_state")
-	private boolean quesDropState;
+	@Column(name = "ques_status")
+	private boolean quesStatus;
 	
 	@Getter
 	@Setter

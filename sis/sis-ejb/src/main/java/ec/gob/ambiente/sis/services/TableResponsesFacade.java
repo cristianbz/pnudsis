@@ -61,5 +61,17 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
 		return findByCreateQuery(sql, camposCondicion);
 	}
+	/**
+	 * Ubica las preguntas 14.1 y 14.2
+	 * @param codigoAvanceEjecucion
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TableResponses> buscaPreguntas14_1_2(int codigoAvanceEjecucion)throws Exception{
+		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId IN (31,32)";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		
+		return findByCreateQuery(sql, camposCondicion);
+	}
 
 }

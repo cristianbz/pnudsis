@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,6 +24,9 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "executive_summaries", schema = "sis")
+@NamedQueries({
+	//@NamedQuery(name = AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO,query = "SELECT ES FROM ExecutiveSummaries ES WHERE ES.advanceExecutionSaveguards.adexId")	
+})
 public class ExecutiveSummaries  {
 
 	
@@ -47,8 +52,8 @@ public class ExecutiveSummaries  {
 	
 	@Getter
 	@Setter
-	@Column(name="exsu_creator_user")
-	private String exsuCreatorUser;
+	@Column(name="exsu_user_creator")
+	private String exsuUserCreator;
 	
 	@Getter
 	@Setter
@@ -68,8 +73,13 @@ public class ExecutiveSummaries  {
 	
 	@Getter
 	@Setter
+	@Column(name = "exsu_status")
+	private boolean exsuStatus;
+	
+	@Getter
+	@Setter
 	@JoinColumn(name = "adex_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
-	private AdvanceExecutionSafeguards advanceExecutionSaveguards;
+	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
    
 }

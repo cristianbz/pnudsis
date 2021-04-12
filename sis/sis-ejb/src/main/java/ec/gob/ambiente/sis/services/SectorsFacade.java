@@ -24,7 +24,7 @@ public class SectorsFacade extends AbstractFacade<Sectors, Integer> {
 	 * @throws Exception
 	 */
 	public List<Sectors> buscarTodosLosSectores() throws Exception{
-		String sql="SELECT S FROM Sectors S WHERE S.sectDropState=true";
+		String sql="SELECT S FROM Sectors S WHERE S.sectStatus=true";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery(sql, camposCondicion);
 	}

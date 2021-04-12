@@ -23,7 +23,7 @@ public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> {
 	 * @return
 	 */
 	public List<ValueAnswers> buscarPorAvanceEjecucion(int codigoAvanceEjecucion) throws Exception{
-		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.advanceExecutionSaveguards.adexDropState=TRUE";
+		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.advanceExecutionSaveguards.adexStatus=TRUE";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		return findByCreateQuery(sql, camposCondicion);
@@ -36,7 +36,7 @@ public class ValueAnswersFacade extends AbstractFacade<ValueAnswers, Integer> {
 	 * @throws Exception
 	 */
 	public List<ValueAnswers> buscarPorAvanceEjecucionYSalvaguarda(int codigoAvanceEjecucion,int codigoSalvaguarda) throws Exception{
-		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.vaanStatus=TRUE  AND VA.advanceExecutionSaveguards.adexDropState=TRUE AND VA.questions.safeguards.safeId=:codigoSalvaguarda";
+		String sql="SELECT VA FROM ValueAnswers VA WHERE VA.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND VA.vaanStatus=TRUE  AND VA.advanceExecutionSaveguards.adexStatus=TRUE AND VA.questions.safeguards.safeId=:codigoSalvaguarda";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);

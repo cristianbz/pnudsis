@@ -32,12 +32,14 @@ import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
+import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 import ec.gob.ambiente.sis.services.AdvanceExecutionSafeguardsFacade;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
+import ec.gob.ambiente.sis.services.ExecutiveSummariesFacade;
 import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.SectorsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
@@ -90,6 +92,10 @@ public class SeguimientoSalvaguardaController  implements Serializable{
     @EJB
 	@Getter
 	private SafeguardsFacade safeguardsFacade;
+    
+    @EJB
+	@Getter
+	private ExecutiveSummariesFacade executiveSummarieFacade;
     
 	@EJB
 	@Getter
@@ -247,6 +253,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				ps.setProjectsRisks(null);
 				ps.setSafeguards(safeguard);
 				getSeguimientoSalvaguardaBean().getListaSalvaguardasProyecto().add(ps);
+				
 			}
 			
 			
@@ -301,6 +308,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 */
 	public void cargarAvanceEjecucionSalvaguarda(){
 		try{
+			
+			getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
 			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(new AdvanceExecutionSafeguards());
 			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getAdvanceExecutionSafeguardsFacade().buscarPorProyecto(getSeguimientoSalvaguardaBean().getCodigoProyecto()));	
 			if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()==null){
@@ -308,10 +317,25 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				avanceEjecucion.setAdexIsReported(false);
 				avanceEjecucion.setAdexRegisterDate(new Date());
 				getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(avanceEjecucion);
-				
+				getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
+				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
+				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
 			}else{
 				sectoresInteresProyecto();
+				getSeguimientoSalvaguardaBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
+				if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()==null){
+					getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
+					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
+					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+				}
+				
 			}
+			
+			
 		}catch(NoResultException e){
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarAvanceEjecucionSalvaguarda " + ": ").append(e.getMessage()));
 		} catch (Exception e) {
@@ -567,42 +591,99 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 * Muestra el cuadro de dialogo para grabar el avnace de ejecucion
 	 */
 	public void mostrarDialogoGrabarSalvaguarda(int codigoSalvaguarda){
-		if(codigoSalvaguarda==1){
-			if(validaDatosAvanceEjecucion() && validaCamposTablasSalvaguardas(codigoSalvaguarda))				
-					Mensaje.verDialogo("dlgGrabaReporteA");			
-			else
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.camposTabla"));
-		}else if(codigoSalvaguarda==2){	
-			if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaB())
-				Mensaje.verDialogo("dlgGrabaReporteB");			
-			else
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
-		}else if(codigoSalvaguarda==3){
-			if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaC())				
-				Mensaje.verDialogo("dlgGrabaReporteC");			
-			else
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+		
+		if(numeroSalvaguardas-getSeguimientoSalvaguardaBean().getTabActual()==1){			
 			
-		}else if(codigoSalvaguarda==4){
-			if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaD())				
-				Mensaje.verDialogo("dlgGrabaReporteD");			
-			else
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
-		}else if(codigoSalvaguarda==5){
-			if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaE())				
-				Mensaje.verDialogo("dlgGrabaReporteE");			
-			else
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
-		}else if(codigoSalvaguarda==6 ){
-			if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaF())				
-				Mensaje.verDialogo("dlgGrabaReporteF");			
-			else
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
-		}else if(codigoSalvaguarda==7){
-			if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaG())				
-				Mensaje.verDialogo("dlgGrabaReporteG");			
-			else
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			if(codigoSalvaguarda==1){
+				if(validaDatosAvanceEjecucion() && validaCamposTablasSalvaguardas(codigoSalvaguarda)){				
+					grabarSalvaguardaA();
+					Mensaje.actualizarComponente(":form:panelResumenEjecutivo");
+					Mensaje.verDialogo("dlgResumenEjecutivo");			
+				}else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.camposTabla"));
+			}else if(codigoSalvaguarda==2){	
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaB()){
+					grabarSalvaguardaB();
+					Mensaje.actualizarComponente(":form:panelResumenEjecutivo");
+					Mensaje.verDialogo("dlgResumenEjecutivo");			
+				}else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==3){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaC()){				
+					grabarSalvaguardaC();
+					Mensaje.actualizarComponente(":form:panelResumenEjecutivo");
+					Mensaje.verDialogo("dlgResumenEjecutivo");	
+				}else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				
+			}else if(codigoSalvaguarda==4){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaD()){				
+					grabarSalvaguardaD();
+					Mensaje.actualizarComponente(":form:panelResumenEjecutivo");
+					Mensaje.verDialogo("dlgResumenEjecutivo");	
+				}else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==5){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaE()){				
+					grabarSalvaguardaE();
+					Mensaje.actualizarComponente(":form:panelResumenEjecutivo");
+					Mensaje.verDialogo("dlgResumenEjecutivo");	
+				}else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==6 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaF()){				
+					grabarSalvaguardaF();
+					Mensaje.actualizarComponente(":form:panelResumenEjecutivo");
+					Mensaje.verDialogo("dlgResumenEjecutivo");	
+				}else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==7){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaG()){				
+					grabarSalvaguardaG();
+					Mensaje.actualizarComponente(":form:panelResumenEjecutivo");
+					Mensaje.verDialogo("dlgResumenEjecutivo");	
+				}else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}
+		}else{
+		
+			if(codigoSalvaguarda==1){
+				if(validaDatosAvanceEjecucion() && validaCamposTablasSalvaguardas(codigoSalvaguarda))				
+						Mensaje.verDialogo("dlgGrabaReporteA");			
+				else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.camposTabla"));
+			}else if(codigoSalvaguarda==2){	
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaB())
+					Mensaje.verDialogo("dlgGrabaReporteB");			
+				else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==3){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaC())				
+					Mensaje.verDialogo("dlgGrabaReporteC");			
+				else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				
+			}else if(codigoSalvaguarda==4){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaD())				
+					Mensaje.verDialogo("dlgGrabaReporteD");			
+				else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==5){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaE())				
+					Mensaje.verDialogo("dlgGrabaReporteE");			
+				else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==6 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaF())				
+					Mensaje.verDialogo("dlgGrabaReporteF");			
+				else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}else if(codigoSalvaguarda==7){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaG())				
+					Mensaje.verDialogo("dlgGrabaReporteG");			
+				else
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+			}
 		}
 	}
 	
@@ -615,6 +696,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(4));	
 			getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPlanGobierno(Integer.parseInt(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnOne())));
+			getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareColumnTwo(String.valueOf(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareGenericoNumerico()));
 			getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareStatus(true);
 			getTableResponsesFacade().create(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
 			getSeguimientoSalvaguardaBean().getTablaSalvaguardaA().add(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
@@ -677,7 +759,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexCreatorUser(usuario.getUserName());
 		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexCreationDate(new Date());
 		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexRegisterDate(new Date());
-		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexDropState(true);
+		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexStatus(true);
 
 		Iterator itera=getSeguimientoSalvaguardaBean().getListaSectoresSeleccionados().iterator();
 		while (itera.hasNext()){
@@ -3247,8 +3329,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		
 		
 		getSeguimientoSalvaguardaBean().setListaPreguntasB(getSeguimientoSalvaguardaBean().getListaPreguntasB().stream().sorted((q1,q2)->q1.getQuesQuestionOrder().compareTo(q2.getQuesQuestionOrder())).collect(Collectors.toList()));
-		listaComunica= getSeguimientoSalvaguardaBean().getListaPreguntasB().get(25).getTableResponsesList().stream().filter((leyes)->leyes.getAdvanceExecutionSaveguards().getAdexId()==getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()).collect(Collectors.toList());
-		listaEjecucion= getSeguimientoSalvaguardaBean().getListaPreguntasB().get(26).getTableResponsesList().stream().filter((politicas)->politicas.getAdvanceExecutionSaveguards().getAdexId()==getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()).collect(Collectors.toList());
+		listaComunica= getSeguimientoSalvaguardaBean().getListaPreguntasB().get(25).getTableResponsesList().stream().filter((leyes)->leyes.getAdvanceExecutionSaveguards().getAdexId()==getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId() && leyes.isTareStatus()).collect(Collectors.toList());
+		listaEjecucion= getSeguimientoSalvaguardaBean().getListaPreguntasB().get(26).getTableResponsesList().stream().filter((politicas)->politicas.getAdvanceExecutionSaveguards().getAdexId()==getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId() && politicas.isTareStatus()).collect(Collectors.toList());
 		listaComunica.stream().forEach(res->{						
 			getSeguimientoSalvaguardaBean().getCatalogoInformacionComunicaSeleccionado().add(Integer.valueOf(res.getTareColumnOne()));
 		});
@@ -4145,6 +4227,75 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	}
 	
 	public void siguienteTab(int salvaguarda){
+		if(!(numeroSalvaguardas-getSeguimientoSalvaguardaBean().getTabActual()==1)){
+			
+			if(salvaguarda==1 ){
+				if(validaDatosAvanceEjecucion() && validaCamposTablasSalvaguardas(1)){
+					grabarSalvaguardaA();				
+					getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				}
+			}else if(salvaguarda==2 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaB()){
+					grabarSalvaguardaB();				
+					getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				}
+			}else if(salvaguarda==3 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaC()){
+					grabarSalvaguardaC();				
+					getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				}
+			}else if(salvaguarda==4 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaD()){
+					grabarSalvaguardaD();				
+					getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				}
+			}else if(salvaguarda==5 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaE()){
+					grabarSalvaguardaE();				
+					getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				}
+			}else if(salvaguarda==6 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaF()){
+					grabarSalvaguardaF();				
+					getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				}
+			}else if(salvaguarda==7 ){
+				if(validaDatosAvanceEjecucion() && validaDatosOpcionSiSalvaguardaG()){
+					grabarSalvaguardaG();				
+					getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error"), getMensajesController().getPropiedad("error.seleccionSi"));
+				}
+			}
+		}
+//		boolean encontrado=false;
+//		Iterator it = getSeguimientoSalvaguardaBean().getMapaTabs().keySet().iterator();
+//		while(it.hasNext()){
+//		  Integer key = (Integer) it.next();		  
+//		  if(key==salvaguarda){
+//			  encontrado=true;
+//			  break;
+//		  }
+//		}
+//		if(encontrado==false)
+//			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info"), getMensajesController().getPropiedad("info.primeroGrabarSalvaguarda"));
+//		else
+//			getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+		
+	}
+	public boolean validaSiguienteTab(int salvaguarda){
 		boolean encontrado=false;
 		Iterator it = getSeguimientoSalvaguardaBean().getMapaTabs().keySet().iterator();
 		while(it.hasNext()){
@@ -4154,11 +4305,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			  break;
 		  }
 		}
-		if(encontrado==false)
-			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info"), getMensajesController().getPropiedad("info.primeroGrabarSalvaguarda"));
-		else
-			getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
-		
+		return encontrado;
 	}
 
 	public boolean validaGrabarTabs(int salvaguarda){
@@ -4420,6 +4567,19 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(13).isVaanYesnoAnswerValue()==false){
 				Mensaje.verDialogo("dlgEliminaDatosTabla");
 			}
+		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B141")){
+			try{
+				getSeguimientoSalvaguardaBean().setListaTempPregunta141(getTableResponsesFacade().buscaPreguntas14_1_2(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
+				if (getSeguimientoSalvaguardaBean().getListaTempPregunta141().size()>0 
+						&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(16).isVaanYesnoAnswerValue()==false){
+					Mensaje.verDialogo("dlgEliminaDatosTabla");
+				}else{
+					getSeguimientoSalvaguardaBean().setCatalogoInformacionComunicaSeleccionado(new ArrayList<>());
+					getSeguimientoSalvaguardaBean().setCatalogoInformacionEjecucionSeleccionado(new ArrayList<>());
+				}
+			}catch(Exception e){
+					e.printStackTrace();
+			}
 		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("C201")){
 			if (validaDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaC201()) 
 					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasC().get(0).isVaanYesnoAnswerValue()==false){
@@ -4441,7 +4601,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasC().get(6).isVaanYesnoAnswerValue()==false){
 				Mensaje.verDialogo("dlgEliminaDatosTabla");
 			}
-		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("C271")){
+		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("C271")){			
 			if (validaDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaC271()) 
 					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasC().get(7).isVaanYesnoAnswerValue()==false){
 				Mensaje.verDialogo("dlgEliminaDatosTabla");
@@ -4607,6 +4767,13 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setTablaSalvaguardaB131(new ArrayList<>());				
 				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
 				Mensaje.actualizarComponente(":form:salvaguardas:panelTablaB131");				
+			}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B141")){
+				getTableResponsesFacade().eliminarDatosTabla(getSeguimientoSalvaguardaBean().getListaTempPregunta141());				
+				getSeguimientoSalvaguardaBean().setCatalogoInformacionComunicaSeleccionado(new ArrayList<>());
+				getSeguimientoSalvaguardaBean().setCatalogoInformacionEjecucionSeleccionado(new ArrayList<>());
+				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
+				Mensaje.actualizarComponente(":form:salvaguardas:panelInformacionComunica");
+				Mensaje.actualizarComponente(":form:salvaguardas:panelInformaEjecucion");	
 			}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("C201")){
 				getTableResponsesFacade().eliminarDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaC201());				
 				getSeguimientoSalvaguardaBean().setTablaSalvaguardaC201(new ArrayList<>());				
@@ -4790,6 +4957,13 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
 			Mensaje.actualizarComponente(":form:salvaguardas:radiopSB10"); 
 			Mensaje.actualizarComponente(":form:salvaguardas:btnTablaB131");
+			
+		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B141")){
+			getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(16).setVaanYesnoAnswerValue(true);
+			getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
+			Mensaje.actualizarComponente(":form:salvaguardas:radiopSB11");
+			Mensaje.actualizarComponente(":form:salvaguardas:panelInformaEjecucion"); 
+			Mensaje.actualizarComponente(":form:salvaguardas:panelInformacionComunica");
 			
 		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("C201")){
 			getSeguimientoSalvaguardaBean().getListaValoresRespuestasC().get(0).setVaanYesnoAnswerValue(true);
@@ -5198,6 +5372,9 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(15).isVaanYesnoAnswerValue() &&
 					getSeguimientoSalvaguardaBean().getTablaSalvaguardaB131().size()==0 ){
 				informacionCompleta=false;
+			}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(16).isVaanYesnoAnswerValue() && (
+					getSeguimientoSalvaguardaBean().getCatalogoInformacionComunicaSeleccionado().size()==0 || getSeguimientoSalvaguardaBean().getCatalogoInformacionEjecucionSeleccionado().size()==0 )){
+				informacionCompleta=false;
 			}
 		
 		return informacionCompleta;
@@ -5325,5 +5502,30 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				informacionCompleta=false;
 			}	
 		return informacionCompleta;
+	}
+	
+	public void grabarResumenEjecutivo(){
+		try{
+			getSeguimientoSalvaguardaBean().getResumenEjecutivo().setAdvanceExecutionSafeguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
+			getExecutiveSummarieFacade().grabarResumenEjecutivo(getSeguimientoSalvaguardaBean().getResumenEjecutivo());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	public void prueba(){
+		
+//		Iterator itera=getSeguimientoSalvaguardaBean().getCatalogoInformacionComunicaSeleccionado().iterator();
+//		while (itera.hasNext()){
+//			System.out.println(itera.next());
+//		}
+		try{
+			getSeguimientoSalvaguardaBean().setListaTempPregunta141(new ArrayList<>());
+			getSeguimientoSalvaguardaBean().setListaTempPregunta141(getTableResponsesFacade().buscaPreguntas14_1_2(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
+			if(getSeguimientoSalvaguardaBean().getListaTempPregunta141().size()>0){
+				System.out.println("Mostrar mensaje error");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }

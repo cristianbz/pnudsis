@@ -30,5 +30,6 @@
    <base-name>resources.tooltip</base-name>
    <var>tooltip</var>
   </resource-bundle>
+  
  </application>
 </faces-config>
