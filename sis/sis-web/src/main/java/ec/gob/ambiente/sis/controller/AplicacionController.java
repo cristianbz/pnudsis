@@ -88,6 +88,7 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaSalvaguardas(getSafeguardsFacade().listarSalvaguardas());
     		getAplicacionBean().setListaAlternativaEconomica(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.ALTERNATIVAECONOMICA.getCodigo()));
     		getAplicacionBean().setListaAlternativaEconomica(getAplicacionBean().getListaAlternativaEconomica().stream().sorted((ae1,ae2)->ae1.getCataText1().compareTo(ae2.getCataText1())).collect(Collectors.toList()));
+    		
     	}catch(Exception e ){
     		e.printStackTrace();
     	}

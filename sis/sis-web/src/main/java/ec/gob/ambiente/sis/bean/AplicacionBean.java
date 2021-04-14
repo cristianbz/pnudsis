@@ -76,6 +76,8 @@ public class AplicacionBean implements Serializable{
 	@Setter
 	private List<Catalogs> listaAlternativaEconomica;
 	
+
+	
 	@Getter
 	@Setter
 	private List<Object[]> listaSalvaguardas;

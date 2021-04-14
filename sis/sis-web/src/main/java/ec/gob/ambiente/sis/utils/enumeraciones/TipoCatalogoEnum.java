@@ -25,7 +25,10 @@ public enum TipoCatalogoEnum {
 	SISTEMAS(16,"Sistemas"),
 	ACCION(17,"Accion"),
 	CONTROLVIGILANCIA(18,"ControlVigilancia"),
-	ALTERNATIVAECONOMICA(19,"AlternativaEconomica");
+	ALTERNATIVAECONOMICA(19,"AlternativaEconomica"),
+	MODALIDAD(20,"Modalidad"),
+	ACTIVIDAD(21,"Actividad"),
+	ACCIONESIMPLEMENTADAS(22,"Acciones Implementadas");
 	
 	@Getter
 	private final int codigo;

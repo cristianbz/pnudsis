@@ -26,6 +26,7 @@ import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoConformacionEnum;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoEstadoEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoInstitucionEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoParticipanteEnum;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
@@ -50,6 +51,22 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Catalogs planGobierno;
+	
+	@Getter
+	@Setter
+	private Catalogs catalogoModalidad;
+	
+	@Getter
+	@Setter
+	private Catalogs catalogoActividad;
+	
+	@Getter
+	@Setter
+	private Catalogs catalogoAccionImplementada;
+	
+	@Getter
+	@Setter
 	private Map<Integer, Integer> mapaTabs; 
 	
 	@Setter
@@ -60,6 +77,9 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Setter
 	private TipoInstitucionEnum[] tipoInstitucionEnum;
+	
+	@Setter
+	private TipoEstadoEnum[] tipoEstadoEnum;
 	
 	@Getter
 	@Setter
@@ -95,6 +115,18 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoModalidad;
+	
+	@Getter
+	@Setter
+	private Integer codigoActividad;
+	
+	@Getter
+	@Setter
+	private Integer codigoAccionImplementada;
+	
+	@Getter
+	@Setter
 	private Integer codigoServicio;
 	
 	@Getter
@@ -116,6 +148,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private Integer codigoTipoInstitucion;
+	
+	@Getter
+	@Setter
+	private Integer codigoTipoEstado;
 	
 	@Getter
 	@Setter
@@ -182,10 +218,21 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private List<GeographicalLocations> listaParroquias;
 	
+	@Getter
+	@Setter
+	private List<Catalogs> listaCatalogoModalidad;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaCatalogoActividad;
 	
 	@Getter
 	@Setter
 	private List<Catalogs> listaCatalogoMedidaTomada;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaCatalogoAccionImplementada;
 	
 	@Getter
 	@Setter
@@ -350,6 +397,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<TableResponses> tablaSalvaguardaB81;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB9;
 	
 	@Getter
 	@Setter
@@ -541,6 +592,18 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaB61;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB62;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB11;
+	
+	@Getter
+	@Setter
 	private boolean salvaguardaA;
 	
 	@Getter
@@ -630,6 +693,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private boolean nuevoRegistroTablaB81;
+
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB9;
 	
 	@Getter
 	@Setter
@@ -763,9 +830,23 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private boolean nuevoRegistroTablaG501;
 	
+	
 	@Getter
 	@Setter
 	private boolean nuevoRegistroTablaG512;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB61;
+	
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB62;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroTablaB11;
 	
 	@Getter
 	@Setter
@@ -790,6 +871,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private TableResponses registroTablaRespuestasB81;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasB9;
 	
 	@Getter
 	@Setter
@@ -952,6 +1037,18 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private TableResponses registroTablaRespuestasB61;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasB62;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasB11;
+	
+	@Getter
+	@Setter
 	private ExecutiveSummaries resumenEjecutivo;
 	
 	@PostConstruct
@@ -1004,6 +1101,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasOPE= new TableResponses();
 		registroTablaRespuestasOPF= new TableResponses();
 		registroTablaRespuestasOPG= new TableResponses();
+		registroTablaRespuestasB61= new TableResponses();
+		registroTablaRespuestasB62= new TableResponses();
+		registroTablaRespuestasB9= new TableResponses();
+		registroTablaRespuestasB11= new TableResponses();
 		
 		listaProyectos=new ArrayList<>();
 		listaValoresRespuestas= new ArrayList<>();
@@ -1062,6 +1163,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaOPE= new ArrayList<>();
 		tablaSalvaguardaOPF= new ArrayList<>();
 		tablaSalvaguardaOPG= new ArrayList<>();
+		tablaSalvaguardaB61= new ArrayList<>();
+		tablaSalvaguardaB62= new ArrayList<>();
+		tablaSalvaguardaB9= new ArrayList<>();
+		tablaSalvaguardaB11= new ArrayList<>();
 	}
 
 	public TipoParticipanteEnum[] getTipoParticipanteEnum() {
@@ -1074,5 +1179,9 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 
 	public TipoInstitucionEnum[] getTipoInstitucionEnum() {
 		return TipoInstitucionEnum.listaValores();
+	}
+	
+	public TipoEstadoEnum[] getTipoEstadoEnum() {
+		return TipoEstadoEnum.listaValores();
 	}
 }

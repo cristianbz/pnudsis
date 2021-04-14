@@ -140,6 +140,12 @@ public class TableResponses  {
 	@Getter
 	@Setter
 	@Transient
+	@Column(name = "tare_Generico_tres")
+	private String tareGenericoTres;
+	
+	@Getter
+	@Setter
+	@Transient
 	@Column(name = "tare_GenericoNumerico")
 	private double tareGenericoNumerico;
 	
