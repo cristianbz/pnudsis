@@ -88,25 +88,21 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 			controlaAvencesSectores(avanceEjecucion.getAdvanceSectorsList(), avanceEjecucion.getAdexId());
 			if(salvaguarda==1){
 				edit(avanceEjecucion);
-				listaAux = tableResponsesFacade.buscarPorAvanceEjecucionYSalvaguarda(avanceEjecucion.getAdexId(),salvaguarda).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());				
-				listaAux.stream().forEach(tr->{
-					try {
-						tableResponsesFacade.eliminarRespuestasTabla(tr);						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				});
-				listaFiltrada = avanceEjecucion.getTableResponsesList().stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());
-				listaFiltrada.stream().forEach(tr->{
-					tr.setTareId(null);
-					tableResponsesFacade.create(tr);
-				});
-//				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
-//					if(respuestaTabla.getTareId()==null)
-//						tableResponsesFacade.create(respuestaTabla);
-//					else
-//						tableResponsesFacade.edit(respuestaTabla);
-//				}
+
+//				listaAux = tableResponsesFacade.buscarPorAvanceEjecucionYSalvaguarda(avanceEjecucion.getAdexId(),salvaguarda);
+//				listaAux= listaAux.stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());
+//				listaAux.stream().forEach(tr->{
+//					try {
+//						tableResponsesFacade.eliminarRespuestasTabla(tr);						
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				});
+//				listaFiltrada = avanceEjecucion.getTableResponsesList().stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==2 || tr.getQuestions().getQuesQuestionOrder()==4).collect(Collectors.toList());
+//				listaFiltrada.stream().forEach(tr->{
+//					tr.setTareId(null);
+//					tableResponsesFacade.create(tr);
+//				});
 				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
 					if(respuestas.getVaanId()==null)
 						valueAnswersFacade.create(respuestas);
@@ -115,27 +111,21 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 				}
 			}else if(salvaguarda==2){
 				edit(avanceEjecucion);
-				listaAux = tableResponsesFacade.buscarPorAvanceEjecucionYSalvaguarda(avanceEjecucion.getAdexId(),salvaguarda).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder() ==26 || tr.getQuestions().getQuesQuestionOrder() ==27).collect(Collectors.toList());				
-				listaAux.stream().forEach(tr->{
-					try {
-						tableResponsesFacade.eliminarRespuestasTabla(tr);	
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				});
+//				listaAux = tableResponsesFacade.buscarPorAvanceEjecucionYSalvaguarda(avanceEjecucion.getAdexId(),salvaguarda).stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder() ==26 || tr.getQuestions().getQuesQuestionOrder() ==27).collect(Collectors.toList());				
+//				listaAux.stream().forEach(tr->{
+//					try {
+//						tableResponsesFacade.eliminarRespuestasTabla(tr);	
+//						
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				});
 				listaFiltrada = avanceEjecucion.getTableResponsesList().stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==26 || tr.getQuestions().getQuesQuestionOrder()==27).collect(Collectors.toList());
 				listaFiltrada.stream().forEach(tr->{
 					tr.setTareId(null);
 					tableResponsesFacade.create(tr);
 				});
-				
-//				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
-//					if(respuestaTabla.getTareId()==null)
-//						tableResponsesFacade.create(respuestaTabla);
-//					else
-//						tableResponsesFacade.edit(respuestaTabla);
-//				}
+//				
 				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
 					if(respuestas.getVaanId()==null)
 						valueAnswersFacade.create(respuestas);

@@ -28,7 +28,8 @@ public enum TipoCatalogoEnum {
 	ALTERNATIVAECONOMICA(19,"AlternativaEconomica"),
 	MODALIDAD(20,"Modalidad"),
 	ACTIVIDAD(21,"Actividad"),
-	ACCIONESIMPLEMENTADAS(22,"Acciones Implementadas");
+	ACCIONESIMPLEMENTADAS(22,"Acciones Implementadas"),
+	RIESGO(23,"Riesgo");
 	
 	@Getter
 	private final int codigo;

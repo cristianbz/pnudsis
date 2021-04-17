@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import org.hibernate.Hibernate;
+
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.model.TableResponses;
 
@@ -55,11 +57,16 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 	}
 	public List<TableResponses> buscarPorAvanceEjecucionYSalvaguarda(int codigoAvanceEjecucion, int codigoSalvaguarda) throws Exception{
-		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.safeguards.safeId=:codigoSalvaguarda";
+		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.safeguards.safeId=:codigoSalvaguarda ORDER BY TR.questions.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
-		return findByCreateQuery(sql, camposCondicion);
+		List<TableResponses> tabla=findByCreateQuery(sql, camposCondicion);
+		for (TableResponses tableResponses : tabla) {
+			Hibernate.initialize(tableResponses.getQuestions());
+		}
+//		return findByCreateQuery(sql, camposCondicion);
+		return tabla;
 	}
 	/**
 	 * Ubica las preguntas 14.1 y 14.2

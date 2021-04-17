@@ -102,6 +102,21 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_column_eleven")
+	private String tareColumnEleven;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_twelve")
+	private String tareColumnTwelve;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_thirteen")
+	private String tareColumnThirteen;
+	
+	@Getter
+	@Setter
 	@Transient
 	private String tareProvincia;
 	

@@ -8,7 +8,8 @@ import lombok.Getter;
 
 public enum TipoInstitucionEnum {
 	POLICIANACIONAL(1,"Policía Nacional"),
-	EJERCITO(2,"Ejército");
+	FISCALIA(2,"Fiscalía"),
+	EJERCITO(3,"Ejército");
 
 	@Getter
 	private final int codigo;

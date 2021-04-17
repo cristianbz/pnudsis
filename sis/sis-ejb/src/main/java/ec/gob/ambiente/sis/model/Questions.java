@@ -30,6 +30,7 @@ import lombok.Setter;
 @NamedQueries({
 	@NamedQuery(name = Questions.CARGAR_PREGUNTAS,query = "SELECT Q FROM Questions Q"),
 	@NamedQuery(name = Questions.CARGAR_PREGUNTAS_POR_SALVAGUARDA,query = "SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda AND Q.quesStatus=False")
+	
 })
 public class Questions  {
 
