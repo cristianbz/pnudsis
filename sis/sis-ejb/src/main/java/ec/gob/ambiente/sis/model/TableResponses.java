@@ -161,6 +161,12 @@ public class TableResponses  {
 	@Getter
 	@Setter
 	@Transient
+	@Column(name = "tare_Generico_cuatro")
+	private String tareGenericoCuatro;
+	
+	@Getter
+	@Setter
+	@Transient
 	@Column(name = "tare_GenericoNumerico")
 	private double tareGenericoNumerico;
 	

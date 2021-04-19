@@ -59,6 +59,31 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<String> listadoActividades;
+	
+	@Getter
+	@Setter
+	private List<String> listadoNivelInvolucramiento;
+	
+	@Getter
+	@Setter
+	private String[] actividadesSeleccionadas;
+	
+	@Getter
+	@Setter
+	private List<String> listadoinstitucionAcompania;
+	
+	@Getter
+	@Setter
+	private String[] nivelInvolucramientoSeleccionados;
+	
+	@Getter
+	@Setter
+	private String[] institucionAcompaniaSeleccionados;
+	
+	
+	@Getter
+	@Setter
 	private Catalogs planGobierno;
 	
 	@Getter
