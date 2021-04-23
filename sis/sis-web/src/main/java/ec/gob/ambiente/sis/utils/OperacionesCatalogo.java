@@ -4,6 +4,7 @@
 **/
 package ec.gob.ambiente.sis.utils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import ec.gob.ambiente.sis.utils.enumeraciones.TipoParticipanteEnum;
 
 public class OperacionesCatalogo {
 	/**
-	 * Busca un catalogo por codigo y listado
+	 * Busca la descripcion de un catalogo por codigo y lista de catalogo
 	 * @param codigo
 	 * @param listaCatalogo
 	 * @return
@@ -33,11 +34,20 @@ public class OperacionesCatalogo {
 		return valor;
 	}
 	
+	/**
+	 * Prepara datos para agregar un nuevo catalogo
+	 * @param tipoCatalogo
+	 * @param listaCatalogo
+	 * @param catalogo
+	 * @param usuario
+	 * @return
+	 */
 	public static Catalogs agregarNuevoCatalogo(int tipoCatalogo,List<Catalogs> listaCatalogo,Catalogs catalogo,String usuario){
 		CatalogsType tipo=new CatalogsType();
 		
 		tipo.setCatyId(tipoCatalogo);
 		catalogo.setCatalogsType(tipo);
+
 		listaCatalogo = listaCatalogo.stream().sorted((cl1,cl2)->cl1.getCataOrder().compareTo(cl2.getCataOrder())).collect(Collectors.toList());
 		if(listaCatalogo.size()==0)
 			catalogo.setCataOrder(1);
@@ -52,8 +62,23 @@ public class OperacionesCatalogo {
 		catalogo.setCataCreatorUser(usuario);
 		return catalogo;
 	}
-
-
+	
+	/**
+	 * Ubica un codigo de catalogo en un catalogo
+	 * @param listaCatalogo
+	 * @param codigo
+	 * @return
+	 */
+	public static boolean ubicaCodigoEnCatalogo(List<Catalogs> listaCatalogo,int codigo){
+		boolean encontrado=false;
+		for (Catalogs catalogo : listaCatalogo) {			
+			if(codigo == catalogo.getCataId()){
+				encontrado=true;
+				break;
+			}
+		}
+		return encontrado;
+	}
 
 }
 

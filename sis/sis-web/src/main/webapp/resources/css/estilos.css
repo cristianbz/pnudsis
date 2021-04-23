@@ -86,15 +86,10 @@
 	background-color: #00b9f5!important;
 }
 
-.goup{
-	background:#00AAC3;
-	bottom:0px;
-	display: block;
-	height: 30px;
-	position: fixed;
-	right:0px;
-	width:25px;
-}
+
 .ui-selectonemenu-label{
      width: 100% !important;
 }  
+.fondoSigma{
+	background: #00AAC3;
+}

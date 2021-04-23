@@ -33,5 +33,11 @@ public class CatalogsFacade extends AbstractFacade<Catalogs,Integer>{
 		camposCondicion.put("tipoCatalogo", tipoCatalogo);
 		return findByCreateQuery(sql, camposCondicion);
 	}
+	
+	public List<Object[]> buscarDescripcionCatalogoPorTipo(int tipoCatalogo) throws Exception{
+		String sql = "select cata_text1 from sis.catalogs where caty_id= " + tipoCatalogo
+					 + " and cata_status=true order by cata_text1";		
+		return consultaNativa(sql);
+	}
 }
 

@@ -69,8 +69,7 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaPueblosNacionalidades(getAplicacionBean().getListaPueblosNacionalidades().stream().sorted((pn1,pn2)->pn1.getCataText1().compareTo(pn2.getCataText1())).collect(Collectors.toList()));
     		getAplicacionBean().setListaAutoIdentificacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.AUTOIDENTIFICACION.getCodigo()));
     		getAplicacionBean().setListaAutoIdentificacion(getAplicacionBean().getListaAutoIdentificacion().stream().sorted((a1,a2)->a1.getCataText1().compareTo(a2.getCataText1())).collect(Collectors.toList()));
-    		getAplicacionBean().setListaHerramientas(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.HERRAMIENTA.getCodigo()));
-    		getAplicacionBean().setListaHerramientas(getAplicacionBean().getListaHerramientas().stream().sorted((h1,h2)->h1.getCataText1().compareTo(h2.getCataText1())).collect(Collectors.toList()));
+    		
     		getAplicacionBean().setListaPublico(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PUBLICO.getCodigo()));
     		getAplicacionBean().setListaPublico(getAplicacionBean().getListaPublico().stream().sorted((p1,p2)->p1.getCataText1().compareTo(p2.getCataText1())).collect(Collectors.toList()));
     		getAplicacionBean().setListaMetodo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.METODO.getCodigo()));

@@ -40,9 +40,7 @@ public class AplicacionBean implements Serializable{
 	@Setter
 	private List<Catalogs> listaAutoIdentificacion;
 	
-	@Getter
-	@Setter
-	private List<Catalogs> listaHerramientas;
+
 	
 	@Getter
 	@Setter

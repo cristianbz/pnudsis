@@ -26,7 +26,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "table_responses", schema = "sis")
 @NamedQueries({
-	@NamedQuery(name = TableResponses.CARGA_RESPUESTAS_POR_AVANCE_EJECUCION,query = "SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.advanceExecutionSaveguards.adexIsReported=TRUE AND TR.tareStatus=TRUE")	
+	@NamedQuery(name = TableResponses.CARGA_RESPUESTAS_POR_AVANCE_EJECUCION,query = "SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.advanceExecutionSaveguards.adexIsReported=TRUE AND TR.tareStatus=TRUE")
+	
 })
 public class TableResponses  {
 

@@ -9,7 +9,7 @@ import lombok.Getter;
 public enum TipoCatalogoEnum {
 	TIPORESPUESTA(1,"TipoRespuesta"),
 	POLITICAS(2,"Politicas"),
-	LEYES(3,"Leyes"),
+	MARCOJURIDICOINTERNACIONAL(3,"Marco Juridico Internacional"),
 	PLANPROYECTO(4,"PlanProyecto"),
 	INFORMEEJECUCION(5,"InformeEjecucion"),
 	INFORMECOMUNICACION(6,"InformeComunicacion"),
@@ -29,7 +29,10 @@ public enum TipoCatalogoEnum {
 	MODALIDAD(20,"Modalidad"),
 	ACTIVIDAD(21,"Actividad"),
 	ACCIONESIMPLEMENTADAS(22,"Acciones Implementadas"),
-	RIESGO(23,"Riesgo");
+	RIESGO(23,"Riesgo"),
+	MARCOJURIDICONACIONAL(24,"Marco Juridico Nacional"),
+	NORMATIVASECUNDARIANACIONAL(25,"Normativa Secundaria Nacional"),
+	TIPODEACCESO(26,"Tipo de acceso");
 	
 	@Getter
 	private final int codigo;

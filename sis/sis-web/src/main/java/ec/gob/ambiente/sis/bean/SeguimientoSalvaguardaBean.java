@@ -53,9 +53,9 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	private boolean habilitaPuebloNacionalidad;
 	
-	@Getter
-	@Setter
-	private List<TableResponses> listaTempPregunta141;
+//	@Getter
+//	@Setter
+//	private List<TableResponses> listaTempPregunta141;
 	
 	@Getter
 	@Setter
@@ -63,11 +63,36 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<String> listadoModalidades;
+	
+	@Getter
+	@Setter
+	private List<String> listadoInformaEjecucion;
+	
+	@Getter
+	@Setter
+	private List<String> listadoInformaComunica;
+	
+	@Getter
+	@Setter
 	private List<String> listadoNivelInvolucramiento;
 	
 	@Getter
 	@Setter
+	private String[] informaEjecucionSeleccionadas;
+	
+	@Getter
+	@Setter
+	private String[] informaComunicaSeleccionadas;
+	
+	
+	@Getter
+	@Setter
 	private String[] actividadesSeleccionadas;
+	
+	@Getter
+	@Setter
+	private String[] modalidadesSeleccionadas;
 	
 	@Getter
 	@Setter
@@ -81,6 +106,21 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private String[] institucionAcompaniaSeleccionados;
 	
+	@Getter
+	@Setter
+	private String[] informacionComunicaSeleccionados;
+	
+	@Getter
+	@Setter
+	private List<String> listadInformacionComunica;
+	
+	@Getter
+	@Setter
+	private String[] informacionEjecucionSeleccionados;
+	
+	@Getter
+	@Setter
+	private List<String> listadoInformacionEjecucion;
 	
 	@Getter
 	@Setter
@@ -269,7 +309,23 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Catalogs nuevoMJN;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevaNormativaSN;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevaHerramienta;
+	
+	@Getter
+	@Setter
 	private Catalogs nuevaPoliticaSA;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevoTipoAcceso;
 	
 	@Getter
 	@Setter
@@ -290,6 +346,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<GeographicalLocations> listaParroquias;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaHerramientas;
 	
 	@Getter
 	@Setter
@@ -317,11 +377,27 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<Catalogs> catalogoInformacionComunica;
+	private List<Catalogs> catalogoMarcoJuridicoNacional;
 	
 	@Getter
 	@Setter
-	private List<Integer> catalogoInformacionComunicaSeleccionado;
+	private List<Catalogs> catalogoNormativaSecundariaNacional;
+	
+	@Getter
+	@Setter
+	private List<Integer> catalogoMarcoJuridicoNacionalSeleccionado;
+	
+	@Getter
+	@Setter
+	private List<Integer> catalogoNormativaSecundariaNacionalSeleccionado;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> catalogoInformacionComunica;
+	
+//	@Getter
+//	@Setter
+//	private List<Integer> catalogoInformacionComunicaSeleccionado;
 	
 	@Getter
 	@Setter
@@ -333,7 +409,11 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private List<Integer> catalogoInformacionEjecucionSeleccionado;
+	private List<Catalogs> listaCatalogoTipoAcceso;
+	
+//	@Getter
+//	@Setter
+//	private List<Integer> catalogoInformacionEjecucionSeleccionado;
 	
 	@Getter
 	@Setter
@@ -725,15 +805,23 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean nuevoIngresoMJN;
+	
+	@Getter
+	@Setter
+	private boolean nuevoIngresoNSN;
+	
+	@Getter
+	@Setter
 	private boolean nuevaPolitica;
 	
-	@Getter
-	@Setter
-	private boolean nuevaEjecucion;
-	
-	@Getter
-	@Setter
-	private boolean nuevaComunicacion;
+//	@Getter
+//	@Setter
+//	private boolean nuevaEjecucion;
+//	
+//	@Getter
+//	@Setter
+//	private boolean nuevaComunicacion;
 	
 	@Getter
 	@Setter

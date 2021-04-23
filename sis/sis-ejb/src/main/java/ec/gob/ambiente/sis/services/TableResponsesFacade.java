@@ -6,10 +6,12 @@ import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 
 import org.hibernate.Hibernate;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.TableResponses;
 
 @Stateless
@@ -74,11 +76,33 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TableResponses> buscaPreguntas14_1_2(int codigoAvanceEjecucion)throws Exception{
-		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId IN (31,32)";
-		Map<String, Object> camposCondicion=new HashMap<String, Object>();
-		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		
-		return findByCreateQuery(sql, camposCondicion);
-	}
+//	public List<TableResponses> buscaPreguntas14_1_2(int codigoAvanceEjecucion)throws Exception{
+//		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId IN (31,32)";
+//		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+//		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		
+//		return findByCreateQuery(sql, camposCondicion);
+//	}
 
+	public TableResponses buscaLeyPolitica(String codigoLeyPolitica,int codigoAvanceEjecucion,int codigoPregunta) throws DaoException{
+		try{
+			String sql="SELECT TR FROM TableResponses TR WHERE TR.tareColumnOne =:codigoLeyPolitica AND TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId =:codigoPregunta";
+			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+			camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		
+			camposCondicion.put("codigoLeyPolitica", codigoLeyPolitica);
+			camposCondicion.put("codigoPregunta", codigoPregunta);			
+			return findByCreateQuerySingleResult(sql, camposCondicion);
+		}catch(NoResultException e){
+			return null;
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new DaoException();
+		}
+	}
+	public void agregarEditarNuevaTableResponse(TableResponses tableResponse) throws Exception{
+		if(tableResponse.getTareId()==null)
+			create(tableResponse);
+		else
+			edit(tableResponse);
+	}
+	
 }
