@@ -7,27 +7,28 @@
  </converter>
  <application>
   <locale-config>
-   <default-locale>es</default-locale>
+   <default-locale>es_ES</default-locale>
+   
    
   </locale-config>
   <resource-bundle>
-   <base-name>resources.etiquetas</base-name>
+   <base-name>etiquetas</base-name>
    <var>etiquetas</var>
   </resource-bundle>
   <resource-bundle>
-   <base-name>resources.titulos</base-name>
+   <base-name>titulos</base-name>
    <var>titulos</var>
   </resource-bundle>
   <resource-bundle>
-   <base-name>resources.botones</base-name>
+   <base-name>botones</base-name>
    <var>botones</var>
   </resource-bundle>
   <resource-bundle>
-   <base-name>resources.mensajes</base-name>
+   <base-name>mensajes</base-name>
    <var>mensajes</var>
   </resource-bundle>
     <resource-bundle>
-   <base-name>resources.tooltip</base-name>
+   <base-name>tooltip</base-name>
    <var>tooltip</var>
   </resource-bundle>
   

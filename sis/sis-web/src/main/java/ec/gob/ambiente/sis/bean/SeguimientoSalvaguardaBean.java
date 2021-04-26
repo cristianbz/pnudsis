@@ -124,6 +124,30 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private String[] monitoreoRemotoSeleccionados;
+	
+	@Getter
+	@Setter
+	private List<String> listadoMonitoreoRemoto;
+	
+	@Getter
+	@Setter
+	private String[] periodicidadSeleccionados;
+	
+	@Getter
+	@Setter
+	private List<String> listadoPeriodicidad;
+	
+	@Getter
+	@Setter
+	private String[] monitoreoInSituSeleccionados;
+	
+	@Getter
+	@Setter
+	private List<String> listadoMonitoreoInSitu;
+	
+	@Getter
+	@Setter
 	private Catalogs planGobierno;
 	
 	@Getter
@@ -145,6 +169,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private Catalogs nuevaComunicacionSB;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevoMonitoreoRemoto;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevoMonitoreoInSitu;
 	
 	@Getter
 	@Setter
@@ -321,6 +353,26 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Catalogs nuevoServicio;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevoRecurso;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevoRiesgo;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevoIncentivo;
+	
+//	@Getter
+//	@Setter
+//	private List<Catalogs> listaRecursos;
+	
+	@Getter
+	@Setter
 	private Catalogs nuevaPoliticaSA;
 	
 	@Getter
@@ -403,13 +455,17 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private List<Catalogs> catalogoInformacionEjecucion;
 	
-	@Getter
-	@Setter
-	private List<Catalogs> listaCatalogoRiesgo;
+//	@Getter
+//	@Setter
+//	private List<Catalogs> listaCatalogoRiesgo;
 	
 	@Getter
 	@Setter
 	private List<Catalogs> listaCatalogoTipoAcceso;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaServicio;
 	
 //	@Getter
 //	@Setter

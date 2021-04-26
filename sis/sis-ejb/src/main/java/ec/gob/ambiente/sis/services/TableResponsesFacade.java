@@ -85,7 +85,10 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 
 	public TableResponses buscaLeyPolitica(String codigoLeyPolitica,int codigoAvanceEjecucion,int codigoPregunta) throws DaoException{
 		try{
-			String sql="SELECT TR FROM TableResponses TR WHERE TR.tareColumnOne =:codigoLeyPolitica AND TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId =:codigoPregunta";
+			System.out.println(codigoLeyPolitica);
+			System.out.println(codigoAvanceEjecucion);
+			System.out.println(codigoPregunta);
+			String sql="SELECT TR FROM TableResponses TR WHERE TR.tareColumnOne  =:codigoLeyPolitica AND TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId =:codigoPregunta";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		
 			camposCondicion.put("codigoLeyPolitica", codigoLeyPolitica);

@@ -28,7 +28,7 @@ public class CatalogsFacade extends AbstractFacade<Catalogs,Integer>{
 	 * @throws Exception
 	 */
 	public List<Catalogs> buscaCatalogosPorTipo(int tipoCatalogo)throws Exception{
-		String sql="SELECT C FROM Catalogs C WHERE C.catalogsType.catyId=:tipoCatalogo ORDER BY C.cataOrder";
+		String sql="SELECT C FROM Catalogs C WHERE C.catalogsType.catyId=:tipoCatalogo ORDER BY C.cataText1, C.cataOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("tipoCatalogo", tipoCatalogo);
 		return findByCreateQuery(sql, camposCondicion);

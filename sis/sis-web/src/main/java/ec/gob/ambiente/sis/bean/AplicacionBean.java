@@ -50,13 +50,15 @@ public class AplicacionBean implements Serializable{
 	@Setter
 	private List<Catalogs> listaPublico;
 	
-	@Getter
-	@Setter
-	private List<Catalogs> listaServicio;
+
 	
 	@Getter
 	@Setter
 	private List<Catalogs> listaRecursos;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaCatalogoRiesgo;
 	
 	@Getter
 	@Setter
@@ -74,6 +76,13 @@ public class AplicacionBean implements Serializable{
 	@Setter
 	private List<Catalogs> listaAlternativaEconomica;
 	
+	@Getter
+	@Setter
+	private List<Catalogs> listaMonitoreoRemoto;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaMonitoreoInSitu;
 
 	
 	@Getter

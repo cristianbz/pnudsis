@@ -6,6 +6,7 @@ package ec.gob.ambiente.sis.controller;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -74,8 +75,8 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaPublico(getAplicacionBean().getListaPublico().stream().sorted((p1,p2)->p1.getCataText1().compareTo(p2.getCataText1())).collect(Collectors.toList()));
     		getAplicacionBean().setListaMetodo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.METODO.getCodigo()));
     		getAplicacionBean().setListaMetodo(getAplicacionBean().getListaMetodo().stream().sorted((m1,m2)->m1.getCataText1().compareTo(m2.getCataText1())).collect(Collectors.toList()));
-    		getAplicacionBean().setListaServicio(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.SERVICIO.getCodigo()));
-    		getAplicacionBean().setListaServicio(getAplicacionBean().getListaServicio().stream().sorted((s1,s2)->s1.getCataText1().compareTo(s2.getCataText1())).collect(Collectors.toList()));
+    		getAplicacionBean().setListaCatalogoRiesgo(new ArrayList<>());
+    		getAplicacionBean().setListaCatalogoRiesgo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.RIESGO.getCodigo()));
     		getAplicacionBean().setListaRecursos(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.RECURSOS.getCodigo()));
     		getAplicacionBean().setListaRecursos(getAplicacionBean().getListaRecursos().stream().sorted((r1,r2)->r1.getCataText1().compareTo(r2.getCataText1())).collect(Collectors.toList()));
     		getAplicacionBean().setListaPeriodicidad(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PERIODICIDAD.getCodigo()));
@@ -87,6 +88,8 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaSalvaguardas(getSafeguardsFacade().listarSalvaguardas());
     		getAplicacionBean().setListaAlternativaEconomica(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.ALTERNATIVAECONOMICA.getCodigo()));
     		getAplicacionBean().setListaAlternativaEconomica(getAplicacionBean().getListaAlternativaEconomica().stream().sorted((ae1,ae2)->ae1.getCataText1().compareTo(ae2.getCataText1())).collect(Collectors.toList()));
+    		getAplicacionBean().setListaMonitoreoRemoto(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOREMOTO.getCodigo()));
+    		getAplicacionBean().setListaMonitoreoInSitu(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOINSITU.getCodigo()));
     		
     	}catch(Exception e ){
     		e.printStackTrace();

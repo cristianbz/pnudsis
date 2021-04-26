@@ -32,7 +32,9 @@ public enum TipoCatalogoEnum {
 	RIESGO(23,"Riesgo"),
 	MARCOJURIDICONACIONAL(24,"Marco Juridico Nacional"),
 	NORMATIVASECUNDARIANACIONAL(25,"Normativa Secundaria Nacional"),
-	TIPODEACCESO(26,"Tipo de acceso");
+	TIPODEACCESO(26,"Tipo de acceso"),
+	MONITOREOREMOTO(27,"Tipo de acceso"),
+	MONITOREOINSITU(28,"Tipo de acceso");
 	
 	@Getter
 	private final int codigo;
