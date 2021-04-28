@@ -90,6 +90,8 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaAlternativaEconomica(getAplicacionBean().getListaAlternativaEconomica().stream().sorted((ae1,ae2)->ae1.getCataText1().compareTo(ae2.getCataText1())).collect(Collectors.toList()));
     		getAplicacionBean().setListaMonitoreoRemoto(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOREMOTO.getCodigo()));
     		getAplicacionBean().setListaMonitoreoInSitu(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOINSITU.getCodigo()));
+    		getAplicacionBean().setListaLineaAccion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.LINEAACCION.getCodigo()));
+    		getAplicacionBean().setListaControlVigilancia(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.CONTROLVIGILANCIA.getCodigo()));
     		
     	}catch(Exception e ){
     		e.printStackTrace();

@@ -248,6 +248,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoLineaAccion;
+	
+	@Getter
+	@Setter
 	private Integer codigoActividad;
 	
 	@Getter
@@ -312,6 +316,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoControlVigilancia;
+	
+	@Getter
+	@Setter
 	private Integer codigoMedidaTomada;
 	
 	@Getter
@@ -366,6 +374,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private Catalogs nuevoIncentivo;
+	
+	@Getter
+	@Setter
+	private Catalogs nuevoControlVigilancia;
 	
 //	@Getter
 //	@Setter

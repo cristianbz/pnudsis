@@ -33,8 +33,9 @@ public enum TipoCatalogoEnum {
 	MARCOJURIDICONACIONAL(24,"Marco Juridico Nacional"),
 	NORMATIVASECUNDARIANACIONAL(25,"Normativa Secundaria Nacional"),
 	TIPODEACCESO(26,"Tipo de acceso"),
-	MONITOREOREMOTO(27,"Tipo de acceso"),
-	MONITOREOINSITU(28,"Tipo de acceso");
+	MONITOREOREMOTO(27,"Monitoreo remoto"),
+	MONITOREOINSITU(28,"Monitoreo insitu"),
+	LINEAACCION(29,"Linea de accion");
 	
 	@Getter
 	private final int codigo;

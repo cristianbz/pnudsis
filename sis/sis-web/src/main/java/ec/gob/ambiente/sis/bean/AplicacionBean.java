@@ -83,6 +83,14 @@ public class AplicacionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> listaMonitoreoInSitu;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaLineaAccion;
+
+	@Getter
+	@Setter
+	private List<Catalogs> listaControlVigilancia;
 
 	
 	@Getter
