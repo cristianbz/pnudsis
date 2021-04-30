@@ -10,6 +10,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
+import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sis.model.Catalogs;
 import lombok.Getter;
 import lombok.Setter;
@@ -96,6 +97,8 @@ public class AplicacionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Object[]> listaSalvaguardas;
+	
+
 
 }
 

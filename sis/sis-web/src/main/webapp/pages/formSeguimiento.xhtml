@@ -29,6 +29,14 @@
 	<h:form prependId="true" id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
 		
+		 <p:dialog  widgetVar="dlgEnProc" 
+                  draggable="false" 
+                  modal="true" resizable="false" closable="false" responsive="true"
+                  style="font-size: 10px;">  
+            <p:graphicImage rendered="true" id="img_validando" value="ajax-loader.gif" library="images" height="200"
+                            width="300"/>
+        </p:dialog> 
+		
 		<p:dialog widgetVar="dlgResumenEjecutivo" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['informeResumenEjecutivo']}" width="390"
@@ -1424,32 +1432,91 @@
 		</div>
 <div class="ui-fluid p-formgrid p-grid">
 
-			<div class="p-field p-col-12 p-md-4"></div>
-			<div class="p-field p-col-12 p-md-4">
+			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-8">
+				
+				<p:panel header="#{titulos['busquedaSalvaguardas']}">
+					<div class="ui-fluid p-formgrid p-grid" style="align-content: center">
+
+						<p:outputLabel value="#{etiquetas['buscarPor']}" />
+						<p:spacer width="20px;"/>
+				        <p:selectOneRadio id="busqueda"  unselectable="false" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoBusquedaProyecto}">
+					            <f:selectItem itemLabel="#{etiquetas['socioImplementador']}" itemValue="#{1}"/>
+					            <f:selectItem itemLabel="#{etiquetas['tituloPlanProyecto']}" itemValue="#{2}"/>	
+					            <p:ajax event="change" process="@this" partialSubmit="true" update="pnlCritBusq pnlListaProy" 
+					            	listener="#{seguimientoSalvaguardaController.vaciaDatosBusqueda}"/>			 	            
+				        </p:selectOneRadio>
+					</div>					
+					<div class="ui-fluid p-formgrid p-grid" >
+						<h:panelGrid id="pnlCritBusq">
+									<h:panelGrid rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoBusquedaProyecto==0}"
+										style="height:30px;" />
+									<p:selectOneMenu id="codSocioBusq"
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoSocioImplementador}" required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoBusquedaProyecto==1}"
+										style="width:500px;">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSociosImplementadores}" var="soc"
+											itemLabel="#{soc.partName}" itemValue="#{soc.partId}">
+										</f:selectItems>
+										<p:ajax event="change" process="@this"/>
+									</p:selectOneMenu>
+									
+									<p:inputText id="tituloBusq"
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tituloProyecto}" required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoBusquedaProyecto==2}" size="60" />
+									
+									
+								</h:panelGrid>
+					</div>
+					<div class="ui-fluid p-formgrid p-grid" >			
+								<h:panelGrid style="margin:0 auto;">
+									<p:commandButton id="btnBusqProy" value="#{botones['buscar']}"
+										actionListener="#{seguimientoSalvaguardaController.buscarProyectos}" icon="#{botones['icono.buscar']}" onclick="PF('dlgEnProc').show()"
+										process="@this :form:tituloBusq :form:pnlCritBusq" update=":form:listadoProyectos :form:growl :form:codSocioBusq :form:tituloBusq" oncomplete="PF('dlgEnProc').hide()"
+										partialSubmit="true" async="true" global="false"
+										 />
+								</h:panelGrid>
+					</div>
+					<div class="ui-fluid p-formgrid p-grid" >			
+								<br />
+							<h:panelGrid id="pnlListaProy" width="800">
+								<p:dataTable id="listadoProyectos"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}" var="proyecto"
+									emptyMessage="#{txt.lbl047}">
+									<p:column width="155">
+										<p:outputLabel value="#{proyecto.projCode}" />
+									</p:column>
+									<p:column headerText="#{etiquetas['tituloPlanProyecto']}">
+										<p:outputLabel value="#{proyecto.projTitle}" />
+									</p:column>
+									<p:column headerText="#{etiquetas['socioImplementador']}" width="300">
+										<p:outputLabel value="#{proyecto.partners.partName}" />
+									</p:column>
+									<p:column width="30">
+										<p:commandButton id="btnProyEdit" icon="#{botones['icono.checkcirculo']}"
+											actionListener="#{seguimientoSalvaguardaController.cargaSalvaguardasDelProyectoSeleccionado(proyecto)}"
+											process="@this" partialSubmit="true" onclick="PF('dlgEnProc').show()" oncomplete="PF('dlgEnProc').hide()"
+											async="true" global="false" update=":form:salvaguardas :form:socio :form:panelDatos  :form:panelsalvaguarda :form:growl" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+					</div>
+					
+					
+					
+					
+					
+					
+				</p:panel>
+				
+			
+			
 				<p:fieldset legend="#{titulos['datosProyecto']}"
 					styleClass="fondoColorSigma">
 					<h:panelGrid columns="1" id="panelDatos">
-						<i class="fas fa-project-diagram"></i>
-						<p:outputLabel for="proyecto" value="#{etiquetas['proyectos']}"
-							styleClass="etiquetaTitulo" />
-						<p:selectOneMenu filter="true" effect="fade" style="min-width: 200.05px;"
-							filterMatchMode="contains" required="true"
-							requiredMessage="#{mensajes['campoRequerido']}"
-							styleClass="estiloMenuItemSeccionActual"
-							value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoProyecto}"
-							id="proyecto">
-							<f:selectItem itemLabel="#{etiquetas['seleccioneElemento']}"
-								itemValue="#{null}"  />
-							<f:selectItems
-								value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaProyectos}"
-								var="proyectos" itemValue="#{proyectos.projId}"
-								itemLabel="#{proyectos.projTitle}" />
-							<p:ajax partialSubmit="true" event="change"
-								process="@this  panelsalvaguarda socio sectores salvaguardas "
-								update="salvaguardas socio panelDatos  panelsalvaguarda growl "
-								listener="#{seguimientoSalvaguardaController.seleccionaProyecto()}" />
-						</p:selectOneMenu>
-						<p:message for="proyecto" />
+						
 						<i class="fas fa-handshake"></i>
 						<p:outputLabel for="socio"
 							value="#{etiquetas['socioImplementador']}"
@@ -1481,7 +1548,7 @@
 					</h:panelGrid>
 				</p:fieldset>
 			</div>
-			<div class="p-field p-col-12 p-md-4"></div>
+			<div class="p-field p-col-12 p-md-2"></div>
 		</div>
 
 		<div class="ui-fluid p-formgrid p-grid">
@@ -2023,9 +2090,9 @@
 										disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}" />
 								</div>								
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton value="#{botones['siguiente']}" oncomplete="goToAnchor('inicio')"
+									<p:commandButton value="#{botones['siguiente']}" oncomplete="goToAnchor('inicio') PF('dlgEnProc').hide()"
 										icon="#{botones['icono.siguiente']}" process="@this :form:salvaguardas"
-										actionListener="#{seguimientoSalvaguardaController.siguienteTab(1)}"										
+										actionListener="#{seguimientoSalvaguardaController.siguienteTab(1)}"	onclick="PF('dlgEnProc').show()" 						
 										update=":form:salvaguardas :form:growl"
 										/>
 
@@ -11404,22 +11471,11 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
-										<p:outputLabel value="#{etiquetas['comunidad']}"/>
-										
-									</div>
-									<div class="p-field p-col-12 p-md-8">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnFour}" tabindex="4"/>
-																						
-									</div>
-									<div class="p-field p-col-12 p-md-2">
-									</div>
-									
-									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
 										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-5">
 											<p:selectOneMenu
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoAutoIdentificacion}" tabindex="5"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoAutoIdentificacion}" tabindex="4"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
 												id="identificacionG471">
 												<f:selectItem itemValue="#{null}"
@@ -11439,7 +11495,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-5">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoPuebloNacionalidad}" tabindex="6"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoPuebloNacionalidad}" tabindex="5"
 												disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.habilitaPuebloNacionalidad}"
 												id="pueblotblG471">
 												<f:selectItem itemValue="#{null}"
@@ -11452,6 +11508,17 @@
 										</p:selectOneMenu>
 									</div>
 									<div class="p-field p-col-12 p-md-5">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+										
+									</div>
+									<div class="p-field p-col-12 p-md-8">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnSix}" tabindex="6"/>
+																						
+									</div>
+									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
@@ -11551,15 +11618,16 @@
 											<p:column headerText="#{etiquetas['parroquia']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareParroquia}"/>
 											</p:column>
-											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnFour}"/>
-											</p:column>
+											
 											<p:column headerText="#{etiquetas['autoDeterminaEtnia']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareGenerico}"/>
 											</p:column>
 											
 											<p:column headerText="#{etiquetas['puebloNacionalidad']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareGenericoDos}"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnSix}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['actividad']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareGenericoTres}"/>
@@ -11710,15 +11778,52 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
-										<p:outputLabel value="#{etiquetas['fecha']}"/>
+										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-3">
-											<p:datePicker pattern="yyyy-MM-dd" locale="es" tabindex="4"
-											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnNine}"/>
-											
+									<div class="p-field p-col-12 p-md-5">
+											<p:selectOneMenu
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoAutoIdentificacion}" tabindex="4"
+												required="true" requiredMessage="#{mensajes['campoRequerido']}"
+												id="identificacionG481">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{aplicacionController.aplicacionBean.listaAutoIdentificacion}"
+													var="identificacion" itemLabel="#{identificacion.cataText1}"
+													itemValue="#{identificacion.cataId}" />
+												<p:ajax process="@this " event="change"	listener="#{seguimientoSalvaguardaController.habilitaPuebloNacionalidad()}" update="pueblotblG481"/>
+										</p:selectOneMenu>
 									</div>
-									<div class="p-field p-col-12 p-md-7">
+									<div class="p-field p-col-12 p-md-5">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
+										<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-5">
+											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoPuebloNacionalidad}" tabindex="5"
+												disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.habilitaPuebloNacionalidad}"
+												id="pueblotblG481">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItems
+													value="#{aplicacionController.aplicacionBean.listaPueblosNacionalidades}"
+													var="pueblo" itemLabel="#{pueblo.cataText1}"
+													itemValue="#{pueblo.cataId}" />
+												<p:ajax process="@this " event="change" />
+										</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-5">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
+										<p:outputLabel value="#{etiquetas['comunidad']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-8">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnSix}" tabindex="6"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
@@ -11727,28 +11832,18 @@
 									<div class="p-field p-col-12 p-md-5">
 										<p:selectCheckboxMenu id="multipleSeleccionG481" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.institucionAcompaniaSeleccionados}"
 												 label="#{etiquetas['institucionAcompania']}" style="width: 15rem"
-								                             tabindex="5"   filter="true" filterMatchMode="startsWith" panelStyle="width: 15rem" scrollHeight="250">
+								                             tabindex="7"   filter="true" filterMatchMode="startsWith" panelStyle="width: 15rem" scrollHeight="250">
 								            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listadoinstitucionAcompania}"/>
 								        </p:selectCheckboxMenu>																												
-									</div>
-									
+									</div>									
 									<div class="p-field p-col-12 p-md-5">
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
-										<p:outputLabel value="#{etiquetas['comunidad']}"/>
-									</div>
-									<div class="p-field p-col-12 p-md-8">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnFive}" tabindex="6"/>
-									</div>
-									<div class="p-field p-col-12 p-md-2">
-									</div>
-									
-									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
-										<p:outputLabel value="#{etiquetas['accion']}"/>
+										<p:outputLabel value="#{etiquetas['actividadIlicitaReportada']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-5">
-											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}"  tabindex="7"
+											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}"  tabindex="8"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoAccion}"
 												id="acciontblG481">
 												<f:selectItem itemValue="#{null}"
@@ -11765,10 +11860,23 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
+										<p:outputLabel value="#{etiquetas['fecha']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+											<p:datePicker pattern="yyyy-MM-dd" locale="es" tabindex="9"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnNine}"/>
+											
+									</div>
+									<div class="p-field p-col-12 p-md-7">
+									</div>
+									
+									
+									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;">
 										<p:outputLabel value="#{etiquetas['resultado']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-8">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnSeven}" tabindex="8"/>
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnTen}" tabindex="10"/>
 											
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -11778,9 +11886,9 @@
 										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-8">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnEight}" 
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnEleven}" 
 												id="linkG481"
-												tabindex="8"/>
+												tabindex="11"/>
 											<p:tooltip for="linkG481" position="top" value="#{tooltip['notaPrensa']} "/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -11789,13 +11897,13 @@
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla481G panelIngreso481G"	title="#{tooltip['grabar']}" tabindex="9"																						
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla481G panelIngreso481G"	title="#{tooltip['grabar']}" tabindex="12"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG481()}" value="#{botones['guardar']}"  
 															update="panelTabla481G :form:growl panelIngreso481G"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
 										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso481G" update="panelIngreso481G" 
-										title="#{tooltip['cancelar']}" tabindex="10" value="#{botones['cancelar']}"
+										title="#{tooltip['cancelar']}" tabindex="13" value="#{botones['cancelar']}"
 											resetValues="true"	immediate="true">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaG481}"/>
@@ -11816,15 +11924,6 @@
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaG481}"
 											id="tablaG481"
 											var="tablarespuestas">
-											
-											<p:column headerText="#{etiquetas['fecha']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNine}" id="fechaG481">
-													<f:convertDateTime for="fechaG481" pattern="yyyy-MM-dd"/>
-												</p:outputLabel>
-											</p:column>
-											<p:column headerText="#{etiquetas['institucionAcompania']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnOne}"/>
-											</p:column>
 											<p:column headerText="#{etiquetas['provincia']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareProvincia}"/>
 											</p:column>
@@ -11834,17 +11933,31 @@
 											<p:column headerText="#{etiquetas['parroquia']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareParroquia}"/>
 											</p:column>
-											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnFive}"/>
+											<p:column headerText="#{etiquetas['autoDeterminaEtnia']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareGenerico}"/>
 											</p:column>
-											<p:column headerText="#{etiquetas['accion']}" styleClass="cabeceraTabla">
+											<p:column headerText="#{etiquetas['puebloNacionalidad']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareGenericoDos}"/>
 											</p:column>
-											<p:column headerText="#{etiquetas['resultado']}" styleClass="cabeceraTabla">
+											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnSix}"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['institucionAcompania']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnSeven}"/>
 											</p:column>
+											<p:column headerText="#{etiquetas['actividadIlicitaReportada']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareGenericoTres}"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['resultado']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTen}"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['fecha']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnNine}" id="fechaG481">
+													<f:convertDateTime for="fechaG481" pattern="yyyy-MM-dd"/>
+												</p:outputLabel>
+											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnEight}"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnEleven}"/>
 											</p:column>
 											<p:column>
 												<p:commandButton action="#{seguimientoSalvaguardaController.eliminaRegistroTablaSalvaguarda(36)}" 
@@ -12292,7 +12405,7 @@
 											<p:inputText  id="linkG501"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="4"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG501.tareColumnFour}"/>
-											<p:tooltip for="linkG501" position="top" value="#{tooltip['contrato']}"/>
+											<p:tooltip for="linkG501" position="top" value="#{tooltip['contratoConvenio']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 									</div>

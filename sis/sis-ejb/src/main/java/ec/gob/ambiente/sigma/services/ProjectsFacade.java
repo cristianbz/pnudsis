@@ -29,4 +29,28 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer>  {
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery("SELECT P FROM Projects P WHERE P.projStatus=true", camposCondicion);
 	}
+	/**
+	 * Lista los proyectos por socio implementador
+	 * @param partId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Projects> listarProyectosPorIdSocioImpl(Integer partId) throws Exception{
+		String sql="SELECT P from Projects P WHERE P.projStatus=true AND P.partners.partId=:param1 ORDER BY P.projTitle";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("param1", partId);
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Lista los proyectos por titulo del proyecto
+	 * @param textoTitulo
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Projects> listarProyectosPorTextoTitulo(String textoTitulo) throws Exception{
+		String sql="SELECT P FROM Projects P WHERE P.projStatus=true AND UPPER(P.projTitle) LIKE :param1 ORDER BY P.projTitle";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("param1", "%"+textoTitulo.toUpperCase()+"%");
+		return findByCreateQuery(sql, camposCondicion);
+	}
 }

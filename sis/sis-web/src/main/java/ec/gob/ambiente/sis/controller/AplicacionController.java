@@ -17,6 +17,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import ec.gob.ambiente.sigma.services.PartnersFacade;
 import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
@@ -39,6 +40,10 @@ public class AplicacionController implements Serializable{
     @Inject
     private AplicacionBean aplicacionBean;
     
+    @EJB
+   	@Getter
+   	private PartnersFacade partnersFacade;
+   	
     @EJB
    	@Getter
    	private CatalogsFacade catalogsFacade;
@@ -92,6 +97,7 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaMonitoreoInSitu(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOINSITU.getCodigo()));
     		getAplicacionBean().setListaLineaAccion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.LINEAACCION.getCodigo()));
     		getAplicacionBean().setListaControlVigilancia(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.CONTROLVIGILANCIA.getCodigo()));
+    		
     		
     	}catch(Exception e ){
     		e.printStackTrace();

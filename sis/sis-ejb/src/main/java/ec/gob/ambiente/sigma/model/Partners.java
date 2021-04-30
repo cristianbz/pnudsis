@@ -14,6 +14,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +56,11 @@ public class Partners implements Serializable {
 	@Column(name = "part_status")
 	private boolean partStatus;
 	
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1)
+    @Column(name = "part_type")
+    private String partType;
 	
 	@Getter
 	@Setter

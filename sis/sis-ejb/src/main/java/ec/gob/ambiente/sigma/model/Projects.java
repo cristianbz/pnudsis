@@ -49,6 +49,11 @@ public class Projects {
 	
 	@Getter
 	@Setter
+    @Column(name = "proj_code")
+    private String projCode;
+	
+	@Getter
+	@Setter
 	@Column(name = "proj_title")
 	private String projTitle;
 	
