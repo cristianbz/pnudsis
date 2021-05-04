@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeflex/primeflex.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeicons-master/primeicons.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	<script>
+	function goToAnchor(nombre) {
+		
+		window.location.hash = "";
+		window.location.hash = nombre;
+	}
+	</script>	
+</h:head>
+<body>
+
+<h:form>	
+
+
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-1"></div>
+			<div class="p-field p-col-12 p-md-10">
+				<center>
+					<p:outputLabel value="#{titulos['salvaguardasDisponibles']}"
+						styleClass="etiquetaTitulo" />
+				</center>
+				
+				<a name="inicio"> </a>
+				
+				<br />
+				<p:outputPanel id="panelreporte">
+
+						<!-- SALVAGUARDA A -->
+						<p:panel  header="#{titulos['salvaguardaA']}"
+							>
+							<div class="ui-fluid p-formgrid p-grid">
+
+								<p:outputLabel value="#{titulos['abordajeSalvaguardaA']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['resumenSalvaguardaA']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br />
+							 
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaTitulo" id="pregunta2"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestionEnglish}" />
+							</div>
+							<br />
+							
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['marcoJuridicoInternacional']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-6">
+								<p:outputPanel id="panelSeleccionLeyes">
+									<p:selectManyMenu id="leyesR" valueChangeListener="#{seguimientoSalvaguardaController.controlAgregaEditaLeyes}" 
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyesSeleccionado}"
+										showCheckbox="true" filter="true" filterMatchMode="contains"
+										styleClass="manymenu-advanced">
+										<f:selectItems 
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoLeyes}" 
+											var="catalogs" itemLabel="#{catalogs.cataText1}"
+											itemValue="#{catalogs.cataId}" />
+										<p:ajax event="valueChange" process="@this"/>
+									</p:selectManyMenu>
+								</p:outputPanel>	
+								</div>								
+								<div class="p-field p-col-12 p-md-6">
+								</div>
+							</div>
+							
+							
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['marcoJuridicoNacional']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-6">
+								<p:outputPanel id="panelSeleccionMJNR">
+									<p:selectManyMenu valueChangeListener="#{seguimientoSalvaguardaController.controlAgregaEditaLeyes}" 
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoMarcoJuridicoNacionalSeleccionado}"
+										showCheckbox="true" filter="true" filterMatchMode="contains"
+										styleClass="manymenu-advanced">
+										<f:selectItems 
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoMarcoJuridicoNacional}" 
+											var="catalogs" itemLabel="#{catalogs.cataText1}"
+											itemValue="#{catalogs.cataId}" />
+										<p:ajax event="valueChange" process="@this"/>
+									</p:selectManyMenu>
+								</p:outputPanel>	
+								</div>								
+								<div class="p-field p-col-12 p-md-6">
+								</div>
+							</div>
+										
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel value="#{titulos['normativaSeguridadNacional']}"
+									styleClass="etiquetaTitulo" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-6">
+								<p:outputPanel id="panelSeleccionNSNR">
+									<p:selectManyMenu valueChangeListener="#{seguimientoSalvaguardaController.controlAgregaEditaLeyes}" 
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoNormativaSecundariaNacionalSeleccionado}"
+										showCheckbox="true" filter="true" filterMatchMode="contains"
+										styleClass="manymenu-advanced">
+										<f:selectItems 
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoNormativaSecundariaNacional}" 
+											var="catalogs" itemLabel="#{catalogs.cataText1}"
+											itemValue="#{catalogs.cataId}" />
+										<p:ajax event="valueChange" process="@this"/>
+									</p:selectManyMenu>
+								</p:outputPanel>	
+								</div>								
+								<div class="p-field p-col-12 p-md-6">
+								</div>
+							</div>
+							
+							
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaTitulo" id="pregunta4"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestionEnglish}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-6">
+								<p:outputPanel id="panelSeleccionPolitica">
+									<p:selectManyMenu id="politicas" valueChangeListener="#{seguimientoSalvaguardaController.controlAgregaEditaPoliticas}"
+										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticasSeleccionado}"
+										filter="true" filterMatchMode="contains" showCheckbox="true"
+										styleClass="manymenu-advanced">>
+							            <f:selectItems
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.catalogoPoliticas}"
+											var="catalogs" itemLabel="#{catalogs.cataText1}"
+											itemValue="#{catalogs.cataId}" />
+										<p:ajax process="@this" event="valueChange" />
+									</p:selectManyMenu>
+								</p:outputPanel>
+								</div>	
+								<div class="p-field p-col-12 p-md-6">
+								</div>
+							</div>
+														
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaTitulo"
+									value="#{titulos['mensajeSalvaguardaA']}" />
+							</div>
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel styleClass="etiquetaTitulo" id="pregunta5"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestionEnglish}" />
+							</div>
+							
+							
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-11">
+									
+									<h:panelGrid id="panelTabla1A">
+										<p:dataTable styleClass="sinBordesAncho100" emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5" paginator="true"											
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaA}"
+											var="tablarespuestas">
+											 
+											<p:column headerText="#{etiquetas['planProyGobierno']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareCatPlanGobierno}"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['presupuestoAsignado']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" id="presupuestoA">
+													<f:convertNumber for="presupuestoA" pattern="#,000.00" locale="es"/>
+												</p:outputLabel>
+											</p:column>
+											<p:column>
+												
+											</p:column>
+											
+										</p:dataTable>
+									</h:panelGrid>
+									
+								</div>
+								<div class="p-field p-col-12 p-md-1">
+										
+										
+								</div>
+							</div>
+							<br />
+							<hr/>
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-3">
+								</div>
+								<div class="p-field p-col-12 p-md-6">
+								<p:outputLabel id="pregunta6"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(5).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(5).quesContentQuestionEnglish}" />
+								
+								
+								</div>	
+								<div class="p-field p-col-12 p-md-3">
+								</div>
+							</div>
+							
+							<br/>
+														
+							<br />
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-10">
+									<h:panelGrid id="panelTablaOPAR">
+										<p:dataTable styleClass="sinBordesAncho100" emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5" paginator="true"
+											
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaOPA}"
+											var="tablarespuestas">
+											<p:column headerText="#{etiquetas['actividadQueAportaSalvaguarda']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
+													
+											</p:column>
+											<p:column headerText="#{etiquetas['logroAlcanzadoReporta']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
+													
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
+													
+											</p:column>
+											<p:column>
+												
+											</p:column>
+										</p:dataTable>
+									</h:panelGrid>
+								</div>
+								<div class="p-field p-col-12 p-md-2">
+									
+										 
+								</div>
+							</div>
+							
+							
+						</p:panel>
+						
+			</p:outputPanel>			
+			</div>
+			<div class="p-field p-col-12 p-md-1"></div>
+		</div>
+
+</h:form>
+
+
+</body>
+</html>

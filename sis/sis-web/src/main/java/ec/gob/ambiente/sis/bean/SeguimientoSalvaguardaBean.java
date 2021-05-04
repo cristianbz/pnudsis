@@ -45,6 +45,34 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+//	@Setter
+//	@Getter
+//	private boolean mensajeRequeridosTablasB;
+	
+	@Setter
+	@Getter
+	private List<Boolean> mensajeRequeridosTablasB;
+	
+	@Setter
+	@Getter
+	private List<Boolean> mensajeRequeridosTablasC;
+	
+	@Setter
+	@Getter
+	private List<Boolean> mensajeRequeridosTablasD;
+
+	@Setter
+	@Getter
+	private List<Boolean> mensajeRequeridosTablasE;
+	
+	@Setter
+	@Getter
+	private List<Boolean> mensajeRequeridosTablasF;
+	
+	@Setter
+	@Getter
+	private List<Boolean> mensajeRequeridosTablasG;
+
 	@Setter
 	@Getter
 	private int tabActual;
@@ -60,6 +88,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	@Getter
 	private String tituloProyecto;
+	
+	@Setter
+	@Getter
+	private Projects proyectoSeleccionado;
 	
 	@Setter
 	@Getter
@@ -1449,6 +1481,32 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaB11= new ArrayList<>();
 		tablaSalvaguardaB143= new ArrayList<>();
 		tablaSalvaguardaC242= new ArrayList<>();
+		
+		setMensajeRequeridosTablasB(new ArrayList<>());
+		setMensajeRequeridosTablasC(new ArrayList<>());
+		setMensajeRequeridosTablasD(new ArrayList<>());
+		setMensajeRequeridosTablasE(new ArrayList<>());
+		setMensajeRequeridosTablasF(new ArrayList<>());
+		setMensajeRequeridosTablasG(new ArrayList<>());
+		for(int i=0;i<11;i++){
+			mensajeRequeridosTablasB.add(false);			
+		}
+		for(int i=0;i<8;i++){
+			mensajeRequeridosTablasC.add(false);			
+		}
+		for(int i=0;i<2;i++){
+			mensajeRequeridosTablasD.add(false);			
+		}
+		for(int i=0;i<6;i++){
+			mensajeRequeridosTablasE.add(false);			
+		}
+		for(int i=0;i<5;i++){
+			mensajeRequeridosTablasF.add(false);			
+		}
+		for(int i=0;i<6;i++){
+			mensajeRequeridosTablasG.add(false);			
+		}
+		
 	}
 
 	public TipoParticipanteEnum[] getTipoParticipanteEnum() {

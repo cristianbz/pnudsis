@@ -73,55 +73,11 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 					valueAnswersFacade.edit(respuestas);
 			}
 		}else{
-
-//			List<TableResponses> listaAux=new ArrayList<>();
-//			List<TableResponses> listaFiltrada=new ArrayList<>();
-
 			controlaAvencesSectores(avanceEjecucion.getAdvanceSectorsList(), avanceEjecucion.getAdexId());
 			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
 					valueAnswersFacade.edit(respuestas);
 			}
-//			if(salvaguarda==1){
-//				edit(avanceEjecucion);
-//
-//				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
-////					if(respuestas.getVaanId()==null)
-////						valueAnswersFacade.create(respuestas);
-////					else
-//						valueAnswersFacade.edit(respuestas);
-//				}
-//			}else if(salvaguarda==2){
-//				edit(avanceEjecucion);
-//
-////				listaFiltrada = avanceEjecucion.getTableResponsesList().stream().filter(tr -> tr.getQuestions().getQuesQuestionOrder()==26 || tr.getQuestions().getQuesQuestionOrder()==27).collect(Collectors.toList());
-////				listaFiltrada.stream().forEach(tr->{
-////					tr.setTareId(null);
-////					tableResponsesFacade.create(tr);
-////				});
-//			
-//				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
-////					if(respuestas.getVaanId()==null)
-////						valueAnswersFacade.create(respuestas);
-////					else
-//						valueAnswersFacade.edit(respuestas);
-//				}
-//				
-//			}else if(salvaguarda>2){
-//				edit(avanceEjecucion);
-////				for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
-////					if(respuestaTabla.getTareId()==null)
-////						tableResponsesFacade.create(respuestaTabla);
-////					else
-////						tableResponsesFacade.edit(respuestaTabla);
-////				}
-//				for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
-////					if(respuestas.getVaanId()==null)
-////						valueAnswersFacade.create(respuestas);
-////					else
-//						valueAnswersFacade.edit(respuestas);
-//				}
-//			}
-			
+			edit(avanceEjecucion);			
 		}
 		return avanceEjecucion;
 

@@ -70,24 +70,9 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 //		return findByCreateQuery(sql, camposCondicion);
 		return tabla;
 	}
-	/**
-	 * Ubica las preguntas 14.1 y 14.2
-	 * @param codigoAvanceEjecucion
-	 * @return
-	 * @throws Exception
-	 */
-//	public List<TableResponses> buscaPreguntas14_1_2(int codigoAvanceEjecucion)throws Exception{
-//		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId IN (31,32)";
-//		Map<String, Object> camposCondicion=new HashMap<String, Object>();
-//		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		
-//		return findByCreateQuery(sql, camposCondicion);
-//	}
 
 	public TableResponses buscaLeyPolitica(String codigoLeyPolitica,int codigoAvanceEjecucion,int codigoPregunta) throws DaoException{
 		try{
-			System.out.println(codigoLeyPolitica);
-			System.out.println(codigoAvanceEjecucion);
-			System.out.println(codigoPregunta);
 			String sql="SELECT TR FROM TableResponses TR WHERE TR.tareColumnOne  =:codigoLeyPolitica AND TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId =:codigoPregunta";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		

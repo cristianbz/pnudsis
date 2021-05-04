@@ -55,6 +55,7 @@
 
 .sinBordesAncho100 tbody td{
 	border:none;
+	table-layout: auto;
 }
 
 
@@ -92,4 +93,10 @@
 }  
 .fondoSigma{
 	background: #00AAC3;
+}
+.anchoColumnas{
+	table-layout: auto;
+}
+.ui-datatable-scrollable-header-box table th, .ui-datatable-scrollable-footer-box table th, .ui-datatable-scrollable-body table td{
+   width: 20% !important;
 }

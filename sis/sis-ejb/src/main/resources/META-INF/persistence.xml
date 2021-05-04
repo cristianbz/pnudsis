@@ -20,15 +20,6 @@
 <class>ec.gob.ambiente.sis.model.TableResponses</class>
 <class>ec.gob.ambiente.sis.model.ValueAnswers</class>
 <class>ec.gob.ambiente.suia.model.Users</class>
-<properties>
-<property name="showSql" value="true"/>
-<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-<!--   <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2012Dialect" /> -->
-<!--    <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />  -->
-<property name="hibernate.format_sql" value="true"/>
-<property name="hibernate.show_sql" value="false"/>
-<property name="hibernate.generate_statistics" value="false"/>
-<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
-</properties>
+
 </persistence-unit>
 </persistence>

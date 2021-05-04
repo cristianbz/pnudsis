@@ -29,12 +29,12 @@
 	<h:form prependId="true" id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
 		
+		
 		 <p:dialog  widgetVar="dlgEnProc" 
                   draggable="false" 
                   modal="true" resizable="false" closable="false" responsive="true"
-                  style="font-size: 10px;">  
-            <p:graphicImage rendered="true" id="img_validando" value="ajax-loader.gif" library="images" height="200"
-                            width="300"/>
+                  style="font-size: 10px;">             
+            <h:graphicImage value="/resources/images/cargando.gif" width="200" height="200"/>
         </p:dialog> 
 		
 		<p:dialog widgetVar="dlgResumenEjecutivo" showEffect="fade"
@@ -429,13 +429,13 @@
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['grabar']}" update="@form growl"
-					id="btngrabar"
+					id="btngrabar" onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
-					oncomplete="PF('dlgGrabaReporteA').hide();"
+					oncomplete="PF('dlgGrabaReporteA').hide(); PF('dlgEnProc').hide();"
 					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
-					value="#{botones['cancelar']}"
-					oncomplete="PF('dlgGrabaReporteA').hide();" process="@this" />
+					value="#{botones['cancelar']}" 
+					oncomplete="PF('dlgGrabaReporteA').hide(); " process="@this" />
 			</h:panelGrid>
 		</p:dialog>
 
@@ -1304,9 +1304,9 @@
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['grabar']}" update="@form growl"
-					
+					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaB}"
-					oncomplete="PF('dlgGrabaReporteB').hide();"
+					oncomplete="PF('dlgGrabaReporteB').hide(); PF('dlgEnProc').hide();"
 					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
@@ -1322,9 +1322,9 @@
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['grabar']}" update="@form growl"
-					
+					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaC}"
-					oncomplete="PF('dlgGrabaReporteC').hide();"
+					oncomplete="PF('dlgGrabaReporteC').hide(); PF('dlgEnProc').hide();"
 					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
@@ -1339,9 +1339,9 @@
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['grabar']}" update="@form growl"
-					
+					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaD}"
-					oncomplete="PF('dlgGrabaReporteD').hide();"
+					oncomplete="PF('dlgGrabaReporteD').hide(); PF('dlgEnProc').hide();"
 					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
@@ -1356,9 +1356,9 @@
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['grabar']}" update="@form growl"
-					
+					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaE}"
-					oncomplete="PF('dlgGrabaReporteE').hide();"
+					oncomplete="PF('dlgGrabaReporteE').hide(); PF('dlgEnProc').hide();"
 					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
@@ -1374,9 +1374,9 @@
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['grabar']}" update="@form growl"
-					
+					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaF}"
-					oncomplete="PF('dlgGrabaReporteF').hide();"
+					oncomplete="PF('dlgGrabaReporteF').hide(); PF('dlgEnProc').hide();"
 					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
@@ -1390,9 +1390,9 @@
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['grabar']}" update="@form growl"
-					
+					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaG}"
-					oncomplete="PF('dlgGrabaReporteG').hide();"
+					oncomplete="PF('dlgGrabaReporteG').hide(); PF('dlgEnProc').hide();"
 					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
@@ -1432,8 +1432,8 @@
 		</div>
 <div class="ui-fluid p-formgrid p-grid">
 
-			<div class="p-field p-col-12 p-md-2"></div>
-			<div class="p-field p-col-12 p-md-8">
+			<div class="p-field p-col-12 p-md-3"></div>
+			<div class="p-field p-col-12 p-md-6">
 				
 				<p:panel header="#{titulos['busquedaSalvaguardas']}">
 					<div class="ui-fluid p-formgrid p-grid" style="align-content: center">
@@ -1443,7 +1443,7 @@
 				        <p:selectOneRadio id="busqueda"  unselectable="false" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoBusquedaProyecto}">
 					            <f:selectItem itemLabel="#{etiquetas['socioImplementador']}" itemValue="#{1}"/>
 					            <f:selectItem itemLabel="#{etiquetas['tituloPlanProyecto']}" itemValue="#{2}"/>	
-					            <p:ajax event="change" process="@this" partialSubmit="true" update="pnlCritBusq pnlListaProy" 
+					            <p:ajax event="change" process="@this" partialSubmit="true" update="pnlCritBusq pnlListaProy panelsalvaguarda panelDatos" 
 					            	listener="#{seguimientoSalvaguardaController.vaciaDatosBusqueda}"/>			 	            
 				        </p:selectOneRadio>
 					</div>					
@@ -1460,7 +1460,9 @@
 										<f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaSociosImplementadores}" var="soc"
 											itemLabel="#{soc.partName}" itemValue="#{soc.partId}">
 										</f:selectItems>
-										<p:ajax event="change" process="@this"/>
+										<p:ajax event="change" process="@this" 
+											partialSubmit="true"
+											listener="#{seguimientoSalvaguardaController.vaciaDatosBusqueda}" update="pnlListaProy panelsalvaguarda panelDatos"/>
 									</p:selectOneMenu>
 									
 									<p:inputText id="tituloBusq"
@@ -1497,7 +1499,7 @@
 									<p:column width="30">
 										<p:commandButton id="btnProyEdit" icon="#{botones['icono.checkcirculo']}"
 											actionListener="#{seguimientoSalvaguardaController.cargaSalvaguardasDelProyectoSeleccionado(proyecto)}"
-											process="@this" partialSubmit="true" onclick="PF('dlgEnProc').show()" oncomplete="PF('dlgEnProc').hide()"
+											process="@this " partialSubmit="true" onclick="PF('dlgEnProc').show()" oncomplete="PF('dlgEnProc').hide()"
 											async="true" global="false" update=":form:salvaguardas :form:socio :form:panelDatos  :form:panelsalvaguarda :form:growl" />
 									</p:column>
 								</p:dataTable>
@@ -1516,7 +1518,14 @@
 				<p:fieldset legend="#{titulos['datosProyecto']}"
 					styleClass="fondoColorSigma">
 					<h:panelGrid columns="1" id="panelDatos">
-						
+						<i class="fas fa-handshake"></i>
+						<p:outputLabel for="proyecto"
+							value="#{etiquetas['tituloPlanProyecto']}"
+							styleClass="etiquetaTitulo" />
+						<p:outputLabel id="proyecto"
+							value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.proyectoSeleccionado.projTitle}"
+							styleClass="etiquetaSubtitulo" />
+						<br />
 						<i class="fas fa-handshake"></i>
 						<p:outputLabel for="socio"
 							value="#{etiquetas['socioImplementador']}"
@@ -1548,7 +1557,7 @@
 					</h:panelGrid>
 				</p:fieldset>
 			</div>
-			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-3"></div>
 		</div>
 
 		<div class="ui-fluid p-formgrid p-grid">
@@ -2090,12 +2099,14 @@
 										disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}" />
 								</div>								
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton value="#{botones['siguiente']}" oncomplete="goToAnchor('inicio') PF('dlgEnProc').hide()"
+									<p:commandButton value="#{botones['siguiente']}" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio'); "
 										icon="#{botones['icono.siguiente']}" process="@this :form:salvaguardas"
-										actionListener="#{seguimientoSalvaguardaController.siguienteTab(1)}"	onclick="PF('dlgEnProc').show()" 						
+										actionListener="#{seguimientoSalvaguardaController.siguienteTab(1)}" onstart="PF('dlgEnProc').show()" 						
 										update=":form:salvaguardas :form:growl"
 										/>
-
+									<p:commandButton process="@this" actionListener="#{seguimientoSalvaguardaController.imprime}">
+										
+									</p:commandButton>
 								</div>	
 								<div class="p-field p-col-12 p-md-6"></div>
 							</div>
@@ -2124,6 +2135,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(0).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida41"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(0)}"/>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB1" styleClass="etiquetaSubtitulo"
@@ -2424,6 +2439,10 @@
 									styleClass="etiquetaTitulo" />
 							</div>
 							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida51B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(1)}"/>
+							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB2" styleClass="etiquetaSubtitulo"
 									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(1).vaanYesnoAnswerValue}"
@@ -2546,6 +2565,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(4).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida61B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(2)}"/>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB3" styleClass="etiquetaSubtitulo"
@@ -2678,6 +2701,10 @@
 									styleClass="etiquetaTitulo" />
 							</div>
 							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida71B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(3)}"/>
+							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB4" styleClass="etiquetaSubtitulo"
 									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(3).vaanYesnoAnswerValue}"
@@ -2804,6 +2831,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(9).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(9).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida81B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(4)}"/>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB5" styleClass="etiquetaSubtitulo"
@@ -3129,7 +3160,11 @@
 								<p:outputLabel
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(11).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(11).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
-							</div>	
+							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida9B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(5)}"/>	
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB6" styleClass="etiquetaSubtitulo"
@@ -3356,6 +3391,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(12).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(12).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>	
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida102B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(6)}"/>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB7" styleClass="etiquetaSubtitulo"
@@ -3655,7 +3694,11 @@
 								<p:outputLabel
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(15).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(15).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
-							</div>	
+							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida11B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(7)}"/>	
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB8" styleClass="etiquetaSubtitulo"
@@ -3810,6 +3853,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida121B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(8)}"/>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB9" styleClass="etiquetaSubtitulo"
@@ -4061,6 +4108,10 @@
 									styleClass="etiquetaTitulo" />
 							</div>
 							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida131B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(9)}"/>
+							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB10" styleClass="etiquetaSubtitulo"
 									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(9).vaanYesnoAnswerValue}"
@@ -4218,6 +4269,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida143B"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(10)}"/>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB11" styleClass="etiquetaSubtitulo"
@@ -4545,7 +4600,7 @@
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton value="#{botones['siguiente']}"
 										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:panelsalvaguarda :form:salvaguardas"
-										actionListener="#{seguimientoSalvaguardaController.siguienteTab(2)}" oncomplete="goToAnchor('inicio')"
+										actionListener="#{seguimientoSalvaguardaController.siguienteTab(2)}" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										update=":form:panelDatos :form:growl :form:panelsalvaguarda :form:salvaguardas"															
 										/>
 								</div>
@@ -4577,6 +4632,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(0).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida201C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(0)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC1" styleClass="etiquetaSubtitulo"
@@ -4904,6 +4963,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(2).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida211C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(1)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC2" styleClass="etiquetaSubtitulo"
@@ -5184,6 +5247,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(4).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida242C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(2)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC3" styleClass="etiquetaSubtitulo"
@@ -5456,7 +5523,7 @@
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton icon="#{botones['icono.mas']}" process="@this :form:salvaguardas:panelIngreso242C" update=":form:salvaguardas:panelIngreso242C"
 										id="btnTablaC242"
-										immediate="true" resetValues="true" disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(4).vaanYesnoAnswerValue}"
+										immediate="true" resetValues="true" disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasC.get(2).vaanYesnoAnswerValue}"
 										action="#{seguimientoSalvaguardaController.nuevaFilaTablaSalvaguardaC242()}"			>
 													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC242}"></f:setPropertyActionListener>
 									</p:commandButton>
@@ -5476,6 +5543,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(7).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(7).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida26C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(3)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC4" styleClass="etiquetaSubtitulo"
@@ -5638,6 +5709,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(9).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(9).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida271C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(4)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC5" styleClass="etiquetaSubtitulo"
@@ -6026,6 +6101,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(12).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(12).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida291C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(5)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC6" styleClass="etiquetaSubtitulo"
@@ -6311,6 +6390,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(14).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(14).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida301C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(6)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC8" styleClass="etiquetaSubtitulo"
@@ -6556,6 +6639,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(16).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasC.get(16).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida311C"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(7)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC9" styleClass="etiquetaSubtitulo"
@@ -6982,7 +7069,7 @@
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton value="#{botones['siguiente']}"
 										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas"	
-										actionListener="#{seguimientoSalvaguardaController.siguienteTab(3)}"	oncomplete="goToAnchor('inicio')"								
+										actionListener="#{seguimientoSalvaguardaController.siguienteTab(3)}"	oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"								
 										update=":form:panelDatos :form:growl :form:salvaguardas"
 										/>
 								</div>
@@ -7015,6 +7102,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasD.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasD.get(0).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida321D"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasD.get(0)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSD1" styleClass="etiquetaSubtitulo"
@@ -7315,6 +7406,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasD.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasD.get(2).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida331D"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasD.get(1)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSD2" styleClass="etiquetaSubtitulo"
@@ -7651,7 +7746,7 @@
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton value="#{botones['siguiente']}"
 										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas"	
-										actionListener="#{seguimientoSalvaguardaController.siguienteTab(4)}"	oncomplete="goToAnchor('inicio')"							
+										actionListener="#{seguimientoSalvaguardaController.siguienteTab(4)}"	oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"							
 										update=":form:panelDatos :form:growl :form:salvaguardas" 
 										/>
 								</div>
@@ -7682,6 +7777,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(0).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida341E"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(0)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE1" styleClass="etiquetaSubtitulo"
@@ -7896,6 +7995,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(2).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida351E"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(1)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE2" styleClass="etiquetaSubtitulo"
@@ -8065,6 +8168,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(4).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida361E"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(2)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE3" styleClass="etiquetaSubtitulo"
@@ -8320,6 +8427,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(6).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(6).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida371E"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(3)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE4" styleClass="etiquetaSubtitulo"
@@ -8640,6 +8751,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(9).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(9).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida381E"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(4)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE5" styleClass="etiquetaSubtitulo"
@@ -8865,6 +8980,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(11).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(11).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida391E"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(5)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE6" styleClass="etiquetaSubtitulo"
@@ -9851,7 +9970,7 @@
 									<p:commandButton value="#{botones['siguiente']}"
 										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas"	
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(5)}"								
-										update=":form:panelDatos :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
+										update=":form:panelDatos :form:growl :form:salvaguardas" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										/>
 								</div>
 								<div class="p-field p-col-12 p-md-10"></div>
@@ -9883,6 +10002,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(0).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida411F"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(0)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF1" styleClass="etiquetaSubtitulo"
@@ -10145,6 +10268,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(2).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida421F"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(1)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF2" styleClass="etiquetaSubtitulo"
@@ -10424,6 +10551,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(4).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida431F"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(2)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF3" styleClass="etiquetaSubtitulo"
@@ -10607,6 +10738,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(6).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(6).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida441F"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(3)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF4" styleClass="etiquetaSubtitulo"
@@ -10886,6 +11021,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(8).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasF.get(8).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida452F"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(4)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF5" styleClass="etiquetaSubtitulo"
@@ -11170,7 +11309,7 @@
 									<p:commandButton value="#{botones['siguiente']}"
 										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas"		
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(6)}"							
-										update=":form:panelDatos :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
+										update=":form:panelDatos :form:growl :form:salvaguardas" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										/>
 								</div>
 								<div class="p-field p-col-12 p-md-6"></div>
@@ -11202,6 +11341,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(0).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida461G"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(0)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG1" styleClass="etiquetaSubtitulo"
@@ -11379,6 +11522,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(2).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida471G"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(1)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG2" styleClass="etiquetaSubtitulo"
@@ -11685,6 +11832,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(5).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(5).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida481G"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(2)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG3" styleClass="etiquetaSubtitulo"
@@ -12003,6 +12154,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(7).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(7).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida491G"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(3)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG4" styleClass="etiquetaSubtitulo"
@@ -12339,6 +12494,10 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(9).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(9).quesContentQuestionEnglish}"
 									styleClass="etiquetaTitulo" />
 							</div>
+							<br />
+							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
+								id="msgTablaRequerida501G"
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(4)}"/>
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG5" styleClass="etiquetaSubtitulo"
@@ -12986,7 +13145,7 @@
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton value="#{botones['siguiente']}"
 										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos"										
-										update=":form:panelDatos :form:growl" oncomplete="goToAnchor('inicio')"
+										update=":form:panelDatos :form:growl" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										
 										/>
 								</div>
