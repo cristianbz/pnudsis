@@ -1,0 +1,106 @@
+/*Color texto tabs*/
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited{
+	color:black;
+}
+
+/*Borde de campos FILE UPLOAD*/
+.ui-fileupload-content{
+	padding: 0;
+	border:0px;
+	width: 0px;
+}
+
+/*Quitar el borde de color verde en los campos FILE UPLOAD*/
+.ui-fileupload{
+	margin-top: -15px;
+}
+
+/*Ancho de botones ver y descargar FILE UPLOAD*/
+.pnlgFile td:nth-child(1),.pnlgFile td:nth-child(2){
+	width: 5%;
+}
+
+
+/*Footer*/
+#footer_logo_1 {
+	text-align: left;
+	margin-left: 20px;
+}
+
+#footer_logo_2 {
+	text-align: left;
+		
+}
+
+#footer_logo_2 img{
+	margin-left: 170px;
+}
+
+#footer_contacto {
+	width: 24%;
+	text-align: right;
+	
+}
+
+#footer_contacto .ui-widget{
+	font-size: 12px;	
+}
+
+/*temp*/
+
+.container {
+	/*margin-top:75px;*/
+	margin-right: auto;
+	margin-left: auto;
+	width: 1048px;
+	height: 100%;
+	min-height: 450px;	
+}
+
+.containerHeader {
+	/*margin-top:130px;*/
+	margin-top:20px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 1048px;
+}
+.containerFooter {
+	margin-top:auto;
+	margin-right: auto;
+	margin-left: auto;
+	width: 1048px;
+}
+
+.containerFooter .ui-panel{
+	background-color: red;
+	background: url("#{request.contextPath}/resources/images/bg_pie.png");
+}
+
+body { 	
+ 	background: url("#{request.contextPath}/resources/images/Bg-mensual-rios.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;    
+    /*opacity: 0.8;
+    filter: alpha(opacity=80);*/
+}
+
+.bordercontainer {
+	/*background-color: #fff;*/
+	
+	border-radius: 2px 2px 2px 2px;
+	/*box-shadow: 0 2px 4px #000000;*/
+	border: 0px solid #dfd9c3;
+	padding: 0 10px 20px 10px;
+	padding-bottom: 10px;
+}
+
+
+/*Alto de Navegador Tabs izquierdo*/
+.ui-tabs-left > .ui-tabs-nav {    
+    height:100% !important;
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+	background: none repeat scroll 0% 0% #F5F5F5 !important;
+}

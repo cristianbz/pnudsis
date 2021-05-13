@@ -46,12 +46,12 @@ public class ProjectsSafeguardsFacade extends AbstractFacade<ProjectsSafeguards,
 	}
 	
 	public List<Object[]> buscaProyectoPorRiesgoCobeneficio(int codigoProyecto) throws Exception {
-		String sql = "select ps.prsa_id,ps.safe_id,sf.safe_order,sf.safe_level,sf.safe_code,pro.proj_id from sigma.projects pro, sigma.projects_cobenefits pc, "
+		String sql = "select distinct ps.safe_id,sf.safe_order,sf.safe_level,sf.safe_code,pro.proj_id from sigma.projects pro, sigma.projects_cobenefits pc, "
 					+ " sigma.projects_safeguards ps , sigma.safeguards sf"
 					+ " where ps.prco_id = pc.prco_id and sf.safe_id=ps.safe_id " 
 					+ " and pro.proj_id = pc.proj_id and pro.proj_id=" + codigoProyecto 
 					+ " union "
-					+ " select ps.prsa_id,ps.safe_id,sf.safe_order,sf.safe_level,sf.safe_code,pro.proj_id from sigma.projects pro, " 
+					+ " select distinct ps.safe_id,sf.safe_order,sf.safe_level,sf.safe_code,pro.proj_id from sigma.projects pro, " 
 					+ " sigma.projects_risks pr, sigma.projects_safeguards ps , sigma.safeguards sf"
 					+ " where ps.prri_id = pr.prri_id and sf.safe_id=ps.safe_id " 
 					+ " and pr.proj_id = pro.proj_id and pro.proj_id=" + codigoProyecto;		

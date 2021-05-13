@@ -45,9 +45,9 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-//	@Setter
-//	@Getter
-//	private boolean mensajeRequeridosTablasB;
+	@Setter
+	@Getter
+	private boolean datosProyecto;
 	
 	@Setter
 	@Getter
@@ -1506,7 +1506,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		for(int i=0;i<6;i++){
 			mensajeRequeridosTablasG.add(false);			
 		}
-		
+		setDatosProyecto(false);
 	}
 
 	public TipoParticipanteEnum[] getTipoParticipanteEnum() {

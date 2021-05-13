@@ -1,0 +1,109 @@
+
+.div-contenedor {
+	border: 2px solid #aeaeae;
+	width: 400px;
+	padding: 5px;
+	margin: 0 auto;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	border-radius: 2px 2px 2px 2px;
+	-webkit-box-shadow: 1px 1px 30px 5px #bebebe;
+	box-shadow: 1px 1px 30px 5px #bebebe;
+}
+
+.container {
+	margin-top: 130px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 950px;
+	overflow: hidden;
+	min-height: auto;
+}
+
+.containerHeader {
+	margin-right: auto;
+	margin-left: auto;
+	width: 1024px;
+	height: 120px;
+	vertical-align: top;
+	margin-bottom: 32px;
+}
+
+.header-left-part {
+	width: 298px;
+	height: 298px;
+	position: fixed;
+	background-image: url("../resources/images/logo_ama_banner_circle.png");
+	z-index: -50;
+}
+
+.header-left-part-text {
+	float: left;
+	width: 161px;
+	height: 87px;
+	background-image: url("../resources/images/logo_ama_banner_text.png");	
+	margin-left: 140px;
+}
+
+.header-right-part {
+	float: right;
+	width: 218px;
+	height: 87px;
+	background-image: url("../resources/images/logo_suia_small.png");
+	margin-bottom: 20px;
+}
+
+.header-right-part-bar {
+	float: right;
+	width: 565px;
+	height: 25px;
+	background-image: url("../resources/images/Barra_titular_sitio.png");	
+	margin-bottom: 20px;
+}
+
+.containerFooter {
+	margin-right: auto;
+	margin-left: auto;
+	width: 1024px;
+}
+
+.containerFooter .ui-menubar {
+	padding: 13px; 
+}
+
+.footer {
+	background: #EEEEEE;
+}
+
+.barItemUser {
+	color: #008890;
+}
+
+.barItemClose {
+	margin-top: 4px;
+	margin-right: 5px;
+}
+
+.barItemClose a {
+	color: blue;
+}
+
+.bordercontainer {
+	background: rgba(255, 255, 255, 0.85);
+	border: 1px solid #dfd9c3;
+}
+
+.icon-user {
+	background-image: url("../resources/images/user_icon.png") !important;
+	margin-right: 5px;
+}
+
+.bandejaIndicator {
+	position: absolute;
+	margin-top: 15px;
+	right: 14%;
+}
+
+.label-justify {
+    color: #2a7d9b;
+    text-align: justify;
+}

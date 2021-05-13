@@ -118,6 +118,16 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_column_decimal_one")
+	private double tareColumnDecimalOne;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_decimal_two")
+	private double tareColumnDecimalTwo;
+	
+	@Getter
+	@Setter
 	@Transient
 	private String tareProvincia;
 	

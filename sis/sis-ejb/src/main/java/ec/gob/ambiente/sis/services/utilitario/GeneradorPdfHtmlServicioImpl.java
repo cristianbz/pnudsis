@@ -15,23 +15,25 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import com.itextpdf.text.pdf.PdfWriter;
-
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.attach.impl.layout.HtmlPageBreak;
 import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.EncryptionConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.WriterProperties;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.AreaBreak;
+
 import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.IElement;
+
+
+
+
 
 @Stateless
 public class GeneradorPdfHtmlServicioImpl implements Serializable{
@@ -91,19 +93,19 @@ public class GeneradorPdfHtmlServicioImpl implements Serializable{
 
 	}
 
-//	/**
-//	 * Metodo para crear el pdf
-//	 * 
-//	 * @param html
-//	 *            archivo ahtml
-//	 * @exception IOException
-//	 *                excepcion
-//	 */
+	/**
+	 * Metodo para crear el pdf
+	 * 
+	 * @param html
+	 *            archivo ahtml
+	 * @exception IOException
+	 *                excepcion
+	 */
 //	public byte[] crearDocumentoPdf(String html) throws IOException {
 //		ConverterProperties properties = new ConverterProperties();
 //		ByteArrayOutputStream file = new ByteArrayOutputStream();
-//		PdfWriter writer = PdfWriter.getInstance(null, file);
-////		PdfWriter writer = new PdfWriter(file);
+////		PdfWriter writer = PdfWriter.getInstance(null, file);
+//		PdfWriter writer = new PdfWriter(file);
 //		
 //		PdfDocument pdf = new PdfDocument(writer);
 //		pdf.setDefaultPageSize(PageSize.A4);
@@ -138,7 +140,7 @@ public class GeneradorPdfHtmlServicioImpl implements Serializable{
 //
 //		PdfDocument pdf = new PdfDocument(writer);
 //
-//		CabeceraPiePaginaPdf footerHandler = new CabeceraPiePaginaPdf(pdf, mensajeQR);
+////		CabeceraPiePaginaPdf footerHandler = new CabeceraPiePaginaPdf(pdf, mensajeQR);
 //		pdf.setDefaultPageSize(PageSize.A4);
 //
 //		Document document = new Document(pdf);
@@ -154,10 +156,10 @@ public class GeneradorPdfHtmlServicioImpl implements Serializable{
 //				document.add((AreaBreak) element);
 //			}
 //		}
-//		if (mensajeQR != null) {
-//			pdf.addEventHandler(PdfDocumentEvent.END_PAGE, footerHandler);
-//			footerHandler.writeTotal(pdf);
-//		}
+////		if (mensajeQR != null) {
+////			pdf.addEventHandler(PdfDocumentEvent.END_PAGE, footerHandler);
+////			footerHandler.writeTotal(pdf);
+////		}
 //		document.close();
 //		return file.toByteArray();
 //	}

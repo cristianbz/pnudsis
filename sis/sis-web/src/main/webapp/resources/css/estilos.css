@@ -4,6 +4,13 @@
 .cabeceraTabla{
 	font-size: 10px;
 }
+.cabeceraTablaLarga{
+	font-size: 8px;
+}
+.contenidoTablaLarga{
+	font-size: 8px;
+}
+
 .titulos{
 	
 	font-weight: bold;
@@ -36,6 +43,17 @@
 	font-size:12px !important;
 	text-align:right;
 }
+.etiquetaTituloSalvaguarda{
+	font-size:16px !important;
+	text-align: left;
+	font-weight: bold;
+}
+.pregunta{
+	font-size:13px !important;
+	text-align: left;
+	font-weight: bold;
+	font-family: sans-serif;
+}
 
 .etiquetaTitulo{
 	display: block;
@@ -55,7 +73,7 @@
 
 .sinBordesAncho100 tbody td{
 	border:none;
-	table-layout: auto;
+	table-layout: auto;		
 }
 
 
@@ -68,6 +86,10 @@
 	width: 150px !important;
 	height: 50px !important;
 	font-size: 14px !important;
+}
+.botonAgregaRegistro{
+	width: 112px !important;
+	float:right;	
 }
 
 .estiloMenuItemSeccionActual{
@@ -98,5 +120,17 @@
 	table-layout: auto;
 }
 .ui-datatable-scrollable-header-box table th, .ui-datatable-scrollable-footer-box table th, .ui-datatable-scrollable-body table td{
-   width: 20% !important;
+   width: 20% !important;     
 }
+.datosProyecto{
+	font-size: 16px;
+	font-weight: bold;
+	text-align: left;	
+}
+.singleLine 
+{ 
+    text-wrap: none; 
+    white-space:nowrap; 
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+} 

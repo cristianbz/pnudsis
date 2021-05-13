@@ -1,0 +1,139 @@
+
+.div-contenedor {
+	border: 2px solid #aeaeae;
+	width: 400px;
+	padding: 5px;
+	margin: 0 auto;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	border-radius: 2px 2px 2px 2px;
+	-webkit-box-shadow: 1px 1px 30px 5px #bebebe;
+	box-shadow: 1px 1px 30px 5px #bebebe;
+}
+
+.container {
+	margin-right: auto;
+	margin-left: auto;
+	width: 1024px;
+	/* overflow: hidden; */
+	min-height: auto;
+}
+
+.containerHeader {
+	margin-right: auto;
+	margin-left: auto;
+	width: 1024px;
+	height: 120px;
+	vertical-align: top;
+	margin-bottom: 32px;
+}
+
+.header-left-part {
+	width: 298px;
+	height: 298px;
+	position: fixed;
+	background-image: url("../resources/images/logo_ama_banner_circle.png");
+	z-index: -50;
+	margin-left: 90px;
+}
+
+/* .header-left-part-text { */
+/* 	float: left; */
+/* 	width: 161px; */
+/* 	height: 87px; */
+/* 	background-image: url("../resources/images/logo_ama_banner_text.png");	 */
+/* 	margin-left: 140px; */
+/* } */
+
+.header-right-part {
+	float: right;
+	width: 785px;
+	height: 115px;
+	background-image: url("../resources/images/logo_cabecera.png");
+	margin-bottom: 20px;
+	background-size: 100%; 
+}
+
+.header-right-part-bar {
+	float: right;
+	width: 500px;
+	height: 25px;
+	background-image: url("../resources/images/barra_consultores_ambientales.png");	
+	margin-bottom: 20px;
+}
+
+.containerFooter {
+	margin-top: 10px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 1024px;
+}
+
+.containerFooter .ui-menubar {
+	padding: 13px; 
+}
+
+.footer {
+	/*background: #EEEEEE;GRIS*/
+	background: #FFFFFF;
+}
+
+.barItemUser {
+	color: #008890;
+}
+
+.barItemClose {
+	margin-top: 4px;
+	margin-right: 5px;
+}
+
+.barItemClose a {
+	color: blue;
+}
+
+.bordercontainer {
+	background: rgba(255, 255, 255, 0.85);
+	border: 1px solid #dfd9c3;
+}
+
+.icon-user {
+	background-image: url("../resources/images/user_icon.png") !important;
+	margin-right: 5px;
+}
+
+.bandejaIndicator {
+	position: absolute;
+	margin-top: 15px;
+	right: 14%;
+}
+
+.label-justify {
+    color: #2a7d9b;
+    text-align: justify;
+}
+
+.labelBold {
+	font-weight: bold;
+}
+
+.panel-header1 {
+	font-weight: bold;
+	text-align: center;
+	background: #00AAC3;
+	color: white;
+}
+
+body {
+	background: url("../resources/images/bg-image.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.containerPromotor {
+	margin-right: auto;
+	margin-left: auto;
+	width: 1024px;
+	overflow: hidden;
+	min-height: 250px;
+}

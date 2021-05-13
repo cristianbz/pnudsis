@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<h:outputStylesheet name="suia-layout.css" library="css" />
+	<h:outputStylesheet name="suia-styles.css" library="css" />
+	<h:outputStylesheet name="suia-pf-custom.css" library="css" />
+	<h:outputStylesheet name="login.css" library="css" />
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/js/util.js"></script>
+	<link rel="shortcut icon"
+		href="#{request.contextPath}/resources/images/favicon.ico" />
+	<title>SIS</title>
+	<script type="text/javascript">
+		document.oncontextmenu = function(){return false;}
+		document.onmousedown = function (event) {
+		   event = (event || window.event);	   
+		   if (event.keyCode == 123) {
+		       return false;
+		   }
+		}
+		document.onkeydown = function (event) {
+		   event = (event || window.event);	
+			var code = event.keyCode;
+            var key = String.fromCharCode(event.keyCode);
+            var shift = event.shiftKey;
+            var alt = event.altKey;
+            var ctrl = event.ctrlKey;
+            var which = event.which;
+            var str = "code = " + code + "\n" +
+                      "key = " + key + "\n" +
+                      "shift = " + shift + "\n" +
+                      "alt = " + alt + "\n" +
+                      "ctrl = " + ctrl + "\n" +
+                      "which = " + which;
+            //alert(str);
+		   if (event.keyCode == 123 || ctrl==true) {
+		       return false;
+		   }
+			else
+				return true;
+		}
+	</script>
+</h:head>
+<h:body>
+	<pe:blockUI></pe:blockUI>
+	<div>
+		<div class="header-left-part"></div>
+		<div id="header" class="containerHeader">
+			<div class="header-left-part-text"></div>
+			<div class="header-right-part"></div>
+			<div class="clear"></div>
+			<div class="header-right-part-bar"></div>
+			<div class="clear"></div>
+		</div>
+		<div id="page">
+			<div id="content" class="container">
+				<h:form id="indexForm">
+				
+					<center>
+						<p:panel header="" styleClass="panelLogin"
+							style="margin-top:60px;">
+							<f:facet name="header">
+								<div style="width:260px; color:#007070;">
+									SISTEMA DE INFORMACION DE SALVAGUARDAS
+								</div>
+							</f:facet>
+							<center>
+								<img src="#{request.contextPath}/resources/images/user.jpg" width="100" height="100" />
+							</center>
+							<h:panelGrid id="grid" columns="2" styleClass="separatorTop w100" 
+								columnClasses="w66, field_mrg">
+								<h:panelGrid columns="2" styleClass="w100" 
+									columnClasses="w33 bold, field_mrg">
+									<p:outputLabel for="username" value="Usuario" 
+										styleClass="labelMain" />
+										<p:inputText value="#{loginController.username}" id="username" 
+											required="true" requiredMessage="Ingrese el usuario" 
+											styleClass="w100" autocomplete="off"/>
+									<p:outputLabel for="password" value="Contraseña" 
+										styleClass="labelMain" />
+										<p:password value="#{loginController.password}" id="password" 
+											required="true" requiredMessage="Ingrese la contraseña" 
+											styleClass="w100" autocomplete="off"/>
+								</h:panelGrid>
+								<p:commandButton id="loginButton" value="Ingresar" 
+									action="#{loginController.acceder()}" update=":indexForm" 
+									styleClass="buttonLogin w100" />
+										
+								<h:panelGrid columns="1" styleClass="w100" columnClasses="alRight">
+									<h:outputLink value="#{request.contextPath}/usuario/recuperarClave.xhtml" styleClass="linkForgot">¿Olvidó su contraseña?</h:outputLink>
+								</h:panelGrid>
+							</h:panelGrid>
+							<br />
+							<h:panelGrid columns="1" rendered="false" 
+								columnClasses="w50 alTop alCenter, field_mrg w50 alTop alCenter">
+								<h:outputLabel value="Si aún no es usuario de SUIA, regístrese ahora" 
+									styleClass="labelRegister" />							
+								
+								<p:commandButton value="Regístrese en el sistema" process="@this" action="/registro.xhtml" ajax="false" immediate="true" styleClass="buttonRegister bold w70" />	
+							</h:panelGrid>							
+							<h:panelGrid columns="1" 
+											columnClasses="w50 alTop alCenter, field_mrg w50 alTop alCenter">
+											<h:outputLabel value="Si aún no es usuario de SUIA, regístrese ahora" 
+												styleClass="labelRegister" />
+											
+											<p:commandButton value="Regístrese en el sistema" 
+												actionListener="#{loginController.registrarse()}" immediate="true"  
+												styleClass="buttonRegister bold w70"/>	
+												
+							</h:panelGrid>
+							
+						</p:panel>
+
+					</center>
+												
+												
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

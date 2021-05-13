@@ -1,0 +1,35 @@
+.labelRegister {
+	font-size: 11px;
+	color: #068b8a;
+}
+
+.buttonRegister {
+	color: white !important;
+	font-weight: bold !important;
+	background-color: #006a77 !important;
+	height: 40px;
+}
+
+a.linkForgot {
+	text-decoration: none;
+	color: blue;
+}
+
+.buttonLogin {
+	height: 55px;
+	background-color: #28b9f8 !important;
+	color: white !important;
+	font-weight: bold !important;
+}
+
+.labelMain {
+	color: #068b8a;
+}
+
+.labelTitle {
+	color: #007070;
+}
+
+.panelLogin {
+	width: 500px;
+}

@@ -42,7 +42,7 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 */	
 	public AdvanceExecutionSafeguards buscarPorProyecto(int codigoProyecto) throws DaoException{
 		try{
-			String sql="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsReported=false";
+			String sql="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoProyecto", codigoProyecto);
 			return findByCreateQuerySingleResult(sql, camposCondicion);
