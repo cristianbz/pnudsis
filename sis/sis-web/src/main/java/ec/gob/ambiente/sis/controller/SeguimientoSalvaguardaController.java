@@ -454,6 +454,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				//salvaguarda A
 				if(salvaguarda.getSafeOrder()==1 && salvaguarda.getSafeLevel()==1){
 					int salvaguardaA=salvaguarda.getSafeId();
+					getSeguimientoSalvaguardaBean().setCodigoSalvaguardaA(salvaguardaA);
 					getSeguimientoSalvaguardaBean().setListaPreguntasA(new ArrayList<>());
 					getSeguimientoSalvaguardaBean().setListaPreguntasA(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaA));
 					getSeguimientoSalvaguardaBean().setCatalogoPoliticas(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.POLITICAS.getCodigo()));
@@ -480,6 +481,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					//salvaguarda B
 				}else if(salvaguarda.getSafeOrder()==2 && salvaguarda.getSafeLevel()==1){
 					int salvaguardaB=salvaguarda.getSafeId();
+					getSeguimientoSalvaguardaBean().setCodigoSalvaguardaB(salvaguardaB);
 					getSeguimientoSalvaguardaBean().setListaPreguntasB(new ArrayList<>());
 					getSeguimientoSalvaguardaBean().setListaPreguntasB(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaB));
 					getSeguimientoSalvaguardaBean().setCatalogoInformacionEjecucion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.INFORMEEJECUCION.getCodigo()));
@@ -506,6 +508,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					//SALVAGUARDA C
 				}else if(salvaguarda.getSafeOrder()==3 && salvaguarda.getSafeLevel()==1){
 					int salvaguardaC=salvaguarda.getSafeId();
+					getSeguimientoSalvaguardaBean().setCodigoSalvaguardaC(salvaguardaC);
 //					cargaTodosLosCantones();
 					getSeguimientoSalvaguardaBean().setListaPreguntasC(new ArrayList<>());
 					getSeguimientoSalvaguardaBean().setListaPreguntasC(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaC));
@@ -531,6 +534,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					//SALVAGUARDA D
 				}else if(salvaguarda.getSafeOrder()==4 && salvaguarda.getSafeLevel()==1){
 					int salvaguardaD=salvaguarda.getSafeId();
+					getSeguimientoSalvaguardaBean().setCodigoSalvaguardaD(salvaguardaD);
 //					cargarProvincias();
 					getSeguimientoSalvaguardaBean().setListaPreguntasD(new ArrayList<>());
 					getSeguimientoSalvaguardaBean().setListaPreguntasD(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaD));
@@ -553,6 +557,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					//SALVAGUARDA E
 				}else if(salvaguarda.getSafeOrder()==5 && salvaguarda.getSafeLevel()==1){
 					int salvaguardaE=salvaguarda.getSafeId();
+					getSeguimientoSalvaguardaBean().setCodigoSalvaguardaE(salvaguardaE);
 //					cargarProvincias();
 					getSeguimientoSalvaguardaBean().setListaPreguntasE(new ArrayList<>());
 					getSeguimientoSalvaguardaBean().setListaPreguntasE(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaE));
@@ -576,6 +581,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					//SALVAGUARDA F
 				}else if(salvaguarda.getSafeOrder()==6 && salvaguarda.getSafeLevel()==1){
 					int salvaguardaF=salvaguarda.getSafeId();
+					getSeguimientoSalvaguardaBean().setCodigoSalvaguardaF(salvaguardaF);
 //					cargarProvincias();
 					getSeguimientoSalvaguardaBean().setListaPreguntasF(new ArrayList<>());
 					getSeguimientoSalvaguardaBean().setListaPreguntasF(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaF));
@@ -599,6 +605,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					//SALVAGUARDA G
 				}else if(salvaguarda.getSafeOrder()==7 && salvaguarda.getSafeLevel()==1){
 					int salvaguardaG=salvaguarda.getSafeId();
+					getSeguimientoSalvaguardaBean().setCodigoSalvaguardaG(salvaguardaG);
 					getSeguimientoSalvaguardaBean().setListaPreguntasG(new ArrayList<>());
 					getSeguimientoSalvaguardaBean().setListaPreguntasG(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaG));
 //					cargarProvincias();
@@ -1943,40 +1950,6 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		}
 	}
 	
-//	public void filtraCanton(){
-//		try{
-//			
-//			List<Object[]> cantones=getGeographicalLocationsFacade().listarCantonesPorProvincia(getSeguimientoSalvaguardaBean().getCodigoProvincia());
-//			
-//			getSeguimientoSalvaguardaBean().setListaCantones(new ArrayList<>());
-//			getSeguimientoSalvaguardaBean().setListaParroquias(new ArrayList<>());
-//			for (Object[] registro : cantones) {
-//				GeographicalLocations catalogo=new GeographicalLocations();
-//				catalogo.setGeloName(registro[0].toString());
-//				catalogo.setGeloId(Integer.valueOf(registro[1].toString()));
-//				catalogo.setGeloCodificationInec(registro[2].toString());
-//				getSeguimientoSalvaguardaBean().getListaCantones().add(catalogo);
-//			}
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//	}
-//	public void filtraParroquia(){
-//		try{
-//			List<Object[]> parroquia=getGeographicalLocationsFacade().listarParroquiasPorCanton(getSeguimientoSalvaguardaBean().getCodigoCanton());
-//			getSeguimientoSalvaguardaBean().setListaParroquias(new ArrayList<>());
-//			for (Object[] registro : parroquia) {
-//				GeographicalLocations catalogo=new GeographicalLocations();
-//				catalogo.setGeloName(registro[0].toString());
-//				catalogo.setGeloId(Integer.valueOf(registro[1].toString()));
-//				catalogo.setGeloCodificationInec(registro[2].toString());
-//				getSeguimientoSalvaguardaBean().getListaParroquias().add(catalogo);
-//			}
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//	}
-	
 	public void agregarFilasTablaSalvaguardaB41(){
 		try{
 			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null){
@@ -2003,6 +1976,14 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					
 					getSeguimientoSalvaguardaBean().getTablaSalvaguardaB41().add(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB41());					
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB41().setTareStatus(true);
+//					ValueAnswers valueAnswers = getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(0);
+//					valueAnswers.setVaanYesnoAnswerValue(true);					
+//					boolean seagregaronValores =  getTableResponsesFacade().agregaTablaResponseValueAnswers(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB41(), valueAnswers,getSeguimientoSalvaguardaBean().getListaValoresRespuestasB());
+//					if (seagregaronValores ){
+//						getSeguimientoSalvaguardaBean().setListaValoresRespuestasB(getValueAnswersFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), getSeguimientoSalvaguardaBean().getCodigoSalvaguardaA()));
+//						Mensaje.actualizarComponente(":form:salvaguardas");
+//					}
+					
 					getTableResponsesFacade().create(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB41());
 				}else{
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB41().setTareColumnTwo(String.valueOf(getSeguimientoSalvaguardaBean().getCodProvincia()));
@@ -2024,6 +2005,10 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					}
 
 					getTableResponsesFacade().edit(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB41());
+//					ValueAnswers valueAnswers = getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(0);
+//					valueAnswers.setVaanYesnoAnswerValue(true);
+//					getTableResponsesFacade().agregaTablaResponseValueAnswers(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB41(), valueAnswers,getSeguimientoSalvaguardaBean().getListaValoresRespuestasB());
+					
 				}
 				getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasB41(new TableResponses());
 				vaciarDatosProvinciaCantonParroquia();
@@ -11818,5 +11803,20 @@ public void finalizarReporteSalvaguardas(){
 	}
 }
 
+public void buscaValorRespuesta(ValueAnswers valueAnswers,List<ValueAnswers> listaValoresRespuestas){
+//	Iterator itera=listaValoresRespuestas.iterator();
+//	while (itera.hasNext()){
+//		ValueAnswers respuesta=(ValueAnswers) itera.next();
+//		if (respuesta.getQuestions().getQuesId() == valueAnswers.getQuestions().getQuesId()){
+//			respuesta = valueAnswers;
+//			
+//		}
+//	}
+	for (ValueAnswers respuesta : listaValoresRespuestas) {
+		if ( respuesta.getQuestions().getQuesId() == valueAnswers.getQuestions().getQuesId()){
+			respuesta = valueAnswers;
+		}
+	}
+}
 
 }

@@ -59,14 +59,15 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 */
 	public AdvanceExecutionSafeguards grabarAvanceEjecucionSalvaguarda(AdvanceExecutionSafeguards avanceEjecucion,int salvaguarda) throws Exception{
 		if(avanceEjecucion.getAdexId()==null){
-			create(avanceEjecucion);
+			avanceEjecucion = create(avanceEjecucion);
 			for (TableResponses respuestaTabla : avanceEjecucion.getTableResponsesList()) {
 				if(respuestaTabla.getTareId()==null)
 					tableResponsesFacade.create(respuestaTabla);
 				else
 					tableResponsesFacade.edit(respuestaTabla);
 			}
-			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
+			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
+				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
 				if(respuestas.getVaanId()==null)
 					valueAnswersFacade.create(respuestas);
 				else

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -13,11 +14,13 @@ import org.hibernate.Hibernate;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.TableResponses;
+import ec.gob.ambiente.sis.model.ValueAnswers;
 
 @Stateless
 @LocalBean
 public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer> {
-
+	@EJB
+	private ValueAnswersFacade valueAnswersFacade;
 
 
 
@@ -91,6 +94,25 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 			create(tableResponse);
 		else
 			edit(tableResponse);
+		
+	}
+	public boolean agregaTablaResponseValueAnswers(TableResponses tableResponse,ValueAnswers valueAnswers,List<ValueAnswers> listaValoresRespuestas) throws Exception{
+		boolean seAgregaronValoresRespuestas=false;
+		if(tableResponse.getTareId()==null)
+			create(tableResponse);
+		else
+			edit(tableResponse);
+		if (valueAnswers!=null && valueAnswers.getVaanId()==null){
+			for (ValueAnswers valores : listaValoresRespuestas) {
+				if(valores.getQuestions().getQuesId() == valueAnswers.getQuestions().getQuesId())
+					valores = valueAnswers;
+				valueAnswersFacade.create(valores);
+			}
+			seAgregaronValoresRespuestas = true;
+		}else{
+			valueAnswersFacade.edit(valueAnswers);
+		}
+		return seAgregaronValoresRespuestas;	
 	}
 	
 }

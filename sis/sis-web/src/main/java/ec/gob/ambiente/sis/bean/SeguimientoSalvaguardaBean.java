@@ -47,6 +47,28 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Setter
 	@Getter
+	private int codigoSalvaguardaA;
+	@Setter
+	@Getter
+	private int codigoSalvaguardaB;
+	@Setter
+	@Getter
+	private int codigoSalvaguardaC;
+	@Setter
+	@Getter
+	private int codigoSalvaguardaD;
+	@Setter
+	@Getter
+	private int codigoSalvaguardaE;
+	@Setter
+	@Getter
+	private int codigoSalvaguardaF;
+	@Setter
+	@Getter
+	private int codigoSalvaguardaG;
+	
+	@Setter
+	@Getter
 	private boolean datosProyecto;
 	
 	@Setter
