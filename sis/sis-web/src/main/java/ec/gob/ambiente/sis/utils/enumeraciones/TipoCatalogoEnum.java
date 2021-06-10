@@ -35,7 +35,8 @@ public enum TipoCatalogoEnum {
 	TIPODEACCESO(26,"Tipo de acceso"),
 	MONITOREOREMOTO(27,"Monitoreo remoto"),
 	MONITOREOINSITU(28,"Monitoreo insitu"),
-	LINEAACCION(29,"Linea de accion");
+	LINEAACCION(29,"Linea de accion"),
+	TIPOORGANIZACION(30,"Tipo de organizacion");
 	
 	@Getter
 	private final int codigo;

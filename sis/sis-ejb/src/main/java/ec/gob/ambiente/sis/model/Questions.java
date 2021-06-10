@@ -59,6 +59,11 @@ public class Questions  {
 	
 	@Getter
 	@Setter
+	@Column(name = "ques_is_gender")
+	private boolean quesIsGender;
+	
+	@Getter
+	@Setter
 	@Column(name = "ques_question_order")
 	private Integer quesQuestionOrder;
 	

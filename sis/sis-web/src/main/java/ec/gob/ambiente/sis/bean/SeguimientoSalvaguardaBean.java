@@ -45,27 +45,6 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Setter
-	@Getter
-	private int codigoSalvaguardaA;
-	@Setter
-	@Getter
-	private int codigoSalvaguardaB;
-	@Setter
-	@Getter
-	private int codigoSalvaguardaC;
-	@Setter
-	@Getter
-	private int codigoSalvaguardaD;
-	@Setter
-	@Getter
-	private int codigoSalvaguardaE;
-	@Setter
-	@Getter
-	private int codigoSalvaguardaF;
-	@Setter
-	@Getter
-	private int codigoSalvaguardaG;
 	
 	@Setter
 	@Getter
@@ -807,6 +786,158 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_1;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_2;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_3;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_4;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_5;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_6;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_7;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_8;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_9;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_10;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_11;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_12;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_13;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_14;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_15;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_16;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_17;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_18;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_19;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_20;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_21;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_22;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_23;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_24;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_25;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_26;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_27;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_28;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_29;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_30;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_31;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_32;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_33;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_34;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_35;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_36;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_37;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaE40_38;
+	
+	@Getter
+	@Setter
 	private List<TableResponses> tablaSalvaguardaF411;
 	
 	@Getter
@@ -1503,6 +1634,44 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaB11= new ArrayList<>();
 		tablaSalvaguardaB143= new ArrayList<>();
 		tablaSalvaguardaC242= new ArrayList<>();
+		tablaSalvaguardaE40_1= new ArrayList<>();
+		tablaSalvaguardaE40_2= new ArrayList<>();
+		tablaSalvaguardaE40_3= new ArrayList<>();
+		tablaSalvaguardaE40_4= new ArrayList<>();
+		tablaSalvaguardaE40_5= new ArrayList<>();
+		tablaSalvaguardaE40_6= new ArrayList<>();
+		tablaSalvaguardaE40_7= new ArrayList<>();
+		tablaSalvaguardaE40_8= new ArrayList<>();
+		tablaSalvaguardaE40_9= new ArrayList<>();
+		tablaSalvaguardaE40_10= new ArrayList<>();
+		tablaSalvaguardaE40_11= new ArrayList<>();
+		tablaSalvaguardaE40_12= new ArrayList<>();
+		tablaSalvaguardaE40_13= new ArrayList<>();
+		tablaSalvaguardaE40_14= new ArrayList<>();
+		tablaSalvaguardaE40_15= new ArrayList<>();
+		tablaSalvaguardaE40_16= new ArrayList<>();
+		tablaSalvaguardaE40_17= new ArrayList<>();
+		tablaSalvaguardaE40_18= new ArrayList<>();
+		tablaSalvaguardaE40_19= new ArrayList<>();
+		tablaSalvaguardaE40_20= new ArrayList<>();
+		tablaSalvaguardaE40_21= new ArrayList<>();
+		tablaSalvaguardaE40_22= new ArrayList<>();
+		tablaSalvaguardaE40_23= new ArrayList<>();
+		tablaSalvaguardaE40_24= new ArrayList<>();
+		tablaSalvaguardaE40_25= new ArrayList<>();
+		tablaSalvaguardaE40_26= new ArrayList<>();
+		tablaSalvaguardaE40_27= new ArrayList<>();
+		tablaSalvaguardaE40_28= new ArrayList<>();
+		tablaSalvaguardaE40_29= new ArrayList<>();
+		tablaSalvaguardaE40_30= new ArrayList<>();
+		tablaSalvaguardaE40_31= new ArrayList<>();
+		tablaSalvaguardaE40_32= new ArrayList<>();
+		tablaSalvaguardaE40_33= new ArrayList<>();
+		tablaSalvaguardaE40_34= new ArrayList<>();
+		tablaSalvaguardaE40_35= new ArrayList<>();
+		tablaSalvaguardaE40_36= new ArrayList<>();
+		tablaSalvaguardaE40_37= new ArrayList<>();
+		tablaSalvaguardaE40_38= new ArrayList<>();
 		
 		setMensajeRequeridosTablasB(new ArrayList<>());
 		setMensajeRequeridosTablasC(new ArrayList<>());

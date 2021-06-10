@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sis.model.Catalogs;
+import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -98,7 +99,9 @@ public class AplicacionBean implements Serializable{
 	@Setter
 	private List<Object[]> listaSalvaguardas;
 	
-
+	@Getter
+	@Setter
+	private List<Catalogs> listaTipoOrganizacion;
 
 }
 

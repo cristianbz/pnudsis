@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:pe="http://primefaces.org/ui/extensions" xmlns:composite="http://java.sun.com/jsf/composite">
+<ui:composition >
+	<ui:define name="contenido">
+		<composite:interface>
+			<composite:attribute name="componenteBuscaProyectos" required="true" />
+		</composite:interface>
+		<composite:implementation>
+
+			<p:growl id="growl" life="3000" showDetail="true" />
+			
+
+				<p:outputPanel id="panelBusquedaProyecto">
+				<p:panel header="#{titulos['busquedaProyectos']}" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}">
+					<div class="ui-fluid p-formgrid p-grid" style="align-content: center">
+
+						<p:outputLabel value="#{etiquetas['buscarPor']}" />
+						<p:spacer width="20px;"/>
+				        <p:selectOneRadio id="busqueda"  unselectable="false" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoBusquedaProyecto}">
+					            <f:selectItem itemLabel="#{etiquetas['socioImplementador']}" itemValue="#{1}"/>
+					            <f:selectItem itemLabel="#{etiquetas['tituloPlanProyecto']}" itemValue="#{2}"/>	
+					            <p:ajax event="change" process="@this" partialSubmit="true" update="pnlCritBusq pnlListaProy  panelDatos" 
+					            	listener="#{cc.attrs.componenteBuscaProyectos.vaciaDatosBusqueda}"/>			 	            
+				        </p:selectOneRadio>
+					</div>					
+					<div class="ui-fluid p-formgrid p-grid" >
+						<h:panelGrid id="pnlCritBusq" style="margin:0 auto;">
+									<h:panelGrid rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoBusquedaProyecto==0}"
+										style="height:30px;" />
+									<p:selectOneMenu id="codSocioBusq"
+										value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoSocioImplementador}" required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoBusquedaProyecto==1}"
+										style="width:500px;">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaSociosImplementadores}" var="soc"
+											itemLabel="#{soc.partName}" itemValue="#{soc.partId}">
+										</f:selectItems>
+										<p:ajax event="change" process="@this" 
+											partialSubmit="true"
+											listener="#{cc.attrs.componenteBuscaProyectos.vaciaDatosBusqueda}" update="pnlListaProy  panelDatos"/>
+									</p:selectOneMenu>
+									
+									<p:inputText id="tituloBusq"
+										value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tituloProyecto}" required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoBusquedaProyecto==2}" size="60" />
+									
+									
+								</h:panelGrid>
+					</div>
+					<div class="ui-fluid p-formgrid p-grid" >			
+								<h:panelGrid style="margin:0 auto;">
+									<p:commandButton id="btnBusqProy" value="#{botones['buscar']}"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.buscarProyectos}" icon="#{botones['icono.buscar']}" onclick="PF('dlgEnProc').show()"
+										process="@this tituloBusq pnlCritBusq" update="listadoProyectos growl codSocioBusq tituloBusq" oncomplete="PF('dlgEnProc').hide()"
+										partialSubmit="true" async="true" global="false"
+										 />
+								</h:panelGrid>
+					</div>
+					<div class="ui-fluid p-formgrid p-grid" >			
+								<br />
+							<h:panelGrid id="pnlListaProy" width="800" style="margin:0 auto;">
+								<p:dataTable id="listadoProyectos"
+									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaProyectos}" var="proyecto"
+									emptyMessage="#{mensajes['noRegistros']}">
+									<p:column width="155">
+										<p:outputLabel value="#{proyecto.projCode}" />
+									</p:column>
+									<p:column headerText="#{etiquetas['tituloPlanProyecto']}">
+										<p:outputLabel value="#{proyecto.projTitle}" />
+									</p:column>
+									<p:column headerText="#{etiquetas['socioImplementador']}" width="300">
+										<p:outputLabel value="#{proyecto.partners.partName}" />
+									</p:column>
+									<p:column width="30">
+										<p:commandButton id="btnProyEdit" icon="#{botones['icono.checkcirculo']}" title="#{tooltip['seleccionar']}"
+											actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyecto(proyecto)}"
+											process="@this " partialSubmit="true" onclick="PF('dlgEnProc').show()" oncomplete="PF('dlgEnProc').hide()"
+											async="true" global="false" update="@form " />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+					</div>					
+				</p:panel>
+				</p:outputPanel>
+				<p:outputPanel id="panelDatosProyecto">
+				<p:panel header="#{titulos['datosProyecto']}" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}" >
+					<h:panelGrid columns="2" id="panelDatos" style="width:600px; margin:0 auto;" >
+						
+						<p:outputLabel for="proyecto"
+							value="#{etiquetas['tituloPlanProyecto']}: "
+							styleClass="datosProyecto" />
+						<p:outputLabel id="proyecto"
+							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}"
+							 />
+						
+						<p:outputLabel for="socio"
+							value="#{etiquetas['socioImplementador']}: "
+							styleClass="datosProyecto" />
+						<p:outputLabel id="socio"
+							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.socioImplementador.partName}"
+							 />
+						
+						<p:outputLabel value="#{etiquetas['sectorIdentifica']}: " rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero}"
+							styleClass="datosProyecto" for="sectores" />
+						
+							<p:selectManyCheckbox id="sectores" rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero}"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaSectoresSeleccionados}"
+								layout="pageDirection" 
+								styleClass="etiquetaSubtitulo" columns="4"
+								disabled="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosAvanceEjecucion}">
+								<f:selectItems
+									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaSectoresDisponibles}"
+									var="sector" itemLabel="#{sector.sectName}"
+									itemValue="#{sector.sectId}" />
+								<p:ajax event="change" process="@this" />
+							</p:selectManyCheckbox>
+							<p:message for="sectores" />
+						
+					</h:panelGrid>
+				</p:panel>
+				</p:outputPanel>
+				
+				<p:outputPanel id="panelNuevaBusquedaProyecto">
+				<h:panelGrid style="margin:0 auto;" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}" >
+							<p:commandButton id="btnVolverInicio" value="#{botones['volverBusqueda']}"
+								icon="#{botones['icono.home']}" update="@form" 
+								actionListener="#{cc.attrs.componenteBuscaProyectos.volverABuscarProyectos}" partialSubmit="true"
+								process="@this " />
+				</h:panelGrid>
+				</p:outputPanel>
+
+			
+		</composite:implementation>
+	</ui:define>
+</ui:composition>
+
+</html>

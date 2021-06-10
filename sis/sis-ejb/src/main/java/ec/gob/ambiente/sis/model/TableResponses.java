@@ -128,6 +128,36 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_column_number_one")
+	private Integer tareColumnNumberOne;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_two")
+	private Integer tareColumnNumberTwo;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_three")
+	private Integer tareColumnNumberThree;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_four")
+	private Integer tareColumnNumberFour;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_five")
+	private Integer tareColumnNumberFive;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_six")
+	private Integer tareColumnNumberSix;
+	
+	@Getter
+	@Setter
 	@Transient
 	private String tareProvincia;
 	

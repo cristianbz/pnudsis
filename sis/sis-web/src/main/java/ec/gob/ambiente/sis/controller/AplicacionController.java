@@ -7,6 +7,7 @@ package ec.gob.ambiente.sis.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +23,7 @@ import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
+import ec.gob.ambiente.suia.model.GeographicalLocations;
 import ec.gob.ambiente.suia.service.GeographicalLocationsFacade;
 import lombok.Getter;
 import lombok.Setter;
@@ -97,13 +99,12 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaMonitoreoInSitu(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOINSITU.getCodigo()));
     		getAplicacionBean().setListaLineaAccion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.LINEAACCION.getCodigo()));
     		getAplicacionBean().setListaControlVigilancia(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.CONTROLVIGILANCIA.getCodigo()));
+    		getAplicacionBean().setListaTipoOrganizacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOORGANIZACION.getCodigo()));
     		
     		
     	}catch(Exception e ){
     		e.printStackTrace();
     	}
-    }
-    
-    
+    }    
 }
 

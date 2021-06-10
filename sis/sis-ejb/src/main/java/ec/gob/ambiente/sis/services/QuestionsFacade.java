@@ -23,7 +23,7 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 */
 	
 	public List<Questions> buscarTodasLasPreguntas() throws Exception{
-		String sql="SELECT Q FROM Questions Q AND Q.quesStatus=True";
+		String sql="SELECT Q FROM Questions Q AND Q.quesStatus=True AND Q.quesIsGender = FALSE ";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery(sql, camposCondicion);
 	}
@@ -32,7 +32,7 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 * @return
 	 */
 	public List<Questions> buscaPreguntaPorSalvaguarda(int codigoSalvaguarda) throws Exception{
-		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda AND Q.quesStatus=True order by Q.quesQuestionOrder";
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId=:codigoSalvaguarda AND Q.quesIsGender = False AND Q.quesStatus=True order by Q.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
 		return findByCreateQuery(sql, camposCondicion);
@@ -44,9 +44,19 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 * @throws Exception
 	 */
 	public List<Questions> buscarPreguntasPorSalvaguardas(List<Integer> codigosSalvaguardas) throws Exception{		
-		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId IN (:codigoSalvaguarda) AND Q.quesStatus=True ORDER BY Q.quesQuestionOrder";
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeId IN (:codigoSalvaguarda) AND Q.quesIsGender = False AND Q.quesStatus=True ORDER BY Q.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoSalvaguarda", codigosSalvaguardas);
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Busca las preguntas de genero
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Questions> buscaPreguntasGenero()throws Exception{
+		String sql="SELECT Q FROM Questions Q WHERE Q.quesStatus=True AND Q.quesIsGender = TRUE ORDER BY Q.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
 		return findByCreateQuery(sql, camposCondicion);
 	}
 }

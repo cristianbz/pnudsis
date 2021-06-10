@@ -63,6 +63,11 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@Column(name = "adex_is_gender")
+	private boolean adexIsGender;
+	
+	@Getter
+	@Setter
 	@Column(name = "adex_creator_user")
 	private String adexCreatorUser;
 	
@@ -81,7 +86,10 @@ public class AdvanceExecutionSafeguards {
 	@Column(name = "adex_update_date")
 	private Date adexUpdateDate;
 	
-	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
+	private List<GenderAdvances> genderAdvancesList;
 	
 	@Getter
 	@Setter

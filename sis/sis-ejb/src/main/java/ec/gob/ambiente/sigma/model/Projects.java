@@ -80,6 +80,11 @@ public class Projects {
 	
 	@Getter
 	@Setter
+	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
+	private List<ProjectsGenderInfo> projectsGenderInfoList;
+	
+	@Getter
+	@Setter
 	@JoinColumn(name = "part_id")
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Partners partners;

@@ -134,3 +134,6 @@
     overflow:hidden; 
     text-overflow:ellipsis; 
 } 
+.anchonumeros{
+	width:20px;
+}

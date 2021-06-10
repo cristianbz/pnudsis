@@ -1,10 +1,8 @@
 package ec.gob.ambiente.sis.services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -15,6 +13,7 @@ import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
+import ec.gob.ambiente.sis.model.GenderAdvances;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 
@@ -30,6 +29,9 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	
 	@EJB
 	private AdvanceSectorsFacade advanceSectorsFacade;
+	
+	@EJB
+	private GenderAdvancesFacade genderAdvancesFacade;  
 
 	public AdvanceExecutionSafeguardsFacade() {
 		super(AdvanceExecutionSafeguards.class,Integer.class);
@@ -42,7 +44,7 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 */	
 	public AdvanceExecutionSafeguards buscarPorProyecto(int codigoProyecto) throws DaoException{
 		try{
-			String sql="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto";
+			String sql="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsGender = FALSE";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoProyecto", codigoProyecto);
 			return findByCreateQuerySingleResult(sql, camposCondicion);
@@ -52,6 +54,25 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 			throw new DaoException();
 		}
 	}
+	/**
+	 * Devuelve el anvance de ejecucion para genero por proyecto 
+	 * @param codigoProyecto
+	 * @return
+	 * @throws DaoException
+	 */
+	public AdvanceExecutionSafeguards buscarAvanceGeneroPorProyecto(int codigoProyecto) throws DaoException{
+		try{
+			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsReported=false AND AE.adexIsGender=true AND AE.adexStatus=true";
+			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+			camposCondicion.put("codigoProyecto", codigoProyecto);
+			return findByCreateQuerySingleResult(sql, camposCondicion);
+		}catch(NoResultException e){
+			return null;
+		}catch(Exception e){
+			throw new DaoException();
+		}
+	}
+
 	/**
 	 * Graba el AvanceEjecucionSalvaguarda
 	 * @param avanceEjecucion
@@ -114,5 +135,32 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 			}
 		}
 	}
-
+	/**
+	 * Registra el avance de ejecucion para genero
+	 * @param avanceEjecucion
+	 * @return
+	 * @throws Exception
+	 */
+	public AdvanceExecutionSafeguards grabarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, GenderAdvances avanceGenero)throws Exception{
+		if (avanceEjecucion.getAdexId() == null){
+			create(avanceEjecucion);
+			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
+				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
+				if(respuestas.getVaanId()==null)
+					valueAnswersFacade.create(respuestas);
+				else
+					valueAnswersFacade.edit(respuestas);
+			}
+			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
+			genderAdvancesFacade.create(avanceGenero);
+		}else{
+//			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
+//				valueAnswersFacade.edit(respuestas);
+//			}
+			edit(avanceEjecucion);
+			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
+			genderAdvancesFacade.edit(avanceGenero);
+		}
+		return avanceEjecucion;
+	}
 }

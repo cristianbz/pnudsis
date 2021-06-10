@@ -61,6 +61,14 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 			edit(tableResponses);
 		}
 	}
+	public void eliminarDatosTablaActualizaValueAnswer(List<TableResponses> tablaDatos,ValueAnswers valueAnswer) throws Exception{
+		for (TableResponses tableResponses : tablaDatos) {
+			tableResponses.setTareStatus(false);
+			edit(tableResponses);			
+		}
+		valueAnswer.setVaanYesnoAnswerValue(false);
+		valueAnswersFacade.edit(valueAnswer);
+	}
 	public List<TableResponses> buscarPorAvanceEjecucionYSalvaguarda(int codigoAvanceEjecucion, int codigoSalvaguarda) throws Exception{
 		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.safeguards.safeId=:codigoSalvaguarda ORDER BY TR.questions.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
@@ -114,5 +122,28 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return seAgregaronValoresRespuestas;	
 	}
-	
+	public void agregaRespuestaTabla(TableResponses respuesta,ValueAnswers valorRespuesta) throws Exception{
+		if(respuesta.getTareId()==null){
+			create(respuesta);
+			valueAnswersFacade.edit(valorRespuesta);
+		}
+			
+	}
+	/**
+	 * Busca por avanceEjecucion y Genero
+	 * @param codigoAvanceEjecucion
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TableResponses> buscarPorAvanceEjecucionYGenero(int codigoAvanceEjecucion) throws Exception{
+		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesIsGender = TRUE ORDER BY TR.questions.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
+		List<TableResponses> tabla=findByCreateQuery(sql, camposCondicion);
+		for (TableResponses tableResponses : tabla) {
+			Hibernate.initialize(tableResponses.getQuestions());
+		}
+//		return findByCreateQuery(sql, camposCondicion);
+		return tabla;
+	}
 }
