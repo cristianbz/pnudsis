@@ -14,9 +14,12 @@ import javax.inject.Named;
 
 import ec.gob.ambiente.sigma.model.Catalog;
 import ec.gob.ambiente.sigma.model.CatalogType;
+import ec.gob.ambiente.sigma.model.Partners;
+import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
+import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.GenderAdvances;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.TableResponses;
@@ -37,7 +40,7 @@ public class RegistroGeneroBean implements Serializable{
 	
 	@Getter
 	@Setter
-	private Integer tipoAvanceGeneroGrabar;
+	private Integer codigoLineaGenero;
 	
 	@Getter
 	@Setter
@@ -49,10 +52,6 @@ public class RegistroGeneroBean implements Serializable{
 	
 	@Getter
 	@Setter
-	private String lineaEstrategica;
-	
-	@Getter
-	@Setter
 	private String codigoTablaDatos;
 	
 	@Getter
@@ -61,11 +60,19 @@ public class RegistroGeneroBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean preguntasGenero;
+	
+	@Getter
+	@Setter
 	private boolean nuevoRegistroTablaGenero1;
 	
 	@Getter
 	@Setter
 	private boolean nuevoRegistroTablaGenero2;
+	
+	@Getter
+	@Setter
+	private boolean nuevoRegistroPreguntasGenero;
 	
 	@Getter
 	@Setter
@@ -95,9 +102,9 @@ public class RegistroGeneroBean implements Serializable{
 	@Setter
 	private GenderAdvances avanceGeneroSeleccionado;
 	
-	@Getter
-	@Setter
-	private GenderAdvances avanceGeneroTransformadorSeleccionado;
+//	@Getter
+//	@Setter
+//	private GenderAdvances avanceGeneroTransformadorSeleccionado;
 	
 	@Getter
 	@Setter
@@ -147,9 +154,9 @@ public class RegistroGeneroBean implements Serializable{
 	@Setter
 	private List<DetailAdvanceGender> listaDatosAvanceGenero;
 	
-	@Getter
-	@Setter
-	private List<DetailAdvanceGender> listaDatosAvanceGeneroTransformador;
+//	@Getter
+//	@Setter
+//	private List<DetailAdvanceGender> listaDatosAvanceGeneroTransformador;
 	
 	@Getter
 	@Setter
@@ -242,6 +249,26 @@ public class RegistroGeneroBean implements Serializable{
 	@Getter
 	@Setter
 	private List<String> listadoTipoOrganizaciones;
+	
+	@Getter
+	@Setter
+	private String[] tipoIncentivoSeleccionado;
+	
+	@Getter
+	@Setter
+	private List<String> listadoTipoIncentivo;
+	
+	@Getter
+	@Setter
+	private ExecutiveSummaries resumenEjecutivo;
+	
+	@Getter
+	@Setter
+	private Projects proyectoSeleccionado;
+	
+	@Getter
+	@Setter
+	private Partners socioImplementador;
 	
 	@PostConstruct
 	public void init(){

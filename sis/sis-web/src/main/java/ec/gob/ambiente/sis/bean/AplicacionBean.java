@@ -102,6 +102,10 @@ public class AplicacionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> listaTipoOrganizacion;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaTipoIncentivo;
 
 }
 

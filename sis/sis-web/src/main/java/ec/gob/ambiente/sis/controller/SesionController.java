@@ -38,9 +38,9 @@ public class SesionController implements Serializable{
     public void redireccionarAPagina(String carpeta, String pagina) {
         try {
             if (carpeta.equals("")) {
-                redirect("/sis-web/pages/" + pagina + ".xhtml");
+                redirect("/sis-web/pages/" + pagina + ".jsf");
             } else {
-                redirect("/sis-web/pages/" + carpeta + "/" + pagina + ".xhtml");
+                redirect("/sis-web/pages/" + carpeta + "/" + pagina + ".jsf");
             }
 
         } catch (Exception e) {

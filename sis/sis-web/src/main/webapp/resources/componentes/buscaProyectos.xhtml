@@ -64,15 +64,18 @@
 								<p:dataTable id="listadoProyectos"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaProyectos}" var="proyecto"
 									emptyMessage="#{mensajes['noRegistros']}">
-									<p:column width="155">
+									<p:column >
 										<p:outputLabel value="#{proyecto.projCode}" />
-									</p:column>
-									<p:column headerText="#{etiquetas['tituloPlanProyecto']}">
+										<br/>
+										<p:outputLabel value="#{etiquetas['tituloPlanProyecto']}" styleClass="estiloHeaderCampoTabla"/>
+										<br/>										
 										<p:outputLabel value="#{proyecto.projTitle}" />
-									</p:column>
-									<p:column headerText="#{etiquetas['socioImplementador']}" width="300">
+										<br/>
+										<p:outputLabel value="#{etiquetas['socioImplementador']}" styleClass="estiloHeaderCampoTabla"/>
+										<br/>
 										<p:outputLabel value="#{proyecto.partners.partName}" />
 									</p:column>
+									
 									<p:column width="30">
 										<p:commandButton id="btnProyEdit" icon="#{botones['icono.checkcirculo']}" title="#{tooltip['seleccionar']}"
 											actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyecto(proyecto)}"
@@ -120,15 +123,6 @@
 						
 					</h:panelGrid>
 				</p:panel>
-				</p:outputPanel>
-				
-				<p:outputPanel id="panelNuevaBusquedaProyecto">
-				<h:panelGrid style="margin:0 auto;" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}" >
-							<p:commandButton id="btnVolverInicio" value="#{botones['volverBusqueda']}"
-								icon="#{botones['icono.home']}" update="@form" 
-								actionListener="#{cc.attrs.componenteBuscaProyectos.volverABuscarProyectos}" partialSubmit="true"
-								process="@this " />
-				</h:panelGrid>
 				</p:outputPanel>
 
 			

@@ -13,6 +13,7 @@ import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
+import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.GenderAdvances;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
@@ -31,7 +32,10 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	private AdvanceSectorsFacade advanceSectorsFacade;
 	
 	@EJB
-	private GenderAdvancesFacade genderAdvancesFacade;  
+	private GenderAdvancesFacade genderAdvancesFacade;
+	
+	@EJB
+	private ExecutiveSummariesFacade executiveSummariesFacade; 
 
 	public AdvanceExecutionSafeguardsFacade() {
 		super(AdvanceExecutionSafeguards.class,Integer.class);
@@ -62,7 +66,8 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 */
 	public AdvanceExecutionSafeguards buscarAvanceGeneroPorProyecto(int codigoProyecto) throws DaoException{
 		try{
-			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsReported=false AND AE.adexIsGender=true AND AE.adexStatus=true";
+//			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsReported=false AND AE.adexIsGender=true AND AE.adexStatus=true";
+			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=true AND AE.adexStatus=true";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoProyecto", codigoProyecto);
 			return findByCreateQuerySingleResult(sql, camposCondicion);
@@ -141,7 +146,7 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @return
 	 * @throws Exception
 	 */
-	public AdvanceExecutionSafeguards grabarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, GenderAdvances avanceGenero)throws Exception{
+	public AdvanceExecutionSafeguards grabarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, GenderAdvances avanceGenero,ExecutiveSummaries resumenEjecutivo)throws Exception{
 		if (avanceEjecucion.getAdexId() == null){
 			create(avanceEjecucion);
 			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
@@ -152,7 +157,10 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 					valueAnswersFacade.edit(respuestas);
 			}
 			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
+			resumenEjecutivo.setAdvanceExecutionSafeguards(avanceEjecucion);
+			resumenEjecutivo.setExsuSummaryContent("");			
 			genderAdvancesFacade.create(avanceGenero);
+			executiveSummariesFacade.create(resumenEjecutivo);
 		}else{
 //			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
 //				valueAnswersFacade.edit(respuestas);
@@ -160,6 +168,7 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 			edit(avanceEjecucion);
 			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
 			genderAdvancesFacade.edit(avanceGenero);
+			executiveSummariesFacade.edit(resumenEjecutivo);
 		}
 		return avanceEjecucion;
 	}

@@ -29,6 +29,21 @@
 <body>
 
 	<h:form prependId="true" id="form">
+		<p:dialog widgetVar="dlgFinalizarReporteGenero" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['finalizarReporte']}" width="390"
+			closable="false" resizable="false">			
+			<p:outputLabel value="#{etiquetas['finReporteSeguimiento']}"/>
+			<h:panelGrid columns="2" style="margin:0 auto;">
+					<p:commandButton value="#{botones['grabar']}" update="informacionGenero1"						
+						actionListener="#{registroGeneroController.finalizaReporteGenero()}"
+						oncomplete="PF('dlgFinalizarReporteGenero').hide();"
+						process="@this informacionGenero1" icon="#{botones['icono.grabar']}" />
+					<p:commandButton icon="#{botones['icono.cancelar']}"
+						value="#{botones['cancelar']}"
+						oncomplete="PF('dlgFinalizarReporteGenero').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>	
 		<!-- DIALOGO ELIMINA DATOS TABLA -->
 		<p:dialog widgetVar="dlgEliminaDatosTabla" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
@@ -66,10 +81,10 @@
 			header="#{titulos['eliminaRegistro']}" width="250"
 			closable="false" resizable="false">
 			<h:panelGrid columns="2" >
-				<p:commandButton value="#{botones['borrar']}" update="panelTablaGenero2 growl"					
+				<p:commandButton value="#{botones['borrar']}" update=" growl"					
 					actionListener="#{registroGeneroController.eliminarRegistroTablaGenero(2)}"
 					oncomplete="PF('dlgEliminaItemTabla2').hide();"
-					process="@this panelTablaGenero2" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTabla2').hide();" process="@this" />
@@ -156,11 +171,11 @@
 			header="#{titulos['grabarAvanceGenero']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="growl btnTablaGen1 btnTablaGen2 btnTablaGen3 btnTablaGen4 btnTablaGen5 btnTablaGen6 btnTablaGen7"
+				<p:commandButton value="#{botones['grabar']}" update="growl panelTablasGenero btnTablaGen1  btnTablaGen3 btnTablaGen4 btnTablaGen5 btnTablaGen6 btnTablaGen7"
 					id="btngrabar" onstart="PF('dlgEnProc').show();"
 					actionListener="#{registroGeneroController.grabarAvanceGenero()}"
 					oncomplete="PF('dlgGrabaAvanceGenero').hide(); PF('dlgEnProc').hide();"
-					process="@this  btnTablaGen1 btnTablaGen2 btnTablaGen3 btnTablaGen4 btnTablaGen5 btnTablaGen6 btnTablaGen7"  icon="#{botones['icono.grabar']}" />
+					process="@this  btnTablaGen1  btnTablaGen3 btnTablaGen4 btnTablaGen5 btnTablaGen6 btnTablaGen7 panelTablasGenero"  icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}" 
 					oncomplete="PF('dlgGrabaAvanceGenero').hide(); " process="@this" />
@@ -185,10 +200,22 @@
 				<comp:buscaProyectos id="buscaProyectos"
 					componenteBuscaProyectos="#{registroGeneroController.componenteBuscarProyectos}" />
 				<br />
-				<h:inputHidden value="#{registroGeneroController.cargaDatosProyectoSeleccionado()}" />
+				<p:outputPanel >
+				<h:panelGrid columns="2" style="margin:0 auto;" rendered="#{registroGeneroController.datosProyecto()}">
+					<p:commandButton actionListener="#{registroGeneroController.cargaDatosProyectoSeleccionado()}" process="@this" 
+						icon="#{botones['icono.check']}"
+						update="informacionGenero1" value="#{botones['mostrarInformacion']}"/>
+					<p:commandButton id="btnVolverInicio" value="#{botones['volverBusqueda']}"
+								icon="#{botones['icono.home']}" update="@form" 
+								actionListener="#{registroGeneroController.volverBuscarProyectos}" partialSubmit="true"
+								process="@this " />
+				</h:panelGrid>
+				</p:outputPanel> 
+				<br/>
+												
 				<p:outputPanel id="informacionGenero1"
-					rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}">
-						
+					>
+					<p:panel rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}" header="#{titulos['informacionGenero']}">	
 					<div class="ui-fluid p-formgrid p-grid">
 						<p:outputLabel value="#{titulos['generoSalvaguardaB']}"
 							styleClass="etiquetaTituloSalvaguarda" />
@@ -206,44 +233,69 @@
 					<br />
 					<p:panel header="#{etiquetas['datosAvanceGeneroSensible']}">
 					<div class="p-field p-col-12 p-md-12">
-						<h:panelGrid columns="2" id="seleccionDatosSensibles" style="margin:0 auto;">
-							<h:inputHidden />
-							<p:outputLabel value="#{registroGeneroController.registroGeneroBean.lineaEstrategica}" id="lineaEstrategica"/>							
-							<p:outputLabel value="#{etiquetas['lineaAccion']}"/>
-							<p:selectOneMenu id="comboLineasAccion" style="width:295px;"
-								required="true" requiredMessage="#{mensajes['campoRequerido']}"
-								value="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo}">
-								<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
-								<f:selectItems value="#{registroGeneroController.registroGeneroBean.listaInformacionGeneroSensible}" var="accion" 
-									itemLabel="#{accion.cataId.cataText2}" itemValue="#{accion.pginId}"/>
-								<p:ajax event="change" process="@this panelGenero1" update="panelGenero1 lineaEstrategica panelTablaGenero1"
-									 listener="#{registroGeneroController.buscaDatosAvanceGenero()}" />
-							</p:selectOneMenu>
-							
+						<h:panelGrid columns="2" id="seleccionDatosSensibles" style="margin:0 auto;">							
+								<p:outputLabel value="#{etiquetas['temasAbarcados']}: "
+									/>
+								<p:selectOneMenu id="comboTemas" style="width:295px;"
+									required="true" requiredMessage="#{mensajes['campoRequerido']}"
+									value="#{registroGeneroController.registroGeneroBean.codigoLineaGenero}">
+									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
+									<f:selectItems value="#{registroGeneroController.registroGeneroBean.listadoLineaGenero}" var="cata" 
+										itemLabel="#{cata.catyDescription}" itemValue="#{cata.catyId}"/>
+									<p:ajax event="change" process="@this tablaProjectInfo panelGenero1 :form:panelTablaGenero1 :form:btnTablaGen1 :form:panelTablasGenero" 
+										update=":form:btnTablaGen1 tablaProjectInfo panelGenero1 :form:panelTablaGenero1 :form:panelTablasGenero" 
+										 listener="#{registroGeneroController.cargaInformacionGeneroProyecto()}" />
+								</p:selectOneMenu>																						
 						</h:panelGrid>
 					</div>
+					<br/>
+					<div class="p-field p-col-12 p-md-12">
+						<p:dataTable id="tablaProjectInfo" style="font-size:10px !important;"
+							value="#{registroGeneroController.registroGeneroBean.listaLineaGenero}" var="genero">
+							<p:column headerText="#{etiquetas['lineaAccion']}">
+								#{genero.cataId.cataText2}
+							</p:column>
+							<p:column headerText="#{etiquetas['lineaBase']}">
+								#{genero.pginActivities}
+							</p:column>
+							<p:column headerText="#{etiquetas['indicador']}">
+								#{genero.pginIndicator}
+							</p:column>
+							<p:column headerText="#{etiquetas['resultadoPdi']}">
+								#{genero.pginResults}
+							</p:column>
+							<p:column headerText="#{etiquetas['tipoResultado']}">
+								<p:outputLabel value="#{genero.pginResultsType.equals('1')?'Sensible al género':'Transformador de las relaciones de género'}"/> 
+							</p:column>
+							<p:column headerText="#{etiquetas['presupuesto']}">
+								#{genero.pginBudget}
+							</p:column>
+							<p:column width="30">
+								<p:commandButton id="btnProyEdit"
+										icon="#{botones['icono.checkcirculo']}"
+										title="#{tooltip['seleccionar']}"
+										actionListener="#{registroGeneroController.buscaInformacionLineaAccion(genero)}"
+										process="@this :form:panelGenero1 :form:panelTablaGenero1 :form:btnTablaGen1 :form:panelTablasGenero" partialSubmit="true"
+										onclick="PF('dlgEnProc').show()"
+										oncomplete="PF('dlgEnProc').hide()" 
+										 update=":form:panelGenero1 :form:panelTablaGenero1 :form:btnTablaGen1 :form:panelTablasGenero"/>
+							</p:column>
+							</p:dataTable>
+					</div>
 					
-					<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-12">
 						<p:outputPanel id="panelGenero1">
-							<h:panelGrid columns="2" style="margin:0 auto;">
-								
-								<p:outputLabel value="#{etiquetas['indicador']}"/>
-								<p:inputText disabled="true" 
-									value="#{registroGeneroController.registroGeneroBean.avanceGeneroSeleccionado.geadIndicator}"/>
-								
-								<p:outputLabel value="#{etiquetas['metaProyecto']}"/>
-								<p:inputText disabled="true" 
-									value="#{registroGeneroController.registroGeneroBean.avanceGeneroSeleccionado.geadGoalProgram}"/>
-								
-								<p:outputLabel value="#{etiquetas['porcentajeAvance']}"/>
+							<center>
+								<p:outputLabel value="#{registroGeneroBean.informacionProyectoGeneroSeleccionado.cataId.cataText2}" style="margin:0 auto;font-weight: bold;font-size:11px;" />
+							</center>
+							<h:panelGrid columns="2" style="margin:0 auto;">															
+								<p:outputLabel value="#{etiquetas['porcentajeAvance']}: "/>
 								<p:inputNumber 
 									value="#{registroGeneroController.registroGeneroBean.avanceGeneroSeleccionado.geadPercentageAdvance}"
-									disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo>0?false:true}" decimalPlaces="0"/>
-								
-								<p:outputLabel value="#{etiquetas['descripcionAvanceGenero']}"/>
-								<p:inputTextarea 
-									value="#{registroGeneroController.registroGeneroBean.avanceGeneroSeleccionado.geadAdvanceDescription}" cols="50" rows="2">
-									
+									disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo>0?false:true}" decimalPlaces="0"/>								
+								<p:outputLabel value="#{etiquetas['descripcionAvanceGenero']}: "/>
+								<p:inputTextarea  disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo>0?false:true}" 
+									value="#{registroGeneroController.registroGeneroBean.avanceGeneroSeleccionado.geadAdvanceDescription}" cols="50" rows="3">									
 								</p:inputTextarea>
 							</h:panelGrid>
 						</p:outputPanel>
@@ -260,7 +312,7 @@
 								<p:commandButton id="btnTablaGen1"
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
 									icon="#{botones['icono.mas']}" process="@this panelIngresoGenero1 seleccionDatosSensibles"
-									update="panelIngresoGenero1 seleccionDatosSensibles growl" disabled="#{registroGeneroController.componenteBuscarProyectos.advanceExecution.adexId!=null?false:true}"
+									update="panelIngresoGenero1 seleccionDatosSensibles growl" disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo!=null?false:true}"
 									actionListener="#{registroGeneroController.nuevoRegistroGeneroTabla1()}"
 									title="#{tooltip['nuevoRegistro']}">
 									
@@ -274,20 +326,20 @@
 							header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['beneficiariasNumero']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputNumber value="#{registroGeneroController.registroGeneroBean.detailAdvanceGender.dtagNumberOfBeneficiaries}" tabindex="1"/>
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['provincia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
 												disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo>0?false:true}"
 												value="#{registroGeneroController.registroGeneroBean.codProvincia}"
@@ -305,11 +357,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['canton']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo>0?false:true}"
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
@@ -328,11 +380,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['parroquia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo>0?false:true}"
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="4"
@@ -348,11 +400,12 @@
 									</p:selectOneMenu>									
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
-								<div class="p-field p-col-12 p-md-2"
+								
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText value="#{registroGeneroController.registroGeneroBean.detailAdvanceGender.dtagComunity}"/>									
 									
 								</div>
@@ -386,33 +439,33 @@
 					<div class="ui-fluid p-formgrid p-grid">
 
 						<h:panelGrid id="panelTablaGenero1" style="margin:0 auto;">
-							<p:dataTable styleClass="sinBordesAncho100"
+							<p:dataTable styleClass="sinBordesAncho100" style="font-size:10px !important;"
 								emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5"
 								paginator="true" 
 								value="#{registroGeneroController.registroGeneroBean.listaDatosAvanceGenero}"
 								var="tablarespuestas">
 								<p:column headerText="#{etiquetas['beneficiariasNumero']}"
-									styleClass="cabeceraTabla">
+									>
 									<p:outputLabel value="#{tablarespuestas.dtagNumberOfBeneficiaries}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['provincia']}"
-									styleClass="cabeceraTabla">
+									>
 									<p:outputLabel value="#{tablarespuestas.provincia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['canton']}"
-									styleClass="cabeceraTabla">
+									>
 									<p:outputLabel value="#{tablarespuestas.canton}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['parroquia']}"
-									styleClass="cabeceraTabla">
+									>
 									<p:outputLabel value="#{tablarespuestas.parroquia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['comunidad']}"
-									styleClass="cabeceraTabla">
+									>
 									<p:outputLabel value="#{tablarespuestas.dtagComunity}" />
 
 								</p:column>
@@ -443,276 +496,14 @@
 
 					</div>
 					<br/>
-					
-					<br/>
-					<div class="ui-fluid p-formgrid p-grid">
-						<div class="p-field p-col-12 p-md-3"></div>
-						<div class="p-field p-col-12 p-md-6">
-							<p:commandButton value="#{botones['guardar']}" update="growl seleccionDatosSensibles" 
-							process="@this panelGenero1 seleccionDatosSensibles" actionListener="#{registroGeneroController.mostrarDialogoGrabarAvanceGenero(1)}"/>
-						</div>
-						<div class="p-field p-col-12 p-md-3"></div>
-					</div>	
-				</p:panel>
-				</p:outputPanel>
-				<br/>
-				<p:outputPanel id="informacionGenero2"
-					rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}">				
-					<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel value="#{titulos['resultadosTransformativosGenero']}"
-							styleClass="etiquetaTitulo" />
-					</div>
-					<br />
-					<p:panel header="#{etiquetas['datosAvanceGeneroTransformativo']}">
-					<div class="p-field p-col-12 p-md-12">
-						<h:panelGrid columns="2" id="seleccionDatosTransformadores" style="margin:0 auto;">
-							<h:inputHidden />
-							<p:outputLabel value="#{registroGeneroController.registroGeneroBean.lineaEstrategica}" id="lineaEstrategicaTrans"/>							
-							<p:outputLabel value="#{etiquetas['lineaAccion']}"/>
-							<p:selectOneMenu id="comboLineasAccionTransformacion" style="width:295px;"
-								required="true" requiredMessage="#{mensajes['campoRequerido']}"
-								value="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfoTransformativo}">
-								<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" />
-								<f:selectItems value="#{registroGeneroController.registroGeneroBean.listaInformacionGeneroTransformador}" var="accion" 
-									itemLabel="#{accion.cataId.cataText2}" itemValue="#{accion.pginId}"/>
-								<p:ajax event="change" process="@this panelGenero2" update="panelGenero2 lineaEstrategicaTrans panelTablaGenero2"
-									 listener="#{registroGeneroController.buscaDatosAvanceGeneroTransformador()}" />
-							</p:selectOneMenu>
-							
-						</h:panelGrid>
-					</div>
-					<div class="ui-fluid p-formgrid p-grid">
-						<p:outputPanel id="panelGenero2">
-							<h:panelGrid columns="2" style="margin:0 auto;">
-								
-								<p:outputLabel value="#{etiquetas['indicador']}"/>
-								<p:inputText disabled="true" 
-									value="#{registroGeneroController.registroGeneroBean.avanceGeneroTransformadorSeleccionado.geadIndicator}"/>
-								
-								<p:outputLabel value="#{etiquetas['metaProyecto']}"/>
-								<p:inputText disabled="true" 
-									value="#{registroGeneroController.registroGeneroBean.avanceGeneroTransformadorSeleccionado.geadGoalProgram}"/>
-								
-								<p:outputLabel value="#{etiquetas['porcentajeAvance']}"/>
-								<p:inputNumber 
-									value="#{registroGeneroController.registroGeneroBean.avanceGeneroTransformadorSeleccionado.geadPercentageAdvance}"
-									disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfo>0?false:true}" decimalPlaces="0"/>
-								
-								<p:outputLabel value="#{etiquetas['descripcionAvanceGenero']}"/>
-								<p:inputTextarea 
-									value="#{registroGeneroController.registroGeneroBean.avanceGeneroTransformadorSeleccionado.geadAdvanceDescription}" cols="50" rows="2">
-									
-								</p:inputTextarea>
-							</h:panelGrid>
-						</p:outputPanel>
-					</div>
-					<br />
-					<div class="p-field p-col-12 p-md-12"
-						style="background: #00AAC3; color: #FFFFFF; display: block;">
-						<div class="ui-fluid p-formgrid p-grid">
-							<div class="p-field p-col-12 p-md-11" style="font-weight: bold;">
-								<p:outputLabel value="#{etiquetas['ingresoInformacion']}" />
-							</div>
-							<div class="p-field p-col-12 p-md-1" style="height: 10px;">
-								<p:commandButton id="btnTablaGen2"
-									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
-									icon="#{botones['icono.mas']}" process="@this panelIngresoGenero2 seleccionDatosTransformadores"
-									update="panelIngresoGenero2 seleccionDatosTransformadores growl" disabled="#{registroGeneroController.componenteBuscarProyectos.advanceExecution.adexId!=null?false:true}"
-									actionListener="#{registroGeneroController.nuevoRegistroGeneroTabla2()}"
-									title="#{tooltip['nuevoRegistro']}">
-									
-								</p:commandButton>
-							</div>
-						</div>
-					</div>	
-					<p:outputPanel id="panelIngresoGenero2">
-						<p:panel id="panelBeneficio2"
-							rendered="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero2}"
-							header="#{titulos['datosSolicitados']}">
-							<div class="ui-fluid p-formgrid p-grid">
-
-								<div class="p-field p-col-12 p-md-2"
-									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-									<p:outputLabel value="#{etiquetas['beneficiariasNumero']}"/>
-								</div>
-								<div class="p-field p-col-12 p-md-8">
-									<p:inputNumber value="#{registroGeneroController.registroGeneroBean.detailAdvanceGenderTransformacion.dtagNumberOfBeneficiaries}" tabindex="1"/>
-								</div>
-								<div class="p-field p-col-12 p-md-2"></div>
-
-								<div class="p-field p-col-12 p-md-2"
-									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-									<p:outputLabel value="#{etiquetas['provincia']}"/>
-								</div>
-								<div class="p-field p-col-12 p-md-8">
-									<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
-												disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfoTransformativo>0?false:true}"
-												value="#{registroGeneroController.registroGeneroBean.codProvincia}"
-												id="provincia2">
-												<f:selectItem itemValue="#{null}"
-													itemLabel="#{mensajes['seleccionElemento']}" />
-												<f:selectItems
-													value="#{registroGeneroController.registroGeneroBean.listaProvincias }"
-													var="provincia" itemLabel="#{provincia.geloName}"
-													itemValue="#{provincia.geloId}" />
-												<p:ajax process="@this " event="change"
-													update="canton2 parroquia2"
-													listener="#{registroGeneroController.filtraCantones()}" />
-									</p:selectOneMenu>
-								</div>
-								<div class="p-field p-col-12 p-md-2"></div>
-
-								<div class="p-field p-col-12 p-md-2"
-									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-									<p:outputLabel value="#{etiquetas['canton']}"/>
-								</div>
-								<div class="p-field p-col-12 p-md-8">
-									<p:selectOneMenu required="true"
-										disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfoTransformativo>0?false:true}"
-										requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
-										value="#{registroGeneroController.registroGeneroBean.codCanton}"
-										id="canton2">
-										<f:selectItem itemValue="#{null}"
-											itemLabel="#{mensajes['seleccionElemento']}" />
-										<f:selectItems
-											value="#{registroGeneroController.registroGeneroBean.listaCantones}"
-											var="canton" itemLabel="#{canton.geloName}"
-											itemValue="#{canton.geloId}" />
-										<p:ajax process="@this " event="change"
-											update="parroquia2"
-											listener="#{registroGeneroController.filtraParroquias()}" />
-									</p:selectOneMenu>
-								</div>
-								<div class="p-field p-col-12 p-md-2"></div>
-								
-								<div class="p-field p-col-12 p-md-2"
-									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-									<p:outputLabel value="#{etiquetas['parroquia']}"/>
-								</div>
-								<div class="p-field p-col-12 p-md-8">
-									<p:selectOneMenu required="true"
-										disabled="#{registroGeneroController.registroGeneroBean.codigoProjectGenderInfoTransformativo>0?false:true}"
-										requiredMessage="#{mensajes['campoRequerido']}" tabindex="4"
-										value="#{registroGeneroController.registroGeneroBean.codParroquia}"
-										id="parroquia2">
-										<f:selectItem itemValue="#{null}"
-											itemLabel="#{mensajes['seleccionElemento']}" />
-										<f:selectItems
-											value="#{registroGeneroController.registroGeneroBean.listaParroquias}"
-											var="parroquia" itemLabel="#{parroquia.geloName}"
-											itemValue="#{parroquia.geloId}" />
-										<p:ajax process="@this " event="change"/>
-									</p:selectOneMenu>									
-								</div>
-								<div class="p-field p-col-12 p-md-2"></div>
-								<div class="p-field p-col-12 p-md-2"
-									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-									<p:outputLabel value="#{etiquetas['comunidad']}"/>
-								</div>
-								<div class="p-field p-col-12 p-md-8">
-									<p:inputText value="#{registroGeneroController.registroGeneroBean.detailAdvanceGenderTransformacion.dtagComunity}"/>									
-									
-								</div>
-								<div class="p-field p-col-12 p-md-2"></div>
-								
-
-								<div class="p-field p-col-12 p-md-4"></div>
-								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton icon="#{botones['icono.grabar']}"
-										process="@this  panelIngresoGenero2"
-										title="#{tooltip['grabar']}" value="#{botones['grabar']}"
-										actionListener="#{registroGeneroController.agregaDetalleRegistroGeneroTabla2()}"
-										update=" :form:growl  panelIngresoGenero2 panelTablaGenero2" />
-								</div>
-								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero2" update="panelIngresoGenero2" tabindex="5" 
-											value="#{botones['cancelar']}"
-											immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
-											
-											<f:setPropertyActionListener value="false" target="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero2}"/>
-										</p:commandButton>
-								</div>
-								<div class="p-field p-col-12 p-md-4"></div>
-
-							</div>
-						</p:panel>
-
-					</p:outputPanel>
-					<br />
-					<div class="ui-fluid p-formgrid p-grid">
-
-						<h:panelGrid id="panelTablaGenero2">
-							<p:dataTable styleClass="sinBordesAncho100" 
-								emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5"
-								paginator="true" 
-								value="#{registroGeneroController.registroGeneroBean.listaDatosAvanceGeneroTransformador}"
-								var="tablarespuestas">
-								<p:column headerText="#{etiquetas['beneficiariasNumero']}"
-									styleClass="cabeceraTabla">
-									<p:outputLabel value="#{tablarespuestas.dtagNumberOfBeneficiaries}" />
-
-								</p:column>
-								<p:column headerText="#{etiquetas['provincia']}"
-									styleClass="cabeceraTabla">
-									<p:outputLabel value="#{tablarespuestas.provincia}" />
-
-								</p:column>
-								<p:column headerText="#{etiquetas['canton']}"
-									styleClass="cabeceraTabla">
-									<p:outputLabel value="#{tablarespuestas.canton}" />
-
-								</p:column>
-								<p:column headerText="#{etiquetas['parroquia']}"
-									styleClass="cabeceraTabla">
-									<p:outputLabel value="#{tablarespuestas.parroquia}" />
-
-								</p:column>
-								<p:column headerText="#{etiquetas['comunidad']}"
-									styleClass="cabeceraTabla">
-									<p:outputLabel value="#{tablarespuestas.dtagComunity}" />
-
-								</p:column>
-								
-								<p:column>
-									<p:commandButton icon="#{botones['icono.editar']}"
-										title="#{tooltip['editar']}" action="#{registroGeneroController.editarRegistroTabla2()}"
-										process="@this :form:panelIngresoGenero2" update=":form:panelIngresoGenero2">
-										
-										<f:setPropertyActionListener value="#{tablarespuestas}"
-											target="#{registroGeneroController.registroGeneroBean.detailAdvanceGenderTransformacion}" />
-										<f:setPropertyActionListener value="true"
-											target="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero2}" />
-									</p:commandButton>
-									<p:commandButton
-										action="#{registroGeneroController.mostrarDialogoEliminaDatosTabla(2)}"
-										
-										icon="#{botones['icono.borrar']}"
-										process="@this ">
-										<f:setPropertyActionListener value="#{tablarespuestas}"
-											target="#{registroGeneroController.registroGeneroBean.registroTablaGenero}"/>
-									</p:commandButton>
-
-								</p:column>
-							</p:dataTable>
-						</h:panelGrid>
 						
+				</p:panel>
 
-					</div>
-					<br/>
-					<div class="ui-fluid p-formgrid p-grid">
-						<div class="p-field p-col-12 p-md-3"></div>
-						<div class="p-field p-col-12 p-md-6">
-							<p:commandButton value="#{botones['guardar']}" update="growl seleccionDatosTransformadores" 
-							process="@this panelGenero2 seleccionDatosTransformadores" actionListener="#{registroGeneroController.mostrarDialogoGrabarAvanceGenero(2)}"/>
-						</div>
-						<div class="p-field p-col-12 p-md-3"></div>
-					</div>		
-					</p:panel>
-				</p:outputPanel>
 				<br/>
+				
 					
-				<p:outputPanel rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}" id="panelTablasGenero">
-					<p:panel header="#{etiquetas['datosAvanceGenero']}">
+				<p:outputPanel  id="panelTablasGenero">
+					<p:panel header="#{etiquetas['datosAvanceGenero']}" rendered="#{registroGeneroController.registroGeneroBean.preguntasGenero}">
 								
 						<div class="ui-fluid p-formgrid p-grid">
 							<p:outputLabel value="#{titulos['actividadesSalvaguardas']}" styleClass="etiquetaTituloSalvaguarda"/>
@@ -735,8 +526,8 @@
 							unselectable="false">
 							<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
 							<f:selectItem itemLabel="#{etiquetas['no']}" itemValue="false" />
-							<p:ajax process="radiopSB1 @this " event="change"
-								partialSubmit="true"
+							<p:ajax process="radiopSB1 @this :form:btnTablaGen3" event="change"
+								partialSubmit="true" update=":form:btnTablaGen3"
 								listener="#{registroGeneroController.mostrarDialogoEliminaValoresTabla('G3')}">
 
 							</p:ajax>
@@ -754,7 +545,7 @@
 								<p:commandButton id="btnTablaGen3"
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
 									icon="#{botones['icono.mas']}" process="@this panelIngresoGenero3 "
-									update="panelIngresoGenero3  growl" disabled="#{registroGeneroController.componenteBuscarProyectos.advanceExecution.adexId!=null?false:true}"
+									update="panelIngresoGenero3  growl" disabled="#{not registroGeneroController.registroGeneroBean.listaValoresRespuestas.get(0).vaanYesnoAnswerValue}"
 									actionListener="#{registroGeneroController.nuevoRegistroGeneroTabla3()}"
 									title="#{tooltip['nuevoRegistro']}">
 									
@@ -767,11 +558,11 @@
 							rendered="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero3}"
 							header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['provincia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1"
 												
 												value="#{registroGeneroController.registroGeneroBean.codProvincia}"
@@ -789,11 +580,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['canton']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
@@ -812,11 +603,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['parroquia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
@@ -832,10 +623,11 @@
 									</p:selectOneMenu>									
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+								
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu
 												value="#{registroGeneroController.registroGeneroBean.codigoAutoIdentificacion}" tabindex="4"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
@@ -852,10 +644,10 @@
 									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
-									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
 												value="#{registroGeneroController.registroGeneroBean.codigoPuebloNacionalidad}" tabindex="5"
 												disabled="#{not registroGeneroController.registroGeneroBean.habilitaPuebloNacionalidad}"
@@ -873,11 +665,11 @@
 									</div>
 								
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnOne}" tabindex="6"/>									
@@ -885,11 +677,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['espacioIdentificado']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnTwo}" tabindex="7"/>									
@@ -897,10 +689,10 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['tipoOrganizacion']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:selectCheckboxMenu id="multipleSeleccionG3" tabindex="8" 
 											value="#{registroGeneroController.registroGeneroBean.tipoOrganizacionSeleccionados}"  label="#{etiquetas['seleccioneElemento']}"
 								                                filter="true" filterMatchMode="startsWith"  scrollHeight="250">
@@ -911,11 +703,11 @@
 										
 									</div>
 
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['finRolOrganizacion']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnFour}"
@@ -924,11 +716,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['accionesFortalecimiento']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnFive}"
@@ -937,11 +729,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['numeroBeneficiariasOrganizacion']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputNumber decimalPlaces="0"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnNumberSix}"
@@ -950,15 +742,41 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
+										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+										<p:outputLabel value="#{etiquetas['nroHombresBeneficiarios']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-7">
+										<p:inputNumber decimalPlaces="0"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnNumberSeven}"
+											tabindex="12" />											
+
+									</div>
+									<div class="p-field p-col-12 p-md-2"></div>
+									
+									<div class="p-field p-col-12 p-md-3"
+										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+										<p:outputLabel value="#{etiquetas['nroMujeresBeneficiarias']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-7">
+										<p:inputNumber decimalPlaces="0"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnNumberEight}"
+											tabindex="13" />											
+
+									</div>
+									<div class="p-field p-col-12 p-md-2"></div>
+									
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnSix}"
-											tabindex="12" />											
+											tabindex="14" />											
 
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
@@ -969,13 +787,13 @@
 								<div class="p-field p-col-12 p-md-4"></div>
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton icon="#{botones['icono.grabar']}"
-										process="@this  panelIngresoGenero3 radiopSB1" tabindex="13"
+										process="@this  panelIngresoGenero3 radiopSB1" tabindex="15"
 										title="#{tooltip['grabar']}" value="#{botones['grabar']}"
 										actionListener="#{registroGeneroController.agregaDetalleRegistroGeneroTabla3()}"
 										update=" :form:growl  panelTablaGenero3 panelIngresoGenero3" />
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero3" update="panelIngresoGenero3" tabindex="14" 
+									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero3" update="panelIngresoGenero3" tabindex="16" 
 											value="#{botones['cancelar']}"
 											immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
@@ -999,56 +817,54 @@
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas3}"
 								var="tablarespuestas">
 								<p:column headerText="#{etiquetas['provincia']}" 
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['canton']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['parroquia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
 								</p:column>
-								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									styleClass="cabeceraTabla">
+								<p:column headerText="#{etiquetas['puebloNacionalidad']}">
 									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
 								</p:column>
-								<p:column headerText="#{etiquetas['comunidad']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['comunidad']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
 
 								</p:column>
-								<p:column headerText="#{etiquetas['espacioIdentificado']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['espacioIdentificado']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 
 								</p:column>
-								<p:column headerText="#{etiquetas['tipoOrganizacion']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['tipoOrganizacion']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 								</p:column>
-								<p:column headerText="#{etiquetas['finRolOrganizacion']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['finRolOrganizacion']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 								</p:column>								
-								<p:column headerText="#{etiquetas['accionesFortalecimiento']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['accionesFortalecimiento']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
 								</p:column>
-								<p:column headerText="#{etiquetas['numeroBeneficiariasOrganizacion']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['numeroBeneficiariasOrganizacion']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
 								</p:column>
-								<p:column headerText="#{etiquetas['linkVerificador']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" />
+								</p:column>
+								<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" />
+								</p:column>
+								<p:column headerText="#{etiquetas['linkVerificador']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
 								</p:column>
 								<p:column>
@@ -1089,8 +905,8 @@
 							unselectable="false">
 							<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
 							<f:selectItem itemLabel="#{etiquetas['no']}" itemValue="false" />
-							<p:ajax process="radiopSB2 @this " event="change"
-								partialSubmit="true"
+							<p:ajax process="radiopSB2 @this btnTablaGen4" event="change" update=":form:btnTablaGen4"
+								partialSubmit="true" 
 								listener="#{registroGeneroController.mostrarDialogoEliminaValoresTabla('G4')}">
 
 							</p:ajax>
@@ -1108,7 +924,7 @@
 								<p:commandButton id="btnTablaGen4"
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
 									icon="#{botones['icono.mas']}" process="@this panelIngresoGenero4 "
-									update="panelIngresoGenero4  growl" disabled="#{registroGeneroController.componenteBuscarProyectos.advanceExecution.adexId!=null?false:true}"
+									update="panelIngresoGenero4  growl" disabled="#{not registroGeneroController.registroGeneroBean.listaValoresRespuestas.get(1).vaanYesnoAnswerValue}"
 									actionListener="#{registroGeneroController.nuevoRegistroGeneroTabla4()}"
 									title="#{tooltip['nuevoRegistro']}">
 									
@@ -1121,11 +937,11 @@
 							rendered="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero4}"
 							header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['provincia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1"
 												
 												value="#{registroGeneroController.registroGeneroBean.codProvincia}"
@@ -1143,11 +959,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['canton']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
@@ -1166,11 +982,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['parroquia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
@@ -1186,10 +1002,11 @@
 									</p:selectOneMenu>									
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+								
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu
 												value="#{registroGeneroController.registroGeneroBean.codigoAutoIdentificacion}" tabindex="4"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
@@ -1206,10 +1023,10 @@
 									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
-									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
 												value="#{registroGeneroController.registroGeneroBean.codigoPuebloNacionalidad}" tabindex="5"
 												disabled="#{not registroGeneroController.registroGeneroBean.habilitaPuebloNacionalidad}"
@@ -1227,11 +1044,11 @@
 									</div>
 								
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnOne}" tabindex="6"/>									
@@ -1239,11 +1056,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['nombreEspacio']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnTwo}" tabindex="7"/>									
@@ -1251,10 +1068,10 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['institucionOrganiza']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnTree}" tabindex="8"/>								        																											
@@ -1263,11 +1080,11 @@
 										
 									</div>
 
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['objetivoCapacitacion']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnFour}"
@@ -1276,11 +1093,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['temasTratados']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnFive}"
@@ -1289,11 +1106,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['institucionesCapacitacion']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnSix}"
@@ -1301,11 +1118,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['nroMujeresBeneficiarias']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputNumber decimalPlaces="0"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnNumberSix}"
@@ -1313,11 +1130,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['dificultadesIdentificadas']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnSeven}"
@@ -1326,11 +1143,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 									
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['medidasTomadas']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnEight}"
@@ -1340,11 +1157,11 @@
 									<div class="p-field p-col-12 p-md-2"></div>
 									
 																											
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnTen}"
@@ -1389,68 +1206,68 @@
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas4}"
 								var="tablarespuestas">
 								<p:column headerText="#{etiquetas['provincia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['canton']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['parroquia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['comunidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['nombreEspacio']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['institucionOrganiza']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['objetivoCapacitacion']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 								</p:column>								
 								<p:column headerText="#{etiquetas['temasTratados']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['institucionesCapacitacion']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['numeroMujeres']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['dificultadesIdentificadas']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnSeven}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['medidasTomadas']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnEight}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['linkVerificador']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTen}" />
 								</p:column>
 								<p:column>
@@ -1493,8 +1310,8 @@
 							unselectable="false">
 							<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
 							<f:selectItem itemLabel="#{etiquetas['no']}" itemValue="false" />
-							<p:ajax process="radiopSB3 @this " event="change"
-								partialSubmit="true"
+							<p:ajax process="radiopSB3 @this :form:btnTablaGen5" event="change"
+								partialSubmit="true" update=":form:btnTablaGen5"
 								listener="#{registroGeneroController.mostrarDialogoEliminaValoresTabla('G5')}">
 
 							</p:ajax>
@@ -1512,7 +1329,7 @@
 								<p:commandButton id="btnTablaGen5"
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
 									icon="#{botones['icono.mas']}" process="@this panelIngresoGenero5"
-									update="panelIngresoGenero5  growl" disabled="#{registroGeneroController.componenteBuscarProyectos.advanceExecution.adexId!=null?false:true}"
+									update="panelIngresoGenero5  growl" disabled="#{not registroGeneroController.registroGeneroBean.listaValoresRespuestas.get(2).vaanYesnoAnswerValue}"
 									actionListener="#{registroGeneroController.nuevoRegistroGeneroTabla5()}"
 									title="#{tooltip['nuevoRegistro']}">
 									
@@ -1526,11 +1343,11 @@
 							rendered="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero5}"
 							header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['provincia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1"
 												
 												value="#{registroGeneroController.registroGeneroBean.codProvincia}"
@@ -1548,11 +1365,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['canton']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
@@ -1571,11 +1388,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['parroquia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
@@ -1591,10 +1408,11 @@
 									</p:selectOneMenu>									
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+								
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu
 												value="#{registroGeneroController.registroGeneroBean.codigoAutoIdentificacion}" tabindex="4"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
@@ -1611,10 +1429,10 @@
 									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
-									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
 												value="#{registroGeneroController.registroGeneroBean.codigoPuebloNacionalidad}" tabindex="5"
 												disabled="#{not registroGeneroController.registroGeneroBean.habilitaPuebloNacionalidad}"
@@ -1632,11 +1450,11 @@
 									</div>
 								
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnOne}" tabindex="6"/>									
@@ -1644,23 +1462,24 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['tipoIncentivo']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
-									<p:inputText 
-										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-										value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnTwo}" tabindex="7"/>									
-									
+								<div class="p-field p-col-12 p-md-7">																		
+									<p:selectCheckboxMenu id="multipleSeleccionG5" tabindex="7" 
+											value="#{registroGeneroController.registroGeneroBean.tipoIncentivoSeleccionado}"  label="#{etiquetas['seleccioneElemento']}"
+								                                filter="true" filterMatchMode="startsWith"  scrollHeight="250">
+								            <f:selectItems value="#{registroGeneroController.registroGeneroBean.listadoTipoIncentivo}"/>
+								        </p:selectCheckboxMenu>
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['nroMujeresBeneficiarias']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputNumber decimalPlaces="0"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnNumberSix}"
@@ -1668,40 +1487,52 @@
 									</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+								<div class="p-field p-col-12 p-md-3"
+										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+										<p:outputLabel value="#{etiquetas['nroHombresBeneficiarios']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-7">
+										<p:inputNumber decimalPlaces="0"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnNumberSeven}"
+											tabindex="9" />											
+									</div>
+								<div class="p-field p-col-12 p-md-2"></div>
+								
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['dificultadesParticipacion']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-										value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnTree}" tabindex="9"/>								        																											
+										value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnTree}" tabindex="10"/>								        																											
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										
 									</div>
 
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['medidasParticipacion']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnFour}"
-											tabindex="10" />
+											tabindex="11" />
 
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 																											
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnFive}"
-											tabindex="11" />											
+											tabindex="12" />											
 
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
@@ -1712,13 +1543,13 @@
 								<div class="p-field p-col-12 p-md-4"></div>
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton icon="#{botones['icono.grabar']}"
-										process="@this  panelIngresoGenero5 radiopSB3" tabindex="12"
+										process="@this  panelIngresoGenero5 radiopSB3" tabindex="13"
 										title="#{tooltip['grabar']}" value="#{botones['grabar']}"
 										actionListener="#{registroGeneroController.agregaDetalleRegistroGeneroTabla5()}"
 										update=" :form:growl  panelTablaGenero5 panelIngresoGenero5" />
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero5" update="panelIngresoGenero5" tabindex="13" 
+									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero5" update="panelIngresoGenero5" tabindex="14" 
 											value="#{botones['cancelar']}"
 											immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
@@ -1741,51 +1572,53 @@
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas5}"
 								var="tablarespuestas">
 								<p:column headerText="#{etiquetas['provincia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['canton']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['parroquia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['comunidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['tipoIncentivo']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 								</p:column>
-								<p:column headerText="#{etiquetas['numeroMujeres']}"
-									styleClass="cabeceraTablaLarga">
+								<p:column headerText="#{etiquetas['numeroMujeres']}">
 									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
 								</p:column>
+								<p:column headerText="#{etiquetas['numeroHombres']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" />
+								</p:column>
 								<p:column headerText="#{etiquetas['dificultadesParticipacion']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['medidasParticipacion']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 								</p:column>								
 								<p:column headerText="#{etiquetas['linkVerificador']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
 								</p:column>
 								<p:column>
@@ -1826,13 +1659,13 @@
 						style="background: #00AAC3; color: #FFFFFF; display: block;">
 						<div class="ui-fluid p-formgrid p-grid">
 							<div class="p-field p-col-12 p-md-11" style="font-weight: bold;">
-								<p:outputLabel value="#{etiquetas['ingresoInformacion']}" />
+								<p:outputLabel value="#{etiquetas['ingresoInformacionLideresa']}" />
 							</div>
 							<div class="p-field p-col-12 p-md-1" style="height: 10px;">
 								<p:commandButton id="btnTablaGen6"
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
 									icon="#{botones['icono.mas']}" process="@this panelIngresoGenero6"
-									update="panelIngresoGenero6  growl" disabled="#{registroGeneroController.componenteBuscarProyectos.advanceExecution.adexId!=null?false:true}"
+									update="panelIngresoGenero6  growl" disabled="#{registroGeneroController.registroGeneroBean.advanceExecutionSafeguards.adexId!=null?false:true}"
 									actionListener="#{registroGeneroController.nuevoRegistroGeneroTabla6()}"
 									title="#{tooltip['nuevoRegistro']}">
 									
@@ -1846,11 +1679,11 @@
 							rendered="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero6}"
 							header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['provincia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1"
 												
 												value="#{registroGeneroController.registroGeneroBean.codProvincia}"
@@ -1868,11 +1701,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['canton']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
@@ -1891,11 +1724,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['parroquia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
@@ -1911,10 +1744,11 @@
 									</p:selectOneMenu>									
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+								
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu
 												value="#{registroGeneroController.registroGeneroBean.codigoAutoIdentificacion}" tabindex="4"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
@@ -1931,10 +1765,10 @@
 									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
-									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
 												value="#{registroGeneroController.registroGeneroBean.codigoPuebloNacionalidad}" tabindex="5"
 												disabled="#{not registroGeneroController.registroGeneroBean.habilitaPuebloNacionalidad}"
@@ -1952,11 +1786,11 @@
 									</div>
 								
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnOne}" tabindex="6"/>									
@@ -1964,11 +1798,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['nombreLideresa']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnTwo}" tabindex="7"/>									
@@ -1976,21 +1810,21 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['espacioDialogo']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnTree}" tabindex="8"/>												
 									</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['rolEspacio']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnFour}" tabindex="9"/>								        																											
@@ -1999,11 +1833,11 @@
 										
 									</div>
 
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['accionesLideresa']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnFive}"
@@ -2011,11 +1845,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2"></div>
 																											
-									<div class="p-field p-col-12 p-md-2"
+									<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnSix}"
@@ -2052,52 +1886,52 @@
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas6}"
 								var="tablarespuestas">
 								<p:column headerText="#{etiquetas['provincia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['canton']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['parroquia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['comunidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['nombreLideresa']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 								</p:column>
 								
 								<p:column headerText="#{etiquetas['espacioDialogo']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['rolEspacio']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['accionesLideresa']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
 								</p:column>								
 								<p:column headerText="#{etiquetas['linkVerificador']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
 								</p:column>
 								<p:column>
@@ -2143,7 +1977,7 @@
 								<p:commandButton id="btnTablaGen7"
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
 									icon="#{botones['icono.mas']}" process="@this panelIngresoGenero6"
-									update="panelIngresoGenero7  growl" disabled="#{registroGeneroController.componenteBuscarProyectos.advanceExecution.adexId!=null?false:true}"
+									update="panelIngresoGenero7  growl" disabled="#{registroGeneroController.registroGeneroBean.advanceExecutionSafeguards.adexId!=null?false:true}"
 									actionListener="#{registroGeneroController.nuevoRegistroGeneroTabla7()}"
 									title="#{tooltip['nuevoRegistro']}">
 									
@@ -2157,11 +1991,11 @@
 							rendered="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero7}"
 							header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['provincia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1"
 												
 												value="#{registroGeneroController.registroGeneroBean.codProvincia}"
@@ -2179,11 +2013,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['canton']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
@@ -2202,11 +2036,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['parroquia']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:selectOneMenu required="true"
 										
 										requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
@@ -2222,10 +2056,11 @@
 									</p:selectOneMenu>									
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+								
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu
 												value="#{registroGeneroController.registroGeneroBean.codigoAutoIdentificacion}" tabindex="4"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
@@ -2242,10 +2077,10 @@
 									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
-									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
 												value="#{registroGeneroController.registroGeneroBean.codigoPuebloNacionalidad}" tabindex="5"
 												disabled="#{not registroGeneroController.registroGeneroBean.habilitaPuebloNacionalidad}"
@@ -2263,11 +2098,11 @@
 									</div>
 								
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnOne}" tabindex="6"/>									
@@ -2275,11 +2110,11 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 									style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 									<p:outputLabel value="#{etiquetas['accion']}"/>
 								</div>
-								<div class="p-field p-col-12 p-md-8">
+								<div class="p-field p-col-12 p-md-7">
 									<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnTwo}" tabindex="7"/>									
@@ -2287,50 +2122,61 @@
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['resultado']}" />
 									</div>
-									<div class="p-field p-col-12 p-md-8">
+									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnTree}" tabindex="8"/>												
 									</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 								
-								<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['nroMujeresBeneficiarias']}"/>
-									</div>
-									<div class="p-field p-col-12 p-md-8">
+								</div>
+								<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnNumberSix}" tabindex="9"/>								        																											
-									</div>
-									<div class="p-field p-col-12 p-md-2">
+								</div>
+								<div class="p-field p-col-12 p-md-2"></div>
+								
+								<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['nroHombresBeneficiarios']}"/>
+								</div>
+								<div class="p-field p-col-12 p-md-7">
+										<p:inputText 
+										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnNumberSeven}" tabindex="10"/>								        																											
+								</div>
+								<div class="p-field p-col-12 p-md-2">
 										
-									</div>
+								</div>
 																											
-									<div class="p-field p-col-12 p-md-2"
+								<div class="p-field p-col-12 p-md-3"
 										style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}" />
-									</div>
-									<div class="p-field p-col-12 p-md-8">
+								</div>
+								<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnFour}"
-											tabindex="10" />											
-									</div>
-									<div class="p-field p-col-12 p-md-2"></div>
+											tabindex="11" />											
+								</div>
+								<div class="p-field p-col-12 p-md-2"></div>
+									
 								<div class="p-field p-col-12 p-md-4"></div>
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton icon="#{botones['icono.grabar']}"
-										process="@this  panelIngresoGenero7 " tabindex="11"
+										process="@this  panelIngresoGenero7 " tabindex="12"
 										title="#{tooltip['grabar']}" value="#{botones['grabar']}"
 										actionListener="#{registroGeneroController.agregaDetalleRegistroGeneroTabla7()}"
 										update=" :form:growl  panelTablaGenero7 panelIngresoGenero7" />
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero7" update="panelIngresoGenero7" tabindex="12" 
+									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero7" update="panelIngresoGenero7" tabindex="13" 
 											value="#{botones['cancelar']}"
 											immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
@@ -2351,48 +2197,52 @@
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas7}"
 								var="tablarespuestas">
 								<p:column headerText="#{etiquetas['provincia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['canton']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['parroquia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['comunidad']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
 
 								</p:column>
 								<p:column headerText="#{etiquetas['accion']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
 								</p:column>
 								
 								<p:column headerText="#{etiquetas['resultado']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 								</p:column>
 								<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
+								</p:column>
+								<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}"
+									>
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" />
 								</p:column>																
 								<p:column headerText="#{etiquetas['linkVerificador']}"
-									styleClass="cabeceraTablaLarga">
+									>
 									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
 								</p:column>
 								<p:column>
@@ -2418,9 +2268,53 @@
 							</p:dataTable>
 						</h:panelGrid>	
 						</p:scrollPanel>					
-					</div>															
+					</div>	
+					<br/>
+						<p:outputPanel id="panelResumenEjecutivo">
+								<h:panelGrid rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}">
+									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
+									<p:inputTextarea counter="resumenB"
+										value="#{registroGeneroController.registroGeneroBean.resumenEjecutivo.exsuSummaryContent}"
+										
+										 counterTemplate="{0} caracteres restantes." maxlength="500"
+										cols="120" rows="9">
+										<p:ajax process="@this "
+											event="blur" partialSubmit="true" />
+									</p:inputTextarea>
+									<h:outputLabel id="resumenB" class="p-d-block" />
+								</h:panelGrid>
+								
+							</p:outputPanel>														
 					</p:panel>					
 				</p:outputPanel>
+				<br/>
+				<h:panelGrid columns="4" style="margin: 0 auto;">
+					
+					<p:commandButton value="#{botones['guardar']}" styleClass="botonRegistroProyecto" update="growl seleccionDatosSensibles" icon="#{botones['icono.grabar']}" 
+						process="@this panelGenero1 seleccionDatosSensibles" actionListener="#{registroGeneroController.mostrarDialogoGrabarAvanceGenero()}" 
+						rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}"/>
+					
+					<p:commandButton ajax="false"
+						actionListener="#{registroGeneroController.imprimirResumenGenero()}"
+						styleClass="botonRegistroProyecto"						
+						rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}"
+						icon="#{botones['icono.imprimir']}"
+						value="#{botones['vistaPrevia']}" process="@this">
+
+					</p:commandButton>
+					<p:commandButton value="#{botones['finalizar']}"
+						styleClass="botonRegistroProyecto"
+						process="@this " update="growl"
+						rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}"
+						actionListener="#{registroGeneroController.mostrarDialogoFinalizarReporte()}"
+						icon="#{botones['icono.check']}">
+
+					</p:commandButton>
+				</h:panelGrid>
+				</p:panel>					
+				</p:outputPanel>
+				<br/>
+				
 			</div>
 			<div class="p-field p-col-12 p-md-3"></div>
 		</div>

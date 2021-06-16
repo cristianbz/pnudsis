@@ -158,6 +158,16 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_column_number_seven")
+	private Integer tareColumnNumberSeven;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_eight")
+	private Integer tareColumnNumberEight;
+	
+	@Getter
+	@Setter
 	@Transient
 	private String tareProvincia;
 	
