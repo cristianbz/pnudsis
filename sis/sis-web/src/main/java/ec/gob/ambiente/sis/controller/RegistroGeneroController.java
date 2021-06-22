@@ -24,6 +24,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
 
+import ec.gob.ambiente.sigma.model.CatalogType;
 import ec.gob.ambiente.sigma.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sigma.services.CatalogFacade;
 import ec.gob.ambiente.sigma.services.CatalogTypeFacade;
@@ -136,6 +137,10 @@ public class RegistroGeneroController implements Serializable{
 			getComponenteBuscarProyectos().setEsReporteGenero(true);
 			getRegistroGeneroBean().setListadoLineaGenero(new ArrayList<>());
 			getRegistroGeneroBean().setListadoLineaGenero(getCatalogTypeFacade().listaLineasGenero());
+			CatalogType catalogoTipoOtros = new CatalogType();
+			catalogoTipoOtros.setCatyId(1000);
+			catalogoTipoOtros.setCatyDescription("Otros temas");
+			getRegistroGeneroBean().getListadoLineaGenero().add(catalogoTipoOtros);
 			cargaProvincias();
 			cargaTipoOrganizacion();
 			cargaTipoIncentivo();
@@ -342,10 +347,13 @@ public class RegistroGeneroController implements Serializable{
 		}
 	}
 	public void mostrarDialogoGrabarAvanceGenero(){
-		if(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado()!=null)
+		if(validaOpcionSiTablas()){
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSi"),"");
+		}else if(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado()!=null){
 			Mensaje.verDialogo("dlgGrabaAvanceGenero");
-		else
+		}else{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.lineaAccion"), "");
+		}
 	}
 
 	/**
@@ -1050,11 +1058,35 @@ public class RegistroGeneroController implements Serializable{
 	}
 	public void cargaInformacionGeneroProyecto(){
 		try{
-			getRegistroGeneroBean().setListaLineaGenero(getProjectsGenderInfoFacade().listaPorProyectoLineaGenero(getComponenteBuscarProyectos().proyectoSeleccionado().getProjId(), getRegistroGeneroBean().getCodigoLineaGenero()));
+			List<ProjectsGenderInfo> listaAux=new ArrayList<>();
+			getRegistroGeneroBean().setListaLineaGenero(new ArrayList<>());
+			if(getRegistroGeneroBean().getCodigoLineaGenero()<1000){
+				listaAux=getProjectsGenderInfoFacade().listaPorProyectoLineaGenero(getComponenteBuscarProyectos().proyectoSeleccionado().getProjId(), getRegistroGeneroBean().getCodigoLineaGenero());
+				for (ProjectsGenderInfo infoGenero : listaAux) {
+					if (infoGenero.getPginResultsType() != null){
+						if(infoGenero.getPginOtherLine()==null)
+							infoGenero.setPginDescripcionLineaAccion(infoGenero.getCataId().getCataText2());
+						else if(infoGenero.getPginOtherLine()!=null)
+							infoGenero.setPginDescripcionLineaAccion(infoGenero.getPginOtherLine());
+						getRegistroGeneroBean().getListaLineaGenero().add(infoGenero);
+					}
+				}
+//				getRegistroGeneroBean().setListaLineaGenero(getProjectsGenderInfoFacade().listaPorProyectoLineaGenero(getComponenteBuscarProyectos().proyectoSeleccionado().getProjId(), getRegistroGeneroBean().getCodigoLineaGenero()));
+			}else if(getRegistroGeneroBean().getCodigoLineaGenero() == 1000){
+//				getRegistroGeneroBean().setListaLineaGenero(getProjectsGenderInfoFacade().listaPorProyectoOtrasLineaGenero(getComponenteBuscarProyectos().proyectoSeleccionado().getProjId()));
+				listaAux = getProjectsGenderInfoFacade().listaPorProyectoOtrasLineaGenero(getComponenteBuscarProyectos().proyectoSeleccionado().getProjId());
+				for (ProjectsGenderInfo infoGenero : listaAux) {
+					infoGenero.setPginDescripcionLineaAccion(infoGenero.getPginOtherLine());
+					getRegistroGeneroBean().getListaLineaGenero().add(infoGenero);
+				}
+			}
 			getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
 			getRegistroGeneroBean().setCodigoProjectGenderInfo(null);
 			getRegistroGeneroBean().setListaDatosAvanceGenero(new ArrayList<>());
 			getRegistroGeneroBean().setPreguntasGenero(false);
+			getRegistroGeneroBean().setInformacionProyectoGeneroSeleccionado(null);
+			if(getRegistroGeneroBean().getListaLineaGenero().size()==0)
+				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.noInformacion"), "");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -1114,18 +1146,38 @@ public class RegistroGeneroController implements Serializable{
 		getRegistroGeneroBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getAdvanceExecution());
 		getRegistroGeneroBean().setDatosGeneroParaMostrar(false);
 	}
+	/**
+	 * Muestra el dialogo para finalizar reporte de genero
+	 */
 	public void mostrarDialogoFinalizarReporte(){
-		if(getRegistroGeneroBean().getResumenEjecutivo().getExsuSummaryContent().trim().length() < 10){
+		if(validaOpcionSiTablas()){
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSi"),"");
+		}else if(getRegistroGeneroBean().getResumenEjecutivo().getExsuSummaryContent().trim().length() < 10){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.ingresoResumenEjecutivo"),"");
 		}else{
 			grabarResumenEjecutivo(getRegistroGeneroBean().getAdvanceExecutionSafeguards());
 			Mensaje.verDialogo("dlgFinalizarReporteGenero");
 		}
 	}
+	/**
+	 * Finaliza el reporte de genero del proyecto
+	 */
 	public void finalizaReporteGenero(){
 		getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexIsReported(true);
 		getAvanceEjecucionGeneroFacade().edit(getRegistroGeneroBean().getAdvanceExecutionSafeguards());
 		getRegistroGeneroBean().setDatosGeneroParaMostrar(false);
+	}
+	
+	public boolean validaOpcionSiTablas(){
+		boolean nocumple=false;
+		if((getRegistroGeneroBean().getListaValoresRespuestas().get(0).isVaanYesnoAnswerValue() && getRegistroGeneroBean().getTablaRespuestas3().size()==0)){
+			nocumple = true; 
+		}else if(getRegistroGeneroBean().getListaValoresRespuestas().get(1).isVaanYesnoAnswerValue() && getRegistroGeneroBean().getTablaRespuestas4().size() == 0){
+			nocumple = true;
+		}else if(getRegistroGeneroBean().getListaValoresRespuestas().get(2).isVaanYesnoAnswerValue() && getRegistroGeneroBean().getTablaRespuestas5().size() == 0){
+			nocumple = true;
+		}
+		return nocumple;
 	}
 }
 	

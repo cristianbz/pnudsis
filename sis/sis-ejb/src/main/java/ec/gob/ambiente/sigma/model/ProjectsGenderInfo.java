@@ -57,6 +57,11 @@ public class ProjectsGenderInfo implements Serializable {
     @Column(name = "pgin_status")
     private Boolean pginStatus;
     
+    @Transient
+    @Getter
+    @Setter
+    private String pginDescripcionLineaAccion;
+    
     @Getter
     @Setter
     @Column(name = "pgin_results_type")

@@ -18,6 +18,12 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	public QuestionsFacade() {
 		super(Questions.class, Integer.class);
 	}
+	
+	public List<Questions> listaPreguntasIngresadas() throws Exception{
+		String sql="SELECT Q FROM Questions Q ";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		return findByCreateQuery(sql, camposCondicion);
+	}
 	/**
 	 * Lista de todas las preguntas ingresadas
 	 */

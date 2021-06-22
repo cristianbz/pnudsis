@@ -2989,13 +2989,13 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaB41.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB41.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaB41.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
 					tablaB41.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 				}
@@ -3233,10 +3233,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);						
 					datosTablaB=new Paragraph();
 				}
@@ -3395,10 +3395,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaB102.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaB102.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
 					tablaB102.addCell(datosTablaB);						
 					datosTablaB=new Paragraph();
 				}
@@ -3447,13 +3447,13 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB11.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
 					tablaB11.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberTwo()),fontContenidoTablas));
 					tablaB11.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaB11.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 				}
@@ -3526,13 +3526,13 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberFive()),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);												
 					datosTablaB=new Paragraph();
 				}
@@ -3566,14 +3566,13 @@ public class ResumenPDF {
 				tablaB131.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Actividad",fontCabeceraTabla));
+				tablaB131.addCell(encabezadoTablaB);				
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Nro de personas que acceden a la info",fontCabeceraTabla));
 				tablaB131.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaB131.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Nro de personas que acceden a la info",fontCabeceraTabla));
-				tablaB131.addCell(encabezadoTablaB);
-
 
 				datosTablaB=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaB131()){
@@ -3585,10 +3584,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB131.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
 					tablaB131.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaB131.addCell(datosTablaB);																		
 					datosTablaB=new Paragraph();
 				}
@@ -3625,17 +3624,16 @@ public class ResumenPDF {
 				tablaB143.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Número de personas",fontCabeceraTabla));
-				tablaB143.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
-				tablaB143.addCell(encabezadoTablaB);
+				tablaB143.addCell(encabezadoTablaB);				
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("¿Que información se comunica a los beneficiarios?",fontCabeceraTabla));
 				tablaB143.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("¿Como se informa a la gente sobre la ejecución del proyecto/programa?",fontCabeceraTabla));
 				tablaB143.addCell(encabezadoTablaB);
-
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
+				tablaB143.addCell(encabezadoTablaB);
 
 				datosTablaB=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaB143()){
@@ -3647,6 +3645,9 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB143.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
+					tablaB143.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaB143.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
@@ -3654,9 +3655,6 @@ public class ResumenPDF {
 					tablaB143.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
-					tablaB143.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
 					tablaB143.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 				}
@@ -3785,13 +3783,13 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
@@ -3800,7 +3798,7 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalTwo()),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnThirteen(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
@@ -3883,19 +3881,19 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);						
 					datosTablaC=new Paragraph();
 				}
@@ -3952,13 +3950,13 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC241.addCell(datosTablaC);					
 					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
+					tablaC241.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC241.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
-					tablaC241.addCell(datosTablaC);
-					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaC241.addCell(datosTablaC);												
 					datosTablaC=new Paragraph();
 				}
@@ -3997,10 +3995,10 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC242.addCell(datosTablaC);					
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
 					tablaC242.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC242.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 				}
@@ -4053,6 +4051,9 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaC26.addCell(datosTablaC);					
 					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					tablaC26.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC26.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
@@ -4060,9 +4061,6 @@ public class ResumenPDF {
 					tablaC26.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
-					tablaC26.addCell(datosTablaC);
-					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
 					tablaC26.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 				}
@@ -4093,15 +4091,15 @@ public class ResumenPDF {
 
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Línea de acción",fontCabeceraTabla));
-				tablaC271.addCell(encabezadoTablaC);
-				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
-				tablaC271.addCell(encabezadoTablaC);					
+				tablaC271.addCell(encabezadoTablaC);									
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Autoidentificación étnica",fontCabeceraTabla));
 				tablaC271.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Pueblo/Nacionalidad",fontCabeceraTabla));
+				tablaC271.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
 				tablaC271.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Objeto del convenio",fontCabeceraTabla));
@@ -4117,10 +4115,7 @@ public class ResumenPDF {
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaC271()){
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
-					tablaC271.addCell(datosTablaC);					
-					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
-					tablaC271.addCell(datosTablaC);
+					tablaC271.addCell(datosTablaC);										
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);
@@ -4128,13 +4123,16 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					tablaC271.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 				}
@@ -4181,10 +4179,10 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaC28.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC28.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnFour().equals("PERSONALPLANTA")?"Personal planta":"Personal consultoria",fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo().equals("PERSONALPLANTA")?"Personal planta":"Personal consultoria",fontContenidoTablas));
 					tablaC28.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
@@ -4262,16 +4260,16 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaC291.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC291.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaC291.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC291.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaC291.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 				}
@@ -4340,6 +4338,15 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareParroquia(),fontContenidoTablas));
 					tablaC301.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					tablaC301.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					tablaC301.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaC301.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaC301.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
@@ -4347,15 +4354,6 @@ public class ResumenPDF {
 					tablaC301.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
-					tablaC301.addCell(datosTablaC);
-					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
-					tablaC301.addCell(datosTablaC);
-					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
-					tablaC301.addCell(datosTablaC);
-					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
 					tablaC301.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 				}
@@ -4433,19 +4431,19 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 				}
@@ -4573,22 +4571,22 @@ public class ResumenPDF {
 					datosTablaD.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnTwelve(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);						
 					datosTablaD=new Paragraph();
 				}
@@ -4639,9 +4637,6 @@ public class ResumenPDF {
 				encabezadoTablaD.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaD331.addCell(encabezadoTablaD);
 
-
-
-
 				datosTablaD=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaD331()){
 
@@ -4655,16 +4650,16 @@ public class ResumenPDF {
 					datosTablaD.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaD331.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaD331.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
 					datosTablaD.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaD331.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaD331.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaD.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaD331.addCell(datosTablaD);											
 					datosTablaD=new Paragraph();
 				}
@@ -4769,7 +4764,7 @@ public class ResumenPDF {
 					datosTablaE.add(new Phrase(tabla.getTareParroquia(),fontContenidoTablas));
 					tablaE341.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaE341.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
@@ -4823,7 +4818,7 @@ public class ResumenPDF {
 					datosTablaE.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaE351.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaE351.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 				}
@@ -4860,15 +4855,15 @@ public class ResumenPDF {
 				tablaE361.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Parroquia",fontCabeceraTabla));
-				tablaE361.addCell(encabezadoTablaE);
-				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("Comunidad",fontCabeceraTabla));
-				tablaE361.addCell(encabezadoTablaE);
+				tablaE361.addCell(encabezadoTablaE);				
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
 				tablaE361.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				tablaE361.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Comunidad",fontCabeceraTabla));
 				tablaE361.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Actores clave",fontCabeceraTabla));
@@ -4887,22 +4882,21 @@ public class ResumenPDF {
 					tablaE361.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareParroquia(),fontContenidoTablas));
-					tablaE361.addCell(datosTablaE);																	
-					datosTablaE=new Paragraph();
-					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
-					tablaE361.addCell(datosTablaE);
+					tablaE361.addCell(datosTablaE);																											
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaE361.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
-					tablaE361.addCell(datosTablaE);																							
+					tablaE361.addCell(datosTablaE);																						
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaE361.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					tablaE361.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaE361.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 				}
@@ -4978,13 +4972,13 @@ public class ResumenPDF {
 					tablaE371.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);																							
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
@@ -4994,13 +4988,13 @@ public class ResumenPDF {
 					tablaE371.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);																							
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 				}
@@ -5068,13 +5062,13 @@ public class ResumenPDF {
 					tablaE381.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaE381.addCell(datosTablaE);																					
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaE381.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaE381.addCell(datosTablaE);																																								
 					datosTablaE=new Paragraph();
 				}
@@ -5138,7 +5132,7 @@ public class ResumenPDF {
 					tablaE391.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaE391.addCell(datosTablaE);																					
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
@@ -5147,7 +5141,7 @@ public class ResumenPDF {
 					datosTablaE.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaE391.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaE391.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 				}
@@ -5728,16 +5722,16 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaF421.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaF421.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaF421.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaF421.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaF421.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
 				}
@@ -5792,19 +5786,19 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaF431.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaF431.addCell(datosTablaF);					
 					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaF431.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
+					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					tablaF431.addCell(datosTablaF);
+					datosTablaF=new Paragraph();
+					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaF431.addCell(datosTablaF);
+					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
-					tablaF431.addCell(datosTablaF);
-					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
-					tablaF431.addCell(datosTablaF);
-					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
 					tablaF431.addCell(datosTablaF);						
 					datosTablaF=new Paragraph();
 				}
@@ -5880,16 +5874,16 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaF441.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaF441.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaF441.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaF441.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaF441.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
 				}
@@ -5938,13 +5932,13 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaF452.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
 					tablaF452.addCell(datosTablaF);					
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnNumberTwo()),fontContenidoTablas));
 					tablaF452.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaF452.addCell(datosTablaF);												
 					datosTablaF=new Paragraph();
 				}
@@ -6023,7 +6017,7 @@ public class ResumenPDF {
 				encabezadoTablaG.add(new Phrase("Autores de la investigación",fontCabeceraTabla));
 				tablaG461.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Riesgo PrincipalIdentificado",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Riesgo Principal Identificado",fontCabeceraTabla));
 				tablaG461.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Nombre del estudio",fontCabeceraTabla));
@@ -6046,10 +6040,10 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaG461.addCell(datosTablaG);
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaG461.addCell(datosTablaG);
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaG461.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 				}
@@ -6128,16 +6122,16 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
@@ -6222,22 +6216,22 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaG481.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaG481.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaG481.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaG481.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaG481.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
 					tablaG481.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaG481.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 				}
@@ -6322,26 +6316,26 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnTwelve(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnThirteen(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 				}
@@ -6392,10 +6386,10 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaG501.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaG501.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaG501.addCell(datosTablaG);																		
 					datosTablaG=new Paragraph();
 				}
@@ -6478,22 +6472,22 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaG511.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					tablaG511.addCell(datosTablaG);						
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					tablaG511.addCell(datosTablaG);						
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					tablaG511.addCell(datosTablaG);						
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					tablaG511.addCell(datosTablaG);						
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaG511.addCell(datosTablaG);						
+					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
-					tablaG511.addCell(datosTablaG);						
-					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
-					tablaG511.addCell(datosTablaG);						
-					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
-					tablaG511.addCell(datosTablaG);						
-					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnTen(),fontContenidoTablas));
-					tablaG511.addCell(datosTablaG);						
-					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnEleven(),fontContenidoTablas));
-					tablaG511.addCell(datosTablaG);						
-					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(tabla.getTareColumnTwelve(),fontContenidoTablas));
 					tablaG511.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 
@@ -7062,7 +7056,7 @@ public class ResumenPDF {
 			tabla5.addCell(encabezadoTabla);
 			
 			Paragraph datosTabla5;
-			for(TableResponses genero:beanGenero.getTablaRespuestas4()){
+			for(TableResponses genero:beanGenero.getTablaRespuestas5()){
 				datosTabla5=new Paragraph();
 				datosTabla5.add(new Phrase(genero.getTareProvincia(),fontContenidoTablas));
 				tabla5.addCell(datosTabla5);
@@ -7154,7 +7148,7 @@ public class ResumenPDF {
 			tabla6.addCell(encabezadoTabla);
 			
 			Paragraph datosTabla6;
-			for(TableResponses genero:beanGenero.getTablaRespuestas5()){
+			for(TableResponses genero:beanGenero.getTablaRespuestas6()){
 				datosTabla6=new Paragraph();
 				datosTabla6.add(new Phrase(genero.getTareProvincia(),fontContenidoTablas));
 				tabla6.addCell(datosTabla6);
@@ -7243,7 +7237,7 @@ public class ResumenPDF {
 			tabla7.addCell(encabezadoTabla);
 			
 			Paragraph datosTabla7;
-			for(TableResponses genero:beanGenero.getTablaRespuestas5()){
+			for(TableResponses genero:beanGenero.getTablaRespuestas7()){
 				datosTabla7=new Paragraph();
 				datosTabla7.add(new Phrase(genero.getTareProvincia(),fontContenidoTablas));
 				tabla7.addCell(datosTabla7);

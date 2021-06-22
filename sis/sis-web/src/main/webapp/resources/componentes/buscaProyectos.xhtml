@@ -86,6 +86,12 @@
 							</h:panelGrid>
 					</div>					
 				</p:panel>
+				<br/>				
+				<h:panelGrid style="margin:0 auto;" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}">
+						<p:commandButton id="btnVolverInicio" value="#{botones['volverInicio']}"
+							icon="fa fa-home"
+							action="#{sesionController.redireccionarAPagina('','inicio')}" process="@this" />
+					</h:panelGrid>
 				</p:outputPanel>
 				<p:outputPanel id="panelDatosProyecto">
 				<p:panel header="#{titulos['datosProyecto']}" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}" >

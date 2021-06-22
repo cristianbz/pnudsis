@@ -243,7 +243,7 @@
 									<f:selectItems value="#{registroGeneroController.registroGeneroBean.listadoLineaGenero}" var="cata" 
 										itemLabel="#{cata.catyDescription}" itemValue="#{cata.catyId}"/>
 									<p:ajax event="change" process="@this tablaProjectInfo panelGenero1 :form:panelTablaGenero1 :form:btnTablaGen1 :form:panelTablasGenero" 
-										update=":form:btnTablaGen1 tablaProjectInfo panelGenero1 :form:panelTablaGenero1 :form:panelTablasGenero" 
+										update=":form:btnTablaGen1 tablaProjectInfo panelGenero1 :form:panelTablaGenero1 :form:panelTablasGenero growl" 
 										 listener="#{registroGeneroController.cargaInformacionGeneroProyecto()}" />
 								</p:selectOneMenu>																						
 						</h:panelGrid>
@@ -252,8 +252,8 @@
 					<div class="p-field p-col-12 p-md-12">
 						<p:dataTable id="tablaProjectInfo" style="font-size:10px !important;"
 							value="#{registroGeneroController.registroGeneroBean.listaLineaGenero}" var="genero">
-							<p:column headerText="#{etiquetas['lineaAccion']}">
-								#{genero.cataId.cataText2}
+							<p:column headerText="#{etiquetas['lineaAccion']}">								
+								#{genero.pginDescripcionLineaAccion}
 							</p:column>
 							<p:column headerText="#{etiquetas['lineaBase']}">
 								#{genero.pginActivities}
@@ -265,7 +265,7 @@
 								#{genero.pginResults}
 							</p:column>
 							<p:column headerText="#{etiquetas['tipoResultado']}">
-								<p:outputLabel value="#{genero.pginResultsType.equals('1')?'Sensible al género':'Transformador de las relaciones de género'}"/> 
+								<p:outputLabel value="#{genero.pginResultsType.equals('1')?'Sensible al género':'Transformador de las relaciones de género'}" style="font-size:10px !important;"/> 
 							</p:column>
 							<p:column headerText="#{etiquetas['presupuesto']}">
 								#{genero.pginBudget}
@@ -286,7 +286,7 @@
 					<div class="p-field p-col-12 p-md-12">
 						<p:outputPanel id="panelGenero1">
 							<center>
-								<p:outputLabel value="#{registroGeneroBean.informacionProyectoGeneroSeleccionado.cataId.cataText2}" style="margin:0 auto;font-weight: bold;font-size:11px;" />
+								<p:outputLabel value="#{registroGeneroBean.informacionProyectoGeneroSeleccionado.pginDescripcionLineaAccion}" style="margin:0 auto;font-weight: bold;font-size:11px;" />
 							</center>
 							<h:panelGrid columns="2" style="margin:0 auto;">															
 								<p:outputLabel value="#{etiquetas['porcentajeAvance']}: "/>
@@ -439,34 +439,29 @@
 					<div class="ui-fluid p-formgrid p-grid">
 
 						<h:panelGrid id="panelTablaGenero1" style="margin:0 auto;">
-							<p:dataTable styleClass="sinBordesAncho100" style="font-size:10px !important;"
+							<p:dataTable  style="font-size:10px !important;"
 								emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5"
 								paginator="true" 
 								value="#{registroGeneroController.registroGeneroBean.listaDatosAvanceGenero}"
 								var="tablarespuestas">
-								<p:column headerText="#{etiquetas['beneficiariasNumero']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.dtagNumberOfBeneficiaries}" />
+								<p:column headerText="#{etiquetas['beneficiariasNumero']}">
+									<p:outputLabel value="#{tablarespuestas.dtagNumberOfBeneficiaries}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['provincia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.provincia}" />
+								<p:column headerText="#{etiquetas['provincia']}">
+									<p:outputLabel value="#{tablarespuestas.provincia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['canton']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.canton}" />
+								<p:column headerText="#{etiquetas['canton']}">
+									<p:outputLabel value="#{tablarespuestas.canton}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['parroquia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.parroquia}" />
+								<p:column headerText="#{etiquetas['parroquia']}">
+									<p:outputLabel value="#{tablarespuestas.parroquia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['comunidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.dtagComunity}" />
+								<p:column headerText="#{etiquetas['comunidad']}">
+									<p:outputLabel value="#{tablarespuestas.dtagComunity}" style="font-size:10px !important;"/>
 
 								</p:column>
 								
@@ -816,56 +811,52 @@
 								paginator="true" resizableColumns="true" 
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas3}"
 								var="tablarespuestas">
-								<p:column headerText="#{etiquetas['provincia']}" 
-									>
-									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
+								<p:column headerText="#{etiquetas['provincia']}" >
+									<p:outputLabel value="#{tablarespuestas.tareProvincia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['canton']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
+								<p:column headerText="#{etiquetas['canton']}">
+									<p:outputLabel value="#{tablarespuestas.tareCanton}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['parroquia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
+								<p:column headerText="#{etiquetas['parroquia']}">
+									<p:outputLabel value="#{tablarespuestas.tareParroquia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
+								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenerico}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['puebloNacionalidad']}">
-									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
+									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['comunidad']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 
 								</p:column>
 								<p:column headerText="#{etiquetas['espacioIdentificado']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 
 								</p:column>
 								<p:column headerText="#{etiquetas['tipoOrganizacion']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['finRolOrganizacion']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 								</p:column>								
 								<p:column headerText="#{etiquetas['accionesFortalecimiento']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['numeroBeneficiariasOrganizacion']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['linkVerificador']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column>
 									<p:commandButton icon="#{botones['icono.editar']}"
@@ -1205,70 +1196,55 @@
 								paginator="true" 
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas4}"
 								var="tablarespuestas">
-								<p:column headerText="#{etiquetas['provincia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
+								<p:column headerText="#{etiquetas['provincia']}">
+									<p:outputLabel value="#{tablarespuestas.tareProvincia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['canton']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
+								<p:column headerText="#{etiquetas['canton']}">
+									<p:outputLabel value="#{tablarespuestas.tareCanton}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['parroquia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
+								<p:column headerText="#{etiquetas['parroquia']}">
+									<p:outputLabel value="#{tablarespuestas.tareParroquia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
+								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenerico}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
+								<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['comunidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
+								<p:column headerText="#{etiquetas['comunidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['nombreEspacio']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
+								<p:column headerText="#{etiquetas['nombreEspacio']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['institucionOrganiza']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
+								<p:column headerText="#{etiquetas['institucionOrganiza']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['objetivoCapacitacion']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
+								<p:column headerText="#{etiquetas['objetivoCapacitacion']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 								</p:column>								
-								<p:column headerText="#{etiquetas['temasTratados']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
+								<p:column headerText="#{etiquetas['temasTratados']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['institucionesCapacitacion']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
+								<p:column headerText="#{etiquetas['institucionesCapacitacion']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['numeroMujeres']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
+								<p:column headerText="#{etiquetas['numeroMujeres']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['dificultadesIdentificadas']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnSeven}" />
+								<p:column headerText="#{etiquetas['dificultadesIdentificadas']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnSeven}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['medidasTomadas']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnEight}" />
+								<p:column headerText="#{etiquetas['medidasTomadas']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnEight}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['linkVerificador']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTen}" />
+								<p:column headerText="#{etiquetas['linkVerificador']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTen}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column>
 									<p:commandButton icon="#{botones['icono.editar']}"
@@ -1571,55 +1547,45 @@
 								paginator="true" 
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas5}"
 								var="tablarespuestas">
-								<p:column headerText="#{etiquetas['provincia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
+								<p:column headerText="#{etiquetas['provincia']}">
+									<p:outputLabel value="#{tablarespuestas.tareProvincia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['canton']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
+								<p:column headerText="#{etiquetas['canton']}">
+									<p:outputLabel value="#{tablarespuestas.tareCanton}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['parroquia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
+								<p:column headerText="#{etiquetas['parroquia']}">
+									<p:outputLabel value="#{tablarespuestas.tareParroquia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
+								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenerico}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
+								<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['comunidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
+								<p:column headerText="#{etiquetas['comunidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['tipoIncentivo']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
+								<p:column headerText="#{etiquetas['tipoIncentivo']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['numeroMujeres']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column headerText="#{etiquetas['numeroHombres']}">
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" />
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['dificultadesParticipacion']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
+								<p:column headerText="#{etiquetas['dificultadesParticipacion']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['medidasParticipacion']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
+								<p:column headerText="#{etiquetas['medidasParticipacion']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 								</p:column>								
-								<p:column headerText="#{etiquetas['linkVerificador']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
+								<p:column headerText="#{etiquetas['linkVerificador']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column>
 									<p:commandButton icon="#{botones['icono.editar']}"
@@ -1885,54 +1851,43 @@
 								paginator="true" 
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas6}"
 								var="tablarespuestas">
-								<p:column headerText="#{etiquetas['provincia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
+								<p:column headerText="#{etiquetas['provincia']}">
+									<p:outputLabel value="#{tablarespuestas.tareProvincia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['canton']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
+								<p:column headerText="#{etiquetas['canton']}">
+									<p:outputLabel value="#{tablarespuestas.tareCanton}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['parroquia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
+								<p:column headerText="#{etiquetas['parroquia']}">
+									<p:outputLabel value="#{tablarespuestas.tareParroquia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
+								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenerico}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
+								<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['comunidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
+								<p:column headerText="#{etiquetas['comunidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['nombreLideresa']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
+								<p:column headerText="#{etiquetas['nombreLideresa']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 								</p:column>
 								
-								<p:column headerText="#{etiquetas['espacioDialogo']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
+								<p:column headerText="#{etiquetas['espacioDialogo']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['rolEspacio']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
+								<p:column headerText="#{etiquetas['rolEspacio']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['accionesLideresa']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" />
+								<p:column headerText="#{etiquetas['accionesLideresa']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnFive}" style="font-size:10px !important;"/>
 								</p:column>								
-								<p:column headerText="#{etiquetas['linkVerificador']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" />
+								<p:column headerText="#{etiquetas['linkVerificador']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnSix}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column>
 									<p:commandButton icon="#{botones['icono.editar']}"
@@ -2196,54 +2151,43 @@
 								paginator="true" 
 								value="#{registroGeneroController.registroGeneroBean.tablaRespuestas7}"
 								var="tablarespuestas">
-								<p:column headerText="#{etiquetas['provincia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareProvincia}" />
+								<p:column headerText="#{etiquetas['provincia']}">
+									<p:outputLabel value="#{tablarespuestas.tareProvincia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['canton']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareCanton}" />
+								<p:column headerText="#{etiquetas['canton']}">
+									<p:outputLabel value="#{tablarespuestas.tareCanton}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['parroquia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareParroquia}" />
+								<p:column headerText="#{etiquetas['parroquia']}">
+									<p:outputLabel value="#{tablarespuestas.tareParroquia}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenerico}" />
+								<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenerico}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['puebloNacionalidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" />
+								<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['comunidad']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" />
+								<p:column headerText="#{etiquetas['comunidad']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 
 								</p:column>
-								<p:column headerText="#{etiquetas['accion']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" />
+								<p:column headerText="#{etiquetas['accion']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 								</p:column>
 								
-								<p:column headerText="#{etiquetas['resultado']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
+								<p:column headerText="#{etiquetas['resultado']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" />
+								<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" />
+								<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
 								</p:column>																
-								<p:column headerText="#{etiquetas['linkVerificador']}"
-									>
-									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" />
+								<p:column headerText="#{etiquetas['linkVerificador']}">
+									<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 								</p:column>
 								<p:column>
 									<p:commandButton icon="#{botones['icono.editar']}"

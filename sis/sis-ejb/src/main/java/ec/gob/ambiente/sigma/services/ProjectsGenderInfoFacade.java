@@ -47,7 +47,18 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 		camposCondicion.put("codigoProyecto", codigoProyecto);
 		camposCondicion.put("codigoLineaGenero", codigoLineaGenero);
 		return findByCreateQuery(sql, camposCondicion);
-
+	}
+	/***
+	 * Busca por otras lineas de genero.
+	 * @param codigoProyecto
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ProjectsGenderInfo> listaPorProyectoOtrasLineaGenero(int codigoProyecto) throws Exception{
+		String sql="SELECT PGI from ProjectsGenderInfo PGI WHERE PGI.pginStatus=true AND PGI.projects.projId=:codigoProyecto AND PGI.cataId.cataId IS NULL";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoProyecto", codigoProyecto);		
+		return findByCreateQuery(sql, camposCondicion);
 	}
 }
 
