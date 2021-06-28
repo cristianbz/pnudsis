@@ -62,6 +62,10 @@ public class Projects {
 	@Column(name = "proj_status")
 	private boolean projStatus;
 	
+	@Getter
+	@Setter
+	@Column(name = "proj_register_status")
+	private String projRegisterStatus;
 	
 	@Getter
 	@Setter

@@ -27,7 +27,7 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer>  {
 
 	public List<Projects> buscarTodosLosProyectos() throws Exception{
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
-		return findByCreateQuery("SELECT P FROM Projects P WHERE P.projStatus=true", camposCondicion);
+		return findByCreateQuery("SELECT P FROM Projects P WHERE P.projStatus=true AND P.projRegisterStatus='V'", camposCondicion);
 	}
 	/**
 	 * Lista los proyectos por socio implementador
@@ -36,7 +36,7 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer>  {
 	 * @throws Exception
 	 */
 	public List<Projects> listarProyectosPorIdSocioImpl(Integer partId) throws Exception{
-		String sql="SELECT P from Projects P WHERE P.projStatus=true AND P.partners.partId=:param1 ORDER BY P.projTitle";
+		String sql="SELECT P from Projects P WHERE P.projStatus=true AND P.projRegisterStatus='V' AND P.partners.partId=:param1 ORDER BY P.projTitle";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("param1", partId);
 		return findByCreateQuery(sql, camposCondicion);
@@ -48,7 +48,7 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer>  {
 	 * @throws Exception
 	 */
 	public List<Projects> listarProyectosPorTextoTitulo(String textoTitulo) throws Exception{
-		String sql="SELECT P FROM Projects P WHERE P.projStatus=true AND UPPER(P.projTitle) LIKE :param1 ORDER BY P.projTitle";
+		String sql="SELECT P FROM Projects P WHERE P.projStatus=true AND P.projRegisterStatus='V' AND UPPER(P.projTitle) LIKE :param1 ORDER BY P.projTitle";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("param1", "%"+textoTitulo.toUpperCase()+"%");
 		return findByCreateQuery(sql, camposCondicion);

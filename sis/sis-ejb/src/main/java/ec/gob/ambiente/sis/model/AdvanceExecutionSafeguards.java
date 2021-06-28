@@ -63,6 +63,16 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@Column(name = "adex_term_from")
+	private String adexTermFrom;
+	
+	@Getter
+	@Setter
+	@Column(name = "adex_term_to")
+	private String adexTermTo;
+	
+	@Getter
+	@Setter
 	@Column(name = "adex_is_gender")
 	private boolean adexIsGender;
 	

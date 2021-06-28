@@ -125,7 +125,33 @@
 									itemValue="#{sector.sectId}" />
 								<p:ajax event="change" process="@this" />
 							</p:selectManyCheckbox>
-							<p:message for="sectores" />
+							
+							
+						<p:outputLabel 
+							value="#{etiquetas['periodoAreportar']}: "
+							styleClass="datosProyecto" />
+						<h:panelGrid columns="2">
+							<p:selectOneMenu value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.anioReporte}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
+								<f:selectItem itemValue="2016" itemLabel="2016"/>
+								<f:selectItem itemValue="2017" itemLabel="2017"/>
+								<f:selectItem itemValue="2018" itemLabel="2018"/>
+								<f:selectItem itemValue="2019" itemLabel="2019"/>
+								<f:selectItem itemValue="2020" itemLabel="2020"/>
+								<f:selectItem itemValue="2021" itemLabel="2021"/>
+								<f:selectItem itemValue="2022" itemLabel="2022"/>
+								<f:selectItem itemValue="2023" itemLabel="2023"/>
+								<f:selectItem itemValue="2024" itemLabel="2024"/>
+								<f:selectItem itemValue="2025" itemLabel="2025"/>
+								<p:ajax process="@this" event="change"/>
+							</p:selectOneMenu>
+							<p:selectOneMenu value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.periodoDesde}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
+								<f:selectItem itemValue="01" itemLabel="Enero-Diciembre"/>
+								<p:ajax process="@this" event="change"/>
+							</p:selectOneMenu>
+						</h:panelGrid>	
+						
 						
 					</h:panelGrid>
 				</p:panel>

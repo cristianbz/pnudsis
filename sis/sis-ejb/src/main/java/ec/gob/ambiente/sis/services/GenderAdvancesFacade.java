@@ -45,12 +45,12 @@ public class GenderAdvancesFacade extends AbstractFacade<GenderAdvances,Integer>
 		}
 	}
 	
-	public List<GenderAdvances> buscaAvancesGeneroPorLineaEstrategica(int codigoLinea,int codigoAvanceEjecucion)throws DaoException{		
-			String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.advanceExecutionSafeguards.adexIsReported=false AND GA.advanceExecutionSafeguards.adexIsGender=true AND GA.advanceExecutionSafeguards.adexStatus=true ";
-			Map<String, Object> camposCondicion=new HashMap<String, Object>();
-			camposCondicion.put("codigoLinea", codigoLinea);
-			camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
-			return findByCreateQuery(sql, camposCondicion);		
-	}
+//	public List<GenderAdvances> buscaAvancesGeneroPorLineaEstrategica(int codigoLinea,int codigoAvanceEjecucion)throws DaoException{		
+//			String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.advanceExecutionSafeguards.adexIsReported=false AND GA.advanceExecutionSafeguards.adexIsGender=true AND GA.advanceExecutionSafeguards.adexStatus=true ";
+//			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+//			camposCondicion.put("codigoLinea", codigoLinea);
+//			camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
+//			return findByCreateQuery(sql, camposCondicion);		
+//	}
 }
 

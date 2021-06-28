@@ -45,6 +45,13 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Getter
+	@Setter
+	private Integer anioReporte;
+	
+	@Getter
+	@Setter
+	private String periodoDesde;
 	
 	@Setter
 	@Getter

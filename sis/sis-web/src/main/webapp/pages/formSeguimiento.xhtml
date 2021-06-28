@@ -1512,11 +1512,13 @@
 									emptyMessage="#{mensajes['noRegistros']}">
 									<p:column width="155">
 										<p:outputLabel value="#{proyecto.projCode}" />
-									</p:column>
-									<p:column headerText="#{etiquetas['tituloPlanProyecto']}">
+										<br/>
+										<p:outputLabel value="#{etiquetas['tituloPlanProyecto']}" styleClass="estiloHeaderCampoTabla"/>
+										<br/>										
 										<p:outputLabel value="#{proyecto.projTitle}" />
-									</p:column>
-									<p:column headerText="#{etiquetas['socioImplementador']}" width="300">
+										<br/>
+										<p:outputLabel value="#{etiquetas['socioImplementador']}" styleClass="estiloHeaderCampoTabla"/>
+										<br/>
 										<p:outputLabel value="#{proyecto.partners.partName}" />
 									</p:column>
 									<p:column width="30">
@@ -1563,15 +1565,46 @@
 									itemValue="#{sector.sectId}" />
 								<p:ajax event="change" process="@this" />
 							</p:selectManyCheckbox>
-							<p:message for="sectores" />
+						
+						<p:outputLabel 
+							value="#{etiquetas['periodoAreportar']}: "
+							styleClass="datosProyecto" />
+						<h:panelGrid columns="2">
+							<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.anioReporte}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
+								<f:selectItem itemValue="2016" itemLabel="2016"/>
+								<f:selectItem itemValue="2017" itemLabel="2017"/>
+								<f:selectItem itemValue="2018" itemLabel="2018"/>
+								<f:selectItem itemValue="2019" itemLabel="2019"/>
+								<f:selectItem itemValue="2020" itemLabel="2020"/>
+								<f:selectItem itemValue="2021" itemLabel="2021"/>
+								<f:selectItem itemValue="2022" itemLabel="2022"/>
+								<f:selectItem itemValue="2023" itemLabel="2023"/>
+								<f:selectItem itemValue="2024" itemLabel="2024"/>
+								<f:selectItem itemValue="2025" itemLabel="2025"/>
+								<p:ajax process="@this" event="change"/>
+							</p:selectOneMenu>
+							<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.periodoDesde}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
+								<f:selectItem itemValue="01" itemLabel="Enero-Diciembre"/>
+								<p:ajax process="@this" event="change"/>
+							</p:selectOneMenu>
+						</h:panelGrid>		
 						
 					</h:panelGrid>
 				</p:panel>
+					<h:panelGrid style="margin:0 auto;"
+						rendered="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosProyecto}">
+						<p:commandButton id="btnInicio"
+							value="#{botones['volverInicio']}" icon="fa fa-home"
+							action="#{sesionController.redireccionarAPagina('','inicio')}"
+							process="@this" />
+					</h:panelGrid>
 				</p:outputPanel>
 				
 				<p:outputPanel id="panelNuevaBusquedaProyecto">
 				<h:panelGrid style="margin:0 auto;" rendered="#{seguimientoSalvaguardaBean.datosProyecto}" >
-							<p:commandButton id="btnVolverInicio" value="#{botones['volverBusqueda']}"
+							<p:commandButton id="btnVolverInicio" value="#{botones['volverBusqueda']}" 
 								icon="#{botones['icono.home']}" update=":form:panelNuevaBusquedaProyecto :form:panelDatosProyecto :form:panelBusquedaProyecto :form:panelsalvaguarda :form:growl" 
 								actionListener="#{seguimientoSalvaguardaController.volverABuscarProyectos}" partialSubmit="true"
 								process="@this :form:panelsalvaguarda" />
@@ -1899,7 +1932,7 @@
 										<p:outputLabel value="#{etiquetas['planProyGobierno']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-5">
-											<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA.tareColumnOne}" id="comboPlanGobierno"
+											<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA.tareColumnNumberOne}" id="comboPlanGobierno"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}">
 												<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
 												<f:selectItems
@@ -2119,11 +2152,11 @@
 							</div>
 							<br />
 							<p:outputPanel id="panelResumenEjecutivoA">
-								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==0?true:false}">
+								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==0?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 									<p:inputTextarea counter="resumenA"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.resumenEjecutivo.exsuSummaryContent}"
-										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										
 										 counterTemplate="{0} caracteres restantes." maxlength="500"
 										cols="120" rows="9">
 										<p:ajax process="@this :form:salvaguardas:panelResumenEjecutivoA"
@@ -2147,10 +2180,10 @@
 										update=":form:panelDatos :form:growl"
 										disabled="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.datosAvanceEjecucion}" />
 								<p:commandButton value="#{botones['siguiente']}" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio'); " 
-										icon="#{botones['icono.siguiente']}" process="@this :form:salvaguardas" styleClass="botonRegistroProyecto"
+										icon="#{botones['icono.siguiente']}" process="@this :form:salvaguardas :form:panelDatosProyecto" styleClass="botonRegistroProyecto"
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(1)}" onstart="PF('dlgEnProc').show()"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}" 						
-										update=":form:salvaguardas :form:growl"
+										update=":form:salvaguardas :form:growl :form:panelDatosProyecto"
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
@@ -4734,11 +4767,11 @@
 							</div>							
 							<br />
 							<p:outputPanel id="panelResumenEjecutivoB">
-								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==1?true:false}">
+								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==1?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 									<p:inputTextarea counter="resumenB"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.resumenEjecutivo.exsuSummaryContent}"
-										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										
 										 counterTemplate="{0} caracteres restantes." maxlength="500"
 										cols="120" rows="9">
 										<p:ajax process="@this :form:salvaguardas:panelResumenEjecutivoB"
@@ -4764,10 +4797,10 @@
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(2)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:panelsalvaguarda :form:salvaguardas"
+										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:panelsalvaguarda :form:salvaguardas :form:panelDatosProyecto"
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(2)}" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
-										update=":form:panelDatos :form:growl :form:panelsalvaguarda :form:salvaguardas"															
+										update=":form:panelDatos :form:growl :form:panelsalvaguarda :form:salvaguardas :form:panelDatosProyecto"															
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
@@ -5667,8 +5700,8 @@
 							<p:panel id="panel242C" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC242}" header="#{titulos['datosSolicitados']}">
 							<div class="ui-fluid p-formgrid p-grid">
 																									
-									<div class="p-field p-col-12 p-md-3">
-										<p:outputLabel value="#{etiquetas['medidasTomadasParticipacion']}"/>
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['medidasTomadasParticipacion']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="1"
@@ -5679,7 +5712,7 @@
 									<div class="p-field p-col-12 p-md-3">
 									</div>
 									
-									<div class="p-field p-col-12 p-md-3">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['mujeresParticipanIntercambio']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
@@ -5691,7 +5724,7 @@
 									<div class="p-field p-col-12 p-md-3">
 									</div>
 									
-									<div class="p-field p-col-12 p-md-3">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
@@ -5832,7 +5865,7 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-6">
-											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
+											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" style="width:414px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoLineaAccion}" tabindex="1"												
 												id="lineaAcciontblC26" >
 												<f:selectItem itemValue="#{null}"
@@ -6012,7 +6045,7 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-6">
-											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" 
+											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" style="width:414px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoLineaAccion}" tabindex="1"												
 												id="lineaAcciontblC271" >
 												<f:selectItem itemValue="#{null}"
@@ -7352,11 +7385,11 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelResumenEjecutivoC">
-								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==2?true:false}">
+								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==2?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 									<p:inputTextarea counter="resumenC"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.resumenEjecutivo.exsuSummaryContent}"
-										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										
 										 counterTemplate="{0} caracteres restantes." maxlength="500"
 										cols="120" rows="9">
 										<p:ajax process="@this :form:salvaguardas:panelResumenEjecutivoC"
@@ -7381,10 +7414,10 @@
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(3)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas"	
+										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas :form:panelDatosProyecto"	
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(3)}"	oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"								
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
-										update=":form:panelDatos :form:growl :form:salvaguardas"
+										update=":form:panelDatos :form:growl :form:salvaguardas :form:panelDatosProyecto"
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
@@ -8114,11 +8147,11 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelResumenEjecutivoD">
-								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==3?true:false}">
+								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==3?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 									<p:inputTextarea counter="resumenD"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.resumenEjecutivo.exsuSummaryContent}"
-										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										
 										 counterTemplate="{0} caracteres restantes." maxlength="500"
 										cols="120" rows="9">
 										<p:ajax process="@this :form:salvaguardas:panelResumenEjecutivoD"
@@ -8143,10 +8176,10 @@
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(4)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas"	
+										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas :form:panelDatosProyecto"	
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(4)}"	oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"							
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
-										update=":form:panelDatos :form:growl :form:salvaguardas" 
+										update=":form:panelDatos :form:growl :form:salvaguardas :form:panelDatosProyecto" 
 										/>
 								<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
@@ -11384,10 +11417,10 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelResumenEjecutivoE">
-								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==4?true:false}">
+								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==4?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 									<p:inputTextarea counter="resumenE"
-										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.resumenEjecutivo.exsuSummaryContent}"
 										 counterTemplate="{0} caracteres restantes." maxlength="500"
 										cols="120" rows="9">
@@ -11413,10 +11446,10 @@
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(5)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas"	
+										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:salvaguardas :form:panelDatosProyecto"	
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(5)}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"								
-										update=":form:panelDatos :form:growl :form:salvaguardas" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
+										update=":form:panelDatos :form:growl :form:salvaguardas :form:panelDatosProyecto" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
@@ -12105,7 +12138,7 @@
 										<p:outputLabel value="#{etiquetas['sistemasRed+']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1"
+											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1" style="width:414px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoSistemas}"
 												id="sistemaF431">
 												<f:selectItem itemValue="#{null}"
@@ -12833,11 +12866,11 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelResumenEjecutivoF">
-								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==5?true:false}">
+								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 ?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 									<p:inputTextarea counter="resumenF"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.resumenEjecutivo.exsuSummaryContent}"
-										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										
 										 counterTemplate="{0} caracteres restantes." maxlength="500"
 										cols="120" rows="9">
 										<p:ajax process="@this :form:salvaguardas:panelResumenEjecutivoF"
@@ -14777,11 +14810,11 @@
 							</div>
 							<br/>
 							<p:outputPanel id="panelResumenEjecutivoG">
-								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==6?true:false}">
+								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==6?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 									<p:inputTextarea counter="resumenG"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.resumenEjecutivo.exsuSummaryContent}"
-										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										
 										 counterTemplate="{0} caracteres restantes." maxlength="500"
 										cols="120" rows="9">
 										<p:ajax process="@this :form:salvaguardas:panelResumenEjecutivoG"
@@ -14806,8 +14839,8 @@
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(7)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos"										
-										update=":form:panelDatos :form:growl" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
+										icon="#{botones['icono.siguiente']}" process="@this :form:panelDatos :form:panelDatosProyecto"										
+										update=":form:panelDatos :form:growl :form:panelDatosProyecto" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"

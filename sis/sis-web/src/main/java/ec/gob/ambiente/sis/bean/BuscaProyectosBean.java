@@ -60,5 +60,14 @@ public class BuscaProyectosBean implements Serializable{
 	@Getter
 	@Setter
 	private AdvanceExecutionSafeguards advanceExecution;
+	
+	@Getter
+	@Setter
+	private Integer anioReporte;
+	
+	@Getter
+	@Setter
+	private String periodoDesde;
+	
 }
 

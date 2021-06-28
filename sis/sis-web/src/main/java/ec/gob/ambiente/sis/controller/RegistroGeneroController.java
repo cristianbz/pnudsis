@@ -7,6 +7,8 @@ package ec.gob.ambiente.sis.controller;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -252,6 +253,8 @@ public class RegistroGeneroController implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	public void preparaInformacionDetalleAvanceGenero(){
 		for (DetailAdvanceGender detalle : getRegistroGeneroBean().getListaDatosAvanceGenero()) {
@@ -347,12 +350,18 @@ public class RegistroGeneroController implements Serializable{
 		}
 	}
 	public void mostrarDialogoGrabarAvanceGenero(){
-		if(validaOpcionSiTablas()){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSi"),"");
-		}else if(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado()!=null){
-			Mensaje.verDialogo("dlgGrabaAvanceGenero");
+		if(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado()!=null ){
+			
+			if(validaOpcionSiTablas()){
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSi"),"");
+			}else if(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado()!=null){
+				Mensaje.verDialogo("dlgGrabaAvanceGenero");
+			}else{
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.lineaAccion"), "");
+			}
 		}else{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.lineaAccion"), "");
+			Mensaje.actualizarComponente(":form:growl");
 		}
 	}
 
@@ -380,6 +389,20 @@ public class RegistroGeneroController implements Serializable{
 				getRegistroGeneroBean().getAdvanceExecutionSafeguards().setUsers(usuario);				
 				getRegistroGeneroBean().getAdvanceExecutionSafeguards().setProjects(getComponenteBuscarProyectos().getBuscaProyectosBean().getProyectoSeleccionado());		
 				getRegistroGeneroBean().getAdvanceExecutionSafeguards().setValueAnswersList(getRegistroGeneroBean().getListaValoresRespuestas());
+				getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()));
+				getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat("12"));
+			}else{
+				String desde="";
+				String hasta="";
+				desde = String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());
+				hasta = String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat("12");
+				if(!getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexTermFrom().equals(desde)){
+					getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexTermFrom(desde);
+					getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexTermTo(hasta);
+					getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(usuario.getUserName());
+					getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
+					
+				}
 			}
 			if(getRegistroGeneroBean().getResumenEjecutivo().getExsuId()==null){
 				getRegistroGeneroBean().getResumenEjecutivo().setExsuCreationDate(new Date());
@@ -929,6 +952,12 @@ public class RegistroGeneroController implements Serializable{
 			geo.setGeloCodificationInec(objects[2].toString());
 			getRegistroGeneroBean().getListaCantones().add(geo);
 		}
+		Collections.sort(getRegistroGeneroBean().getListaCantones(), new Comparator<GeographicalLocations>(){
+            @Override
+            public int compare(GeographicalLocations o1, GeographicalLocations o2) {
+                return o1.getGeloName().compareToIgnoreCase(o2.getGeloName());
+            }
+        });
 	}
 
 	public void filtraParroquias(){
@@ -941,6 +970,12 @@ public class RegistroGeneroController implements Serializable{
 			geo.setGeloCodificationInec(objects[2].toString());
 			getRegistroGeneroBean().getListaParroquias().add(geo);
 		}
+		Collections.sort(getRegistroGeneroBean().getListaParroquias(), new Comparator<GeographicalLocations>(){
+            @Override
+            public int compare(GeographicalLocations o1, GeographicalLocations o2) {
+                return o1.getGeloName().compareToIgnoreCase(o2.getGeloName());
+            }
+        });
 	}
 	/**
 	 * 
@@ -1063,6 +1098,16 @@ public class RegistroGeneroController implements Serializable{
 			if(getRegistroGeneroBean().getCodigoLineaGenero()<1000){
 				listaAux=getProjectsGenderInfoFacade().listaPorProyectoLineaGenero(getComponenteBuscarProyectos().proyectoSeleccionado().getProjId(), getRegistroGeneroBean().getCodigoLineaGenero());
 				for (ProjectsGenderInfo infoGenero : listaAux) {
+					infoGenero.setGenderAdvancesList(new ArrayList<>());
+					GenderAdvances generoAvances= getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(infoGenero.getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId());
+					
+					if(generoAvances == null){						
+						infoGenero.getGenderAdvancesList().add(new GenderAdvances());
+					
+					}else{
+						infoGenero.getGenderAdvancesList().add(generoAvances);
+					
+					}
 					if (infoGenero.getPginResultsType() != null){
 						if(infoGenero.getPginOtherLine()==null)
 							infoGenero.setPginDescripcionLineaAccion(infoGenero.getCataId().getCataText2());
@@ -1150,13 +1195,18 @@ public class RegistroGeneroController implements Serializable{
 	 * Muestra el dialogo para finalizar reporte de genero
 	 */
 	public void mostrarDialogoFinalizarReporte(){
-		if(validaOpcionSiTablas()){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSi"),"");
-		}else if(getRegistroGeneroBean().getResumenEjecutivo().getExsuSummaryContent().trim().length() < 10){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.ingresoResumenEjecutivo"),"");
+		if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null && getRegistroGeneroBean().getAvanceGeneroSeleccionado().getGeadId()!=null){
+			if(validaOpcionSiTablas()){
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSi"),"");
+			}else if(getRegistroGeneroBean().getResumenEjecutivo().getExsuSummaryContent().trim().length() < 10){
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.ingresoResumenEjecutivo"),"");
+			}else{
+				grabarResumenEjecutivo(getRegistroGeneroBean().getAdvanceExecutionSafeguards());
+				Mensaje.verDialogo("dlgFinalizarReporteGenero");
+			}
 		}else{
-			grabarResumenEjecutivo(getRegistroGeneroBean().getAdvanceExecutionSafeguards());
-			Mensaje.verDialogo("dlgFinalizarReporteGenero");
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.avanceGenero"), "");
+			Mensaje.actualizarComponente(":form:growl");
 		}
 	}
 	/**
@@ -1166,6 +1216,8 @@ public class RegistroGeneroController implements Serializable{
 		getRegistroGeneroBean().getAdvanceExecutionSafeguards().setAdexIsReported(true);
 		getAvanceEjecucionGeneroFacade().edit(getRegistroGeneroBean().getAdvanceExecutionSafeguards());
 		getRegistroGeneroBean().setDatosGeneroParaMostrar(false);
+		getComponenteBuscarProyectos().volverABuscarProyectos();
+		vaciaDatosGenero();
 	}
 	
 	public boolean validaOpcionSiTablas(){
@@ -1178,6 +1230,42 @@ public class RegistroGeneroController implements Serializable{
 			nocumple = true;
 		}
 		return nocumple;
+	}
+	
+	public void mostrarDialogoDetallesAvanceGenero(ProjectsGenderInfo projectGenderInfo){
+		try{			
+			getRegistroGeneroBean().setInformacionProyectoGeneroSeleccionado(projectGenderInfo);
+			if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null && getRegistroGeneroBean().getAdvanceExecutionSafeguards()!=null){
+				getRegistroGeneroBean().setAvanceGeneroSeleccionado(getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(projectGenderInfo.getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+				if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null){
+					for (DetailAdvanceGender detalle : getRegistroGeneroBean().getAvanceGeneroSeleccionado().getDetailAdvanceGenderList()) {
+						if (detalle.isDtagStatus())					
+							getRegistroGeneroBean().getListaDatosAvanceGenero().add(detalle);					
+					}
+					preparaInformacionDetalleAvanceGenero();				
+				}else{
+					getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
+				}
+				cargaValoresPreguntasRespuestas();
+				getRegistroGeneroBean().setPreguntasGenero(true);
+				preparaRespuestasGenero();
+				getRegistroGeneroBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+				if(getRegistroGeneroBean().getResumenEjecutivo()==null){
+					getRegistroGeneroBean().setResumenEjecutivo(new ExecutiveSummaries());
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuStatus(true);
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+				}
+			}else{
+				getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
+				getRegistroGeneroBean().setPreguntasGenero(false);
+				cargaValoresPreguntasRespuestas();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		Mensaje.verDialogo("dlgInfoDetailGenero");
 	}
 }
 	

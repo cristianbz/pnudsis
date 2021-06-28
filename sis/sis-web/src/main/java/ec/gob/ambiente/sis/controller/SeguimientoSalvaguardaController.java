@@ -3,6 +3,8 @@ package ec.gob.ambiente.sis.controller;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -255,7 +257,9 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		try{
 			getSeguimientoSalvaguardaBean().setProyectoSeleccionado(new Projects());
 			AdvanceExecutionSafeguards avanceEjecucion=new AdvanceExecutionSafeguards();
-			avanceEjecucion = getAdvanceExecutionSafeguardsFacade().buscarPorProyecto(proyecto.getProjId());			
+			avanceEjecucion = getAdvanceExecutionSafeguardsFacade().buscarPorProyecto(proyecto.getProjId());
+			getSeguimientoSalvaguardaBean().setAnioReporte(null);
+			getSeguimientoSalvaguardaBean().setPeriodoDesde(null);
 			if((avanceEjecucion!=null && !avanceEjecucion.isAdexIsReported()) || avanceEjecucion==null){
 				getSeguimientoSalvaguardaBean().setProyectoSeleccionado(proyecto);
 				getSeguimientoSalvaguardaBean().setCodigoProyecto(proyecto.getProjId());
@@ -378,13 +382,21 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				AdvanceExecutionSafeguards avanceEjecucion=new AdvanceExecutionSafeguards();
 				avanceEjecucion.setAdexIsReported(false);
 				avanceEjecucion.setAdexRegisterDate(new Date());
+				avanceEjecucion.setAdexCreationDate(new Date());
+				if(getSeguimientoSalvaguardaBean().getAnioReporte()!=null && getSeguimientoSalvaguardaBean().getPeriodoDesde()!=null){
+					avanceEjecucion.setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat(getSeguimientoSalvaguardaBean().getPeriodoDesde()));
+					avanceEjecucion.setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12"));
+				}
 				getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(avanceEjecucion);
 				getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
 				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
 				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
 				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
 				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+				
 			}else{
+				getSeguimientoSalvaguardaBean().setAnioReporte(Integer.valueOf(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexTermFrom().substring(0,4)));
+				getSeguimientoSalvaguardaBean().setPeriodoDesde("01");
 				sectoresInteresProyecto();
 				getSeguimientoSalvaguardaBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
 				if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()==null){
@@ -469,7 +481,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						}						
 					}
 					preparaInformacionSalvaguardaA();
-					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null && getSeguimientoSalvaguardaBean().getTabActual()==0)
+					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()==null  && getSeguimientoSalvaguardaBean().getTabActual()==0)
 						listaTempValoresRespuesta = Stream.concat(listaTempValoresRespuesta.stream(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasA().stream()).collect(Collectors.toList());
 					//salvaguarda B
 				}else if(salvaguarda.getSafeOrder()==2 && salvaguarda.getSafeLevel()==1){
@@ -525,7 +537,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						}						
 					}
 					preparaInformacionSalvaguardaC();
-					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null && getSeguimientoSalvaguardaBean().getTabActual()==0)
+					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards() != null && getSeguimientoSalvaguardaBean().getTabActual()==0)
 						listaTempValoresRespuesta = Stream.concat(listaTempValoresRespuesta.stream(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasC().stream()).collect(Collectors.toList());
 					//SALVAGUARDA D
 				}else if(salvaguarda.getSafeOrder()==4 && salvaguarda.getSafeLevel()==1){
@@ -550,7 +562,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						}						
 					}
 					preparaInformacionSalvaguardaD();
-					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null && getSeguimientoSalvaguardaBean().getTabActual()==0)
+					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards() != null && getSeguimientoSalvaguardaBean().getTabActual()==0)
 						listaTempValoresRespuesta = Stream.concat(listaTempValoresRespuesta.stream(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasD().stream()).collect(Collectors.toList());
 					//SALVAGUARDA E
 				}else if(salvaguarda.getSafeOrder()==5 && salvaguarda.getSafeLevel()==1){
@@ -576,7 +588,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						}						
 					}
 					preparaInformacionSalvaguardaE();
-					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null && getSeguimientoSalvaguardaBean().getTabActual()==0)
+					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!= null && getSeguimientoSalvaguardaBean().getTabActual()==0)
 						listaTempValoresRespuesta = Stream.concat(listaTempValoresRespuesta.stream(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasE().stream()).collect(Collectors.toList());
 					//SALVAGUARDA F
 				}else if(salvaguarda.getSafeOrder()==6 && salvaguarda.getSafeLevel()==1){
@@ -602,7 +614,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						}						
 					}
 					preparaInformacionSalvaguardaF();
-					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null && getSeguimientoSalvaguardaBean().getTabActual()==0)
+					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!= null && getSeguimientoSalvaguardaBean().getTabActual()==0)
 						listaTempValoresRespuesta = Stream.concat(listaTempValoresRespuesta.stream(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasF().stream()).collect(Collectors.toList());
 					//SALVAGUARDA G
 				}else if(salvaguarda.getSafeOrder()==7 && salvaguarda.getSafeLevel()==1){
@@ -632,12 +644,12 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						}						
 					}
 					preparaInformacionSalvaguardaG();
-					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null && getSeguimientoSalvaguardaBean().getTabActual()==0)
+					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!= null && getSeguimientoSalvaguardaBean().getTabActual()==0)
 						listaTempValoresRespuesta = Stream.concat(listaTempValoresRespuesta.stream(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasG().stream()).collect(Collectors.toList());
 				}
 				
 			}
-			if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()==null && getSeguimientoSalvaguardaBean().getTabActual()==0){
+			if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards() != null && getSeguimientoSalvaguardaBean().getTabActual()==0){				
 				getSeguimientoSalvaguardaBean().setListaValoresRespuestas(listaTempValoresRespuesta);
 				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setValueAnswersList(getSeguimientoSalvaguardaBean().getListaValoresRespuestas());
 			}
@@ -807,7 +819,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				if(validaDatosAvanceEjecucion() && validaCamposTablasSalvaguardas(codigoSalvaguarda))				
 						Mensaje.verDialogo("dlgGrabaReporteA");			
 				else
-					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.camposTabla"), "");
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.tablasSalvaguardaA"), "");
 			}else if(codigoSalvaguarda==2){	
 				if(validaDatosAvanceEjecucion() ){
 					if(validaDatosOpcionSiSalvaguardaB()){
@@ -890,13 +902,13 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareId()==null){
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(4));	
-				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPlanGobierno(Integer.parseInt(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnOne())));
+				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPlanGobierno(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnNumberOne()));
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareColumnDecimalOne(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnDecimalOne());
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareStatus(true);
 				getTableResponsesFacade().create(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
 				getSeguimientoSalvaguardaBean().getTablaSalvaguardaA().add(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
 			}else{
-				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPlanGobierno(Integer.parseInt(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnOne())));
+				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPlanGobierno(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnNumberOne()));
 				getTableResponsesFacade().edit(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
 			}
 			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasA(new TableResponses());
@@ -929,6 +941,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				});
 				List<TableResponses> datosTablaConcatenados= Stream.concat(respuestasTabla.stream(), getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getTableResponsesList().stream()).collect(Collectors.toList());
 				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(datosTablaConcatenados);
+				
+				controlaCambiosFechaPeriodoReportar();
 				getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(),ubicaSalvaguarda(TipoSalvaguardaEnum.SALVAGUARDAA.getCodigo()));
 				recargaPreguntasRespuestasSalvaguardas();
 				preparaInformacionSalvaguardaA();
@@ -941,6 +955,26 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaA " + ": ").append(e.getMessage()));			
 		}
 	}
+	
+	public void controlaCambiosFechaPeriodoReportar(){
+		String desde="";
+		String hasta="";
+		desde = String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat(getSeguimientoSalvaguardaBean().getPeriodoDesde());
+		hasta = String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12");
+		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexTermFrom()!=null){
+			if(!getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexTermFrom().equals(desde)){
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermFrom(desde);
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermTo(hasta);
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(usuario.getUserName());
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
+				
+			}
+		}else{
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermFrom(desde);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermTo(hasta);
+		}
+	}
+	
 	/**
 	 * Configura los datos de avanceEjecucion y avanceSectores para grabar/actualizar
 	 */
@@ -954,8 +988,10 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setProjects(proyecto);
 		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setUsers(usuario);
 		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexCreatorUser(usuario.getUserName());
-		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexCreationDate(new Date());
-		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexRegisterDate(new Date());
+		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()== null){
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexCreationDate(new Date());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexRegisterDate(new Date());
+		}
 		getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexStatus(true);
 
 		Iterator itera=getSeguimientoSalvaguardaBean().getListaSectoresSeleccionados().iterator();
@@ -977,7 +1013,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		Iterator itera =getSeguimientoSalvaguardaBean().getCatalogoLeyesSeleccionado().iterator();
 		while(itera.hasNext()){
 			TableResponses respuesta=new TableResponses();
-			respuesta.setTareColumnOne(itera.next().toString());
+			respuesta.setTareColumnNumberOne(Integer.valueOf(itera.next().toString()));
 			respuesta.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			respuesta.setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(1));
 			respuesta.setTareStatus(true);
@@ -986,7 +1022,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		Iterator iteraMJN =getSeguimientoSalvaguardaBean().getCatalogoMarcoJuridicoNacionalSeleccionado().iterator();
 		while(iteraMJN.hasNext()){
 			TableResponses respuesta=new TableResponses();
-			respuesta.setTareColumnOne(iteraMJN.next().toString());
+			respuesta.setTareColumnNumberOne(Integer.valueOf(iteraMJN.next().toString()));
 			respuesta.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			respuesta.setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(1));
 			respuesta.setTareStatus(true);
@@ -995,7 +1031,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		Iterator iteraNSN =getSeguimientoSalvaguardaBean().getCatalogoNormativaSecundariaNacionalSeleccionado().iterator();
 		while(iteraNSN.hasNext()){
 			TableResponses respuesta=new TableResponses();
-			respuesta.setTareColumnOne(iteraNSN.next().toString());
+			respuesta.setTareColumnNumberOne(Integer.valueOf(iteraNSN.next().toString()));
 			respuesta.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			respuesta.setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(1));
 			respuesta.setTareStatus(true);
@@ -1008,7 +1044,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		Iterator itera = getSeguimientoSalvaguardaBean().getCatalogoPoliticasSeleccionado().iterator();
 		while(itera.hasNext()){
 			TableResponses respuesta=new TableResponses();
-			respuesta.setTareColumnOne(String.valueOf(itera.next().toString()));
+			respuesta.setTareColumnNumberOne(Integer.valueOf(itera.next().toString()));
 			respuesta.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			respuesta.setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(3));
 			respuesta.setTareStatus(true);
@@ -1059,34 +1095,38 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		cargaCatalogoPlanGobierno();
 		
 		List<TableResponses> listaSalvaguardaA=new ArrayList<>();		
-		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
+		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
 			listaSalvaguardaA = getTableResponsesFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 1);
 		}
 		listaLeyes=listaSalvaguardaA.stream().filter((sc)->sc.getQuestions().getQuesId().equals(2)).collect(Collectors.toList());
 		listaPoliticas=listaSalvaguardaA.stream().filter((sc)->sc.getQuestions().getQuesId().equals(4)).collect(Collectors.toList());
 		listaLeyes.stream().forEach(res->{						
-			if(OperacionesCatalogo.ubicaCodigoEnCatalogo(getSeguimientoSalvaguardaBean().getCatalogoLeyes(), Integer.valueOf(res.getTareColumnOne())))
-				getSeguimientoSalvaguardaBean().getCatalogoLeyesSeleccionado().add(Integer.valueOf(res.getTareColumnOne()));
-			else if(OperacionesCatalogo.ubicaCodigoEnCatalogo(getSeguimientoSalvaguardaBean().getCatalogoMarcoJuridicoNacional(), Integer.valueOf(res.getTareColumnOne())))
-				getSeguimientoSalvaguardaBean().getCatalogoMarcoJuridicoNacionalSeleccionado().add(Integer.valueOf(res.getTareColumnOne()));
-			else if(OperacionesCatalogo.ubicaCodigoEnCatalogo(getSeguimientoSalvaguardaBean().getCatalogoNormativaSecundariaNacional(), Integer.valueOf(res.getTareColumnOne())))
-				getSeguimientoSalvaguardaBean().getCatalogoNormativaSecundariaNacionalSeleccionado().add(Integer.valueOf(res.getTareColumnOne()));
+			if(OperacionesCatalogo.ubicaCodigoEnCatalogo(getSeguimientoSalvaguardaBean().getCatalogoLeyes(), res.getTareColumnNumberOne()))
+				getSeguimientoSalvaguardaBean().getCatalogoLeyesSeleccionado().add(res.getTareColumnNumberOne());
+			else if(OperacionesCatalogo.ubicaCodigoEnCatalogo(getSeguimientoSalvaguardaBean().getCatalogoMarcoJuridicoNacional(), res.getTareColumnNumberOne()))
+				getSeguimientoSalvaguardaBean().getCatalogoMarcoJuridicoNacionalSeleccionado().add(res.getTareColumnNumberOne());
+			else if(OperacionesCatalogo.ubicaCodigoEnCatalogo(getSeguimientoSalvaguardaBean().getCatalogoNormativaSecundariaNacional(), res.getTareColumnNumberOne()))
+				getSeguimientoSalvaguardaBean().getCatalogoNormativaSecundariaNacionalSeleccionado().add(res.getTareColumnNumberOne());
 			
 		});
 		
 		listaPoliticas.stream().forEach(res->{			
-			getSeguimientoSalvaguardaBean().getCatalogoPoliticasSeleccionado().add(Integer.valueOf(res.getTareColumnOne()));			
+			getSeguimientoSalvaguardaBean().getCatalogoPoliticasSeleccionado().add(res.getTareColumnNumberOne());			
 		});
 		List<TableResponses> tablaAux=new ArrayList<>();
-		tablaAux=getSeguimientoSalvaguardaBean().getListaPreguntasA().get(4).getTableResponsesList().stream().filter((r)->r.getAdvanceExecutionSaveguards().getAdexId()==seguimientoSalvaguardaBean.getAdvanceExecutionSafeguards().getAdexId()).collect(Collectors.toList());
+		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
+			tablaAux=getSeguimientoSalvaguardaBean().getListaPreguntasA().get(4).getTableResponsesList().stream().filter((r)->r.getAdvanceExecutionSaveguards().getAdexId()==seguimientoSalvaguardaBean.getAdvanceExecutionSafeguards().getAdexId()).collect(Collectors.toList());
+		}
 		tablaAux.stream().forEach(res->{
 			getSeguimientoSalvaguardaBean().getTablaSalvaguardaA().add(res);
 		});	
 				
 		getSeguimientoSalvaguardaBean().getTablaSalvaguardaA().forEach(res->{
-			res.setTareCatPlanGobierno(buscaCatalogoPlanGobierno(Integer.parseInt(res.getTareColumnOne())));			
+			res.setTareCatPlanGobierno(buscaCatalogoPlanGobierno(res.getTareColumnNumberOne()));			
 		});
-		getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPA(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(5).getTableResponsesList().stream().filter((r)->r.getAdvanceExecutionSaveguards().getAdexId()==seguimientoSalvaguardaBean.getAdvanceExecutionSafeguards().getAdexId()).collect(Collectors.toList()));
+		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
+			getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPA(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(5).getTableResponsesList().stream().filter((r)->r.getAdvanceExecutionSaveguards().getAdexId()==seguimientoSalvaguardaBean.getAdvanceExecutionSafeguards().getAdexId()).collect(Collectors.toList()));
+		}
 		getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPA(getSeguimientoSalvaguardaBean().getTablaSalvaguardaOPA().stream().filter((sb)->sb.isTareStatus()).collect(Collectors.toList()));
 		}catch(Exception e){
 			e.printStackTrace();
@@ -4263,7 +4303,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			for (TableResponses datos : respuestasTabla) {
 				datos.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			}
-			
+			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(),TipoSalvaguardaEnum.SALVAGUARDAB.getCodigo());
 			recargaPreguntasRespuestasSalvaguardas();
@@ -4301,6 +4341,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			for (TableResponses datos : respuestasTabla) {
 				datos.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			}
+			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(),TipoSalvaguardaEnum.SALVAGUARDAC.getCodigo());
 			recargaPreguntasRespuestasSalvaguardas();
@@ -4325,7 +4366,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		cargaCatalogoAccionImplementada();
 
 		List<TableResponses> listaSalvaguardaB=new ArrayList<>();
-		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
+		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
 			listaSalvaguardaB = getTableResponsesFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 2);
 		
 		getSeguimientoSalvaguardaBean().setListaPreguntasB(getSeguimientoSalvaguardaBean().getListaPreguntasB().stream().sorted((q1,q2)->q1.getQuesQuestionOrder().compareTo(q2.getQuesQuestionOrder())).collect(Collectors.toList()));
@@ -4407,7 +4448,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		try{
 			cargaCatalogoTipoDeAcceso();
 		List<TableResponses> listaSalvaguardaC=new ArrayList<>();
-		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
+		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
 			listaSalvaguardaC = getTableResponsesFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 9);
 		getSeguimientoSalvaguardaBean().setTablaSalvaguardaC201(listaSalvaguardaC.stream().filter((sc)->sc.getQuestions().getQuesId().equals(43)).collect(Collectors.toList()));
 		getSeguimientoSalvaguardaBean().getTablaSalvaguardaC201().forEach(res->{
@@ -4440,12 +4481,12 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			res.setTareGenericoTres(ubicaResultadoAcuerdo(res.getTareColumnNumberSix()));
 		});
 		
-		getSeguimientoSalvaguardaBean().setTablaSalvaguardaC293(listaSalvaguardaC.stream().filter((sc)->sc.getQuestions().getQuesId().equals(59)).collect(Collectors.toList()));
-		getSeguimientoSalvaguardaBean().getTablaSalvaguardaC293().forEach(res->{
-			
-			res.setTareCanton(buscarCanton(Integer.parseInt(res.getTareColumnOne())));
-			
-		});
+//		getSeguimientoSalvaguardaBean().setTablaSalvaguardaC293(listaSalvaguardaC.stream().filter((sc)->sc.getQuestions().getQuesId().equals(59)).collect(Collectors.toList()));
+//		getSeguimientoSalvaguardaBean().getTablaSalvaguardaC293().forEach(res->{
+//			
+//			res.setTareCanton(buscarCanton(Integer.parseInt(res.getTareColumnOne())));
+//			
+//		});
 		
 		getSeguimientoSalvaguardaBean().setTablaSalvaguardaC311(listaSalvaguardaC.stream().filter((sc)->sc.getQuestions().getQuesId().equals(63)).collect(Collectors.toList()));
 		getSeguimientoSalvaguardaBean().getTablaSalvaguardaC311().forEach(res->{
@@ -4507,6 +4548,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			for (TableResponses datos : respuestasTabla) {
 				datos.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			}
+			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(),TipoSalvaguardaEnum.SALVAGUARDAD.getCodigo());
 			recargaPreguntasRespuestasSalvaguardas();
@@ -4541,6 +4583,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			for (TableResponses datos : respuestasTabla) {
 				datos.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			}
+			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(),TipoSalvaguardaEnum.SALVAGUARDAE.getCodigo());
 			recargaPreguntasRespuestasSalvaguardas();
@@ -4573,6 +4616,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			for (TableResponses datos : respuestasTabla) {
 				datos.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			}
+			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(),TipoSalvaguardaEnum.SALVAGUARDAF.getCodigo());
 			recargaPreguntasRespuestasSalvaguardas();
@@ -4602,6 +4646,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			for (TableResponses datos : respuestasTabla) {
 				datos.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			}
+			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(),TipoSalvaguardaEnum.SALVAGUARDAG.getCodigo());
 			recargaPreguntasRespuestasSalvaguardas();
@@ -4623,7 +4668,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void preparaInformacionSalvaguardaD(){
 		try{
 			List<TableResponses> listaSalvaguardaD=new ArrayList<>();
-			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
+			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
 				listaSalvaguardaD = getTableResponsesFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 16);
 
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaD321(listaSalvaguardaD.stream().filter((sc)->sc.getQuestions().getQuesId().equals(65)).collect(Collectors.toList()));
@@ -4661,7 +4706,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			cargaCatalogoHerramientas();
 			cargarCatalogoServicio();
 			List<TableResponses> listaSalvaguardaE=new ArrayList<>();
-			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
+			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
 				listaSalvaguardaE = getTableResponsesFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 20);
 			
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaE341(listaSalvaguardaE.stream().filter((sc)->sc.getQuestions().getQuesId().equals(69)).collect(Collectors.toList()));
@@ -4879,7 +4924,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void preparaInformacionSalvaguardaF(){
 		try{
 			List<TableResponses> listaSalvaguardaF=new ArrayList<>();
-			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
+			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
 				listaSalvaguardaF = getTableResponsesFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 24);
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaF411(listaSalvaguardaF.stream().filter((sc)->sc.getQuestions().getQuesId().equals(113)).collect(Collectors.toList()));
 			getSeguimientoSalvaguardaBean().getTablaSalvaguardaF411().forEach(res->{
@@ -4935,7 +4980,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			cargaCatalogoMonitoreoinSitu();
 			cargaCatalogoPeriodicidad();
 			List<TableResponses> listaSalvaguardaG=new ArrayList<>();
-			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null) 
+			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null) 
 				listaSalvaguardaG = getTableResponsesFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 29);
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaG461(listaSalvaguardaG.stream().filter((sc)->sc.getQuestions().getQuesId().equals(124)).collect(Collectors.toList()));
 			getSeguimientoSalvaguardaBean().getTablaSalvaguardaG461().forEach(res->{			
@@ -5599,8 +5644,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	
 	public void siguienteTab(int salvaguarda){
 		setCodigoSalvaguardaActual(salvaguarda);
-		if(!(numeroSalvaguardas-getSeguimientoSalvaguardaBean().getTabActual()==1)){
-			
+		if(!(numeroSalvaguardas-getSeguimientoSalvaguardaBean().getTabActual()==1)){			
 			if(salvaguarda==1 ){
 				if(validaDatosAvanceEjecucion() && validaCamposTablasSalvaguardas(1)){
 					grabarSalvaguardaA();				
@@ -5637,6 +5681,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				if(validaDatosAvanceEjecucion()){
 					if(validaDatosOpcionSiSalvaguardaE()){
 						grabarSalvaguardaE();				
+
 						getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
 					}else
 						Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.seleccionSi"), "");
@@ -5654,6 +5699,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					if(validaDatosOpcionSiSalvaguardaG()){
 						grabarSalvaguardaG();				
 						getSeguimientoSalvaguardaBean().setTabActual(getSeguimientoSalvaguardaBean().getTabActual()+1);
+
 					}else
 						Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.seleccionSi"), "");
 				}
@@ -5716,6 +5762,12 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			geo.setGeloCodificationInec(objects[2].toString());
 			getSeguimientoSalvaguardaBean().getListaCantones().add(geo);
 		}
+		Collections.sort(getSeguimientoSalvaguardaBean().getListaCantones(), new Comparator<GeographicalLocations>(){
+            @Override
+            public int compare(GeographicalLocations o1, GeographicalLocations o2) {
+                return o1.getGeloName().compareToIgnoreCase(o2.getGeloName());
+            }
+        });
 	}
 	
 	public void filtraParroquias(){
@@ -5728,6 +5780,12 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			geo.setGeloCodificationInec(objects[2].toString());
 			getSeguimientoSalvaguardaBean().getListaParroquias().add(geo);
 		}
+		Collections.sort(getSeguimientoSalvaguardaBean().getListaParroquias(), new Comparator<GeographicalLocations>(){
+            @Override
+            public int compare(GeographicalLocations o1, GeographicalLocations o2) {
+                return o1.getGeloName().compareToIgnoreCase(o2.getGeloName());
+            }
+        });
 	}
 	public String buscaProvinciaCantonParroquia(int codigo,int tipo){
 		GeographicalLocations catalogo;
@@ -7999,7 +8057,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 							}
 						}
 						if(encontrado==false){
-							TableResponses tablaRespuesta= getTableResponsesFacade().buscaLeyPolitica(String.valueOf(antiguo), getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 2);
+							TableResponses tablaRespuesta= getTableResponsesFacade().buscaLeyPolitica(antiguo, getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 2);
 							tablaRespuesta.setTareStatus(false);
 							getTableResponsesFacade().agregarEditarNuevaTableResponse(tablaRespuesta);
 						}
@@ -8028,7 +8086,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 							question.setQuesId(2);
 							nuevoRegistroTableResponse.setTareStatus(true);
 							nuevoRegistroTableResponse.setQuestions(question);
-							nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(valorNuevo));
+							nuevoRegistroTableResponse.setTareColumnNumberOne(valorNuevo);
 							nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 							getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
 						}
@@ -8040,7 +8098,15 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					question.setQuesId(2);
 					nuevoRegistroTableResponse.setTareStatus(true);
 					nuevoRegistroTableResponse.setQuestions(question);
-					nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(listaNuevos.get(0)));
+//					System.out.println( (Object)listaNuevos.get(0).getClass().getSimpleName());
+					
+					String numero= String.valueOf( listaNuevos.get(0));
+//					System.out.println( (Object)numero.getClass().getSimpleName());
+//					System.out.println(numero);
+					int n= Integer.parseInt(numero);
+//					System.out.println(n);
+//					nuevoRegistroTableResponse.setTareColumnNumberOne(listaNuevos.get(0).intValue());
+					nuevoRegistroTableResponse.setTareColumnNumberOne(n);
 					nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 					getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
 				}
@@ -8075,7 +8141,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 							}
 						}
 						if(encontrado==false){
-							TableResponses tablaRespuesta= getTableResponsesFacade().buscaLeyPolitica(String.valueOf(antiguo), getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 4);
+							TableResponses tablaRespuesta= getTableResponsesFacade().buscaLeyPolitica(antiguo, getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 4);
 							tablaRespuesta.setTareStatus(false);
 							getTableResponsesFacade().agregarEditarNuevaTableResponse(tablaRespuesta);
 						}
@@ -8104,7 +8170,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 							question.setQuesId(2);
 							nuevoRegistroTableResponse.setTareStatus(true);
 							nuevoRegistroTableResponse.setQuestions(question);
-							nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(valorNuevo));
+							nuevoRegistroTableResponse.setTareColumnNumberOne(valorNuevo);
 							nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 							getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
 						}
@@ -8116,7 +8182,9 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					question.setQuesId(4);
 					nuevoRegistroTableResponse.setTareStatus(true);
 					nuevoRegistroTableResponse.setQuestions(question);
-					nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(listaNuevos.get(0)));
+					String numero= String.valueOf( listaNuevos.get(0));
+					int n = Integer.valueOf(numero);
+					nuevoRegistroTableResponse.setTareColumnNumberOne(n);
 					nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 					getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
 				}
@@ -8150,91 +8218,99 @@ public void cargaListadoInformaEjecucion(){
 	}
 }	
 
-public void controlaSectores(ValueChangeEvent event){
-	try{
-		List<Integer> antiguos=new ArrayList<>();
-
-		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
-			List<Integer> listaAntiguos= (List<Integer>)event.getOldValue();
-			List<Integer> listaNuevos= (List<Integer>)event.getNewValue();
-			int nuevo=0;
-			int antiguo=0;
-			boolean encontrado=false;
-			if(listaAntiguos!=null && listaAntiguos.size()>0){
-				Iterator valoresAntiguos= listaAntiguos.iterator();
-				while(valoresAntiguos.hasNext()){
-					encontrado=false;
-					antiguo = Integer.valueOf(valoresAntiguos.next().toString());
-					Iterator valoresNuevos=listaNuevos.iterator();
-					while(valoresNuevos.hasNext()){
-						nuevo=Integer.valueOf(valoresNuevos.next().toString());
-						if(antiguo== nuevo){
-							encontrado = true;
-							antiguos.add(antiguo);
-						}
-					}
-					if(encontrado==false){
-						TableResponses tablaRespuesta= getTableResponsesFacade().buscaLeyPolitica(String.valueOf(antiguo), getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 4);
-						tablaRespuesta.setTareStatus(false);
-						getTableResponsesFacade().agregarEditarNuevaTableResponse(tablaRespuesta);
-					}
-
-				}
-
-				int valorNuevo=0;
-				int valorAntiguo=0;
-				encontrado=false;
-
-				Iterator iteraNuevo=listaNuevos.iterator();
-				while (iteraNuevo.hasNext()){
-					encontrado=false;
-					valorNuevo=Integer.valueOf(iteraNuevo.next().toString());
-					Iterator iteraAntiguo = antiguos.iterator();
-					while(iteraAntiguo.hasNext()){
-						valorAntiguo= Integer.valueOf(iteraAntiguo.next().toString());
-						if(valorNuevo==valorAntiguo){
-							encontrado=true;
-							break;
-						}
-					}
-					if(encontrado==false){
-						TableResponses nuevoRegistroTableResponse=new TableResponses();
-						Questions question=new Questions();
-						question.setQuesId(2);
-						nuevoRegistroTableResponse.setTareStatus(true);
-						nuevoRegistroTableResponse.setQuestions(question);
-						nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(valorNuevo));
-						nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
-						getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
-					}
-
-				}
-			}else{
-				TableResponses nuevoRegistroTableResponse=new TableResponses();
-				Questions question=new Questions();
-				question.setQuesId(4);
-				nuevoRegistroTableResponse.setTareStatus(true);
-				nuevoRegistroTableResponse.setQuestions(question);
-				nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(listaNuevos.get(0)));
-				nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
-				getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
-			}
-		}
-	}catch(Exception e){
-		e.printStackTrace();
-	}
-	
-}
+//public void controlaSectores(ValueChangeEvent event){
+//	try{
+//		List<Integer> antiguos=new ArrayList<>();
+//
+//		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
+//			List<Integer> listaAntiguos= (List<Integer>)event.getOldValue();
+//			List<Integer> listaNuevos= (List<Integer>)event.getNewValue();
+//			int nuevo=0;
+//			int antiguo=0;
+//			boolean encontrado=false;
+//			if(listaAntiguos!=null && listaAntiguos.size()>0){
+//				Iterator valoresAntiguos= listaAntiguos.iterator();
+//				while(valoresAntiguos.hasNext()){
+//					encontrado=false;
+//					antiguo = Integer.valueOf(valoresAntiguos.next().toString());
+//					Iterator valoresNuevos=listaNuevos.iterator();
+//					while(valoresNuevos.hasNext()){
+//						nuevo=Integer.valueOf(valoresNuevos.next().toString());
+//						if(antiguo== nuevo){
+//							encontrado = true;
+//							antiguos.add(antiguo);
+//						}
+//					}
+//					if(encontrado==false){
+//						TableResponses tablaRespuesta= getTableResponsesFacade().buscaLeyPolitica(String.valueOf(antiguo), getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), 4);
+//						tablaRespuesta.setTareStatus(false);
+//						getTableResponsesFacade().agregarEditarNuevaTableResponse(tablaRespuesta);
+//					}
+//
+//				}
+//
+//				int valorNuevo=0;
+//				int valorAntiguo=0;
+//				encontrado=false;
+//
+//				Iterator iteraNuevo=listaNuevos.iterator();
+//				while (iteraNuevo.hasNext()){
+//					encontrado=false;
+//					valorNuevo=Integer.valueOf(iteraNuevo.next().toString());
+//					Iterator iteraAntiguo = antiguos.iterator();
+//					while(iteraAntiguo.hasNext()){
+//						valorAntiguo= Integer.valueOf(iteraAntiguo.next().toString());
+//						if(valorNuevo==valorAntiguo){
+//							encontrado=true;
+//							break;
+//						}
+//					}
+//					if(encontrado==false){
+//						TableResponses nuevoRegistroTableResponse=new TableResponses();
+//						Questions question=new Questions();
+//						question.setQuesId(2);
+//						nuevoRegistroTableResponse.setTareStatus(true);
+//						nuevoRegistroTableResponse.setQuestions(question);
+//						nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(valorNuevo));
+//						nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
+//						getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
+//					}
+//
+//				}
+//			}else{
+//				TableResponses nuevoRegistroTableResponse=new TableResponses();
+//				Questions question=new Questions();
+//				question.setQuesId(4);
+//				nuevoRegistroTableResponse.setTareStatus(true);
+//				nuevoRegistroTableResponse.setQuestions(question);
+//				nuevoRegistroTableResponse.setTareColumnOne(String.valueOf(listaNuevos.get(0)));
+//				nuevoRegistroTableResponse.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
+//				getTableResponsesFacade().agregarEditarNuevaTableResponse(nuevoRegistroTableResponse);
+//			}
+//		}
+//	}catch(Exception e){
+//		e.printStackTrace();
+//	}
+//	
+//}
 
 public void buscarProyectos(){
 	try{
 		getSeguimientoSalvaguardaBean().setListaProyectos(new ArrayList<>());
-		if(getSeguimientoSalvaguardaBean().getCodigoBusquedaProyecto()==1)			
+		if(getSeguimientoSalvaguardaBean().getCodigoBusquedaProyecto()==1){			
 			getSeguimientoSalvaguardaBean().setListaProyectos(getProjectsFacade().listarProyectosPorIdSocioImpl(getSeguimientoSalvaguardaBean().getCodigoSocioImplementador()));
-		else if(getSeguimientoSalvaguardaBean().getCodigoBusquedaProyecto()==2){
-			if (getSeguimientoSalvaguardaBean().getTituloProyecto().length()>5)
+			if(getSeguimientoSalvaguardaBean().getListaProyectos().size()==0){
+				Mensaje.actualizarComponente(":form:growl");				
+				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.noProyectos"), "");
+			}
+		}else if(getSeguimientoSalvaguardaBean().getCodigoBusquedaProyecto()==2){
+			if (getSeguimientoSalvaguardaBean().getTituloProyecto().length()>5){
 				getSeguimientoSalvaguardaBean().setListaProyectos(getProjectsFacade().listarProyectosPorTextoTitulo(getSeguimientoSalvaguardaBean().getTituloProyecto()));
-			else{
+				if(getSeguimientoSalvaguardaBean().getListaProyectos().size()==0){
+					Mensaje.actualizarComponente(":form:growl");				
+					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.noProyectos"), "");
+				}
+			}else{
 				Mensaje.actualizarComponente(":form:growl");				
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.longitudMinima"), "");
 			}
@@ -9211,12 +9287,14 @@ public void agregarFilasTablaSalvaguardaE40_38(){
 
 public boolean validaIngresoResumenEjecutivo(){
 	boolean estado=false;
-	if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuId() == null && getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty()){
-		estado=false;
-	}else if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty() || getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().trim().length()<10){
-		estado = false;
-	}else{
-		estado = true;
+	if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()!=null){
+		if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuId() == null && getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty()){
+			estado=false;
+		}else if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty() || getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().trim().length()<10){
+			estado = false;
+		}else{
+			estado = true;
+		}
 	}
 	return estado;
 }

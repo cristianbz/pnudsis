@@ -29,13 +29,33 @@
 <body>
 
 	<h:form prependId="true" id="form">
+		<p:dialog widgetVar="dlgInfoDetailGenero" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['finalizarReporte']}" width="390"
+			closable="false" resizable="false">
+			<p:outputPanel id="infoAvancesGenero">
+				<p:panel header="#{etiquetas['datosAvanceGenero']}">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="#{etiquetas['porcentajeAvance']}:" />
+						<p:inputNumber
+							value="#{registroGeneroController.registroGeneroBean.avanceGeneroSeleccionado.geadPercentageAdvance}" />
+						<p:outputLabel value="#{etiquetas['descripcionAvanceGenero']}" />
+						<p:inputTextarea rows="2"
+							value="#{registroGeneroController.registroGeneroBean.avanceGeneroSeleccionado.geadGoalProgram}" />
+						<p:commandButton value="#{botones['guardar']}" process="@this"/>
+						<p:commandButton value="#{botones['cancelar']}" process="@this"/>	
+					</h:panelGrid>
+				</p:panel>
+			</p:outputPanel>
+		</p:dialog>
+	
 		<p:dialog widgetVar="dlgFinalizarReporteGenero" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['finalizarReporte']}" width="390"
 			closable="false" resizable="false">			
 			<p:outputLabel value="#{etiquetas['finReporteSeguimiento']}"/>
 			<h:panelGrid columns="2" style="margin:0 auto;">
-					<p:commandButton value="#{botones['grabar']}" update="informacionGenero1"						
+					<p:commandButton value="#{botones['grabar']}" update="@form"						
 						actionListener="#{registroGeneroController.finalizaReporteGenero()}"
 						oncomplete="PF('dlgFinalizarReporteGenero').hide();"
 						process="@this informacionGenero1" icon="#{botones['icono.grabar']}" />
@@ -202,9 +222,9 @@
 				<br />
 				<p:outputPanel >
 				<h:panelGrid columns="2" style="margin:0 auto;" rendered="#{registroGeneroController.datosProyecto()}">
-					<p:commandButton actionListener="#{registroGeneroController.cargaDatosProyectoSeleccionado()}" process="@this" 
+					<p:commandButton actionListener="#{registroGeneroController.cargaDatosProyectoSeleccionado()}" process="@this :form:buscaProyectos" 
 						icon="#{botones['icono.check']}"
-						update="informacionGenero1" value="#{botones['mostrarInformacion']}"/>
+						update="@form" value="#{botones['mostrarInformacion']}"/>
 					<p:commandButton id="btnVolverInicio" value="#{botones['volverBusqueda']}"
 								icon="#{botones['icono.home']}" update="@form" 
 								actionListener="#{registroGeneroController.volverBuscarProyectos}" partialSubmit="true"
@@ -216,14 +236,11 @@
 				<p:outputPanel id="informacionGenero1"
 					>
 					<p:panel rendered="#{registroGeneroController.registroGeneroBean.datosGeneroParaMostrar}" header="#{titulos['informacionGenero']}">	
-					<div class="ui-fluid p-formgrid p-grid">
-						<p:outputLabel value="#{titulos['generoSalvaguardaB']}"
-							styleClass="etiquetaTituloSalvaguarda" />
-					</div>
+					
 					<br />
 					<div class="ui-fluid p-formgrid p-grid">
 						<p:outputLabel value="#{titulos['resultadosLogradosGenero']}"
-							styleClass="etiquetaSubCategoria" />
+							styleClass="etiquetaTituloSalvaguarda" />
 					</div>
 					<br />
 					<div class="ui-fluid p-formgrid p-grid">
@@ -250,7 +267,8 @@
 					</div>
 					<br/>
 					<div class="p-field p-col-12 p-md-12">
-						<p:dataTable id="tablaProjectInfo" style="font-size:10px !important;"
+						<p:scrollPanel style="width:800px;height:250px;margin:0 auto;">
+						<p:dataTable id="tablaProjectInfo" style="width:1400px;font-size:10px !important;"
 							value="#{registroGeneroController.registroGeneroBean.listaLineaGenero}" var="genero">
 							<p:column headerText="#{etiquetas['lineaAccion']}">								
 								#{genero.pginDescripcionLineaAccion}
@@ -270,6 +288,12 @@
 							<p:column headerText="#{etiquetas['presupuesto']}">
 								#{genero.pginBudget}
 							</p:column>
+							<p:column headerText="#{etiquetas['porcentajeAvance']}">
+								#{genero.genderAdvancesList.get(0).geadPercentageAdvance}
+							</p:column>
+							<p:column headerText="#{etiquetas['descripcionAvanceGenero']}">
+								#{genero.genderAdvancesList.get(0).geadAdvanceDescription}
+							</p:column>
 							<p:column width="30">
 								<p:commandButton id="btnProyEdit"
 										icon="#{botones['icono.checkcirculo']}"
@@ -280,7 +304,13 @@
 										oncomplete="PF('dlgEnProc').hide()" 
 										 update=":form:panelGenero1 :form:panelTablaGenero1 :form:btnTablaGen1 :form:panelTablasGenero"/>
 							</p:column>
-							</p:dataTable>
+							<p:column>
+								<p:commandButton actionListener="#{registroGeneroController.mostrarDialogoDetallesAvanceGenero(genero)}" 
+									update=":form:infoAvancesGenero"
+									process="@this :form:infoAvancesGenero" value="mostrar"/>
+							</p:column>
+						</p:dataTable>
+						</p:scrollPanel>
 					</div>
 					
 					<div class="p-field p-col-12 p-md-12">
@@ -331,7 +361,9 @@
 									<p:outputLabel value="#{etiquetas['beneficiariasNumero']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputNumber value="#{registroGeneroController.registroGeneroBean.detailAdvanceGender.dtagNumberOfBeneficiaries}" tabindex="1"/>
+									<p:inputNumber decimalPlaces="0"
+										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										value="#{registroGeneroController.registroGeneroBean.detailAdvanceGender.dtagNumberOfBeneficiaries}" tabindex="1"/>
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
 
@@ -406,7 +438,9 @@
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText value="#{registroGeneroController.registroGeneroBean.detailAdvanceGender.dtagComunity}"/>									
+									<p:inputTextarea
+										required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="5"
+										value="#{registroGeneroController.registroGeneroBean.detailAdvanceGender.dtagComunity}"/>									
 									
 								</div>
 								<div class="p-field p-col-12 p-md-2"></div>
@@ -415,14 +449,14 @@
 								<div class="p-field p-col-12 p-md-4"></div>
 								<div class="p-field p-col-12 p-md-2">
 									<p:commandButton icon="#{botones['icono.grabar']}"
-										process="@this  panelIngresoGenero1"
+										process="@this  panelIngresoGenero1" tabindex="6"
 										title="#{tooltip['grabar']}" value="#{botones['grabar']}"
 										actionListener="#{registroGeneroController.agregaDetalleRegistroGeneroTabla1()}"
 										update=" :form:growl  panelIngresoGenero1 panelTablaGenero1" />
 								</div>
 								<div class="p-field p-col-12 p-md-2">
-									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero1" update="panelIngresoGenero1" tabindex="5" 
-											value="#{botones['cancelar']}"
+									<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoGenero1" update="panelIngresoGenero1" tabindex="7" 
+											value="#{botones['cancelar']}" 
 											immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
 											<f:setPropertyActionListener value="false" target="#{registroGeneroController.registroGeneroBean.nuevoRegistroTablaGenero1}"/>
@@ -503,10 +537,7 @@
 						<div class="ui-fluid p-formgrid p-grid">
 							<p:outputLabel value="#{titulos['actividadesSalvaguardas']}" styleClass="etiquetaTituloSalvaguarda"/>
 						</div>
-						<br/>
-						<div class="ui-fluid p-formgrid p-grid">
-							<p:outputLabel value="#{titulos['generoSalvaguardaD']}" styleClass="etiquetaSubCategoria"/>
-						</div>
+						
 						<br />
 					<div class="ui-fluid p-formgrid p-grid">
 						<p:outputLabel
@@ -665,7 +696,7 @@
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnOne}" tabindex="6"/>									
 									
@@ -677,7 +708,7 @@
 									<p:outputLabel value="#{etiquetas['espacioIdentificado']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnTwo}" tabindex="7"/>									
 									
@@ -703,7 +734,7 @@
 										<p:outputLabel value="#{etiquetas['finRolOrganizacion']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnFour}"
 											tabindex="9" />
@@ -716,7 +747,7 @@
 										<p:outputLabel value="#{etiquetas['accionesFortalecimiento']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla3.tareColumnFive}"
 											tabindex="10" />											
@@ -1040,7 +1071,7 @@
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnOne}" tabindex="6"/>									
 									
@@ -1052,7 +1083,7 @@
 									<p:outputLabel value="#{etiquetas['nombreEspacio']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnTwo}" tabindex="7"/>									
 									
@@ -1063,7 +1094,7 @@
 										<p:outputLabel value="#{etiquetas['institucionOrganiza']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputTextarea 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnTree}" tabindex="8"/>								        																											
 									</div>
@@ -1076,7 +1107,7 @@
 										<p:outputLabel value="#{etiquetas['objetivoCapacitacion']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnFour}"
 											tabindex="9" />
@@ -1089,7 +1120,7 @@
 										<p:outputLabel value="#{etiquetas['temasTratados']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnFive}"
 											tabindex="10" />											
@@ -1102,7 +1133,7 @@
 										<p:outputLabel value="#{etiquetas['institucionesCapacitacion']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnSix}"
 											tabindex="11" />
@@ -1126,7 +1157,7 @@
 										<p:outputLabel value="#{etiquetas['dificultadesIdentificadas']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnSeven}"
 											tabindex="13" />											
@@ -1139,7 +1170,7 @@
 										<p:outputLabel value="#{etiquetas['medidasTomadas']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla4.tareColumnEight}"
 											tabindex="14" />											
@@ -1431,7 +1462,7 @@
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnOne}" tabindex="6"/>									
 									
@@ -1479,7 +1510,7 @@
 										<p:outputLabel value="#{etiquetas['dificultadesParticipacion']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputTextarea 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnTree}" tabindex="10"/>								        																											
 									</div>
@@ -1492,7 +1523,7 @@
 										<p:outputLabel value="#{etiquetas['medidasParticipacion']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla5.tareColumnFour}"
 											tabindex="11" />
@@ -1757,7 +1788,7 @@
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnOne}" tabindex="6"/>									
 									
@@ -1781,7 +1812,7 @@
 										<p:outputLabel value="#{etiquetas['espacioDialogo']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputTextarea 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnTree}" tabindex="8"/>												
 									</div>
@@ -1791,7 +1822,7 @@
 										<p:outputLabel value="#{etiquetas['rolEspacio']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnFour}" tabindex="9"/>								        																											
 									</div>
@@ -1804,7 +1835,7 @@
 										<p:outputLabel value="#{etiquetas['accionesLideresa']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText
+										<p:inputTextarea
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{registroGeneroController.registroGeneroBean.filaTabla6.tareColumnFive}"
 											tabindex="10" />
@@ -2058,7 +2089,7 @@
 									<p:outputLabel value="#{etiquetas['comunidad']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnOne}" tabindex="6"/>									
 									
@@ -2070,7 +2101,7 @@
 									<p:outputLabel value="#{etiquetas['accion']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-									<p:inputText 
+									<p:inputTextarea
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnTwo}" tabindex="7"/>									
 									
@@ -2082,7 +2113,7 @@
 										<p:outputLabel value="#{etiquetas['resultado']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputTextarea 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnTree}" tabindex="8"/>												
 									</div>
@@ -2092,7 +2123,7 @@
 										<p:outputLabel value="#{etiquetas['nroMujeresBeneficiarias']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputNumber decimalPlaces="0" 
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnNumberSix}" tabindex="9"/>								        																											
 								</div>
@@ -2102,7 +2133,7 @@
 										<p:outputLabel value="#{etiquetas['nroHombresBeneficiarios']}"/>
 								</div>
 								<div class="p-field p-col-12 p-md-7">
-										<p:inputText 
+										<p:inputNumber decimalPlaces="0"
 										required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 										value="#{registroGeneroController.registroGeneroBean.filaTabla7.tareColumnNumberSeven}" tabindex="10"/>								        																											
 								</div>

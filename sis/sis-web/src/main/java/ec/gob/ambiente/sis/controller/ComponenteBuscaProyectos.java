@@ -84,12 +84,21 @@ public class ComponenteBuscaProyectos implements Serializable{
 	public void buscarProyectos(){
 		try{
 			getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
-			if(getBuscaProyectosBean().getCodigoBusquedaProyecto()==1)			
+			if(getBuscaProyectosBean().getCodigoBusquedaProyecto()==1){			
 				getBuscaProyectosBean().setListaProyectos(getProjectsFacade().listarProyectosPorIdSocioImpl(getBuscaProyectosBean().getCodigoSocioImplementador()));
-			else if(getBuscaProyectosBean().getCodigoBusquedaProyecto()==2){
-				if (getBuscaProyectosBean().getTituloProyecto().length()>5)
+				if(getBuscaProyectosBean().getListaProyectos().size()==0){
+					Mensaje.actualizarComponente(":form:growl");				
+					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.noProyectos"), "");
+				}
+					
+			}else if(getBuscaProyectosBean().getCodigoBusquedaProyecto()==2){
+				if (getBuscaProyectosBean().getTituloProyecto().length()>5){
 					getBuscaProyectosBean().setListaProyectos(getProjectsFacade().listarProyectosPorTextoTitulo(getBuscaProyectosBean().getTituloProyecto()));
-				else{
+					if(getBuscaProyectosBean().getListaProyectos().size()==0){
+						Mensaje.actualizarComponente(":form:growl");				
+						Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.noProyectos"), "");
+					}
+				}else{
 					Mensaje.actualizarComponente(":form:growl");				
 					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.longitudMinima"), "");
 				}
@@ -108,6 +117,8 @@ public class ComponenteBuscaProyectos implements Serializable{
 	 */	
 	public void buscaAvanceEjecucionDelProyecto(Projects proyecto){
 		try{
+			getBuscaProyectosBean().setPeriodoDesde(null);
+			getBuscaProyectosBean().setAnioReporte(null);
 			getBuscaProyectosBean().setProyectoSeleccionado(new Projects());
 			getBuscaProyectosBean().setProyectoSeleccionado(proyecto);
 			getBuscaProyectosBean().setAdvanceExecution(new AdvanceExecutionSafeguards());
@@ -115,6 +126,10 @@ public class ComponenteBuscaProyectos implements Serializable{
 			if(esReporteGenero){
 				getBuscaProyectosBean().setAdvanceExecution(getAdvanceExecutionSafeguardsFacade().buscarAvanceGeneroPorProyecto(proyecto.getProjId()));
 				getBuscaProyectosBean().setDatosProyecto(true);
+				if (getBuscaProyectosBean().getAdvanceExecution()!=null){
+					getBuscaProyectosBean().setAnioReporte(Integer.valueOf(getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0, 4)));
+					getBuscaProyectosBean().setPeriodoDesde("01");
+				}
 			}else{
 				getBuscaProyectosBean().setAdvanceExecution(getAdvanceExecutionSafeguardsFacade().buscarPorProyecto(proyecto.getProjId()));
 				getBuscaProyectosBean().setDatosProyecto(true);
