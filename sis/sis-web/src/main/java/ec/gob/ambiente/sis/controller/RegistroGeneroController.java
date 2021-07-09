@@ -24,6 +24,7 @@ import javax.inject.Named;
 import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
+import org.hibernate.tuple.entity.EntityMetamodel.GenerationStrategyPair;
 
 import ec.gob.ambiente.sigma.model.CatalogType;
 import ec.gob.ambiente.sigma.model.ProjectsGenderInfo;
@@ -151,6 +152,7 @@ public class RegistroGeneroController implements Serializable{
 			usuario=new Users();
 			usuario.setUserName("Christian Báez");
 			usuario.setUserId(0);
+			getRegistroGeneroBean().setPosicionTab(0);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -208,6 +210,8 @@ public class RegistroGeneroController implements Serializable{
 				}else{
 					getRegistroGeneroBean().setDatosGeneroParaMostrar(false);
 				}
+				cargaValoresPreguntasRespuestas();
+				preparaRespuestasGenero();
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -261,6 +265,10 @@ public class RegistroGeneroController implements Serializable{
 			detalle.setProvincia(ubicaProvinciaCantonParroquia(detalle.getDtagProvince(), 1));
 			detalle.setCanton(ubicaProvinciaCantonParroquia(detalle.getDtagCanton(), 2));
 			detalle.setParroquia(ubicaProvinciaCantonParroquia(detalle.getDtagParish(), 3));
+			detalle.setEtnia(OperacionesCatalogo.ubicaDescripcionCatalogo(detalle.getDtagEthnicity(), getAplicacionBean().getListaAutoIdentificacion()));
+			if(detalle.getDtagEthnicity() == CODIGO_IDENTIFICACION_INDIGENA){
+				detalle.setPueblo(OperacionesCatalogo.ubicaDescripcionCatalogo(detalle.getDtagTown(), getAplicacionBean().getListaPueblosNacionalidades()));
+			}
 		}
 	}
 
@@ -274,6 +282,7 @@ public class RegistroGeneroController implements Serializable{
 					valoresRespuestasPorDefecto(getRegistroGeneroBean().getListaPreguntas(), getRegistroGeneroBean().getListaValoresRespuestas());
 			}else		
 				valoresRespuestasPorDefecto(getRegistroGeneroBean().getListaPreguntas(), getRegistroGeneroBean().getListaValoresRespuestas());
+			getRegistroGeneroBean().setPreguntasGenero(true);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -349,6 +358,17 @@ public class RegistroGeneroController implements Serializable{
 			}
 		}
 	}
+	
+	public void mostrarDialogoGrabarAvanceGenero1(){
+		if(getRegistroGeneroBean().getListaLineaGenero().size()>0 ){
+			if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()==null && getRegistroGeneroBean().getAdvanceExecutionSafeguards()==null){
+				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.agregaBeneficiarioGenero"), "");
+			}else{
+				Mensaje.verDialogo("dlgGrabaAvanceGenero");
+			}
+		}
+	}
+	
 	public void mostrarDialogoGrabarAvanceGenero(){
 		if(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado()!=null ){
 			
@@ -413,8 +433,9 @@ public class RegistroGeneroController implements Serializable{
 			}
 			avanceEjecucion = getAvanceEjecucionGeneroFacade().grabarEditarAvanceEjecucionGenero(getRegistroGeneroBean().getAdvanceExecutionSafeguards(),getRegistroGeneroBean().getAvanceGeneroSeleccionado(),getRegistroGeneroBean().getResumenEjecutivo());
 			getRegistroGeneroBean().setAdvanceExecutionSafeguards(avanceEjecucion);
-			getRegistroGeneroBean().setPreguntasGenero(true);
+//			getRegistroGeneroBean().setPreguntasGenero(true);
 			getRegistroGeneroBean().setAvanceGeneroSeleccionado(getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado().getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+			getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado().getGenderAdvancesList().set(0, getRegistroGeneroBean().getAvanceGeneroSeleccionado());
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.infoGrabada"), "");
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.grabarAvanceGenero"), "");
@@ -427,6 +448,11 @@ public class RegistroGeneroController implements Serializable{
 		if(getRegistroGeneroBean().getAdvanceExecutionSafeguards()!=null && getRegistroGeneroBean().getAvanceGeneroSeleccionado().getGeadId()!=null){
 			getRegistroGeneroBean().setNuevoRegistroTablaGenero1(true);
 			getRegistroGeneroBean().setDetailAdvanceGender(new DetailAdvanceGender());
+			getRegistroGeneroBean().setCodCanton(null);
+			getRegistroGeneroBean().setCodigoAutoIdentificacion(null);
+			getRegistroGeneroBean().setCodigoPuebloNacionalidad(0);
+			getRegistroGeneroBean().setCodProvincia(null);
+			getRegistroGeneroBean().setCodParroquia(null);
 		}else{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.grabarGenero"), "");
 		}
@@ -499,7 +525,7 @@ public class RegistroGeneroController implements Serializable{
 
 	public void habilitaPuebloNacionalidad(){
 
-		if(getRegistroGeneroBean().getCodigoAutoIdentificacion()==54)
+		if(getRegistroGeneroBean().getCodigoAutoIdentificacion() == CODIGO_IDENTIFICACION_INDIGENA)
 			getRegistroGeneroBean().setHabilitaPuebloNacionalidad(true);
 		else{
 			getRegistroGeneroBean().setHabilitaPuebloNacionalidad(false);
@@ -545,6 +571,14 @@ public class RegistroGeneroController implements Serializable{
 				getRegistroGeneroBean().getDetailAdvanceGender().setProvincia(ubicaProvinciaCantonParroquia(getRegistroGeneroBean().getDetailAdvanceGender().getDtagProvince(), 1));
 				getRegistroGeneroBean().getDetailAdvanceGender().setCanton(ubicaProvinciaCantonParroquia(getRegistroGeneroBean().getDetailAdvanceGender().getDtagCanton(), 2));
 				getRegistroGeneroBean().getDetailAdvanceGender().setParroquia(ubicaProvinciaCantonParroquia(getRegistroGeneroBean().getDetailAdvanceGender().getDtagParish(), 3));
+				getRegistroGeneroBean().getDetailAdvanceGender().setDtagEthnicity(getRegistroGeneroBean().getCodigoAutoIdentificacion());
+				getRegistroGeneroBean().getDetailAdvanceGender().setEtnia(OperacionesCatalogo.ubicaDescripcionCatalogo(getRegistroGeneroBean().getDetailAdvanceGender().getDtagEthnicity(), getAplicacionBean().getListaAutoIdentificacion()));
+				if(getRegistroGeneroBean().getDetailAdvanceGender().getDtagEthnicity() == CODIGO_IDENTIFICACION_INDIGENA){
+					getRegistroGeneroBean().getDetailAdvanceGender().setDtagTown(getRegistroGeneroBean().getCodigoPuebloNacionalidad());
+					getRegistroGeneroBean().getDetailAdvanceGender().setPueblo(ubicaPuebloNacionalidad(getRegistroGeneroBean().getDetailAdvanceGender().getDtagTown()));
+				}else{
+					getRegistroGeneroBean().getDetailAdvanceGender().setDtagTown(null);
+				}
 				getRegistroGeneroBean().getDetailAdvanceGender().setDtagStatus(true);
 				getDetailAdvanceGenderFacade().agregarEditarRegistroDetalleAvanceGenero(getRegistroGeneroBean().getDetailAdvanceGender());
 				getRegistroGeneroBean().getListaDatosAvanceGenero().add(getRegistroGeneroBean().getDetailAdvanceGender());
@@ -556,6 +590,15 @@ public class RegistroGeneroController implements Serializable{
 				getRegistroGeneroBean().getDetailAdvanceGender().setProvincia(ubicaProvinciaCantonParroquia(getRegistroGeneroBean().getDetailAdvanceGender().getDtagProvince(), 1));
 				getRegistroGeneroBean().getDetailAdvanceGender().setCanton(ubicaProvinciaCantonParroquia(getRegistroGeneroBean().getDetailAdvanceGender().getDtagCanton(), 2));
 				getRegistroGeneroBean().getDetailAdvanceGender().setParroquia(ubicaProvinciaCantonParroquia(getRegistroGeneroBean().getDetailAdvanceGender().getDtagParish(), 3));				
+				getRegistroGeneroBean().getDetailAdvanceGender().setDtagEthnicity(getRegistroGeneroBean().getCodigoAutoIdentificacion());
+				getRegistroGeneroBean().getDetailAdvanceGender().setEtnia(OperacionesCatalogo.ubicaDescripcionCatalogo(getRegistroGeneroBean().getDetailAdvanceGender().getDtagEthnicity(), getAplicacionBean().getListaAutoIdentificacion()));
+				if(getRegistroGeneroBean().getDetailAdvanceGender().getDtagEthnicity() == CODIGO_IDENTIFICACION_INDIGENA){
+					getRegistroGeneroBean().getDetailAdvanceGender().setDtagTown(getRegistroGeneroBean().getCodigoPuebloNacionalidad());
+					getRegistroGeneroBean().getDetailAdvanceGender().setPueblo(ubicaPuebloNacionalidad(getRegistroGeneroBean().getDetailAdvanceGender().getDtagTown()));
+				}else{
+					getRegistroGeneroBean().getDetailAdvanceGender().setDtagTown(null);
+					getRegistroGeneroBean().getDetailAdvanceGender().setPueblo("");
+				}
 				getDetailAdvanceGenderFacade().agregarEditarRegistroDetalleAvanceGenero(getRegistroGeneroBean().getDetailAdvanceGender());
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.infoGrabada"), "");
 			}
@@ -815,6 +858,11 @@ public class RegistroGeneroController implements Serializable{
 		getRegistroGeneroBean().setCodCanton(getRegistroGeneroBean().getDetailAdvanceGender().getDtagCanton());
 		filtraParroquias();
 		getRegistroGeneroBean().setCodParroquia(getRegistroGeneroBean().getDetailAdvanceGender().getDtagParish());
+		getRegistroGeneroBean().setCodigoAutoIdentificacion(getRegistroGeneroBean().getDetailAdvanceGender().getDtagEthnicity());
+		if(getRegistroGeneroBean().getCodigoAutoIdentificacion() == CODIGO_IDENTIFICACION_INDIGENA){
+			getRegistroGeneroBean().setCodigoPuebloNacionalidad(getRegistroGeneroBean().getDetailAdvanceGender().getDtagTown());
+			getRegistroGeneroBean().setHabilitaPuebloNacionalidad(true);
+		}
 	}
 	public void editarRegistroTabla3(){
 		getRegistroGeneroBean().setCodProvincia(getRegistroGeneroBean().getFilaTabla3().getTareColumnNumberOne());
@@ -1037,7 +1085,17 @@ public class RegistroGeneroController implements Serializable{
 					&& getRegistroGeneroBean().getListaValoresRespuestas().get(2).isVaanYesnoAnswerValue()==false){
 				Mensaje.verDialogo("dlgEliminaDatosTabla");
 			}
-		}		
+		}else if(getRegistroGeneroBean().getCodigoTablaDatos().equals("G6")){
+			if (validaDatosTabla(getRegistroGeneroBean().getTablaRespuestas6()) 
+					&& getRegistroGeneroBean().getListaValoresRespuestas().get(3).isVaanYesnoAnswerValue()==false){
+				Mensaje.verDialogo("dlgEliminaDatosTabla");
+			}
+		}else if(getRegistroGeneroBean().getCodigoTablaDatos().equals("G7")){
+			if (validaDatosTabla(getRegistroGeneroBean().getTablaRespuestas7()) 
+					&& getRegistroGeneroBean().getListaValoresRespuestas().get(4).isVaanYesnoAnswerValue()==false){
+				Mensaje.verDialogo("dlgEliminaDatosTabla");
+			}
+		}						
 	}
 	public boolean validaDatosTabla(List<TableResponses> tablaRespuestas){
 		if(tablaRespuestas.size()>0)
@@ -1062,6 +1120,16 @@ public class RegistroGeneroController implements Serializable{
 				getRegistroGeneroBean().setTablaRespuestas5(new ArrayList<>());				
 				getRegistroGeneroBean().setCodigoTablaDatos("");
 				Mensaje.actualizarComponente(":form:panelTablaGenero5");
+			}else if(getRegistroGeneroBean().getCodigoTablaDatos().equals("G6")){
+				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getRegistroGeneroBean().getTablaRespuestas6(),getRegistroGeneroBean().getListaValoresRespuestas().get(3));
+				getRegistroGeneroBean().setTablaRespuestas6(new ArrayList<>());				
+				getRegistroGeneroBean().setCodigoTablaDatos("");
+				Mensaje.actualizarComponente(":form:panelTablaGenero6");
+			}else if(getRegistroGeneroBean().getCodigoTablaDatos().equals("G7")){
+				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getRegistroGeneroBean().getTablaRespuestas7(),getRegistroGeneroBean().getListaValoresRespuestas().get(4));
+				getRegistroGeneroBean().setTablaRespuestas7(new ArrayList<>());				
+				getRegistroGeneroBean().setCodigoTablaDatos("");
+				Mensaje.actualizarComponente(":form:panelTablaGenero7");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1080,7 +1148,14 @@ public class RegistroGeneroController implements Serializable{
 			getRegistroGeneroBean().getListaValoresRespuestas().get(2).setVaanYesnoAnswerValue(true);
 			getRegistroGeneroBean().setCodigoTablaDatos("");
 			Mensaje.actualizarComponente(":form:radiopSB3"); 
-
+		}else if(getRegistroGeneroBean().getCodigoTablaDatos().equals("G6")){
+			getRegistroGeneroBean().getListaValoresRespuestas().get(3).setVaanYesnoAnswerValue(true);
+			getRegistroGeneroBean().setCodigoTablaDatos("");
+			Mensaje.actualizarComponente(":form:radiopSB4"); 
+		}else if(getRegistroGeneroBean().getCodigoTablaDatos().equals("G7")){
+			getRegistroGeneroBean().getListaValoresRespuestas().get(4).setVaanYesnoAnswerValue(true);
+			getRegistroGeneroBean().setCodigoTablaDatos("");
+			Mensaje.actualizarComponente(":form:radiopSB5"); 
 		}
 	}
 	public void cargaLineasGenero(){
@@ -1099,15 +1174,25 @@ public class RegistroGeneroController implements Serializable{
 				listaAux=getProjectsGenderInfoFacade().listaPorProyectoLineaGenero(getComponenteBuscarProyectos().proyectoSeleccionado().getProjId(), getRegistroGeneroBean().getCodigoLineaGenero());
 				for (ProjectsGenderInfo infoGenero : listaAux) {
 					infoGenero.setGenderAdvancesList(new ArrayList<>());
-					GenderAdvances generoAvances= getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(infoGenero.getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId());
 					
-					if(generoAvances == null){						
+					if(getRegistroGeneroBean().getAdvanceExecutionSafeguards()!= null && getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
+						GenderAdvances generoAvances= getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(infoGenero.getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId());					
+						if(generoAvances == null){						
+							infoGenero.getGenderAdvancesList().add(new GenderAdvances());
+						
+						}else{
+							infoGenero.getGenderAdvancesList().add(generoAvances);
+						
+						}
+//						if (infoGenero.getPginResultsType() != null){
+//							if(infoGenero.getPginOtherLine()==null)
+//								infoGenero.setPginDescripcionLineaAccion(infoGenero.getCataId().getCataText2());
+//							else if(infoGenero.getPginOtherLine()!=null)
+//								infoGenero.setPginDescripcionLineaAccion(infoGenero.getPginOtherLine());
+//							getRegistroGeneroBean().getListaLineaGenero().add(infoGenero);
+//						}
+					}else
 						infoGenero.getGenderAdvancesList().add(new GenderAdvances());
-					
-					}else{
-						infoGenero.getGenderAdvancesList().add(generoAvances);
-					
-					}
 					if (infoGenero.getPginResultsType() != null){
 						if(infoGenero.getPginOtherLine()==null)
 							infoGenero.setPginDescripcionLineaAccion(infoGenero.getCataId().getCataText2());
@@ -1128,10 +1213,11 @@ public class RegistroGeneroController implements Serializable{
 			getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
 			getRegistroGeneroBean().setCodigoProjectGenderInfo(null);
 			getRegistroGeneroBean().setListaDatosAvanceGenero(new ArrayList<>());
-			getRegistroGeneroBean().setPreguntasGenero(false);
+//			getRegistroGeneroBean().setPreguntasGenero(false);
 			getRegistroGeneroBean().setInformacionProyectoGeneroSeleccionado(null);
 			if(getRegistroGeneroBean().getListaLineaGenero().size()==0)
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.noInformacion"), "");
+			getRegistroGeneroBean().setMostrarTabla1(false);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -1195,7 +1281,7 @@ public class RegistroGeneroController implements Serializable{
 	 * Muestra el dialogo para finalizar reporte de genero
 	 */
 	public void mostrarDialogoFinalizarReporte(){
-		if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null && getRegistroGeneroBean().getAvanceGeneroSeleccionado().getGeadId()!=null){
+		if(getRegistroGeneroBean().getAdvanceExecutionSafeguards()!=null ){
 			if(validaOpcionSiTablas()){
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSi"),"");
 			}else if(getRegistroGeneroBean().getResumenEjecutivo().getExsuSummaryContent().trim().length() < 10){
@@ -1235,6 +1321,7 @@ public class RegistroGeneroController implements Serializable{
 	public void mostrarDialogoDetallesAvanceGenero(ProjectsGenderInfo projectGenderInfo){
 		try{			
 			getRegistroGeneroBean().setInformacionProyectoGeneroSeleccionado(projectGenderInfo);
+			getRegistroGeneroBean().setListaDatosAvanceGenero(new ArrayList<>());
 			if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null && getRegistroGeneroBean().getAdvanceExecutionSafeguards()!=null){
 				getRegistroGeneroBean().setAvanceGeneroSeleccionado(getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(projectGenderInfo.getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
 				if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null){
@@ -1242,13 +1329,60 @@ public class RegistroGeneroController implements Serializable{
 						if (detalle.isDtagStatus())					
 							getRegistroGeneroBean().getListaDatosAvanceGenero().add(detalle);					
 					}
-					preparaInformacionDetalleAvanceGenero();				
+//					preparaInformacionDetalleAvanceGenero();				
 				}else{
 					getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
 				}
-				cargaValoresPreguntasRespuestas();
-				getRegistroGeneroBean().setPreguntasGenero(true);
-				preparaRespuestasGenero();
+				getRegistroGeneroBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+				if(getRegistroGeneroBean().getResumenEjecutivo()==null){
+					getRegistroGeneroBean().setResumenEjecutivo(new ExecutiveSummaries());
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuStatus(true);
+					getRegistroGeneroBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+				}
+//				Mensaje.verDialogo("dlgInfoDetailGenero");
+			}else{
+				getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
+				getRegistroGeneroBean().setResumenEjecutivo(new ExecutiveSummaries());
+				getRegistroGeneroBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+				getRegistroGeneroBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+				getRegistroGeneroBean().getResumenEjecutivo().setExsuStatus(true);
+				getRegistroGeneroBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+
+				
+//				getRegistroGeneroBean().setPreguntasGenero(false);
+//				cargaValoresPreguntasRespuestas();
+			}
+			
+			
+			getRegistroGeneroBean().setMostrarTabla1(false);
+			Mensaje.verDialogo("dlgInfoDetailGenero");
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void mostrarDatosTablaBeneficiarios(ProjectsGenderInfo projectGenderInfo){
+		try{
+			getRegistroGeneroBean().setCodigoProjectGenderInfo(projectGenderInfo.getPginId());
+			getRegistroGeneroBean().setInformacionProyectoGeneroSeleccionado(projectGenderInfo);
+			getRegistroGeneroBean().setListaDatosAvanceGenero(new ArrayList<>());
+			getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
+			if(getRegistroGeneroBean().getAdvanceExecutionSafeguards()!=null)
+				getRegistroGeneroBean().setAvanceGeneroSeleccionado(getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(projectGenderInfo.getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+			if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null && getRegistroGeneroBean().getAvanceGeneroSeleccionado().getGeadId()!=null && getRegistroGeneroBean().getAdvanceExecutionSafeguards()!=null){
+				getRegistroGeneroBean().setMostrarTabla1(true);
+//				getRegistroGeneroBean().setAvanceGeneroSeleccionado(getGenderAdvancesFacade().buscaPorProjectGenderInfoAvanceExecution(projectGenderInfo.getPginId(), getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+				if(getRegistroGeneroBean().getAvanceGeneroSeleccionado()!=null){
+					for (DetailAdvanceGender detalle : getRegistroGeneroBean().getAvanceGeneroSeleccionado().getDetailAdvanceGenderList()) {
+						if (detalle.isDtagStatus())					
+							getRegistroGeneroBean().getListaDatosAvanceGenero().add(detalle);					
+					}
+					preparaInformacionDetalleAvanceGenero();				
+				}
 				getRegistroGeneroBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getRegistroGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
 				if(getRegistroGeneroBean().getResumenEjecutivo()==null){
 					getRegistroGeneroBean().setResumenEjecutivo(new ExecutiveSummaries());
@@ -1258,14 +1392,27 @@ public class RegistroGeneroController implements Serializable{
 					getRegistroGeneroBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
 				}
 			}else{
-				getRegistroGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
+				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.agregaBeneficiarioGenero"), "");
 				getRegistroGeneroBean().setPreguntasGenero(false);
-				cargaValoresPreguntasRespuestas();
+				getRegistroGeneroBean().setMostrarTabla1(false);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		Mensaje.verDialogo("dlgInfoDetailGenero");
+	}
+	
+	public void siguienteTab(){
+		if(getRegistroGeneroBean().getAdvanceExecutionSafeguards()!=null)
+			getRegistroGeneroBean().setPosicionTab(1);
+		else
+			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.agregaBeneficiarioGenero"), "");
+	}
+	public void retrocederTab(){
+		getRegistroGeneroBean().setPosicionTab(0);
+	}
+	public void tabChange() {
+		getRegistroGeneroBean().setPosicionTab(0);
+		
 	}
 }
 	

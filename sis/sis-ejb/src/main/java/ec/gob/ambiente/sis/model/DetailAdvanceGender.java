@@ -33,8 +33,8 @@ public class DetailAdvanceGender {
 	
 	@Getter
 	@Setter
-	@Column(name = "dtag_number_of_beneficiaries")
-	private Integer dtagNumberOfBeneficiaries;
+	@Column(name = "dtag_number_of_women")
+	private Integer dtagNumberOfWomen;
 		
 	@Getter
 	@Setter
@@ -50,6 +50,21 @@ public class DetailAdvanceGender {
 	@Setter
 	@Column(name = "dtag_parish")
 	private Integer dtagParish;
+	
+	@Getter
+	@Setter
+	@Column(name = "dtag_number_of_mens")
+	private Integer dtagNumberOfMens;
+	
+	@Getter
+	@Setter
+	@Column(name = "dtag_ethnicity")
+	private Integer dtagEthnicity;
+	
+	@Getter
+	@Setter
+	@Column(name = "dtag_town")
+	private Integer dtagTown;
 		
 	@Getter
 	@Setter
@@ -75,6 +90,16 @@ public class DetailAdvanceGender {
 	@Setter
 	@Transient
 	private String parroquia;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String etnia;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String pueblo;
 	
 	@Getter
 	@Setter

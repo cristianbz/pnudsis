@@ -6748,7 +6748,7 @@ public class ResumenPDF {
 			Paragraph datosTabla2;
 			for(DetailAdvanceGender genero:beanGenero.getListaDatosAvanceGenero()){
 				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(String.valueOf(genero.getDtagNumberOfBeneficiaries()),fontContenidoTablas));
+				datosTabla2.add(new Phrase(String.valueOf(genero.getDtagNumberOfWomen()),fontContenidoTablas));
 				tabla2.addCell(datosTabla2);
 				datosTabla2=new Paragraph();
 				datosTabla2.add(new Phrase(genero.getProvincia() ,fontContenidoTablas));

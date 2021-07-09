@@ -140,3 +140,7 @@
 .estiloHeaderCampoTabla{
 	font-weight: bold;
 }
+.etiqueta{	
+	text-align: left;
+	font-weight: bold;
+}

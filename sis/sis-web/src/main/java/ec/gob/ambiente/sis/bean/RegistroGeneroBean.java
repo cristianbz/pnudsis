@@ -60,6 +60,10 @@ public class RegistroGeneroBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean mostrarTabla1;
+	
+	@Getter
+	@Setter
 	private boolean preguntasGenero;
 	
 	@Getter
@@ -269,6 +273,10 @@ public class RegistroGeneroBean implements Serializable{
 	@Getter
 	@Setter
 	private Partners socioImplementador;
+	
+	@Getter
+	@Setter
+	private Integer posicionTab;
 	
 	@PostConstruct
 	public void init(){
