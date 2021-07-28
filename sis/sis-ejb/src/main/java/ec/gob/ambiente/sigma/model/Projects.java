@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
+import ec.gob.ambiente.sis.model.ProjectQuestions;
+import ec.gob.ambiente.sis.model.ProjectUsers;
+import ec.gob.ambiente.suia.model.Users;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -86,6 +89,16 @@ public class Projects {
 	@Setter
 	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
 	private List<ProjectsGenderInfo> projectsGenderInfoList;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
+	private List<ProjectQuestions> projectQuestionsList;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
+	private List<ProjectUsers> projectUsersList;
 	
 	@Getter
 	@Setter

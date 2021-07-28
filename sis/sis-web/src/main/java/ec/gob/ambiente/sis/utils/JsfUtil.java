@@ -1159,15 +1159,15 @@ public class JsfUtil {
 			return null;
 		}
 	}*/
-	
-	public static User getLoggedUser() {
-		LoginBean instance = getBean(LoginBean.class);
-		if (instance.getUser().getUserId()!=null) {
-			//instance.getUser().setPassword(instance.getPassword());
-			return instance.getUser();
-		}
-		return null;
-	}
+//	
+//	public static User getLoggedUser() {
+//		LoginBean instance = getBean(LoginBean.class);
+//		if (instance.getUser().getUserId()!=null) {
+//			//instance.getUser().setPassword(instance.getPassword());
+//			return instance.getUser();
+//		}
+//		return null;
+//	}
 	
 	/**
 	 * Obtiene un managed bean del contexto

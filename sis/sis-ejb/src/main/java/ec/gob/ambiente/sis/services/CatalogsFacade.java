@@ -39,5 +39,18 @@ public class CatalogsFacade extends AbstractFacade<Catalogs,Integer>{
 					 + " and cata_status=true order by cata_text1";		
 		return consultaNativa(sql);
 	}
+	
+	public void agregaEditaCatalogo(Catalogs catalogo) throws Exception{
+		if(catalogo.getCataId() == null)
+			create(catalogo);
+		else
+			edit(catalogo);
+	}
+	public List<Catalogs> buscaTodosCatalogos() throws Exception{
+		String sql="SELECT C FROM Catalogs C ORDER BY C.catalogsType.catyId,C.cataOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		
+		return findByCreateQuery(sql, camposCondicion);
+	}
 }
 

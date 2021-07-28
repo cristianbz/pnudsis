@@ -64,6 +64,16 @@ public class Questions  {
 	
 	@Getter
 	@Setter
+	@Column(name = "ques_principal_question")
+	private boolean quesPrincipalQuestion;
+	
+	@Getter
+	@Setter
+	@Column(name = "ques_important_question")
+	private boolean quesImportantQuestion;
+	
+	@Getter
+	@Setter
 	@Column(name = "ques_question_order")
 	private Integer quesQuestionOrder;
 	

@@ -62,7 +62,7 @@
 		<div id="page">
 			<div id="content" class="container">
 				<h:form id="indexForm">
-				
+				<p:growl id="growl"/>
 					<center>
 						<p:panel header="" styleClass="panelLogin"
 							style="margin-top:60px;">
@@ -90,7 +90,7 @@
 											styleClass="w100" autocomplete="off"/>
 								</h:panelGrid>
 								<p:commandButton id="loginButton" value="Ingresar" 
-									action="#{loginController.acceder()}" update=":indexForm" 
+									action="#{loginController.validarUsuario()}" update=":indexForm"  process="@this username password grid" partialSubmit="true"
 									styleClass="buttonLogin w100" />
 										
 								<h:panelGrid columns="1" styleClass="w100" columnClasses="alRight">

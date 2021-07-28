@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.Questions;
 import lombok.Getter;
 import lombok.Setter;
@@ -85,6 +86,11 @@ public class Safeguards  {
 	@Setter
 	@OneToMany(mappedBy = "safeguards", fetch = FetchType.LAZY)
 	private List<Questions> questionsList;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "safeguards", fetch = FetchType.LAZY)
+	private List<ProjectQuestions> projectQuestionsList;
 	
 	@Getter
 	@Setter

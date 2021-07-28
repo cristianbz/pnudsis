@@ -29,7 +29,7 @@ public class SafeguardsFacade extends AbstractFacade<Safeguards, Integer> {
 	}
 	
 	public List<Object[]> listarSalvaguardas() throws Exception {
-		String sql = "select safe_id,safe_description,safe_order,safe_code from sigma.safeguards WHERE safe_level=1 order by safe_order";
+		String sql = "select safe_id,safe_description,safe_order,safe_code,safe_title from sigma.safeguards WHERE safe_level=1 order by safe_order";
 		return consultaNativa(sql);
 	}
 }

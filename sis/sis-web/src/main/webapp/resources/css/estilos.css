@@ -144,3 +144,10 @@
 	text-align: left;
 	font-weight: bold;
 }
+.ui-growl {
+	width: 350px !important;
+}
+
+.ui-growl-message {
+	width: 220px !important;
+}

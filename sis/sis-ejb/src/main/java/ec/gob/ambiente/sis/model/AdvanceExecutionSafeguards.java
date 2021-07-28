@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ec.gob.ambiente.sigma.model.Projects;
+import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.suia.model.Users;
 import lombok.Getter;
 import lombok.Setter;
@@ -126,6 +127,12 @@ public class AdvanceExecutionSafeguards {
 	@JoinColumn(name = "proj_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
 	private Projects projects;
+	
+	@Getter
+	@Setter
+	@JoinColumn(name = "pspa_id")
+	@ManyToOne(fetch = FetchType.LAZY)	
+	private ProjectsStrategicPartners projectsStrategicPartners;
 	
 	@Getter
 	@Setter

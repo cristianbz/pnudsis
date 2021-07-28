@@ -12,13 +12,16 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.primefaces.PrimeFaces;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
@@ -27,8 +30,11 @@ import org.primefaces.model.menu.MenuModel;
 
 import ec.gob.ambiente.sigma.model.User;
 import ec.gob.ambiente.sis.bean.LoginBean;
+import ec.gob.ambiente.sis.services.ProjectUsersFacade;
 import ec.gob.ambiente.sis.services.UserFacade;
+import ec.gob.ambiente.sis.utils.EncriptarSHA;
 import ec.gob.ambiente.sis.utils.JsfUtil;
+import ec.gob.ambiente.sis.utils.Mensaje;
 import ec.gob.ambiente.suia.model.Menu;
 import ec.gob.ambiente.suia.model.MenuVO;
 import ec.gob.ambiente.suia.model.Role;
@@ -37,12 +43,16 @@ import ec.gob.ambiente.suia.service.MenuFacade;
 import ec.gob.ambiente.suia.service.PeopleFacade;
 import ec.gob.ambiente.suia.service.RoleFacade;
 import ec.gob.ambiente.suia.service.RolesUserFacade;
+import ec.gob.ambiente.suia.service.UsersFacade;
+import lombok.Getter;
+import lombok.Setter;
 
 @Named
 @ViewScoped
 public class LoginController implements Serializable {
 	
 	private static final long serialVersionUID = -8722324921427912257L;
+	private static final Logger log = Logger.getLogger(LoginController.class);
 	
 	@EJB
 	private MenuFacade menuFacade;
@@ -54,10 +64,25 @@ public class LoginController implements Serializable {
 	private UserFacade userFacade;
 	
 	@EJB
+	@Getter
+	private UsersFacade usersFacade;
+	
+	@EJB
+	@Getter
+	private ProjectUsersFacade projectUsersFacade;
+	
+	@EJB
+	@Getter
 	private RolesUserFacade rolesUserFacade;
 	
 	@Inject
+	@Getter
 	private LoginBean loginBean;
+	
+	@Getter
+	@Setter
+	@Inject
+	private MensajesController mensajesController;
 	
 	/*@EJB
 	private ContactFacade contactFacade;*/
@@ -77,6 +102,13 @@ public class LoginController implements Serializable {
 	private String userEmail;
 	private String prefijoRoles;
 	
+	private static String ROL_SOCIO_ESTRATEGICO="SIS_socio_estrategico";
+	private static String ROL_SOCIO_IMPLEMENTADOR="SIS_socio_implementador";
+	private static String ROL_ADMINISTRADOR="SIS_Administrador";
+	
+
+	
+	private ExternalContext ec;
 	
 	@PostConstruct
 	private void init() throws RuntimeException, IOException, ServletException
@@ -135,7 +167,7 @@ public class LoginController implements Serializable {
 	            loginBean.setPassword(password);
 	            loginBean.setLoggedIn(loggedIn);
 	            loginBean.setTiempoSession(request.getSession().getMaxInactiveInterval());
-	            loginBean.setUser(userFacade.findByUserName(this.getUsername()));
+//	            loginBean.setUsers(userFacade.findByUserName(this.getUsername()));
 	            
 	            fillMenuModel();             
 	           
@@ -490,7 +522,7 @@ public class LoginController implements Serializable {
 	public boolean verificarUsuario(String userName, String userPwd) {
 
 		User user = userFacade.findByUserName(userName);
-		loginBean.setUser(user);
+//		loginBean.setUsers(user);
 
 		if(user.getUserId() == null) {
 			msg = "Usuario no encontrado: " + userName;
@@ -601,4 +633,52 @@ public class LoginController implements Serializable {
 			e.printStackTrace();
 		}	
 	}
+	
+	public void validarUsuario(){		
+		try{
+			
+			getLoginBean().setUser(getUsersFacade().validarUsuario(username,EncriptarSHA.encriptarSHA1(password)));
+			getLoginBean().setListaProyectosDelUsuario(new ArrayList<>());
+			if(getLoginBean().getUser()!=null){
+				ec = FacesContext.getCurrentInstance().getExternalContext();
+				getLoginBean().setSesion( (HttpSession)ec.getSession(true));
+				getLoginBean().getSesion().setAttribute("logeado", true);
+				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listRoleByUser(getLoginBean().getUser()));
+				for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
+					if(ru.getRole().getRoleName().equals(ROL_SOCIO_ESTRATEGICO)){
+						getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));
+						getLoginBean().setTipoRol(3);
+						break;
+					}else if(ru.getRole().getRoleName().equals(ROL_SOCIO_IMPLEMENTADOR)){
+						getLoginBean().setTipoRol(2);
+						break;
+					}else{
+						getLoginBean().setTipoRol(1);
+						break;
+					}
+				}
+				
+				JsfUtil.redirect("/pages/inicio.xhtml");
+			}else{
+				Mensaje.actualizarComponente(":indexForm:growl");
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.usuarionoValido"), "");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * Valida si la sesion esta activa
+	 */
+	public void validarSesion() {
+		try {
+			if (!(getLoginBean().getSesion()!=null && (boolean) getLoginBean().getSesion().getAttribute("logeado"))) {
+				ec=FacesContext.getCurrentInstance().getExternalContext();
+				ec.redirect(ec.getRequestContextPath() + "/index.xhtml");
+			}
+		}catch(IOException e) {
+			log.error(new StringBuilder().append(this.getClass().getName() + "." + "validarSesion" + ": ").append(e.getMessage()));
+		}
+	}	
 }

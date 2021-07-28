@@ -40,6 +40,44 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	public AdvanceExecutionSafeguardsFacade() {
 		super(AdvanceExecutionSafeguards.class,Integer.class);
 	}
+	/**
+	 * Busca si existe un avance de ejecucion para genero o proyecto en base a un periodo de reporte
+	 * @param codigoProyecto
+	 * @param codigoPartner
+	 * @param generoSalvaguarda  1 salvaguarda  2 genero
+	 * @param desde
+	 * @param hasta
+	 * @return
+	 * @throws DaoException
+	 */
+	public AdvanceExecutionSafeguards buscarAvanceSalvaguardaGeneroReportado(int codigoProyecto, int codigoPartner,int generoSalvaguarda,String desde,String hasta) throws DaoException{
+		try{
+			String sql="";
+			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+			if (codigoProyecto>0 && codigoPartner == 0 && generoSalvaguarda == 1){
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = FALSE AND AE.adexIsReported=TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
+				camposCondicion.put("codigoProyecto", codigoProyecto);
+				camposCondicion.put("desde", desde);
+				camposCondicion.put("hasta", hasta);
+			}else if (codigoProyecto>0 && codigoPartner > 0 && generoSalvaguarda == 1){
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoPartner AND AE.adexIsGender = FALSE AND AE.adexIsReported=TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta";
+				camposCondicion.put("codigoProyecto", codigoProyecto);
+				camposCondicion.put("codigoPartner", codigoPartner);
+				camposCondicion.put("desde", desde);
+				camposCondicion.put("hasta", hasta);
+			}else if (codigoProyecto>0 && codigoPartner == 0 && generoSalvaguarda == 2){
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = TRUE AND AE.adexIsReported=TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
+				camposCondicion.put("codigoProyecto", codigoProyecto);
+				camposCondicion.put("desde", desde);
+				camposCondicion.put("hasta", hasta);
+			}			
+			return findByCreateQuerySingleResult(sql, camposCondicion);
+		}catch(NoResultException e){
+			return null;
+		}catch(Exception e){
+			throw new DaoException();
+		}
+	}
 	
 	/**
 	 * Devuelve el avance de ejecucion por proyecto
@@ -48,8 +86,26 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 */	
 	public AdvanceExecutionSafeguards buscarPorProyecto(int codigoProyecto) throws DaoException{
 		try{
-			String sql="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsGender = FALSE";
+			String sql="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.projectsStrategicPartners.pspaId=NULL AND AP.adexIsGender = FALSE AND AP.adexIsReported=FALSE";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+			camposCondicion.put("codigoProyecto", codigoProyecto);
+			return findByCreateQuerySingleResult(sql, camposCondicion);
+		}catch(NoResultException e){
+			return null;
+		}catch(Exception e){
+			throw new DaoException();
+		}
+	}
+	/**
+	 * Devuelve el avance de ejecucion por strategicPartner
+	 * @param codigoProyecto
+	 * @return
+	 */	
+	public AdvanceExecutionSafeguards buscarPorStrategicPartner(int codigoPartner,int codigoProyecto) throws DaoException{
+		try{
+			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projectsStrategicPartners.pspaId=:codigoPartner AND AE.projects.projId=:codigoProyecto AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaStatus= TRUE AND AE.adexIsReported=FALSE";
+			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+			camposCondicion.put("codigoPartner", codigoPartner);
 			camposCondicion.put("codigoProyecto", codigoProyecto);
 			return findByCreateQuerySingleResult(sql, camposCondicion);
 		}catch(NoResultException e){
@@ -67,7 +123,7 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	public AdvanceExecutionSafeguards buscarAvanceGeneroPorProyecto(int codigoProyecto) throws DaoException{
 		try{
 //			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsReported=false AND AE.adexIsGender=true AND AE.adexStatus=true";
-			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=true AND AE.adexStatus=true";
+			String sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=true AND AE.adexIsReported=false AND AE.adexStatus=true";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoProyecto", codigoProyecto);
 			return findByCreateQuerySingleResult(sql, camposCondicion);

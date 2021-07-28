@@ -7,11 +7,11 @@
 
 <h:head>
 	<link rel="stylesheet" type="text/css"
-		href="../resources/css/estilos.css" />
+		href="${facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
 	<link rel="stylesheet" type="text/css"
-		href="../resources/css/primeflex/primeflex.css" />
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
 	<link rel="stylesheet" type="text/css"
-		href="../resources/css/primeicons-master/primeicons.css" />
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeicons-master/primeicons.css" />
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
@@ -25,12 +25,9 @@
 	</script>
 </h:head>
 <body>
-
-	<h:form prependId="true" id="form">
-				
+	<f:event listener="#{loginController.validarSesion()}" type="preRenderView" />
+	<h:form id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
-		
-
 		<p:dialog widgetVar="dlgEnProc" draggable="false" modal="true"
 			resizable="false" closable="false" responsive="true"
 			style="font-size: 10px;">
@@ -38,34 +35,531 @@
 				height="200" />
 		</p:dialog>
 
+		<p:dialog widgetVar="dlgEliminaPregunta" showEffect="fade" hideEffect="fade"
+			modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaRegistro']}" width="390"
+			closable="false" resizable="false">
+			<h:panelGrid columns="2">
+				<p:commandButton process="@this" update="tabs" actionListener="#{administracionController.eliminarPregunta()}" oncomplete="PF('dlgEliminaPregunta').hide();"/>
+			</h:panelGrid>
+			
+			
+		</p:dialog>
 		<div class="ui-fluid p-formgrid p-grid">
-
 			<div class="p-field p-col-12 p-md-3"></div>
 			<div class="p-field p-col-12 p-md-6">
-				<p:tabView>
-					<p:tab >
-						<p:dataTable value="#{administracionController.administracionBean.listaPreguntas}" var="pregunta">
-							<p:column headerText="#{etiquetas['nro']}">
-								#{pregunta.quesId}
+				<p:tabView id="tabs">
+					<p:tab title="#{etiquetas['preguntasSeguimiento']}">
+						<p:outputPanel id="panelPregunta">
+							<p:panel rendered="#{administracionBean.nuevaPregunta}" header="#{titulos['ingresoPreguntas']}">
+								<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['orden']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">									
+										<p:inputNumber value="#{administracionBean.preguntaSeleccionada.quesQuestionOrder}" tabindex="1"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['salvaguarda']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:selectOneMenu tabindex="2"
+										value="#{administracionController.administracionBean.codigoSalvaguarda}">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems
+											value="#{administracionController.administracionBean.listaSalvaguardas}"
+											var="sf" itemLabel="#{sf.safeCode}" itemValue="#{sf.safeId}" />
+									</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['tipoRespuesta']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:selectOneMenu tabindex="2"
+										value="#{administracionController.administracionBean.codigoTipoRespuesta}">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems
+											value="#{administracionController.administracionBean.listaTipoRespuestaPregunta}"
+											var="tr" itemLabel="#{tr.cataText1}" itemValue="#{tr.cataId}" />
+									</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['contPregunta']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputTextarea tabindex="3"
+										value="#{administracionController.administracionBean.preguntaSeleccionada.quesContentQuestion}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['contPreguntaIngles']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputTextarea tabindex="4"
+										value="#{administracionController.administracionBean.preguntaSeleccionada.quesContentQuestionEnglish}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['estado']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+										<p:toggleSwitch value="#{administracionController.administracionBean.preguntaSeleccionada.quesStatus}">
+											<p:ajax process="@this" event="change"/>
+										</p:toggleSwitch>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelPregunta tablaPreguntas " title="#{tooltip['grabar']}" tabindex="6"																							
+															actionListener="#{administracionController.agregarEditarPregunta()}" value="#{botones['guardar']}"
+															update="panelPregunta tablaPreguntas :form:growl"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelPregunta" update="panelPregunta" immediate="true" 
+											tabindex="7"  value="#{botones['cancelar']}"
+											resetValues="true" title="#{tooltip['cancelar']}">
+											
+											<f:setPropertyActionListener value="false" target="#{administracionController.administracionBean.nuevaPregunta}"/>
+										</p:commandButton>
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+								</div>
+							</p:panel>
+						</p:outputPanel>
+						<div class="p-field p-col-12 p-md-12"
+							style="background: #00AAC3; color: #FFFFFF; display: block;">
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-11" style="font-weight: bold;">
+									<p:outputLabel value="#{etiquetas['ingresarPregunta']}" />
+								</div>
+								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
+										actionListener="#{administracionController.nuevaPregunta(1)}" update="panelPregunta"
+										process="@this"/>
+
+								</div>
+							</div>
+						</div>
+						<br />
+						<p:dataTable id="tablaPreguntas"
+							value="#{administracionController.administracionBean.listaPreguntas}"
+							rows="10" paginator="true" rowKey="#{pregunta.quesId}"
+							filteredValue="#{administracionController.administracionBean.listaPreguntasFiltradas}"
+							var="pregunta">
+							<p:column headerText="#{etiquetas['orden']}" sortable="true"
+								style="width:30px;">
+								#{pregunta.quesQuestionOrder}
 							</p:column>
-							<p:column headerText="#{etiquetas['salvaguarda']}">
-								#{pregunta.safeguards.safeDescription}
+							<p:column headerText="#{etiquetas['salvaguarda']}"
+								filterMatchMode="contains" style="width:100px;"
+								filterBy="#{pregunta.safeguards.safeCode}">
+								#{pregunta.safeguards.safeCode}
 							</p:column>
 							<p:column headerText="#{etiquetas['pregunta']}">
 								#{pregunta.quesContentQuestion}
 							</p:column>
-							<p:column headerText="#{etiquetas['orden']}">
-								#{pregunta.quesQuestionOrder}
+							<p:column headerText="#{etiquetas['pregunta']}">
+								#{pregunta.quesContentQuestionEnglish}
 							</p:column>
-							<p:column headerText="#{etiquetas['estado']}">
-								#{pregunta.quesStatus}
+
+							<p:column headerText="#{etiquetas['estado']}" style="width:70px;">
+								<p:outputLabel
+									value="#{pregunta.quesStatus==true?'Activa':'Inactiva'}" />
 							</p:column>
-							<p:column>
+							<p:column width="40">
+								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarPregunta(pregunta)}"
+									process="@this :form:tabs:panelPregunta" update=":form:tabs:panelPregunta" />
+
 							</p:column>
 						</p:dataTable>
 					</p:tab>
-				
-				</p:tabView>				
+					<p:tab title="#{etiquetas['preguntaGenero']}">
+						<p:outputPanel id="panelPreguntaGenero">
+							<p:panel rendered="#{administracionBean.nuevaPreguntaGenero}" header="#{titulos['ingresoPreguntas']}">
+								<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['orden']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">									
+										<p:inputNumber value="#{administracionBean.preguntaSeleccionada.quesQuestionOrder}" tabindex="1"/>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['tipoRespuesta']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:selectOneMenu tabindex="2"
+										value="#{administracionController.administracionBean.codigoTipoRespuesta}">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems
+											value="#{administracionController.administracionBean.listaTipoRespuestaPregunta}"
+											var="tr" itemLabel="#{tr.cataText1}" itemValue="#{tr.cataId}" />
+									</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+																		
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['contPregunta']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputTextarea tabindex="3"
+										value="#{administracionController.administracionBean.preguntaSeleccionada.quesContentQuestion}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['contPreguntaIngles']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputTextarea tabindex="4"
+										value="#{administracionController.administracionBean.preguntaSeleccionada.quesContentQuestionEnglish}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['estado']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+										<p:toggleSwitch value="#{administracionController.administracionBean.preguntaSeleccionada.quesStatus}">
+											<p:ajax process="@this" event="change"/>
+										</p:toggleSwitch>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelPreguntaGenero tablaPreguntasGenero " title="#{tooltip['grabar']}" tabindex="6"																							
+															actionListener="#{administracionController.agregarEditarPreguntaGenero()}" value="#{botones['guardar']}"
+															update="panelPreguntaGenero tablaPreguntasGenero :form:growl"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelPreguntaGenero" update="panelPreguntaGenero" immediate="true" 
+											tabindex="7"  value="#{botones['cancelar']}"
+											resetValues="true" title="#{tooltip['cancelar']}">
+											
+											<f:setPropertyActionListener value="false" target="#{administracionController.administracionBean.nuevaPreguntaGenero}"/>
+										</p:commandButton>
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+								</div>
+							</p:panel>
+						</p:outputPanel>
+						<div class="p-field p-col-12 p-md-12"
+							style="background: #00AAC3; color: #FFFFFF; display: block;">
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-11" style="font-weight: bold;">
+									<p:outputLabel value="#{etiquetas['ingresarPregunta']}" />
+								</div>
+								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
+										actionListener="#{administracionController.nuevaPregunta(2)}" update="panelPreguntaGenero"
+										process="@this"/>
+
+								</div>
+							</div>
+						</div>
+						<br />
+						<p:dataTable id="tablaPreguntasGenero"
+							value="#{administracionController.administracionBean.listaPreguntasGenero}"
+							rows="10" paginator="true" rowKey="#{pregunta.quesId}"
+							filteredValue="#{administracionController.administracionBean.listaPreguntasGeneroFiltradas}"
+							var="pregunta">
+							<p:column headerText="#{etiquetas['orden']}" sortable="true"
+								style="width:30px;">
+								#{pregunta.quesQuestionOrder}
+							</p:column>							
+							<p:column headerText="#{etiquetas['pregunta']}">
+								#{pregunta.quesContentQuestion}
+							</p:column>
+							<p:column headerText="#{etiquetas['pregunta']}">
+								#{pregunta.quesContentQuestionEnglish}
+							</p:column>
+
+							<p:column headerText="#{etiquetas['estado']}" style="width:70px;">
+								<p:outputLabel
+									value="#{pregunta.quesStatus==true?'Activa':'Inactiva'}" />
+							</p:column>
+							<p:column width="40">
+								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarPreguntaGenero(pregunta)}"
+									process="@this :form:tabs:panelPreguntaGenero" update=":form:tabs:panelPreguntaGenero" />
+
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab title="#{etiquetas['catalogos']}">
+						<p:outputPanel id="panelCatalogos">
+							<p:panel rendered="#{administracionBean.nuevoCatalogo}" header="#{titulos['ingresoCatalogos']}">
+								<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['tipo']}" />
+									</div>									
+									<div class="p-field p-col-12 p-md-6">
+									<p:selectOneMenu tabindex="1"
+										value="#{administracionController.administracionBean.codigoTipoCatalogo}">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems
+											value="#{administracionController.administracionBean.listaTipoCatalogo}"
+											var="cata" itemLabel="#{cata.catyDescription}" itemValue="#{cata.catyId}" />
+									</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+																		
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['orden']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputNumber tabindex="2" decimalPlaces="0"
+										value="#{administracionController.administracionBean.catalogoSeleccionado.cataOrder}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['descripcionCorta']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputTextarea tabindex="3"
+										value="#{administracionController.administracionBean.catalogoSeleccionado.cataText1}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['descripcionLarga']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputTextarea tabindex="4"
+										value="#{administracionController.administracionBean.catalogoSeleccionado.cataText2}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['estado']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+										<p:toggleSwitch value="#{administracionController.administracionBean.catalogoSeleccionado.cataStatus}" tabindex="5">
+											<p:ajax process="@this" event="change"/>
+										</p:toggleSwitch>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelCatalogos tablaCatalogos " title="#{tooltip['grabar']}" tabindex="6"																							
+															actionListener="#{administracionController.agregaEditaCatalogo()}" value="#{botones['guardar']}"
+															update="panelCatalogos tablaCatalogos :form:growl"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelCatalogos" update="panelCatalogos" immediate="true" 
+											tabindex="7"  value="#{botones['cancelar']}"
+											resetValues="true" title="#{tooltip['cancelar']}">
+											
+											<f:setPropertyActionListener value="false" target="#{administracionController.administracionBean.nuevoCatalogo}"/>
+										</p:commandButton>
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+								</div>
+							</p:panel>
+						</p:outputPanel>
+						<div class="p-field p-col-12 p-md-12"
+							style="background: #00AAC3; color: #FFFFFF; display: block;">
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-11" style="font-weight: bold;">
+									<p:outputLabel value="#{titulos['ingresoCatalogos']}" />
+								</div>
+								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
+										actionListener="#{administracionController.nuevoCatalogo}" update="panelCatalogos"
+										process="@this"/>
+
+								</div>
+							</div>
+						</div>
+						<br />
+						<p:dataTable id="tablaCatalogos"
+							value="#{administracionController.administracionBean.listaCatalogos}"
+							rows="10" paginator="true" rowKey="#{cata.cataId}"							
+							var="cata">
+							<p:column headerText="#{etiquetas['tipo']}" groupRow="true">
+								#{cata.catalogsType.catyDescription}
+							</p:column> 
+							<p:column headerText="#{etiquetas['orden']}" 
+								style="width:30px;">
+								#{cata.cataOrder}
+							</p:column>							
+							<p:column headerText="#{etiquetas['descripcionCorta']}">
+								#{cata.cataText1}
+							</p:column>
+							<p:column headerText="#{etiquetas['descripcionLarga']}">
+								#{cata.cataText2}
+							</p:column>
+
+							<p:column headerText="#{etiquetas['estado']}" style="width:70px;">
+								<p:outputLabel
+									value="#{cata.cataStatus==true?'Activa':'Inactiva'}" />
+							</p:column>
+							<p:column width="40">
+								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarcatalogo(cata)}"
+									process="@this :form:tabs:panelCatalogos" update=":form:tabs:panelCatalogos" />
+
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab title="#{etiquetas['usuarioProyecto']}">
+						<p:outputPanel id="panelUsuarios">
+							<p:panel rendered="#{administracionBean.nuevoUsuario}" header="#{titulos['ingresoUsuarios']}">
+								<div class="ui-fluid p-formgrid p-grid">
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['usuario']}" />
+									</div>									
+									<div class="p-field p-col-12 p-md-6">
+									<p:inputText value="#{administracionBean.nombreUsuario}" required="true" id="usuario">
+										<f:validateLength minimum="3"/>
+									</p:inputText>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+										<p:commandButton value="#{botones['buscar']}" icon="#{botones['icono.buscar']}"
+											update="listaUsuarios" partialSubmit="true"
+											process="@this usuario" actionListener="#{administracionController.buscarUsuarios()}"/>
+									</div>
+									
+																																		
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['usuario']}" />
+									</div>									
+									<div class="p-field p-col-12 p-md-6">
+									<p:selectOneListbox id="listaUsuarios" value="#{administracionBean.usuarioSeleccionado}">
+						                <f:selectItems value="#{administracionBean.listaUsuarios}" var="usuario" itemLabel="#{usuario.userName}" itemValue="#{usuario.userId}"/>						                
+						            </p:selectOneListbox>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+																		
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['proyectos']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+										<p:selectOneMenu id="listaProyectos" value="#{administracionBean.codigoProyecto}" style="width:220px;">
+											<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+												itemValue="#{null}" />
+											<f:selectItems
+												value="#{administracionBean.listaProyectos}"
+												var="proy" itemLabel="#{proy.projTitle}" itemValue="#{proy.projId}" />
+										</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+																		
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['estado']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+										<p:toggleSwitch value="#{administracionBean.usuarioSeleccionado.prusStatus}" tabindex="5">
+											<p:ajax process="@this" event="change"/>
+										</p:toggleSwitch>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelUsuarios tablaUsuarios " title="#{tooltip['grabar']}" tabindex="6"																							
+															actionListener="#{administracionController.agregaEditaCatalogo()}" value="#{botones['guardar']}"
+															update="panelUsuarios tablaUsuarios :form:growl"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelUsuarios" update="panelUsuarios" immediate="true" 
+											tabindex="7"  value="#{botones['cancelar']}"
+											resetValues="true" title="#{tooltip['cancelar']}">
+											
+											<f:setPropertyActionListener value="false" target="#{administracionController.administracionBean.nuevoUsuario}"/>
+										</p:commandButton>
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+								</div>
+							</p:panel>
+						</p:outputPanel>
+						<div class="p-field p-col-12 p-md-12"
+							style="background: #00AAC3; color: #FFFFFF; display: block;">
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-11" style="font-weight: bold;">
+									<p:outputLabel value="#{titulos['ingresoUsuarios']}" />
+								</div>
+								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
+										actionListener="#{administracionController.nuevoUsuario}" update="panelUsuarios"
+										process="@this"/>
+
+								</div>
+							</div>
+						</div>
+						<br />
+						<p:dataTable id="tablaUsuarios"
+							value="#{administracionBean.listaProyectoUsuarios}"
+							rows="10" paginator="true" rowKey="#{proy.prusId}"							
+							var="proy">
+							<p:column headerText="#{etiquetas['proyectos']}" groupRow="true">
+								#{proy.projects.projTitle}
+							</p:column> 										
+							<p:column headerText="#{etiquetas['usuario']}">
+								#{proy.users.userName}
+							</p:column>
+							<p:column headerText="#{etiquetas['estado']}" style="width:70px;">
+								<p:outputLabel
+									value="#{proy.prusStatus == true?'Activa':'Inactiva'}" />
+							</p:column>
+							<p:column width="40">
+								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarUsuario(proy)}"
+									process="@this :form:tabs:panelUsuarios" update=":form:tabs:panelUsuarios" />
+
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+				</p:tabView>
+				<br />
+				<h:panelGrid style="margin:0 auto;">
+					<p:commandButton id="btnVolverInicio"
+						value="#{botones['volverInicio']}" icon="fa fa-home"
+						action="#{sesionController.redireccionarAPagina('','inicio')}"
+						process="@this" />
+				</h:panelGrid>
 			</div>
 			<div class="p-field p-col-12 p-md-3"></div>
 		</div>

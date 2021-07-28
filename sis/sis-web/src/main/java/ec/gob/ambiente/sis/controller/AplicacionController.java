@@ -105,6 +105,16 @@ public class AplicacionController implements Serializable{
     	}catch(Exception e ){
     		e.printStackTrace();
     	}
-    }    
+    }  
+    
+    public void cargarSalvaguardas(){
+    	try{
+    		if(getAplicacionBean().getListaSalvaguardas() == null){
+    			getAplicacionBean().setListaSalvaguardas(getSafeguardsFacade().listarSalvaguardas());
+    		}
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    }
 }
 

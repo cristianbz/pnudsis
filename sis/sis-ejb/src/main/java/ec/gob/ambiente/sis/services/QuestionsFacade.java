@@ -18,9 +18,19 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	public QuestionsFacade() {
 		super(Questions.class, Integer.class);
 	}
-	
+	/**
+	 * Preguntas de salvaguardas ingresadas
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Questions> listaPreguntasIngresadas() throws Exception{
-		String sql="SELECT Q FROM Questions Q ";
+		String sql="SELECT Q FROM Questions Q ORDER BY Q.safeguards.safeCode,Q.quesId";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	
+	public List<Questions> listaPreguntasGeneroIngresadas() throws Exception{
+		String sql="SELECT Q FROM Questions Q WHERE Q.quesIsGender=TRUE ORDER BY Q.safeguards.safeCode,Q.quesId";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery(sql, camposCondicion);
 	}
@@ -29,7 +39,7 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 */
 	
 	public List<Questions> buscarTodasLasPreguntas() throws Exception{
-		String sql="SELECT Q FROM Questions Q AND Q.quesStatus=True AND Q.quesIsGender = FALSE ";
+		String sql="SELECT Q FROM Questions Q AND Q.quesStatus=True AND Q.quesIsGender = FALSE ORDER BY Q.quesId";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery(sql, camposCondicion);
 	}
@@ -64,5 +74,18 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 		String sql="SELECT Q FROM Questions Q WHERE Q.quesStatus=True AND Q.quesIsGender = TRUE ORDER BY Q.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
 		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Crea o edita una pregunta
+	 * @param pregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public Questions crearEditarPregunta(Questions pregunta) throws Exception{
+		if(pregunta.getQuesId() == null)
+			create(pregunta);
+		else
+			edit(pregunta);
+		return pregunta;
 	}
 }

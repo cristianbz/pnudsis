@@ -9,11 +9,11 @@
 
 <h:head>
 	<link rel="stylesheet" type="text/css"
-		href="../resources/css/estilos.css" />
+		href="${facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
 	<link rel="stylesheet" type="text/css"
-		href="../resources/css/primeflex/primeflex.css" />
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
 	<link rel="stylesheet" type="text/css"
-		href="../resources/css/primeicons-master/primeicons.css" />
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeicons-master/primeicons.css" />
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
@@ -27,7 +27,7 @@
 	</script>
 </h:head>
 <body>
-
+	<f:event listener="#{loginController.validarSesion()}" type="preRenderView" />
 	<h:form prependId="true" id="form">
 		<p:dialog widgetVar="dlgInfoDetailGenero" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
@@ -253,7 +253,7 @@
 				<comp:buscaProyectos id="buscaProyectos"
 					componenteBuscaProyectos="#{registroGeneroController.componenteBuscarProyectos}" />
 				<br />
-				<p:outputPanel>
+				<p:outputPanel id="panelOpcionesProyecto">
 					<h:panelGrid columns="2" style="margin:0 auto;"
 						rendered="#{registroGeneroController.datosProyecto()}">
 						<p:commandButton
@@ -335,21 +335,21 @@
 											<p:column headerText="#{etiquetas['presupuesto']}">
 											#{genero.pginBudget}
 										</p:column>
-											<p:column headerText="#{etiquetas['porcentajeAvance']}">
+											<p:column headerText="Indicadores">
 												<p:outputLabel
-													value="#{genero.genderAdvancesList.get(0).geadPercentageAdvance}"
+													value="Numero de mujeres ..."
 													style="color:blue" />
 											</p:column>
 											<p:column
-												headerText="#{etiquetas['descripcionAvanceGenero']}">
+												headerText="Meta">
 												<p:outputLabel
-													value="#{genero.genderAdvancesList.get(0).geadAdvanceDescription}"
+													value="200 personas capacitadas."
 													style="color:blue" />
 											</p:column>
 											<p:column width="30">
 												<p:commandButton
 													actionListener="#{registroGeneroController.mostrarDialogoDetallesAvanceGenero(genero)}"
-													update=":form:infoAvancesGenero :form:tabs:panelMostrarTabla1 :form:infoAvancesGenero"
+													update=":form:infoAvancesGenero :form:tabs:panelMostrarTabla1"
 													icon="#{botones['icono.checkcirculo']}"
 													partialSubmit="true"
 													title="#{etiquetas['datosAvanceGenero']}"

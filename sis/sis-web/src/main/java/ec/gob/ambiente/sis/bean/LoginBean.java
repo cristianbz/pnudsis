@@ -2,6 +2,7 @@ package ec.gob.ambiente.sis.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -11,17 +12,19 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import lombok.Getter;
-import lombok.Setter;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.menu.MenuModel;
 
-import ec.gob.ambiente.sigma.model.User;
+import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.services.UserFacade;
 import ec.gob.ambiente.sis.utils.JsfUtil;
 import ec.gob.ambiente.suia.model.Organization;
+import ec.gob.ambiente.suia.model.RolesUser;
+import ec.gob.ambiente.suia.model.Users;
 import ec.gob.ambiente.suia.service.PeopleFacade;
+import lombok.Getter;
+import lombok.Setter;
 
 
 //import ec.gob.ambiente.suia.enlisy.services.UserFacade;
@@ -46,8 +49,14 @@ public class LoginBean implements Serializable {
 	private String username;
 
 	private String password;
-
-	private User user;
+	
+	@Getter
+	@Setter
+	private Users user;
+	
+	@Getter
+	@Setter
+	private HttpSession sesion;
 
 	private Map<String, Object> content;
 
@@ -64,12 +73,25 @@ public class LoginBean implements Serializable {
 	
 	
 	private int tiempoSession;
-
+	
+	@Getter
+	@Setter
+	private List<RolesUser> listaRolesUsuario;
+	
+	@Getter
+	@Setter
+	//1 Admin  2 Socio Implementador  3 Socio estrategico
+	private int tipoRol;
+	
+	@Getter
+	@Setter
+	private List<ProjectUsers> listaProyectosDelUsuario;
+	
 	@PostConstruct
 	public void init() {
 		
 		organization=null;
-
+		user=new Users();
 	}
 	
 	/**
@@ -159,14 +181,6 @@ public class LoginBean implements Serializable {
 
 	}
 
-	public User getUser() {		
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-//		organization=organizationFacade.findByRuc(user.getUserName());
-	}
 
 	public long getProcessInstanceId() {
 		return processInstanceId;

@@ -32,6 +32,7 @@ import ec.gob.ambiente.sigma.services.CatalogFacade;
 import ec.gob.ambiente.sigma.services.CatalogTypeFacade;
 import ec.gob.ambiente.sigma.services.ProjectsGenderInfoFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
+import ec.gob.ambiente.sis.bean.LoginBean;
 import ec.gob.ambiente.sis.bean.RegistroGeneroBean;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
@@ -122,6 +123,11 @@ public class RegistroGeneroController implements Serializable{
 	@EJB
 	@Getter
 	private TableResponsesFacade tableResponsesFacade;
+	
+    @Getter
+    @Setter
+    @Inject
+    private LoginBean loginBean;
 
 	@EJB
 	@Getter
@@ -149,9 +155,9 @@ public class RegistroGeneroController implements Serializable{
 			getRegistroGeneroBean().setListaValoresRespuestas(new ArrayList<>());
 			getRegistroGeneroBean().setListaPreguntas(new ArrayList<>());
 			getRegistroGeneroBean().setDatosGeneroParaMostrar(false);
-			usuario=new Users();
-			usuario.setUserName("Christian Báez");
-			usuario.setUserId(0);
+			usuario=getLoginBean().getUser();
+//			usuario.setUserName("Christian Báez");
+//			usuario.setUserId(0);
 			getRegistroGeneroBean().setPosicionTab(0);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -390,9 +396,9 @@ public class RegistroGeneroController implements Serializable{
 	 */
 	public void grabarAvanceGenero(){
 		try{
-			Users usuario=new Users();
-			usuario.setUserId(0);
-			usuario.setUserName("Christian Baez");
+//			Users usuario=new Users();
+//			usuario.setUserId(0);
+//			usuario.setUserName("Christian Baez");
 			AdvanceExecutionSafeguards avanceEjecucion=new AdvanceExecutionSafeguards();
 			getRegistroGeneroBean().getAvanceGeneroSeleccionado().setProjectsGenderInfo(getRegistroGeneroBean().getInformacionProyectoGeneroSeleccionado());
 			getRegistroGeneroBean().getAvanceGeneroSeleccionado().setGeadCreationDate(new Date());

@@ -127,5 +127,8 @@ public class Catalogs {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogs")
     private List<Questions> questionsList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogs")
+    private List<ProjectQuestions> projectQuestionsList;
 
 }

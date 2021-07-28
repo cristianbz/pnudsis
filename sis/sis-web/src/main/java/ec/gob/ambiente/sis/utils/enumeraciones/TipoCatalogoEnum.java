@@ -37,7 +37,8 @@ public enum TipoCatalogoEnum {
 	MONITOREOINSITU(28,"Monitoreo insitu"),
 	LINEAACCION(29,"Linea de accion"),
 	TIPOORGANIZACION(30,"Tipo de organizacion"),
-	TIPOINCENTIVO(31,"Tipo de incentivo");
+	TIPOINCENTIVO(31,"Tipo de incentivo"),
+	PREGUNTASASIGNACIONSALVAGUARDAS(32,"Preguntas asignacion salvaguardas");
 	
 	@Getter
 	private final int codigo;
