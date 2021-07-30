@@ -78,11 +78,11 @@
 						style="align-content: center">
 
 						<p:outputLabel value="#{etiquetas['buscarPor']}"
-							rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}" />
+							rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==4 or cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==1}" />
 						<p:spacer width="20px;" />
 						<p:selectOneRadio id="busqueda" unselectable="false"
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoBusquedaProyecto}"
-							rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
+							rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==4 or cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==1}">
 							<f:selectItem itemLabel="#{etiquetas['socioImplementador']}"
 								itemValue="#{1}" />
 							<f:selectItem itemLabel="#{etiquetas['tituloPlanProyecto']}"
@@ -94,7 +94,7 @@
 					</div>
 					<div class="ui-fluid p-formgrid p-grid">
 						<h:panelGrid id="pnlCritBusq" style="margin:0 auto;"
-							rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
+							rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==4 or cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==1}">
 							<h:panelGrid
 								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoBusquedaProyecto==0}"
 								style="height:30px;" />
@@ -268,7 +268,12 @@
 					<p:ajax event="tabChange"
 						listener="#{cc.attrs.componenteBuscaProyectos.tabChange}"
 						process="tabs" update="tabs" />
+					
 					<p:tab title="#{titulos['socioImpEstrategico']}">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"/>
+							<p:outputLabel value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}"/>
+						</h:panelGrid>						
 						<br />
 						<p:selectBooleanCheckbox
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
@@ -308,6 +313,11 @@
 
 					</p:tab>
 					<p:tab title="#{etiquetas['pregunta']}">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"/>
+							<p:outputLabel value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}"/>
+						</h:panelGrid>						
+						<br />
 						<br />
 						<p:outputLabel value="#{titulos['escojaPreguntas']}" />
 						<br />
@@ -344,6 +354,11 @@
 						</h:panelGrid>
 					</p:tab>
 					<p:tab title="#{etiquetas['salvaguarda']}">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"/>
+							<p:outputLabel value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}"/>
+						</h:panelGrid>						
+						<br />
 						<br />
 						<p:dataTable id="tablaSalvaguarda"
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaSalvaguardasAsignadas}"

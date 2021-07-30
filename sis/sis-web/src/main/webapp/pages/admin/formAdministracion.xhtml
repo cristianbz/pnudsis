@@ -48,8 +48,15 @@
 		<div class="ui-fluid p-formgrid p-grid">
 			<div class="p-field p-col-12 p-md-3"></div>
 			<div class="p-field p-col-12 p-md-6">
+				<br/>
+				<br/>
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-12">
+						<p:outputLabel value="#{titulos['cuidadoCambios']}"/>
+					</div>
+				</div>
 				<p:tabView id="tabs">
-					<p:tab title="#{etiquetas['preguntasSeguimiento']}">
+					<p:tab title="#{etiquetas['preguntasSalvaguardas']}">
 						<p:outputPanel id="panelPregunta">
 							<p:panel rendered="#{administracionBean.nuevaPregunta}" header="#{titulos['ingresoPreguntas']}">
 								<div class="ui-fluid p-formgrid p-grid">																									
@@ -444,7 +451,7 @@
 							<p:panel rendered="#{administracionBean.nuevoUsuario}" header="#{titulos['ingresoUsuarios']}">
 								<div class="ui-fluid p-formgrid p-grid">
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
-										<p:outputLabel value="#{etiquetas['usuario']}" />
+										<p:outputLabel value="#{etiquetas['nombreusuario']}" />
 									</div>									
 									<div class="p-field p-col-12 p-md-6">
 									<p:inputText value="#{administracionBean.nombreUsuario}" required="true" id="usuario">
@@ -453,7 +460,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:commandButton value="#{botones['buscar']}" icon="#{botones['icono.buscar']}"
-											update="listaUsuarios" partialSubmit="true"
+											update="listaUsuarios :form:growl" partialSubmit="true"
 											process="@this usuario" actionListener="#{administracionController.buscarUsuarios()}"/>
 									</div>
 									
@@ -462,8 +469,11 @@
 										<p:outputLabel value="#{etiquetas['usuario']}" />
 									</div>									
 									<div class="p-field p-col-12 p-md-6">
-									<p:selectOneListbox id="listaUsuarios" value="#{administracionBean.usuarioSeleccionado}">
-						                <f:selectItems value="#{administracionBean.listaUsuarios}" var="usuario" itemLabel="#{usuario.userName}" itemValue="#{usuario.userId}"/>						                
+									<p:selectOneListbox id="listaUsuarios" 
+										required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										value="#{administracionBean.usuarioSeleccionado}" converter="usuarioConverter">
+						                <f:selectItems value="#{administracionBean.listaUsuarios}" var="usuario" itemLabel="#{usuario.userName}" itemValue="#{usuario}"/>
+						                <p:ajax event="change" process="@this listaPartners" listener="#{administracionController.rolesUsuario()}" update="listaPartners"/>						                
 						            </p:selectOneListbox>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -473,12 +483,30 @@
 									<p:outputLabel value="#{etiquetas['proyectos']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-										<p:selectOneMenu id="listaProyectos" value="#{administracionBean.codigoProyecto}" style="width:220px;">
+										<p:selectOneMenu id="listaProyectos" value="#{administracionBean.codigoProyecto}" 
+											style="width:220px;" required="true" requiredMessage="#{mensajes['campoRequerido']}">
 											<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
 												itemValue="#{null}" />
 											<f:selectItems
 												value="#{administracionBean.listaProyectos}"
 												var="proy" itemLabel="#{proy.projTitle}" itemValue="#{proy.projId}" />
+											<p:ajax process="@this" event="change" update="listaPartners" listener="#{administracionController.cargaPartnersProyecto()}"/>	
+										</p:selectOneMenu>
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+									<p:outputLabel value="#{etiquetas['socioEstrategico']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+										<p:selectOneMenu id="listaPartners" value="#{administracionBean.codigoPartner}" disabled="#{administracionBean.noEsSocioEstrategico}"
+											style="width:220px;" >
+											<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+												itemValue="#{null}" />
+											<f:selectItems
+												value="#{administracionBean.listaPartners}"
+												var="part" itemLabel="#{part.partners.partName}" itemValue="#{part.partners.partId}" />
 										</p:selectOneMenu>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -489,7 +517,7 @@
 									<p:outputLabel value="#{etiquetas['estado']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-										<p:toggleSwitch value="#{administracionBean.usuarioSeleccionado.prusStatus}" tabindex="5">
+										<p:toggleSwitch value="#{administracionBean.proyectoUsuarioSeleccionado.prusStatus}" tabindex="5">
 											<p:ajax process="@this" event="change"/>
 										</p:toggleSwitch>
 									</div>
@@ -500,11 +528,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelUsuarios tablaUsuarios " title="#{tooltip['grabar']}" tabindex="6"																							
-															actionListener="#{administracionController.agregaEditaCatalogo()}" value="#{botones['guardar']}"
+															actionListener="#{administracionController.agregarEditarUsuario()}" value="#{botones['guardar']}"
 															update="panelUsuarios tablaUsuarios :form:growl"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelUsuarios" update="panelUsuarios" immediate="true" 
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelUsuarios" update="panelUsuarios :form:growl" immediate="true" 
 											tabindex="7"  value="#{botones['cancelar']}"
 											resetValues="true" title="#{tooltip['cancelar']}">
 											
@@ -537,9 +565,15 @@
 							var="proy">
 							<p:column headerText="#{etiquetas['proyectos']}" groupRow="true">
 								#{proy.projects.projTitle}
-							</p:column> 										
+							</p:column> 	
+							<p:column headerText="#{etiquetas['socioEstrategico']}">
+								#{proy.prusPartner}
+							</p:column>									
 							<p:column headerText="#{etiquetas['usuario']}">
 								#{proy.users.userName}
+							</p:column>
+							<p:column headerText="#{etiquetas['rol']}">
+								#{proy.prusRolUsuario}
 							</p:column>
 							<p:column headerText="#{etiquetas['estado']}" style="width:70px;">
 								<p:outputLabel

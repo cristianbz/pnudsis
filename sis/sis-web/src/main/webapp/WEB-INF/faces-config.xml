@@ -5,6 +5,10 @@
   <converter-id>catalogsConverter</converter-id>
   <converter-class>ec.gob.ambiente.sis.converter.CatalogsConverter</converter-class>
  </converter>
+  <converter>
+  <converter-id>usuarioConverter</converter-id>
+  <converter-class>ec.gob.ambiente.sis.converter.UsuarioConverter</converter-class>
+ </converter>
  <application>
   <locale-config>
    <default-locale>es_ES</default-locale>

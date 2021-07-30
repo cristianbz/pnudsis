@@ -1,7 +1,9 @@
 package ec.gob.ambiente.suia.service;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -113,5 +115,5 @@ public class RolesUserFacade extends AbstractFacade <RolesUser, Integer> impleme
 		}
         return result;
     }
-	
+
 }

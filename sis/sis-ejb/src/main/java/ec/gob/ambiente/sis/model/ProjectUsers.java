@@ -51,5 +51,15 @@ public class ProjectUsers implements Serializable {
 	@JoinColumn(name = "user_id")
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Users users;
+	
+	@Transient
+	@Getter
+	@Setter
+	private String prusRolUsuario;
+	
+	@Transient
+	@Getter
+	@Setter
+	private String prusPartner;
    
 }

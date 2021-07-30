@@ -22,8 +22,6 @@ import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
-
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
@@ -196,7 +194,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 	public void buscarProyectos(){
 		try{
 			getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
-			if(getBuscaProyectosBean().getTipoRol()!=3){
+			if(getBuscaProyectosBean().getTipoRol()==4 || getBuscaProyectosBean().getTipoRol()==1){
 				if(getBuscaProyectosBean().getCodigoBusquedaProyecto()==1){			
 					getBuscaProyectosBean().setListaProyectos(getProjectsFacade().listarProyectosPorIdSocioImpl(getBuscaProyectosBean().getCodigoSocioImplementador()));
 					if(getBuscaProyectosBean().getListaProyectos().size()==0){
@@ -223,10 +221,14 @@ public class ComponenteBuscaProyectos implements Serializable{
 			}else{
 				List<ProjectUsers> listaProyectousuarios=new ArrayList<>();
 				getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
-				//				listaProyectousuarios=getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId());
-				listaProyectousuarios=getLoginBean().getListaProyectosDelUsuario();
-				for (ProjectUsers pu : listaProyectousuarios) {
-					getBuscaProyectosBean().getListaProyectos().add(pu.getProjects());
+				if(getLoginBean().getListaProyectosDelUsuario().size()>0){	
+					listaProyectousuarios=getLoginBean().getListaProyectosDelUsuario();
+					for (ProjectUsers pu : listaProyectousuarios) {
+						getBuscaProyectosBean().getListaProyectos().add(pu.getProjects());
+					}
+				}else{
+					Mensaje.actualizarComponente(":form:growl");				
+					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, getMensajesController().getPropiedad("info.proyectosUsuario") ,"" );
 				}
 			}
 
@@ -257,11 +259,11 @@ public class ComponenteBuscaProyectos implements Serializable{
 					getBuscaProyectosBean().setDatosProyecto(true);
 				}
 			}else{
-				if(getLoginBean().getTipoRol()==3){					
-						cargaSectoresInteres();		
-						cargaAvanceEjecucionSalvaguardas(getBuscaProyectosBean().getProyectoSeleccionado());
-						getBuscaProyectosBean().setDatosProyecto(true);
-						sectoresInteresProyecto();
+				if(getLoginBean().getTipoRol()==3){						
+					cargaSectoresInteres();		
+					cargaAvanceEjecucionSalvaguardas(getBuscaProyectosBean().getProyectoSeleccionado());
+					getBuscaProyectosBean().setDatosProyecto(true);
+					sectoresInteresProyecto();					
 				}else{					
 					getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));					
 					Mensaje.verDialogo("dlgSeleccionSocios");
@@ -358,7 +360,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 		getBuscaProyectosBean().setPosicionTab(1);
 	}
 	public void siguienteTabSalvaguardasSeleccionadas(){
-		if(getBuscaProyectosBean().getPreguntasSelecionadas()!=null){
+		if(getBuscaProyectosBean().getPreguntasSelecionadas()!=null && getBuscaProyectosBean().getPreguntasSelecionadas().size()>0){
 			getBuscaProyectosBean().setPosicionTab(2);
 			asignarSalvaguardas();
 		}else{

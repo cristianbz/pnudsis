@@ -35,6 +35,7 @@ import ec.gob.ambiente.sis.services.UserFacade;
 import ec.gob.ambiente.sis.utils.EncriptarSHA;
 import ec.gob.ambiente.sis.utils.JsfUtil;
 import ec.gob.ambiente.sis.utils.Mensaje;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoRolesUsuarioEnum;
 import ec.gob.ambiente.suia.model.Menu;
 import ec.gob.ambiente.suia.model.MenuVO;
 import ec.gob.ambiente.suia.model.Role;
@@ -645,11 +646,15 @@ public class LoginController implements Serializable {
 				getLoginBean().getSesion().setAttribute("logeado", true);
 				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listRoleByUser(getLoginBean().getUser()));
 				for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
-					if(ru.getRole().getRoleName().equals(ROL_SOCIO_ESTRATEGICO)){
+					if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta())){
+						getLoginBean().setTipoRol(4);
+						break;
+					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.getEtiqueta())){
 						getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));
 						getLoginBean().setTipoRol(3);
 						break;
-					}else if(ru.getRole().getRoleName().equals(ROL_SOCIO_IMPLEMENTADOR)){
+					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
+						getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));
 						getLoginBean().setTipoRol(2);
 						break;
 					}else{

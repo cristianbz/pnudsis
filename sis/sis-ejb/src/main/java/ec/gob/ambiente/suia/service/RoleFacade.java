@@ -2,6 +2,7 @@ package ec.gob.ambiente.suia.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -9,11 +10,12 @@ import javax.persistence.Query;
 import ec.gob.ambiente.sigma.model.User;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.suia.model.Role;
+import ec.gob.ambiente.suia.model.Users;
 
 
 
 
-
+@LocalBean
 @Stateless
 public class RoleFacade extends AbstractFacade <Role, Integer> implements Serializable{
 
@@ -41,10 +43,10 @@ public class RoleFacade extends AbstractFacade <Role, Integer> implements Serial
 	 * @return Devuelve null si no encuntra ningun registro
 	 */
 	@SuppressWarnings("unchecked")
-    public List<Role> listRoleByUser(User usuario) throws Exception {
+    public List<Role> listRoleByUser(Users usuario) throws Exception {
         List<Role> result = null;
         try {
-        	Query query = getEntityManager().createQuery(" SELECT r FROM RolesUser ru, Role r WHERE ru.role.roleId=r.roleId and ru.user.userId = :userId");		
+        	Query query = getEntityManager().createQuery(" SELECT r FROM RolesUser ru, Role r WHERE ru.role.roleId=r.roleId and ru.users.userId = :userId");		
 			query.setParameter("userId",usuario.getUserId());
 			return (List<Role>) query.getResultList();
         } catch (NoResultException e) {

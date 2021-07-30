@@ -1472,7 +1472,7 @@
 						rendered="#{seguimientoSalvaguardaController.datosProyecto()}">
 						<p:commandButton
 							actionListener="#{seguimientoSalvaguardaController.cargaDatosProyectoSeleccionado()}"
-							process="@this :form:buscaProyectos" 
+							process="@this :form:buscaProyectos" onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();"
 							icon="#{botones['icono.check']}" update="@form"
 							value="#{botones['mostrarInformacion']}" />
 						<p:commandButton id="btnVolverInicio"

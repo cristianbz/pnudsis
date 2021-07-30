@@ -14,6 +14,7 @@ import javax.persistence.NoResultException;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
+import ec.gob.ambiente.suia.model.RolesUser;
 import ec.gob.ambiente.suia.model.Users;
 @Stateless
 @LocalBean
@@ -47,6 +48,13 @@ public class UsersFacade extends AbstractFacade<Users, Integer>{
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("filtro","%"+filtro+"%");		
 		return findByCreateQuery(sql, camposCondicion);
+	}
+	
+	public List<Users> findByRolEstrategicoImplementador(String filtro) throws Exception{
+		String sql = "SELECT u FROM RolesUser o,Users u WHERE  o.users.userId=u.userId AND o.role.roleName IN('SIS_socio_implementador','SIS_socio_estrategico') AND o.rousStatus = TRUE AND o.users.userName LIKE :filtro ";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("filtro","%"+filtro+"%");
+		return findByCreateQuery(sql, camposCondicion);	
 	}
 }
 

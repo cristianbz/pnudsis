@@ -11,11 +11,14 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import ec.gob.ambiente.sigma.model.Projects;
+import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
 import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.model.Questions;
+import ec.gob.ambiente.suia.model.Role;
+import ec.gob.ambiente.suia.model.RolesUser;
 import ec.gob.ambiente.suia.model.Users;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +32,10 @@ public class AdministracionBean implements Serializable{
 	@Getter
 	@Setter
 	private Integer codigoSalvaguarda;
+	
+	@Getter
+	@Setter
+	private Integer codigoPartner;
 	
 	@Getter
 	@Setter
@@ -64,6 +71,10 @@ public class AdministracionBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean noEsSocioEstrategico;
+	
+	@Getter
+	@Setter
 	private String nombreUsuario;
 	
 	@Getter
@@ -96,6 +107,10 @@ public class AdministracionBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<ProjectsStrategicPartners> listaPartners;
+	
+	@Getter
+	@Setter
 	private Questions preguntaSeleccionada;
 	
 	@Getter
@@ -108,7 +123,11 @@ public class AdministracionBean implements Serializable{
 	
 	@Getter
 	@Setter
-	private ProjectUsers usuarioSeleccionado;
+	private ProjectUsers proyectoUsuarioSeleccionado;
+	
+	@Getter
+	@Setter
+	private Users usuarioSeleccionado;
 	
 	@Getter
 	@Setter
@@ -122,5 +141,9 @@ public class AdministracionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<ProjectUsers> listaProyectoUsuarios;
+	
+	@Getter
+	@Setter
+	private List<Role> listaRolesUsuario;
 }
 
