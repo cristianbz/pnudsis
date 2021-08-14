@@ -654,7 +654,7 @@ public class LoginController implements Serializable {
 						getLoginBean().setTipoRol(3);
 						break;
 					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
-						getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));
+						getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));						
 						getLoginBean().setTipoRol(2);
 						break;
 					}else{

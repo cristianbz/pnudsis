@@ -16,11 +16,12 @@ import ec.gob.ambiente.sigma.model.Catalog;
 import ec.gob.ambiente.sigma.model.CatalogType;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
-import ec.gob.ambiente.sigma.model.ProjectsGenderInfo;
+
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
 import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.GenderAdvances;
+import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;

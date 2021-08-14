@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
+import org.hibernate.Hibernate;
+
+import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
@@ -55,22 +59,28 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 			String sql="";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			if (codigoProyecto>0 && codigoPartner == 0 && generoSalvaguarda == 1){
-				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = FALSE AND AE.adexIsReported=TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = FALSE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
 				camposCondicion.put("codigoProyecto", codigoProyecto);
 				camposCondicion.put("desde", desde);
 				camposCondicion.put("hasta", hasta);
 			}else if (codigoProyecto>0 && codigoPartner > 0 && generoSalvaguarda == 1){
-				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoPartner AND AE.adexIsGender = FALSE AND AE.adexIsReported=TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta";
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoPartner AND AE.adexIsGender = FALSE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta";
 				camposCondicion.put("codigoProyecto", codigoProyecto);
 				camposCondicion.put("codigoPartner", codigoPartner);
 				camposCondicion.put("desde", desde);
 				camposCondicion.put("hasta", hasta);
 			}else if (codigoProyecto>0 && codigoPartner == 0 && generoSalvaguarda == 2){
-				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = TRUE AND AE.adexIsReported=TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
 				camposCondicion.put("codigoProyecto", codigoProyecto);
 				camposCondicion.put("desde", desde);
 				camposCondicion.put("hasta", hasta);
-			}			
+			}else if(codigoProyecto>0 && codigoPartner > 0 && generoSalvaguarda == 2){
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoPartner AND AE.adexIsGender = TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
+				camposCondicion.put("codigoProyecto", codigoProyecto);
+				camposCondicion.put("codigoPartner", codigoPartner);
+				camposCondicion.put("desde", desde);
+				camposCondicion.put("hasta", hasta);
+			}
 			return findByCreateQuerySingleResult(sql, camposCondicion);
 		}catch(NoResultException e){
 			return null;
@@ -228,4 +238,88 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 		}
 		return avanceEjecucion;
 	}
+	
+	/**
+	 * Registra el avance de ejecucion para genero
+	 * @param avanceEjecucion
+	 * @return
+	 * @throws Exception
+	 */
+	public AdvanceExecutionSafeguards agregarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, List<GenderAdvances> avancesGenero)throws Exception{
+		if (avanceEjecucion.getAdexId() == null){
+			create(avanceEjecucion);
+			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
+				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
+				if(respuestas.getVaanId()==null)
+					valueAnswersFacade.create(respuestas);
+				else
+					valueAnswersFacade.edit(respuestas);
+			}
+			for(GenderAdvances ag:avancesGenero){
+				ag.setAdvanceExecutionSafeguards(avanceEjecucion);
+				genderAdvancesFacade.create(ag);
+			}						
+		}else{
+			edit(avanceEjecucion);
+			for(GenderAdvances ag:avancesGenero){
+				ag.setAdvanceExecutionSafeguards(avanceEjecucion);
+				genderAdvancesFacade.edit(ag);
+			}
+		}
+		return avanceEjecucion;
+	}
+	/**
+	 * Actualiza avance ejecucion genero
+	 * @param avanceEjecucion
+	 * @param avancesGenero
+	 * @return
+	 * @throws Exception
+	 */
+	public AdvanceExecutionSafeguards actualizaAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion)throws Exception{
+		edit(avanceEjecucion);		
+		return avanceEjecucion;
+	} 
+
+	
+	/**
+	 * Busca los avances de ejecucion reportados
+	 * @param codigoProyecto
+	 * @param tipo  1  salvaguardas  2 genero
+	 * @return
+	 * @throws Exception
+	 */
+	public List<AdvanceExecutionSafeguards> listarProyectosReportados(Integer codigoProyecto, Integer tipo) throws Exception{
+		String sql="";
+		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
+		if (tipo == 1)
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexIsGender = FALSE";
+		else
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexIsGender = TRUE";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoProyecto", codigoProyecto);
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+		return listaTemp;
+	}
+	
+	/**
+	 * Busca los avances de ejecucion reportados del socio estrategico
+	 * @param codigoProyecto
+	 * @param tipo  1  salvaguardas  2 genero
+	 * @return
+	 * @throws Exception
+	 */
+	public List<AdvanceExecutionSafeguards> listarProyectosReportadosSocioEstrategico(Integer codigoProyecto, Integer tipo,Integer codigoSocio) throws Exception{
+		String sql="";
+		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
+		if (tipo == 1)
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId=:codigoSocio";
+		else
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexIsGender = TRUE AND AE.projectsStrategicPartners.pspaId=:codigoSocio";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoProyecto", codigoProyecto);
+		camposCondicion.put("codigoSocio", codigoSocio);
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+		return listaTemp;
+	}
+
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:comp="http://java.sun.com/jsf/composite/componentes"
+	xmlns:val="http://java.sun.com/jsf/composite/componentes">
+
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeflex/primeflex.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeicons-master/primeicons.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	
+	<script>
+	function goToAnchor(nombre) {
+		
+		window.location.hash = "";
+		window.location.hash = nombre;
+	}
+	</script>	
+</h:head>
+<body>
+ 	<f:event listener="#{loginController.validarSesion()}" type="preRenderView" />
+	<h:form prependId="true" id="form">
+		<p:growl id="growl" life="3000" showDetail="true" />
+		
+		
+		 <p:dialog  widgetVar="dlgEnProc" 
+                  draggable="false" 
+                  modal="true" resizable="false" closable="false" responsive="true"
+                  style="font-size: 10px;">             
+            <h:graphicImage value="/resources/images/cargando.gif" width="150" height="150"/>
+        </p:dialog> 
+
+		
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-2">				
+			</div>
+			<div class="p-field p-col-12 p-md-2">
+				
+			</div>
+			<div class="p-field p-col-12 p-md-6"></div>
+			<div class="p-field p-col-12 p-md-2">
+				<p:outputLabel value="#{etiquetas['cambiarIdioma']}" />
+
+				<h:selectOneMenu value="#{seleccionaIdiomaController.localeCode}" onchange="submit()"
+                                 valueChangeListener="#{seleccionaIdiomaController.countryLocaleCodeChanged}">
+                    <f:selectItems value="#{seleccionaIdiomaController.countriesInMap}" />
+                </h:selectOneMenu>
+			</div>
+		</div>
+<div class="ui-fluid p-formgrid p-grid">
+
+			<div class="p-field p-col-12 p-md-3"></div>
+			<div class="p-field p-col-12 p-md-6">
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-12" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:left;">		
+						<p:outputLabel value="#{titulos['registroSalvaguardas']}" style="font-size:18px;font-weight:bold;"/>
+					</div>
+				</div>
+				<comp:buscaProyectos id="buscaProyectos"
+					componenteBuscaProyectos="#{registroSalvaguardasController.componenteBuscarProyectos}" />
+				<br />
+				<p:outputPanel id="panelOpcionesProyecto">
+					<h:panelGrid columns="2" style="margin:0 auto;"
+						rendered="#{registroSalvaguardasController.datosProyecto()}">
+						<p:commandButton id="btnVolverInicio"
+							value="#{botones['volverBusqueda']}"
+							icon="#{botones['icono.home']}" update="@form" 
+							actionListener="#{registroSalvaguardasController.volverBuscarProyectos}"
+							partialSubmit="true" process="@this " />
+					</h:panelGrid>
+				</p:outputPanel>
+				<br />	
+			</div>
+			<div class="p-field p-col-12 p-md-3"></div>
+		</div>
+
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-3"></div>
+			<div class="p-field p-col-12 p-md-6">
+
+			</div>
+			<div class="p-field p-col-12 p-md-3"></div>
+		</div>
+
+
+
+<div class="goup">
+	<i class="fas fa-angle-double-up fa-2x" style="color:white"></i>
+</div>
+	</h:form>
+
+</body>
+</html>

@@ -117,7 +117,7 @@ public class AdministracionController implements Serializable{
 			getAdministracionBean().setListaPreguntasGenero(getQuestionsFacade().buscaPreguntasGenero());
 			getAdministracionBean().setListaTipoRespuestaPregunta(getCatalogsFacade().buscaCatalogosPorTipo(TIPO_RESPUESTA));
 			getAdministracionBean().setListaCatalogos(getCatalogsFacade().buscaTodosCatalogos());
-			getAdministracionBean().setListaTipoCatalogo(getCatalogsTypeFacade().listaTipoCatalogos());
+			getAdministracionBean().setListaTipoCatalogo(getCatalogsTypeFacade().listaTipoCatalogos());			
 			getAdministracionBean().setListaProyectos(getProjectsFacade().buscarTodosLosProyectos());
 			cargaProyectosUsuarios();
 			getAdministracionBean().setNuevaPregunta(false);

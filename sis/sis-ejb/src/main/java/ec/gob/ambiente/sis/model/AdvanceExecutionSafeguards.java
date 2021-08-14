@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
@@ -31,6 +32,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "advance_execution_safeguards", schema = "sis")
 @NamedQueries({
+	@NamedQuery(name = "pro",query = "SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexIsGender = FALSE"),
 	@NamedQuery(name = AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO,query = "SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsReported=false")	
 })
 public class AdvanceExecutionSafeguards {
@@ -84,6 +86,11 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@Column(name = "adex_reported_status")	
+	private String adexReportedStatus;
+	
+	@Getter
+	@Setter
 	@Column(name = "adex_creation_date")
 	private Date adexCreationDate;
 	
@@ -91,6 +98,11 @@ public class AdvanceExecutionSafeguards {
 	@Setter
 	@Column(name = "adex_update_user")
 	private String adexUpdateUser;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String adexStrategicPartner;
 	
 	@Getter
 	@Setter
@@ -125,13 +137,13 @@ public class AdvanceExecutionSafeguards {
 	@Getter
 	@Setter
 	@JoinColumn(name = "proj_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private Projects projects;
 	
 	@Getter
 	@Setter
 	@JoinColumn(name = "pspa_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private ProjectsStrategicPartners projectsStrategicPartners;
 	
 	@Getter

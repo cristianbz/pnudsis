@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.ProjectUsers;
-import ec.gob.ambiente.suia.model.Users;
+import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +30,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "projects", schema = "sigma")
 @NamedQueries({
+	
 	@NamedQuery(name = Projects.CARGAR_TODOS_LOS_PROYECTOS,query = "SELECT P FROM Projects P WHERE P.projStatus=true"),
 	@NamedQuery(name = Projects.CARGAR_SALVAGUARDAS_POR_COBENEFICIO,query = "SELECT PS FROM Projects P  INNER JOIN P.projectsCobenefitsList PC INNER JOIN PC.projectsSafeguardsList PS WHERE P.projId=:codigoProyecto"),
 	@NamedQuery(name = Projects.CARGAR_SALVAGUARDAS_POR_RIESGO,query = "SELECT PS FROM Projects P  INNER JOIN P.projectsRisksList PR INNER JOIN PR.projectsSafeguardsList PS WHERE P.projId =:codigoProyecto")
@@ -74,6 +75,11 @@ public class Projects {
 	@Setter
 	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
 	private List<ProjectsCobenefits> projectsCobenefitsList;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
+	private List<ProjectsSpecificObjectives> projectsSpecificObjectivesList;
 	
 	@Getter
 	@Setter

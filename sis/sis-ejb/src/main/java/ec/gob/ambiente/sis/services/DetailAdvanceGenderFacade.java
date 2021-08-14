@@ -46,5 +46,12 @@ public class DetailAdvanceGenderFacade extends AbstractFacade<DetailAdvanceGende
 		detalle.setDtagStatus(false);
 		edit(detalle);
 	}
+	
+	public List<DetailAdvanceGender> listadoDetalleAvanceGenero(int codigoAvanceGenero)throws Exception{
+		String sql="SELECT DA FROM DetailAdvanceGender DA WHERE DA.genderAdvances.geadId=:codigoAvanceGenero ";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceGenero", codigoAvanceGenero);
+		return findByCreateQuery(sql, camposCondicion);	
+	}
 }
 

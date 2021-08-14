@@ -21,14 +21,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ec.gob.ambiente.sigma.model.ProjectsGenderInfo;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "gender_advances", schema = "sis")
 @NamedQueries({
-    @NamedQuery(name = "GenderAdvances.findAll", query = "SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.advanceExecutionSafeguards.adexIsReported=false AND GA.advanceExecutionSafeguards.adexIsGender=true AND GA.advanceExecutionSafeguards.adexStatus=true ")})
+    @NamedQuery(name = "GenderAdvances.findAll", query = "SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.advanceExecutionSafeguards.adexIsReported=false AND GA.advanceExecutionSafeguards.adexIsGender=true AND GA.advanceExecutionSafeguards.adexStatus=true "),
+    @NamedQuery(name = "GenderAdvances.findProyecto", query = "SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.advanceExecutionSafeguards.adexIsReported=false AND GA.advanceExecutionSafeguards.adexIsGender=true AND GA.advanceExecutionSafeguards.adexStatus=true "),
+    @NamedQuery(name = "GenderAdvances.AvancesSinReportar", query = "SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.advanceExecutionSafeguards.adexIsReported=false AND GA.advanceExecutionSafeguards.adexIsGender=true AND GA.advanceExecutionSafeguards.adexStatus=true ")
+})
 public class GenderAdvances {
 	
 	@Getter
@@ -42,29 +44,30 @@ public class GenderAdvances {
 
 	@Getter
 	@Setter
-	@Column(name = "gead_advance_description")
-	private String geadAdvanceDescription;
+	@Column(name = "gead_observations")
+	private String geadObservations;
 	
-	@Getter
-	@Setter	
-    @Column(name = "gead_indicator")
-	private String geadIndicator;
-	
-	@Getter
-	@Setter
-	@Column(name = "gead_goal_program")
-	private String geadGoalProgram;
-	
-	
+		
 	@Getter
 	@Setter
 	@Column(name = "gead_executed_budget")
 	private double geadExecutedBudget;
-		
+	
 	@Getter
 	@Setter
-	@Column(name = "gead_percentage_advance")
-	private double geadPercentageAdvance;
+	@Column(name = "gead_advance_value_goal")
+	private int geadAdvanceValueGoal;
+	
+	@Getter
+	@Setter
+	@Column(name = "gead_advance_value_goal_boolean")
+	private boolean geadAdvanceValueGoalBoolean;
+	
+	@Getter
+	@Setter
+	@Column(name = "gead_budget_actions")
+	private String geadBudgetActions;
+
 		
 	@Getter
 	@Setter
@@ -93,6 +96,11 @@ public class GenderAdvances {
 	
 	@Getter
 	@Setter
+	@Column(name = "gead_dba_observation")
+	private String geadDbaObservation;
+	
+	@Getter
+	@Setter
 	@JoinColumn(name = "adex_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
 	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
@@ -100,7 +108,7 @@ public class GenderAdvances {
 	@Getter
 	@Setter
 	@JoinColumn(name = "pgin_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private ProjectsGenderInfo projectsGenderInfo;
 	
 	

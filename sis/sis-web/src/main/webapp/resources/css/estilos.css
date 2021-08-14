@@ -151,3 +151,6 @@
 .ui-growl-message {
 	width: 220px !important;
 }
+.estiloComboLetraPequenia .ui-selectonemenu-label{
+	font-size:10px !important;
+}

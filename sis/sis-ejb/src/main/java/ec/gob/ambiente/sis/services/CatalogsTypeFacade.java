@@ -20,8 +20,21 @@ public class CatalogsTypeFacade extends AbstractFacade<CatalogsType, Integer>{
 	public CatalogsTypeFacade(){
 		super(CatalogsType.class,Integer.class);
 	}
+	/**
+	 * Recupera los catalogos activos
+	 */
 	public List<CatalogsType> listaTipoCatalogos() throws Exception{
-		String sql="SELECT CT FROM CatalogsType CT ORDER BY CT.catyId";
+		String sql="SELECT CT FROM CatalogsType CT WHERE CT.catyStatus=TRUE ORDER BY CT.catyId";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Carga las lineas de accion de genero
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CatalogsType> listaLineasGenero() throws Exception{
+		String sql="SELECT CT FROM CatalogsType CT WHERE CT.catyStatus=TRUE AND CT.catyId IN(33,34,35) ORDER BY CT.catyId";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
 		return findByCreateQuery(sql, camposCondicion);
 	}

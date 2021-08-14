@@ -25,14 +25,21 @@
 			</h:panelGrid>
 			<h:panelGrid columns="3">
 				<p:tieredMenu style="width:400px">
+					<p:submenu label="Registro">
+						<p:menuitem value="Registro de Salvaguardas"
+							action="#{sesionController.redireccionarAPagina('','formRegistroSalvaguardas')}"
+							update="msgs" />						
+						<p:menuitem value="Registro de Genero"
+							action="#{sesionController.redireccionarAPagina('','formRegistroDeGenero')}"
+							update="msgs" />
+					</p:submenu>
 					<p:submenu label="Seguimiento">
-
 						<p:menuitem value="Seguimiento de Salvaguardas"
 							action="#{sesionController.redireccionarAPagina('','formSeguimiento')}"
 							update="msgs" />
 						<p:menuitem value="Seguimiento de Genero"
-							action="#{sesionController.redireccionarAPagina('','formRegistroGenero')}"
-							update="msgs" />
+							action="#{sesionController.redireccionarAPagina('','formSeguimientoGenero')}"
+							update="msgs" />						
 					</p:submenu>
 					<p:submenu label="Administracion">
 						<p:menuitem value="Catalogos"

@@ -4,6 +4,7 @@
 **/
 package ec.gob.ambiente.sis.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +13,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
-import org.hibernate.Hibernate;
-
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.GenderAdvances;
-import ec.gob.ambiente.sis.model.TableResponses;
 
 @Stateless
 @LocalBean
@@ -44,13 +42,58 @@ public class GenderAdvancesFacade extends AbstractFacade<GenderAdvances,Integer>
 			throw new DaoException();
 		}
 	}
-	
-//	public List<GenderAdvances> buscaAvancesGeneroPorLineaEstrategica(int codigoLinea,int codigoAvanceEjecucion)throws DaoException{		
-//			String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.advanceExecutionSafeguards.adexIsReported=false AND GA.advanceExecutionSafeguards.adexIsGender=true AND GA.advanceExecutionSafeguards.adexStatus=true ";
-//			Map<String, Object> camposCondicion=new HashMap<String, Object>();
-//			camposCondicion.put("codigoLinea", codigoLinea);
-//			camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
-//			return findByCreateQuery(sql, camposCondicion);		
-//	}
+	/**
+	 * Busca los avances de genero en estado activo y que pertencen a un reporte de seguimiento activo
+	 * @param codigoProjectGenderInfo
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GenderAdvances> listaAvancesGeneroActivosPorProjectGender(int codigoProjectGenderInfo)throws Exception{
+		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.projectsGenderInfo.pginId=:codigoProjectGenderInfo AND GA.geadStatus = TRUE AND GA.advanceExecutionSafeguards.adexReportedStatus='I'";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoProjectGenderInfo", codigoProjectGenderInfo);					
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Busca los avances de genero por avance de ejecucion
+	 * @param codigoAvanceEjecucion
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GenderAdvances> listadoAvancesGeneroPorAvanceEjecucion(int codigoAvanceEjecucion)throws Exception{
+		List<GenderAdvances> listaTemp=new ArrayList<GenderAdvances>();
+		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.projectsGenderInfo.cataId IS NOT NULL";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);					
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+
+		return listaTemp;
+	}
+	/**
+	 * Busca los avances de genero por avance de ejecucion de otros temas
+	 * @param codigoAvanceEjecucion
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GenderAdvances> listadoAvancesGeneroOtrosTemasPorAvanceEjecucion(int codigoAvanceEjecucion)throws Exception{
+		List<GenderAdvances> listaTemp=new ArrayList<GenderAdvances>();
+		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.projectsGenderInfo.cataId IS NULL";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);					
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+		return listaTemp;
+	}
+	/**
+	 * 
+	 * @param avanceGenero
+	 * @throws Exception
+	 */
+	public void actualizarCrearAvanceGenero(GenderAdvances avanceGenero)throws Exception{
+		if(avanceGenero.getGeadId()==null)
+			create(avanceGenero);
+		else
+			edit(avanceGenero);
+	}
+
 }
 

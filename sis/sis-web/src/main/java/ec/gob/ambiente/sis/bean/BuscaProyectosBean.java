@@ -15,8 +15,11 @@ import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
+import ec.gob.ambiente.sis.model.CatalogsType;
 import ec.gob.ambiente.sis.model.ExecutiveSummaries;
+import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
+import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Sectors;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +28,14 @@ import lombok.Setter;
 @ViewScoped
 public class BuscaProyectosBean implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
+	@Getter
+	@Setter
+	private boolean esRegistroSalvaguardas;
+	
+	@Getter
+	@Setter
+	private boolean esRegistroGenero;
 	
 	@Setter
 	@Getter
@@ -42,6 +53,10 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private Integer posicionTab;
 	
+	@Getter
+	@Setter
+	private Integer posicionTabGenero;
+	
 	@Setter
 	@Getter
 	private int codigoBusquedaProyecto;
@@ -58,9 +73,21 @@ public class BuscaProyectosBean implements Serializable{
 	@Getter
 	private String tituloProyecto;
 	
+	@Setter
+	@Getter
+	private String nombreSocioEstrategico;
+	
 	@Getter
 	@Setter
 	private List<Projects> listaProyectos;
+	
+	@Getter
+	@Setter
+	private List<AdvanceExecutionSafeguards> listaProyectosReportados;
+	
+	@Getter
+	@Setter
+	private List<Projects> listaProyectosSociosReportados;
 	
 	@Getter
 	@Setter
@@ -114,9 +141,18 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private boolean asignacionSalvaguardas;
 	
+	
+	@Getter
+	@Setter
+	private boolean asignacionGenero;
+	
 	@Getter
 	@Setter
 	private boolean salvaguardasSociosEstrategicos;
+	
+	@Getter
+	@Setter
+	private boolean lineasGeneroSociosEstrategicos;
 	
 	@Getter
 	@Setter
@@ -130,6 +166,48 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private ExecutiveSummaries resumenEjecutivo;
 	
+	@Getter
+	@Setter
+	private List<CatalogsType> listaLineasGenero;
+	
+	@Getter
+	@Setter
+	private boolean proyectoTienePlanGenero;
 
+	@Getter
+	@Setter
+	private List<ProjectsGenderInfo> listaTemaGenero1;
+	
+	@Getter
+	@Setter
+	private List<ProjectsGenderInfo> listaTemaGenero2;
+	
+	@Getter
+	@Setter
+	private List<ProjectsGenderInfo> listaTemaGenero3;
+	
+	@Getter
+	@Setter
+	private List<ProjectsGenderInfo> listaTemaGeneroOtros;
+	
+	@Getter
+	@Setter
+	private List<Indicators> listaIndicadores;
+	
+	@Getter
+	@Setter
+	private List<String> listaObjetivosEspecificos;
+	
+	@Getter
+	@Setter
+	private ProjectsGenderInfo lineaGeneroSeleccionada;
+	
+	@Getter
+	@Setter
+	private boolean nuevoSeguimiento;
+	
+	@Getter
+	@Setter
+	private boolean proyectoReportado;
 }
 

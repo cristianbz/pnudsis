@@ -53,4 +53,7 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer>  {
 		camposCondicion.put("param1", "%"+textoTitulo.toUpperCase()+"%");
 		return findByCreateQuery(sql, camposCondicion);
 	}
+
+	
+	
 }

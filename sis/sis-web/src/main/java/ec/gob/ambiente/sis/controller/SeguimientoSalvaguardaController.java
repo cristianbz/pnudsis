@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,7 +32,6 @@ import org.apache.log4j.Logger;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
-import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sigma.services.PartnersFacade;
 import ec.gob.ambiente.sigma.services.ProjectsFacade;
@@ -196,6 +195,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void init(){
 		try{
 			getComponenteBuscarProyectos().setEsReporteGenero(false);
+			getComponenteBuscarProyectos().setEsReporteSalvaguardas(true);
 			codigoSalvaguardaActual=0;
 			numeroSalvaguardas=0;
 			getSeguimientoSalvaguardaBean().setTabActual(0);
@@ -9429,67 +9429,157 @@ public void volverBuscarProyectos(){
 	vaciaDatosBusqueda();
 	getSeguimientoSalvaguardaBean().setMostrartabs(false);
 }
+///**
+// * Carga la información de las salvaguardas del proyecto seleccionado.
+// */
+//public void cargaDatosProyectoSeleccionado(){
+//	try{
+//		if(!componenteBuscarProyectos.getBuscaProyectosBean().isAsignacionSalvaguardas()){
+//			getSeguimientoSalvaguardaBean().setTabActual(0);
+//			getSeguimientoSalvaguardaBean().setProyectoSeleccionado(new Projects());
+//			getSeguimientoSalvaguardaBean().setProyectoSeleccionado(getComponenteBuscarProyectos().getBuscaProyectosBean().getProyectoSeleccionado());		
+//			getSeguimientoSalvaguardaBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getCodigoPartner());		
+//			AdvanceExecutionSafeguards avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId(), getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()==null?0:getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(), 1, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
+//			if(avance == null){
+//				if(getLoginBean().getTipoRol()==3){
+//					for (ProjectUsers pu : getLoginBean().getListaProyectosDelUsuario()) {
+//						if(pu.getProjects().getProjId()== getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId() && pu.getUsers().getUserId()== getLoginBean().getUser().getUserId()){
+//							if(pu.getPspaId()== null){
+//								obtenerSalvaguardasAsignadas(0,pu.getProjects().getProjId());
+//							}else{
+//								obtenerSalvaguardasAsignadas(pu.getPspaId(),0);
+//							}
+//
+//							getSeguimientoSalvaguardaBean().setDatosAvanceEjecucion(false);
+//							getSeguimientoSalvaguardaBean().setTabActual(0);
+//							getSeguimientoSalvaguardaBean().setMapaTabs(new TreeMap<Integer, Integer>());
+//							getSeguimientoSalvaguardaBean().setMostrartabs(true);
+//							getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());
+//							cargarSalvaguardas();
+//							cargaValoresRespuestaPorSalvaguarda();
+//							getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresSeleccionados());
+//							getSeguimientoSalvaguardaBean().setAnioReporte(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte());
+//							getSeguimientoSalvaguardaBean().setPeriodoDesde(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());
+//							if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null){
+//								getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat(getSeguimientoSalvaguardaBean().getPeriodoDesde()));
+//								getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12"));
+//							}else{
+//								getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(new AdvanceExecutionSafeguards());					
+//							}
+//
+//							break;
+//						}
+//					}
+//				}else{
+//					if(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()== null){
+//						obtenerSalvaguardasAsignadas(0,getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId());
+//					}else{
+//						obtenerSalvaguardasAsignadas(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(),0);
+//					}
+//
+//					getSeguimientoSalvaguardaBean().setDatosAvanceEjecucion(false);
+//					getSeguimientoSalvaguardaBean().setTabActual(0);
+//					getSeguimientoSalvaguardaBean().setMapaTabs(new TreeMap<Integer, Integer>());
+//					getSeguimientoSalvaguardaBean().setMostrartabs(true);
+//					getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());
+//
+//					cargarSalvaguardas();
+//					cargaValoresRespuestaPorSalvaguarda();
+//					getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresSeleccionados());
+//					getSeguimientoSalvaguardaBean().setAnioReporte(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte());
+//					getSeguimientoSalvaguardaBean().setPeriodoDesde(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());
+//				}
+//				if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null){
+//					getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat(getSeguimientoSalvaguardaBean().getPeriodoDesde()));
+//					getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12"));	
+//					if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId() != null)
+//						getSeguimientoSalvaguardaBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
+//					if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()==null){
+//						getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
+//						getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+//						getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+//						getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
+//						getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+//					}
+//
+//				}else{
+//					getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(new AdvanceExecutionSafeguards());
+//					getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+//				}
+//			}else{
+//				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.proyectoReportado"), "");	
+//			}
+//		}
+//	}catch(Exception e){
+//		e.printStackTrace();
+//	}
+//}
 /**
  * Carga la información de las salvaguardas del proyecto seleccionado.
  */
 public void cargaDatosProyectoSeleccionado(){
 	try{
-		if(!componenteBuscarProyectos.getBuscaProyectosBean().isAsignacionSalvaguardas()){
 		getSeguimientoSalvaguardaBean().setTabActual(0);
 		getSeguimientoSalvaguardaBean().setProyectoSeleccionado(new Projects());
 		getSeguimientoSalvaguardaBean().setProyectoSeleccionado(getComponenteBuscarProyectos().getBuscaProyectosBean().getProyectoSeleccionado());		
-		getSeguimientoSalvaguardaBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getCodigoPartner());		
-		AdvanceExecutionSafeguards avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId(), getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()==null?0:getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(), 1, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
-		if(avance == null){
-		if(getLoginBean().getTipoRol()==3){
-			for (ProjectUsers pu : getLoginBean().getListaProyectosDelUsuario()) {
-				if(pu.getProjects().getProjId()== getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId() && pu.getUsers().getUserId()== getLoginBean().getUser().getUserId()){
-					if(pu.getPspaId()== null){
-						obtenerSalvaguardasAsignadas(0,pu.getProjects().getProjId());
-					}else{
-						obtenerSalvaguardasAsignadas(pu.getPspaId(),0);
+		getSeguimientoSalvaguardaBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getBuscaProyectosBean().getCodigoStrategicPartner());
+		System.out.println("CODIGO partner " + getSeguimientoSalvaguardaBean().getCodigoStrategicPartner());
+		if(getComponenteBuscarProyectos().getBuscaProyectosBean().isNuevoSeguimiento()){
+			AdvanceExecutionSafeguards avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId(), getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()==null?0:getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(), 1, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
+			if(avance == null){
+				if(getLoginBean().getTipoRol()==3){
+					for (ProjectUsers pu : getLoginBean().getListaProyectosDelUsuario()) {
+						if(pu.getProjects().getProjId()== getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId() && pu.getUsers().getUserId()== getLoginBean().getUser().getUserId()){
+							if(pu.getPspaId()== null){
+								obtenerSalvaguardasAsignadas(0,pu.getProjects().getProjId());
+							}else{
+								obtenerSalvaguardasAsignadas(pu.getPspaId(),0);
+							}
+
+							getSeguimientoSalvaguardaBean().setDatosAvanceEjecucion(false);
+							getSeguimientoSalvaguardaBean().setTabActual(0);
+							getSeguimientoSalvaguardaBean().setMapaTabs(new TreeMap<Integer, Integer>());
+							getSeguimientoSalvaguardaBean().setMostrartabs(true);
+							getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());
+							cargarSalvaguardas();
+							cargaValoresRespuestaPorSalvaguarda();
+							getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresSeleccionados());
+							getSeguimientoSalvaguardaBean().setAnioReporte(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte());
+							getSeguimientoSalvaguardaBean().setPeriodoDesde(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());
+							getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat(getSeguimientoSalvaguardaBean().getPeriodoDesde()));
+							getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12"));
+							break;
+						}
 					}
-					
+				}else{
+					if(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()== null){
+						obtenerSalvaguardasAsignadas(0,getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId());
+					}else{
+						obtenerSalvaguardasAsignadas(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(),0);
+					}
 					getSeguimientoSalvaguardaBean().setDatosAvanceEjecucion(false);
 					getSeguimientoSalvaguardaBean().setTabActual(0);
 					getSeguimientoSalvaguardaBean().setMapaTabs(new TreeMap<Integer, Integer>());
 					getSeguimientoSalvaguardaBean().setMostrartabs(true);
 					getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());
+
 					cargarSalvaguardas();
 					cargaValoresRespuestaPorSalvaguarda();
 					getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresSeleccionados());
 					getSeguimientoSalvaguardaBean().setAnioReporte(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte());
 					getSeguimientoSalvaguardaBean().setPeriodoDesde(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());
-					if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null){
-						getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat(getSeguimientoSalvaguardaBean().getPeriodoDesde()));
-						getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12"));
-					}else{
-						getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(new AdvanceExecutionSafeguards());					
-					}
-					
-					break;
 				}
+			}else{
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.proyectoReportado"), "");	
 			}
 		}else{
-			if(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()== null){
-				obtenerSalvaguardasAsignadas(0,getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId());
-			}else{
-				obtenerSalvaguardasAsignadas(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(),0);
-			}
-			
-			getSeguimientoSalvaguardaBean().setDatosAvanceEjecucion(false);
-			getSeguimientoSalvaguardaBean().setTabActual(0);
-			getSeguimientoSalvaguardaBean().setMapaTabs(new TreeMap<Integer, Integer>());
-			getSeguimientoSalvaguardaBean().setMostrartabs(true);
-			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());
-			
-			cargarSalvaguardas();
-			cargaValoresRespuestaPorSalvaguarda();
-			getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresSeleccionados());
+			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getAdvanceExecution());
 			getSeguimientoSalvaguardaBean().setAnioReporte(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte());
-			getSeguimientoSalvaguardaBean().setPeriodoDesde(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());
-		}
-		if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null){
+			getSeguimientoSalvaguardaBean().setPeriodoDesde(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());			
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat(getSeguimientoSalvaguardaBean().getPeriodoDesde()));
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12"));	
 			if (getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId() != null)
@@ -9501,23 +9591,29 @@ public void cargaDatosProyectoSeleccionado(){
 				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
 				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
 			}
+			if(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()== null){
+				obtenerSalvaguardasAsignadas(0,getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId());
+			}else{
+				obtenerSalvaguardasAsignadas(getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(),0);
+			}
+			getSeguimientoSalvaguardaBean().setDatosAvanceEjecucion(false);
+			getSeguimientoSalvaguardaBean().setTabActual(0);
+			getSeguimientoSalvaguardaBean().setMapaTabs(new TreeMap<Integer, Integer>());
+			getSeguimientoSalvaguardaBean().setMostrartabs(true);
+			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());
+
+			cargarSalvaguardas();
+			cargaValoresRespuestaPorSalvaguarda();
+			getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresSeleccionados());
+			getSeguimientoSalvaguardaBean().setAnioReporte(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte());
+			getSeguimientoSalvaguardaBean().setPeriodoDesde(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde());
 			
-		}else{
-			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(new AdvanceExecutionSafeguards());
-			getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
-			getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
-			getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
-			getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
-			getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
-		}
-		}else{
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.proyectoReportado"), "");	
-		}
 		}
 	}catch(Exception e){
 		e.printStackTrace();
 	}
 }
+
 
 public void obtenerSalvaguardasAsignadas(int codigoPartner,int codigoProyecto){
 	

@@ -24,13 +24,11 @@ import javax.inject.Named;
 import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
-import org.hibernate.tuple.entity.EntityMetamodel.GenerationStrategyPair;
 
 import ec.gob.ambiente.sigma.model.CatalogType;
-import ec.gob.ambiente.sigma.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sigma.services.CatalogFacade;
 import ec.gob.ambiente.sigma.services.CatalogTypeFacade;
-import ec.gob.ambiente.sigma.services.ProjectsGenderInfoFacade;
+import ec.gob.ambiente.sis.services.ProjectsGenderInfoFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
 import ec.gob.ambiente.sis.bean.RegistroGeneroBean;
@@ -39,6 +37,7 @@ import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
 import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.GenderAdvances;
+import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
@@ -142,6 +141,9 @@ public class RegistroGeneroController implements Serializable{
 	@PostConstruct
 	private void init(){
 		try{
+			getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroSalvaguardas(false);
+			getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroGenero(true);
+			
 			getComponenteBuscarProyectos().setEsReporteGenero(true);
 			getRegistroGeneroBean().setListadoLineaGenero(new ArrayList<>());
 			getRegistroGeneroBean().setListadoLineaGenero(getCatalogTypeFacade().listaLineasGenero());
@@ -1245,7 +1247,7 @@ public class RegistroGeneroController implements Serializable{
 				ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 				String directorioArchivoPDF = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append(1).append(".pdf").toString();
 				rutaPDF=directorioArchivoPDF;
-				ResumenPDF.reporteGenero(directorioArchivoPDF, getRegistroGeneroBean());
+//				ResumenPDF.reporteGenero(directorioArchivoPDF, getRegistroGeneroBean());
 			}else{
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.lineaAccion"), "");
 				Mensaje.actualizarComponente(":form:growl");

@@ -10,9 +10,12 @@ import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 
 import ec.gob.ambiente.sigma.model.Catalog;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.excepciones.DaoException;
+import ec.gob.ambiente.sis.model.Catalogs;
 
 @Stateless
 @LocalBean
@@ -33,5 +36,6 @@ public class CatalogFacade extends AbstractFacade<Catalog, Integer>{
 		return findByCreateQuery(sql, camposCondicion);
 	}
 	
+
 }
 

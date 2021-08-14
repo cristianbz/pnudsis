@@ -13,50 +13,86 @@
 			<composite:attribute name="componenteBuscaProyectos" required="true" />
 		</composite:interface>
 		<composite:implementation>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="#{botones['si']}" type="button"
+					styleClass="ui-confirmdialog-yes" icon="#{botones['icono.check']}" />
+				<p:commandButton value="#{botones['no']}" type="button"
+					styleClass="ui-confirmdialog-no" icon="#{botones['icono.cancelar']}" />
+			</p:confirmDialog>
 
 			<p:growl id="growl" life="3000" showDetail="true" />
-			<p:dialog widgetVar="dlgSeleccionSocios" showEffect="fade"
+			
+			<p:dialog widgetVar="dlgEliminaLineaGenero" showEffect="fade"
 				hideEffect="fade" modal="true" appendTo="@(body)"
 				header="#{titulos['seguimientoSalvaguardas']}" width="390"
 				closable="false" resizable="false">
+				<p:outputLabel value="#{titulos['eliminLineaGenero']}"/>
+				<h:panelGrid columns="2">
+					<p:commandButton value="#{botones['si']}" process="@this" update="@form" onstart="PF('dlgEnProc').show();" 
+						action="#{cc.attrs.componenteBuscaProyectos.eliminaLineaGeneroSeleccionada}"
+						oncomplete="PF('dlgEnProc').hide(); PF('dlgEliminaLineaGenero').hide();"/>
+					<p:commandButton value="#{botones['no']}" oncomplete="PF('dlgEliminaLineaGenero').hide();" process="@this"
+						action="#{cc.attrs.componenteBuscaProyectos.cancelaEliminaLineaGeneroSeleccionada}" update="@form"
+						/>
+				</h:panelGrid>
+			</p:dialog>	
+			
+			<p:dialog  widgetVar="dlgEnProc" 
+	                  draggable="false" 
+	                  modal="true" resizable="false" closable="false" responsive="true"
+	                  style="font-size: 10px;">             
+	            <h:graphicImage value="/resources/images/cargando.gif" width="150" height="150"/>
+	        </p:dialog> 
+			<p:dialog widgetVar="dlgSeleccionSocios" showEffect="fade"
+				hideEffect="fade" modal="true" appendTo="@(body)"
+				header="#{titulos['reporteSocioImpEst']}" width="390"
+				closable="false" resizable="false">
 				<p:outputPanel id="sociosReportar">
-				<p:selectBooleanCheckbox
-					value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
-					itemLabel="#{etiquetas['salvaguardasSocios']}">
-					<p:ajax process="@this " update="sociosReportar" partialSubmit="true" event="change"
-						listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionSalvaguardaSocioEstrategico}" />
-				</p:selectBooleanCheckbox>
-				<br />
-				
-				<h:panelGrid id="selSocios">
-					<p:fieldset legend="#{titulos['sociosPDI']}">
-						<p:selectOneRadio id="partners"
-							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoStrategicPartner}"
-							layout="grid" columns="3" required="true" requiredMessage="#{mensajes['campoRequerido']}"
-							disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
-							unselectable="false">
-							<f:selectItems
-								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaPartnersProyectos}"
-								var="partner"
-								itemLabel="#{partner.partners.partName} (#{partner.pspaType=='E'?'Estratégico':'Apoyo'})"
-								itemValue="#{partner.partners.partId}" />
-							<p:ajax process="@this " event="change" partialSubmit="true"/>
-						</p:selectOneRadio>
-					</p:fieldset>
-					<p:messages />
-				</h:panelGrid>
-				<h:panelGrid style="margin:0 auto;" columns="2">
-					<p:commandButton value="#{botones['buscar']}" update="selSocios :form:growl panelDatosProyecto panelBusquedaProyecto :form:panelOpcionesProyecto"
-						actionListener="#{cc.attrs.componenteBuscaProyectos.informacionAvanceEjecucion}"
-						process="@this selSocios panelBusquedaProyecto panelDatosProyecto :form:panelOpcionesProyecto" partialSubmit="true"
-						icon="#{botones['icono.buscar']}" />	
-					<p:commandButton value="#{botones['cancelar']}" process="@this selSocios" oncomplete="PF('dlgSeleccionSocios').hide();"
-						partialSubmit="true"  icon="#{botones['icono.cancelar']}" resetValues="true"
-						actionListener="#{cc.attrs.componenteBuscaProyectos.cancelaSeleccionSocio}"/>					
-				</h:panelGrid>
+					<p:outputLabel value="#{titulos['infoSeleccionSocios']}" style="color:blue;font-size:11px;"/>
+					<br/>
+					<p:selectBooleanCheckbox
+						value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
+						itemLabel="#{etiquetas['seleccioneSociosEst']}">
+						<p:ajax process="@this " update="sociosReportar"
+							partialSubmit="true" event="change"
+							listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionSalvaguardaSocioEstrategico}" />
+					</p:selectBooleanCheckbox>
+					<br />
+
+					<h:panelGrid id="selSocios">												
+						<p:fieldset legend="#{titulos['sociosPDI']}">
+							<p:selectOneRadio id="partners"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoStrategicPartner}"
+								layout="grid" columns="3" required="true"
+								requiredMessage="#{mensajes['campoRequerido']}"
+								disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
+								unselectable="false">
+								<f:selectItems
+									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaPartnersProyectos}"
+									var="partner"
+									itemLabel="#{partner.partners.partName} (#{partner.pspaType=='E'?'Estratégico':'Apoyo'})"
+									itemValue="#{partner.pspaId}" />
+								<p:ajax process="@this " event="change" partialSubmit="true" />
+							</p:selectOneRadio>
+						</p:fieldset>
+						<p:messages />
+					</h:panelGrid>
+					<h:panelGrid style="margin:0 auto;" columns="2">
+						<p:commandButton value="#{botones['buscar']}"
+							update="selSocios :form:growl panelDatosProyecto panelBusquedaProyecto :form:panelOpcionesProyecto"
+							actionListener="#{cc.attrs.componenteBuscaProyectos.nuevaInformacionAvanceEjecucion}"
+							process="@this selSocios panelBusquedaProyecto panelDatosProyecto :form:panelOpcionesProyecto"
+							partialSubmit="true" icon="#{botones['icono.buscar']}" />
+						<p:commandButton value="#{botones['cancelar']}"
+							process="@this selSocios"
+							oncomplete="PF('dlgSeleccionSocios').hide();"
+							partialSubmit="true" icon="#{botones['icono.cancelar']}"
+							resetValues="true"
+							actionListener="#{cc.attrs.componenteBuscaProyectos.cancelaSeleccionSocio}" />
+					</h:panelGrid>
 				</p:outputPanel>
 			</p:dialog>
-			
+
 			<p:dialog widgetVar="dlgAsignaSalvaguardas" showEffect="fade"
 				hideEffect="fade" modal="true" appendTo="@(body)"
 				header="#{titulos['asignaSalvaguardas']}" width="390"
@@ -130,7 +166,7 @@
 								icon="#{botones['icono.buscar']}"
 								onclick="PF('dlgEnProc').show()"
 								process="@this tituloBusq pnlCritBusq"
-								update="listadoProyectos growl codSocioBusq tituloBusq"
+								update="listadoProyectos :form:growl codSocioBusq tituloBusq"
 								oncomplete="PF('dlgEnProc').hide()" partialSubmit="true"
 								async="true" global="false" />
 						</h:panelGrid>
@@ -141,6 +177,7 @@
 							<p:dataTable id="listadoProyectos"
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaProyectos}"
 								var="proyecto" emptyMessage="#{mensajes['noRegistros']}">
+								<f:facet name="header">#{titulos.listaProyectos}</f:facet>
 								<p:column>
 									<p:outputLabel value="#{proyecto.projCode}" />
 									<br />
@@ -154,19 +191,65 @@
 									<br />
 									<p:outputLabel value="#{proyecto.partners.partName}" />
 								</p:column>
-
-								<p:column width="30">
+<!-- 
+								<p:column width="30"
+									rendered="#{cc.attrs.componenteBuscaProyectos.esReporteSalvaguardas and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
+									Es reporte administrador salvaguardas
 									<p:commandButton id="btnProyEdit"
-										icon="#{botones['icono.checkcirculo']}"
+										icon="#{botones['icono.nuevo']}"
 										title="#{tooltip['seleccionar']}"
-										actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyecto(proyecto)}"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyecto(proyecto)}"
 										process="@this " partialSubmit="true"
 										onclick="PF('dlgEnProc').show()"
 										oncomplete="PF('dlgEnProc').hide()" async="true"
 										global="false" update="@form " />
+									<br />
+									<p:commandButton icon="#{botones['icono.buscar']}"
+										process="@this :form:buscaProyectos:tablaReportados"
+										update=":form:buscaProyectos:tablaReportados"
+										partialSubmit="true"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.cargaProyectosReportados(proyecto)}" />
 								</p:column>
+								 
 								<p:column width="30"
-									rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
+									rendered="#{(cc.attrs.componenteBuscaProyectos.esReporteGenero or cc.attrs.componenteBuscaProyectos.buscaProyectosBean.esRegistroSalvaguardas) and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
+									<p:commandButton id="btnProyEditGenero"
+										icon="#{botones['icono.nuevo']}"
+										title="#{tooltip['seleccionar']}"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyecto(proyecto)}"
+										process="@this " partialSubmit="true"
+										onclick="PF('dlgEnProc').show()"
+										oncomplete="PF('dlgEnProc').hide()" async="true"
+										global="false" update="@form " />
+									<br />
+									<p:commandButton icon="#{botones['icono.buscar']}"
+										process="@this :form:buscaProyectos:tablaReportados"
+										update=":form:buscaProyectos:tablaReportados"
+										partialSubmit="true"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.cargaProyectosReportados(proyecto)}" />
+								</p:column>
+								-->
+								<p:column width="30"
+									rendered="#{(cc.attrs.componenteBuscaProyectos.esReporteGenero or cc.attrs.componenteBuscaProyectos.esReporteSalvaguardas) and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==3}">
+									Reporte generosalvaguarda por socio
+									<p:commandButton id="btnProyEditGeneroSocios"
+										icon="#{botones['icono.nuevo']}"
+										title="#{tooltip['nuevoReporte']}"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyectoSocioEstrategico(proyecto)}"
+										process="@this " partialSubmit="true"
+										onclick="PF('dlgEnProc').show()"
+										oncomplete="PF('dlgEnProc').hide()" async="true"
+										global="false" update="@form " />
+									<br />
+									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} "
+										process="@this :form:buscaProyectos:tablaReportados"
+										update=":form:buscaProyectos:tablaReportados"
+										partialSubmit="true"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.cargaProyectosSocioEstrategicoReportados(proyecto)}" />
+								</p:column>
+								
+								<p:column width="30"
+									rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3 and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.esRegistroSalvaguardas}">
 									<p:commandButton id="btnProyAsignaSalvaguarda"
 										icon="#{botones['icono.asignaSalvaguarda']}"
 										title="#{tooltip['asignar']}"
@@ -175,6 +258,88 @@
 										onclick="PF('dlgEnProc').show()"
 										oncomplete="PF('dlgEnProc').hide()" async="true"
 										global="false" update="@form " />
+								</p:column>
+								<p:column width="30"
+									rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.esRegistroGenero and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
+									<p:commandButton id="btnProyAsignaGenero"
+										icon="#{botones['icono.asignaSalvaguarda']}"
+										title="#{tooltip['asignar']}"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.asignacionLineasGenero(proyecto)}"
+										process="@this " partialSubmit="true" async="true"
+										global="false" update="@form " />
+								</p:column>
+								<p:column width="30"
+									rendered="#{cc.attrs.componenteBuscaProyectos.esReporteSalvaguardas or cc.attrs.componenteBuscaProyectos.esReporteGenero and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
+									R.A.I 
+									<p:commandButton id="btnNuevoProyecto"
+										icon="#{botones['icono.nuevo']}"
+										title="#{tooltip['nuevoReporte']}"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyectoAdminSocioImpl(proyecto)}"
+										process="@this " partialSubmit="true"										
+										 async="true"
+										global="false" update="@form " />
+									<br />
+									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} "
+										process="@this :form:buscaProyectos:tablaReportados"
+										update=":form:buscaProyectos:tablaReportados"
+										partialSubmit="true"
+										actionListener="#{cc.attrs.componenteBuscaProyectos.cargaProyectosReportados(proyecto)}" />
+								</p:column>
+							</p:dataTable>
+							<br />
+							<br />
+							<p:dataTable id="tablaReportados"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaProyectosReportados}"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.esRegistroSalvaguardas == false and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.esRegistroGenero == false}"
+								var="avance" emptyMessage="#{mensajes['noRegistros']}">
+								<f:facet name="header">#{titulos.reportesCreados}</f:facet>
+								<p:column>
+									<p:outputLabel value="#{avance.projects.projCode}" />
+									<br />
+									<p:outputLabel value="#{etiquetas['tituloPlanProyecto']}"
+										styleClass="estiloHeaderCampoTabla" />
+									<br />
+									<p:outputLabel value="#{avance.projects.projTitle}" />
+									<br />
+									<p:outputLabel value="#{etiquetas['socioImplementador']}"
+										styleClass="estiloHeaderCampoTabla" />
+									<br />
+									<p:outputLabel value="#{avance.projects.partners.partName}" />
+									<br />
+									<p:outputLabel value="#{etiquetas['socioEstrategico']}"
+										rendered="#{avance.projectsStrategicPartners!=null}"
+										styleClass="estiloHeaderCampoTabla" />
+									<br />
+									<p:outputLabel
+										value="#{avance.projectsStrategicPartners.partners.partName}"
+										rendered="#{avance.projectsStrategicPartners!=null}" />
+
+								</p:column>
+								<p:column width="90">
+									<p:outputLabel value="#{etiquetas['anio']}"
+										styleClass="estiloHeaderCampoTabla" />
+									<br />
+									<p:outputLabel value="#{avance.adexTermFrom.substring(0,4)}" />
+									<br />
+									<p:outputLabel value="#{etiquetas['periodo']}"
+										styleClass="estiloHeaderCampoTabla" />
+									<br />
+									<p:outputLabel value="Enero-Diciembre" />
+									<br />
+									<h:outputText styleClass="ui-icon fa fa-file"
+										style="color:#99A3A4;" rendered="#{avance.adexIsReported}" />
+									<p:outputLabel value=" #{etiquetas['reportado']}"
+										rendered="#{avance.adexIsReported}" />
+									<h:outputText styleClass="ui-icon fa fa-save"
+										style="color:blue;" rendered="#{not avance.adexIsReported}" />
+									<p:outputLabel value=" #{etiquetas['parcialGuardado']}"
+										rendered="#{not avance.adexIsReported}" />
+								</p:column>
+								<p:column width="30">
+									<p:commandButton actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyectoReportado(avance)}" title="#{tooltip['visualizaInformacion']}"
+										process="@this" partialSubmit="true" update="@form" icon="#{botones['icono.checkcirculo']}"/>
+									
+									
 								</p:column>
 							</p:dataTable>
 						</h:panelGrid>
@@ -191,7 +356,7 @@
 			</p:outputPanel>
 			<p:outputPanel id="panelDatosProyecto">
 				<p:panel header="#{titulos['datosProyecto']}"
-					rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto==true and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionSalvaguardas == false}">
+					rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto==true and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionSalvaguardas == false and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionGenero == false}">
 					<h:panelGrid columns="2" id="panelDatos"
 						style="width:600px; margin:0 auto;">
 
@@ -268,17 +433,32 @@
 					<p:ajax event="tabChange"
 						listener="#{cc.attrs.componenteBuscaProyectos.tabChange}"
 						process="tabs" update="tabs" />
-					
+
 					<p:tab title="#{titulos['socioImpEstrategico']}">
-						<h:panelGrid columns="2">
-							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"/>
-							<p:outputLabel value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}"/>
-						</h:panelGrid>						
+						<h:panelGrid columns="2" id="panelDatosSocios">
+							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"
+								styleClass="estiloHeaderCampoTabla" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
+							<p:outputLabel value="#{etiquetas['socioImplementador']}"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel value="#{etiquetas['socioEstrategico']}"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+						</h:panelGrid>
 						<br />
 						<p:selectBooleanCheckbox
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
 							itemLabel="#{etiquetas['salvaguardasSocios']}">
-							<p:ajax process="@this seleccionSocios" update="seleccionSocios"
+							<p:ajax process="@this seleccionSocios panelDatosSocios"
+								update="seleccionSocios panelDatosSocios"
 								listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionSalvaguardaSocioEstrategico}" />
 						</p:selectBooleanCheckbox>
 						<br />
@@ -293,8 +473,11 @@
 										value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaPartnersProyectos}"
 										var="partner"
 										itemLabel="#{partner.partners.partName} (#{partner.pspaType=='E'?'Estratégico':'Apoyo'})"
-										itemValue="#{partner.partners.partId}" />
-									<p:ajax process="@this" event="change" />
+										itemValue="#{partner.pspaId}" />
+									<p:ajax process="@this panelDatosSocios" event="change"
+										partialSubmit="true"
+										listener="#{cc.attrs.componenteBuscaProyectos.capturaNombreSocioEstrategico}"
+										update="panelDatosSocios" />
 								</p:selectOneRadio>
 							</p:fieldset>
 							<p:messages />
@@ -314,9 +497,23 @@
 					</p:tab>
 					<p:tab title="#{etiquetas['pregunta']}">
 						<h:panelGrid columns="2">
-							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"/>
-							<p:outputLabel value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}"/>
-						</h:panelGrid>						
+							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"
+								styleClass="estiloHeaderCampoTabla" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
+							<p:outputLabel value="#{etiquetas['socioImplementador']}:"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel value="#{etiquetas['socioEstrategico']}:"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+						</h:panelGrid>
 						<br />
 						<br />
 						<p:outputLabel value="#{titulos['escojaPreguntas']}" />
@@ -355,9 +552,23 @@
 					</p:tab>
 					<p:tab title="#{etiquetas['salvaguarda']}">
 						<h:panelGrid columns="2">
-							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"/>
-							<p:outputLabel value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}"/>
-						</h:panelGrid>						
+							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"
+								styleClass="estiloHeaderCampoTabla" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
+							<p:outputLabel value="#{etiquetas['socioImplementador']}:"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel value="#{etiquetas['socioEstrategico']}:"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+						</h:panelGrid>
 						<br />
 						<br />
 						<p:dataTable id="tablaSalvaguarda"
@@ -384,6 +595,486 @@
 						</h:panelGrid>
 					</p:tab>
 				</p:tabView>
+			</p:outputPanel>
+			<p:outputPanel id="panelAsignaGenero">
+				<p:tabView id="tabsGenero"
+					rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionGenero}" 
+					activeIndex="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.posicionTabGenero}">
+					<p:ajax event="tabChange"
+						listener="#{cc.attrs.componenteBuscaProyectos.tabChangeGenero}"
+						process="tabsGenero" update="tabsGenero" />
+					<p:tab title="#{titulos['temasMinimos']}">
+						<h:panelGrid columns="3">
+							<p:outputLabel value="#{etiquetas['pdiTieneGenero']}" />
+							<p:selectOneRadio id="tienePlan"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoTienePlanGenero}">
+								<f:selectItem itemValue="true" itemLabel="#{etiquetas['si']}" />
+								<f:selectItem itemValue="false" itemLabel="#{etiquetas['no']}" />
+							</p:selectOneRadio>
+							<p:message for="tienePlan" />
+						</h:panelGrid>
+						<p:dataTable
+							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaLineasGenero}"
+							var="linea">
+							<p:column headerText="#{titulos['temasMinimos']}">
+								<p:outputLabel value="#{linea.catyDescription}" />
+							</p:column>
+						</p:dataTable>
+						<br />
+						<h:panelGrid columns="4" style="margin: 0 auto;">
+							<p:commandButton value="#{botones['siguiente']}"
+								styleClass="botonRegistroProyecto"
+								icon="#{botones['icono.siguiente']}"
+								process="@this tienePlan "
+								update="tienePlan tabsGenero"
+								actionListener="#{cc.attrs.componenteBuscaProyectos.siguienteTabGeneroSeleccionSocio}"
+								oncomplete="PF('dlgEnProc').hide(); "
+								onstart="PF('dlgEnProc').show();" />
+						</h:panelGrid>
+						
+					</p:tab>
+					<p:tab title="#{titulos['socioImpEstrategico']}">
+						<h:panelGrid columns="2" id="panelDatosSociosGenero">
+							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"
+								styleClass="estiloHeaderCampoTabla" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
+							<p:outputLabel value="#{etiquetas['socioImplementador']}"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
+								rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel value="#{etiquetas['socioEstrategico']}"
+								styleClass="estiloHeaderCampoTabla"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+							<p:outputLabel
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
+								rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}" />
+						</h:panelGrid>
+						<br />
+						<p:selectBooleanCheckbox
+							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineasGeneroSociosEstrategicos}"
+							itemLabel="#{etiquetas['lineasGeneroSocios']}">
+							<p:ajax process="@this seleccionSociosGenero panelDatosSociosGenero"
+								update="seleccionSociosGenero panelDatosSociosGenero"
+								listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionLineasGeneroSocioEstrategico}" />
+						</p:selectBooleanCheckbox>
+						<br />
+						<h:panelGrid id="seleccionSociosGenero">
+							<p:fieldset legend="#{titulos['sociosPDI']}">
+								<p:selectOneRadio id="partnersGenero"
+									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoStrategicPartner}"
+									layout="grid" columns="3"
+									disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineasGeneroSociosEstrategicos}"
+									unselectable="false">
+									<f:selectItems
+										value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaPartnersProyectos}"
+										var="partner"
+										itemLabel="#{partner.partners.partName} (#{partner.pspaType=='E'?'Estratégico':'Apoyo'})"
+										itemValue="#{partner.pspaId}" />
+									<p:ajax process="@this panelDatosSociosGenero" event="change"
+										partialSubmit="true"
+										listener="#{cc.attrs.componenteBuscaProyectos.capturaNombreSocioEstrategico}"
+										update="panelDatosSociosGenero" />
+								</p:selectOneRadio>
+							</p:fieldset>
+							<p:messages for="partnersGenero" id="msgPartnersGenero"/>
+						</h:panelGrid>
+						<br />
+						<h:panelGrid columns="4" style="margin: 0 auto;">
+							<p:commandButton value="#{botones['atras']}"
+								styleClass="botonRegistroProyecto"
+								icon="#{botones['icono.atras']}"
+								process="@this tienePlan "
+								update="tienePlan tabsGenero"
+								actionListener="#{cc.attrs.componenteBuscaProyectos.atrasInicioGenero}"
+								oncomplete="PF('dlgEnProc').hide(); "
+								onstart="PF('dlgEnProc').show();" />
+							<p:commandButton value="#{botones['siguiente']}"
+								styleClass="botonRegistroProyecto"
+								icon="#{botones['icono.siguiente']}"
+								process="@this tienePlan "
+								update="tienePlan tabsGenero msgPartnersGenero"
+								actionListener="#{cc.attrs.componenteBuscaProyectos.siguienteTabAsignaLineasGenero}"
+								oncomplete="PF('dlgEnProc').hide(); "
+								onstart="PF('dlgEnProc').show();" />
+						</h:panelGrid>
+					</p:tab>
+					<p:tab title="#{etiquetas['lineasDeAccion']}">
+						<p:panel header="#{titulos['fortalecimientoGenero']}" id="panelLineasGenero">
+							<p:dataTable style="font-size:10px;" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaTemaGenero1}" id="lstEnfGen1"
+								var="genero1">
+								<f:facet name="header">#{titulos['temaGenero1']}</f:facet>
+								<p:column width="15">
+									<p:selectBooleanCheckbox value="#{genero1.seleccionado}" >
+										<p:ajax event="change" process="@this" listener="#{cc.attrs.componenteBuscaProyectos.seleccionarLineaGeneroTema1(genero1)}"/>
+									</p:selectBooleanCheckbox>											
+								</p:column>
+								<p:column headerText="#{etiquetas['lineaAccion']}">
+									#{genero1.cataId.cataText2}
+									<br/>
+									<p:inputTextarea value="#{genero1.pginOtherLine}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											rendered="#{genero1.cataId.cataNumber==7}" >
+											<p:ajax event="blur" process="@this"/>
+									</p:inputTextarea>		
+								</p:column>
+								<p:column headerText="#{etiquetas['lineaBase']}">
+									<p:inputTextarea value="#{genero1.pginBaseLine}" cols="25"
+											style="font-size:10px !important;" />
+								</p:column>								
+								<p:column headerText="#{etiquetas['tipoResultado']}">
+									<p:selectOneMenu value="#{genero1.pginResultsType}"
+											style="width:80px;" styleClass="estiloComboLetraPequenia">
+											<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes1']}" itemValue="1" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes2']}" itemValue="2" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes3']}" itemValue="3" />
+										</p:selectOneMenu>
+								</p:column>
+								<p:column headerText="#{etiquetas['resultadoPdi']}">
+										<p:selectCheckboxMenu id="multipleSeleccion1" value="#{genero1.pginObjectivesSelected}" 
+										 label="#{etiquetas['objetivo']}" style="font-size:10px;"
+											tabindex="1"      filter="true" filterMatchMode="startsWith"  scrollHeight="250">
+								            <f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaObjetivosEspecificos}"/>
+								        </p:selectCheckboxMenu>								        										
+								</p:column>
+								<p:column headerText="#{etiquetas['indicador']}">
+									<p:selectOneMenu value="#{genero1.indicators.indiId}" style="width:70px;" styleClass="estiloComboLetraPequenia" rendered="#{genero1.cataId.cataNumber!=7}">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaIndicadores}" var="indi" itemLabel="#{indi.indiDescription}" itemValue="#{indi.indiId}"/>
+									</p:selectOneMenu>									
+									<p:inputTextarea value="#{genero1.pginAnotherIndicator}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											rendered="#{genero1.cataId.cataNumber==7}" >
+											<p:ajax event="blur" process="@this"/>
+									</p:inputTextarea>
+								</p:column>
+								<p:column headerText="#{etiquetas['meta']}">
+									<p:inputTextarea value="#{genero1.pginGoals}" cols="25"
+											style="font-size:10px !important;" />
+									<br/>
+									<p:outputLabel value="#{etiquetas['valor']}"/>
+									<br/>
+									<p:inputNumber decimalPlaces="0"  value="#{genero1.pginGoalValue}" style="font-size:10px !important;"/>
+											
+								</p:column>
+								<p:column headerText="#{etiquetas['presupuesto']}">
+									<p:inputNumber decimalPlaces="0" value="#{genero1.pginBudget}" decimalSeparator="," thousandSeparator="." style="font-size:10px !important;"/>
+									<p:commandButton icon="fa fa-trash"
+											action="#{cc.attrs.componenteBuscaProyectos.eliminaLineaEnfGenero1(genero1)}" process="@this"
+											async="true" global="false"
+											update=":form:buscaProyectos:tabsGenero:lstEnfGen1"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()"
+											rendered="#{genero1.cataId.cataNumber==7}">
+											<p:confirm header="Confirmación" message="#{etiquetas['eliminarOtraLinea']}"
+												icon="pi pi-exclamation-triangle" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+							<br/>
+							<p:messages for="lstEnfGen1"  id="msgGenero1" showDetail="true">
+								<p:autoUpdate/>
+							</p:messages>
+							<br/>
+							<h:panelGrid columns="2">
+									<h:panelGrid width="550" />
+									
+										<p:commandButton value="#{botones['nuevaLineaAccion']}" icon="fa fa-file"										
+											process="@this" async="true" global="false"
+											update="@form" action="#{cc.attrs.componenteBuscaProyectos.agregaOtroLineaGenero1}"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()">
+											<p:confirm header="#{titulos['temaGenero1']}" global="false"
+												message="#{etiquetas['insertarOtrasLineas']}" icon="pi pi-exclamation-triangle"  />		
+										</p:commandButton>
+								
+
+							</h:panelGrid>
+							<p:dataTable style="font-size:10px;" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaTemaGenero2}" id="lstEnfGen2"
+								var="genero2">
+								<f:facet name="header">#{titulos['temaGenero2']}</f:facet>
+								<p:column width="15">
+									<p:selectBooleanCheckbox value="#{genero2.seleccionado}"> 
+										<p:ajax event="change" process="@this" listener="#{cc.attrs.componenteBuscaProyectos.seleccionarLineaGeneroTema2(genero2)}"/>
+									</p:selectBooleanCheckbox>										
+								</p:column>
+								<p:column headerText="#{etiquetas['lineaAccion']}">
+									#{genero2.cataId.cataText2}
+									<br/>
+									<p:inputTextarea value="#{genero2.pginOtherLine}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											rendered="#{genero2.cataId.cataNumber==4}" />
+								</p:column>
+								<p:column headerText="#{etiquetas['lineaBase']}">
+									<p:inputTextarea value="#{genero2.pginBaseLine}" cols="25"
+											style="font-size:10px !important;" />
+								</p:column>								
+								<p:column headerText="#{etiquetas['tipoResultado']}">
+									<p:selectOneMenu value="#{genero2.pginResultsType}"
+											style="width:80px;" styleClass="estiloComboLetraPequenia">
+											<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes1']}" itemValue="1" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes2']}" itemValue="2" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes3']}" itemValue="3" />
+										</p:selectOneMenu>
+								</p:column>
+								<p:column headerText="#{etiquetas['resultadoPdi']}">
+									<p:selectCheckboxMenu id="multipleSeleccion2" value="#{genero2.pginObjectivesSelected}" 
+										 label="#{etiquetas['objetivo']}" style="font-size:10px;"
+											 filter="true" filterMatchMode="startsWith"  scrollHeight="250">
+								            <f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaObjetivosEspecificos}"/>
+								    </p:selectCheckboxMenu>
+								</p:column>
+								<p:column headerText="#{etiquetas['indicador']}">
+									<p:selectOneMenu value="#{genero2.indicators.indiId}" style="width:70px;" styleClass="estiloComboLetraPequenia" rendered="#{genero2.cataId.cataNumber!=4}">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaIndicadores}" var="indi" itemLabel="#{indi.indiDescription}" itemValue="#{indi.indiId}"/>
+									</p:selectOneMenu>
+									<p:inputTextarea value="#{genero2.pginAnotherIndicator}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											rendered="#{genero2.cataId.cataNumber==4}" >
+											<p:ajax event="blur" process="@this"/>
+									</p:inputTextarea>
+								</p:column>
+								<p:column headerText="#{etiquetas['meta']}">
+									<p:inputTextarea value="#{genero2.pginGoals}" cols="25"
+											style="font-size:10px !important;" />
+									<br/>
+									<p:outputLabel value="#{etiquetas['valor']}"/>
+									<br/>
+									<p:inputNumber decimalPlaces="0" value="#{genero2.pginGoalValue}" style="font-size:10px !important;"/>		
+								</p:column>
+								<p:column headerText="#{etiquetas['presupuesto']}">
+									<p:inputNumber decimalPlaces="0" value="#{genero2.pginBudget}" decimalSeparator="," thousandSeparator="." style="font-size:10px !important;"/>
+									<p:commandButton icon="fa fa-trash"
+											action="#{cc.attrs.componenteBuscaProyectos.eliminaLineaEnfGenero2(genero2)}" process="@this"
+											async="true" global="false"
+											update=":form:buscaProyectos:tabsGenero:lstEnfGen2"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()"
+											rendered="#{genero2.cataId.cataNumber == 4}">
+											<p:confirm header="Confirmación" message="#{etiquetas['eliminarOtraLinea']}"
+												icon="pi pi-exclamation-triangle" />
+									</p:commandButton>
+									
+								</p:column>
+							</p:dataTable>
+							<br/>
+							<p:message for="lstEnfGen2" showDetail="true">
+								<p:autoUpdate/>
+							</p:message>	
+							<br/>
+							<h:panelGrid columns="2">
+									<h:panelGrid width="550" />
+									
+										<p:commandButton value="#{botones['nuevaLineaAccion']}" icon="fa fa-file"										
+											process="@this" async="true" global="false"
+											update="@form" action="#{cc.attrs.componenteBuscaProyectos.agregaOtroLineaGenero2}"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()">
+											<p:confirm header="#{titulos['temaGenero2']}" global="false"
+												message="#{etiquetas['insertarOtrasLineas']}" icon="pi pi-exclamation-triangle"  />		
+										</p:commandButton>
+										 
+							</h:panelGrid>
+							<p:dataTable style="font-size:10px;" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaTemaGenero3}" id="lstEnfGen3"
+								var="genero3">
+								<f:facet name="header">#{titulos['temaGenero3']}</f:facet>
+								<p:column width="15">
+									<p:selectBooleanCheckbox value="#{genero3.seleccionado}" >
+										<p:ajax event="change" process="@this" listener="#{cc.attrs.componenteBuscaProyectos.seleccionarLineaGeneroTema3(genero3)}"/>
+									</p:selectBooleanCheckbox>										
+								</p:column>
+								<p:column headerText="#{etiquetas['lineaAccion']}">
+									#{genero3.cataId.cataText2}
+									<br/>
+									<p:inputTextarea value="#{genero3.pginOtherLine}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											rendered="#{genero3.cataId.cataNumber==5}" />
+								</p:column>
+								<p:column headerText="#{etiquetas['lineaBase']}">
+									<p:inputTextarea value="#{genero3.pginBaseLine}" cols="25"
+											style="font-size:10px !important;" />
+								</p:column>								
+								<p:column headerText="#{etiquetas['tipoResultado']}">
+									<p:selectOneMenu value="#{genero3.pginResultsType}"
+											style="width:80px;" styleClass="estiloComboLetraPequenia">
+											<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes1']}" itemValue="1" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes2']}" itemValue="2" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes3']}" itemValue="3" />
+										</p:selectOneMenu>
+								</p:column>
+								<p:column headerText="#{etiquetas['resultadoPdi']}">
+									<p:selectCheckboxMenu id="multipleSeleccion3" value="#{genero3.pginObjectivesSelected}" 
+										 label="#{etiquetas['objetivo']}" style="font-size:10px;"
+											 filter="true" filterMatchMode="startsWith"  scrollHeight="250">
+								            <f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaObjetivosEspecificos}"/>
+								    </p:selectCheckboxMenu>
+								</p:column>
+								<p:column headerText="#{etiquetas['indicador']}">
+									<p:selectOneMenu value="#{genero3.indicators.indiId}" style="width:70px;" styleClass="estiloComboLetraPequenia" rendered="#{genero3.cataId.cataNumber!=5}">
+										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+										<f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaIndicadores}" var="indi" itemLabel="#{indi.indiDescription}" itemValue="#{indi.indiId}"/>
+									</p:selectOneMenu>
+									<p:inputTextarea value="#{genero3.pginAnotherIndicator}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											rendered="#{genero3.cataId.cataNumber==5}" >
+											<p:ajax event="blur" process="@this"/>
+									</p:inputTextarea>
+								</p:column>
+								<p:column headerText="#{etiquetas['meta']}">
+									<p:inputTextarea value="#{genero3.pginGoals}" cols="25"
+											style="font-size:10px !important;" />
+									<br/>
+									<p:outputLabel value="#{etiquetas['valor']}"/>
+									<br/>
+									<p:inputNumber decimalPlaces="0" value="#{genero3.pginGoalValue}" style="font-size:10px !important;"/>		
+								</p:column>
+								<p:column headerText="#{etiquetas['presupuesto']}">
+									<p:inputNumber decimalPlaces="0" value="#{genero3.pginBudget}" decimalSeparator="," thousandSeparator="." style="font-size:10px !important;"/>
+									<p:commandButton icon="fa fa-trash"
+											action="#{cc.attrs.componenteBuscaProyectos.eliminaLineaEnfGenero3(genero3)}" process="@this"
+											async="true" global="false"
+											update=":form:buscaProyectos:tabsGenero:lstEnfGen3"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()"
+											rendered="#{genero3.cataId.cataNumber == 5}">
+											<p:confirm header="Confirmación" message="#{etiquetas['eliminarOtraLinea']}"
+												icon="pi pi-exclamation-triangle" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+							<br/>
+							<p:message for="lstEnfGen3" showDetail="true">
+								<p:autoUpdate/>
+							</p:message>	
+							<br/>
+							<h:panelGrid columns="2">
+									<h:panelGrid width="550" />
+									
+										<p:commandButton value="#{botones['nuevaLineaAccion']}" icon="fa fa-file"										
+											process="@this" async="true" global="false"
+											update="@form" action="#{cc.attrs.componenteBuscaProyectos.agregaOtroLineaGenero3}"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()">
+											<p:confirm header="#{titulos['temaGenero3']}" global="false"
+												message="#{etiquetas['insertarOtrasLineas']}" icon="pi pi-exclamation-triangle"  />		
+										</p:commandButton>
+										 
+							</h:panelGrid>
+							<p:dataTable style="font-size:10px;" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaTemaGeneroOtros}" id="lstEnfGen4"
+								var="genero4">
+								<f:facet name="header">#{titulos['otroTemaGenero']}</f:facet>
+								<p:column width="15">
+									<p:selectBooleanCheckbox value="#{genero4.seleccionado}" disabled="true" />										
+								</p:column>
+								<p:column headerText="#{etiquetas['temaLinea']}">
+									<p:inputTextarea value="#{genero4.pginOtherLine}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											 />
+								</p:column>
+								<p:column headerText="#{etiquetas['lineaBase']}">
+									<p:inputTextarea value="#{genero4.pginBaseLine}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											 />
+								</p:column>
+								
+								<p:column headerText="#{etiquetas['tipoResultado']}">
+									<p:selectOneMenu value="#{genero4.pginResultsType}"
+											style="width:80px;" styleClass="estiloComboLetraPequenia">
+											<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+											itemValue="#{null}" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes1']}" itemValue="1" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes2']}" itemValue="2" />
+											<f:selectItem itemLabel="#{etiquetas['tipoRes3']}" itemValue="3" />
+									</p:selectOneMenu>
+								</p:column>
+								<p:column headerText="#{etiquetas['resultadoPdi']}">
+									<p:selectCheckboxMenu id="multipleSeleccion4" value="#{genero4.pginObjectivesSelected}" 
+										 label="#{etiquetas['objetivo']}" style="font-size:10px;"
+											 filter="true" filterMatchMode="startsWith"  scrollHeight="250">
+								            <f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaObjetivosEspecificos}"/>
+								    </p:selectCheckboxMenu>
+								</p:column>
+								<p:column headerText="#{etiquetas['indicador']}">
+									<p:inputTextarea value="#{genero4.pginAnotherIndicator}" cols="15"
+											style="font-size:10px !important;" maxlength="200"
+											 />
+								</p:column>
+								<p:column headerText="#{etiquetas['meta']}">
+									<p:inputTextarea value="#{genero4.pginGoals}" cols="25"
+											style="font-size:10px !important;" />
+									<br/>
+									<p:outputLabel value="#{etiquetas['valor']}"/>
+									<br/>
+									<p:inputNumber decimalPlaces="0" value="#{genero4.pginGoalValue}" style="font-size:10px !important;"/>		
+								</p:column>
+								<p:column headerText="#{etiquetas['presupuesto']}">
+									<p:inputNumber decimalPlaces="0" value="#{genero4.pginBudget}" decimalSeparator="," thousandSeparator="." style="font-size:10px !important;"/>
+									<p:commandButton icon="fa fa-trash"
+											action="#{cc.attrs.componenteBuscaProyectos.eliminaLineaEnfGenero4(genero4)}" process="@this"
+											async="true" global="false"
+											update=":form:buscaProyectos:tabsGenero:lstEnfGen4"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()"
+											>
+											<p:confirm header="Confirmación" message="#{etiquetas['eliminarOtraLinea']}"
+												icon="pi pi-exclamation-triangle" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+							<br/>
+							<p:message for="lstEnfGen4" showDetail="true">
+								<p:autoUpdate/>
+							</p:message>	
+							<br/>
+							<h:panelGrid columns="2">
+									<h:panelGrid width="550" />
+									
+										<p:commandButton value="#{botones['nuevaLineaAccion']}" icon="fa fa-file"										
+											process="@this :form:buscaProyectos:tabsGenero:lstEnfGen4" async="true" global="false"
+											update=":form:buscaProyectos:tabsGenero:lstEnfGen4" action="#{cc.attrs.componenteBuscaProyectos.agregaOtroLineaGenero4}"
+											onclick="PF('dlgEnProc').show()"
+											oncomplete="PF('dlgEnProc').hide()">
+											<p:confirm header="#{titulos['otroTemaGenero']}" global="false"
+												message="#{etiquetas['insertarOtroTema']}" icon="pi pi-exclamation-triangle"  />		
+										</p:commandButton>
+										 
+							</h:panelGrid>
+						</p:panel>
+						<br/>
+						<h:panelGrid columns="4" style="margin: 0 auto;">
+							<p:commandButton value="#{botones['atras']}"
+								styleClass="botonRegistroProyecto"
+								icon="#{botones['icono.atras']}"
+								process="@this tienePlan "
+								update="tienePlan tabsGenero"
+								actionListener="#{cc.attrs.componenteBuscaProyectos.atrasSelecionSocioGenero}"
+								oncomplete="PF('dlgEnProc').hide(); "
+								onstart="PF('dlgEnProc').show();" />
+							<p:commandButton value="#{botones['guardar']}"
+								styleClass="botonRegistroProyecto"
+								icon="#{botones['icono.grabar']}"
+								process="@this tienePlan panelLineasGenero msgGenero1"
+								update="tienePlan tabsGenero panelLineasGenero  :form:growl"
+								actionListener="#{cc.attrs.componenteBuscaProyectos.grabarLineasGenero}"
+								oncomplete="PF('dlgEnProc').hide(); "
+								onstart="PF('dlgEnProc').show();" />								
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+
+
 			</p:outputPanel>
 
 		</composite:implementation>

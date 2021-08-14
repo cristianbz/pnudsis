@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import ec.gob.ambiente.sigma.model.CatalogType;
 import ec.gob.ambiente.sis.bean.RegistroGeneroBean;
+import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
 import ec.gob.ambiente.sis.bean.SeguimientoSalvaguardaBean;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
@@ -6578,7 +6579,7 @@ public class ResumenPDF {
 	 * @param directorioArchivoPDF
 	 * @param seguimientoSalvaguardas
 	 */
-	public static void reporteGenero(String directorioArchivoPDF, RegistroGeneroBean beanGenero){
+	public static void reporteGenero(String directorioArchivoPDF, SeguimientoGeneroBean beanGenero){
 		try{
 			String tema="";
 			
@@ -6642,10 +6643,10 @@ public class ResumenPDF {
 			Paragraph temaAbarcado = new Paragraph();
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
 			temaAbarcado.add(new Phrase("Tema abarcado: ", fontTitulos));
-			for (CatalogType tipo : beanGenero.getListadoLineaGenero()) {
-				if(beanGenero.getCodigoLineaGenero() == tipo.getCatyId())
-					tema = tipo.getCatyDescription();
-			}
+//			for (CatalogType tipo : beanGenero.getListadoLineaGenero()) {
+//				if(beanGenero.getCodigoLineaGenero() == tipo.getCatyId())
+//					tema = tipo.getCatyDescription();
+//			}
 			temaAbarcado.add(new Phrase(tema,fontContenido));
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
@@ -6685,19 +6686,19 @@ public class ResumenPDF {
 				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getCataId().getCataText2(),fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginActivities() ,fontContenidoTablas));
+//				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginActivities() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginIndicator() ,fontContenidoTablas));
+//				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginIndicator() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginResults() ,fontContenidoTablas));
+//				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginResults() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginResultsType().equals("1")?"Transformador":"Trans" ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginBudget() ,fontContenidoTablas));
+//				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginBudget() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 			
 			document.add(tabla1);
@@ -6708,11 +6709,11 @@ public class ResumenPDF {
 			avance.add(new Phrase(Chunk.NEWLINE));
 			avance.add(new Phrase("Porcentaje de avance", fontTitulos));
 			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase(String.valueOf( beanGenero.getAvanceGeneroSeleccionado().getGeadPercentageAdvance()), fontContenido));
+			avance.add(new Phrase(String.valueOf( 0), fontContenido));
 			avance.add(new Phrase(Chunk.NEWLINE));
 			avance.add(new Phrase("Descripción del avance", fontTitulos));
 			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase(String.valueOf( beanGenero.getAvanceGeneroSeleccionado().getGeadAdvanceDescription()), fontContenido));
+//			avance.add(new Phrase(String.valueOf( beanGenero.getAvanceGeneroSeleccionado().getGeadAdvanceDescription()), fontContenido));
 			avance.add(new Phrase(Chunk.NEWLINE));
 			avance.add(new Phrase("INFORMACION DE BENEFICIARIOS", fontTitulos));
 			avance.add(new Phrase(Chunk.NEWLINE));
@@ -6746,24 +6747,24 @@ public class ResumenPDF {
 			tabla2.addCell(encabezadoTabla2);
 			
 			Paragraph datosTabla2;
-			for(DetailAdvanceGender genero:beanGenero.getListaDatosAvanceGenero()){
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(String.valueOf(genero.getDtagNumberOfWomen()),fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getProvincia() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getCanton() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getParroquia() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getDtagComunity() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				
-			}
+//			for(DetailAdvanceGender genero:beanGenero.getListaDatosAvanceGenero()){
+//				datosTabla2=new Paragraph();
+//				datosTabla2.add(new Phrase(String.valueOf(genero.getDtagNumberOfWomen()),fontContenidoTablas));
+//				tabla2.addCell(datosTabla2);
+//				datosTabla2=new Paragraph();
+//				datosTabla2.add(new Phrase(genero.getProvincia() ,fontContenidoTablas));
+//				tabla2.addCell(datosTabla2);
+//				datosTabla2=new Paragraph();
+//				datosTabla2.add(new Phrase(genero.getCanton() ,fontContenidoTablas));
+//				tabla2.addCell(datosTabla2);
+//				datosTabla2=new Paragraph();
+//				datosTabla2.add(new Phrase(genero.getParroquia() ,fontContenidoTablas));
+//				tabla2.addCell(datosTabla2);
+//				datosTabla2=new Paragraph();
+//				datosTabla2.add(new Phrase(genero.getDtagComunity() ,fontContenidoTablas));
+//				tabla2.addCell(datosTabla2);
+//				
+//			}
 			document.add(tabla2);
 			
 			Paragraph preguntas = new Paragraph();

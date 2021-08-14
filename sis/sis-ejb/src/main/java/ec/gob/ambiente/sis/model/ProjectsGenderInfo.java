@@ -1,10 +1,11 @@
 /**
-@autor proamazonia [Christian Báez]  31 may. 2021
+@autor proamazonia [Christian Báez]  2 ago. 2021
 
 **/
-package ec.gob.ambiente.sigma.model;
+package ec.gob.ambiente.sis.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -16,64 +17,142 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
-import ec.gob.ambiente.sis.model.GenderAdvances;
+import ec.gob.ambiente.sigma.model.Projects;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "sigma.projects_gender_info")
-@NamedQueries({
-    @NamedQuery(name = "ProjectsGenderInfo.findAll", query = "SELECT p FROM ProjectsGenderInfo p")})
+@Table(name = "sis.projects_gender_info")
+
 public class ProjectsGenderInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+    
+    @Getter
+    @Setter
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "pgin_id")
     private Integer pginId;
+    
+    @Getter
+    @Setter
+    @Size(max = 200)
+    @Column(name = "pgin_base_line")
+    private String pginBaseLine;
+    
+    @Getter
+    @Setter
     @Size(max = 200)
     @Column(name = "pgin_other_line")
     private String pginOtherLine;
-    @Size(max = 100)
+    
+    @Getter
+    @Setter
     @Column(name = "pgin_budget")
-    private String pginBudget;
+    private double pginBudget;
+    
+    
+    @Getter
+    @Setter
+    @Size(max = 250)
+    @Column(name = "pgin_associated_results")
+    private String pginAssociatedResults;
+    
+    @Getter
+    @Setter
     @Size(max = 200)
-    @Column(name = "pgin_indicator")
-    private String pginIndicator;
-    @Size(max = 2147483647)
-    @Column(name = "pgin_activities")
-    private String pginActivities;
-    @Size(max = 2147483647)
-    @Column(name = "pgin_results")
-    private String pginResults;
+    @Column(name = "pgin_goals")
+    private String pginGoals;
+    
+    @Getter
+    @Setter
+    @Size(max = 200)
+    @Column(name = "pgin_another_indicator")
+    private String pginAnotherIndicator;
+    
+    @Getter
+    @Setter    
+    @Column(name = "pgin_goal_value")
+    private Integer pginGoalValue;
+    
+    @Getter
+    @Setter
+    @Size(max = 1)
+    @Column(name = "pgin_results_type")
+    private String pginResultsType;
+    
+    @Getter
+    @Setter
     @Column(name = "pgin_status")
     private Boolean pginStatus;
+    
+    @Getter
+    @Setter
+    @Column(name = "pspa_id")
+    private Integer pspaId;
+    
+    @Getter
+    @Setter
+    @Size(max = 250)
+    @Column(name = "pgin_creator_user")
+    private String pginCreatorUser;
+    
+    @Getter
+    @Setter    
+    @Column(name = "pgin_creation_date")
+    private Date pginCreationDate;
+    
+    @Getter
+    @Setter
+    @Size(max = 250)
+    @Column(name = "pgin_update_user")
+    private String pginUpdateUser;
+
+    @Getter
+    @Setter    
+    @Column(name = "pgin_update_date")
+    private Date pginUpdateDate;
+
+    @Getter
+    @Setter    
+    @Column(name = "pgin_dba_observation")
+    private String pginDbaObservation;
+
     
     @Transient
     @Getter
     @Setter
     private String pginDescripcionLineaAccion;
     
+    @Transient
     @Getter
     @Setter
-    @Column(name = "pgin_results_type")
-    private String pginResultsType;
+    private String[] pginObjectivesSelected;
     
+    @Getter
+    @Setter
     @JoinColumn(name = "cata_id", referencedColumnName = "cata_id")
     @ManyToOne
-    private Catalog cataId;
+    private Catalogs cataId;
     
+    @Getter
+    @Setter
     @JoinColumn(name = "proj_id", referencedColumnName = "proj_id")
     @ManyToOne(optional = false)
     private Projects projects;
+    
+    @Getter
+    @Setter
+    @JoinColumn(name = "indi_id", referencedColumnName = "indi_id")
+    @ManyToOne    
+    private Indicators indicators;
     
     @Getter
 	@Setter
@@ -81,6 +160,8 @@ public class ProjectsGenderInfo implements Serializable {
 	private List<GenderAdvances> genderAdvancesList;
     
     @Transient
+    @Getter
+	@Setter
     private boolean seleccionado;
 
     public ProjectsGenderInfo() {
@@ -90,90 +171,7 @@ public class ProjectsGenderInfo implements Serializable {
     public ProjectsGenderInfo(Integer pginId) {
         this.pginId = pginId;
     }
-
-    public Integer getPginId() {
-        return pginId;
-    }
-
-    public void setPginId(Integer pginId) {
-        this.pginId = pginId;
-    }
-
-    public String getPginOtherLine() {
-        return pginOtherLine;
-    }
-
-    public void setPginOtherLine(String pginOtherLine) {
-        this.pginOtherLine = pginOtherLine;
-    }
-
-    public String getPginBudget() {
-        return pginBudget;
-    }
-
-    public void setPginBudget(String pginBudget) {
-        this.pginBudget = pginBudget;
-    }
-
-    public String getPginIndicator() {
-        return pginIndicator;
-    }
-
-    public void setPginIndicator(String pginIndicator) {
-        this.pginIndicator = pginIndicator;
-    }
     
-    
-
-    public String getPginActivities() {
-		return pginActivities;
-	}
-
-	public void setPginActivities(String pginActivities) {
-		this.pginActivities = pginActivities;
-	}
-
-	public String getPginResults() {
-		return pginResults;
-	}
-
-	public void setPginResults(String pginResults) {
-		this.pginResults = pginResults;
-	}
-
-	public Boolean getPginStatus() {
-        return pginStatus;
-    }
-
-    public void setPginStatus(Boolean pginStatus) {
-        this.pginStatus = pginStatus;
-    }
-
-    public Catalog getCataId() {
-        return cataId;
-    }
-
-    public void setCataId(Catalog cataId) {
-        this.cataId = cataId;
-    }
-
-    public Projects getProjId() {
-        return projects;
-    }
-
-    public void setProjId(Projects projId) {
-        this.projects = projId;
-    }
-    
-    
-
-    public boolean isSeleccionado() {
-		return seleccionado;
-	}
-
-	public void setSeleccionado(boolean seleccionado) {
-		this.seleccionado = seleccionado;
-	}
 
 	@Override
     public int hashCode() {
@@ -201,4 +199,5 @@ public class ProjectsGenderInfo implements Serializable {
     }
     
 }
+
 

@@ -28,10 +28,12 @@
 }
 
 .header-left-part {
-	width: 298px;
+	/*width: 298px;*/
+	width: 236px;
 	height: 298px;
 	position: fixed;
-	background-image: url("../resources/images/logo_ama_banner_circle.png");
+	background-image: url("../resources/images/escudo_ecuador.png");
+	/*background-image: url("../resources/images/logo_ama_banner_circle.png");*/
 	z-index: -50;
 	margin-left: 90px;
 }
@@ -48,7 +50,8 @@
 	float: right;
 	width: 785px;
 	height: 115px;
-	background-image: url("../resources/images/logo_cabecera.png");
+	/*background-image: url("../resources/images/logo_cabecera.png");*/
+	background-image: url("../resources/images/ENCABEZADOS_SUIA.png");
 	margin-bottom: 20px;
 	background-size: 100%; 
 }
