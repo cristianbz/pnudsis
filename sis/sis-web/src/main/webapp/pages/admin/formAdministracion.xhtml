@@ -51,6 +51,13 @@
 				<br/>
 				<br/>
 				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-12"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+						<p:outputLabel value="#{titulos['adminConf']}"
+							style="font-size:18px;font-weight:bold;" />
+					</div>
+				</div>
+				<div class="ui-fluid p-formgrid p-grid">
 					<div class="p-field p-col-12 p-md-12">
 						<p:outputLabel value="#{titulos['cuidadoCambios']}"/>
 					</div>
@@ -137,6 +144,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelPregunta tablaPreguntas " title="#{tooltip['grabar']}" tabindex="6"																							
 															actionListener="#{administracionController.agregarEditarPregunta()}" value="#{botones['guardar']}"
+															oncomplete="PF('idTablaPreguntas').filter()"
 															update="panelPregunta tablaPreguntas :form:growl"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -159,15 +167,15 @@
 									<p:outputLabel value="#{etiquetas['ingresarPregunta']}" />
 								</div>
 								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
-									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
-										actionListener="#{administracionController.nuevaPregunta(1)}" update="panelPregunta"
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" title="#{tooltip['agregarPregunta']}"
+										actionListener="#{administracionController.nuevaPregunta(1)}" update="panelPregunta" icon="#{botones['icono.mas']}"
 										process="@this"/>
 
 								</div>
 							</div>
 						</div>
 						<br />
-						<p:dataTable id="tablaPreguntas"
+						<p:dataTable id="tablaPreguntas" widgetVar="idTablaPreguntas"
 							value="#{administracionController.administracionBean.listaPreguntas}"
 							rows="10" paginator="true" rowKey="#{pregunta.quesId}"
 							filteredValue="#{administracionController.administracionBean.listaPreguntasFiltradas}"
@@ -193,7 +201,9 @@
 									value="#{pregunta.quesStatus==true?'Activa':'Inactiva'}" />
 							</p:column>
 							<p:column width="40">
-								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarPregunta(pregunta)}"
+								<p:commandButton icon="#{botones['icono.editar']}" 
+									title="#{tooltip['editar']}"
+									actionListener="#{administracionController.editarPregunta(pregunta)}"
 									process="@this :form:tabs:panelPregunta" update=":form:tabs:panelPregunta" />
 
 							</p:column>
@@ -286,8 +296,8 @@
 									<p:outputLabel value="#{etiquetas['ingresarPregunta']}" />
 								</div>
 								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
-									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
-										actionListener="#{administracionController.nuevaPregunta(2)}" update="panelPreguntaGenero"
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" title="#{tooltip['agregarPregunta']}"
+										actionListener="#{administracionController.nuevaPregunta(2)}" update="panelPreguntaGenero" icon="#{botones['icono.mas']}"
 										process="@this"/>
 
 								</div>
@@ -315,7 +325,9 @@
 									value="#{pregunta.quesStatus==true?'Activa':'Inactiva'}" />
 							</p:column>
 							<p:column width="40">
-								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarPreguntaGenero(pregunta)}"
+								<p:commandButton icon="#{botones['icono.editar']}" 
+									title="#{tooltip['editar']}"
+									actionListener="#{administracionController.editarPreguntaGenero(pregunta)}"
 									process="@this :form:tabs:panelPreguntaGenero" update=":form:tabs:panelPreguntaGenero" />
 
 							</p:column>
@@ -409,8 +421,8 @@
 									<p:outputLabel value="#{titulos['ingresoCatalogos']}" />
 								</div>
 								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
-									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
-										actionListener="#{administracionController.nuevoCatalogo}" update="panelCatalogos"
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" title="#{tooltip['agregarCatalogo']}"
+										actionListener="#{administracionController.nuevoCatalogo}" update="panelCatalogos" icon="#{botones['icono.mas']}"
 										process="@this"/>
 
 								</div>
@@ -440,7 +452,9 @@
 									value="#{cata.cataStatus==true?'Activa':'Inactiva'}" />
 							</p:column>
 							<p:column width="40">
-								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarcatalogo(cata)}"
+								<p:commandButton icon="#{botones['icono.editar']}" 
+									title="#{tooltip['editar']}"
+									actionListener="#{administracionController.editarcatalogo(cata)}"
 									process="@this :form:tabs:panelCatalogos" update=":form:tabs:panelCatalogos" />
 
 							</p:column>
@@ -454,13 +468,15 @@
 										<p:outputLabel value="#{etiquetas['nombreusuario']}" />
 									</div>									
 									<div class="p-field p-col-12 p-md-6">
-									<p:inputText value="#{administracionBean.nombreUsuario}" required="true" id="usuario">
+									<p:inputText value="#{administracionBean.nombreUsuario}" 
+										requiredMessage="#{mensajes['longitudMinima']}"
+										required="true" id="usuario">
 										<f:validateLength minimum="3"/>
 									</p:inputText>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:commandButton value="#{botones['buscar']}" icon="#{botones['icono.buscar']}"
-											update="listaUsuarios :form:growl" partialSubmit="true"
+											update="listaUsuarios :form:growl" partialSubmit="true" title="#{tooltip['buscaUsuario']}"
 											process="@this usuario" actionListener="#{administracionController.buscarUsuarios()}"/>
 									</div>
 									
@@ -551,8 +567,8 @@
 									<p:outputLabel value="#{titulos['ingresoUsuarios']}" />
 								</div>
 								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
-									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 
-										actionListener="#{administracionController.nuevoUsuario}" update="panelUsuarios"
+									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" title="#{tooltip['agregarUsuario']}"
+										actionListener="#{administracionController.nuevoUsuario}" update="panelUsuarios" icon="#{botones['icono.mas']}"
 										process="@this"/>
 
 								</div>
@@ -565,7 +581,12 @@
 							var="proy">
 							<p:column headerText="#{etiquetas['proyectos']}" groupRow="true">
 								#{proy.projects.projTitle}
-							</p:column> 	
+								<br/>
+								<br/>
+								<p:outputLabel value="#{etiquetas['socioImplementador']}" styleClass="estiloHeaderCampoTabla"/>
+								#{proy.projects.partners.partName}
+							</p:column> 
+								
 							<p:column headerText="#{etiquetas['socioEstrategico']}">
 								#{proy.prusPartner}
 							</p:column>									
@@ -580,7 +601,9 @@
 									value="#{proy.prusStatus == true?'Activa':'Inactiva'}" />
 							</p:column>
 							<p:column width="40">
-								<p:commandButton icon="#{botones['icono.editar']}" actionListener="#{administracionController.editarUsuario(proy)}"
+								<p:commandButton icon="#{botones['icono.editar']}" 
+									title="#{tooltip['editar']}"
+									actionListener="#{administracionController.editarUsuario(proy)}"
 									process="@this :form:tabs:panelUsuarios" update=":form:tabs:panelUsuarios" />
 
 							</p:column>

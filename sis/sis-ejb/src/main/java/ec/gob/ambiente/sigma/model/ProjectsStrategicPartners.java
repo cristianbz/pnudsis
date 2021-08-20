@@ -69,7 +69,7 @@ public class ProjectsStrategicPartners implements Serializable {
 	@Getter
 	@Setter
 	@Column(name = "pspa_has_project")
-	private boolean pspaHasProject;
+	private Boolean pspaHasProject;
 	
 	@Getter
 	@Setter

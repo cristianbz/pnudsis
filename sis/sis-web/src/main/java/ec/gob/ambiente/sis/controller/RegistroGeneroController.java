@@ -1232,7 +1232,7 @@ public class RegistroGeneroController implements Serializable{
 	}
 	public void grabarResumenEjecutivo(AdvanceExecutionSafeguards avanceEjecucion){
 		try{
-			getRegistroGeneroBean().getResumenEjecutivo().setAdvanceExecutionSafeguards(avanceEjecucion);
+//			getRegistroGeneroBean().getResumenEjecutivo().setAdvanceExecutionSafeguards(avanceEjecucion);
 			getExecutiveSummarieFacade().grabarResumenEjecutivo(getRegistroGeneroBean().getResumenEjecutivo());
 		}catch(Exception e){
 			e.printStackTrace();

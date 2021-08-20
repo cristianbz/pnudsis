@@ -61,7 +61,7 @@ public class ProjectsGenderInfo implements Serializable {
     
     @Getter
     @Setter
-    @Size(max = 250)
+    @Size(max = 800)
     @Column(name = "pgin_associated_results")
     private String pginAssociatedResults;
     

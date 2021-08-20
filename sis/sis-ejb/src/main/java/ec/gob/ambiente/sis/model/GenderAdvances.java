@@ -51,17 +51,14 @@ public class GenderAdvances {
 	@Getter
 	@Setter
 	@Column(name = "gead_executed_budget")
-	private double geadExecutedBudget;
+	private double geadExecutedBudget; 
 	
 	@Getter
 	@Setter
 	@Column(name = "gead_advance_value_goal")
-	private int geadAdvanceValueGoal;
+	private String geadAdvanceValueGoal;
 	
-	@Getter
-	@Setter
-	@Column(name = "gead_advance_value_goal_boolean")
-	private boolean geadAdvanceValueGoalBoolean;
+
 	
 	@Getter
 	@Setter

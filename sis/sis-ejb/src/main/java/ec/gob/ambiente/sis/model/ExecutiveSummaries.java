@@ -76,10 +76,10 @@ public class ExecutiveSummaries  {
 	@Column(name = "exsu_status")
 	private boolean exsuStatus;
 	
-	@Getter
-	@Setter
-	@JoinColumn(name = "adex_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
-	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
+//	@Getter
+//	@Setter
+//	@JoinColumn(name = "adex_id")
+//	@ManyToOne(fetch = FetchType.LAZY)	
+//	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
    
 }

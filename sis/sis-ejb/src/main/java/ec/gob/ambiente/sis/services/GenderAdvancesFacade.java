@@ -51,7 +51,7 @@ public class GenderAdvancesFacade extends AbstractFacade<GenderAdvances,Integer>
 	public List<GenderAdvances> listaAvancesGeneroActivosPorProjectGender(int codigoProjectGenderInfo)throws Exception{
 		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.projectsGenderInfo.pginId=:codigoProjectGenderInfo AND GA.geadStatus = TRUE AND GA.advanceExecutionSafeguards.adexReportedStatus='I'";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
-		camposCondicion.put("codigoProjectGenderInfo", codigoProjectGenderInfo);					
+		camposCondicion.put("codigoProjectGenderInfo", codigoProjectGenderInfo);			
 		return findByCreateQuery(sql, camposCondicion);
 	}
 	/**
@@ -62,7 +62,7 @@ public class GenderAdvancesFacade extends AbstractFacade<GenderAdvances,Integer>
 	 */
 	public List<GenderAdvances> listadoAvancesGeneroPorAvanceEjecucion(int codigoAvanceEjecucion)throws Exception{
 		List<GenderAdvances> listaTemp=new ArrayList<GenderAdvances>();
-		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.projectsGenderInfo.cataId IS NOT NULL";
+		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.projectsGenderInfo.cataId IS NOT NULL AND GA.geadStatus=TRUE";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);					
 		listaTemp = findByCreateQuery(sql, camposCondicion);
@@ -77,7 +77,7 @@ public class GenderAdvancesFacade extends AbstractFacade<GenderAdvances,Integer>
 	 */
 	public List<GenderAdvances> listadoAvancesGeneroOtrosTemasPorAvanceEjecucion(int codigoAvanceEjecucion)throws Exception{
 		List<GenderAdvances> listaTemp=new ArrayList<GenderAdvances>();
-		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.projectsGenderInfo.cataId IS NULL";
+		String sql="SELECT GA FROM GenderAdvances GA WHERE GA.advanceExecutionSafeguards.adexId=:codigoAvanceEjecucion AND GA.projectsGenderInfo.cataId IS NULL AND GA.geadStatus=TRUE";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);					
 		listaTemp = findByCreateQuery(sql, camposCondicion);

@@ -685,5 +685,6 @@ public class LoginController implements Serializable {
 		}catch(IOException e) {
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "validarSesion" + ": ").append(e.getMessage()));
 		}
-	}	
+	}
+
 }

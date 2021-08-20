@@ -223,8 +223,8 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 					valueAnswersFacade.edit(respuestas);
 			}
 			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
-			resumenEjecutivo.setAdvanceExecutionSafeguards(avanceEjecucion);
-			resumenEjecutivo.setExsuSummaryContent("");			
+//			resumenEjecutivo.setAdvanceExecutionSafeguards(avanceEjecucion);
+//			resumenEjecutivo.setExsuSummaryContent("");			
 			genderAdvancesFacade.create(avanceGenero);
 			executiveSummariesFacade.create(resumenEjecutivo);
 		}else{

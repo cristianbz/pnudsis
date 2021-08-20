@@ -43,7 +43,7 @@ public class ProjectsStrategicPartnersFacade extends AbstractFacade<ProjectsStra
 	 */
 	public ProjectsStrategicPartners partnerDelProyecto(Integer codigoProyecto,Integer codigoPartner)throws DaoException{
 		try{
-			String sql="SELECT PSP FROM ProjectsStrategicPartners PSP WHERE  PSP.projects.projId=:codigoProyecto AND PSP.partners.partId=:codigoPartner AND PSP.pspaStatus=TRUE";
+			String sql="SELECT PSP FROM ProjectsStrategicPartners PSP WHERE  PSP.projects.projId=:codigoProyecto AND PSP.pspaId=:codigoPartner AND PSP.pspaStatus=TRUE";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoProyecto", codigoProyecto);
 			camposCondicion.put("codigoPartner", codigoPartner);

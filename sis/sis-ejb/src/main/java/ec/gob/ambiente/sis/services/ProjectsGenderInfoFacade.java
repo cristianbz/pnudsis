@@ -153,5 +153,23 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 			throw new DaoException();
 		}
 	}
+	
+	public List<Object[]> listadoNuevosProyectosAgregados(int codigoProyecto,int codigoPartner) throws Exception{
+		String sql="";		
+		if(codigoProyecto>0 && codigoPartner == 0){
+			sql="SELECT ga.pgin_id as pgi1,pgi.pgin_id as pgi2,pgi.cata_id,pgi.indi_id,pgi.pgin_other_line,pgi.pgin_another_indicator "
+				+",pgi.pgin_results_type,pgi.pgin_associated_results, pgi.pgin_budget,pgi.pspa_id " 
+				+" FROM sis.gender_advances ga RIGHT JOIN sis.projects_gender_info pgi "
+				+" ON ga.pgin_id = pgi.pgin_id  WHERE pgi.pgin_status=TRUE AND pgi.pgin_associated_results is not null AND pgi.proj_id=" +codigoProyecto
+				+ " AND pgi.pspa_id IS NULL";
+		}else if(codigoProyecto>0 && codigoPartner > 0){
+			sql="SELECT ga.pgin_id as pgi1,pgi.pgin_id as pgi2,pgi.cata_id,pgi.indi_id,pgi.pgin_other_line,pgi.pgin_another_indicator "
+					+",pgi.pgin_results_type,pgi.pgin_associated_results, pgi.pgin_budget,pgi.pspa_id " 
+					+" FROM sis.gender_advances ga RIGHT JOIN sis.projects_gender_info pgi "
+					+" ON ga.pgin_id = pgi.pgin_id  WHERE pgi.pgin_status=TRUE AND pgi.pgin_associated_results is not null AND pgi.proj_id="+codigoProyecto
+					+ " AND pgi.pspa_id="+codigoPartner;			
+		}		
+		return consultaNativa(sql);
+	}
 }
 

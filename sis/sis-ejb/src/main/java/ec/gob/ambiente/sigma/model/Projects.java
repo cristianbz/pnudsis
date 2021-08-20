@@ -63,6 +63,11 @@ public class Projects {
 	
 	@Getter
 	@Setter
+	@Column(name = "proj_type")
+	private String projType;
+	
+	@Getter
+	@Setter
 	@Column(name = "proj_status")
 	private boolean projStatus;
 	

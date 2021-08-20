@@ -101,6 +101,11 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@Column(name = "adex_executive_summary")
+	private String adexExecutiveSummary;
+	
+	@Getter
+	@Setter
 	@Transient
 	private String adexStrategicPartner;
 	
@@ -124,10 +129,10 @@ public class AdvanceExecutionSafeguards {
 	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
 	private List<TableResponses> tableResponsesList;
 	
-	@Getter
-	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
-	private List<ExecutiveSummaries> executiveSummariesList;
+//	@Getter
+//	@Setter
+//	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
+//	private List<ExecutiveSummaries> executiveSummariesList;
 	
 	@Getter
 	@Setter

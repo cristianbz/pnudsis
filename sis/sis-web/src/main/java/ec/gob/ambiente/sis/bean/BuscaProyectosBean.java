@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
+import ec.gob.ambiente.sigma.model.ProjectsSpecificObjectives;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
@@ -194,9 +195,13 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private List<Indicators> listaIndicadores;
 	
+//	@Getter
+//	@Setter
+//	private List<String> listaObjetivosEspecificos;
+	
 	@Getter
 	@Setter
-	private List<String> listaObjetivosEspecificos;
+	private List<ProjectsSpecificObjectives> listaObjetivosEspecificos;
 	
 	@Getter
 	@Setter

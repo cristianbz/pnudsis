@@ -154,3 +154,13 @@
 .estiloComboLetraPequenia .ui-selectonemenu-label{
 	font-size:10px !important;
 }
+.textCircle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 10px;
+  color: #fff;
+  line-height: 25px;
+  text-align: center;
+  background: #5499C7
+}

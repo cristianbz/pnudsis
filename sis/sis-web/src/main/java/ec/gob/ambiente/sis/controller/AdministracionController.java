@@ -143,6 +143,7 @@ public class AdministracionController implements Serializable{
 				if(pu.getPrusRolUsuario().contains(TipoRolesUsuarioEnum.SIS_socio_estrategico.toString())){
 					pu.setPrusPartner(getProjectsStrategicPartnersFacade().partnerDelProyecto(pu.getProjects().getProjId(), pu.getPspaId()).getPartners().getPartName());
 				}
+
 				getAdministracionBean().getListaProyectoUsuarios().add(pu);
 			}
 		}catch(Exception e){
@@ -269,8 +270,8 @@ public class AdministracionController implements Serializable{
 				pregunta.setQuesPrincipalQuestion(false);
 			}
 			getQuestionsFacade().crearEditarPregunta(pregunta);
-			getAdministracionBean().setNuevaPregunta(false);
-			getAdministracionBean().setListaPreguntas(getQuestionsFacade().listaPreguntasIngresadas());	
+			getAdministracionBean().setNuevaPregunta(false);			
+			getAdministracionBean().setListaPreguntas(getQuestionsFacade().listaPreguntasIngresadas());
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, getMensajesController().getPropiedad("info.infoGrabada"), "");						
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.grabar"), "");

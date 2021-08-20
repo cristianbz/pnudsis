@@ -3,6 +3,7 @@ package ec.gob.ambiente.sigma.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "projects_specific_objectives", schema = "sigma")
 @NamedQueries({
-	
+	@NamedQuery(name = "ps",query = "SELECT PSO FROM ProjectsSpecificObjectives PSO WHERE PSO.psobStatus = TRUE AND PSO.projects.projId=1 AND PSO.projects.projType=''")
 	
 })
 
@@ -45,4 +46,10 @@ public class ProjectsSpecificObjectives implements Serializable {
 	@Setter
 	@Column(name = "psob_status")
 	private boolean psobStatus;
+	
+	@Getter
+	@Setter
+    @JoinColumn(name = "gelo_id", referencedColumnName = "gelo_id")
+    @ManyToOne
+    private GeographicalLocations geloId;
 }

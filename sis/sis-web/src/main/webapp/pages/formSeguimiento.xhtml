@@ -41,14 +41,25 @@
         </p:dialog> 
 		<p:dialog widgetVar="dlgFinalizarReporteSalvaguarda" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['finalizarReporte']}" width="390"
+			header="#{titulos['finalizarReporte']}" width="550"
 			closable="false" resizable="false">			
 			<p:outputLabel value="#{etiquetas['finReporteSeguimiento']}"/>
+			<h:panelGrid id="contenidoResumenEjecutivo">
+				<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
+				<p:inputTextarea counter="resumenExecutive" 
+					value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexExecutiveSummary}"
+					counterTemplate="{0} caracteres restantes." maxlength="500"
+					cols="70" rows="9">
+					<p:ajax process="@this "
+						event="blur"  />
+				</p:inputTextarea>
+				<h:outputLabel id="resumenExecutive" class="p-d-block" />
+			</h:panelGrid>
 			<h:panelGrid columns="2" style="margin:0 auto;">
-					<p:commandButton value="#{botones['grabar']}" update=":form:panelsalvaguarda :form:buscaProyectos "						
-						actionListener="#{seguimientoSalvaguardaController.finalizarReporteSalvaguardas}"
-						oncomplete="PF('dlgFinalizarReporteSalvaguarda').hide();"
-						process="@this :form:panelsalvaguarda :form:buscaProyectos " icon="#{botones['icono.grabar']}" />
+					<p:commandButton value="#{botones['grabar']}" update="@form"						
+						action="#{seguimientoSalvaguardaController.finalizarReporteSalvaguardas}"
+						oncomplete="PF('dlgFinalizarReporteSalvaguarda').hide();" 
+						process="@this :form:panelsalvaguarda :form:buscaProyectos contenidoResumenEjecutivo panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 					<p:commandButton icon="#{botones['icono.cancelar']}"
 						value="#{botones['cancelar']}"
 						oncomplete="PF('dlgFinalizarReporteSalvaguarda').hide();" process="@this" />
@@ -2032,7 +2043,7 @@
 									</h:panelGrid>
 
 							</div>
-							<br />
+							<br /> <!-- 
 							<p:outputPanel id="panelResumenEjecutivoA">
 								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==0?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
@@ -2047,7 +2058,7 @@
 									<h:outputLabel id="resumenA" class="p-d-block" />
 								</h:panelGrid>
 								
-							</p:outputPanel>
+							</p:outputPanel>  -->
 							<br/>
 							
 							<h:panelGrid columns="4" style="margin: 0 auto;">
@@ -4647,7 +4658,7 @@
 									</h:panelGrid>
 								
 							</div>							
-							<br />
+							<br /> <!-- 
 							<p:outputPanel id="panelResumenEjecutivoB">
 								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==1?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
@@ -4663,7 +4674,7 @@
 								</h:panelGrid>
 								
 							</p:outputPanel>
-								
+							 -->	
 							<br/>			
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -7265,7 +7276,7 @@
 									</h:panelGrid>
 								
 							</div>
-							<br/>
+							<br/> <!-- 
 							<p:outputPanel id="panelResumenEjecutivoC">
 								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==2?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
@@ -7280,7 +7291,7 @@
 									<h:outputLabel id="resumenC" class="p-d-block" />
 								</h:panelGrid>
 								
-							</p:outputPanel>
+							</p:outputPanel>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -8027,7 +8038,7 @@
 									</h:panelGrid>
 
 							</div>
-							<br/>
+							<br/> <!-- 
 							<p:outputPanel id="panelResumenEjecutivoD">
 								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==3?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
@@ -8042,7 +8053,7 @@
 									<h:outputLabel id="resumenD" class="p-d-block" />
 								</h:panelGrid>
 								
-							</p:outputPanel>
+							</p:outputPanel>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -11297,7 +11308,7 @@
 									</h:panelGrid>
 								
 							</div>
-							<br/>
+							<br/> <!-- 
 							<p:outputPanel id="panelResumenEjecutivoE">
 								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 and seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==4?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
@@ -11312,7 +11323,7 @@
 									<h:outputLabel id="resumenE" class="p-d-block" />
 								</h:panelGrid>
 								
-							</p:outputPanel>
+							</p:outputPanel>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -12746,7 +12757,7 @@
 									</h:panelGrid>
 
 							</div>
-							<br/>
+							<br/> <!-- 
 							<p:outputPanel id="panelResumenEjecutivoF">
 								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 ?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
@@ -12761,7 +12772,7 @@
 									<h:outputLabel id="resumenF" class="p-d-block" />
 								</h:panelGrid>
 								
-							</p:outputPanel>
+							</p:outputPanel>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -14690,7 +14701,7 @@
 									
 									
 							</div>
-							<br/>
+							<br/> <!-- 
 							<p:outputPanel id="panelResumenEjecutivoG">
 								<h:panelGrid rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1 or seguimientoSalvaguardaController.getCodigoSalvaguardaActual()==6?true:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==0 and seguimientoSalvaguardaController.numeroSalvaguardas==1?true:false}">
 									<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
@@ -14705,7 +14716,7 @@
 									<h:outputLabel id="resumenG" class="p-d-block" />
 								</h:panelGrid>
 								
-							</p:outputPanel>
+							</p:outputPanel>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
