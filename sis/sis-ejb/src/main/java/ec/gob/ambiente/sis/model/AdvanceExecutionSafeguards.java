@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import ec.gob.ambiente.sigma.model.Projects;
+import ec.gob.ambiente.sigma.model.ProjectsSpecificObjectives;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.suia.model.Users;
 import lombok.Getter;
@@ -128,12 +129,7 @@ public class AdvanceExecutionSafeguards {
 	@Setter
 	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
 	private List<TableResponses> tableResponsesList;
-	
-//	@Getter
-//	@Setter
-//	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
-//	private List<ExecutiveSummaries> executiveSummariesList;
-	
+		
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.EAGER,cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
@@ -144,6 +140,12 @@ public class AdvanceExecutionSafeguards {
 	@JoinColumn(name = "proj_id")
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Projects projects;
+	
+	@Getter
+	@Setter
+	@JoinColumn(name = "psob_id",referencedColumnName = "psob_id")
+	@ManyToOne	
+	private ProjectsSpecificObjectives projectsSpecificObjectives;
 	
 	@Getter
 	@Setter

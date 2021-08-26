@@ -1,8 +1,12 @@
 package ec.gob.ambiente.sigma.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
+import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
+import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,4 +56,9 @@ public class ProjectsSpecificObjectives implements Serializable {
     @JoinColumn(name = "gelo_id", referencedColumnName = "gelo_id")
     @ManyToOne
     private GeographicalLocations geloId;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "projectsSpecificObjectives", fetch = FetchType.LAZY)
+	private List<AdvanceExecutionSafeguards> advanceExecutionSafeguardsList;
 }

@@ -57,7 +57,9 @@ public class ProjectQuestionsFacade extends AbstractFacade<ProjectQuestions, Int
 			controlPreguntasProyecto(listaProjectQuestions, esProyecto, tipo);
 		for (ProjectQuestions preguntas : listaProjectQuestions) {
 			if(preguntas.getPrquId() == null)
-				create(preguntas);						
+				create(preguntas);	
+			else
+				edit(preguntas);
 		}
 
 	}
@@ -96,6 +98,21 @@ public class ProjectQuestionsFacade extends AbstractFacade<ProjectQuestions, Int
 				edit(pqtemp);
 			}
 		}
+	}
+	/**
+	 * Busca las salvaguardas asignadas por proyecto o por socio estrategico
+	 * @param codigoProyecto  Es el codigo del proyecto seleccionado
+	 * @param codigoSocioEstrategico Es el codigo del socio estratégico seleccionado
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Object[]> listaSalvaguardasComponentes(Integer codigoProyecto,Integer codigoSocioEstrategico)throws Exception{
+		String sql="";		
+		if(codigoProyecto!=null && codigoSocioEstrategico == null)
+			sql="SELECT DISTINCT safe_id, prqu_components FROM sis.project_questions WHERE prqu_status=true AND proj_id="+codigoProyecto +" ORDER BY safe_id";			
+		else if(codigoSocioEstrategico != null)
+			sql="SELECT DISTINCT safe_id, prqu_components FROM sis.project_questions WHERE prqu_status=true AND pspa_id="+codigoSocioEstrategico +" ORDER BY safe_id";							
+		return consultaNativa(sql);
 	}
 }
 

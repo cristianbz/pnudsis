@@ -427,17 +427,17 @@
 						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.indicators!=null?seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.indicators.indiDescription:seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.pginAnotherIndicator}" />
 
 					<p:outputLabel value="#{etiquetas['valorAlcanzado']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputTextarea cols="30" maxlength="200"
+					<p:inputTextarea cols="30" maxlength="200" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadAdvanceValueGoal}"						
 						 />
 
 					<p:outputLabel value="#{etiquetas['presupuestoEjecutado']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
 					<p:inputNumber decimalPlaces="2" decimalSeparator=","
-						thousandSeparator="."
+						thousandSeparator="." required="true" requiredMessage="#{mensajes['campoRequerido']}"
 						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadExecutedBudget}" />
 
 					<p:outputLabel value="#{etiquetas['accionesRealizadas']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputTextarea
+					<p:inputTextarea maxlength="200" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadBudgetActions}"
 						cols="30" />
 
@@ -448,9 +448,9 @@
 						disabled="#{buscaProyectosBean.proyectoReportado}"
 						icon="#{botones['icono.grabar']}" partialSubmit="true"
 						action="#{seguimientoGeneroController.grabarAvanceLineaGenero()}"
-						oncomplete="PF('dlgRegistroSeguimiento').hide();" update=":form:tabs:tablaAvancesGenero"
+						update=":form:tabs:tablaAvancesGenero datosAvanceGenero growl"
 						process="@this datosAvanceGenero :form:tabs:tablaAvancesGenero" />
-					<p:commandButton value="#{botones['cancelar']}"
+					<p:commandButton value="#{botones['cancelar']}" resetValues="true"
 						icon="#{botones['icono.cancelar']}" process="@this"
 						oncomplete="PF('dlgRegistroSeguimiento').hide();" />
 				</h:panelGrid>
@@ -552,8 +552,7 @@
 							listener="#{seguimientoGeneroController.tabChange}"
 							process=":form:tabs" update=":form:tabs" />
 						<p:tab title="#{etiquetas['lineasDeAccion']}">
-							<p:outputLabel value="#{titulos['notaAclaratoriaGenero']}"/>
-							<br/>
+							
 							<br/>
 							<p:dataTable value="#{seguimientoGeneroBean.listaAvancesGenero}" id="tablaAvancesGenero"
 								var="genero" style="font-size:10px !important;">

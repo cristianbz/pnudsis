@@ -14,6 +14,7 @@ import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSpecificObjectives;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
+import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
@@ -22,6 +23,7 @@ import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Sectors;
+import ec.gob.ambiente.sis.utils.dtos.DtoComponenteSalvaguarda;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -214,5 +216,25 @@ public class BuscaProyectosBean implements Serializable{
 	@Getter
 	@Setter
 	private boolean proyectoReportado;
+	
+	@Getter
+	@Setter
+	private List<ProjectQuestions> listaPreguntasAsignadasAux;
+	
+	@Getter
+	@Setter
+	private List<ProjectsSpecificObjectives> listaComponentes;
+	
+	@Getter
+	@Setter
+	private List<DtoComponenteSalvaguarda> listaComponentesSalvaguardas;
+	
+	@Getter
+	@Setter
+	private int codigoComponente;
+	
+	@Getter
+	@Setter
+	private List<Safeguards> listadoSalvaguardasAsignadasProyecto;
 }
 

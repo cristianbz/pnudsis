@@ -58,6 +58,7 @@ import ec.gob.ambiente.sis.services.ProjectUsersFacade;
 import ec.gob.ambiente.sis.services.ProjectsGenderInfoFacade;
 import ec.gob.ambiente.sis.services.SectorsFacade;
 import ec.gob.ambiente.sis.utils.Mensaje;
+import ec.gob.ambiente.sis.utils.dtos.DtoComponenteSalvaguarda;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -344,7 +345,9 @@ public class ComponenteBuscaProyectos implements Serializable{
 				}
 			}else{
 //				System.out.println(avanceEjecucion.getProjectsStrategicPartners().getPspaId());
+				
 				getBuscaProyectosBean().setAdvanceExecution(avanceEjecucion);
+				getBuscaProyectosBean().setCodigoComponente(avanceEjecucion.getProjectsSpecificObjectives().getPsobId());
 				if(avanceEjecucion.getProjectsStrategicPartners()!=null)
 					getBuscaProyectosBean().setCodigoStrategicPartner(avanceEjecucion.getProjectsStrategicPartners().getPspaId());
 //				if(getLoginBean().getTipoRol()==3){-						
@@ -355,6 +358,9 @@ public class ComponenteBuscaProyectos implements Serializable{
 					getBuscaProyectosBean().setAnioReporte(Integer.valueOf(getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0,4)));
 					getBuscaProyectosBean().setPeriodoDesde("01");
 					sectoresInteresProyecto();
+					
+					organizaSalvaguardasEnComponentes(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(),getBuscaProyectosBean().getCodigoStrategicPartner());
+					salvaguardasAsignadasAlComponente();
 //					getBuscaProyectosBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getBuscaProyectosBean().getAdvanceExecution().getAdexId()));
 //					if(getBuscaProyectosBean().getResumenEjecutivo()==null){
 //						getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
@@ -534,6 +540,8 @@ public class ComponenteBuscaProyectos implements Serializable{
 			getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));			
 			getBuscaProyectosBean().setDatosProyecto(true);
 			getBuscaProyectosBean().setAsignacionSalvaguardas(true);
+			getBuscaProyectosBean().setListaObjetivosEspecificos(new ArrayList<>());
+			getBuscaProyectosBean().setListaObjetivosEspecificos(getProjectsSpecificObjectivesFacade().listaObjetivosProyecto(proyecto.getProjId()));
 			cargaListadoSalvaguardas();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -598,6 +606,8 @@ public class ComponenteBuscaProyectos implements Serializable{
 				getBuscaProyectosBean().setListaPreguntasAsignadas(getProjectQuestionsFacade().listaPreguntasPartnerSeleccionadas(getBuscaProyectosBean().getCodigoStrategicPartner()));
 			else
 				getBuscaProyectosBean().setListaPreguntasAsignadas(getProjectQuestionsFacade().listaPreguntasProyectoSeleccionadas(getBuscaProyectosBean().getProyectoSeleccionado().getProjId()));			
+			
+			getBuscaProyectosBean().setListaPreguntasAsignadasAux(getBuscaProyectosBean().getListaPreguntasAsignadas());
 			if(getBuscaProyectosBean().getListaPreguntasAsignadas().size()==0){	
 				getBuscaProyectosBean().setSinDatosProyectoPreguntas(true);
 				nuevoIngreso = true;
@@ -656,8 +666,27 @@ public class ComponenteBuscaProyectos implements Serializable{
 		}
 		for(Entry<String,ProjectQuestions> sa:mapaTemp.entrySet()){
 			getBuscaProyectosBean().getListaSalvaguardasAsignadas().add(sa.getValue());
-		}			
+		}
+		armaComponentesEnSalvaguardas();
+		
+		
 	}
+	
+	public void armaComponentesEnSalvaguardas(){
+		for(ProjectQuestions pq: getBuscaProyectosBean().getListaPreguntasAsignadasAux()){
+			for(ProjectQuestions pqAux: getBuscaProyectosBean().getListaSalvaguardasAsignadas()){
+				if(pq.getSafeguards().getSafeId() == pqAux.getSafeguards().getSafeId()){					
+					String[] vector = pq.getPrquComponents().split(" ");
+					pqAux.setPrquComponentsAux(new Integer[vector.length]);
+					for(int x=0;x<vector.length;x++){						
+						pqAux.getPrquComponentsAux()[x]=Integer.parseInt(vector[x]);						
+					}
+				}
+			}
+		}
+		
+	}
+	
 
 	public void cargaListadoSalvaguardas(){
 		try{
@@ -692,6 +721,9 @@ public class ComponenteBuscaProyectos implements Serializable{
 				tipo=getBuscaProyectosBean().getProyectoSeleccionado().getProjId();
 			else
 				tipo = getBuscaProyectosBean().getCodigoStrategicPartner();
+			
+			
+			organizaComponentesSeleccionados();
 			getProjectQuestionsFacade().agregaPreguntasProyecto(getBuscaProyectosBean().getListaPreguntasAsignadas(),esProyecto,tipo,nuevoIngreso);
 			getBuscaProyectosBean().setAsignacionSalvaguardas(false);
 			volverABuscarProyectos();
@@ -700,10 +732,30 @@ public class ComponenteBuscaProyectos implements Serializable{
 			Mensaje.actualizarComponente(":form:growl");				
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
+			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAsignacionSalvaguardas " + ": ").append(e.getMessage()));
 			Mensaje.actualizarComponente(":form:growl");				
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
+	
+	public void organizaComponentesSeleccionados(){
+		for(ProjectQuestions pq:getBuscaProyectosBean().getListaSalvaguardasAsignadas()){
+			StringBuffer cadena= new StringBuffer();
+			for(int x=0;x<pq.getPrquComponentsAux().length;x++){
+				cadena = cadena.append(pq.getPrquComponentsAux()[x]).append(" ");
+			}
+			pq.setPrquComponents(cadena.toString());			
+		}
+		for(ProjectQuestions pq:getBuscaProyectosBean().getListaPreguntasAsignadas()){
+			for(ProjectQuestions pqsa:getBuscaProyectosBean().getListaSalvaguardasAsignadas()){
+				if(pq.getSafeguards().getSafeId()== pqsa.getSafeguards().getSafeId()){
+					pq.setPrquComponents(pqsa.getPrquComponents());
+				}
+			}
+		}
+		
+	}
+	
 	/**
 	 * Setea el tipo de rol del usuario
 	 */
@@ -840,7 +892,6 @@ public class ComponenteBuscaProyectos implements Serializable{
 	 */
 	public void asignacionLineasGenero(Projects proyecto){
 		try{
-			List<ProjectsSpecificObjectives> objetivosTemp=new ArrayList<>();
 			getBuscaProyectosBean().setProyectoSeleccionado(proyecto);
 			getBuscaProyectosBean().setAsignacionGenero(true);		
 			getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));			
@@ -849,10 +900,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			getBuscaProyectosBean().setListaIndicadores(getIndicatorsFacade().listaIndicadoresGenero());
 			getBuscaProyectosBean().setListaObjetivosEspecificos(new ArrayList<>());
 			getBuscaProyectosBean().setListaObjetivosEspecificos(getProjectsSpecificObjectivesFacade().listaObjetivosProyecto(proyecto.getProjId()));
-//			objetivosTemp= getProjectsSpecificObjectivesFacade().listaObjetivosProyecto(proyecto.getProjId());
-//			for (ProjectsSpecificObjectives poe : objetivosTemp) {
-//				getBuscaProyectosBean().getListaObjetivosEspecificos().add(poe.getPsobDescription());
-//			}
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -1058,24 +1106,24 @@ public class ComponenteBuscaProyectos implements Serializable{
 			if(pgi.getCataId()!=null && pgi.getCataId().getCatalogsType().getCatyMnemonic().equals(TipoCatalogoEnum.LINEAGENERO1.getEtiqueta())){
 				if(pgi.getIndicators()!=null && pgi.getPginBudget()>0 && pgi.getPginAssociatedResults()!=null && pgi.getPginAssociatedResults().length()>0){
 					pgi.setSeleccionado(true);
-					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(","));
+					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(", "));
 				}
 				getBuscaProyectosBean().getListaTemaGenero1().add(pgi);
 			}else if(pgi.getCataId()!=null && pgi.getCataId().getCatalogsType().getCatyMnemonic().equals(TipoCatalogoEnum.LINEAGENERO2.getEtiqueta())){
 				if(pgi.getIndicators()!=null && pgi.getPginBudget()>0 && pgi.getPginAssociatedResults()!=null && pgi.getPginAssociatedResults().length()>0){
 					pgi.setSeleccionado(true);
-					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(","));
+					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(", "));
 				}
 				getBuscaProyectosBean().getListaTemaGenero2().add(pgi);
 			}else if(pgi.getCataId()!=null && pgi.getCataId().getCatalogsType().getCatyMnemonic().equals(TipoCatalogoEnum.LINEAGENERO3.getEtiqueta())){
 				if(pgi.getIndicators()!=null && pgi.getPginBudget()>0 && pgi.getPginAssociatedResults()!=null && pgi.getPginAssociatedResults().length()>0){
 					pgi.setSeleccionado(true);
-					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(","));
+					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(", "));
 				}
 				getBuscaProyectosBean().getListaTemaGenero3().add(pgi);
 			}else if(pgi.getCataId()==null){ 
 				if(pgi.getPginAnotherIndicator()!=null && pgi.getPginAnotherIndicator().length()>0 && pgi.getPginBudget()>0 && pgi.getPginAssociatedResults()!=null && pgi.getPginAssociatedResults().length()>0){
-					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(","));
+					pgi.setPginObjectivesSelected(pgi.getPginAssociatedResults().split(", "));
 					pgi.setSeleccionado(true);
 				}
 				getBuscaProyectosBean().getListaTemaGeneroOtros().add(pgi);
@@ -1395,7 +1443,9 @@ public class ComponenteBuscaProyectos implements Serializable{
 					getBuscaProyectosBean().setDatosProyecto(true);
 
 					getBuscaProyectosBean().setSalvaguardasSociosEstrategicos(false);
-
+					
+					organizaSalvaguardasEnComponentes(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(),getBuscaProyectosBean().getCodigoStrategicPartner());
+					
 					Mensaje.ocultarDialogo("dlgSeleccionSocios");
 				}else{
 					avanceEjecucion.setAdexIsGender(true);
@@ -1410,5 +1460,53 @@ public class ComponenteBuscaProyectos implements Serializable{
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void mostrarDialogoFinAsignaSalvaguardas(){
+		Mensaje.verDialogo("dlgAsignaSalvaguardas");
+	}
+	
+	public void organizaSalvaguardasEnComponentes(Integer codigoProyecto,Integer codigoSocioEstrategico){
+		try{
+			Map<Integer,ProjectsSpecificObjectives> mapaTemp=new HashMap<Integer,ProjectsSpecificObjectives>();
+			List<ProjectsSpecificObjectives> listaComponentes=new ArrayList<>();
+			getBuscaProyectosBean().setListaComponentes(new ArrayList<>());
+			getBuscaProyectosBean().setListaComponentesSalvaguardas(new ArrayList<>());
+			List<Object[]> listaSalvaguardasComponentes = getProjectQuestionsFacade().listaSalvaguardasComponentes(codigoProyecto, codigoSocioEstrategico);			
+			for(Object object: listaSalvaguardasComponentes){
+				Object[] datos = (Object[]) object;
+				String[] vector = datos[1].toString().split(" ");	
+				int codigoSalvaguarda= Integer.parseInt(datos[0].toString());
+				for(int x=0;x<vector.length;x++){						
+					ProjectsSpecificObjectives pso=new ProjectsSpecificObjectives();					
+					pso.setPsobId(Integer.parseInt(vector[x]));
+					listaComponentes.add(pso);
+					getBuscaProyectosBean().getListaComponentesSalvaguardas().add(new DtoComponenteSalvaguarda(Integer.parseInt(vector[x]),codigoSalvaguarda));
+				}
+			}			
+			for(ProjectsSpecificObjectives pso:listaComponentes){
+				mapaTemp.put(pso.getPsobId(), pso);
+			}
+			for(Entry<Integer,ProjectsSpecificObjectives> pso:mapaTemp.entrySet()){
+				getBuscaProyectosBean().getListaComponentes().add(getProjectsSpecificObjectivesFacade().datosComponente(pso.getValue().getPsobId()));
+			}
+						
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void salvaguardasAsignadasAlComponente(){
+		try{
+			getBuscaProyectosBean().setListadoSalvaguardasAsignadasProyecto(new ArrayList<>());
+			for(DtoComponenteSalvaguarda compsalv:getBuscaProyectosBean().getListaComponentesSalvaguardas()){
+				if(compsalv.getCodigoComponente()== getBuscaProyectosBean().getCodigoComponente()){					
+					getBuscaProyectosBean().getListadoSalvaguardasAsignadasProyecto().add(getSafeguardsFacade().obtieneSalvaguarda(compsalv.getCodigoSalvaguarda()));
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 }

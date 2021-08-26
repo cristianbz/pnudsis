@@ -372,6 +372,7 @@ public class SeguimientoGeneroController implements Serializable{
 			getGenderAdvancesFacade().actualizarCrearAvanceGenero(getSeguimientoGeneroBean().getAvanceGeneroSeleccionado());
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,   "",getMensajesController().getPropiedad("info.infoGrabada"));
 			Mensaje.actualizarComponente(":form:growl");
+			Mensaje.ocultarDialogo("dlgRegistroSeguimiento");
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAvanceLineaGenero " + ": ").append(e.getMessage()));
@@ -1126,10 +1127,12 @@ public class SeguimientoGeneroController implements Serializable{
 			if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId() != null){
 				getSeguimientoGeneroBean().setListaValoresRespuestas(getValueAnswersFacade().buscarPorAvanceEjecucionGenero(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
 				getSeguimientoGeneroBean().setListaValoresRespuestas(getSeguimientoGeneroBean().getListaValoresRespuestas().stream().sorted((vr1,vr2)->vr1.getQuestions().getQuesQuestionOrder().compareTo(vr2.getQuestions().getQuesQuestionOrder())).collect(Collectors.toList()));
-				if(getSeguimientoGeneroBean().getListaValoresRespuestas().size()==0)
+				if(getSeguimientoGeneroBean().getListaValoresRespuestas().size()==0 && getSeguimientoGeneroBean().getListaValoresRespuestas()!=null)
 					valoresRespuestasPorDefecto(getSeguimientoGeneroBean().getListaPreguntas(), getSeguimientoGeneroBean().getListaValoresRespuestas());
-			}else		
+			}else{
+				getSeguimientoGeneroBean().setListaValoresRespuestas(new ArrayList<>());
 				valoresRespuestasPorDefecto(getSeguimientoGeneroBean().getListaPreguntas(), getSeguimientoGeneroBean().getListaValoresRespuestas());
+			}
 			getSeguimientoGeneroBean().setPreguntasGenero(true);
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.respuestasPreguntas"));
