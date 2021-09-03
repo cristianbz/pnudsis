@@ -136,6 +136,16 @@ public class ProjectsGenderInfo implements Serializable {
     @Setter
     private String[] pginObjectivesSelected;
     
+	@Getter
+	@Setter
+	@Transient
+	private Integer[] pginObjectivesSelectedAux;
+	
+    @Getter
+    @Setter
+    @Transient
+    private String pginAssociatedResultsAux;
+    
     @Getter
     @Setter
     @JoinColumn(name = "cata_id", referencedColumnName = "cata_id")

@@ -41,7 +41,7 @@ public class ProjectsSpecificObjectivesFacade extends AbstractFacade<ProjectsSpe
 	 * @throws Exception
 	 */
 	public List<ProjectsSpecificObjectives> listaComponentesProyecto(int codigoProyecto)throws Exception{
-		String sql="SELECT PSO FROM ProjectsSpecificObjectives PSO WHERE PSO.psobStatus = TRUE AND PSO.projects.projId=:codigoProyecto AND PSO.projects.projType IN('PRG','PROY') ORDER BY P.psobDescription";
+		String sql="SELECT PSO FROM ProjectsSpecificObjectives PSO WHERE PSO.psobStatus = TRUE AND PSO.projects.projId=:codigoProyecto ORDER BY PSO.psobDescription";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoProyecto", codigoProyecto);
 		return findByCreateQuery(sql, camposCondicion);

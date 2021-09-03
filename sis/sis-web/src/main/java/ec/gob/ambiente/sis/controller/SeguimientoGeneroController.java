@@ -26,7 +26,9 @@ import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
 
+import ec.gob.ambiente.sigma.model.ProjectsSpecificObjectives;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
+import ec.gob.ambiente.sigma.services.ProjectsSpecificObjectivesFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
 import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
@@ -90,6 +92,10 @@ public class SeguimientoGeneroController implements Serializable{
 	@EJB
 	@Getter
 	private ValueAnswersFacade valueAnswersFacade;
+	
+	@EJB
+	@Getter
+	private ProjectsSpecificObjectivesFacade projectsSpecificObjectivesFacade;
 
 	@Inject
 	@Getter
@@ -145,23 +151,24 @@ public class SeguimientoGeneroController implements Serializable{
 		try{
 			getSeguimientoGeneroBean().setSocioImplementador(getComponenteBuscarProyectos().getBuscaProyectosBean().getSocioImplementador());
 			getSeguimientoGeneroBean().setMostrarTablaSeguimiento1(false);
+			getSeguimientoGeneroBean().setPosicionTab(0);
 			getSeguimientoGeneroBean().setListaAvancesGenero(new ArrayList<>());
 			getSeguimientoGeneroBean().setProyectoSeleccionado(getComponenteBuscarProyectos().getBuscaProyectosBean().getProyectoSeleccionado());	
 			getSeguimientoGeneroBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getBuscaProyectosBean().getCodigoStrategicPartner());
 			if(getComponenteBuscarProyectos().getBuscaProyectosBean().isNuevoSeguimiento()){
-				AdvanceExecutionSafeguards avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
+				AdvanceExecutionSafeguards avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"),0);
 				if(avance == null){
 					getSeguimientoGeneroBean().setDatosSeguimiento(true);
 					getSeguimientoGeneroBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());				
 					if(getLoginBean().getTipoRol()!=3 && getSeguimientoGeneroBean().getCodigoStrategicPartner()==null){
 						armarAvancesGeneroPrimeraVez(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), 0);
-						avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
+						avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"),0);
 						getSeguimientoGeneroBean().setAdvanceExecutionSafeguards(avance);
 						if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null)
 							getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));						
 					}else{
 						armarAvancesGeneroPrimeraVez(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner());
-						avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
+						avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"),0);
 						getSeguimientoGeneroBean().setAdvanceExecutionSafeguards(avance);
 						if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null)
 							getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));						
@@ -175,6 +182,17 @@ public class SeguimientoGeneroController implements Serializable{
 						    }
 						}
 					}
+					for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGenero()){
+						String [] listaComponentesAux;
+						listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
+						StringBuilder sb=new StringBuilder();
+						for(int x=0;x<listaComponentesAux.length;x++){
+							ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+							sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+						}
+						ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
+					}
+
 					cargaValoresPreguntasRespuestas();
 					preparaRespuestasGenero();
 				}else{
@@ -202,7 +220,31 @@ public class SeguimientoGeneroController implements Serializable{
 						return o1.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyMnemonic().compareToIgnoreCase(o2.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyMnemonic());
 					}
 				});
+				
+				for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGenero()){
+					String [] listaComponentesAux;
+					listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
+					StringBuilder sb=new StringBuilder();
+					for(int x=0;x<listaComponentesAux.length;x++){
+						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+					}
+					ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
+				}
+				
 				getSeguimientoGeneroBean().setListaAvancesGeneroOtrosTemas(getGenderAdvancesFacade().listadoAvancesGeneroOtrosTemasPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+				
+				for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas()){
+					String [] listaComponentesAux;
+					listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
+					StringBuilder sb=new StringBuilder();
+					for(int x=0;x<listaComponentesAux.length;x++){
+						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+					}
+					ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
+				}
+				
 				getSeguimientoGeneroBean().setDatosSeguimiento(true);
 				getSeguimientoGeneroBean().setDatosGeneroParaMostrar(true);
 				cargaValoresPreguntasRespuestas();
@@ -297,13 +339,22 @@ public class SeguimientoGeneroController implements Serializable{
 				ag.setGeadCreationDate(new Date());
 				ag.setGeadStatus(true);				
 				if(pgi.getIndicators()!=null && pgi.getPginBudget() > 0 && pgi.getPginResultsType()!= null && pgi.getPginAssociatedResults() != null){
+					
 					getSeguimientoGeneroBean().getListaAvancesGenero().add(ag);				
 				}else if(pgi.getCataId()!= null && pgi.getIndicators()==null && pgi.getPginBudget() > 0 && pgi.getPginResultsType()!= null && pgi.getPginAssociatedResults() != null && pgi.getPginAnotherIndicator()!=null){
+//					listaComponentesAux = pgi.getPginAssociatedResults().split(" ");
+//					StringBuilder sb=new StringBuilder();
+//					for(int x=0;x<listaComponentesAux.length;x++){
+//						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+//						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+//					}
+//					ag.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
 					getSeguimientoGeneroBean().getListaAvancesGenero().add(ag);
 				}
 			}
 
 			for(ProjectsGenderInfo pgi:listaTempOtros){
+				String [] listaComponentesAux;
 				GenderAdvances ag=new GenderAdvances();
 				ag.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
 				ag.setGeadBudgetActions("");
@@ -313,6 +364,13 @@ public class SeguimientoGeneroController implements Serializable{
 				ag.setGeadCreationDate(new Date());
 				ag.setGeadStatus(true);				
 				if(pgi.getCataId()== null && pgi.getPginOtherLine() != null && pgi.getPginBudget() > 0 && pgi.getPginResultsType()!= null && pgi.getPginAssociatedResults() != null && pgi.getPginAnotherIndicator() != null){
+					listaComponentesAux = pgi.getPginAssociatedResults().split(" ");
+					StringBuilder sb=new StringBuilder();
+					for(int x=0;x<listaComponentesAux.length;x++){
+						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+					}
+					ag.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
 					getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas().add(ag);
 				}
 			}
@@ -1088,7 +1146,7 @@ public class SeguimientoGeneroController implements Serializable{
 	 */
 	public void imprimirResumenGenero(){
 		try{
-
+			organizaBeneficiariosLineasAcccion();
 			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 			String directorioArchivoPDF = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append(1).append(".pdf").toString();
 			rutaPDF=directorioArchivoPDF;
@@ -1315,6 +1373,47 @@ public class SeguimientoGeneroController implements Serializable{
 			getSeguimientoGeneroBean().getListaValoresRespuestas().get(4).setVaanYesnoAnswerValue(true);
 			getSeguimientoGeneroBean().setCodigoTablaDatos("");
 			Mensaje.actualizarComponente(":form:tabs:radiopSB5"); 
+		}
+	}
+	
+	public void organizaBeneficiariosLineasAcccion(){
+		try{
+			getSeguimientoGeneroBean().setListaDetalleAvancesGeneroOtros(new ArrayList<>());
+			getSeguimientoGeneroBean().setListaDetalleAvancesGenero(new ArrayList<>());
+			List<DetailAdvanceGender> listaTemp=new ArrayList<>();
+			List<DetailAdvanceGender> listaTempOtros=new ArrayList<>();
+			for (GenderAdvances ag : getSeguimientoGeneroBean().getListaAvancesGenero()) {
+				listaTemp.addAll(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(ag.getGeadId()));				
+			}
+			getSeguimientoGeneroBean().setListaDetalleAvancesGenero(listaTemp);
+			for (GenderAdvances ag : getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas()) {
+				listaTempOtros.addAll(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(ag.getGeadId()));				
+			}
+			getSeguimientoGeneroBean().setListaDetalleAvancesGeneroOtros(listaTempOtros);
+			
+			for(DetailAdvanceGender dag:getSeguimientoGeneroBean().getListaDetalleAvancesGenero()){
+				dag.setLineaAccion(getDetailAdvanceGenderFacade().lineaDeAccion(dag.getDtagId()));
+				dag.setProvincia(ubicaProvinciaCantonParroquia(dag.getDtagProvince(), 1));
+				dag.setCanton(ubicaProvinciaCantonParroquia(dag.getDtagCanton(), 2));
+				dag.setParroquia(ubicaProvinciaCantonParroquia(dag.getDtagParish(), 3));
+				dag.setEtnia(OperacionesCatalogo.ubicaDescripcionCatalogo(dag.getDtagEthnicity(), getAplicacionBean().getListaAutoIdentificacion()));
+				if(dag.getDtagEthnicity()== CODIGO_IDENTIFICACION_INDIGENA){
+					dag.setPueblo(ubicaPuebloNacionalidad(dag.getDtagTown()));
+				}					
+			}
+			for(DetailAdvanceGender dag:getSeguimientoGeneroBean().getListaDetalleAvancesGeneroOtros()){
+				dag.setLineaAccion(getDetailAdvanceGenderFacade().lineaDeAccion(dag.getDtagId()));
+				dag.setProvincia(ubicaProvinciaCantonParroquia(dag.getDtagProvince(), 1));
+				dag.setCanton(ubicaProvinciaCantonParroquia(dag.getDtagCanton(), 2));
+				dag.setParroquia(ubicaProvinciaCantonParroquia(dag.getDtagParish(), 3));
+				dag.setEtnia(OperacionesCatalogo.ubicaDescripcionCatalogo(dag.getDtagEthnicity(), getAplicacionBean().getListaAutoIdentificacion()));
+				if(dag.getDtagEthnicity()== CODIGO_IDENTIFICACION_INDIGENA){
+					dag.setPueblo(ubicaPuebloNacionalidad(dag.getDtagTown()));
+				}					
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 }

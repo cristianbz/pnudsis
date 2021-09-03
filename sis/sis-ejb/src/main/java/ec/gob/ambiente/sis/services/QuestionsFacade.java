@@ -75,6 +75,13 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
 		return findByCreateQuery(sql, camposCondicion);
 	}
+	
+	public List<Questions> buscaTodasPreguntasGenero()throws Exception{
+		String sql="SELECT Q FROM Questions Q WHERE Q.quesIsGender = TRUE ORDER BY Q.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();		
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	
 	/**
 	 * Crea o edita una pregunta
 	 * @param pregunta
@@ -87,5 +94,36 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 		else
 			edit(pregunta);
 		return pregunta;
+	}
+	/**
+	 * Obtiene el numero de orden mas alto de las preguntas de una salvaguarda
+	 * @param codigoSalvaguarda Codigo de la salvaguarda a buscar
+	 * @return
+	 * @throws Exception
+	 */
+	public int campoOrdenPregunta(int codigoSalvaguarda) throws Exception{
+		int orden=0;
+		String sql="SELECT MAX(ques_question_order) FROM sis.questions WHERE safe_id=" + codigoSalvaguarda;		
+		List<Object[]>  resultList = (List<Object[]>) consultaNativa(sql);
+		for (Object object : resultList) {			
+			int dato = (Integer) object;
+			orden=dato;			
+		}
+		return orden;
+	}
+	/**
+	 * Obtiene el numero de orden mas alto de las preguntas de genero 
+	 * @return
+	 * @throws Exception
+	 */
+	public int campoOrdenPreguntaGenero() throws Exception{
+		int orden=0;
+		String sql="SELECT MAX(ques_question_order) FROM sis.questions WHERE safe_id IS NULL";		
+		List<Object[]>  resultList = (List<Object[]>) consultaNativa(sql);
+		for (Object object : resultList) {			
+			int dato = (Integer) object;
+			orden=dato;			
+		}
+		return orden;
 	}
 }

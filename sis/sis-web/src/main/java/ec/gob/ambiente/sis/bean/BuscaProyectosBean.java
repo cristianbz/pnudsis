@@ -5,7 +5,9 @@
 package ec.gob.ambiente.sis.bean;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -196,11 +198,7 @@ public class BuscaProyectosBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Indicators> listaIndicadores;
-	
-//	@Getter
-//	@Setter
-//	private List<String> listaObjetivosEspecificos;
-	
+		
 	@Getter
 	@Setter
 	private List<ProjectsSpecificObjectives> listaObjetivosEspecificos;
@@ -236,5 +234,21 @@ public class BuscaProyectosBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Safeguards> listadoSalvaguardasAsignadasProyecto;
+	
+	@Getter
+	@Setter
+	private boolean mostrarOpcionesBusqueda;
+	
+	@Getter
+	@Setter
+	private List<ProjectsSpecificObjectives> listaComponentesParaBusqueda;
+	
+	@Getter
+	@Setter
+	private String estadoReporte;
+		
+	@Getter
+	@Setter
+	private boolean mostrarTabs;
 }
 

@@ -30,7 +30,7 @@ public class CatalogsFacade extends AbstractFacade<Catalogs,Integer>{
 	 * @throws Exception
 	 */
 	public List<Catalogs> buscaCatalogosPorTipo(int tipoCatalogo)throws Exception{
-		String sql="SELECT C FROM Catalogs C WHERE C.catalogsType.catyId=:tipoCatalogo ORDER BY C.cataText1, C.cataOrder";
+		String sql="SELECT C FROM Catalogs C WHERE C.catalogsType.catyId=:tipoCatalogo AND C.cataStatus = TRUE ORDER BY C.cataText1, C.cataOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("tipoCatalogo", tipoCatalogo);
 		return findByCreateQuery(sql, camposCondicion);
@@ -80,8 +80,24 @@ public class CatalogsFacade extends AbstractFacade<Catalogs,Integer>{
 			return null;
 		}catch(Exception e){
 			throw new DaoException();			
-		}
-		
+		}		
 	}
+	/**
+	 * Genera el numero de orden de un catalogo en base al tipo de catalogo
+	 * @param codigoCatalogo
+	 * @return
+	 * @throws Exception
+	 */
+	public int campoOrdenCatalogo(int codigoCatalogo) throws Exception{
+		int orden=0;
+		String sql="SELECT MAX(cata_order) FROM sis.catalogs cat, sis.catalogs_types ct WHERE cat.caty_id= ct.caty_id AND cat.caty_id=" + codigoCatalogo;		
+		List<Object[]>  resultList = (List<Object[]>) consultaNativa(sql);
+		for (Object object : resultList) {			
+			int dato = (Integer) object;
+			orden=dato;			
+		}
+		return orden;
+	}
+	
 }
 

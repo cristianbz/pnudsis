@@ -28,8 +28,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import ec.gob.ambiente.sigma.model.CatalogType;
-import ec.gob.ambiente.sis.bean.RegistroGeneroBean;
 import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
 import ec.gob.ambiente.sis.bean.SeguimientoSalvaguardaBean;
 import ec.gob.ambiente.sis.model.Catalogs;
@@ -58,7 +56,7 @@ public class ResumenPDF {
 			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
 			Font fontTitulosSalvaguardas = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 12);
-			Font fontCabecera = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
+
 			Font fontCabeceraTabla = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 
@@ -2696,7 +2694,7 @@ public class ResumenPDF {
 			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
 			Font fontTitulosSalvaguardas = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 12);
-			Font fontCabecera = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
+
 			Font fontCabeceraTabla = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 
@@ -6582,13 +6580,11 @@ public class ResumenPDF {
 	 */
 	public static void reporteGenero(String directorioArchivoPDF, SeguimientoGeneroBean beanGenero){
 		try{
-			String tema="";
-			
+			String tema="";			
 			Document document = new Document();
 			document.setPageSize(PageSize.A4);
 			document.setMargins(35, 35, 35, 35);
 			document.setMarginMirroring(true);
-
 			PdfWriter writer =PdfWriter.getInstance(document, new FileOutputStream(directorioArchivoPDF));
 			Rectangle rect = new Rectangle(100, 30, 500, 800);
 			writer.setBoxSize("art", rect);
@@ -6600,12 +6596,8 @@ public class ResumenPDF {
 			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
 			Font fontTitulosSalvaguardas = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 12);
-			Font fontCabecera = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
 			Font fontCabeceraTabla = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
-
-
-
 			Paragraph parrafoHoja = new Paragraph();
 			parrafoHoja.add(new Phrase("RESUMEN DE GENERO", fontTitulosSalvaguardas));
 			parrafoHoja.add(new Phrase(Chunk.NEWLINE));
@@ -6614,14 +6606,10 @@ public class ResumenPDF {
 			document.add(parrafoHoja);
 
 			PdfPTable tablaCabecera = new PdfPTable(2);
-
 			PdfPCell celda = new PdfPCell(new Phrase("Título del Plan de implementación, Programa o Proyecto:", fontTitulos));
-			//			celda.setColspan(1);
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			tablaCabecera.addCell(celda);
-
-
 			celda = new PdfPCell(new Phrase(beanGenero.getProyectoSeleccionado().getProjTitle(), fontContenido));
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -6636,7 +6624,7 @@ public class ResumenPDF {
 				celda = new PdfPCell(new Phrase(beanGenero.getSocioImplementador().getPartName(), fontContenido));
 			else
 				celda = new PdfPCell(new Phrase("", fontContenido));
-			//			celda.setColspan(1);
+
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);			
 			tablaCabecera.addCell(celda);
@@ -6669,7 +6657,7 @@ public class ResumenPDF {
 			tabla1.getDefaultCell().setUseDescender(true);
 			tabla1.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 			tabla1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-//
+
 			Paragraph encabezadoTabla1=new Paragraph();
 			encabezadoTabla1.add(new Phrase("Temas",fontCabeceraTabla));
 			tabla1.addCell(encabezadoTabla1);
@@ -6705,7 +6693,7 @@ public class ResumenPDF {
 			tabla1.addCell(encabezadoTabla1);
 						
 			Paragraph datosTabla1;
-			for (GenderAdvances ga : beanGenero.getListaAvancesGenero()) {							
+			for (GenderAdvances ga : beanGenero.getListaAvancesGenero()) {						
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyDescription(),fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
@@ -6719,7 +6707,7 @@ public class ResumenPDF {
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginResultsType().equals("1")?"Sensible al género":ga.getProjectsGenderInfo().getPginResultsType().equals("2")?"Positivo al género":"Transformador de las relaciones de género" ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResults() ,fontContenidoTablas));
+				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResultsAux() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getIndicators()!=null?ga.getProjectsGenderInfo().getIndicators().getIndiDescription():ga.getProjectsGenderInfo().getPginAnotherIndicator() ,fontContenidoTablas));
@@ -6731,7 +6719,10 @@ public class ResumenPDF {
 				datosTabla1.add(new Phrase(String.valueOf(ga.getProjectsGenderInfo().getPginBudget()) ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal())!=null?String.valueOf(ga.getGeadAdvanceValueGoal()):"" ,fontContenidoTablas));
+				if(ga.getGeadAdvanceValueGoal()!=null)
+					datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal()) ,fontContenidoTablas));
+				else
+					datosTabla1.add(new Phrase("" ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadExecutedBudget()) ,fontContenidoTablas));
@@ -6741,6 +6732,83 @@ public class ResumenPDF {
 				tabla1.addCell(datosTabla1);
 			}
 			document.add(tabla1);
+			
+			Paragraph beneficiarios1 = new Paragraph();
+			beneficiarios1.add(new Phrase(Chunk.NEWLINE));
+			beneficiarios1.add(new Phrase("Beneficiarios de la línea de acción: ", fontTitulos));
+			beneficiarios1.add(new Phrase(tema,fontContenido));
+			beneficiarios1.add(new Phrase(Chunk.NEWLINE));
+			beneficiarios1.add(new Phrase(Chunk.NEWLINE));
+			document.add(beneficiarios1);
+			
+			PdfPTable tablaBeneficiario1 = new PdfPTable(new float[] { 5,5, 5, 5, 5 ,5, 5,5, 5});
+			tablaBeneficiario1.setWidthPercentage(100);
+			tablaBeneficiario1.setHorizontalAlignment(Element.ALIGN_LEFT);
+			tablaBeneficiario1.getDefaultCell().setPadding(3);
+			tablaBeneficiario1.getDefaultCell().setUseAscender(true);
+			tablaBeneficiario1.getDefaultCell().setUseDescender(true);
+			tablaBeneficiario1.getDefaultCell().setBorderColor(BaseColor.BLACK);				
+			tablaBeneficiario1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+
+			Paragraph encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Línea de acción",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Nro hombres",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Nro mujeres",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Cantón",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Parroquia",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Etnia",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Pueblo/Nacionalidad",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Comunidad",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			
+			Paragraph datosBeneficiarios;
+			for (DetailAdvanceGender dag : beanGenero.getListaDetalleAvancesGenero()) {
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getLineaAccion() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(String.valueOf(dag.getDtagNumberOfMens()) ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(String.valueOf(dag.getDtagNumberOfWomen()) ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getProvincia() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getCanton() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getParroquia() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getEtnia() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getPueblo() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(String.valueOf(dag.getDtagComunity()) ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+			}
+			document.add(tablaBeneficiario1);
 			
 			temaAbarcado = new Paragraph();
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
@@ -6790,8 +6858,6 @@ public class ResumenPDF {
 			encabezadoTabla1=new Paragraph();	
 			encabezadoTabla1.add(new Phrase("Acciones realizadas",fontCabeceraTabla));
 			tabla1.addCell(encabezadoTabla1);
-						
-			
 			for (GenderAdvances ga : beanGenero.getListaAvancesGeneroOtrosTemas()) {							
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginOtherLine() ,fontContenidoTablas));
@@ -6803,7 +6869,7 @@ public class ResumenPDF {
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginResultsType().equals("1")?"Sensible al género":ga.getProjectsGenderInfo().getPginResultsType().equals("2")?"Positivo al género":"Transformador de las relaciones de género" ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResults() ,fontContenidoTablas));
+				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResultsAux() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAnotherIndicator() ,fontContenidoTablas));
@@ -6815,7 +6881,10 @@ public class ResumenPDF {
 				datosTabla1.add(new Phrase(String.valueOf(ga.getProjectsGenderInfo().getPginBudget()) ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal())!=null?String.valueOf(ga.getGeadAdvanceValueGoal()):"" ,fontContenidoTablas));
+				if(ga.getGeadAdvanceValueGoal()!=null)
+					datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal()) ,fontContenidoTablas));
+				else
+					datosTabla1.add(new Phrase("" ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadExecutedBudget()) ,fontContenidoTablas));
@@ -6826,70 +6895,83 @@ public class ResumenPDF {
 			}
 			document.add(tabla1);
 			
+			beneficiarios1 = new Paragraph();
+			beneficiarios1.add(new Phrase(Chunk.NEWLINE));
+			beneficiarios1.add(new Phrase("Beneficiarios de la línea de acción otros temas: ", fontTitulos));
+			beneficiarios1.add(new Phrase(tema,fontContenido));
+			beneficiarios1.add(new Phrase(Chunk.NEWLINE));
+			beneficiarios1.add(new Phrase(Chunk.NEWLINE));
+			document.add(beneficiarios1);
 			
-//			Paragraph avance = new Paragraph();
-//			avance.add(new Phrase(Chunk.NEWLINE));	
-//			avance.add(new Phrase("DATOS DEL AVANCE", fontTitulosSalvaguardas));
-//			avance.add(new Phrase(Chunk.NEWLINE));
-//			avance.add(new Phrase("Porcentaje de avance", fontTitulos));
-//			avance.add(new Phrase(Chunk.NEWLINE));
-//			avance.add(new Phrase(String.valueOf( 0), fontContenido));
-//			avance.add(new Phrase(Chunk.NEWLINE));
-//			avance.add(new Phrase("Descripción del avance", fontTitulos));
-//			avance.add(new Phrase(Chunk.NEWLINE));
-////			avance.add(new Phrase(String.valueOf( beanGenero.getAvanceGeneroSeleccionado().getGeadAdvanceDescription()), fontContenido));
-//			avance.add(new Phrase(Chunk.NEWLINE));
-//			avance.add(new Phrase("INFORMACION DE BENEFICIARIOS", fontTitulos));
-//			avance.add(new Phrase(Chunk.NEWLINE));
-//			avance.add(new Phrase(Chunk.NEWLINE));
-//			document.add(avance);
-//			
-//			PdfPTable tabla2 = new PdfPTable(new float[] { 5, 5, 5, 5 , 5 });
-//			tabla2.setWidthPercentage(100);
-//			tabla2.setHorizontalAlignment(Element.ALIGN_LEFT);
-//			tabla2.getDefaultCell().setPadding(3);
-//			tabla2.getDefaultCell().setUseAscender(true);
-//			tabla2.getDefaultCell().setUseDescender(true);
-//			tabla2.getDefaultCell().setBorderColor(BaseColor.BLACK);				
-//			tabla2.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-//
-//			
-//			Paragraph encabezadoTabla2=new Paragraph();				
-//			encabezadoTabla2.add(new Phrase("Nro. beneficiarias",fontCabeceraTabla));
-//			tabla2.addCell(encabezadoTabla2);
-//			encabezadoTabla2=new Paragraph();	
-//			encabezadoTabla2.add(new Phrase("Provincia",fontCabeceraTabla));
-//			tabla2.addCell(encabezadoTabla2);
-//			encabezadoTabla2=new Paragraph();	
-//			encabezadoTabla2.add(new Phrase("Cantón",fontCabeceraTabla));
-//			tabla2.addCell(encabezadoTabla2);
-//			encabezadoTabla2=new Paragraph();	
-//			encabezadoTabla2.add(new Phrase("Parroquia",fontCabeceraTabla));
-//			tabla2.addCell(encabezadoTabla2);
-//			encabezadoTabla2=new Paragraph();	
-//			encabezadoTabla2.add(new Phrase("Comunidad",fontCabeceraTabla));
-//			tabla2.addCell(encabezadoTabla2);
-//			
-//			Paragraph datosTabla2;
-////			for(DetailAdvanceGender genero:beanGenero.getListaDatosAvanceGenero()){
-////				datosTabla2=new Paragraph();
-////				datosTabla2.add(new Phrase(String.valueOf(genero.getDtagNumberOfWomen()),fontContenidoTablas));
-////				tabla2.addCell(datosTabla2);
-////				datosTabla2=new Paragraph();
-////				datosTabla2.add(new Phrase(genero.getProvincia() ,fontContenidoTablas));
-////				tabla2.addCell(datosTabla2);
-////				datosTabla2=new Paragraph();
-////				datosTabla2.add(new Phrase(genero.getCanton() ,fontContenidoTablas));
-////				tabla2.addCell(datosTabla2);
-////				datosTabla2=new Paragraph();
-////				datosTabla2.add(new Phrase(genero.getParroquia() ,fontContenidoTablas));
-////				tabla2.addCell(datosTabla2);
-////				datosTabla2=new Paragraph();
-////				datosTabla2.add(new Phrase(genero.getDtagComunity() ,fontContenidoTablas));
-////				tabla2.addCell(datosTabla2);
-////				
-////			}
-//			document.add(tabla2);
+			tablaBeneficiario1 = new PdfPTable(new float[] { 5,5, 5, 5, 5 ,5, 5,5, 5});
+			tablaBeneficiario1.setWidthPercentage(100);
+			tablaBeneficiario1.setHorizontalAlignment(Element.ALIGN_LEFT);
+			tablaBeneficiario1.getDefaultCell().setPadding(3);
+			tablaBeneficiario1.getDefaultCell().setUseAscender(true);
+			tablaBeneficiario1.getDefaultCell().setUseDescender(true);
+			tablaBeneficiario1.getDefaultCell().setBorderColor(BaseColor.BLACK);				
+			tablaBeneficiario1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Línea de acción",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Nro hombres",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Nro mujeres",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Cantón",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Parroquia",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Etnia",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Pueblo/Nacionalidad",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			encabezadoBeneficiario1=new Paragraph();
+			encabezadoBeneficiario1.add(new Phrase("Comunidad",fontCabeceraTabla));
+			tablaBeneficiario1.addCell(encabezadoBeneficiario1);
+			
+//			Paragraph datosBeneficiarios;
+			for (DetailAdvanceGender dag : beanGenero.getListaDetalleAvancesGeneroOtros()) {
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getLineaAccion() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(String.valueOf(dag.getDtagNumberOfMens()) ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(String.valueOf(dag.getDtagNumberOfWomen()) ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getProvincia() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getCanton() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getParroquia() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getEtnia() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(dag.getPueblo() ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+				datosBeneficiarios = new Paragraph();
+				datosBeneficiarios.add(new Phrase(String.valueOf(dag.getDtagComunity()) ,fontContenidoTablas));
+				tablaBeneficiario1.addCell(datosBeneficiarios);
+			}
+			document.add(tablaBeneficiario1);
+
 			
 			Paragraph preguntas = new Paragraph();
 			preguntas.add(new Phrase(Chunk.NEWLINE));

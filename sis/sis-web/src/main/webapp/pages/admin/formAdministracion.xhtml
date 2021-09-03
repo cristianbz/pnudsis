@@ -71,7 +71,8 @@
 										<p:outputLabel value="#{etiquetas['orden']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">									
-										<p:inputNumber value="#{administracionBean.preguntaSeleccionada.quesQuestionOrder}" tabindex="1"/>
+										<p:inputNumber disabled="#{administracionBean.deshabilitaOrdenPregunta}" id="ordenPregunta"
+											value="#{administracionBean.preguntaSeleccionada.quesQuestionOrder}" tabindex="1"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -87,6 +88,8 @@
 										<f:selectItems
 											value="#{administracionController.administracionBean.listaSalvaguardas}"
 											var="sf" itemLabel="#{sf.safeCode}" itemValue="#{sf.safeId}" />
+										<p:ajax event="change" listener="#{administracionController.obtieneValorOrden()}" 
+											process="@this ordenPregunta" partialSubmit="true" update="ordenPregunta"/>	
 									</p:selectOneMenu>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -217,7 +220,8 @@
 										<p:outputLabel value="#{etiquetas['orden']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">									
-										<p:inputNumber value="#{administracionBean.preguntaSeleccionada.quesQuestionOrder}" tabindex="1"/>
+										<p:inputNumber disabled="#{administracionBean.deshabilitaOrdenPregunta}" 
+											value="#{administracionBean.preguntaSeleccionada.quesQuestionOrder}" tabindex="1"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -338,16 +342,20 @@
 							<p:panel rendered="#{administracionBean.nuevoCatalogo}" header="#{titulos['ingresoCatalogos']}">
 								<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
-										<p:outputLabel value="#{etiquetas['tipo']}" />
+										<p:outputLabel value="#{etiquetas['catalogo']}" />
 									</div>									
 									<div class="p-field p-col-12 p-md-6">
-									<p:selectOneMenu tabindex="1"
+									<p:selectOneMenu tabindex="1" panelStyle="width: 35rem"
+											style="width:200px;"
 										value="#{administracionController.administracionBean.codigoTipoCatalogo}">
 										<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
 											itemValue="#{null}" />
 										<f:selectItems
 											value="#{administracionController.administracionBean.listaTipoCatalogo}"
 											var="cata" itemLabel="#{cata.catyDescription}" itemValue="#{cata.catyId}" />
+										<p:ajax process="@this numeroOrdenCatalogo" update="numeroOrdenCatalogo" 
+											partialSubmit="true"
+											listener="#{administracionController.obtieneValorOrdenCatalogo()}"/>	
 									</p:selectOneMenu>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -357,7 +365,7 @@
 									<p:outputLabel value="#{etiquetas['orden']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-									<p:inputNumber tabindex="2" decimalPlaces="0"
+									<p:inputNumber tabindex="2" decimalPlaces="0" disabled="#{administracionBean.deshabilitaOrdenCatalogo}" id="numeroOrdenCatalogo"
 										value="#{administracionController.administracionBean.catalogoSeleccionado.cataOrder}" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -399,6 +407,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelCatalogos tablaCatalogos " title="#{tooltip['grabar']}" tabindex="6"																							
 															actionListener="#{administracionController.agregaEditaCatalogo()}" value="#{botones['guardar']}"
+															oncomplete="PF('idTablaCatalogos').filter()"
 															update="panelCatalogos tablaCatalogos :form:growl"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -422,18 +431,21 @@
 								</div>
 								<div class="p-field p-col-12 p-md-1" style="height: 10px;">
 									<p:commandButton styleClass="botonAgregaRegistro" value="#{botones['agregar']}" title="#{tooltip['agregarCatalogo']}"
-										actionListener="#{administracionController.nuevoCatalogo}" update="panelCatalogos" icon="#{botones['icono.mas']}"
+										actionListener="#{administracionController.nuevoCatalogo}" 
+										
+										update="panelCatalogos" icon="#{botones['icono.mas']}"
 										process="@this"/>
 
 								</div>
 							</div>
 						</div>
 						<br />
-						<p:dataTable id="tablaCatalogos"
+						<p:dataTable id="tablaCatalogos" widgetVar="idTablaCatalogos"
 							value="#{administracionController.administracionBean.listaCatalogos}"
-							rows="10" paginator="true" rowKey="#{cata.cataId}"							
+							rows="10" paginator="true" rowKey="#{cata.cataId}"	filteredValue="#{administracionBean.listaCatalogosFiltrados}"						 
 							var="cata">
-							<p:column headerText="#{etiquetas['tipo']}" groupRow="true">
+							<p:column headerText="#{etiquetas['tipo']}" groupRow="true" filterMatchMode="contains" style="width:100px;"
+								filterBy="#{cata.catalogsType.catyDescription}">
 								#{cata.catalogsType.catyDescription}
 							</p:column> 
 							<p:column headerText="#{etiquetas['orden']}" 

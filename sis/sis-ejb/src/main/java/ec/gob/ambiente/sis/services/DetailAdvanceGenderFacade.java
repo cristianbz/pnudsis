@@ -53,5 +53,18 @@ public class DetailAdvanceGenderFacade extends AbstractFacade<DetailAdvanceGende
 		camposCondicion.put("codigoAvanceGenero", codigoAvanceGenero);
 		return findByCreateQuery(sql, camposCondicion);	
 	}
+	
+	public String lineaDeAccion(int codigoDetalle)throws Exception{
+		String valor="";
+		String sql="SELECT c.cata_text2 FROM sis.detail_advance_gender dag, sis.gender_advances ga, sis.projects_gender_info pgi, sis.catalogs c "				
+					+ " WHERE dag.gead_id = ga.gead_id AND pgi.pgin_id = ga.pgin_id AND c.cata_id = pgi.cata_id AND dag.dtag_id=" + codigoDetalle;
+		List<Object[]> resultado = (List<Object[]>)consultaNativa(sql);		
+		for(Object obj:resultado){
+//			Object[] dato = (Object[]) obj;
+//			valor= dato[0].toString();
+			valor = obj.toString();
+		}
+		return valor;
+	}
 }
 

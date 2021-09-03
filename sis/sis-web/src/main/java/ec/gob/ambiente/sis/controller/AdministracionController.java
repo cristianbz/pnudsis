@@ -6,6 +6,8 @@ package ec.gob.ambiente.sis.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
+import ec.gob.ambiente.sis.model.GenderAdvances;
 import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
@@ -110,14 +113,27 @@ public class AdministracionController implements Serializable{
 	public void init(){
 		try{
 			getAdministracionBean().setNoEsSocioEstrategico(true);
-			
+			getAdministracionBean().setDeshabilitaOrdenPregunta(true);
+			getAdministracionBean().setDeshabilitaOrdenCatalogo(true);
 			getAdministracionBean().setListaProyectoUsuarios(new ArrayList<>());
 			getAdministracionBean().setListaPreguntas(new ArrayList<>());
 			getAdministracionBean().setListaPreguntas(getQuestionsFacade().listaPreguntasIngresadas());		
-			getAdministracionBean().setListaPreguntasGenero(getQuestionsFacade().buscaPreguntasGenero());
+			getAdministracionBean().setListaPreguntasGenero(getQuestionsFacade().buscaTodasPreguntasGenero());
 			getAdministracionBean().setListaTipoRespuestaPregunta(getCatalogsFacade().buscaCatalogosPorTipo(TIPO_RESPUESTA));
 			getAdministracionBean().setListaCatalogos(getCatalogsFacade().buscaTodosCatalogos());
-			getAdministracionBean().setListaTipoCatalogo(getCatalogsTypeFacade().listaTipoCatalogos());			
+			Collections.sort(getAdministracionBean().getListaCatalogos(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCatalogsType().getCatyDescription().compareToIgnoreCase(o2.getCatalogsType().getCatyDescription());
+				}
+			});
+			getAdministracionBean().setListaTipoCatalogo(getCatalogsTypeFacade().listaTipoCatalogos());
+			Collections.sort(getAdministracionBean().getListaTipoCatalogo(), new Comparator<CatalogsType>(){
+				@Override
+				public int compare(CatalogsType o1, CatalogsType o2) {
+					return o1.getCatyDescription().compareToIgnoreCase(o2.getCatyDescription());
+				}
+			});
 			getAdministracionBean().setListaProyectos(getProjectsFacade().buscarTodosLosProyectos());
 			cargaProyectosUsuarios();
 			getAdministracionBean().setNuevaPregunta(false);
@@ -160,18 +176,63 @@ public class AdministracionController implements Serializable{
 			getAdministracionBean().getListaSalvaguardas().add(safe);
 		}
 	}
-
+	/**
+	 * Habilita crear nueva pregunta
+	 * @param tipo 1 Pregunta salvaguarda  2 Pregunta de genero
+	 */
 	public void nuevaPregunta(int tipo){
-		if(tipo == 1){
-			getAdministracionBean().setNuevaPregunta(true);
-			getAdministracionBean().setNuevaPreguntaGenero(false);
-		}else{
-			getAdministracionBean().setNuevaPreguntaGenero(true);
-			getAdministracionBean().setNuevaPregunta(false);
+		try{
+			int numeroOrden=0;
+			getAdministracionBean().setDeshabilitaOrdenPregunta(true);
+			getAdministracionBean().setPreguntaSeleccionada(new Questions());
+			if(tipo == 1){
+				getAdministracionBean().setNuevaPregunta(true);			
+				getAdministracionBean().setNuevaPreguntaGenero(false);
+
+			}else{
+				getAdministracionBean().setNuevaPreguntaGenero(true);
+				getAdministracionBean().setNuevaPregunta(false);
+				numeroOrden= getQuestionsFacade().campoOrdenPreguntaGenero();
+				if (numeroOrden==0)
+					numeroOrden=1;
+				else
+					numeroOrden++;
+				getAdministracionBean().getPreguntaSeleccionada().setQuesQuestionOrder(numeroOrden);
+			}			
+			getAdministracionBean().setCodigoSalvaguarda(null);
+			getAdministracionBean().setCodigoTipoRespuesta(null);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		getAdministracionBean().setPreguntaSeleccionada(new Questions());
-		getAdministracionBean().setCodigoSalvaguarda(null);
-		getAdministracionBean().setCodigoTipoRespuesta(null);
+	}
+	
+	public void obtieneValorOrden(){
+		try{
+			int numeroOrden=0;
+			numeroOrden= getQuestionsFacade().campoOrdenPregunta(getAdministracionBean().getCodigoSalvaguarda());
+			if (numeroOrden==0)
+				numeroOrden=1;
+			else
+				numeroOrden++;
+			getAdministracionBean().getPreguntaSeleccionada().setQuesQuestionOrder(numeroOrden);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void obtieneValorOrdenCatalogo(){
+		try{
+			int numeroOrden=0;
+			numeroOrden= getCatalogsFacade().campoOrdenCatalogo(getAdministracionBean().getCodigoTipoCatalogo());
+			if (numeroOrden==0)
+				numeroOrden=1;
+			else
+				numeroOrden++;
+			getAdministracionBean().getCatalogoSeleccionado().setCataOrder(numeroOrden);
+			getAdministracionBean().getCatalogoSeleccionado().setCataNumber(numeroOrden);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void nuevoCatalogo(){
@@ -262,19 +323,22 @@ public class AdministracionController implements Serializable{
 				pregunta.setQuesUpdateDate(new Date());
 				pregunta.setQuesUpdateUser(getLoginBean().getUser().getUserName());
 			}else{
-				pregunta.setQuesParentId(pregunta.getQuesId());
 				pregunta.setQuesCreatorUser(getLoginBean().getUser().getUserName());
 				pregunta.setQuesCreationDate(new Date());
 				pregunta.setQuesIsGender(false);
 				pregunta.setQuesImportantQuestion(false);
 				pregunta.setQuesPrincipalQuestion(false);
+				List<Questions> listaHijos=new ArrayList<>();				
+				listaHijos.add(pregunta);
+				pregunta.setQuestionsList(listaHijos);
+				pregunta.setQuesStatus(true);
 			}
 			getQuestionsFacade().crearEditarPregunta(pregunta);
 			getAdministracionBean().setNuevaPregunta(false);			
 			getAdministracionBean().setListaPreguntas(getQuestionsFacade().listaPreguntasIngresadas());
-			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, getMensajesController().getPropiedad("info.infoGrabada"), "");						
+			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "",getMensajesController().getPropiedad("info.infoGrabada"));						
 		}catch(Exception e){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.grabar"), "");
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarPregunta " + ": ").append(e.getMessage()));
 		}
 	}
@@ -298,13 +362,18 @@ public class AdministracionController implements Serializable{
 				pregunta.setQuesIsGender(true);
 				pregunta.setQuesImportantQuestion(false);
 				pregunta.setQuesPrincipalQuestion(false);
+				List<Questions> listaHijos=new ArrayList<>();
+				
+				listaHijos.add(pregunta);
+				pregunta.setQuestionsList(listaHijos);
+				pregunta.setQuesStatus(true);
 			}
 			getQuestionsFacade().crearEditarPregunta(pregunta);
 			getAdministracionBean().setNuevaPreguntaGenero(false);
-			getAdministracionBean().setListaPreguntasGenero(getQuestionsFacade().buscaPreguntasGenero());	
-			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, getMensajesController().getPropiedad("info.infoGrabada"), "");						
+			getAdministracionBean().setListaPreguntasGenero(getQuestionsFacade().buscaTodasPreguntasGenero());	
+			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "",getMensajesController().getPropiedad("info.infoGrabada"));						
 		}catch(Exception e){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.grabar"), "");
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarPregunta " + ": ").append(e.getMessage()));
 		}
 	}
@@ -327,10 +396,16 @@ public class AdministracionController implements Serializable{
 			}
 			getCatalogsFacade().agregaEditaCatalogo(catalogo);
 			getAdministracionBean().setListaCatalogos(getCatalogsFacade().buscaTodosCatalogos());
+			Collections.sort(getAdministracionBean().getListaCatalogos(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCatalogsType().getCatyDescription().compareToIgnoreCase(o2.getCatalogsType().getCatyDescription());
+				}
+			});
 			getAdministracionBean().setNuevoCatalogo(false);
-			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, getMensajesController().getPropiedad("info.infoGrabada"), "");						
+			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));						
 		}catch(Exception e){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.grabar"), "");
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaEditaCatalogo " + ": ").append(e.getMessage()));
 		}
 	}
@@ -352,18 +427,18 @@ public class AdministracionController implements Serializable{
 					pu.setPspaId(getAdministracionBean().getCodigoPartner());
 				}
 				if(getAdministracionBean().isNoEsSocioEstrategico() && pu.getPrusId() == null && getProjectUsersFacade().validaUsuarioAsignado(u.getUserId(), p.getProjId(), null) != null){
-					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.usuarioAsignado"), "");
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.usuarioAsignado"));
 				}else if(!getAdministracionBean().isNoEsSocioEstrategico() && pu.getPrusId() == null && getProjectUsersFacade().validaUsuarioAsignado(u.getUserId(), p.getProjId(), getAdministracionBean().getCodigoPartner())!= null){
-					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.usuarioAsignado"), "");
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.usuarioAsignado"));
 				}else{
 					getProjectUsersFacade().agregarEditarProyectousuario(pu);				
 					cargaProyectosUsuarios();
 					getAdministracionBean().setNuevoUsuario(false);
-					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, getMensajesController().getPropiedad("info.infoGrabada"), "");
+					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));
 				}
 			}
 		}catch(Exception e){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.grabar"), "");
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarUsuario " + ": ").append(e.getMessage()));
 		}
 	}
@@ -382,7 +457,6 @@ public class AdministracionController implements Serializable{
 	}
 	public void buscarUsuarios(){
 		try{
-//			getAdministracionBean().setListaUsuarios(getUsersFacade().listaUsuariosFiltrados(getAdministracionBean().getNombreUsuario()));
 			getAdministracionBean().setListaUsuarios(getUsersFacade().findByRolEstrategicoImplementador(getAdministracionBean().getNombreUsuario()));
 		}catch(Exception e){
 			e.printStackTrace();

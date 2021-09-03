@@ -112,6 +112,11 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@Transient
+	private String adexComponente;
+	
+	@Getter
+	@Setter
 	@Column(name = "adex_update_date")
 	private Date adexUpdateDate;
 	

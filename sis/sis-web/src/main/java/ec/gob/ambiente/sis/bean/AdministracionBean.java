@@ -91,6 +91,10 @@ public class AdministracionBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<Catalogs> listaCatalogosFiltrados;
+	
+	@Getter
+	@Setter
 	private List<CatalogsType> listaTipoCatalogo;
 	
 	@Getter
@@ -145,5 +149,13 @@ public class AdministracionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Role> listaRolesUsuario;
+	
+	@Getter
+	@Setter
+	private boolean deshabilitaOrdenPregunta;
+	
+	@Getter
+	@Setter
+	private boolean deshabilitaOrdenCatalogo;
 }
 
