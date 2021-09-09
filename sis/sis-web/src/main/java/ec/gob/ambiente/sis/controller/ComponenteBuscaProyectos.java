@@ -816,7 +816,17 @@ public class ComponenteBuscaProyectos implements Serializable{
 		try{
 			getBuscaProyectosBean().setProyectoSeleccionado(proyecto);
 			getBuscaProyectosBean().setCodigoStrategicPartner(null);
-			getBuscaProyectosBean().setListaProyectosReportados(getAdvanceExecutionSafeguardsFacade().listarProyectosReportados(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(), 2));
+			for (ProjectUsers pu : getLoginBean().getListaProyectosDelUsuario()) {
+				if(pu.getProjects().getProjId() == proyecto.getProjId()){						
+					getBuscaProyectosBean().setCodigoStrategicPartner(pu.getPspaId());
+					break;
+				}
+			}
+			if(getLoginBean().getTipoRol() == 2)
+				getBuscaProyectosBean().setListaProyectosReportados(getAdvanceExecutionSafeguardsFacade().listarProyectosReportados(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(), 2));
+			else if(getLoginBean().getTipoRol() == 3){
+				getBuscaProyectosBean().setListaProyectosReportados(getAdvanceExecutionSafeguardsFacade().listarProyectosReportadosSocioEstrategico(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(), 2,getBuscaProyectosBean().getCodigoStrategicPartner()));
+			}
 			if(getBuscaProyectosBean().getListaProyectosReportados().size()==0){
 				Mensaje.actualizarComponente(":form:growl");				
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "" ,getMensajesController().getPropiedad("info.noReportesGenerados") );

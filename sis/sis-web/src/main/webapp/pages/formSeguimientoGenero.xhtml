@@ -566,7 +566,7 @@
 								</p:column>
 								<p:column headerText="#{etiquetas['lineaAccion']}">
 									<p:outputLabel
-										value="#{genero.projectsGenderInfo.cataId.cataText2}"
+										value="#{genero.projectsGenderInfo.indicators==null and genero.projectsGenderInfo.cataId!=null?genero.projectsGenderInfo.pginOtherLine:genero.projectsGenderInfo.cataId.cataText2}"
 										style="font-size:10px !important;" />
 								</p:column>
 								<p:column headerText="#{etiquetas['lineaBase']}">

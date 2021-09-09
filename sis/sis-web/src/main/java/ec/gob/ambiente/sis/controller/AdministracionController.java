@@ -30,10 +30,12 @@ import ec.gob.ambiente.sis.bean.LoginBean;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
 import ec.gob.ambiente.sis.model.GenderAdvances;
+import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
 import ec.gob.ambiente.sis.services.CatalogsTypeFacade;
+import ec.gob.ambiente.sis.services.IndicatorsFacade;
 import ec.gob.ambiente.sis.services.ProjectUsersFacade;
 import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.utils.Mensaje;
@@ -65,6 +67,10 @@ public class AdministracionController implements Serializable{
 	@EJB
 	@Getter
 	private ProjectsFacade projectsFacade;
+	
+	@EJB
+	@Getter
+	private IndicatorsFacade indicatorsFacade;
 	
 	@EJB
 	@Getter
@@ -117,6 +123,8 @@ public class AdministracionController implements Serializable{
 			getAdministracionBean().setDeshabilitaOrdenCatalogo(true);
 			getAdministracionBean().setListaProyectoUsuarios(new ArrayList<>());
 			getAdministracionBean().setListaPreguntas(new ArrayList<>());
+			getAdministracionBean().setListaIndicadores(new ArrayList<>());
+			getAdministracionBean().setListaIndicadores(getIndicatorsFacade().listaTodosIndicadoresGenero());
 			getAdministracionBean().setListaPreguntas(getQuestionsFacade().listaPreguntasIngresadas());		
 			getAdministracionBean().setListaPreguntasGenero(getQuestionsFacade().buscaTodasPreguntasGenero());
 			getAdministracionBean().setListaTipoRespuestaPregunta(getCatalogsFacade().buscaCatalogosPorTipo(TIPO_RESPUESTA));
@@ -240,7 +248,10 @@ public class AdministracionController implements Serializable{
 		getAdministracionBean().setCatalogoSeleccionado(new Catalogs());
 		getAdministracionBean().setCodigoTipoCatalogo(null);
 	}
-	
+	public void nuevoIndicador(){
+		getAdministracionBean().setNuevoIndicador(true);
+		getAdministracionBean().setIndicadorSeleccionado(new Indicators());
+	}
 	public void nuevoUsuario(){
 		getAdministracionBean().setListaPartners(new ArrayList<>());
 		getAdministracionBean().setNuevoUsuario(true);
@@ -270,6 +281,10 @@ public class AdministracionController implements Serializable{
 		getAdministracionBean().setCatalogoSeleccionado(catalogo);
 		getAdministracionBean().setCodigoTipoCatalogo(catalogo.getCatalogsType().getCatyId());
 		getAdministracionBean().setNuevoCatalogo(true);
+	}
+	public void editarIndicador(Indicators indicador){
+		getAdministracionBean().setIndicadorSeleccionado(indicador);
+		getAdministracionBean().setNuevoIndicador(true);
 	}
 	public void editarUsuario(ProjectUsers usuario){
 		getAdministracionBean().setListaPartners(new ArrayList<>());
@@ -340,6 +355,25 @@ public class AdministracionController implements Serializable{
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarPregunta " + ": ").append(e.getMessage()));
+		}
+	}
+	
+	public void agregaEditaIndicador(){
+		try{
+			Indicators indicador=getAdministracionBean().getIndicadorSeleccionado();
+			indicador.setIndiCreationDate(new Date());
+			indicador.setIndiCreatorUser(getLoginBean().getUser().getUserName());
+			if(indicador.getIndiId()!=null){
+				indicador.setIndiUpdateDate(new Date());
+				indicador.setIndiUpdateUser(getLoginBean().getUser().getUserName());
+			}
+			getIndicatorsFacade().agregaEditaIndicador(indicador);
+			getAdministracionBean().setNuevoIndicador(false);
+			getAdministracionBean().setListaIndicadores(getIndicatorsFacade().listaTodosIndicadoresGenero());
+			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "",getMensajesController().getPropiedad("info.infoGrabada"));
+		}catch(Exception e){
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
+			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaEditaIndicador " + ": ").append(e.getMessage()));
 		}
 	}
 	

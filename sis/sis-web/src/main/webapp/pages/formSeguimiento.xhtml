@@ -49,7 +49,7 @@
 				<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
 				<p:inputTextarea counter="resumenExecutive" id="idResumenEjecutivo"  
 					value="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexExecutiveSummary}"
-					counterTemplate="{0} caracteres restantes." maxlength="500"
+					counterTemplate="{0} caracteres restantes." maxlength="5000"
 					cols="60" rows="9">
 					<p:ajax process="@this "
 						event="blur"  />
@@ -1830,6 +1830,8 @@
 									</div>
 									<div class="p-field p-col-12 p-md-5">
 											<p:selectOneMenu value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA.tareColumnNumberOne}" id="comboPlanGobierno"
+											panelStyle="width: 35rem"
+											style="width:300px;"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}">
 												<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
 												<f:selectItems
@@ -1838,25 +1840,28 @@
 													itemValue="#{plan.cataId}" />
 												<p:ajax process="@this" />
 											</p:selectOneMenu>
-											<p:commandButton icon="#{botones['icono.mas']}" process="@this " 
+											
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:commandButton icon="#{botones['icono.mas']}" process="@this " 
 												title="#{tooltip['agregarNuevoPlanGobierno']}"	actionListener="#{seguimientoSalvaguardaController.nuevoPlanGobierno()}"																																	
 												update="@this :form:panelPlanGobierno"/>
 									</div>
-									<div class="p-field p-col-12 p-md-4">
+									<div class="p-field p-col-12 p-md-3">
 									
 									</div>			
 									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['presupuestoAsignado']}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-5">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA.tareColumnDecimalOne}"
+									<div class="p-field p-col-12 p-md-2">
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasA.tareColumnDecimalOne}"												
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
 												modifyValueOnWheel="false">
 												<p:ajax process="@this" event="blur" />
 											</p:inputNumber>
 									</div>
-									<div class="p-field p-col-12 p-md-4">
+									<div class="p-field p-col-12 p-md-7">
 									</div>
 									
 									<div class="p-field p-col-12 p-md-4">
@@ -1901,7 +1906,7 @@
 														pattern="###,###.##" maxIntegerDigits="7" maxFractionDigits="2" locale="es"/>
 												</p:outputLabel>
 											</p:column>
-											<p:column>												
+											<p:column style="width:80px;">												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 													process="@this :form:salvaguardas:panelIngreso1A" update=":form:salvaguardas:panelIngreso1A">
@@ -2036,7 +2041,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												<p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}"
 													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}" 
 													process="@this :form:salvaguardas:panelIngresoOPA" update=":form:salvaguardas:panelIngresoOPA">
@@ -2297,6 +2302,8 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="6"
+												panelStyle="width: 35rem"
+												style="width:300px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoModalidad}"
 												id="comboModalidadActividad">
 												<f:selectItem itemValue="#{null}"
@@ -2426,7 +2433,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 												<p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaB41()}"
 													immediate="true" resetValues="true"
@@ -2569,7 +2576,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -2713,7 +2720,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -2858,7 +2865,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}"/>
 												
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true" 
 													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -3071,6 +3078,8 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="8"
+												panelStyle="width: 35rem"
+												style="width:300px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoActividad}"
 												id="comboActividad">
 												<f:selectItem itemValue="#{null}"
@@ -3195,7 +3204,7 @@
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTablaLarga" width="30">
 												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>												
 											</p:column>											
-											<p:column>												
+											<p:column style="width:80px;">												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	immediate="true" resetValues="true"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -3429,7 +3438,7 @@
 											<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnSix}" style="font-size:10px !important;"/>												
 											</p:column>																						
-											<p:column>												
+											<p:column style="width:80px;">												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	immediate="true" resetValues="true"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -3741,7 +3750,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	immediate="true" resetValues="true"
@@ -3912,7 +3921,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 											</p:column>																							
 																																	
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4182,7 +4191,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 											</p:column>
 											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4357,7 +4366,7 @@
 											
 
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true" action="#{seguimientoSalvaguardaController.editarTablaB131()}"								                
 													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4567,7 +4576,7 @@
 											</p:column>
 
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true" action="#{seguimientoSalvaguardaController.editarTablaB143()}"								                
 													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4695,7 +4704,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;" >
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -5015,6 +5024,8 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:selectOneMenu tabindex="11"
+												panelStyle="width: 35rem"
+												style="width:300px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoTipoAccesoRecurso}" 
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
 												id="recursoC201">
@@ -5117,7 +5128,7 @@
 											<p:column headerText="#{etiquetas['tipoAcceso']}" styleClass="cabeceraTablaLarga" >
 												<p:outputLabel value="#{tablarespuestas.tareGenericoTres}" style="font-size:10px !important;"/>
 											</p:column>											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -5418,7 +5429,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnFive}" style="font-size:10px !important;"/>
 											</p:column>										
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaC211()}"
 								                	immediate="true" resetValues="true"
@@ -5601,7 +5612,7 @@
 													
 											</p:column>																					
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -5729,7 +5740,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 												
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	immediate="true" resetValues="true"
@@ -5919,7 +5930,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 											</p:column>																					
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true"
 								                	action="#{seguimientoSalvaguardaController.editarTablaC26}"
@@ -6150,7 +6161,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>																					
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true"
 								                	action="#{seguimientoSalvaguardaController.editarTablaC271()}"
@@ -6330,7 +6341,7 @@
 												</p:outputLabel>
 											</p:column>																				
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -6627,7 +6638,7 @@
 											<p:column headerText="#{etiquetas['objetoAcuerdo']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaC291()}"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -6900,7 +6911,7 @@
 												
 											</p:column>	
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true" action="#{seguimientoSalvaguardaController.editarTablaC301()}"
 													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -7207,7 +7218,7 @@
 											</p:column>		
 											
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -7338,7 +7349,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -7737,7 +7748,7 @@
 											</p:column>		
 											
 																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" action="#{seguimientoSalvaguardaController.editarTablaD321()}"
 								                	immediate="true" resetValues="true"
@@ -7973,7 +7984,7 @@
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 											</p:column>																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" immediate="true" resetValues="true"
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -8102,7 +8113,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -8415,7 +8426,7 @@
 											<p:column headerText="#{etiquetas['tipoAreaConsolidada']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareGenerico}" style="font-size:10px !important;"/>
 											</p:column>																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	action="#{seguimientoSalvaguardaController.editarTablaE341()}" 
@@ -8603,7 +8614,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 											</p:column>																							
 																																	
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	action="#{seguimientoSalvaguardaController.editarTablaE351()}"
@@ -8876,7 +8887,7 @@
 													<f:convertNumber for="hectarea361E" pattern="#,000.00" locale="es"/>
 												</p:outputLabel>
 											</p:column>																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -9196,7 +9207,7 @@
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>																						
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -9454,7 +9465,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 											</p:column>																							
 																																	
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -9716,7 +9727,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 											</p:column>																							
 																																	
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -11463,7 +11474,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -11813,7 +11824,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>																																		
 																																	
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -12110,7 +12121,7 @@
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -12203,7 +12214,9 @@
 										<p:outputLabel value="#{etiquetas['sistemasRed+']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1" style="width:414px;"
+											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1" 
+												panelStyle="width: 35rem"
+												style="width:300px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoSistemas}"
 												id="sistemaF431">
 												<f:selectItem itemValue="#{null}"
@@ -12320,7 +12333,7 @@
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -12527,6 +12540,8 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="7"
+												panelStyle="width: 35rem"
+												style="width:300px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoRiesgo}"
 												id="comboRiesgoF441">
 												<f:selectItem itemValue="#{null}"
@@ -12537,13 +12552,14 @@
 													itemValue="#{riesgo.cataId}" />
 												<p:ajax process="@this " event="change" />
 											</p:selectOneMenu>
-											<p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaRiesgoF441" actionListener="#{seguimientoSalvaguardaController.nuevoRiesgo}" tabindex="8"/>
+											
+									</div>
+									<div class="p-field p-col-12 p-md-1">
+										<p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaRiesgoF441" actionListener="#{seguimientoSalvaguardaController.nuevoRiesgo}" tabindex="8"/>
 										<p:tooltip for="idAgregaRiesgoF441" value="#{tooltip['agregarRiesgo']}" position="top"/>
 									</div>
-									<div class="p-field p-col-12 p-md-3">
-										
+									<div class="p-field p-col-12 p-md-2">
 									</div>
-									
 									
 									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
@@ -12625,7 +12641,7 @@
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -12793,7 +12809,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}"/>
 											</p:column>
 											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}"  
 								                	resetValues="true" 
@@ -12926,7 +12942,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -13194,7 +13210,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 											</p:column>
 											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}" 
@@ -13402,7 +13418,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										
-										<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="7" style="width:295px;"
+										<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="7" 
+												panelStyle="width: 35rem"
+												style="width:300px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoControlVigilancia}"
 												id="comboControlVF471">
 												<f:selectItem itemValue="#{null}"
@@ -13413,11 +13431,13 @@
 													itemValue="#{control.cataId}" />
 												<p:ajax process="@this " event="change" />
 											</p:selectOneMenu>
-										<p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaControlVG471" actionListener="#{seguimientoSalvaguardaController.nuevoControlVigilancia}" tabindex="8"/>
-										<p:tooltip for="idAgregaControlVG471" value="#{tooltip['agregaControlVigilancia']}" position="top"/>	
+											
 									</div>	
-									<div class="p-field p-col-12 p-md-3">
-										
+									<div class="p-field p-col-12 p-md-1">
+										<p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaControlVG471" actionListener="#{seguimientoSalvaguardaController.nuevoControlVigilancia}" tabindex="8"/>
+										<p:tooltip for="idAgregaControlVG471" value="#{tooltip['agregaControlVigilancia']}" position="top"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
@@ -13518,7 +13538,7 @@
 												</p:outputLabel>
 											</p:column>
 											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}"  
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -13850,7 +13870,7 @@
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareColumnFour}" style="font-size:10px !important;"/>
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}"  
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -14069,6 +14089,8 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:selectOneMenu tabindex="8"
+												panelStyle="width: 35rem"
+												style="width:300px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoAlternativaEconomica}"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
 												id="alternativaG491">
@@ -14080,12 +14102,14 @@
 													itemValue="#{alternativa.cataId}" />
 												<p:ajax process="@this " event="change"	/>
 										</p:selectOneMenu>
+											
+									</div>
+									<div class="p-field p-col-12 p-md-1">
 										<p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaIncentivoG491" actionListener="#{seguimientoSalvaguardaController.nuevoIncentivo}" tabindex="3"/>
-										<p:tooltip for="idAgregaIncentivoG491" value="#{tooltip['agregarIncentivo']}" position="top"/>	
+										<p:tooltip for="idAgregaIncentivoG491" value="#{tooltip['agregarIncentivo']}" position="top"/>
 									</div>
-									<div class="p-field p-col-12 p-md-3">
+									<div class="p-field p-col-12 p-md-2">
 									</div>
-									
 									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['nroHombresBeneficiarios']}"/>
@@ -14202,7 +14226,7 @@
 											</p:column>
 											
 											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}"  
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -14380,7 +14404,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}"/>
 											</p:column>
 											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}"  
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -14606,15 +14630,19 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:selectCheckboxMenu id="multipleSeleccionRemotoG512" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.monitoreoRemotoSeleccionados}" 
-											label="#{etiquetas['monitoreoRemoto']}" tabindex="9"
-								                                filter="true" filterMatchMode="startsWith"  scrollHeight="250">
+											panelStyle="width: 35rem"
+											style="width:300px;"
+											label="#{etiquetas['monitoreoRemoto']}" tabindex="9" multiple="true"
+								            filter="true" filterMatchMode="startsWith"  scrollHeight="250">
 								            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listadoMonitoreoRemoto}"/>
 								        </p:selectCheckboxMenu>
-								        <p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaRemotoG512" actionListener="#{seguimientoSalvaguardaController.nuevoMonitoreoRemoto}" tabindex="3"/>
-										<p:tooltip for="idAgregaRemotoG512" value="#{tooltip['agregarActividad']}" position="top"/>																												
+								        																												
 									</div>
-									<div class="p-field p-col-12 p-md-3">
-										
+									<div class="p-field p-col-12 p-md-1">
+										<p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaRemotoG512" actionListener="#{seguimientoSalvaguardaController.nuevoMonitoreoRemoto}" tabindex="3"/>
+										<p:tooltip for="idAgregaRemotoG512" value="#{tooltip['agregaMonitoreoR']}" position="top"/>
+									</div>
+									<div class="p-field p-col-12 p-md-2">
 									</div>
 									
 									
@@ -14623,24 +14651,27 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:selectCheckboxMenu id="multipleSeleccionInSituG512" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.monitoreoInSituSeleccionados}" 
+												panelStyle="width: 35rem" multiple="true"
+											style="width:300px;"
 												label="#{etiquetas['monitoreoInSitu']}" tabindex="10" 
-								                                filter="true" filterMatchMode="startsWith"  scrollHeight="250">
+								                filter="true" filterMatchMode="startsWith"  scrollHeight="250">
 								            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listadoMonitoreoInSitu}"/>
 								        </p:selectCheckboxMenu>
-								        <p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaInSituG512" actionListener="#{seguimientoSalvaguardaController.nuevoMonitoreoInSitu}" tabindex="3"/>
-										<p:tooltip for="idAgregaInSituG512" value="#{tooltip['agregarActividad']}" position="top"/>																												
+								        																												
 									</div>
-									<div class="p-field p-col-12 p-md-3">
-										
+									<div class="p-field p-col-12 p-md-1">
+										<p:commandButton icon="#{botones['icono.mas']}" process="@this" id="idAgregaInSituG512" actionListener="#{seguimientoSalvaguardaController.nuevoMonitoreoInSitu}" tabindex="3"/>
+										<p:tooltip for="idAgregaInSituG512" value="#{tooltip['agregaMonitoreoI']}" position="top"/>
 									</div>
-									
+									<div class="p-field p-col-12 p-md-2">
+									</div>
 									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['periodicidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:selectCheckboxMenu id="multipleSeleccionPeriodicidadG512" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.periodicidadSeleccionados}" 
-											label="#{etiquetas['periodicidad']}" tabindex="11" 
+											label="#{etiquetas['periodicidad']}" tabindex="11" multiple="true" 
 								                                filter="true" filterMatchMode="startsWith"  scrollHeight="250">
 								            <f:selectItems value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listadoPeriodicidad}"/>
 								        </p:selectCheckboxMenu>								        																												
@@ -14720,7 +14751,7 @@
 											</p:column>
 											
 											
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}"  
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -14884,7 +14915,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" />
 													
 											</p:column>
-											<p:column>
+											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
 								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"

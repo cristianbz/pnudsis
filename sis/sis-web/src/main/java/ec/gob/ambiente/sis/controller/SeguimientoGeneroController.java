@@ -202,7 +202,7 @@ public class SeguimientoGeneroController implements Serializable{
 			}else{
 				getSeguimientoGeneroBean().setAdvanceExecutionSafeguards(getComponenteBuscarProyectos().getBuscaProyectosBean().getAdvanceExecution());		
 				if(!getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().isAdexIsReported()){
-					validaNuevaInformacionGeneroAgregada(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjects().getProjId(), getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners());
+					validaNuevaInformacionGeneroAgregada(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjects().getProjId(), getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners(),getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId());
 				}
 				getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));				
 				if(getSeguimientoGeneroBean().getListaAvancesGenero()!=null){
@@ -259,13 +259,13 @@ public class SeguimientoGeneroController implements Serializable{
 	 * @param codigoProyecto
 	 * @param psp
 	 */
-	public void validaNuevaInformacionGeneroAgregada(int codigoProyecto,ProjectsStrategicPartners psp){
+	public void validaNuevaInformacionGeneroAgregada(int codigoProyecto,ProjectsStrategicPartners psp,int codigoAvance){
 		try{
 			List<Object[]> listaTemp= new ArrayList<>();
 			if(codigoProyecto>0 && psp == null)
-				listaTemp = getProjectsGenderInfoFacade().listadoNuevosProyectosAgregados(codigoProyecto, 0);
+				listaTemp = getProjectsGenderInfoFacade().listadoNuevosProyectosAgregados(codigoProyecto, 0,codigoAvance);
 			else
-				listaTemp = getProjectsGenderInfoFacade().listadoNuevosProyectosAgregados(codigoProyecto, psp.getPspaId());
+				listaTemp = getProjectsGenderInfoFacade().listadoNuevosProyectosAgregados(codigoProyecto, psp.getPspaId(),codigoAvance);
 			for(Object[] obj:listaTemp ){
 				GenderAdvances avancesGenero = new GenderAdvances();
 				ProjectsGenderInfo pgi=new ProjectsGenderInfo();
@@ -279,7 +279,7 @@ public class SeguimientoGeneroController implements Serializable{
 					avancesGenero.setGeadExecutedBudget(0);
 					avancesGenero.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
 					getGenderAdvancesFacade().create(avancesGenero);
-				}else if(obj[0] == null && obj[2] !=null && obj[3] ==null && obj[4].toString().length()>0 && obj[5].toString().length()>0 && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){
+				}else if(obj[0] == null && obj[2] !=null && obj[3] ==null && obj[4]!=null && obj[4].toString().length()>0 && obj[5]!=null && obj[5].toString().length()>0 && obj[6]!=null && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){
 					pgi.setPginId(Integer.valueOf(obj[1].toString()));
 					avancesGenero.setProjectsGenderInfo(pgi);
 					avancesGenero.setGeadCreatorUser(getLoginBean().getUser().getUserName());

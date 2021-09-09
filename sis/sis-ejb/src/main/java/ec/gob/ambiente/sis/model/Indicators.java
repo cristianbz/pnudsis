@@ -48,12 +48,6 @@ public class Indicators implements Serializable {
     
     @Getter
     @Setter    
-    @Column(name = "indi_expected_response")
-    @Size(max = 1)
-    private String indiExpectedResponse;
-    
-    @Getter
-    @Setter    
     @Column(name = "indi_status")
     private boolean indiStatus;
     

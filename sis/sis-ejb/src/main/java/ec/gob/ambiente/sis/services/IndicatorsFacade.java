@@ -30,6 +30,26 @@ public class IndicatorsFacade extends AbstractFacade<Indicators, Integer> {
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();				
 		return findByCreateQuery(sql, camposCondicion);
 	}
-	
+	/**
+	 * Carga todos los indicadores de genero
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Indicators> listaTodosIndicadoresGenero()throws Exception{
+		String sql="SELECT I from Indicators I ORDER BY I.indiId";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();				
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Agrega o edita un indicador
+	 * @param indicador  El indicador a crear o editar
+	 * @throws Exception
+	 */
+	public void agregaEditaIndicador(Indicators indicador)throws Exception{
+		if(indicador.getIndiId()==null)
+			create(indicador);
+		else
+			edit(indicador);
+	}
 }
 

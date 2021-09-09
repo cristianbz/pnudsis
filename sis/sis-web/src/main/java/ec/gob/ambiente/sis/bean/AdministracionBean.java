@@ -15,6 +15,7 @@ import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
+import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.suia.model.Role;
@@ -157,5 +158,17 @@ public class AdministracionBean implements Serializable{
 	@Getter
 	@Setter
 	private boolean deshabilitaOrdenCatalogo;
+	
+	@Getter
+	@Setter
+	private List<Indicators> listaIndicadores;
+	
+	@Getter
+	@Setter
+	private Indicators indicadorSeleccionado;
+	
+	@Getter
+	@Setter
+	private boolean nuevoIndicador;
 }
 

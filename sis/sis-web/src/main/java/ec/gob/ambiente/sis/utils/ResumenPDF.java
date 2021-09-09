@@ -6698,7 +6698,7 @@ public class ResumenPDF {
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyDescription(),fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getCataId().getCataText2() ,fontContenidoTablas));
+				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getIndicators()==null && ga.getProjectsGenderInfo().getCataId()!=null? ga.getProjectsGenderInfo().getPginOtherLine() : ga.getProjectsGenderInfo().getCataId().getCataText2() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginBaseLine() ,fontContenidoTablas));
@@ -7494,7 +7494,7 @@ public class ResumenPDF {
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 			response.setContentType("application/pdf");				
-			response.setHeader("Content-Disposition","attachment; filename=" + new StringBuilder().append("resumenSalvaguardas").append(".pdf").toString());				
+			response.setHeader("Content-Disposition","attachment; filename=" + new StringBuilder().append("seguimientoGenero").append(".pdf").toString());				
 			response.getOutputStream().write(Archivos.getBytesFromFile(new File(directorioArchivoPDF)));
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
