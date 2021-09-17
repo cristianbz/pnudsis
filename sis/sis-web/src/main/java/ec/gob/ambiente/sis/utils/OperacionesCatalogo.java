@@ -55,8 +55,8 @@ public class OperacionesCatalogo {
 			catalogo.setCataOrder(listaCatalogo.get(listaCatalogo.size()-1).getCataOrder()+1);
 
 		catalogo.setCataNumber(catalogo.getCataOrder());
-		catalogo.setCataText1(catalogo.getCataText1());
-		catalogo.setCataText2(catalogo.getCataText1());
+		catalogo.setCataText1(".");
+		catalogo.setCataText2(catalogo.getCataText2());
 		catalogo.setCataCreationDate(new Date());
 		catalogo.setCataStatus(true);
 		catalogo.setCataCreatorUser(usuario);

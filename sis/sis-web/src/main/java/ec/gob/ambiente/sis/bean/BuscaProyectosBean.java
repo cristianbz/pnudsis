@@ -39,6 +39,10 @@ public class BuscaProyectosBean implements Serializable{
 	private boolean esRegistroSalvaguardas;
 	
 	@Getter
+	@Setter //1 implementador  2 estrategico
+	private int tipoSocio;
+	
+	@Getter
 	@Setter
 	private boolean esRegistroGenero;
 	
@@ -199,9 +203,9 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private List<Indicators> listaIndicadores;
 		
-	@Getter
-	@Setter
-	private List<ProjectsSpecificObjectives> listaObjetivosEspecificos;
+//	@Getter
+//	@Setter
+//	private List<ProjectsSpecificObjectives> listaObjetivosEspecificos;
 	
 	@Getter
 	@Setter

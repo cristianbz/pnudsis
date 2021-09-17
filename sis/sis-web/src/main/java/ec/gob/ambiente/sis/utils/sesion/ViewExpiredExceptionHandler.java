@@ -49,7 +49,7 @@ public class ViewExpiredExceptionHandler extends ExceptionHandlerWrapper {
 					map.put("currentViewId", viewExpiredException.getViewId());
 					navigationHandler
 					.handleNavigation(facesContext, null,
-							"/index.jsf");
+							"/finSesion.jsf");
 					facesContext.renderResponse();
 				} finally {
 					i.remove();

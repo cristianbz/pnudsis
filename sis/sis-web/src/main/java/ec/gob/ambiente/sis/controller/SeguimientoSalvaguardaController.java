@@ -1180,7 +1180,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		catalogo.setCataStatus(true);
 		catalogo.setCataCreationDate(new Date());
 		if (categoria==1){
-			if(getSeguimientoSalvaguardaBean().getNuevaLeySA().getCataText1().trim().length()==0){
+			if(getSeguimientoSalvaguardaBean().getNuevaLeySA().getCataText2().trim().length()==0){
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,"",  getMensajesController().getPropiedad("error.datosLey") );
 			}else{
 				tipo.setCatyId(TipoCatalogoEnum.MARCOJURIDICOINTERNACIONAL.getCodigo());
@@ -1198,16 +1198,15 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					catalogo.setCataOrder(getSeguimientoSalvaguardaBean().getCatalogoLeyes().get(getSeguimientoSalvaguardaBean().getCatalogoLeyes().size()-1).getCataOrder()+1);
 				catalogo.setCataNumber(catalogo.getCataOrder());
 
-				catalogo.setCataText1(getSeguimientoSalvaguardaBean().getNuevaLeySA().getCataText1());
+				catalogo.setCataText1(".");
 
-				catalogo.setCataText2(getSeguimientoSalvaguardaBean().getNuevaLeySA().getCataText1());
-
+				catalogo.setCataText2(getSeguimientoSalvaguardaBean().getNuevaLeySA().getCataText2());
 				catalogo=getCatalogsFacade().create(catalogo);
 				getSeguimientoSalvaguardaBean().getCatalogoLeyes().add(catalogo);
 				getSeguimientoSalvaguardaBean().setNuevaLey(false);
 			}
 		}else if(categoria==2){
-			if(getSeguimientoSalvaguardaBean().getNuevoMJN().getCataText1().trim().length()==0){
+			if(getSeguimientoSalvaguardaBean().getNuevoMJN().getCataText2().trim().length()==0){
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.datosLey"));
 			}else{
 				catalogo=OperacionesCatalogo.agregarNuevoCatalogo(TipoCatalogoEnum.MARCOJURIDICONACIONAL.getCodigo(), getSeguimientoSalvaguardaBean().getCatalogoMarcoJuridicoNacional(), getSeguimientoSalvaguardaBean().getNuevoMJN(), usuario.getUserName());
@@ -1218,7 +1217,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoIngresoMJN(false);
 			}
 		}else if(categoria==3){
-			if(getSeguimientoSalvaguardaBean().getNuevaNormativaSN().getCataText1().trim().length()==0){
+			if(getSeguimientoSalvaguardaBean().getNuevaNormativaSN().getCataText2().trim().length()==0){
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.datosLey"), "");
 			}else{
 				catalogo=OperacionesCatalogo.agregarNuevoCatalogo(TipoCatalogoEnum.NORMATIVASECUNDARIANACIONAL.getCodigo(), getSeguimientoSalvaguardaBean().getCatalogoNormativaSecundariaNacional(), getSeguimientoSalvaguardaBean().getNuevaNormativaSN(), usuario.getUserName());
@@ -1229,7 +1228,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoIngresoNSN(false);
 			}
 		}else if(categoria==4){
-			if(getSeguimientoSalvaguardaBean().getNuevaPoliticaSA().getCataText1().trim().length()==0){
+			if(getSeguimientoSalvaguardaBean().getNuevaPoliticaSA().getCataText2().trim().length()==0){
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.datosPolitica"));
 			}else{
 				tipo.setCatyId(TipoCatalogoEnum.POLITICAS.getCodigo());
@@ -1248,12 +1247,13 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 				catalogo.setCataNumber(catalogo.getCataOrder());
 
-				catalogo.setCataText1(getSeguimientoSalvaguardaBean().getNuevaPoliticaSA().getCataText1());
-				catalogo.setCataText2(getSeguimientoSalvaguardaBean().getNuevaPoliticaSA().getCataText1());
+				catalogo.setCataText1(".");
+				catalogo.setCataText2(getSeguimientoSalvaguardaBean().getNuevaPoliticaSA().getCataText2());
 
 				catalogo=getCatalogsFacade().create(catalogo);
 				getSeguimientoSalvaguardaBean().getCatalogoPoliticas().add(catalogo);
 				getSeguimientoSalvaguardaBean().setNuevaPolitica(false);
+				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 			}
 		}
 	}
@@ -5159,7 +5159,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public String buscaCatalogoPlanGobierno(int codigo){
 		Catalogs catalogo;
 		catalogo= getSeguimientoSalvaguardaBean().getCatalogoPlanGobierno().stream().filter(pg->pg.getCataId().equals(codigo)).findFirst().get();
-		return catalogo.getCataText1();
+		return catalogo.getCataText2();
 	}
 	/**
 	 * Localiza el catalogo de medida tomada
@@ -7659,7 +7659,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	}
 	public void agregarNuevoPlanGobierno(){
 		try{
-			if(getSeguimientoSalvaguardaBean().getPlanGobierno().getCataText1()==null ){
+			if(getSeguimientoSalvaguardaBean().getPlanGobierno().getCataText2()==null ){
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.datosPlanGobierno"));
 
 			}else{
@@ -7681,8 +7681,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 				catalogo.setCataNumber(catalogo.getCataOrder());
 
-				catalogo.setCataText1(getSeguimientoSalvaguardaBean().getPlanGobierno().getCataText1());
-				catalogo.setCataText2(getSeguimientoSalvaguardaBean().getPlanGobierno().getCataText1());
+				catalogo.setCataText1(".");
+				catalogo.setCataText2(getSeguimientoSalvaguardaBean().getPlanGobierno().getCataText2());
 				catalogo.setCataCreationDate(new Date());
 				catalogo.setCataCreatorUser(usuario.getUserName());
 				catalogo.setCataStatus(true);

@@ -549,14 +549,23 @@
 			</p:outputPanel>
 
 			<p:outputPanel id="panelAsignacion">
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-11">
+					</div>
+					<div class="p-field p-col-12 p-md-1">
+						<h:panelGrid rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionSalvaguardas}">
+							<componentes:ayuda texto="#{tooltip['desplazamientoTabs']}" />
+						</h:panelGrid>
+					</div>
+				</div>	
+
 				<p:tabView
 					rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionSalvaguardas}"
 					id="tabs"
 					activeIndex="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.posicionTab}">
 					<p:ajax event="tabChange"
 						listener="#{cc.attrs.componenteBuscaProyectos.tabChange}"
-						process="tabs" update="tabs" />
-
+						process="tabs" update="tabs" />					
 					<p:tab title="#{titulos['socioImpEstrategico']}">
 						<h:panelGrid columns="2" id="panelDatosSocios">
 							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"
@@ -577,20 +586,31 @@
 								 />
 						</h:panelGrid>
 						<br />
-						<p:selectBooleanCheckbox
-							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
-							itemLabel="#{etiquetas['salvaguardasSocios']}">
-							<p:ajax process="@this seleccionSocios panelDatosSocios"
-								update="seleccionSocios panelDatosSocios"
-								listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionSalvaguardaSocioEstrategico}" />
-						</p:selectBooleanCheckbox>
+						<div class="ui-fluid p-formgrid p-grid">
+									<h:panelGrid columns="2">									
+										<p:selectOneRadio id="radiopSalvaguarda" layout="grid"											
+											styleClass="etiquetaSubtitulo" columns="3"
+											value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoSocio}"
+											unselectable="false">
+											<f:selectItem itemLabel="#{etiquetas['salvaguardasSocioImp']}" itemValue="1" />
+											<f:selectItem itemLabel="#{etiquetas['salvaguardasSocios']}" itemValue="2"	/>
+											<p:ajax process="seleccionSocios panelDatosSocios @this "
+												event="change" 
+												update="seleccionSocios panelDatosSocios"
+												listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionSalvaguardaSocioEstrategico}">
+											</p:ajax>
+										</p:selectOneRadio>
+										<componentes:ayuda texto="#{tooltip['asignacionSalvaguarda']}"/>
+									</h:panelGrid>	
+						</div>
 						<br />
+						
 						<h:panelGrid id="seleccionSocios">
 							<p:fieldset legend="#{titulos['sociosPDI']}">
 								<p:selectOneRadio id="partners"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoStrategicPartner}"
 									layout="grid" columns="3"
-									disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.salvaguardasSociosEstrategicos}"
+									disabled="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoSocio==1}"
 									unselectable="false">
 									<f:selectItems
 										value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaPartnersProyectos}"
@@ -603,7 +623,7 @@
 										update="panelDatosSocios" />
 								</p:selectOneRadio>
 							</p:fieldset>
-							<p:messages />
+							<p:messages showDetail="true"/>
 						</h:panelGrid>
 						<br />
 						<h:panelGrid columns="4" style="margin: 0 auto;">
@@ -727,10 +747,20 @@
 								icon="#{botones['icono.check']}">
 							</p:commandButton>
 						</h:panelGrid>
-					</p:tab>
+					</p:tab>					
 				</p:tabView>
+					
 			</p:outputPanel>
 			<p:outputPanel id="panelAsignaGenero">
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-11">
+					</div>
+					<div class="p-field p-col-12 p-md-1">
+						<h:panelGrid rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionGenero}">
+							<componentes:ayuda texto="#{tooltip['desplazamientoTabs']}" />
+						</h:panelGrid>
+					</div>
+				</div>	
 				<p:tabView id="tabsGenero"
 					rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionGenero}" 
 					activeIndex="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.posicionTabGenero}">
@@ -755,6 +785,9 @@
 							</p:column>
 						</p:dataTable>
 						<br />
+						
+						<p:messages showSummary="true" showDetail="true"/>
+						<br/>
 						<h:panelGrid columns="4" style="margin: 0 auto;">
 							<p:commandButton value="#{botones['siguiente']}"
 								styleClass="botonRegistroProyecto"
@@ -785,22 +818,34 @@
 							<p:outputLabel
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
 								 />
-						</h:panelGrid>
+						</h:panelGrid>						
 						<br />
-						<p:selectBooleanCheckbox
-							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineasGeneroSociosEstrategicos}"
-							itemLabel="#{etiquetas['lineasGeneroSocios']}">
-							<p:ajax process="@this seleccionSociosGenero panelDatosSociosGenero"
-								update="seleccionSociosGenero panelDatosSociosGenero"
-								listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionLineasGeneroSocioEstrategico}" />
-						</p:selectBooleanCheckbox>
+						<div class="ui-fluid p-formgrid p-grid">
+									<h:panelGrid columns="2">									
+										<p:selectOneRadio id="radiopGenero" layout="grid"											
+											styleClass="etiquetaSubtitulo" columns="3"
+											value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoSocio}"
+											unselectable="false">
+											<f:selectItem itemLabel="#{etiquetas['generoSocioImplementador']}" itemValue="1" />
+											<f:selectItem itemLabel="#{etiquetas['generoSocioEstrategico']}" itemValue="2"	/>
+											<p:ajax process="seleccionSociosGenero panelDatosSociosGenero @this "
+												event="change" 
+												update="seleccionSociosGenero panelDatosSociosGenero"
+												listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionLineasGeneroSocioEstrategico}">
+											</p:ajax>
+										</p:selectOneRadio>
+										<componentes:ayuda texto="#{tooltip['asignacionGenero']}"/>
+									</h:panelGrid>	
+						</div>
+						
 						<br />
+
 						<h:panelGrid id="seleccionSociosGenero">
 							<p:fieldset legend="#{titulos['sociosPDI']}">
 								<p:selectOneRadio id="partnersGenero"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoStrategicPartner}"
 									layout="grid" columns="3"
-									disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineasGeneroSociosEstrategicos}"
+									disabled="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoSocio==1}"
 									unselectable="false">
 									<f:selectItems
 										value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaPartnersProyectos}"
@@ -813,7 +858,7 @@
 										update="panelDatosSociosGenero" />
 								</p:selectOneRadio>
 							</p:fieldset>
-							<p:messages for="partnersGenero" id="msgPartnersGenero"/>
+							<p:messages showDetail="true"/>
 						</h:panelGrid>
 						<br />
 						<h:panelGrid columns="4" style="margin: 0 auto;">
@@ -829,7 +874,7 @@
 								styleClass="botonRegistroProyecto"
 								icon="#{botones['icono.siguiente']}"
 								process="@this tienePlan "
-								update="tienePlan tabsGenero msgPartnersGenero"
+								update="tienePlan tabsGenero seleccionSociosGenero"
 								actionListener="#{cc.attrs.componenteBuscaProyectos.siguienteTabAsignaLineasGenero}"
 								oncomplete="PF('dlgEnProc').hide(); "
 								onstart="PF('dlgEnProc').show();" />
