@@ -146,11 +146,11 @@ public class AdvanceExecutionSafeguards {
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Projects projects;
 	
-	@Getter
-	@Setter
-	@JoinColumn(name = "psob_id",referencedColumnName = "psob_id")
-	@ManyToOne	
-	private ProjectsSpecificObjectives projectsSpecificObjectives;
+//	@Getter
+//	@Setter
+//	@JoinColumn(name = "psob_id",referencedColumnName = "psob_id")
+//	@ManyToOne	
+//	private ProjectsSpecificObjectives projectsSpecificObjectives;
 	
 	@Getter
 	@Setter

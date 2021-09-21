@@ -231,9 +231,9 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private List<DtoComponenteSalvaguarda> listaComponentesSalvaguardas;
 	
-	@Getter
-	@Setter
-	private int codigoComponente;
+//	@Getter
+//	@Setter
+//	private int codigoComponente;
 	
 	@Getter
 	@Setter
@@ -243,9 +243,9 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private boolean mostrarOpcionesBusqueda;
 	
-	@Getter
-	@Setter
-	private List<ProjectsSpecificObjectives> listaComponentesParaBusqueda;
+//	@Getter
+//	@Setter
+//	private List<ProjectsSpecificObjectives> listaComponentesParaBusqueda;
 	
 	@Getter
 	@Setter

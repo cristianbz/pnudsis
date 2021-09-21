@@ -344,6 +344,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private Integer codigoMetodo;
 	
+	
 	@Getter
 	@Setter
 	private Integer codigoTipoInstitucion;
@@ -391,6 +392,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private Integer codigoRiesgo;
+	
+	@Getter
+	@Setter
+	private Integer codigoComponente;
 	
 	@Getter
 	@Setter

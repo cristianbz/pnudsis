@@ -57,8 +57,8 @@ public class ProjectsSpecificObjectives implements Serializable {
     @ManyToOne
     private GeographicalLocations geloId;
 	
-	@Getter
-	@Setter
-	@OneToMany(mappedBy = "projectsSpecificObjectives", fetch = FetchType.LAZY)
-	private List<AdvanceExecutionSafeguards> advanceExecutionSafeguardsList;
+//	@Getter
+//	@Setter
+//	@OneToMany(mappedBy = "projectsSpecificObjectives", fetch = FetchType.LAZY)
+//	private List<AdvanceExecutionSafeguards> advanceExecutionSafeguardsList;
 }

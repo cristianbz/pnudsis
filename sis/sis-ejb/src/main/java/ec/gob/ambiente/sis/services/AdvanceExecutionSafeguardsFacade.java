@@ -54,23 +54,21 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @return
 	 * @throws DaoException
 	 */
-	public AdvanceExecutionSafeguards buscarAvanceSalvaguardaGeneroReportado(int codigoProyecto, int codigoPartner,int generoSalvaguarda,String desde,String hasta, int codigoComponente) throws DaoException{
+	public AdvanceExecutionSafeguards buscarAvanceSalvaguardaGeneroReportado(int codigoProyecto, int codigoPartner,int generoSalvaguarda,String desde,String hasta) throws DaoException{
 		try{
 			String sql="";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			if (codigoProyecto>0 && codigoPartner == 0 && generoSalvaguarda == 1){
-				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = FALSE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta AND AE.projectsSpecificObjectives.psobId=:codigoComponente";
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = FALSE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
 				camposCondicion.put("codigoProyecto", codigoProyecto);
 				camposCondicion.put("desde", desde);
 				camposCondicion.put("hasta", hasta);
-				camposCondicion.put("codigoComponente", codigoComponente);
 			}else if (codigoProyecto>0 && codigoPartner > 0 && generoSalvaguarda == 1){
-				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoPartner AND AE.adexIsGender = FALSE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta AND AE.projectsSpecificObjectives.psobId=:codigoComponente";
+				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoPartner AND AE.adexIsGender = FALSE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta";
 				camposCondicion.put("codigoProyecto", codigoProyecto);
 				camposCondicion.put("codigoPartner", codigoPartner);
 				camposCondicion.put("desde", desde);
 				camposCondicion.put("hasta", hasta);
-				camposCondicion.put("codigoComponente", codigoComponente);
 			}else if (codigoProyecto>0 && codigoPartner == 0 && generoSalvaguarda == 2){
 				sql="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.projectsStrategicPartners.pspaId=NULL AND AE.adexIsGender = TRUE AND AE.adexTermFrom =:desde AND AE.adexTermTo =:hasta ";
 				camposCondicion.put("codigoProyecto", codigoProyecto);
@@ -333,25 +331,24 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @return
 	 * @throws Exception
 	 */
-	public List<AdvanceExecutionSafeguards> listarProyReportadosConCriteriosBusqueda(Integer codigoProyecto, Integer codigoSocio, Integer codigoComponente, String codigoPeriodo, String codigoEstado) throws Exception{
+	public List<AdvanceExecutionSafeguards> listarProyReportadosConCriteriosBusqueda(Integer codigoProyecto, Integer codigoSocio, String codigoPeriodo, String codigoEstado) throws Exception{
 		String sql="";
 		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		if (codigoSocio == null && codigoPeriodo!=null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsSpecificObjectives.psobId=:codigoComponente AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL";
 			camposCondicion.put("codigoPeriodo", codigoPeriodo);
 		}else if(codigoSocio == null && codigoPeriodo==null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsSpecificObjectives.psobId=:codigoComponente AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL";			
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL";			
 		}else if(codigoSocio != null && codigoPeriodo != null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.projectsSpecificObjectives.psobId=:codigoComponente AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE";
 			camposCondicion.put("codigoSocio", codigoSocio);
 			camposCondicion.put("codigoPeriodo", codigoPeriodo);
 		}else if(codigoSocio != null && codigoPeriodo == null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.projectsSpecificObjectives.psobId=:codigoComponente AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE";
 			camposCondicion.put("codigoSocio", codigoSocio);			
 		}
-		camposCondicion.put("codigoProyecto", codigoProyecto);
-		camposCondicion.put("codigoComponente", codigoComponente);		
+		camposCondicion.put("codigoProyecto", codigoProyecto);		
 		camposCondicion.put("codigoEstado", codigoEstado);
 		listaTemp = findByCreateQuery(sql, camposCondicion);
 		return listaTemp;

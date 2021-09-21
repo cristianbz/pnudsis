@@ -168,6 +168,11 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_code_component")
+	private Integer tareCodeComponent;
+	
+	@Getter
+	@Setter
 	@Transient
 	private String tareProvincia;
 	
@@ -185,6 +190,11 @@ public class TableResponses  {
 	@Setter
 	@Transient
 	private String tareCatPlanGobierno;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String tareComponente;
 	
 	@Getter
 	@Setter

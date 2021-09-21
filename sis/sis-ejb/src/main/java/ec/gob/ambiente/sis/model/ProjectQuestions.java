@@ -36,16 +36,7 @@ public class ProjectQuestions implements Serializable {
 	@Column(name = "prqu_status")
 	private boolean prquStatus;
 	
-	@Getter
-	@Setter
-	@Column(name = "prqu_components")
-	private String prquComponents;
-	
-	@Getter
-	@Setter
-	@Transient
-	private Integer[] prquComponentsAux;
-   
+	   
 	@Getter
 	@Setter
 	@JoinColumn(name = "cata_id")

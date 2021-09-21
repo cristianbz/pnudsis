@@ -18,6 +18,8 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import ec.gob.ambiente.sigma.model.Components;
+import ec.gob.ambiente.sigma.services.ComponentsFacade;
 import ec.gob.ambiente.sigma.services.PartnersFacade;
 import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
@@ -45,6 +47,11 @@ public class AplicacionController implements Serializable{
     @EJB
    	@Getter
    	private PartnersFacade partnersFacade;
+    
+    @EJB
+   	@Getter
+   	private ComponentsFacade componentsFacade;
+
    	
     @EJB
    	@Getter
@@ -101,7 +108,13 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaControlVigilancia(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.CONTROLVIGILANCIA.getCodigo()));
     		getAplicacionBean().setListaTipoOrganizacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOORGANIZACION.getCodigo()));
     		getAplicacionBean().setListaTipoIncentivo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOINCENTIVO.getCodigo()));
-    		
+    		getAplicacionBean().setListaComponentes(getComponentsFacade().listaComponentesActivos());
+    		Components componente = new Components();
+    		componente.setCompId(1000);
+    		componente.setCompStatus(true);
+    		componente.setCompCode("CEO5");
+    		componente.setCompName("Componentes Operativos");
+    		getAplicacionBean().getListaComponentes().add(componente);
     	}catch(Exception e ){
     		e.printStackTrace();
     	}
