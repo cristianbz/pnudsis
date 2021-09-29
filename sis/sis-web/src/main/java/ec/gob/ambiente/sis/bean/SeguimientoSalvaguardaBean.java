@@ -2,6 +2,7 @@ package ec.gob.ambiente.sis.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -46,6 +47,34 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+//	@Getter
+//	@Setter
+//	private String provinciaAux;
+//	
+//	@Getter
+//	@Setter
+//	private String cantonAux;
+//	
+//	@Getter
+//	@Setter
+//	private String parroquiaAux;
+//	
+//	@Getter
+//	@Setter
+//	private String comunidadAux;
+//	
+//	@Getter
+//	@Setter
+//	private Date fechaAux;
+//	
+//	@Getter
+//	@Setter
+//	private String actividadAux;
+//	
+//	@Getter
+//	@Setter
+//	private double hectareasAux;
+//	
 	@Getter
 	@Setter
 	private Integer codigoStrategicPartner;
@@ -65,6 +94,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	@Getter
 	private boolean mostrartabs;
+	
+	@Setter
+	@Getter
+	private boolean esNuevoRegistroTbl51;
+	
+	@Setter
+	@Getter
+	private boolean esNuevoRegistroTbl81;
 	
 	
 	@Setter
@@ -344,10 +381,65 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private Integer codigoMetodo;
 	
+	@Getter
+	@Setter
+	private boolean otroCatalogo121;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoE371;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoF421;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoG461;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoA1;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoB81;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoB41;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoB131;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoC201;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoE351;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoE381;
+
+	@Getter
+	@Setter
+	private boolean otroCatalogoE391;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoF441;
 	
 	@Getter
 	@Setter
 	private Integer codigoTipoInstitucion;
+	
+	@Getter
+	@Setter
+	private Integer codigoPlanGobierno;
 	
 	@Getter
 	@Setter
@@ -688,11 +780,19 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaB51Aux;
+	
+	@Getter
+	@Setter
 	private List<TableResponses> tablaSalvaguardaB71;
 	
 	@Getter
 	@Setter
 	private List<TableResponses> tablaSalvaguardaB81;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB81Aux;
 	
 	@Getter
 	@Setter
@@ -729,6 +829,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<TableResponses> tablaSalvaguardaB181;
+	
 	
 	@Getter
 	@Setter
@@ -1346,11 +1447,19 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private TableResponses registroTablaRespuestasB51Aux;
+	
+	@Getter
+	@Setter
 	private TableResponses registroTablaRespuestasB71;
 	
 	@Getter
 	@Setter
 	private TableResponses registroTablaRespuestasB81;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasB81Aux;
 	
 	@Getter
 	@Setter
@@ -1550,8 +1659,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasB131 = new TableResponses();
 		registroTablaRespuestasB41 = new TableResponses();
 		registroTablaRespuestasB51 = new TableResponses();
+		registroTablaRespuestasB51Aux = new TableResponses();
 		registroTablaRespuestasB71 = new TableResponses();
 		registroTablaRespuestasB81 = new TableResponses();
+		registroTablaRespuestasB81Aux = new TableResponses();
 		registroTablaRespuestasC201 = new TableResponses();
 		registroTablaRespuestasC211 = new TableResponses();
 		registroTablaRespuestasC241= new TableResponses();
@@ -1611,8 +1722,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaA=new ArrayList<>();
 		tablaSalvaguardaB41=new ArrayList<>();
 		tablaSalvaguardaB51=new ArrayList<>();
+		tablaSalvaguardaB51Aux=new ArrayList<>();
 		tablaSalvaguardaB71= new ArrayList<>();
 		tablaSalvaguardaB81= new ArrayList<>();
+		tablaSalvaguardaB81Aux= new ArrayList<>();
 		tablaSalvaguardaB102= new ArrayList<>();
 		tablaSalvaguardaB103= new ArrayList<>();
 		tablaSalvaguardaB121= new ArrayList<>();
@@ -1724,6 +1837,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 			mensajeRequeridosTablasG.add(false);			
 		}
 		setDatosProyecto(false);
+		
 	}
 
 	public TipoParticipanteEnum[] getTipoParticipanteEnum() {

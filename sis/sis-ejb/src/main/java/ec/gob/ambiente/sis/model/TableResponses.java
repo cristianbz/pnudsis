@@ -168,8 +168,23 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_column_number_nine")
+	private Integer tareColumnNumberNine;
+	
+	@Getter
+	@Setter
 	@Column(name = "tare_code_component")
 	private Integer tareCodeComponent;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_law_political")
+	private Integer tareLawPolitical;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_another_catalog")
+	private String tareAnotherCatalog;
 	
 	@Getter
 	@Setter
@@ -195,12 +210,7 @@ public class TableResponses  {
 	@Setter
 	@Transient
 	private String tareComponente;
-	
-	@Getter
-	@Setter
-	@Column(name = "tare_answer_ord")
-	private Integer tareAnswerOrd;
-	
+		
 	@Getter
 	@Setter
 	@Transient

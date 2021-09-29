@@ -146,6 +146,7 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private String periodoDesde;
 	
+	
 	@Getter
 	@Setter
 	private boolean asignacionSalvaguardas;

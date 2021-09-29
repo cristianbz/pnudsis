@@ -49,7 +49,7 @@
 	        <!-- SELECION DE SOCIOS -->
 			<p:dialog widgetVar="dlgSeleccionSocios" showEffect="fade"
 				hideEffect="fade" modal="true" appendTo="@(body)"
-				header="#{titulos['reporteSocioImpEst']}" width="390"
+				header="#{titulos['reporteSocioImpEst']}" width="490"
 				closable="false" resizable="false">
 				<p:outputPanel id="sociosReportar">
 					<div class="ui-fluid p-formgrid p-grid">
@@ -481,6 +481,13 @@
 							styleClass="datosProyecto" />
 						<p:outputLabel id="socio"
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.socioImplementador.partName}" />
+							
+						<p:outputLabel for="socioEst"
+							value="#{etiquetas['socioEstrategico']}: "
+							styleClass="datosProyecto" />
+						<p:outputLabel id="socioEst"
+							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}" />
+							
 
 						<p:outputLabel value="#{etiquetas['sectorIdentifica']}: "
 							rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero}"
@@ -536,12 +543,13 @@
 
 			<p:outputPanel id="panelAsignacion">
 				<div class="ui-fluid p-formgrid p-grid">
-					<div class="p-field p-col-12 p-md-11">
-					</div>
+					
 					<div class="p-field p-col-12 p-md-1">
 						<h:panelGrid rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionSalvaguardas}">
 							<componentes:ayuda texto="#{tooltip['desplazamientoTabs']}" />
 						</h:panelGrid>
+					</div>
+					<div class="p-field p-col-12 p-md-11">
 					</div>
 				</div>	
 
@@ -729,12 +737,13 @@
 			</p:outputPanel>
 			<p:outputPanel id="panelAsignaGenero">
 				<div class="ui-fluid p-formgrid p-grid">
-					<div class="p-field p-col-12 p-md-11">
-					</div>
+					
 					<div class="p-field p-col-12 p-md-1">
 						<h:panelGrid rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.asignacionGenero}">
 							<componentes:ayuda texto="#{tooltip['desplazamientoTabs']}" />
 						</h:panelGrid>
+					</div>
+					<div class="p-field p-col-12 p-md-11">
 					</div>
 				</div>	
 				<p:tabView id="tabsGenero"

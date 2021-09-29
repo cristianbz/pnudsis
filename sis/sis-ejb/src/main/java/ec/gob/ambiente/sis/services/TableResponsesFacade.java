@@ -146,4 +146,29 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 //		return findByCreateQuery(sql, camposCondicion);
 		return tabla;
 	}
+	
+	public List<TableResponses> buscarPorAvanceEjecucionPreguntaProCanParr(int codigoAvanceEjecucion, int codigoPregunta,int codigoProv,int codigoCan,int codigoParr) throws Exception{
+		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId = :codigoPregunta AND TR.tareColumnNumberOne=:codigoProv AND TR.tareColumnNumberTwo=:codigoCan AND TR.tareColumnNumberThree=:codigoParr  ORDER BY TR.tareId";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
+		camposCondicion.put("codigoPregunta", codigoPregunta);
+		camposCondicion.put("codigoProv", codigoProv);
+		camposCondicion.put("codigoCan", codigoCan);
+		camposCondicion.put("codigoParr", codigoParr);
+		List<TableResponses> tabla=findByCreateQuery(sql, camposCondicion);
+//		for (TableResponses tableResponses : tabla) {
+//			Hibernate.initialize(tableResponses.getQuestions());
+//		}
+		return findByCreateQuery(sql, camposCondicion);
+//		return tabla;
+	}
+	
+	public List<TableResponses> listaAvanceEjecucionPregunta(int codigoAvanceEjecucion, int codigoPregunta) throws Exception{
+		String sql="SELECT TR FROM TableResponses TR WHERE TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId=:codigoPregunta ORDER BY TR.tareId";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
+		camposCondicion.put("codigoPregunta", codigoPregunta);
+		return findByCreateQuery(sql, camposCondicion);
+
+	}
 }

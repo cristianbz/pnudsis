@@ -108,13 +108,13 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaControlVigilancia(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.CONTROLVIGILANCIA.getCodigo()));
     		getAplicacionBean().setListaTipoOrganizacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOORGANIZACION.getCodigo()));
     		getAplicacionBean().setListaTipoIncentivo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOINCENTIVO.getCodigo()));
-    		getAplicacionBean().setListaComponentes(getComponentsFacade().listaComponentesActivos());
-    		Components componente = new Components();
-    		componente.setCompId(1000);
-    		componente.setCompStatus(true);
-    		componente.setCompCode("CEO5");
-    		componente.setCompName("Componentes Operativos");
-    		getAplicacionBean().getListaComponentes().add(componente);
+//    		getAplicacionBean().setListaComponentes(getComponentsFacade().listaComponentesActivos());
+//    		Components componente = new Components();
+//    		componente.setCompId(1000);
+//    		componente.setCompStatus(true);
+//    		componente.setCompCode("CEO5");
+//    		componente.setCompName("Componentes Operativos");
+//    		getAplicacionBean().getListaComponentes().add(componente);
     	}catch(Exception e ){
     		e.printStackTrace();
     	}

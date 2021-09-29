@@ -3015,7 +3015,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB51 = new PdfPTable(new float[] { 3, 3, 3  });
+				PdfPTable tablaB51 = new PdfPTable(new float[] { 3, 3, 3 ,3, 3, 3  });
 				tablaB51.setWidthPercentage(100);
 				tablaB51.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB51.getDefaultCell().setPadding(3);
@@ -3024,6 +3024,15 @@ public class ResumenPDF {
 				tablaB51.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 				tablaB51.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
+				encabezadoTablaB=new Paragraph();				
+				encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaB51.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Cantón",fontCabeceraTabla));
+				tablaB51.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
+				tablaB51.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Institución",fontCabeceraTabla));
 				tablaB51.addCell(encabezadoTablaB);
@@ -3037,6 +3046,15 @@ public class ResumenPDF {
 
 				datosTablaB=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaB51()){
+					datosTablaB.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaB51.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareCanton(),fontContenidoTablas));
+					tablaB51.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareParroquia(),fontContenidoTablas));
+					tablaB51.addCell(datosTablaB);						
+					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB51.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
@@ -3159,7 +3177,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB81 = new PdfPTable(new float[] { 3, 3, 3,3, 3, 3,3, 3, 3,3,3  });
+				PdfPTable tablaB81 = new PdfPTable(new float[] { 3, 3, 3,3, 3, 3,3  });
 				tablaB81.setWidthPercentage(100);
 				tablaB81.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB81.getDefaultCell().setPadding(3);
@@ -3168,9 +3186,7 @@ public class ResumenPDF {
 				tablaB81.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 				tablaB81.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
-				encabezadoTablaB=new Paragraph();				
-				encabezadoTablaB.add(new Phrase("Fecha",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
+				
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
@@ -3180,14 +3196,11 @@ public class ResumenPDF {
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
+				tablaB81.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();				
+				encabezadoTablaB.add(new Phrase("Fecha",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Actividad",fontCabeceraTabla));
@@ -3195,20 +3208,12 @@ public class ResumenPDF {
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Hectáreas",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();				
-				encabezadoTablaB.add(new Phrase("Nro hombres",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Nro mujeres",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
 
 
 
 				datosTablaB=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaB81()){
-					datosTablaB.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
+					
 					datosTablaB.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
@@ -3218,26 +3223,17 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareParroquia(),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
+					datosTablaB.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
+					tablaB81.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
+					tablaB81.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);						
+					tablaB81.addCell(datosTablaB);											
 					datosTablaB=new Paragraph();
 				}
 				document.add(tablaB81);

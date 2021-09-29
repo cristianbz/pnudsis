@@ -54,5 +54,23 @@ public class ProjectsStrategicPartnersFacade extends AbstractFacade<ProjectsStra
 			throw new DaoException();
 		}
 	}
+	/**
+	 * Devuelve el partner estrategico
+	 * @param codigoPartner El codigo del partner estrategico
+	 * @return
+	 * @throws DaoException
+	 */
+	public ProjectsStrategicPartners partnerEstrategico(Integer codigoPartner)throws DaoException{
+		try{
+			String sql="SELECT PSP FROM ProjectsStrategicPartners PSP WHERE  PSP.pspaId=:codigoPartner AND PSP.pspaStatus=TRUE";
+			Map<String, Object> camposCondicion=new HashMap<String, Object>();			
+			camposCondicion.put("codigoPartner", codigoPartner);
+			return findByCreateQuerySingleResult(sql, camposCondicion);
+		}catch(NoResultException e){
+			return null;
+		}catch(Exception e){
+			throw new DaoException();
+		}
+	}
 }
 
