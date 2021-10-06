@@ -10,15 +10,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
-import org.hibernate.Hibernate;
-
-import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
 import ec.gob.ambiente.sis.model.ExecutiveSummaries;
-import ec.gob.ambiente.sis.model.GenderAdvances;
+
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 
@@ -35,8 +32,8 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	@EJB
 	private AdvanceSectorsFacade advanceSectorsFacade;
 	
-	@EJB
-	private GenderAdvancesFacade genderAdvancesFacade;
+//	@EJB
+//	private GenderAdvancesFacade genderAdvancesFacade;
 	
 	@EJB
 	private ExecutiveSummariesFacade executiveSummariesFacade; 
@@ -212,32 +209,28 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @return
 	 * @throws Exception
 	 */
-	public AdvanceExecutionSafeguards grabarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, GenderAdvances avanceGenero,ExecutiveSummaries resumenEjecutivo)throws Exception{
-		if (avanceEjecucion.getAdexId() == null){
-			create(avanceEjecucion);
-			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
-				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
-				if(respuestas.getVaanId()==null)
-					valueAnswersFacade.create(respuestas);
-				else
-					valueAnswersFacade.edit(respuestas);
-			}
-			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
-//			resumenEjecutivo.setAdvanceExecutionSafeguards(avanceEjecucion);
-//			resumenEjecutivo.setExsuSummaryContent("");			
-			genderAdvancesFacade.create(avanceGenero);
-			executiveSummariesFacade.create(resumenEjecutivo);
-		}else{
-//			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) {
-//				valueAnswersFacade.edit(respuestas);
+//	public AdvanceExecutionSafeguards grabarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, GenderAdvances avanceGenero,ExecutiveSummaries resumenEjecutivo)throws Exception{
+//		if (avanceEjecucion.getAdexId() == null){
+//			create(avanceEjecucion);
+//			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
+//				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
+//				if(respuestas.getVaanId()==null)
+//					valueAnswersFacade.create(respuestas);
+//				else
+//					valueAnswersFacade.edit(respuestas);
 //			}
-			edit(avanceEjecucion);
-			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
-			genderAdvancesFacade.edit(avanceGenero);
-			executiveSummariesFacade.edit(resumenEjecutivo);
-		}
-		return avanceEjecucion;
-	}
+//			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);	
+//			genderAdvancesFacade.create(avanceGenero);
+//			executiveSummariesFacade.create(resumenEjecutivo);
+//		}else{
+//
+//			edit(avanceEjecucion);
+//			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
+//			genderAdvancesFacade.edit(avanceGenero);
+//			executiveSummariesFacade.edit(resumenEjecutivo);
+//		}
+//		return avanceEjecucion;
+//	}
 	
 	/**
 	 * Registra el avance de ejecucion para genero
@@ -245,29 +238,29 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @return
 	 * @throws Exception
 	 */
-	public AdvanceExecutionSafeguards agregarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, List<GenderAdvances> avancesGenero)throws Exception{
-		if (avanceEjecucion.getAdexId() == null){
-			create(avanceEjecucion);
-			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
-				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
-				if(respuestas.getVaanId()==null)
-					valueAnswersFacade.create(respuestas);
-				else
-					valueAnswersFacade.edit(respuestas);
-			}
-			for(GenderAdvances ag:avancesGenero){
-				ag.setAdvanceExecutionSafeguards(avanceEjecucion);
-				genderAdvancesFacade.create(ag);
-			}						
-		}else{
-			edit(avanceEjecucion);
-			for(GenderAdvances ag:avancesGenero){
-				ag.setAdvanceExecutionSafeguards(avanceEjecucion);
-				genderAdvancesFacade.edit(ag);
-			}
-		}
-		return avanceEjecucion;
-	}
+//	public AdvanceExecutionSafeguards agregarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, List<GenderAdvances> avancesGenero)throws Exception{
+//		if (avanceEjecucion.getAdexId() == null){
+//			create(avanceEjecucion);
+//			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
+//				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
+//				if(respuestas.getVaanId()==null)
+//					valueAnswersFacade.create(respuestas);
+//				else
+//					valueAnswersFacade.edit(respuestas);
+//			}
+//			for(GenderAdvances ag:avancesGenero){
+//				ag.setAdvanceExecutionSafeguards(avanceEjecucion);
+//				genderAdvancesFacade.create(ag);
+//			}						
+//		}else{
+//			edit(avanceEjecucion);
+//			for(GenderAdvances ag:avancesGenero){
+//				ag.setAdvanceExecutionSafeguards(avanceEjecucion);
+//				genderAdvancesFacade.edit(ag);
+//			}
+//		}
+//		return avanceEjecucion;
+//	}
 	/**
 	 * Actualiza avance ejecucion genero
 	 * @param avanceEjecucion

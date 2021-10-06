@@ -125,6 +125,13 @@ public class Catalogs {
     @ManyToOne
     private Catalogs cataParentId;
     
+    public Catalogs(){
+    	
+    }
+    public Catalogs(Integer cataId){
+    	this.cataId = cataId;
+    }
+    
 	@Getter
 	@Setter
     @JoinColumn(name = "caty_id", referencedColumnName = "caty_id")

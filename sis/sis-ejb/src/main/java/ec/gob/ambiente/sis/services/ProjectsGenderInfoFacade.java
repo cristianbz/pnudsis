@@ -4,7 +4,7 @@
 **/
 package ec.gob.ambiente.sis.services;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,17 +14,25 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
+import org.hibernate.Hibernate;
+
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
-import ec.gob.ambiente.sis.model.GenderAdvances;
+import ec.gob.ambiente.sis.model.ProjectGenderIndicator;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
+import lombok.Getter;
 
 @Stateless
 @LocalBean
 public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo, Integer>{
+//	
+//	@EJB
+//	private GenderAdvancesFacade genderAdvancesFacade;
 	
 	@EJB
-	private GenderAdvancesFacade genderAdvancesFacade;
+	@Getter
+	private ProjectGenderIndicatorFacade projectGenderIndicatorFacade;
+
 	
 	public ProjectsGenderInfoFacade(){
 		super(ProjectsGenderInfo.class,Integer.class);
@@ -78,6 +86,7 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 	 */
 	public List<ProjectsGenderInfo> listaLineasGeneroProyectoPartner(Integer codigoProyecto,Integer codigoPartner) throws Exception{
 		String sql="";
+		List<ProjectsGenderInfo> listaTemp=new ArrayList<ProjectsGenderInfo>();
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		if(codigoProyecto>0 && codigoPartner>0){
 			sql="SELECT PGI from ProjectsGenderInfo PGI WHERE PGI.pginStatus=TRUE AND PGI.projects.projId=:codigoProyecto AND PGI.pspaId=:codigoPartner ORDER BY PGI.cataId.cataNumber";
@@ -86,8 +95,13 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 		}else{
 			sql="SELECT PGI from ProjectsGenderInfo PGI WHERE PGI.pginStatus=TRUE AND PGI.projects.projId=:codigoProyecto AND PGI.pspaId IS NULL ORDER BY PGI.cataId.cataNumber";
 			camposCondicion.put("codigoProyecto", codigoProyecto);		
-		}			
-		return findByCreateQuery(sql, camposCondicion);
+		}		
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+		for (ProjectsGenderInfo pgi : listaTemp) {
+			Hibernate.initialize(pgi.getProjectGenderIndicatorList());
+		}
+		return listaTemp;
+//		return findByCreateQuery(sql, camposCondicion);
 	}
 	
 	public List<ProjectsGenderInfo> listaOtrasLineasGeneroProyectoPartner(Integer codigoProyecto,Integer codigoPartner) throws Exception{
@@ -108,33 +122,32 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 	 * @param projectGenderInfo
 	 * @throws Exception
 	 */
-	public void agregarEditarProjectGenerInfo(ProjectsGenderInfo projectGenderInfo)throws Exception{
+	public void agregarEditarProjectGenerInfo(ProjectsGenderInfo projectGenderInfo,List<ProjectGenderIndicator> indicadores)throws Exception{
 		if(projectGenderInfo.getPginId() == null)
 			create(projectGenderInfo);
 		else
 			edit(projectGenderInfo);
+		for(ProjectGenderIndicator pgi:indicadores){
+			getProjectGenderIndicatorFacade().agregarEditar(pgi);
+		}
 	}
 	
-	public void eliminaLineaDeGenero(List<GenderAdvances> listaAvances,ProjectsGenderInfo projectGender,String usuario)throws Exception{
-		for (GenderAdvances ga : listaAvances) {
-			ga.setGeadStatus(false);
-			ga.setGeadUpdateUser(usuario);
-			ga.setGeadUpdateDate(new Date());
-			genderAdvancesFacade.edit(ga);
-		}
-		projectGender.setIndicators(null);
-		projectGender.setPginAnotherIndicator(null);
-		projectGender.setPginAssociatedResults(null);
-		projectGender.setPginBudget(0);
-		projectGender.setPginGoals(null);
-		projectGender.setPginGoalValue(null);
-		projectGender.setPginResultsType(null);
-		projectGender.setPginBaseLine(null);
-		projectGender.setPginOtherLine(null);
-		projectGender.setPginUpdateDate(new Date());
-		projectGender.setPginUpdateUser(usuario);		
-		edit(projectGender);
-	}
+//	public void eliminaLineaDeGenero(List<GenderAdvances> listaAvances,ProjectsGenderInfo projectGender,String usuario)throws Exception{
+//		for (GenderAdvances ga : listaAvances) {
+//			ga.setGeadStatus(false);
+//			ga.setGeadUpdateUser(usuario);
+//			ga.setGeadUpdateDate(new Date());
+//			genderAdvancesFacade.edit(ga);
+//		}
+//		projectGender.setPginAssociatedResults(null);
+//		projectGender.setPginBudget(0);
+//		projectGender.setPginResultsType(null);
+//
+//		projectGender.setPginOtherLine(null);
+//		projectGender.setPginUpdateDate(new Date());
+//		projectGender.setPginUpdateUser(usuario);		
+//		edit(projectGender);
+//	}
 	/**
 	 * Consulta en base al codigo del projectGenderInfo
 	 * @param codigo

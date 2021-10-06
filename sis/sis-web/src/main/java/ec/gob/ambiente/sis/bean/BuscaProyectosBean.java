@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import ec.gob.ambiente.sigma.model.CatalogType;
+import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSpecificObjectives;
@@ -22,6 +24,7 @@ import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
 import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.Indicators;
+import ec.gob.ambiente.sis.model.ProjectGenderIndicator;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Sectors;
@@ -49,6 +52,10 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	@Getter
 	private boolean datosProyecto;
+	
+	@Getter
+	@Setter
+	private Integer codigoLineaGenero;
 	
 	@Getter
 	@Setter
@@ -109,6 +116,10 @@ public class BuscaProyectosBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> listaPreguntasSalvaguardas;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaLineasAccion;
 	
 	@Getter
 	@Setter
@@ -208,9 +219,9 @@ public class BuscaProyectosBean implements Serializable{
 //	@Setter
 //	private List<ProjectsSpecificObjectives> listaObjetivosEspecificos;
 	
-	@Getter
-	@Setter
-	private ProjectsGenderInfo lineaGeneroSeleccionada;
+//	@Getter
+//	@Setter
+//	private ProjectsGenderInfo lineaGeneroSeleccionada;
 	
 	@Getter
 	@Setter
@@ -255,5 +266,42 @@ public class BuscaProyectosBean implements Serializable{
 	@Getter
 	@Setter
 	private boolean mostrarTabs;
+	
+	@Getter
+	@Setter
+	private CatalogsType lineaGeneroSel;
+	
+	@Getter
+	@Setter
+	private Catalogs lineaAccionSel;
+	
+	@Getter
+	@Setter
+	private List<Components> listadoComponentes;
+	
+//	@Getter
+//	@Setter
+//	private Integer[] listadoComponentesSeleccionados;
+	
+	@Getter
+	@Setter
+	private List<String> listadoComponentesSeleccionados;
+	
+	@Getter
+	@Setter
+	private List<ProjectGenderIndicator> listadoProyectoGeneroIndicador;
+	
+	@Getter
+	@Setter
+	private ProjectsGenderInfo projectGenderInfoSeleccionado;
+	
+	@Getter
+	@Setter
+	private List<ProjectsGenderInfo> listaAccionesdeGeneroProyecto;
+	
+	@Getter
+	@Setter
+	private ProjectGenderIndicator indicadorSeleccionado;
+		
 }
 

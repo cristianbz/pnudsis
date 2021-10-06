@@ -15,7 +15,7 @@ import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
-import ec.gob.ambiente.sis.model.GenderAdvances;
+
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.TableResponses;
@@ -59,13 +59,13 @@ public class SeguimientoGeneroBean implements Serializable{
 	private String codigoTablaDatos;
 	
 
-	@Getter
-	@Setter
-	private List<GenderAdvances> listaAvancesGenero;
-		
-	@Getter
-	@Setter
-	private List<GenderAdvances> listaAvancesGeneroOtrosTemas;
+//	@Getter
+//	@Setter
+//	private List<GenderAdvances> listaAvancesGenero;
+//		
+//	@Getter
+//	@Setter
+//	private List<GenderAdvances> listaAvancesGeneroOtrosTemas;
 	
 	@Getter
 	@Setter
@@ -75,9 +75,9 @@ public class SeguimientoGeneroBean implements Serializable{
 	@Setter
 	private List<ValueAnswers> listaValoresRespuestas;
 	
-	@Getter
-	@Setter
-	private GenderAdvances avanceGeneroSeleccionado;
+//	@Getter
+//	@Setter
+//	private GenderAdvances avanceGeneroSeleccionado;
 	
 	@Getter
 	@Setter
@@ -241,7 +241,7 @@ public class SeguimientoGeneroBean implements Serializable{
 	
 	@PostConstruct
 	public void init(){
-		setAvanceGeneroSeleccionado(new GenderAdvances());
+//		setAvanceGeneroSeleccionado(new GenderAdvances());
 	}
 }
 

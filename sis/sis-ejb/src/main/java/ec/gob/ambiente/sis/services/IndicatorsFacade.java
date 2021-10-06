@@ -26,7 +26,7 @@ public class IndicatorsFacade extends AbstractFacade<Indicators, Integer> {
 	 * @throws Exception
 	 */
 	public List<Indicators> listaIndicadoresGenero()throws Exception{
-		String sql="SELECT I from Indicators I WHERE I.indiStatus=TRUE ORDER BY I.indiId";
+		String sql="SELECT I from Indicators I WHERE I.indiStatus=TRUE ORDER BY I.indiOrd";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();				
 		return findByCreateQuery(sql, camposCondicion);
 	}
@@ -36,7 +36,7 @@ public class IndicatorsFacade extends AbstractFacade<Indicators, Integer> {
 	 * @throws Exception
 	 */
 	public List<Indicators> listaTodosIndicadoresGenero()throws Exception{
-		String sql="SELECT I from Indicators I ORDER BY I.indiId";
+		String sql="SELECT I from Indicators I ORDER BY I.indiOrd";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();				
 		return findByCreateQuery(sql, camposCondicion);
 	}

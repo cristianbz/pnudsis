@@ -2668,7 +2668,7 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-11">
-										<p:dataTable id="tblAux51" var="tabla" value="#{seguimientoSalvaguardaBean.tablaSalvaguardaB51Aux}">
+										<p:dataTable id="tblAux51" var="tabla" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoSalvaguardaBean.tablaSalvaguardaB51Aux}">
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTablaLarga" >
 												<p:inputNumber value="#{tabla.tareColumnNumberSix}"
 													decimalPlaces="0" 
@@ -3258,7 +3258,7 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-11">
-										<p:dataTable id="tblAux81" var="tabla" value="#{seguimientoSalvaguardaBean.tablaSalvaguardaB81Aux}">
+										<p:dataTable id="tblAux81" var="tabla" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoSalvaguardaBean.tablaSalvaguardaB81Aux}">
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTablaLarga" style="width:50px;">
 												<p:inputNumber value="#{tabla.tareColumnNumberSeven}" 
 													decimalPlaces="0" 

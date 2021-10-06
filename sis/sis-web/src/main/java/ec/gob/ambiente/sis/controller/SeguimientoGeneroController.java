@@ -35,14 +35,14 @@ import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
-import ec.gob.ambiente.sis.model.GenderAdvances;
+
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 import ec.gob.ambiente.sis.services.AdvanceExecutionSafeguardsFacade;
 import ec.gob.ambiente.sis.services.DetailAdvanceGenderFacade;
-import ec.gob.ambiente.sis.services.GenderAdvancesFacade;
+
 import ec.gob.ambiente.sis.services.ProjectsGenderInfoFacade;
 import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
@@ -109,9 +109,9 @@ public class SeguimientoGeneroController implements Serializable{
 	@Getter
 	private AdvanceExecutionSafeguardsFacade advanceExecutionSafeguardsFacade;
 
-	@EJB
-	@Getter
-	private GenderAdvancesFacade genderAdvancesFacade;
+//	@EJB
+//	@Getter
+//	private GenderAdvancesFacade genderAdvancesFacade;
 
 	@EJB
 	@Getter
@@ -153,7 +153,7 @@ public class SeguimientoGeneroController implements Serializable{
 			getSeguimientoGeneroBean().setSocioImplementador(getComponenteBuscarProyectos().getBuscaProyectosBean().getSocioImplementador());
 			getSeguimientoGeneroBean().setMostrarTablaSeguimiento1(false);
 			getSeguimientoGeneroBean().setPosicionTab(0);
-			getSeguimientoGeneroBean().setListaAvancesGenero(new ArrayList<>());
+//			getSeguimientoGeneroBean().setListaAvancesGenero(new ArrayList<>());
 			getSeguimientoGeneroBean().setProyectoSeleccionado(getComponenteBuscarProyectos().getBuscaProyectosBean().getProyectoSeleccionado());	
 			getSeguimientoGeneroBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getBuscaProyectosBean().getCodigoStrategicPartner());
 			if(getComponenteBuscarProyectos().getBuscaProyectosBean().isNuevoSeguimiento()){
@@ -165,34 +165,34 @@ public class SeguimientoGeneroController implements Serializable{
 						armarAvancesGeneroPrimeraVez(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), 0);
 						avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
 						getSeguimientoGeneroBean().setAdvanceExecutionSafeguards(avance);
-						if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null)
-							getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));						
+//						if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null)
+//							getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));						
 					}else{
 						armarAvancesGeneroPrimeraVez(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner());
 						avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoGeneroBean().getProyectoSeleccionado().getProjId(), getSeguimientoGeneroBean().getCodigoStrategicPartner()==null?0:getSeguimientoGeneroBean().getCodigoStrategicPartner(), 2, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
 						getSeguimientoGeneroBean().setAdvanceExecutionSafeguards(avance);
-						if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null)
-							getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));						
+//						if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null)
+//							getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));						
 					}
-					if(getSeguimientoGeneroBean().getListaAvancesGenero()!=null){				
-						Iterator iter=getSeguimientoGeneroBean().getListaAvancesGenero().iterator();
-						while(iter.hasNext()){
-							GenderAdvances ga=(GenderAdvances) iter.next();
-						    if(ga.getProjectsGenderInfo().getCataId()==null){
-						        iter.remove();
-						    }
-						}
-					}
-					for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGenero()){
-						String [] listaComponentesAux;
-						listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
-						StringBuilder sb=new StringBuilder();
-						for(int x=0;x<listaComponentesAux.length;x++){
-							ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
-							sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
-						}
-						ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
-					}
+//					if(getSeguimientoGeneroBean().getListaAvancesGenero()!=null){				
+//						Iterator iter=getSeguimientoGeneroBean().getListaAvancesGenero().iterator();
+//						while(iter.hasNext()){
+//							GenderAdvances ga=(GenderAdvances) iter.next();
+//						    if(ga.getProjectsGenderInfo().getCataId()==null){
+//						        iter.remove();
+//						    }
+//						}
+//					}
+//					for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGenero()){
+//						String [] listaComponentesAux;
+//						listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
+//						StringBuilder sb=new StringBuilder();
+//						for(int x=0;x<listaComponentesAux.length;x++){
+//							ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+//							sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+//						}
+//						ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
+//					}
 
 					cargaValoresPreguntasRespuestas();
 					preparaRespuestasGenero();
@@ -205,46 +205,46 @@ public class SeguimientoGeneroController implements Serializable{
 				if(!getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().isAdexIsReported()){
 					validaNuevaInformacionGeneroAgregada(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjects().getProjId(), getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners(),getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId());
 				}
-				getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));				
-				if(getSeguimientoGeneroBean().getListaAvancesGenero()!=null){
-					Iterator iter=getSeguimientoGeneroBean().getListaAvancesGenero().iterator();
-					while(iter.hasNext()){
-						GenderAdvances ga=(GenderAdvances) iter.next();
-						if(ga.getProjectsGenderInfo().getCataId()==null){
-							iter.remove();
-						}
-					}
-				}
-				Collections.sort(getSeguimientoGeneroBean().getListaAvancesGenero(), new Comparator<GenderAdvances>(){
-					@Override
-					public int compare(GenderAdvances o1, GenderAdvances o2) {
-						return o1.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyMnemonic().compareToIgnoreCase(o2.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyMnemonic());
-					}
-				});
-				
-				for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGenero()){
-					String [] listaComponentesAux;
-					listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
-					StringBuilder sb=new StringBuilder();
-					for(int x=0;x<listaComponentesAux.length;x++){
-						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
-						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
-					}
-					ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
-				}
-				
-				getSeguimientoGeneroBean().setListaAvancesGeneroOtrosTemas(getGenderAdvancesFacade().listadoAvancesGeneroOtrosTemasPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
-				
-				for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas()){
-					String [] listaComponentesAux;
-					listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
-					StringBuilder sb=new StringBuilder();
-					for(int x=0;x<listaComponentesAux.length;x++){
-						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
-						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
-					}
-					ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
-				}
+//				getSeguimientoGeneroBean().setListaAvancesGenero(getGenderAdvancesFacade().listadoAvancesGeneroPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));				
+//				if(getSeguimientoGeneroBean().getListaAvancesGenero()!=null){
+//					Iterator iter=getSeguimientoGeneroBean().getListaAvancesGenero().iterator();
+//					while(iter.hasNext()){
+//						GenderAdvances ga=(GenderAdvances) iter.next();
+//						if(ga.getProjectsGenderInfo().getCataId()==null){
+//							iter.remove();
+//						}
+//					}
+//				}
+//				Collections.sort(getSeguimientoGeneroBean().getListaAvancesGenero(), new Comparator<GenderAdvances>(){
+//					@Override
+//					public int compare(GenderAdvances o1, GenderAdvances o2) {
+//						return o1.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyMnemonic().compareToIgnoreCase(o2.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyMnemonic());
+//					}
+//				});
+//				
+//				for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGenero()){
+//					String [] listaComponentesAux;
+//					listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
+//					StringBuilder sb=new StringBuilder();
+//					for(int x=0;x<listaComponentesAux.length;x++){
+//						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+//						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+//					}
+//					ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
+//				}
+//				
+//				getSeguimientoGeneroBean().setListaAvancesGeneroOtrosTemas(getGenderAdvancesFacade().listadoAvancesGeneroOtrosTemasPorAvanceEjecucion(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
+//				
+//				for(GenderAdvances ga:getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas()){
+//					String [] listaComponentesAux;
+//					listaComponentesAux = ga.getProjectsGenderInfo().getPginAssociatedResults().split(" ");
+//					StringBuilder sb=new StringBuilder();
+//					for(int x=0;x<listaComponentesAux.length;x++){
+//						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
+//						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
+//					}
+//					ga.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
+//				}
 				
 				getSeguimientoGeneroBean().setDatosSeguimiento(true);
 				getSeguimientoGeneroBean().setDatosGeneroParaMostrar(true);
@@ -267,41 +267,41 @@ public class SeguimientoGeneroController implements Serializable{
 				listaTemp = getProjectsGenderInfoFacade().listadoNuevosProyectosAgregados(codigoProyecto, 0,codigoAvance);
 			else
 				listaTemp = getProjectsGenderInfoFacade().listadoNuevosProyectosAgregados(codigoProyecto, psp.getPspaId(),codigoAvance);
-			for(Object[] obj:listaTemp ){
-				GenderAdvances avancesGenero = new GenderAdvances();
-				ProjectsGenderInfo pgi=new ProjectsGenderInfo();
-				if(obj[0] == null && obj[2] !=null && obj[3] !=null && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){					
-					pgi.setPginId(Integer.valueOf(obj[1].toString()));
-					avancesGenero.setProjectsGenderInfo(pgi);
-					avancesGenero.setGeadCreatorUser(getLoginBean().getUser().getUserName());
-					avancesGenero.setGeadCreationDate(new Date());
-					avancesGenero.setGeadStatus(true);
-					avancesGenero.setGeadBudgetActions("");
-					avancesGenero.setGeadExecutedBudget(0);
-					avancesGenero.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
-					getGenderAdvancesFacade().create(avancesGenero);
-				}else if(obj[0] == null && obj[2] !=null && obj[3] ==null && obj[4]!=null && obj[4].toString().length()>0 && obj[5]!=null && obj[5].toString().length()>0 && obj[6]!=null && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){
-					pgi.setPginId(Integer.valueOf(obj[1].toString()));
-					avancesGenero.setProjectsGenderInfo(pgi);
-					avancesGenero.setGeadCreatorUser(getLoginBean().getUser().getUserName());
-					avancesGenero.setGeadCreationDate(new Date());
-					avancesGenero.setGeadStatus(true);
-					avancesGenero.setGeadBudgetActions("");
-					avancesGenero.setGeadExecutedBudget(0);
-					avancesGenero.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
-					getGenderAdvancesFacade().create(avancesGenero);
-				}else if(obj[0] == null && obj[2] == null && obj[3] == null && obj[4].toString().length()>0 && obj[5].toString().length()>0 && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){
-					pgi.setPginId(Integer.valueOf(obj[1].toString()));
-					avancesGenero.setProjectsGenderInfo(pgi);
-					avancesGenero.setGeadCreatorUser(getLoginBean().getUser().getUserName());
-					avancesGenero.setGeadCreationDate(new Date());
-					avancesGenero.setGeadStatus(true);
-					avancesGenero.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
-					avancesGenero.setGeadBudgetActions("");
-					avancesGenero.setGeadExecutedBudget(0);
-					getGenderAdvancesFacade().create(avancesGenero);
-				}
-			}
+//			for(Object[] obj:listaTemp ){
+//				GenderAdvances avancesGenero = new GenderAdvances();
+//				ProjectsGenderInfo pgi=new ProjectsGenderInfo();
+//				if(obj[0] == null && obj[2] !=null && obj[3] !=null && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){					
+//					pgi.setPginId(Integer.valueOf(obj[1].toString()));
+//					avancesGenero.setProjectsGenderInfo(pgi);
+//					avancesGenero.setGeadCreatorUser(getLoginBean().getUser().getUserName());
+//					avancesGenero.setGeadCreationDate(new Date());
+//					avancesGenero.setGeadStatus(true);
+//					avancesGenero.setGeadBudgetActions("");
+//					avancesGenero.setGeadExecutedBudget(0);
+//					avancesGenero.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
+//					getGenderAdvancesFacade().create(avancesGenero);
+//				}else if(obj[0] == null && obj[2] !=null && obj[3] ==null && obj[4]!=null && obj[4].toString().length()>0 && obj[5]!=null && obj[5].toString().length()>0 && obj[6]!=null && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){
+//					pgi.setPginId(Integer.valueOf(obj[1].toString()));
+//					avancesGenero.setProjectsGenderInfo(pgi);
+//					avancesGenero.setGeadCreatorUser(getLoginBean().getUser().getUserName());
+//					avancesGenero.setGeadCreationDate(new Date());
+//					avancesGenero.setGeadStatus(true);
+//					avancesGenero.setGeadBudgetActions("");
+//					avancesGenero.setGeadExecutedBudget(0);
+//					avancesGenero.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
+//					getGenderAdvancesFacade().create(avancesGenero);
+//				}else if(obj[0] == null && obj[2] == null && obj[3] == null && obj[4].toString().length()>0 && obj[5].toString().length()>0 && (obj[6].toString().equals("1") || obj[6].toString().equals("2") || obj[6].toString().equals("3")) && obj[7].toString().length()>0 && Double.parseDouble(obj[8].toString())>0 ){
+//					pgi.setPginId(Integer.valueOf(obj[1].toString()));
+//					avancesGenero.setProjectsGenderInfo(pgi);
+//					avancesGenero.setGeadCreatorUser(getLoginBean().getUser().getUserName());
+//					avancesGenero.setGeadCreationDate(new Date());
+//					avancesGenero.setGeadStatus(true);
+//					avancesGenero.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
+//					avancesGenero.setGeadBudgetActions("");
+//					avancesGenero.setGeadExecutedBudget(0);
+//					getGenderAdvancesFacade().create(avancesGenero);
+//				}
+//			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -317,9 +317,9 @@ public class SeguimientoGeneroController implements Serializable{
 		try{
 			List<ProjectsGenderInfo> listaTemp = new ArrayList<>();
 			List<ProjectsGenderInfo> listaTempOtros = new ArrayList<>();
-			List<GenderAdvances> listaAvancesGenerado=new ArrayList<>();
-			getSeguimientoGeneroBean().setListaAvancesGenero(new ArrayList<>());
-			getSeguimientoGeneroBean().setListaAvancesGeneroOtrosTemas(new ArrayList<>());
+//			List<GenderAdvances> listaAvancesGenerado=new ArrayList<>();
+//			getSeguimientoGeneroBean().setListaAvancesGenero(new ArrayList<>());
+//			getSeguimientoGeneroBean().setListaAvancesGeneroOtrosTemas(new ArrayList<>());
 			listaTemp = getProjectsGenderInfoFacade().listaLineasGeneroProyectoPartner(codigoProyecto, codigoPartner);
 			Collections.sort(listaTemp, new Comparator<ProjectsGenderInfo>(){
 				@Override
@@ -331,18 +331,30 @@ public class SeguimientoGeneroController implements Serializable{
 
 
 			for(ProjectsGenderInfo pgi:listaTemp){
-				GenderAdvances ag=new GenderAdvances();
-				ag.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
-				ag.setGeadBudgetActions("");
-				ag.setGeadExecutedBudget(0);
-				ag.setGeadCreatorUser(getLoginBean().getUser().getUserName());
-				ag.setProjectsGenderInfo(pgi);
-				ag.setGeadCreationDate(new Date());
-				ag.setGeadStatus(true);				
-				if(pgi.getIndicators()!=null && pgi.getPginBudget() > 0 && pgi.getPginResultsType()!= null && pgi.getPginAssociatedResults() != null){
-					
-					getSeguimientoGeneroBean().getListaAvancesGenero().add(ag);				
-				}else if(pgi.getCataId()!= null && pgi.getIndicators()==null && pgi.getPginBudget() > 0 && pgi.getPginResultsType()!= null && pgi.getPginAssociatedResults() != null && pgi.getPginAnotherIndicator()!=null){
+//				GenderAdvances ag=new GenderAdvances();
+//				ag.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
+//				ag.setGeadBudgetActions("");
+//				ag.setGeadExecutedBudget(0);
+//				ag.setGeadCreatorUser(getLoginBean().getUser().getUserName());
+//				ag.setProjectsGenderInfo(pgi);
+//				ag.setGeadCreationDate(new Date());
+//				ag.setGeadStatus(true);				
+//				getSeguimientoGeneroBean().getListaAvancesGenero().add(ag);				
+//				getSeguimientoGeneroBean().getListaAvancesGenero().add(ag);
+
+			}
+
+			for(ProjectsGenderInfo pgi:listaTempOtros){
+//				String [] listaComponentesAux;
+//				GenderAdvances ag=new GenderAdvances();
+//				ag.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
+//				ag.setGeadBudgetActions("");
+//				ag.setGeadExecutedBudget(0);
+//				ag.setGeadCreatorUser(getLoginBean().getUser().getUserName());
+//				ag.setProjectsGenderInfo(pgi);
+//				ag.setGeadCreationDate(new Date());
+//				ag.setGeadStatus(true);				
+//
 //					listaComponentesAux = pgi.getPginAssociatedResults().split(" ");
 //					StringBuilder sb=new StringBuilder();
 //					for(int x=0;x<listaComponentesAux.length;x++){
@@ -350,55 +362,33 @@ public class SeguimientoGeneroController implements Serializable{
 //						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
 //					}
 //					ag.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
-					getSeguimientoGeneroBean().getListaAvancesGenero().add(ag);
-				}
-			}
-
-			for(ProjectsGenderInfo pgi:listaTempOtros){
-				String [] listaComponentesAux;
-				GenderAdvances ag=new GenderAdvances();
-				ag.setAdvanceExecutionSafeguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
-				ag.setGeadBudgetActions("");
-				ag.setGeadExecutedBudget(0);
-				ag.setGeadCreatorUser(getLoginBean().getUser().getUserName());
-				ag.setProjectsGenderInfo(pgi);
-				ag.setGeadCreationDate(new Date());
-				ag.setGeadStatus(true);				
-				if(pgi.getCataId()== null && pgi.getPginOtherLine() != null && pgi.getPginBudget() > 0 && pgi.getPginResultsType()!= null && pgi.getPginAssociatedResults() != null && pgi.getPginAnotherIndicator() != null){
-					listaComponentesAux = pgi.getPginAssociatedResults().split(" ");
-					StringBuilder sb=new StringBuilder();
-					for(int x=0;x<listaComponentesAux.length;x++){
-						ProjectsSpecificObjectives pso = getProjectsSpecificObjectivesFacade().datosComponente(Integer.parseInt(listaComponentesAux[x].toString()));
-						sb=sb.append(pso.getGeloId().getGeloName()).append(": ").append(pso.getPsobDescription()).append(", ");
-					}
-					ag.getProjectsGenderInfo().setPginAssociatedResultsAux(sb.toString());
-					getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas().add(ag);
-				}
+//					getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas().add(ag);
+////				}
 			}
 
 
-			if(getSeguimientoGeneroBean().getListaAvancesGenero().size()== 0 && getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas().size()==0){
-				getSeguimientoGeneroBean().setDatosSeguimiento(false);
-				Mensaje.actualizarComponente(":form:growl");
-				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.noInfoGenero"));
-			}else{
-				listaAvancesGenerado=getSeguimientoGeneroBean().getListaAvancesGenero();
-				listaAvancesGenerado.addAll(getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas());
-				getSeguimientoGeneroBean().setListaPreguntas(getQuestionsFacade().buscaPreguntasGenero());
-				getSeguimientoGeneroBean().setListaValoresRespuestas(new ArrayList<>());
-				valoresRespuestasPorDefecto(getSeguimientoGeneroBean().getListaPreguntas(), getSeguimientoGeneroBean().getListaValoresRespuestas());
-				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setValueAnswersList(getSeguimientoGeneroBean().getListaValoresRespuestas());
-				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()));
-				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat("12"));
-				if(getSeguimientoGeneroBean().getCodigoStrategicPartner() != null){
-					ProjectsStrategicPartners psp = new ProjectsStrategicPartners();
-					psp.setPspaId(getSeguimientoGeneroBean().getCodigoStrategicPartner());
-					getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setProjectsStrategicPartners(psp);
-				}else{
-					getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setProjectsStrategicPartners(null);
-				}
-				getAdvanceExecutionSafeguardsFacade().agregarEditarAvanceEjecucionGenero(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards(), listaAvancesGenerado);
-			}
+//			if(getSeguimientoGeneroBean().getListaAvancesGenero().size()== 0 && getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas().size()==0){
+//				getSeguimientoGeneroBean().setDatosSeguimiento(false);
+//				Mensaje.actualizarComponente(":form:growl");
+//				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.noInfoGenero"));
+//			}else{
+//				listaAvancesGenerado=getSeguimientoGeneroBean().getListaAvancesGenero();
+//				listaAvancesGenerado.addAll(getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas());
+//				getSeguimientoGeneroBean().setListaPreguntas(getQuestionsFacade().buscaPreguntasGenero());
+//				getSeguimientoGeneroBean().setListaValoresRespuestas(new ArrayList<>());
+//				valoresRespuestasPorDefecto(getSeguimientoGeneroBean().getListaPreguntas(), getSeguimientoGeneroBean().getListaValoresRespuestas());
+//				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setValueAnswersList(getSeguimientoGeneroBean().getListaValoresRespuestas());
+//				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexTermFrom(String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()));
+//				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat("12"));
+//				if(getSeguimientoGeneroBean().getCodigoStrategicPartner() != null){
+//					ProjectsStrategicPartners psp = new ProjectsStrategicPartners();
+//					psp.setPspaId(getSeguimientoGeneroBean().getCodigoStrategicPartner());
+//					getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setProjectsStrategicPartners(psp);
+//				}else{
+//					getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setProjectsStrategicPartners(null);
+//				}
+//				getAdvanceExecutionSafeguardsFacade().agregarEditarAvanceEjecucionGenero(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards(), listaAvancesGenerado);
+//			}
 
 
 		}catch(Exception e){
@@ -426,17 +416,17 @@ public class SeguimientoGeneroController implements Serializable{
 		}
 	}
 
-	public void grabarAvanceLineaGenero(){
-		try{
-			getGenderAdvancesFacade().actualizarCrearAvanceGenero(getSeguimientoGeneroBean().getAvanceGeneroSeleccionado());
-			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,   "",getMensajesController().getPropiedad("info.infoGrabada"));
-			Mensaje.actualizarComponente(":form:growl");
-			Mensaje.ocultarDialogo("dlgRegistroSeguimiento");
-		}catch(Exception e){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAvanceLineaGenero " + ": ").append(e.getMessage()));
-		}
-	}
+//	public void grabarAvanceLineaGenero(){
+//		try{
+//			getGenderAdvancesFacade().actualizarCrearAvanceGenero(getSeguimientoGeneroBean().getAvanceGeneroSeleccionado());
+//			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,   "",getMensajesController().getPropiedad("info.infoGrabada"));
+//			Mensaje.actualizarComponente(":form:growl");
+//			Mensaje.ocultarDialogo("dlgRegistroSeguimiento");
+//		}catch(Exception e){
+//			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
+//			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAvanceLineaGenero " + ": ").append(e.getMessage()));
+//		}
+//	}
 	public void cargaProvincias(){
 		getSeguimientoGeneroBean().setListaProvincias(new ArrayList<>());
 
@@ -502,7 +492,7 @@ public class SeguimientoGeneroController implements Serializable{
 			getSeguimientoGeneroBean().getDetalleAdvanceGender().setDtagProvince(getSeguimientoGeneroBean().getCodProvincia());
 			getSeguimientoGeneroBean().getDetalleAdvanceGender().setDtagCanton(getSeguimientoGeneroBean().getCodCanton());
 			getSeguimientoGeneroBean().getDetalleAdvanceGender().setDtagParish(getSeguimientoGeneroBean().getCodParroquia());
-			getSeguimientoGeneroBean().getDetalleAdvanceGender().setGenderAdvances(getSeguimientoGeneroBean().getAvanceGeneroSeleccionado());
+//			getSeguimientoGeneroBean().getDetalleAdvanceGender().setGenderAdvances(getSeguimientoGeneroBean().getAvanceGeneroSeleccionado());
 			getSeguimientoGeneroBean().getDetalleAdvanceGender().setProvincia(ubicaProvinciaCantonParroquia(getSeguimientoGeneroBean().getDetalleAdvanceGender().getDtagProvince(), 1));
 			getSeguimientoGeneroBean().getDetalleAdvanceGender().setCanton(ubicaProvinciaCantonParroquia(getSeguimientoGeneroBean().getDetalleAdvanceGender().getDtagCanton(), 2));
 			getSeguimientoGeneroBean().getDetalleAdvanceGender().setParroquia(ubicaProvinciaCantonParroquia(getSeguimientoGeneroBean().getDetalleAdvanceGender().getDtagParish(), 3));
@@ -595,19 +585,19 @@ public class SeguimientoGeneroController implements Serializable{
 		}
 	}
 
-	public void nuevoRegistroGeneroTabla1(){
-		if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoGeneroBean().getAvanceGeneroSeleccionado().getGeadId()!=null){
-			getSeguimientoGeneroBean().setNuevoDetalleGenero1(true);
-			getSeguimientoGeneroBean().setDetalleAdvanceGender(new DetailAdvanceGender());
-			getSeguimientoGeneroBean().setCodCanton(null);
-			getSeguimientoGeneroBean().setCodigoAutoIdentificacion(null);
-			getSeguimientoGeneroBean().setCodigoPuebloNacionalidad(0);
-			getSeguimientoGeneroBean().setCodProvincia(null);
-			getSeguimientoGeneroBean().setCodParroquia(null);
-		}else{
-			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.grabarGenero"));
-		}
-	}
+//	public void nuevoRegistroGeneroTabla1(){
+//		if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoGeneroBean().getAvanceGeneroSeleccionado().getGeadId()!=null){
+//			getSeguimientoGeneroBean().setNuevoDetalleGenero1(true);
+//			getSeguimientoGeneroBean().setDetalleAdvanceGender(new DetailAdvanceGender());
+//			getSeguimientoGeneroBean().setCodCanton(null);
+//			getSeguimientoGeneroBean().setCodigoAutoIdentificacion(null);
+//			getSeguimientoGeneroBean().setCodigoPuebloNacionalidad(0);
+//			getSeguimientoGeneroBean().setCodProvincia(null);
+//			getSeguimientoGeneroBean().setCodParroquia(null);
+//		}else{
+//			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.grabarGenero"));
+//		}
+//	}
 	/**
 	 * Muestra el cuadro de dialogo para eliminar segun el tipo
 	 * @param codigo indica el tipo de dialogo a mostrar
@@ -674,26 +664,26 @@ public class SeguimientoGeneroController implements Serializable{
 	}
 
 
-	public void mostrarDatosTablaBeneficiarios(GenderAdvances avanceGenero){
-		try{
-			getSeguimientoGeneroBean().setAvanceGeneroSeleccionado(avanceGenero);
-			getSeguimientoGeneroBean().setMostrarTablaSeguimiento1(true);
-			getSeguimientoGeneroBean().setTablaDetalleGenero1(new ArrayList<>());
-			getSeguimientoGeneroBean().setTablaDetalleGenero1(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(avanceGenero.getGeadId()));
-			for (DetailAdvanceGender dag : getSeguimientoGeneroBean().getTablaDetalleGenero1()) {
-				dag.setProvincia(ubicaProvinciaCantonParroquia(dag.getDtagProvince(), 1));
-				dag.setCanton(ubicaProvinciaCantonParroquia(dag.getDtagCanton(), 2));
-				dag.setParroquia(ubicaProvinciaCantonParroquia(dag.getDtagParish(), 3));
-				dag.setEtnia(OperacionesCatalogo.ubicaDescripcionCatalogo(dag.getDtagEthnicity(),getAplicacionBean().getListaAutoIdentificacion()));				
-				if(dag.getDtagEthnicity()== CODIGO_IDENTIFICACION_INDIGENA)
-					dag.setPueblo(OperacionesCatalogo.ubicaDescripcionCatalogo(dag.getDtagTown(),getAplicacionBean().getListaPueblosNacionalidades()));					
-			}
-			Mensaje.verDialogo("dlgAsignaBeneficiarios");
-		}catch(Exception e){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.mostrarBeneficiarios"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "mostrarDatosTablaBeneficiarios " + ": ").append(e.getMessage()));
-		}
-	}
+//	public void mostrarDatosTablaBeneficiarios(GenderAdvances avanceGenero){
+//		try{
+//			getSeguimientoGeneroBean().setAvanceGeneroSeleccionado(avanceGenero);
+//			getSeguimientoGeneroBean().setMostrarTablaSeguimiento1(true);
+//			getSeguimientoGeneroBean().setTablaDetalleGenero1(new ArrayList<>());
+//			getSeguimientoGeneroBean().setTablaDetalleGenero1(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(avanceGenero.getGeadId()));
+//			for (DetailAdvanceGender dag : getSeguimientoGeneroBean().getTablaDetalleGenero1()) {
+//				dag.setProvincia(ubicaProvinciaCantonParroquia(dag.getDtagProvince(), 1));
+//				dag.setCanton(ubicaProvinciaCantonParroquia(dag.getDtagCanton(), 2));
+//				dag.setParroquia(ubicaProvinciaCantonParroquia(dag.getDtagParish(), 3));
+//				dag.setEtnia(OperacionesCatalogo.ubicaDescripcionCatalogo(dag.getDtagEthnicity(),getAplicacionBean().getListaAutoIdentificacion()));				
+//				if(dag.getDtagEthnicity()== CODIGO_IDENTIFICACION_INDIGENA)
+//					dag.setPueblo(OperacionesCatalogo.ubicaDescripcionCatalogo(dag.getDtagTown(),getAplicacionBean().getListaPueblosNacionalidades()));					
+//			}
+//			Mensaje.verDialogo("dlgAsignaBeneficiarios");
+//		}catch(Exception e){
+//			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.mostrarBeneficiarios"));
+//			log.error(new StringBuilder().append(this.getClass().getName() + "." + "mostrarDatosTablaBeneficiarios " + ": ").append(e.getMessage()));
+//		}
+//	}
 	
 	
 
@@ -1301,7 +1291,7 @@ public class SeguimientoGeneroController implements Serializable{
 		getSeguimientoGeneroBean().setCodParroquia(null);
 
 		getSeguimientoGeneroBean().setInformacionProyectoGeneroSeleccionado(null);
-		getSeguimientoGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
+//		getSeguimientoGeneroBean().setAvanceGeneroSeleccionado(new GenderAdvances());
 
 		getSeguimientoGeneroBean().setListaPreguntas(new ArrayList<>());
 		getSeguimientoGeneroBean().setListaValoresRespuestas(new ArrayList<>());
@@ -1386,13 +1376,13 @@ public class SeguimientoGeneroController implements Serializable{
 			getSeguimientoGeneroBean().setListaDetalleAvancesGenero(new ArrayList<>());
 			List<DetailAdvanceGender> listaTemp=new ArrayList<>();
 			List<DetailAdvanceGender> listaTempOtros=new ArrayList<>();
-			for (GenderAdvances ag : getSeguimientoGeneroBean().getListaAvancesGenero()) {
-				listaTemp.addAll(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(ag.getGeadId()));				
-			}
+//			for (GenderAdvances ag : getSeguimientoGeneroBean().getListaAvancesGenero()) {
+//				listaTemp.addAll(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(ag.getGeadId()));				
+//			}
 			getSeguimientoGeneroBean().setListaDetalleAvancesGenero(listaTemp);
-			for (GenderAdvances ag : getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas()) {
-				listaTempOtros.addAll(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(ag.getGeadId()));				
-			}
+//			for (GenderAdvances ag : getSeguimientoGeneroBean().getListaAvancesGeneroOtrosTemas()) {
+//				listaTempOtros.addAll(getDetailAdvanceGenderFacade().listadoDetalleAvanceGenero(ag.getGeadId()));				
+//			}
 			getSeguimientoGeneroBean().setListaDetalleAvancesGeneroOtros(listaTempOtros);
 			
 			for(DetailAdvanceGender dag:getSeguimientoGeneroBean().getListaDetalleAvancesGenero()){

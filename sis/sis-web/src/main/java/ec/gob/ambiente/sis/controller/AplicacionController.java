@@ -7,7 +7,6 @@ package ec.gob.ambiente.sis.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -18,14 +17,13 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import ec.gob.ambiente.sigma.model.Components;
+import ec.gob.ambiente.sigma.services.CatalogTypeFacade;
 import ec.gob.ambiente.sigma.services.ComponentsFacade;
 import ec.gob.ambiente.sigma.services.PartnersFacade;
 import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
-import ec.gob.ambiente.suia.model.GeographicalLocations;
 import ec.gob.ambiente.suia.service.GeographicalLocationsFacade;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,6 +54,10 @@ public class AplicacionController implements Serializable{
     @EJB
    	@Getter
    	private CatalogsFacade catalogsFacade;
+    
+    @EJB
+   	@Getter
+   	private CatalogTypeFacade catalogTypeFacade;
     
     @EJB
    	@Getter
@@ -108,6 +110,7 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setListaControlVigilancia(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.CONTROLVIGILANCIA.getCodigo()));
     		getAplicacionBean().setListaTipoOrganizacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOORGANIZACION.getCodigo()));
     		getAplicacionBean().setListaTipoIncentivo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOINCENTIVO.getCodigo()));
+//    		getAplicacionBean().setListaLineasGenero(getCatalogTypeFacade().listaLineasGenero());
 //    		getAplicacionBean().setListaComponentes(getComponentsFacade().listaComponentesActivos());
 //    		Components componente = new Components();
 //    		componente.setCompId(1000);

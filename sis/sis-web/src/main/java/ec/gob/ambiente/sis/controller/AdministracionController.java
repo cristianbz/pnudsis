@@ -29,7 +29,6 @@ import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
-import ec.gob.ambiente.sis.model.GenderAdvances;
 import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.model.Questions;

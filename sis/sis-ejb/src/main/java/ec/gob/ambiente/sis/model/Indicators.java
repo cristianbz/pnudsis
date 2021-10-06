@@ -81,7 +81,17 @@ public class Indicators implements Serializable {
     private String indiDbaObservation;
     
     @Getter
+    @Setter    
+    @Column(name = "indi_type")
+    private String indiType;
+    
+    @Getter
+    @Setter    
+    @Column(name = "indi_ord")
+    private Integer indiOrd;
+    
+    @Getter
 	@Setter
 	@OneToMany(mappedBy = "indicators", fetch = FetchType.LAZY)
-	private List<ProjectsGenderInfo> projectGenderInfoList;
+	private List<ProjectGenderIndicator> projectGenderIndicatorList;
 }

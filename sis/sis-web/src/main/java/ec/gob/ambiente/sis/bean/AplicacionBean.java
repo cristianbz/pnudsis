@@ -10,6 +10,8 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
+import ec.gob.ambiente.sigma.model.Catalog;
+import ec.gob.ambiente.sigma.model.CatalogType;
 import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sis.model.Catalogs;
@@ -111,5 +113,9 @@ public class AplicacionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Components> listaComponentes;
+	
+	@Getter
+	@Setter
+	private List<CatalogType> listaLineasGenero;
 }
 

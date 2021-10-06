@@ -32,7 +32,7 @@ import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
 import ec.gob.ambiente.sis.bean.SeguimientoSalvaguardaBean;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
-import ec.gob.ambiente.sis.model.GenderAdvances;
+
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 
@@ -6689,44 +6689,44 @@ public class ResumenPDF {
 			tabla1.addCell(encabezadoTabla1);
 						
 			Paragraph datosTabla1;
-			for (GenderAdvances ga : beanGenero.getListaAvancesGenero()) {						
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyDescription(),fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getIndicators()==null && ga.getProjectsGenderInfo().getCataId()!=null? ga.getProjectsGenderInfo().getPginOtherLine() : ga.getProjectsGenderInfo().getCataId().getCataText2() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginBaseLine() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginResultsType().equals("1")?"Sensible al género":ga.getProjectsGenderInfo().getPginResultsType().equals("2")?"Positivo al género":"Transformador de las relaciones de género" ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResultsAux() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getIndicators()!=null?ga.getProjectsGenderInfo().getIndicators().getIndiDescription():ga.getProjectsGenderInfo().getPginAnotherIndicator() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginGoals() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(String.valueOf(ga.getProjectsGenderInfo().getPginBudget()) ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				if(ga.getGeadAdvanceValueGoal()!=null)
-					datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal()) ,fontContenidoTablas));
-				else
-					datosTabla1.add(new Phrase("" ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadExecutedBudget()) ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getGeadBudgetActions() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-			}
+//			for (GenderAdvances ga : beanGenero.getListaAvancesGenero()) {						
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getCataId().getCatalogsType().getCatyDescription(),fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginResultsType().equals("1")?"Sensible al género":ga.getProjectsGenderInfo().getPginResultsType().equals("2")?"Positivo al género":"Transformador de las relaciones de género" ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResultsAux() ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(String.valueOf(ga.getProjectsGenderInfo().getPginBudget()) ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				if(ga.getGeadAdvanceValueGoal()!=null)
+//					datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal()) ,fontContenidoTablas));
+//				else
+//					datosTabla1.add(new Phrase("" ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadExecutedBudget()) ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getGeadBudgetActions() ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//			}
 			document.add(tabla1);
 			
 			Paragraph beneficiarios1 = new Paragraph();
@@ -6854,41 +6854,41 @@ public class ResumenPDF {
 			encabezadoTabla1=new Paragraph();	
 			encabezadoTabla1.add(new Phrase("Acciones realizadas",fontCabeceraTabla));
 			tabla1.addCell(encabezadoTabla1);
-			for (GenderAdvances ga : beanGenero.getListaAvancesGeneroOtrosTemas()) {							
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginOtherLine() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginBaseLine() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginResultsType().equals("1")?"Sensible al género":ga.getProjectsGenderInfo().getPginResultsType().equals("2")?"Positivo al género":"Transformador de las relaciones de género" ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResultsAux() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAnotherIndicator() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginGoals() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(String.valueOf(ga.getProjectsGenderInfo().getPginBudget()) ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				if(ga.getGeadAdvanceValueGoal()!=null)
-					datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal()) ,fontContenidoTablas));
-				else
-					datosTabla1.add(new Phrase("" ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadExecutedBudget()) ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(ga.getGeadBudgetActions() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-			}
+//			for (GenderAdvances ga : beanGenero.getListaAvancesGeneroOtrosTemas()) {							
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginOtherLine() ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginResultsType().equals("1")?"Sensible al género":ga.getProjectsGenderInfo().getPginResultsType().equals("2")?"Positivo al género":"Transformador de las relaciones de género" ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getProjectsGenderInfo().getPginAssociatedResultsAux() ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(String.valueOf(ga.getProjectsGenderInfo().getPginBudget()) ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				if(ga.getGeadAdvanceValueGoal()!=null)
+//					datosTabla1.add(new Phrase(String.valueOf(ga.getGeadAdvanceValueGoal()) ,fontContenidoTablas));
+//				else
+//					datosTabla1.add(new Phrase("" ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(String.valueOf(ga.getGeadExecutedBudget()) ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//				datosTabla1=new Paragraph();
+//				datosTabla1.add(new Phrase(ga.getGeadBudgetActions() ,fontContenidoTablas));
+//				tabla1.addCell(datosTabla1);
+//			}
 			document.add(tabla1);
 			
 			beneficiarios1 = new Paragraph();

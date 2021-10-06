@@ -44,12 +44,6 @@ public class ProjectsGenderInfo implements Serializable {
     @Getter
     @Setter
     @Size(max = 200)
-    @Column(name = "pgin_base_line")
-    private String pginBaseLine;
-    
-    @Getter
-    @Setter
-    @Size(max = 200)
     @Column(name = "pgin_other_line")
     private String pginOtherLine;
     
@@ -66,22 +60,10 @@ public class ProjectsGenderInfo implements Serializable {
     private String pginAssociatedResults;
     
     @Getter
-    @Setter
-    @Size(max = 200)
-    @Column(name = "pgin_goals")
-    private String pginGoals;
-    
-    @Getter
-    @Setter
-    @Size(max = 200)
-    @Column(name = "pgin_another_indicator")
-    private String pginAnotherIndicator;
-    
-    @Getter
     @Setter    
-    @Column(name = "pgin_goal_value")
-    private Integer pginGoalValue;
-    
+    @Column(name = "pgin_components")
+    private String pginComponents;
+        
     @Getter
     @Setter
     @Size(max = 1)
@@ -134,6 +116,11 @@ public class ProjectsGenderInfo implements Serializable {
     @Transient
     @Getter
     @Setter
+    private String componentesGenero;
+    
+    @Transient
+    @Getter
+    @Setter
     private String[] pginObjectivesSelected;
     
 	@Getter
@@ -159,15 +146,20 @@ public class ProjectsGenderInfo implements Serializable {
     private Projects projects;
     
     @Getter
-    @Setter
-    @JoinColumn(name = "indi_id", referencedColumnName = "indi_id")
-    @ManyToOne    
-    private Indicators indicators;
+	@Setter
+	@OneToMany(mappedBy = "projectsGenderInfo", fetch = FetchType.LAZY)
+	private List<ProjectGenderIndicator> projectGenderIndicatorList;
     
     @Getter
 	@Setter
-	@OneToMany(mappedBy = "projectsGenderInfo", fetch = FetchType.LAZY)
-	private List<GenderAdvances> genderAdvancesList;
+	@OneToMany(mappedBy = "projectsGenderInfo", fetch = FetchType.EAGER)
+	private List<DetailAdvanceGender> detailAdvanceGenderList;
+    
+	@Getter
+	@Setter
+	@JoinColumn(name = "adex_id")
+	@ManyToOne(fetch = FetchType.LAZY)	
+	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
     
     @Transient
     @Getter

@@ -108,8 +108,8 @@ public class DetailAdvanceGender {
 	
 	@Getter
 	@Setter
-	@JoinColumn(name = "gead_id")
+	@JoinColumn(name = "pgin_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
-	private GenderAdvances genderAdvances;
+	private ProjectsGenderInfo projectsGenderInfo;
 }
 
