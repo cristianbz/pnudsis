@@ -149,17 +149,8 @@ public class ProjectsGenderInfo implements Serializable {
 	@Setter
 	@OneToMany(mappedBy = "projectsGenderInfo", fetch = FetchType.LAZY)
 	private List<ProjectGenderIndicator> projectGenderIndicatorList;
-    
-    @Getter
-	@Setter
-	@OneToMany(mappedBy = "projectsGenderInfo", fetch = FetchType.EAGER)
-	private List<DetailAdvanceGender> detailAdvanceGenderList;
-    
-	@Getter
-	@Setter
-	@JoinColumn(name = "adex_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
-	private AdvanceExecutionSafeguards advanceExecutionSafeguards;
+        
+
     
     @Transient
     @Getter

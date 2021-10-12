@@ -11,8 +11,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
+import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.DetailAdvanceGender;
 
@@ -40,7 +42,7 @@ public class SeguimientoGeneroBean implements Serializable{
 	
 	@Getter
 	@Setter
-	private boolean nuevoDetalleGenero1;
+	private boolean nuevoDetalleGenero;
 	
 	@Getter
 	@Setter
@@ -69,6 +71,10 @@ public class SeguimientoGeneroBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<AdvanceExecutionProjectGender> listaLineasGenero;
+	
+	@Getter
+	@Setter
 	private List<Questions> listaPreguntas;
 	
 	@Getter
@@ -83,9 +89,9 @@ public class SeguimientoGeneroBean implements Serializable{
 	@Setter
 	private boolean mostrarTablaSeguimiento1;
 	
-	@Getter
-	@Setter
-	private List<DetailAdvanceGender> tablaDetalleGenero1;
+//	@Getter
+//	@Setter
+//	private List<DetailAdvanceGender> tablaDetalleGenero1;
 	
 	@Getter
 	@Setter
@@ -237,7 +243,15 @@ public class SeguimientoGeneroBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<Components> listaComponentes;
+	
+	@Getter
+	@Setter
 	private List<DetailAdvanceGender> listaDetalleAvancesGeneroOtros;
+	
+	@Getter
+	@Setter
+	private AdvanceExecutionProjectGender advanceExecutionProjectGenderSeleccionado; 
 	
 	@PostConstruct
 	public void init(){

@@ -32,6 +32,60 @@
 		type="preRenderView" />
 	<h:form prependId="true" id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
+		
+		<p:dialog widgetVar="dlgRegistroSeguimiento" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['registroGenero']}" width="690" closable="false"
+			resizable="false">
+			<p:outputPanel id="panelIngresoDatosSeg">
+				<h:panelGrid columns="2" id="datosAvanceGenero"
+					style="margin:0 auto;">
+					<p:outputLabel value="#{etiquetas['lineaAccion']}:" style="font-size:10px !important;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}" style="font-size:10px !important;"/>
+					<p:outputLabel value="#{etiquetas['presupuesto']}:" style="font-size:10px !important;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginBudget}" style="font-size:10px !important;"/>
+				</h:panelGrid>
+				<!-- 
+				<p:dataTable style="font-size:10px !important;"
+					styleClass="sinBordesAncho100" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.projectGenderIndicatorList}"
+					var="indicador">
+					<p:column headerText="#{etiquetas['indicador']}">
+						<p:outputLabel value="#{indicador.indicators.indiDescription != 'Otro'? indicador.indicators.indiDescription: indicador.pgigAnotherIndicator }" style="font-size:10px !important;"/>
+						<br/>
+						<p:outputLabel value="#{etiquetas['meta']}:" style="font-size:10px !important;" styleClass="estiloHeaderCampoTabla"/>
+						<br/>
+						<p:outputLabel value="#{indicador.pgigGoals}" style="font-size:10px !important;"/>
+					</p:column>
+					<p:column headerText="#{etiquetas['valorAlcanzado']}" >
+						<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('G')}"/>
+						<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('B') or indicador.indicators.indiType.equals('N')}"/>							
+						<p:inputNumber decimalPlaces="0" value="#{indicador.pgigValueReachedOne}" rendered="#{indicador.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+						<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('G')}"/>
+						<p:inputNumber decimalPlaces="0" value="#{indicador.pgigValueReachedTwo}" rendered="#{indicador.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+						<p:inputNumber decimalPlaces="0" value="#{indicador.pgigValueReachedOne}" rendered="#{indicador.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+						<p:toggleSwitch value="#{indicador.pgigBooleanValue}" rendered="#{indicador.indicators.indiType.equals('B')}" id="valorCuatro"/>
+						<p:inputTextarea value="#{indicador.pgigValueReachedAnotherIndicator}" style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
+					</p:column>
+					<p:column headerText="#{etiquetas['accionesRealizadas']}">
+						<p:inputTextarea value="#{indicador.pgigActionsDone}" style="font-size:10px !important;">
+						
+						</p:inputTextarea>
+					</p:column>
+				</p:dataTable>  -->
+				<h:panelGrid columns="2" style="margin:0 auto;">
+					<p:commandButton value="#{botones['guardar']}"
+						disabled="#{buscaProyectosBean.proyectoReportado}"
+						icon="#{botones['icono.grabar']}" partialSubmit="true"
+						action="#{seguimientoGeneroController.grabarAvanceLineaGenero()}"
+						update=":form:tabs:tablaAvancesGenero growl"
+						process="@this panelIngresoDatosSeg :form:tabs:tablaAvancesGenero" />
+					<p:commandButton value="#{botones['cancelar']}" resetValues="true"
+						icon="#{botones['icono.cancelar']}" process="@this"
+						oncomplete="PF('dlgRegistroSeguimiento').hide();" />
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+		
 		<p:dialog widgetVar="dlgEliminaDatosTabla" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['eliminaDatosTabla']}" width="250" closable="false"
@@ -62,7 +116,7 @@
 			resizable="false">
 			<p:outputPanel id="detalleBeneGenero">
 				<h:panelGrid columns="4"
-					rendered="#{seguimientoGeneroBean.nuevoDetalleGenero1}">
+					rendered="#{seguimientoGeneroBean.nuevoDetalleGenero}">
 					<p:outputLabel value="#{etiquetas['beneficiarios']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
 					<p:inputNumber decimalPlaces="0" required="true" style="width:30px;"
@@ -162,7 +216,7 @@
 
 				</h:panelGrid>
 				<h:panelGrid columns="4" style="margin: 0 auto;"
-					rendered="#{seguimientoGeneroBean.nuevoDetalleGenero1}">
+					rendered="#{seguimientoGeneroBean.nuevoDetalleGenero}">
 					<p:commandButton icon="#{botones['icono.grabar']}"
 						disabled="#{buscaProyectosBean.proyectoReportado}"
 						process="@this :form:detalleBeneficiarios :form:detalleBeneGenero" partialSubmit="true"
@@ -176,7 +230,7 @@
 						value="#{botones['cancelar']}" immediate="true" resetValues="true"
 						title="#{tooltip['cancelar']} ">
 						<f:setPropertyActionListener value="false"
-							target="#{seguimientoGeneroBean.nuevoDetalleGenero1}" />
+							target="#{seguimientoGeneroBean.nuevoDetalleGenero}" />
 					</p:commandButton>
 				</h:panelGrid>
 			</p:outputPanel>
@@ -187,7 +241,7 @@
 						<p:outputLabel value="#{etiquetas['beneficiariosLineaAccion']}"
 							style="font-size:11px !important;font-weight: bold;" />
 						<p:outputLabel
-							value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.cataId!=null?seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.cataId.cataText2:seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.pginOtherLine}"
+							value=""
 							style="font-size:10px !important;font-weight: bold;" />
 
 					</h:panelGrid>
@@ -195,7 +249,7 @@
 					styleClass="sinBordesAncho100" id="panelTablaGeneroAS"
 					emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5"
 					paginator="true"
-					value="#{seguimientoGeneroBean.tablaDetalleGenero1}"
+					value="#{seguimientoGeneroBean.listaDetalleAvancesGenero}"
 					var="tablarespuestas">
 					<f:facet name="header">
 						<p:commandButton style="width:200px;"
@@ -204,7 +258,7 @@
 							disabled="#{buscaProyectosBean.proyectoReportado}"
 							process="@this :form:detalleBeneGenero "
 							update=":form:detalleBeneGenero  :form:growl"
-							actionListener="#{seguimientoGeneroController.nuevoRegistroGeneroTabla1()}"
+							actionListener="#{seguimientoGeneroController.nuevoRegistroDetalleGenero()}"
 							title="#{tooltip['nuevoRegistro']}" />
 					</f:facet>
 					<p:column headerText="#{etiquetas['beneficiarios']}">
@@ -256,7 +310,7 @@
 							<f:setPropertyActionListener value="#{tablarespuestas}"
 								target="#{seguimientoGeneroBean.detalleAdvanceGender}" />
 							<f:setPropertyActionListener value="true"
-								target="#{seguimientoGeneroBean.nuevoDetalleGenero1}" />
+								target="#{seguimientoGeneroBean.nuevoDetalleGenero}" />
 						</p:commandButton>
 					</p:column>
 					<p:column width="30">
@@ -418,89 +472,8 @@
 		</p:dialog>
 
 
-		<p:dialog widgetVar="dlgRegistroSeguimiento" showEffect="fade"
-			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['registroGenero']}" width="490" closable="false"
-			resizable="false">
-			<p:outputPanel id="panelIngresoDatosSeg">
-				<h:panelGrid columns="2" id="datosAvanceGenero"
-					style="margin:0 auto;">
-					<p:outputLabel value="#{etiquetas['indicador']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:outputLabel
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.indicators!=null?seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.indicators.indiDescription:seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.pginAnotherIndicator}" />
-
-					<p:outputLabel value="#{etiquetas['valorAlcanzado']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputTextarea cols="30" maxlength="200" required="true" requiredMessage="#{mensajes['campoRequerido']}"
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadAdvanceValueGoal}"						
-						 />
-
-					<p:outputLabel value="#{etiquetas['presupuestoEjecutado']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputNumber decimalPlaces="2" decimalSeparator=","
-						thousandSeparator="." required="true" requiredMessage="#{mensajes['campoRequerido']}"
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadExecutedBudget}" />
-
-					<p:outputLabel value="#{etiquetas['accionesRealizadas']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputTextarea maxlength="200" required="true" requiredMessage="#{mensajes['campoRequerido']}"
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadBudgetActions}"
-						cols="30" />
-
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" style="margin:0 auto;">
-					<p:commandButton value="#{botones['guardar']}"
-						disabled="#{buscaProyectosBean.proyectoReportado}"
-						icon="#{botones['icono.grabar']}" partialSubmit="true"
-						action="#{seguimientoGeneroController.grabarAvanceLineaGenero()}"
-						update=":form:tabs:tablaAvancesGenero datosAvanceGenero growl"
-						process="@this datosAvanceGenero :form:tabs:tablaAvancesGenero" />
-					<p:commandButton value="#{botones['cancelar']}" resetValues="true"
-						icon="#{botones['icono.cancelar']}" process="@this"
-						oncomplete="PF('dlgRegistroSeguimiento').hide();" />
-				</h:panelGrid>
-			</p:outputPanel>
-		</p:dialog>
+				
 		
-		<p:dialog widgetVar="dlgRegistroSeguimientoOtros" showEffect="fade"
-			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['registroGenero']}" width="490" closable="false"
-			resizable="false">
-			<p:outputPanel id="panelIngresoDatosOtrosSeg">
-				<h:panelGrid columns="2" id="datosAvanceGeneroOtros"
-					style="margin:0 auto;">
-					<p:outputLabel value="#{etiquetas['indicador']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:outputLabel
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.projectsGenderInfo.pginAnotherIndicator}" />
-
-					<p:outputLabel value="#{etiquetas['valorAlcanzado']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputTextarea cols="30" maxlength="200"
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadAdvanceValueGoal}"
-						 />
-		
-					<p:outputLabel value="#{etiquetas['presupuestoEjecutado']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputNumber decimalPlaces="2" decimalSeparator=","
-						thousandSeparator="."
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadExecutedBudget}" />
-
-					<p:outputLabel value="#{etiquetas['accionesRealizadas']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
-					<p:inputTextarea
-						value="#{seguimientoGeneroBean.avanceGeneroSeleccionado.geadBudgetActions}"
-						cols="30" />
-
-				</h:panelGrid>
-				<h:panelGrid columns="2" style="margin:0 auto;">
-					<p:commandButton value="#{botones['guardar']}"
-						disabled="#{buscaProyectosBean.proyectoReportado}"
-						icon="#{botones['icono.grabar']}" partialSubmit="true"
-						action="#{seguimientoGeneroController.grabarAvanceLineaGenero()}"
-						oncomplete="PF('dlgRegistroSeguimientoOtros').hide();" update=":form:tabs:tablaAvancesGeneroOtros"
-						process="@this datosAvanceGeneroOtros :form:tabs:tablaAvancesGeneroOtros" />
-					<p:commandButton value="#{botones['cancelar']}"
-						icon="#{botones['icono.cancelar']}" process="@this"
-						oncomplete="PF('dlgRegistroSeguimientoOtros').hide();" />
-				</h:panelGrid>
-			</p:outputPanel>
-		</p:dialog>
-
 		<div class="ui-fluid p-formgrid p-grid">
 			<div class="p-field p-col-12 p-md-2"></div>
 			<div class="p-field p-col-12 p-md-2"></div>
@@ -535,7 +508,7 @@
 						rendered="#{seguimientoGeneroController.datosProyecto()}">
 						<p:commandButton
 							actionListener="#{seguimientoGeneroController.cargaDatosProyectoSeleccionado()}"
-							process="@this :form:buscaProyectos"
+							process="@this :form:buscaProyectos:panelDatosProyecto"
 							onstart="PF('dlgEnProc').show();"
 							icon="#{botones['icono.check']}" update="@form"
 							oncomplete="PF('dlgEnProc').hide();"
@@ -566,112 +539,72 @@
 						<p:tab title="#{etiquetas['lineasDeAccion']}">
 							
 							<br/>
-							<p:dataTable value="#{seguimientoGeneroBean.listaAvancesGenero}" id="tablaAvancesGenero"
+							<p:dataTable value="#{seguimientoGeneroBean.listaLineasGenero}" id="tablaAvancesGenero"
 								var="genero" style="font-size:10px !important;">
 								<f:facet name="header">
 									<p:outputLabel value="#{titulos['seguimientoGenero']}" />
 								</f:facet>
-								<p:column headerText="#{etiquetas['temas']}" groupRow="true" style="width:200px;">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.cataId.catalogsType.catyDescription}"
-										style="font-size:10px !important;color: blue;" />
-								</p:column>
 								<p:column headerText="#{etiquetas['lineaAccion']}">
+									<p:outputLabel value="#{etiquetas['temas']}" styleClass="estiloHeaderCampoTabla"/>
+									<br/>
+									<p:outputLabel
+										value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.catalogsType.catyDescription}"
+										style="font-size:10px !important;color: blue;" />
+									<br/>	
 									<p:outputLabel value="#{etiquetas['lineaAccion']}" styleClass="estiloHeaderCampoTabla"/>
 									<br/>
 									<p:outputLabel
-										value="#{genero.projectsGenderInfo.indicators==null and genero.projectsGenderInfo.cataId!=null?genero.projectsGenderInfo.pginOtherLine:genero.projectsGenderInfo.cataId.cataText2}"
+										value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2.equals('Otro')?genero.projectGenderIndicator.projectsGenderInfo.pginOtherLine:genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}"
 										style="font-size:10px !important;" />
-									<br/>
-									<p:outputLabel value="#{etiquetas['lineaBase']}" styleClass="estiloHeaderCampoTabla"/>
-									<br/>	
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginBaseLine}"
-										style="font-size:10px !important;" />
-									<br/>
+									<br/>									
 									<p:outputLabel value="#{etiquetas['componentesEstrategicos']}" styleClass="estiloHeaderCampoTabla"/>
 									<br/>									
 									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginAssociatedResultsAux}"
+										value="#{genero.projectGenderIndicator.projectsGenderInfo.componentesGenero}"
 										style="font-size:10px !important;" />
 									<br/>
 																		
 									<p:outputLabel value="#{etiquetas['presupuesto']}" styleClass="estiloHeaderCampoTabla"/>
 									<br/>
-									<p:outputLabel value="#{genero.projectsGenderInfo.pginBudget}"
+									<p:outputLabel value="#{genero.projectGenderIndicator.projectsGenderInfo.pginBudget}"
 										style="font-size:10px !important;" />	
 									<br/>
 									<p:outputLabel value="#{etiquetas['indicadores']}" styleClass="estiloHeaderCampoTabla"/>
 									<br/>
-									<p:dataTable style="font-size:10px !important;"
+									<!-- 
+									<p:dataTable style="font-size:10px !important;" value="#{genero.projectGenderIndicator.projectsGenderInfo.projectGenderIndicatorList}"
+										var="indicadores"
 													emptyMessage="#{mensajes['noRegistros']}">
 										<p:column headerText="#{etiquetas['indicador']}">
+											<p:outputLabel value="#{indicadores.indicators.indiDescription != 'Otro'? indicadores.indicators.indiDescription : indicadores.pgigAnotherIndicator }" style="font-size:10px !important;" />
+										</p:column>
+										<p:column headerText="#{etiquetas['valorAlcanzado']}">											
+											<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G')}"/>
+											<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('B') or indicadores.indicators.indiType.equals('N') or indicadores.indicators.indiType.equals('O')}"/>							
+											<p:outputLabel value="#{indicadores.pgigValueReachedOne}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G') or indicadores.indicators.indiType.equals('N') }"/>
+											<p:outputLabel value="#{indicadores.pgigValueReachedOne==1?'SI':'NO'}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('B')}"/>							
+											<br/>
+											<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G')}"/>
+											<p:outputLabel value="#{indicadores.pgigValueReachedTwo}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G')}"/>																		
+											<p:outputLabel value="#{indicadores.pgigValueReachedAnotherIndicator}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('O')}" />
 											
-										</p:column>
-										<p:column headerText="#{etiquetas['valorAlcanzado']}">
-										
-										</p:column>
-										<p:column headerText="#{etiquetas['presupuestoEjecutado']}">
-										
-										</p:column>
+										</p:column>										
 										<p:column headerText="#{etiquetas['accionesRealizadas']}">
-										
+											<p:outputLabel value="#{indicadores.pgigActionsDone}" style="font-size:10px !important;" />
 										</p:column>
-									</p:dataTable>
+									</p:dataTable>   -->
 								</p:column>
-								<!-- 
-								<p:column headerText="#{etiquetas['lineaBase']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginBaseLine}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['tipoResultado']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginResultsType.equals('1')?'Sensible al género':genero.projectsGenderInfo.pginResultsType.equals('2')?'Positivo al género':'Transformador de las relaciones de género'}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['resultadoPdi']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginAssociatedResultsAux}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['indicador']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.indicators!=null?genero.projectsGenderInfo.indicators.indiDescription:genero.projectsGenderInfo.pginAnotherIndicator}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['meta']}">
-									<p:outputLabel value="#{genero.projectsGenderInfo.pginGoals}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['presupuesto']}">
-									<p:outputLabel value="#{genero.projectsGenderInfo.pginBudget}"
-										style="font-size:10px !important;" />
-								</p:column>   
-								<p:column width="30">
-									<div  class="textCircle">
-										<h:outputText value="" styleClass="ui-icon fa fa-info" escape="false" id="informacionSeg"/>
-									</div>
-									<p:tooltip for="informacionSeg" value=""  trackMouse="true">
-										<h:outputText value="VALOR ALCANZADO: #{genero.geadAdvanceValueGoal}" escape="false" />
-										<br />
-										<h:outputText value="PRESUPUESTO EJECUTADO: #{genero.geadExecutedBudget}" escape="false" />
-										<br />
-										<h:outputText value="ACCIONES REALIZADAS: #{genero.geadBudgetActions}" escape="false" />
-									</p:tooltip>
-								</p:column> -->
-								
 								<p:column width="30">
 									<p:commandButton icon="#{botones['icono.checkcirculo']}"
 										title="#{tooltip['registrarSeguimiento']}"
 										process="@this "
 										partialSubmit="true"
 										update=":form:panelIngresoDatosSeg "
+										action="#{seguimientoGeneroController.asignaInformacionLineaGenero()}"
 										oncomplete="PF('dlgRegistroSeguimiento').show();">
 										<f:setPropertyActionListener value="#{genero}"
-											target="#{seguimientoGeneroBean.avanceGeneroSeleccionado}"></f:setPropertyActionListener>
-										<f:setPropertyActionListener value="false"
-											target="#{seguimientoGeneroBean.mostrarTablaSeguimiento1}"></f:setPropertyActionListener>
+											target="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado}"/>
+										
 									</p:commandButton>
 								</p:column>
 								<p:column width="30">
@@ -683,82 +616,8 @@
 								</p:column>
 							</p:dataTable>
 							<br />
-							<br />
-							<p:dataTable
-								value="#{seguimientoGeneroBean.listaAvancesGeneroOtrosTemas}" id="tablaAvancesGeneroOtros"
-								var="genero" style="font-size:10px !important;">
-								<f:facet name="header">
-									<p:outputLabel value="#{titulos['otroTemaGenero']}" />
-								</f:facet>
-
-								<p:column headerText="#{etiquetas['lineaAccion']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginOtherLine}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['lineaBase']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginBaseLine}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['tipoResultado']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginResultsType.equals('1')?'Sensible al género':genero.projectsGenderInfo.pginResultsType.equals('2')?'Positivo al género':'Transformador de las relaciones de género'}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['resultadoPdi']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginAssociatedResultsAux}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['indicador']}">
-									<p:outputLabel
-										value="#{genero.projectsGenderInfo.pginAnotherIndicator}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['meta']}">
-									<p:outputLabel value="#{genero.projectsGenderInfo.pginGoals}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column headerText="#{etiquetas['presupuesto']}">
-									<p:outputLabel value="#{genero.projectsGenderInfo.pginBudget}"
-										style="font-size:10px !important;" />
-								</p:column>
-								<p:column width="30">									
-									<div  class="textCircle">
-										<h:outputText value="" styleClass="ui-icon fa fa-info" escape="false" id="informacionSeg2"/>
-									</div>
-									<p:tooltip for="informacionSeg2" value=""  trackMouse="true">
-										<h:outputText value="VALOR ALCANZADO: #{genero.geadAdvanceValueGoal}" escape="false" />
-										<br />
-										<h:outputText value="PRESUPUESTO EJECUTADO: #{genero.geadExecutedBudget}" escape="false" />
-										<br />
-										<h:outputText value="ACCIONES REALIZADAS: #{genero.geadBudgetActions}" escape="false" />
-									</p:tooltip>
-								</p:column>
-								<p:column width="30">
-									<p:commandButton icon="#{botones['icono.checkcirculo']}"
-										title="#{tooltip['registrarSeguimiento']}"
-										process="@this "
-										partialSubmit="true"
-										update=":form:panelIngresoDatosOtrosSeg "
-										oncomplete="PF('dlgRegistroSeguimientoOtros').show();">
-										<f:setPropertyActionListener value="#{genero}"
-											target="#{seguimientoGeneroBean.avanceGeneroSeleccionado}"></f:setPropertyActionListener>
-										<f:setPropertyActionListener value="false"
-											target="#{seguimientoGeneroBean.mostrarTablaSeguimiento1}"></f:setPropertyActionListener>
-									</p:commandButton>
-								</p:column>
-								<p:column width="30">
-									<p:commandButton icon="#{botones['icono.beneficiario']}"
-										title="#{tooltip['registrarBeneficiarios']}"
-										process="@this :form:detalleBeneficiarios"
-										partialSubmit="true" update=":form:detalleBeneficiarios"
-										action="#{seguimientoGeneroController.mostrarDatosTablaBeneficiarios(genero)}" />
-								</p:column>
-							</p:dataTable>
-
-							<br />							
+							
+														
 							<h:panelGrid style="margin: 0 auto;">
 
 								<p:commandButton value="#{botones['siguiente']}"
@@ -1957,11 +1816,11 @@
 									rendered="#{seguimientoGeneroBean.datosGeneroParaMostrar}" />
 
 								<p:commandButton ajax="false"
-									actionListener="#{seguimientoGeneroController.imprimirResumenGenero()}"
-									styleClass="botonRegistroProyecto"
+									action="#{seguimientoGeneroController.imprimirResumenGenero()}"
+									styleClass="botonRegistroProyecto" partialSubmit="true"
 									rendered="#{seguimientoGeneroBean.datosGeneroParaMostrar}"
 									icon="#{botones['icono.imprimir']}"
-									value="#{botones['vistaPrevia']}" process="@this">
+									value="#{botones['vistaPrevia']}" process="@this :form:tabs :form:buscaProyectos:panelDatosProyecto">
 
 								</p:commandButton>
 								<p:commandButton value="#{botones['finalizar']}"

@@ -15,6 +15,7 @@ import javax.inject.Named;
 
 import org.primefaces.component.tabview.TabView;
 
+import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
@@ -103,6 +104,9 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	private boolean esNuevoRegistroTbl81;
 	
+	@Getter
+	@Setter
+	private List<Components> listaComponentes;
 	
 	@Setter
 	@Getter

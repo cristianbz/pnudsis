@@ -18,6 +18,7 @@ import org.hibernate.Hibernate;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
+import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.ProjectGenderIndicator;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import lombok.Getter;
@@ -25,13 +26,14 @@ import lombok.Getter;
 @Stateless
 @LocalBean
 public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo, Integer>{
-//	
-//	@EJB
-//	private GenderAdvancesFacade genderAdvancesFacade;
-	
+
 	@EJB
 	@Getter
 	private ProjectGenderIndicatorFacade projectGenderIndicatorFacade;
+	
+	@EJB
+	@Getter
+	private AdvanceExecutionProjectGenderFacade advanceExecutionProjectGenderFacade;
 
 	
 	public ProjectsGenderInfoFacade(){
@@ -45,11 +47,15 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 	 * @throws Exception
 	 */
 	public List<ProjectsGenderInfo> listaProjectsGenderInfo(int codigoProyecto) throws Exception{
+		List<ProjectsGenderInfo> listaTemp=new ArrayList<>();
 		String sql="SELECT PGI from ProjectsGenderInfo PGI WHERE PGI.pginStatus=true AND PGI.projects.projId=:codigoProyecto";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoProyecto", codigoProyecto);
-		
-		return findByCreateQuery(sql, camposCondicion);
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+		for (ProjectsGenderInfo pgi : listaTemp) {
+			Hibernate.initialize(pgi.getProjectGenderIndicatorList());
+		}
+		return listaTemp;
 
 	}
 	/**
@@ -84,6 +90,7 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 	 * @return
 	 * @throws Exception
 	 */
+	//OJO ELIMINAR
 	public List<ProjectsGenderInfo> listaLineasGeneroProyectoPartner(Integer codigoProyecto,Integer codigoPartner) throws Exception{
 		String sql="";
 		List<ProjectsGenderInfo> listaTemp=new ArrayList<ProjectsGenderInfo>();
@@ -122,7 +129,7 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 	 * @param projectGenderInfo
 	 * @throws Exception
 	 */
-	public void agregarEditarProjectGenerInfo(ProjectsGenderInfo projectGenderInfo,List<ProjectGenderIndicator> indicadores)throws Exception{
+	public void agregarEditarProjectGenerInfo(ProjectsGenderInfo projectGenderInfo,List<ProjectGenderIndicator> indicadores,List<AdvanceExecutionProjectGender> listaAvancesGenero)throws Exception{
 		if(projectGenderInfo.getPginId() == null)
 			create(projectGenderInfo);
 		else
@@ -130,24 +137,15 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 		for(ProjectGenderIndicator pgi:indicadores){
 			getProjectGenderIndicatorFacade().agregarEditar(pgi);
 		}
+		if(listaAvancesGenero!=null){
+			for(AdvanceExecutionProjectGender aepg:listaAvancesGenero){
+				aepg.setAepgStatus(false);
+				getAdvanceExecutionProjectGenderFacade().agregarEditar(aepg);
+			}
+		}
+			
 	}
 	
-//	public void eliminaLineaDeGenero(List<GenderAdvances> listaAvances,ProjectsGenderInfo projectGender,String usuario)throws Exception{
-//		for (GenderAdvances ga : listaAvances) {
-//			ga.setGeadStatus(false);
-//			ga.setGeadUpdateUser(usuario);
-//			ga.setGeadUpdateDate(new Date());
-//			genderAdvancesFacade.edit(ga);
-//		}
-//		projectGender.setPginAssociatedResults(null);
-//		projectGender.setPginBudget(0);
-//		projectGender.setPginResultsType(null);
-//
-//		projectGender.setPginOtherLine(null);
-//		projectGender.setPginUpdateDate(new Date());
-//		projectGender.setPginUpdateUser(usuario);		
-//		edit(projectGender);
-//	}
 	/**
 	 * Consulta en base al codigo del projectGenderInfo
 	 * @param codigo

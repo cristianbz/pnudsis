@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Init;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -269,6 +271,10 @@ public class BuscaProyectosBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean nuevaLineaAccion;
+	
+	@Getter
+	@Setter
 	private CatalogsType lineaGeneroSel;
 	
 	@Getter
@@ -303,5 +309,10 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private ProjectGenderIndicator indicadorSeleccionado;
 		
+	@PostConstruct
+	public void init(){
+//		lineaGeneroSel=new CatalogsType();
+//		lineaAccionSel = new Catalogs();
+	}
 }
 

@@ -9895,6 +9895,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void cargaDatosProyectoSeleccionado(){
 		try{
 //			limpiavariablesAuxiliares();
+			getSeguimientoSalvaguardaBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getBuscaProyectosBean().getCodigoStrategicPartner());
 			if(getLoginBean().getTipoRol()==3)
 				getSeguimientoSalvaguardaBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getAdvanceExecution().getProjectsStrategicPartners().getPspaId());
 			else if(getLoginBean().getTipoRol()==2){
@@ -9910,19 +9911,22 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setTabActual(0);
 			getSeguimientoSalvaguardaBean().setProyectoSeleccionado(new Projects());
 			getSeguimientoSalvaguardaBean().setProyectoSeleccionado(getComponenteBuscarProyectos().getBuscaProyectosBean().getProyectoSeleccionado());
-			getAplicacionBean().setListaComponentes(getComponentsFacade().listaComponentesActivos(getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId()));
+			
+			getSeguimientoSalvaguardaBean().setListaComponentes(new ArrayList<>());
+			getSeguimientoSalvaguardaBean().setListaComponentes(getComponentsFacade().listaComponentesActivos(getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId()));
 			Components componente = new Components();
     		componente.setCompId(1000);
     		componente.setCompStatus(true);
     		componente.setCompCode("CEO5");
     		componente.setCompName("Componentes Operativos");
-    		getAplicacionBean().getListaComponentes().add(componente);
+    		getSeguimientoSalvaguardaBean().getListaComponentes().add(componente);
     		
 			getSeguimientoSalvaguardaBean().setListaSectoresDisponibles(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresDisponibles());
 			getSeguimientoSalvaguardaBean().setListaSectoresSeleccionados(getComponenteBuscarProyectos().getBuscaProyectosBean().getListaSectoresSeleccionados());
 
 			if(getComponenteBuscarProyectos().getBuscaProyectosBean().isNuevoSeguimiento()){
 				AdvanceExecutionSafeguards avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId(), getSeguimientoSalvaguardaBean().getCodigoStrategicPartner()==null?0:getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(), 1, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
+//				AdvanceExecutionSafeguards avance =getAdvanceExecutionSafeguardsFacade().buscarAvanceSalvaguardaGeneroReportado(getSeguimientoSalvaguardaBean().getProyectoSeleccionado().getProjId(), getSeguimientoSalvaguardaBean().getCodigoStrategicPartner(), 1, String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat(getComponenteBuscarProyectos().getBuscaProyectosBean().getPeriodoDesde()), String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-12"));
 				if(avance == null){
 					if(getLoginBean().getTipoRol()==3){
 						for (ProjectUsers pu : getLoginBean().getListaProyectosDelUsuario()) {
@@ -10123,7 +10127,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 */
 	public String ubicaComponente(int codigoComponente){
 		String respuesta="";
-		for(Components com:getAplicacionBean().getListaComponentes()){
+		for(Components com:getSeguimientoSalvaguardaBean().getListaComponentes()){
 			if(com.getCompId()==codigoComponente){
 				respuesta=com.getCompName();
 				break;

@@ -25,7 +25,7 @@
 			
 			<p:dialog widgetVar="dlgEliminaIndicadorGenero" showEffect="fade" positionType="absolute"
 				hideEffect="fade" modal="true" appendTo="@(body)" position="center top"
-				header="#{titulos['nuevaLineaAccion']}" width="400px;" 
+				header="#{titulos['borrarLineaGenero']}" width="400px;" 
 				closable="false" resizable="false" responsive="true">
 				<h:panelGrid columns="2">
 					<p:commandButton process="@this :form:buscaProyectos:tablaIndicadores" icon="#{botones['icono.check']}" oncomplete="PF('dlgEliminaIndicadorGenero').hide();"
@@ -36,20 +36,21 @@
 						value="#{botones['cancelar']}"/>
 				</h:panelGrid>	
 			</p:dialog>				
-						
+			
+			<!-- Asignacion lineas de genero -->			
 			<p:dialog widgetVar="dlgAsignaLineaGenero" showEffect="fade" positionType="absolute"
 				hideEffect="fade" modal="true" appendTo="@(body)" position="center top"
 				header="#{titulos['nuevaLineaAccion']}" width="400px;" 
 				closable="false" resizable="false" responsive="true">
 				<p:scrollPanel style="width:800px;height:800px;margin:0 auto;" >
-				<p:outputPanel id="panelIndicadores">
+				<p:outputPanel id="panelIndicadores" >
 				<div class="ui-fluid p-formgrid p-grid">					
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 						<p:outputLabel value="#{etiquetas['temas']}"/>
 					</div>
 					<div class="p-field p-col-12 p-md-7">
-						<p:selectOneMenu id="temasObj"
-									required="true" requiredMessage="#{mensajes['campoRequerido']}"
+						<p:selectOneMenu id="temasObj" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"
+									requiredMessage="#{mensajes['campoRequerido']}" required="true"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineaGeneroSel}"
 									converter="selectOneMenuConverter"
 									panelStyle="width:420px" effect="fade" var="c" 
@@ -68,15 +69,15 @@
 						</p:selectOneMenu>
 					</div>
 					<div class="p-field p-col-12 p-md-2">
-						<p:message for="temasObj"/>
+						<p:message id="msgtemasObj" for="temasObj" />
 					</div>
 					
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 						<p:outputLabel value="#{etiquetas['lineaAccion']}"/>
 					</div>
 					<div class="p-field p-col-12 p-md-7">
-						<p:selectOneMenu id="lineaObj"
-									required="true" requiredMessage="#{mensajes['campoRequerido']}"
+						<p:selectOneMenu id="lineaObj" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"
+									requiredMessage="#{mensajes['campoRequerido']}" required="true"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineaAccionSel}"
 									converter="selectOneMenuConverter"
 									panelStyle="width:420px" effect="fade" var="c" 
@@ -101,7 +102,9 @@
 						<p:outputLabel value="#{etiquetas['descripcionOtraLinea']}"/>
 					</div>
 					<div class="p-field p-col-12 p-md-9">
-						<p:inputTextarea rows="2" cols="60" disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineaAccionSel.cataText2.trim().equals('Otro')}" id="idOtraLinea">
+						<p:inputTextarea rows="2" cols="60" 
+							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.projectGenderInfoSeleccionado.pginOtherLine}"
+							disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineaAccionSel.cataText2.trim().equals('Otro')}" id="idOtraLinea">
 						
 					</p:inputTextarea>
 					</div>
@@ -109,9 +112,9 @@
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 						<p:outputLabel value="#{etiquetas['componentesPA']}"/>
 					</div>
-					<div class="p-field p-col-12 p-md-9">
+					<div class="p-field p-col-12 p-md-7">
 						<p:selectCheckboxMenu id="multipleSeleccionComponentes" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listadoComponentesSeleccionados}" 
-											panelStyle="width: 400px" 
+											panelStyle="width: 400px" requiredMessage="#{mensajes['campoRequerido']}" required="true"
 											style="width:200px;"
 											label="#{etiquetas['componente']}" tabindex="9" multiple="true"
 								            scrollHeight="250">
@@ -120,24 +123,35 @@
 								            	var="c" itemValue="#{c.compName}"/>								            
 						</p:selectCheckboxMenu>	
 					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:message for="multipleSeleccionComponentes"/>
+					</div>
 					
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 						<p:outputLabel value="#{etiquetas['presupuesto']}"/>	
 					</div>
 					<div class="p-field p-col-12 p-md-3">
-						<p:inputNumber value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.projectGenderInfoSeleccionado.pginBudget}" decimalPlaces="2" decimalSeparator=",">
+						<p:inputNumber  id="presupuesto"
+							requiredMessage="#{mensajes['campoRequerido']}" required="true"
+							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.projectGenderInfoSeleccionado.pginBudget}" decimalPlaces="2" decimalSeparator=",">
 						
 						</p:inputNumber>	
 					</div>
-					<div class="p-field p-col-12 p-md-6">
+					<div class="p-field p-col-12 p-md-4">
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:message for="presupuesto"/>
 					</div>
 					
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 						<p:outputLabel value="#{etiquetas['indicador']}"/>
 					</div>
 					<div class="p-field p-col-12 p-md-9">
+						
 					</div>
-					
+					<div class="p-field p-col-12 p-md-12">
+						<p:outputLabel value="#{etiquetas['ingresoIndicadores']}" styleClass="estiloHeaderCampoTabla"/>
+					</div>
 					<div class="p-field p-col-12 p-md-11">
 						<p:dataTable value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listadoProyectoGeneroIndicador}"
 							style="font-size:10px !important;" emptyMessage="#{mensajes['noRegistros']}"
@@ -162,35 +176,39 @@
 										partialSubmit="true" 
 										/>									
 							</p:selectOneMenu>
-							<p:inputTextarea value="#{pgi.pgigAnotherIndicator}" 
-								required="true" requiredMessage="#{mensajes['campoRequerido']}" rows="2" style="font-size:10px !important;"
-								rendered="#{pgi.indicators.indiType.equals('O')}" id="otroIndicador">
-							
+							<p:inputTextarea value="#{pgi.pgigAnotherIndicator}" requiredMessage="#{mensajes['campoRequerido']}" 
+								required="true"  rows="2" style="font-size:10px !important;"
+								rendered="#{pgi.indicators.indiType.equals('O')}" id="otroIndicador">							
 							</p:inputTextarea>							
+							
 						</p:column>
 						<p:column headerText="#{etiquetas['lineaBase']}" style="font-size:10px !important;">
 							<p:inputTextarea value="#{pgi.pgigBaseLine}" rows="2" style="font-size:10px !important;">
 							</p:inputTextarea>
 						</p:column>
 						<p:column headerText="#{etiquetas['meta']}" style="font-size:10px !important;">
-							<p:inputTextarea value="#{pgi.pgigGoals}" rows="2" 
+							<p:inputTextarea value="#{pgi.pgigGoals}" rows="2" id="metas" 
 								required="true" requiredMessage="#{mensajes['campoRequerido']}"
 								style="font-size:10px !important;">
 							</p:inputTextarea>
+							<p:message for="metas"/>
 						</p:column>
 						<p:column headerText="#{etiquetas['valoresMeta']}" style="font-size:10px !important;width:100px;">
 							<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
 							<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('B') or pgi.indicators.indiType.equals('N')}"/>							
 							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+							<p:message for="valorUno"/>
 							<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
 							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueTwo}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+							<p:message for="valorDos"/>
 							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+							<p:message for="valorTres"/>
 							<p:toggleSwitch value="#{pgi.pgigBooleanValue}" rendered="#{pgi.indicators.indiType.equals('B')}" id="valorCuatro"/>
 							<p:inputText value="#{pgi.pgigValueAnotherIndicator}" rendered="#{pgi.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
-							
+							<p:message for="valorCinco"/>
 						</p:column>
 						<p:column style="font-size:10px !important; width:40px;">
-							<p:commandButton icon="#{botones['icono.borrar']}" onclick="PF('dlgEliminaIndicadorGenero').show();" process="@this">
+							<p:commandButton icon="#{botones['icono.borrar']}" onclick="PF('dlgEliminaIndicadorGenero').show();" process="@this" resetValues="true">
 								<f:setPropertyActionListener value="#{pgi}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.indicadorSeleccionado}"></f:setPropertyActionListener>
 							</p:commandButton>
 						</p:column>
@@ -213,7 +231,9 @@
 						></p:commandButton> 
 					<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" oncomplete="PF('dlgAsignaLineaGenero').hide();" process="@this"
 						update="@form"
-						/>
+						>
+						<f:setPropertyActionListener value="false" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"></f:setPropertyActionListener>
+					</p:commandButton>	
 				</h:panelGrid>
 				</center>
 				</p:scrollPanel>
@@ -567,10 +587,10 @@
 											<componentes:ayuda texto="#{tooltip['seleccionPeriodo']}" />
 										</h:panelGrid>
 										<p:outputLabel value="#{etiquetas['estado']}:"/>
-										<p:selectOneMenu panelStyle="width: 35rem"
+										<p:selectOneMenu panelStyle="width: 35rem" requiredMessage="#{mensajes['campoRequerido']}"
 											value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.estadoReporte}"
 											style="width:200px;" required="true"
-											requiredMessage="#{mensajes['campoRequerido']}">
+											>
 											<f:selectItem itemValue="I" itemLabel="Iniciado" />
 											<f:selectItem itemValue="F" itemLabel="Finalizado" />
 											<p:ajax process="@this" event="change"/>
@@ -707,8 +727,8 @@
 							styleClass="datosProyecto" />
 						<h:panelGrid columns="2">
 							<p:selectOneMenu style="width:200px;" disabled="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevoSeguimiento}"
-								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.anioReporte}"
-								required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.anioReporte}" requiredMessage="#{mensajes['campoRequerido']}"
+								required="true" >
 								<f:selectItem itemValue="#{null}"
 									itemLabel="#{mensajes['seleccionElemento']}" />
 								<f:selectItem itemValue="2016" itemLabel="2016" />
@@ -1097,12 +1117,12 @@
 							<div class="p-field p-col-12 p-md-4"></div>
 						</div>
 						<p:dataTable 
-							var="lineas"
+							var="lineas" emptyMessage="#{mensajes['noRegistros']}"
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaAccionesdeGeneroProyecto}">
 							<p:column>
 								<p:outputLabel value="#{lineas.cataId.catalogsType.catyDescription}"/>
 								<br/>
-								<p:outputLabel value="#{lineas.cataId.cataText2}"/>
+								<p:outputLabel value="#{lineas.cataId.cataText2.equals('Otro')?lineas.pginOtherLine:lineas.cataId.cataText2}"/>
 								<br/>
 								<p:outputLabel value="#{etiquetas['componente']}: " styleClass="estiloHeaderCampoTabla"/>								
 								<p:outputLabel value="#{lineas.componentesGenero}"/>
@@ -1113,7 +1133,7 @@
 								<p:outputLabel value="#{titulos['indicadoresIngresados']}" styleClass="estiloHeaderCampoTabla"/>
 								<br/>
 								<br/>
-								<p:dataTable value="#{lineas.projectGenderIndicatorList}" var="gi">
+								<p:dataTable value="#{lineas.projectGenderIndicatorList}" emptyMessage="#{mensajes['noRegistros']}" var="gi">
 									<p:column headerText="#{etiquetas['indicador']}">
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.indicators.indiDescription}" rendered="#{not gi.indicators.indiType.equals('O')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigAnotherIndicator}" rendered="#{gi.indicators.indiType.equals('O')}"/>

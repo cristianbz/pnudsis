@@ -123,7 +123,7 @@ public class AdvanceExecutionSafeguards {
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
-	private List<ProjectsGenderInfo> projectsGenderInfoList;
+	private List<AdvanceExecutionProjectGender> advanceExecutionProjectGenderList;
 	
 	@Getter
 	@Setter

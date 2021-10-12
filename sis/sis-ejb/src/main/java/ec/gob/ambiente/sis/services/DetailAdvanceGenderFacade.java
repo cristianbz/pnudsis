@@ -48,7 +48,7 @@ public class DetailAdvanceGenderFacade extends AbstractFacade<DetailAdvanceGende
 	}
 	
 	public List<DetailAdvanceGender> listadoDetalleAvanceGenero(int codigoAvanceGenero)throws Exception{
-		String sql="SELECT DA FROM DetailAdvanceGender DA WHERE DA.genderAdvances.geadId=:codigoAvanceGenero AND DA.dtagStatus=TRUE";
+		String sql="SELECT DA FROM DetailAdvanceGender DA WHERE DA.advanceExecutionProjectGender.aepgId =:codigoAvanceGenero AND DA.dtagStatus=TRUE";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvanceGenero", codigoAvanceGenero);
 		return findByCreateQuery(sql, camposCondicion);	

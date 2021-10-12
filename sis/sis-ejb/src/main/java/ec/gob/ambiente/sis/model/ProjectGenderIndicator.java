@@ -1,6 +1,8 @@
 package ec.gob.ambiente.sis.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 import lombok.Getter;
@@ -37,6 +39,11 @@ public class ProjectGenderIndicator implements Serializable {
     @JoinColumn(name = "pgin_id", referencedColumnName = "pgin_id")
     @ManyToOne    
     private ProjectsGenderInfo projectsGenderInfo;
+    
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "projectGenderIndicator", fetch = FetchType.LAZY)
+	private List<AdvanceExecutionProjectGender> advanceExecutionProjectGenderList;
     
     @Getter
     @Setter
@@ -77,6 +84,12 @@ public class ProjectGenderIndicator implements Serializable {
     @Setter
     @Column(name = "pgig_value_reached_two")
     private Integer pgigValueReachedTwo;
+    
+    @Getter
+    @Setter
+    @Column(name = "pgig_value_reached_another_indicator")
+    private String pgigValueReachedAnotherIndicator;
+    
         
     @Getter
     @Setter

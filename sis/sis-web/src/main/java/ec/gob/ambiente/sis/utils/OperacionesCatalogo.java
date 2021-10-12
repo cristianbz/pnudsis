@@ -4,18 +4,14 @@
 **/
 package ec.gob.ambiente.sis.utils;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.faces.application.FacesMessage;
-
+import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
-import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
-import ec.gob.ambiente.sis.utils.enumeraciones.TipoParticipanteEnum;
 
 public class OperacionesCatalogo {
 	/**
@@ -79,6 +75,32 @@ public class OperacionesCatalogo {
 		}
 		return encontrado;
 	}
-
+	/**
+	 * Ubica el codigo del componente en base al nombre
+	 * @param componente
+	 * @param listaComponentes
+	 * @return
+	 */
+	public static int ubicaComponente(String componente,List<Components> listaComponentes){
+		int codigo=0;
+		for (Components comp : listaComponentes) {
+			if(comp.getCompName().equals(componente)){
+				codigo=comp.getCompId();
+				break;
+			}
+		}
+		return codigo;
+	}
+	
+	public static String ubicaComponentePorCodigo(int codigo,List<Components> listaComponentes){
+		String componente="";
+		for (Components comp : listaComponentes) {
+			if(comp.getCompId()== codigo){
+				componente=comp.getCompName();
+				break;
+			}
+		}
+		return componente;
+	}
 }
 

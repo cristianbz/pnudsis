@@ -7,11 +7,13 @@ package ec.gob.ambiente.sis.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,6 +38,10 @@ public class AplicacionController implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(AplicacionController.class);
+	
+	@Getter
+    @Setter
+	private ResourceBundle bundle;
 
     @Getter
     @Setter
@@ -74,7 +80,9 @@ public class AplicacionController implements Serializable{
     
     @PostConstruct
     public void ini(){
-    	cargarCatalogos();    	
+    	cargarCatalogos();   
+		FacesContext context = FacesContext.getCurrentInstance();
+		bundle = context.getApplication().evaluateExpressionGet(context, "#{txt}", ResourceBundle.class);
     }
     
     public void cargarCatalogos(){

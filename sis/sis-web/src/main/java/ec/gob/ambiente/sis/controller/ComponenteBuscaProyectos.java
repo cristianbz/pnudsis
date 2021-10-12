@@ -38,6 +38,7 @@ import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.BuscaProyectosBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
+import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
 import ec.gob.ambiente.sis.model.Catalogs;
@@ -49,6 +50,7 @@ import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Sectors;
+import ec.gob.ambiente.sis.services.AdvanceExecutionProjectGenderFacade;
 import ec.gob.ambiente.sis.services.AdvanceExecutionSafeguardsFacade;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
 import ec.gob.ambiente.sis.services.CatalogsTypeFacade;
@@ -109,6 +111,10 @@ public class ComponenteBuscaProyectos implements Serializable{
 	@EJB
 	@Getter
 	private AdvanceExecutionSafeguardsFacade advanceExecutionSafeguardsFacade;
+	
+	@EJB
+	@Getter
+	private AdvanceExecutionProjectGenderFacade advanceExecutionProjectGenderFacade;
 
 	@EJB
 	@Getter
@@ -192,7 +198,9 @@ public class ComponenteBuscaProyectos implements Serializable{
 			getBuscaProyectosBean().setSinDatosProyectoPreguntas(false);
 			indicaTipoRol();
 			getBuscaProyectosBean().setListaLineasGenero(getCatalogsTypeFacade().listaLineasGenero());
-			getBuscaProyectosBean().setLineaGeneroSel(new CatalogsType());
+//			getBuscaProyectosBean().setLineaGeneroSel(new CatalogsType());
+//			getBuscaProyectosBean().setLineaAccionSel(new Catalogs());
+			getBuscaProyectosBean().setNuevaLineaAccion(false);
 		}catch(Exception e){
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
@@ -339,14 +347,17 @@ public class ComponenteBuscaProyectos implements Serializable{
 				getBuscaProyectosBean().setProyectoReportado(true);
 			else
 				getBuscaProyectosBean().setProyectoReportado(false);
-			if(esReporteGenero){
-				getBuscaProyectosBean().setAdvanceExecution(avanceEjecucion);								
-				if (getBuscaProyectosBean().getAdvanceExecution()!=null ){
-					getBuscaProyectosBean().setDatosProyecto(true);
+			if(esReporteGenero){				
+				getBuscaProyectosBean().setAdvanceExecution(avanceEjecucion);
+				getBuscaProyectosBean().setDatosProyecto(true);
+				if(avanceEjecucion.getProjectsStrategicPartners()!=null)
+					getBuscaProyectosBean().setCodigoStrategicPartner(avanceEjecucion.getProjectsStrategicPartners().getPspaId());
+				else
+					getBuscaProyectosBean().setCodigoStrategicPartner(null);
+				
+				if (getBuscaProyectosBean().getAdvanceExecution()!=null ){					
 					getBuscaProyectosBean().setAnioReporte(Integer.valueOf(getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0, 4)));
 					getBuscaProyectosBean().setPeriodoDesde("01");
-				}else{
-					getBuscaProyectosBean().setDatosProyecto(true);
 				}
 			}else{				
 				getBuscaProyectosBean().setAdvanceExecution(avanceEjecucion);
@@ -1055,8 +1066,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 	 * Avanza al tab de asignacion de lineas de genero
 	 */
 	public void siguienteTabAsignaLineasGenero(){
-		cargarLineasGeneroAsignadas();
-		getBuscaProyectosBean().setPosicionTabGenero(2);
+		if(getBuscaProyectosBean().getTipoSocio()==2 && getBuscaProyectosBean().getCodigoStrategicPartner()!=null || getBuscaProyectosBean().getTipoSocio()==1){
+			cargarLineasGeneroAsignadas();		
+			getBuscaProyectosBean().setPosicionTabGenero(2);
+		}else{
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "" ,getMensajesController().getPropiedad("error.seleccionSocio") );
+		}
 	}
 	
 	public void cargarLineasGeneroAsignadas(){
@@ -1065,7 +1080,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			if(getBuscaProyectosBean().getCodigoStrategicPartner()==null)
 				getBuscaProyectosBean().setListaAccionesdeGeneroProyecto(getProjectsGenderInfoFacade().listaLineasGeneroProyectoPartner(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(), 0));
 			else
-				getBuscaProyectosBean().setListaAccionesdeGeneroProyecto(getProjectsGenderInfoFacade().listaLineasGeneroProyectoPartner(getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getPginId(), getBuscaProyectosBean().getCodigoStrategicPartner()));
+				getBuscaProyectosBean().setListaAccionesdeGeneroProyecto(getProjectsGenderInfoFacade().listaLineasGeneroProyectoPartner(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(), getBuscaProyectosBean().getCodigoStrategicPartner()));
 			if(getBuscaProyectosBean().getListaAccionesdeGeneroProyecto()!=null && getBuscaProyectosBean().getListaAccionesdeGeneroProyecto().size()>0){
 				String [] codigos= null;
 				for (ProjectsGenderInfo pgi : getBuscaProyectosBean().getListaAccionesdeGeneroProyecto()) {
@@ -1136,13 +1151,15 @@ public class ComponenteBuscaProyectos implements Serializable{
 	 */
 	public void eliminaLineaGeneroSeleccionada(){
 		try{
+			List<AdvanceExecutionProjectGender> listaTemp= new ArrayList<>();
+			listaTemp=getAdvanceExecutionProjectGenderFacade().listaReportadosActivosPorProyectoGeneroInfo(getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getPginId());
 			List<ProjectGenderIndicator> listaIndicadores=new ArrayList<>();			
 			listaIndicadores = getProjectGenderIndicatorFacade().listaPorProjectGender(getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getPginId());
 			for (ProjectGenderIndicator pgi : listaIndicadores) {
 				pgi.setPgigStatus(false);
 			}
 			getBuscaProyectosBean().getProjectGenderInfoSeleccionado().setPginStatus(false);
-			getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(getBuscaProyectosBean().getProjectGenderInfoSeleccionado(), listaIndicadores);
+			getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(getBuscaProyectosBean().getProjectGenderInfoSeleccionado(), listaIndicadores,listaTemp);
 			getBuscaProyectosBean().getListaAccionesdeGeneroProyecto().remove(getBuscaProyectosBean().getProjectGenderInfoSeleccionado());
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.eliminar"));
 			Mensaje.actualizarComponente(":form:growl");
@@ -1206,42 +1223,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * Arma las lineas de genero por tema
-	 */
-//	public void primerIngresoLineasDeGenero(int codigoProyecto, int codigoPartner){
-//		try{
-//			List<ProjectsGenderInfo> listaTemp=new ArrayList<>();
-//			
-//			List<Object[]> listaTempLineasGenero = getCatalogsFacade().buscaCatalogoLineasAccionGenero();
-//			if(listaTempLineasGenero!=null && listaTempLineasGenero.size()>0){				
-//				for(Object[] obj : listaTempLineasGenero) {
-//					ProjectsGenderInfo pgi = new ProjectsGenderInfo();
-//					Catalogs catalogo= new Catalogs();
-//					catalogo.setCataId(Integer.parseInt(obj[0].toString()));
-//					pgi.setCataId(catalogo);
-//					pgi.setProjects(getBuscaProyectosBean().getProyectoSeleccionado());
-//					if(codigoPartner>0)
-//						pgi.setPspaId(codigoPartner);
-//					pgi.setPginStatus(true);
-//					pgi.setPginCreationDate(new Date());
-//					pgi.setPginCreatorUser(getLoginBean().getUser().getUserName());
-//					getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(pgi);
-//				}
-//			}
-//			if(codigoPartner>0){
-//				listaTemp = getProjectsGenderInfoFacade().listaLineasGeneroProyectoPartner(codigoProyecto, codigoPartner);
-//				
-//			}else{
-//				listaTemp = getProjectsGenderInfoFacade().listaLineasGeneroProyectoPartner(codigoProyecto, 0);
-//				
-//			}
-//			armarLineasGenero(listaTemp);
-//		}catch(Exception e){
-//			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "", getMensajesController().getPropiedad("error.grabar"));
-//			log.error(new StringBuilder().append(this.getClass().getName() + "." + "primerIngresoLineasDeGenero " + ": ").append(e.getMessage()));
-//		}
-//	}
+
 	/**
 	 * Arma las lineas de genero
 	 * @param listaInfoGenero
@@ -1620,6 +1602,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			getBuscaProyectosBean().setListaSectoresSeleccionados(null);
 			getBuscaProyectosBean().setNuevoSeguimiento(true);
 			getBuscaProyectosBean().setProyectoSeleccionado(proyecto);
+			
 			getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));		
 //			getBuscaProyectosBean().setCodigoComponente(0);
 			getBuscaProyectosBean().setListaProyectosReportados(new ArrayList<>());
@@ -1762,7 +1745,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 		getBuscaProyectosBean().setLineaGeneroSel(new CatalogsType());
 		getBuscaProyectosBean().setListaLineasAccion(new ArrayList<>());
 		getBuscaProyectosBean().setListadoComponentesSeleccionados(new ArrayList<>());
-		
+		getBuscaProyectosBean().setNuevaLineaAccion(true);
 	}
 	public void agregaIndicadorGenero(){
 		ProjectGenderIndicator pgi= new ProjectGenderIndicator();
@@ -1774,50 +1757,54 @@ public class ComponenteBuscaProyectos implements Serializable{
 	public void grabarLineasAccion(){
 		try{
 			StringBuilder cmp = new StringBuilder();
-			
-			if(getBuscaProyectosBean().getListadoProyectoGeneroIndicador().size()>0){
-				ProjectsGenderInfo projectGenderInfo = new ProjectsGenderInfo();
-				projectGenderInfo = getBuscaProyectosBean().getProjectGenderInfoSeleccionado();
-				projectGenderInfo.setProjects(getBuscaProyectosBean().getProyectoSeleccionado());
-				projectGenderInfo.setPspaId(getBuscaProyectosBean().getCodigoStrategicPartner());
-				Iterator it= getBuscaProyectosBean().getListadoComponentesSeleccionados().iterator();
-				while(it.hasNext()){
-					cmp.append(ubicaComponente(it.next().toString())).append(",");
-				}
-				for(ProjectGenderIndicator pgi:getBuscaProyectosBean().getListadoProyectoGeneroIndicador()){
-					pgi.setPgigStatus(true);
-					if(pgi.getIndicators().getIndiType().equals("B")){
-						if(pgi.isPgigBooleanValue())
-							pgi.setPgigGoalValueOne(1);
-						else
-							pgi.setPgigGoalValueOne(0);
+
+				if(getBuscaProyectosBean().getListadoProyectoGeneroIndicador().size()>0){
+					ProjectsGenderInfo projectGenderInfo = new ProjectsGenderInfo();
+					projectGenderInfo = getBuscaProyectosBean().getProjectGenderInfoSeleccionado();
+					projectGenderInfo.setProjects(getBuscaProyectosBean().getProyectoSeleccionado());
+					projectGenderInfo.setPspaId(getBuscaProyectosBean().getCodigoStrategicPartner());
+					Iterator it= getBuscaProyectosBean().getListadoComponentesSeleccionados().iterator();
+					while(it.hasNext()){
+						cmp.append(ubicaComponente(it.next().toString())).append(",");
 					}
-				}
-				projectGenderInfo.setPginComponents(cmp.toString());
-				projectGenderInfo.setCataId(getBuscaProyectosBean().getLineaAccionSel());
-				projectGenderInfo.setPginStatus(true);
-				if(projectGenderInfo.getPginId()==null){
-					projectGenderInfo.setPginCreationDate(new Date());
-					projectGenderInfo.setPginCreatorUser(getLoginBean().getUser().getUserName());				
+					for(ProjectGenderIndicator pgi:getBuscaProyectosBean().getListadoProyectoGeneroIndicador()){
+						pgi.setPgigStatus(true);
+						if(pgi.getIndicators().getIndiType().equals("B")){
+							if(pgi.isPgigBooleanValue())
+								pgi.setPgigGoalValueOne(1);
+							else
+								pgi.setPgigGoalValueOne(0);
+						}
+					}
+					projectGenderInfo.setPginComponents(cmp.toString());
+					projectGenderInfo.setCataId(getBuscaProyectosBean().getLineaAccionSel());
+					projectGenderInfo.setPginStatus(true);
+					if(projectGenderInfo.getPginId()==null){
+						projectGenderInfo.setPginCreationDate(new Date());
+						projectGenderInfo.setPginCreatorUser(getLoginBean().getUser().getUserName());				
+					}else{
+						projectGenderInfo.setPginUpdateDate(new Date());
+						projectGenderInfo.setPginUpdateUser(getLoginBean().getUser().getUserName());
+					}
+					getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(projectGenderInfo, getBuscaProyectosBean().getListadoProyectoGeneroIndicador(),null);
+					cargarLineasGeneroAsignadas();
+					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.infoGrabada"));
+					Mensaje.ocultarDialogo("dlgAsignaLineaGenero");
+					getBuscaProyectosBean().setNuevaLineaAccion(false);
 				}else{
-					projectGenderInfo.setPginUpdateDate(new Date());
-					projectGenderInfo.setPginUpdateUser(getLoginBean().getUser().getUserName());
+					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.indicador"));
+					
 				}
-				getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(projectGenderInfo, getBuscaProyectosBean().getListadoProyectoGeneroIndicador());
-				cargarLineasGeneroAsignadas();
-				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.infoGrabada"));
-				Mensaje.ocultarDialogo("dlgAsignaLineaGenero");
-			}else{
-				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.indicador"));
-				
-			}
+		
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
 	}
 	
 	public void editarLineaAccion(ProjectsGenderInfo linea){
-		try{			
+		try{
+			getBuscaProyectosBean().setNuevaLineaAccion(true);
+			getBuscaProyectosBean().setProjectGenderInfoSeleccionado(linea);
 			for (CatalogsType c : getBuscaProyectosBean().getListaLineasGenero()) {
 				if(c.getCatyDescription().equals(linea.getCataId().getCatalogsType().getCatyDescription())){
 					getBuscaProyectosBean().setLineaGeneroSel(c);
@@ -1847,7 +1834,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 						pgin.setPgigBooleanValue(false);
 				}
 			}
-			getBuscaProyectosBean().setProjectGenderInfoSeleccionado(linea);
+			
 			
 			
 			Mensaje.verDialogo("dlgAsignaLineaGenero");
@@ -1886,6 +1873,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 		}
 		return obj;
 	}
+	
 	public void mostrarDialogoEliminaLineaGenero(){
 		
 	}
