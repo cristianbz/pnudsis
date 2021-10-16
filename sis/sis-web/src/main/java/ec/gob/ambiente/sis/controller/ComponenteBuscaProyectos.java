@@ -89,10 +89,6 @@ public class ComponenteBuscaProyectos implements Serializable{
 	private PartnersFacade partnersFacade;
 	
 	
-//	@EJB
-//	@Getter
-//	private GenderAdvancesFacade genderAdvancesFacade;
-
 	@Getter
 	@Setter
 	@Inject
@@ -198,8 +194,8 @@ public class ComponenteBuscaProyectos implements Serializable{
 			getBuscaProyectosBean().setSinDatosProyectoPreguntas(false);
 			indicaTipoRol();
 			getBuscaProyectosBean().setListaLineasGenero(getCatalogsTypeFacade().listaLineasGenero());
-//			getBuscaProyectosBean().setLineaGeneroSel(new CatalogsType());
-//			getBuscaProyectosBean().setLineaAccionSel(new Catalogs());
+			getBuscaProyectosBean().setLineaGeneroSel(new CatalogsType());
+			getBuscaProyectosBean().setLineaAccionSel(new Catalogs());
 			getBuscaProyectosBean().setNuevaLineaAccion(false);
 		}catch(Exception e){
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
@@ -1006,7 +1002,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 	public void asignacionLineasGenero(Projects proyecto){
 		try{
 			getBuscaProyectosBean().setProyectoSeleccionado(proyecto);
-			getBuscaProyectosBean().setAsignacionGenero(true);		
+			getBuscaProyectosBean().setAsignacionGenero(true);	
 			getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));			
 			getBuscaProyectosBean().setDatosProyecto(true);
 			getBuscaProyectosBean().setProyectoTienePlanGenero(true);
@@ -1151,16 +1147,21 @@ public class ComponenteBuscaProyectos implements Serializable{
 	 */
 	public void eliminaLineaGeneroSeleccionada(){
 		try{
+			
 			List<AdvanceExecutionProjectGender> listaTemp= new ArrayList<>();
-			listaTemp=getAdvanceExecutionProjectGenderFacade().listaReportadosActivosPorProyectoGeneroInfo(getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getPginId());
+//			listaTemp=getAdvanceExecutionProjectGenderFacade().listaReportadosActivosPorProyectoGeneroInfo(getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getPginId());
+			
 			List<ProjectGenderIndicator> listaIndicadores=new ArrayList<>();			
 			listaIndicadores = getProjectGenderIndicatorFacade().listaPorProjectGender(getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getPginId());
 			for (ProjectGenderIndicator pgi : listaIndicadores) {
 				pgi.setPgigStatus(false);
+				listaTemp .addAll(getAdvanceExecutionProjectGenderFacade().ubicaIndicadoresActivosNoFinalizados(pgi.getPgigId()));
 			}
 			getBuscaProyectosBean().getProjectGenderInfoSeleccionado().setPginStatus(false);
 			getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(getBuscaProyectosBean().getProjectGenderInfoSeleccionado(), listaIndicadores,listaTemp);
 			getBuscaProyectosBean().getListaAccionesdeGeneroProyecto().remove(getBuscaProyectosBean().getProjectGenderInfoSeleccionado());
+			
+			
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.eliminar"));
 			Mensaje.actualizarComponente(":form:growl");
 		}catch(Exception e){
@@ -1357,82 +1358,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 //		}
 		return respuesta;
 	}
-	/**
-	 * Permite grabar las lineas de genero
-	 */
-	public void grabarLineasGenero(){
-//		try{
-//			if(validaSeleccionLineasAccion()){
-//				for(ProjectsGenderInfo pgi: getBuscaProyectosBean().getListaTemaGenero1()){
-//					if(pgi.isSeleccionado()){
-//						StringBuilder objetivos=new StringBuilder();
-//						if(pgi.getCataId().getCataNumber()==7)
-//							pgi.setIndicators(null);
-//						for(int x=0;x<pgi.getPginObjectivesSelectedAux().length;x++){
-//							String objeto=String.valueOf(pgi.getPginObjectivesSelectedAux()[x]);
-//							objetivos.append(objeto).append(" ");
-//						}
-//						pgi.setPginAssociatedResults(objetivos.toString());
-//						pgi.setPginUpdateUser(getLoginBean().getUser().getUserName());
-//						pgi.setPginUpdateDate(new Date());
-//						getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(pgi);
-//					}
-//				}
-//				for(ProjectsGenderInfo pgi: getBuscaProyectosBean().getListaTemaGenero2()){
-//					if(pgi.isSeleccionado()){
-//						StringBuilder objetivos=new StringBuilder();
-//						if(pgi.getCataId().getCataNumber()==4)
-//							pgi.setIndicators(null);
-//						for(int x=0;x<pgi.getPginObjectivesSelectedAux().length;x++){
-//							String objeto=String.valueOf(pgi.getPginObjectivesSelectedAux()[x]);
-//							objetivos.append(objeto).append(" ");
-//						}
-//						pgi.setPginAssociatedResults(objetivos.toString());
-//						
-//						pgi.setPginUpdateUser(getLoginBean().getUser().getUserName());
-//						pgi.setPginUpdateDate(new Date());
-//						getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(pgi);
-//					}
-//				}
-//				for(ProjectsGenderInfo pgi: getBuscaProyectosBean().getListaTemaGenero3()){
-//					if(pgi.isSeleccionado()){
-//						StringBuilder objetivos=new StringBuilder();
-//						if(pgi.getCataId().getCataNumber()==5)
-//							pgi.setIndicators(null);
-//						for(int x=0;x<pgi.getPginObjectivesSelectedAux().length;x++){
-//							String objeto=String.valueOf(pgi.getPginObjectivesSelectedAux()[x]);
-//							objetivos.append(objeto).append(" ");
-//						}
-//						pgi.setPginAssociatedResults(objetivos.toString());
-//
-//						pgi.setPginUpdateUser(getLoginBean().getUser().getUserName());
-//						pgi.setPginUpdateDate(new Date());
-//						getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(pgi);
-//					}
-//				}
-//				for(ProjectsGenderInfo pgi: getBuscaProyectosBean().getListaTemaGeneroOtros()){
-//					if(pgi.isSeleccionado()){
-//						StringBuilder objetivos=new StringBuilder();
-//						for(int x=0;x<pgi.getPginObjectivesSelectedAux().length;x++){
-//							String objeto=String.valueOf(pgi.getPginObjectivesSelectedAux()[x]);
-//							objetivos.append(objeto).append(" ");
-//						}
-//						pgi.setPginAssociatedResults(objetivos.toString());
-//
-//						pgi.setPginUpdateUser(getLoginBean().getUser().getUserName());
-//						pgi.setPginUpdateDate(new Date());
-//						if(pgi.getCataId()== null )
-//							pgi.setIndicators(null);
-//						getProjectsGenderInfoFacade().agregarEditarProjectGenerInfo(pgi);
-//					}
-//				}
-//				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.infoGrabada"));
-//			}
-//		}catch(Exception e){
-//			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "", getMensajesController().getPropiedad("error.grabar"));
-//			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarLineasGenero " + ": ").append(e.getMessage()));
-//		}
-	}
+
 	/**
 	 * Permite eliminar otras lineas enfocadas en genero para la linea1
 	 * @param pgi
@@ -1874,8 +1800,14 @@ public class ComponenteBuscaProyectos implements Serializable{
 		return obj;
 	}
 	
-	public void mostrarDialogoEliminaLineaGenero(){
-		
+	public void finAsignacionGenero(){
+		getBuscaProyectosBean().setListadoComponentesSeleccionados(new ArrayList<>());
+		getBuscaProyectosBean().setProjectGenderInfoSeleccionado(new ProjectsGenderInfo());
+		getBuscaProyectosBean().setListadoProyectoGeneroIndicador(new ArrayList<>());
+		getBuscaProyectosBean().setListaAccionesdeGeneroProyecto(new ArrayList<>());
+		getBuscaProyectosBean().setAsignacionGenero(false);
+		getBuscaProyectosBean().setDatosProyecto(false);
+		getBuscaProyectosBean().setPosicionTabGenero(0);
 	}
 	
 }

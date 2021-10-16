@@ -78,6 +78,16 @@ public class Projects {
 	
 	@Getter
 	@Setter
+	@Column(name = "proj_term_from")
+	private String projTermFrom;
+	
+	@Getter
+	@Setter
+	@Column(name = "proj_term_to")
+	private String projTermTo;
+	
+	@Getter
+	@Setter
 	@OneToMany(mappedBy = "projects", fetch = FetchType.LAZY)
 	private List<ProjectsCobenefits> projectsCobenefitsList;
 	

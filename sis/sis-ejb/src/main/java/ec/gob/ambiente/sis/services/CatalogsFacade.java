@@ -92,9 +92,11 @@ public class CatalogsFacade extends AbstractFacade<Catalogs,Integer>{
 		int orden=0;
 		String sql="SELECT MAX(cata_order) FROM sis.catalogs cat, sis.catalogs_types ct WHERE cat.caty_id= ct.caty_id AND cat.caty_id=" + codigoCatalogo;		
 		List<Object[]>  resultList = (List<Object[]>) consultaNativa(sql);
-		for (Object object : resultList) {			
-			int dato = (Integer) object;
-			orden=dato;			
+		for (Object object : resultList) {		
+			if(object != null){
+				int dato = (Integer) object;
+				orden=dato;		
+			}
 		}
 		return orden;
 	}

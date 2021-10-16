@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum TipoAreaConsolidadaEnum {
 	CONSERVACION(1,"Conservación"),
 	RESTAURACION(2,"Restauración"),
-	PRODUCCIONSOSTENIBLE(3,"Producción Sostenible");
+	PRODUCCIONSOSTENIBLE(3,"Producción Sostenible"),
+	CONECTIVIDADDEAREAS(4,"Conectividad de Areas");
 
 	@Getter
 	private final int codigo;

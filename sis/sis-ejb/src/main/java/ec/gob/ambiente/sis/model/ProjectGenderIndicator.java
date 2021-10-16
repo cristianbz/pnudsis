@@ -74,27 +74,7 @@ public class ProjectGenderIndicator implements Serializable {
     @Setter
     @Column(name = "pgig_value_another_indicator")
     private String pgigValueAnotherIndicator;
-    
-    @Getter
-    @Setter
-    @Column(name = "pgig_value_reached_one")
-    private Integer pgigValueReachedOne;
-    
-    @Getter
-    @Setter
-    @Column(name = "pgig_value_reached_two")
-    private Integer pgigValueReachedTwo;
-    
-    @Getter
-    @Setter
-    @Column(name = "pgig_value_reached_another_indicator")
-    private String pgigValueReachedAnotherIndicator;
-    
         
-    @Getter
-    @Setter
-    @Column(name = "pgig_actions_done")
-    private String pgigActionsDone;
     
     @Getter
     @Setter

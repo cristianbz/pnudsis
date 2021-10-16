@@ -142,8 +142,7 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 				aepg.setAepgStatus(false);
 				getAdvanceExecutionProjectGenderFacade().agregarEditar(aepg);
 			}
-		}
-			
+		}			
 	}
 	
 	/**
@@ -195,5 +194,7 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 		}		
 		return consultaNativa(sql);
 	}
+	
+	
 }
 

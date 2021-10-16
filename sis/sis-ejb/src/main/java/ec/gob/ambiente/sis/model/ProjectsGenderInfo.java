@@ -147,7 +147,7 @@ public class ProjectsGenderInfo implements Serializable {
     
     @Getter
 	@Setter
-	@OneToMany(mappedBy = "projectsGenderInfo", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "projectsGenderInfo", fetch = FetchType.EAGER)
 	private List<ProjectGenderIndicator> projectGenderIndicatorList;
         
 

@@ -48,34 +48,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-//	@Getter
-//	@Setter
-//	private String provinciaAux;
-//	
-//	@Getter
-//	@Setter
-//	private String cantonAux;
-//	
-//	@Getter
-//	@Setter
-//	private String parroquiaAux;
-//	
-//	@Getter
-//	@Setter
-//	private String comunidadAux;
-//	
-//	@Getter
-//	@Setter
-//	private Date fechaAux;
-//	
-//	@Getter
-//	@Setter
-//	private String actividadAux;
-//	
-//	@Getter
-//	@Setter
-//	private double hectareasAux;
-//	
+	@Getter
+	@Setter
+	private Integer codigoCobeneficio;
+	
 	@Getter
 	@Setter
 	private Integer codigoStrategicPartner;
@@ -236,6 +212,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<String> listadoMonitoreoRemoto;
+	
+	@Getter
+	@Setter
+	private List<String> listadoInstitucionAcompania;
 	
 	@Getter
 	@Setter
@@ -436,6 +416,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private boolean otroCatalogoF441;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoG491;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoG471;
 	
 	@Getter
 	@Setter
@@ -1650,6 +1638,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private TableResponses registroTablaCobeneficios;
+	
+	@Getter
+	@Setter
 	private ExecutiveSummaries resumenEjecutivo;
 	
 	@PostConstruct
@@ -1710,7 +1702,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasB11= new TableResponses();
 		registroTablaRespuestasB143= new TableResponses();
 		registroTablaRespuestasC242= new TableResponses();
-		
+		registroTablaCobeneficios= new TableResponses();
 		
 		listaProyectos=new ArrayList<>();
 		listaValoresRespuestas= new ArrayList<>();

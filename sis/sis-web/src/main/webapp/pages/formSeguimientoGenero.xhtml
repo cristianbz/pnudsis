@@ -40,10 +40,29 @@
 			<p:outputPanel id="panelIngresoDatosSeg">
 				<h:panelGrid columns="2" id="datosAvanceGenero"
 					style="margin:0 auto;">
-					<p:outputLabel value="#{etiquetas['lineaAccion']}:" style="font-size:10px !important;"/>
-					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}" style="font-size:10px !important;"/>
-					<p:outputLabel value="#{etiquetas['presupuesto']}:" style="font-size:10px !important;"/>
-					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginBudget}" style="font-size:10px !important;"/>
+					<p:outputLabel value="#{etiquetas['lineaAccion']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.cataId.cataText2.equals('Otro')?seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginOtherLine:seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}" />
+					<p:outputLabel value="#{etiquetas['componentesEstrategicos']}" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.componentesGenero}" />
+					<p:outputLabel value="#{etiquetas['indicador']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiDescription}" />
+					<p:outputLabel value="#{etiquetas['presupuesto']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginBudget}" />
+					
+					<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:outputLabel value="#{etiquetas['valor']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+					<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedTwo}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+					<p:toggleSwitch value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgBooleanValue}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B')}" id="valorCuatro"/>
+					<p:inputTextarea style="width:450px;" rows="2"
+						value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedAnotherIndicator}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
+					
+					<p:outputLabel value="#{etiquetas['accionesImplementadas']}" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:inputTextarea 
+						style="width:450px;"
+						value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgActionsDone}" cols="20" rows="2"/>
 				</h:panelGrid>
 				<!-- 
 				<p:dataTable style="font-size:10px !important;"
@@ -119,19 +138,25 @@
 					rendered="#{seguimientoGeneroBean.nuevoDetalleGenero}">
 					<p:outputLabel value="#{etiquetas['beneficiarios']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
-					<p:inputNumber decimalPlaces="0" required="true" style="width:30px;"
+					<p:inputNumber decimalPlaces="0" required="true" style="width:30px;" id="ben1"
 						requiredMessage="#{mensajes['campoRequerido']}"
 						value="#{seguimientoGeneroBean.detalleAdvanceGender.dtagNumberOfMens}"
-						tabindex="1" />
+						tabindex="1" />						
 					<p:outputLabel value="#{etiquetas['beneficiarias']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
-					<p:inputNumber decimalPlaces="0" required="true" style="width:30px;"
+					<p:inputNumber decimalPlaces="0" required="true" style="width:30px;" id="ben2"
 						requiredMessage="#{mensajes['campoRequerido']}"
 						value="#{seguimientoGeneroBean.detalleAdvanceGender.dtagNumberOfWomen}"
 						tabindex="2" />
+					
+					<h:inputHidden />
+					<p:message for="ben1"/>
+					<h:inputHidden />
+					<p:message for="ben2"/>
+						
 					<p:outputLabel value="#{etiquetas['provincia']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
-					<p:selectOneMenu required="true" style="width:150px;"
+					<p:selectOneMenu required="true" style="width:150px;" 
 						requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
 						value="#{seguimientoGeneroBean.codProvincia}" id="provinciaAS">
 						<f:selectItem itemValue="#{null}"
@@ -143,7 +168,6 @@
 							update="cantonAS parroquiaAS" partialSubmit="true"
 							listener="#{seguimientoGeneroController.filtraCantones()}" />
 					</p:selectOneMenu>
-
 					<p:outputLabel value="#{etiquetas['canton']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
 					<p:selectOneMenu required="true" style="width:150px;"
@@ -158,6 +182,11 @@
 							partialSubmit="true"
 							listener="#{seguimientoGeneroController.filtraParroquias()}" />
 					</p:selectOneMenu>
+					
+					<h:inputHidden />
+					<p:message for="provinciaAS"/>
+					<h:inputHidden />
+					<p:message for="cantonAS"/>
 
 					<p:outputLabel value="#{etiquetas['parroquia']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
@@ -188,6 +217,11 @@
 							listener="#{seguimientoGeneroController.habilitaPuebloNacionalidad()}"
 							 />
 					</p:selectOneMenu>
+					
+					<h:inputHidden />
+					<p:message for="parroquiaAS"/>
+					<h:inputHidden />
+					<p:message for="identificacionAS"/>
 
 					<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
@@ -202,17 +236,19 @@
 							itemLabel="#{mensajes['seleccionElemento']}" />
 						<f:selectItems
 							value="#{aplicacionController.aplicacionBean.listaPueblosNacionalidades}"
-							var="pueblo" itemLabel="#{pueblo.cataText1}"
-							
-							itemValue="#{pueblo.cataId}" />
-						
-					</p:selectOneMenu>
-									
+							var="pueblo" itemLabel="#{pueblo.cataText1}"							
+							itemValue="#{pueblo.cataId}" />						
+					</p:selectOneMenu>									
 					<p:outputLabel value="#{etiquetas['comunidad']}"
 						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
-					<p:inputTextarea required="true" cols="20" 
+					<p:inputTextarea required="true" cols="20" id="comunidadAS"
 						requiredMessage="#{mensajes['campoRequerido']}" tabindex="8"
 						value="#{seguimientoGeneroBean.detalleAdvanceGender.dtagComunity}" />
+					
+					<h:inputHidden />
+					<p:message for="puebloAS"/>
+					<h:inputHidden />
+					<p:message for="comunidadAS"/>	
 
 				</h:panelGrid>
 				<h:panelGrid columns="4" style="margin: 0 auto;"
@@ -536,78 +572,45 @@
 						<p:ajax event="tabChange"
 							listener="#{seguimientoGeneroController.tabChange}"
 							process=":form:tabs" update=":form:tabs" />
-						<p:tab title="#{etiquetas['lineasDeAccion']}">
-							
+						<p:tab title="#{etiquetas['indicadores']}">
+							<p:outputLabel value="#{titulos['indicadoresIngresados']}"/>
 							<br/>
 							<p:dataTable value="#{seguimientoGeneroBean.listaLineasGenero}" id="tablaAvancesGenero"
 								var="genero" style="font-size:10px !important;">
-								<f:facet name="header">
-									<p:outputLabel value="#{titulos['seguimientoGenero']}" />
-								</f:facet>
-								<p:column headerText="#{etiquetas['lineaAccion']}">
-									<p:outputLabel value="#{etiquetas['temas']}" styleClass="estiloHeaderCampoTabla"/>
-									<br/>
-									<p:outputLabel
-										value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.catalogsType.catyDescription}"
-										style="font-size:10px !important;color: blue;" />
-									<br/>	
-									<p:outputLabel value="#{etiquetas['lineaAccion']}" styleClass="estiloHeaderCampoTabla"/>
-									<br/>
-									<p:outputLabel
-										value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2.equals('Otro')?genero.projectGenderIndicator.projectsGenderInfo.pginOtherLine:genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}"
-										style="font-size:10px !important;" />
-									<br/>									
-									<p:outputLabel value="#{etiquetas['componentesEstrategicos']}" styleClass="estiloHeaderCampoTabla"/>
-									<br/>									
-									<p:outputLabel
-										value="#{genero.projectGenderIndicator.projectsGenderInfo.componentesGenero}"
-										style="font-size:10px !important;" />
-									<br/>
-																		
-									<p:outputLabel value="#{etiquetas['presupuesto']}" styleClass="estiloHeaderCampoTabla"/>
-									<br/>
-									<p:outputLabel value="#{genero.projectGenderIndicator.projectsGenderInfo.pginBudget}"
-										style="font-size:10px !important;" />	
-									<br/>
-									<p:outputLabel value="#{etiquetas['indicadores']}" styleClass="estiloHeaderCampoTabla"/>
-									<br/>
-									<!-- 
-									<p:dataTable style="font-size:10px !important;" value="#{genero.projectGenderIndicator.projectsGenderInfo.projectGenderIndicatorList}"
-										var="indicadores"
-													emptyMessage="#{mensajes['noRegistros']}">
-										<p:column headerText="#{etiquetas['indicador']}">
-											<p:outputLabel value="#{indicadores.indicators.indiDescription != 'Otro'? indicadores.indicators.indiDescription : indicadores.pgigAnotherIndicator }" style="font-size:10px !important;" />
-										</p:column>
-										<p:column headerText="#{etiquetas['valorAlcanzado']}">											
-											<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G')}"/>
-											<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('B') or indicadores.indicators.indiType.equals('N') or indicadores.indicators.indiType.equals('O')}"/>							
-											<p:outputLabel value="#{indicadores.pgigValueReachedOne}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G') or indicadores.indicators.indiType.equals('N') }"/>
-											<p:outputLabel value="#{indicadores.pgigValueReachedOne==1?'SI':'NO'}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('B')}"/>							
-											<br/>
-											<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G')}"/>
-											<p:outputLabel value="#{indicadores.pgigValueReachedTwo}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('G')}"/>																		
-											<p:outputLabel value="#{indicadores.pgigValueReachedAnotherIndicator}" style="font-size:10px !important;" rendered="#{indicadores.indicators.indiType.equals('O')}" />
-											
-										</p:column>										
-										<p:column headerText="#{etiquetas['accionesRealizadas']}">
-											<p:outputLabel value="#{indicadores.pgigActionsDone}" style="font-size:10px !important;" />
-										</p:column>
-									</p:dataTable>   -->
+								<p:column groupRow="true" headerText="#{etiquetas['temas']}">
+									<p:outputLabel value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.catalogsType.catyDescription}" style="font-size:10px !important;"/>
 								</p:column>
-								<p:column width="30">
+								<p:column groupRow="true" headerText="#{etiquetas['lineaAccion']}">
+									<p:outputLabel value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2.equals('Otro')?genero.projectGenderIndicator.projectsGenderInfo.pginOtherLine:genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}" style="font-size:10px !important;"/>									
+								</p:column>								
+								<p:column headerText="#{etiquetas['indicador']}">
+									<p:outputLabel value="#{genero.projectGenderIndicator.indicators.indiId==0?genero.projectGenderIndicator.pgigAnotherIndicator:genero.projectGenderIndicator.indicators.indiDescription }" style="font-size:10px !important;"/>
+								</p:column>
+								<p:column headerText="#{etiquetas['valorAlcanzado']}">																		
+									<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+									<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('B') or genero.projectGenderIndicator.indicators.indiType.equals('N') or genero.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+									<p:outputLabel value="#{genero.aepgValueReachedOne}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G') or genero.projectGenderIndicator.indicators.indiType.equals('N') }"/>
+									<p:outputLabel value="#{genero.aepgValueReachedOne==1?'SI':'NO'}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('B')}"/>							
+									<br/>
+									<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+									<p:outputLabel value="#{genero.aepgValueReachedTwo}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G')}"/>																		
+									<p:outputLabel value="#{genero.aepgValueReachedAnotherIndicator}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('O')}" />
+								</p:column>
+								<p:column headerText="#{etiquetas['accionesImplementadas']}">
+									<p:outputLabel value="#{genero.aepgActionsDone}" style="font-size:10px !important;"/>
+								</p:column>
+								<p:column width="30px;">
 									<p:commandButton icon="#{botones['icono.checkcirculo']}"
 										title="#{tooltip['registrarSeguimiento']}"
 										process="@this "
 										partialSubmit="true"
 										update=":form:panelIngresoDatosSeg "
-										action="#{seguimientoGeneroController.asignaInformacionLineaGenero()}"
+										action="#{seguimientoGeneroController.asignaInformacionLineaGenero(genero)}"
 										oncomplete="PF('dlgRegistroSeguimiento').show();">
-										<f:setPropertyActionListener value="#{genero}"
-											target="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado}"/>
 										
-									</p:commandButton>
+									</p:commandButton>		
 								</p:column>
-								<p:column width="30">
+								<p:column width="30px;">
 									<p:commandButton icon="#{botones['icono.beneficiario']}"
 										title="#{tooltip['registrarBeneficiarios']}"
 										process="@this :form:detalleBeneficiarios"
@@ -615,8 +618,8 @@
 										action="#{seguimientoGeneroController.mostrarDatosTablaBeneficiarios(genero)}" />
 								</p:column>
 							</p:dataTable>
-							<br />
 							
+							<br/> 							
 														
 							<h:panelGrid style="margin: 0 auto;">
 
@@ -717,7 +720,9 @@
 															listener="#{seguimientoGeneroController.filtraCantones()}" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="provincia3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -739,7 +744,9 @@
 															listener="#{seguimientoGeneroController.filtraParroquias()}" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="canton3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -759,7 +766,9 @@
 														<p:ajax process="@this " event="change" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="parroquia3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -783,7 +792,9 @@
 															update="puebloG3" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="identificacionG3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -805,7 +816,9 @@
 														<p:ajax process="@this " event="change" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="puebloG3"/>
+												</div>
 
 
 												<div class="p-field p-col-12 p-md-3"
@@ -813,8 +826,7 @@
 													<p:outputLabel value="#{etiquetas['comunidad']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputTextarea required="true"
-														requiredMessage="#{mensajes['campoRequerido']}"
+													<p:inputTextarea 
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla3.tareColumnOne}"
 														tabindex="6" />
@@ -827,14 +839,16 @@
 													<p:outputLabel value="#{etiquetas['espacioIdentificado']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputTextarea required="true"
+													<p:inputTextarea required="true" id="espacioG3"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla3.tareColumnTwo}"
 														tabindex="7" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="espacioG3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -842,7 +856,7 @@
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectCheckboxMenu id="multipleSeleccionG3"
-														multiple="true" tabindex="8"
+														multiple="true" tabindex="8" requiredMessage="#{mensajes['campoRequerido']}" required="true"
 														value="#{seguimientoGeneroBean.tipoOrganizacionSeleccionados}"
 														label="#{etiquetas['seleccioneElemento']}" filter="true"
 														filterMatchMode="startsWith" scrollHeight="250">
@@ -850,21 +864,25 @@
 															value="#{seguimientoGeneroBean.listadoTipoOrganizaciones}" />
 													</p:selectCheckboxMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="multipleSeleccionG3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel value="#{etiquetas['finRolOrganizacion']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputTextarea required="true"
+													<p:inputTextarea required="true" id="rolG3"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla3.tareColumnFour}"
 														tabindex="9" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="rolG3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -872,44 +890,33 @@
 														value="#{etiquetas['accionesFortalecimiento']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputTextarea required="true"
+													<p:inputTextarea required="true" id="accionesG3"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla3.tareColumnFive}"
 														tabindex="10" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
-<!-- 
-												<div class="p-field p-col-12 p-md-3"
-													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel
-														value="#{etiquetas['numeroBeneficiariasOrganizacion']}" />
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="accionesG3"/>
 												</div>
-												<div class="p-field p-col-12 p-md-7">
-													<p:inputNumber decimalPlaces="0" required="true"
-														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
-														value="#{seguimientoGeneroBean.filaTabla3.tareColumnNumberSix}"
-														tabindex="11" />
-
-												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
- -->
+												
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel
 														value="#{etiquetas['nroHombresBeneficiarios']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputNumber decimalPlaces="0" required="true"
+													<p:inputNumber decimalPlaces="0" required="true" id="hombresG3"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla3.tareColumnNumberSix}"
 														tabindex="12" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="hombresG3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -919,26 +926,30 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputNumber decimalPlaces="0" required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="mujeresG3"
 														value="#{seguimientoGeneroBean.filaTabla3.tareColumnNumberSeven}"
 														tabindex="13" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="mujeresG3"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel value="#{etiquetas['linkVerificador']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputText required="true"
+													<p:inputText required="true" id="linkG3"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla3.tareColumnSix}"
 														tabindex="14" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="linkG3"/>
+												</div>
 
 
 
@@ -1153,7 +1164,9 @@
 															listener="#{seguimientoGeneroController.filtraCantones()}" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="provincia6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1175,7 +1188,9 @@
 															listener="#{seguimientoGeneroController.filtraParroquias()}" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="canton6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1195,7 +1210,9 @@
 														<p:ajax process="@this " event="change" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="parroquia6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1219,7 +1236,9 @@
 															update="puebloG6" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="identificacionG6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1241,7 +1260,9 @@
 														<p:ajax process="@this " event="change" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="puebloG6"/>
+												</div>
 
 
 												<div class="p-field p-col-12 p-md-3"
@@ -1263,40 +1284,46 @@
 													<p:outputLabel value="#{etiquetas['nombreLideresa']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputText required="true"
+													<p:inputText required="true" id="lideresaG6"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla6.tareColumnTwo}"
 														tabindex="7" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="lideresaG6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel value="#{etiquetas['espacioDialogo']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputTextarea required="true"
+													<p:inputTextarea required="true" id="espacioG6"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla6.tareColumnTree}"
 														tabindex="8" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="espacioG6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel value="#{etiquetas['rolEspacio']}" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
-													<p:inputTextarea required="true"
+													<p:inputTextarea required="true" id="rolG6"
 														requiredMessage="#{mensajes['campoRequerido']}"
 														immediate="true"
 														value="#{seguimientoGeneroBean.filaTabla6.tareColumnFour}"
 														tabindex="9" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="rolG6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1305,11 +1332,13 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="accionG6"
 														value="#{seguimientoGeneroBean.filaTabla6.tareColumnFive}"
 														tabindex="10" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="accionG6"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1318,11 +1347,14 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputText required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="linkG6"
 														value="#{seguimientoGeneroBean.filaTabla6.tareColumnSix}"
 														tabindex="11" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="linkG6"/>
+												</div>
+												
 												<div class="p-field p-col-12 p-md-4"></div>
 												<div class="p-field p-col-12 p-md-2">
 													<p:commandButton icon="#{botones['icono.grabar']}"
@@ -1508,7 +1540,9 @@
 															listener="#{seguimientoGeneroController.filtraCantones()}" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="provincia7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1530,7 +1564,9 @@
 															listener="#{seguimientoGeneroController.filtraParroquias()}" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="canton7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1550,7 +1586,9 @@
 														<p:ajax process="@this " event="change" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="parroquia7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1574,7 +1612,9 @@
 															update="puebloG7" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="identificacionG7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1596,7 +1636,9 @@
 														<p:ajax process="@this " event="change" />
 													</p:selectOneMenu>
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="puebloG7"/>
+												</div>
 
 
 												<div class="p-field p-col-12 p-md-3"
@@ -1606,12 +1648,14 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="comunidadG7"
 														value="#{seguimientoGeneroBean.filaTabla7.tareColumnOne}"
 														tabindex="6" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="comunidadG7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1620,12 +1664,14 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="accionG7"
 														value="#{seguimientoGeneroBean.filaTabla7.tareColumnTwo}"
 														tabindex="7" />
 
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="accionG7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1634,11 +1680,13 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="resultadoG7"
 														value="#{seguimientoGeneroBean.filaTabla7.tareColumnTree}"
 														tabindex="8" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="resultadoG7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1648,11 +1696,13 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputNumber decimalPlaces="0" required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="mujeresG7"
 														value="#{seguimientoGeneroBean.filaTabla7.tareColumnNumberSix}"
 														tabindex="9" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="mujeresG7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1662,11 +1712,13 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputNumber decimalPlaces="0" required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="hombresG7"
 														value="#{seguimientoGeneroBean.filaTabla7.tareColumnNumberSeven}"
 														tabindex="10" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="hombresG7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -1675,11 +1727,13 @@
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputText required="true"
 														requiredMessage="#{mensajes['campoRequerido']}"
-														immediate="true"
+														immediate="true" id="linkG7"
 														value="#{seguimientoGeneroBean.filaTabla7.tareColumnFour}"
 														tabindex="11" />
 												</div>
-												<div class="p-field p-col-12 p-md-2"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="linkG7"/>
+												</div>
 
 												<div class="p-field p-col-12 p-md-4"></div>
 												<div class="p-field p-col-12 p-md-2">

@@ -38,8 +38,8 @@
 			</p:dialog>				
 			
 			<!-- Asignacion lineas de genero -->			
-			<p:dialog widgetVar="dlgAsignaLineaGenero" showEffect="fade" positionType="absolute"
-				hideEffect="fade" modal="true" appendTo="@(body)" position="center top"
+			<p:dialog widgetVar="dlgAsignaLineaGenero" showEffect="fade" 
+				hideEffect="fade" modal="true" appendTo="@(body)" 
 				header="#{titulos['nuevaLineaAccion']}" width="400px;" 
 				closable="false" resizable="false" responsive="true">
 				<p:scrollPanel style="width:800px;height:800px;margin:0 auto;" >
@@ -115,7 +115,7 @@
 					<div class="p-field p-col-12 p-md-7">
 						<p:selectCheckboxMenu id="multipleSeleccionComponentes" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listadoComponentesSeleccionados}" 
 											panelStyle="width: 400px" requiredMessage="#{mensajes['campoRequerido']}" required="true"
-											style="width:200px;"
+											style="width:200px;" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"
 											label="#{etiquetas['componente']}" tabindex="9" multiple="true"
 								            scrollHeight="250">
 								            <f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listadoComponentes}" 
@@ -781,16 +781,16 @@
 								styleClass="estiloHeaderCampoTabla" />
 							<p:outputLabel
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
-							<p:outputLabel value="#{etiquetas['socioImplementador']}"
+							<p:outputLabel value="#{etiquetas['socioImplementador']}" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								styleClass="estiloHeaderCampoTabla"
 								 />
-							<p:outputLabel
+							<p:outputLabel rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
 								 />
 							<p:outputLabel value="#{etiquetas['socioEstrategico']}"
-								styleClass="estiloHeaderCampoTabla"
+								styleClass="estiloHeaderCampoTabla" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								 />
-							<p:outputLabel
+							<p:outputLabel rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
 								 />
 						</h:panelGrid>
@@ -847,24 +847,20 @@
 						</h:panelGrid>
 
 					</p:tab>
-					<p:tab title="#{etiquetas['preguntas']}">
+					<p:tab title="#{etiquetas['registroSalvaguardas']}">
 						<h:panelGrid columns="2">
 							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"
 								styleClass="estiloHeaderCampoTabla" />
 							<p:outputLabel
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
-							<p:outputLabel value="#{etiquetas['socioImplementador']}:"
-								styleClass="estiloHeaderCampoTabla"
-								 />
-							<p:outputLabel
-								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
-								 />
-							<p:outputLabel value="#{etiquetas['socioEstrategico']}:"
-								styleClass="estiloHeaderCampoTabla"
-								 />
-							<p:outputLabel
-								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
-								 />
+							<p:outputLabel value="#{etiquetas['socioImplementador']}:" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
+								styleClass="estiloHeaderCampoTabla"/>
+							<p:outputLabel rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"/>
+							<p:outputLabel value="#{etiquetas['socioEstrategico']}:" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
+								styleClass="estiloHeaderCampoTabla"/>
+							<p:outputLabel rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"/>
 						</h:panelGrid>
 						<br />
 						<br />
@@ -980,7 +976,12 @@
 						<p:dataTable emptyMessage="#{mensajes['noRegistros']}"
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaLineasGenero}"
 							var="linea">
-							<p:column headerText="#{titulos['temasMinimos']}">
+							<f:facet name="header">
+								<center>
+									<componentes:ayuda texto="#{tooltip['lineasAccionGenero']}"/>
+								</center>
+							</f:facet>
+							<p:column headerText="#{titulos['lineaAccionMinima']}" >
 								<p:outputLabel value="#{linea.catyDescription}" />
 							</p:column>
 						</p:dataTable>
@@ -1006,16 +1007,16 @@
 								styleClass="estiloHeaderCampoTabla" />
 							<p:outputLabel
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
-							<p:outputLabel value="#{etiquetas['socioImplementador']}:"
+							<p:outputLabel value="#{etiquetas['socioImplementador']}:" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								styleClass="estiloHeaderCampoTabla"
 								 />
-							<p:outputLabel
+							<p:outputLabel rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
 								 />
-							<p:outputLabel value="#{etiquetas['socioEstrategico']}:"
+							<p:outputLabel value="#{etiquetas['socioEstrategico']}:" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								styleClass="estiloHeaderCampoTabla"
 								 />
-							<p:outputLabel
+							<p:outputLabel rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
 								 />
 						</h:panelGrid>						
@@ -1089,16 +1090,16 @@
 									styleClass="estiloHeaderCampoTabla" />
 								<p:outputLabel
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
-								<p:outputLabel value="#{etiquetas['socioImplementador']}:"
+								<p:outputLabel value="#{etiquetas['socioImplementador']}:" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 									styleClass="estiloHeaderCampoTabla"
 									 />
-								<p:outputLabel
+								<p:outputLabel rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
 									 />
 								<p:outputLabel value="#{etiquetas['socioEstrategico']}:"
-									styleClass="estiloHeaderCampoTabla"
+									styleClass="estiloHeaderCampoTabla" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 									 />
-								<p:outputLabel
+								<p:outputLabel rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
 									 />
 							</h:panelGrid>
@@ -1120,8 +1121,10 @@
 							var="lineas" emptyMessage="#{mensajes['noRegistros']}"
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaAccionesdeGeneroProyecto}">
 							<p:column>
+								<p:outputLabel value="#{etiquetas['temas']}: " styleClass="estiloHeaderCampoTabla"/>
 								<p:outputLabel value="#{lineas.cataId.catalogsType.catyDescription}"/>
 								<br/>
+								<p:outputLabel value="#{etiquetas['lineaAccion']}: " styleClass="estiloHeaderCampoTabla"/>
 								<p:outputLabel value="#{lineas.cataId.cataText2.equals('Otro')?lineas.pginOtherLine:lineas.cataId.cataText2}"/>
 								<br/>
 								<p:outputLabel value="#{etiquetas['componente']}: " styleClass="estiloHeaderCampoTabla"/>								
@@ -1174,12 +1177,12 @@
 								actionListener="#{cc.attrs.componenteBuscaProyectos.atrasSelecionSocioGenero}"
 								oncomplete="PF('dlgEnProc').hide(); "
 								onstart="PF('dlgEnProc').show();" />
-							<p:commandButton value="#{botones['guardar']}"
+							<p:commandButton value="#{botones['finalizar']}"
 								styleClass="botonRegistroProyecto"
-								icon="#{botones['icono.grabar']}"
-								process="@this tienePlan panelLineasGenero "
-								update="tienePlan tabsGenero panelLineasGenero  :form:growl"
-								actionListener="#{cc.attrs.componenteBuscaProyectos.grabarLineasGenero}"
+								icon="#{botones['icono.check']}"
+								process="@this "
+								update="@form"
+								actionListener="#{cc.attrs.componenteBuscaProyectos.finAsignacionGenero}"
 								oncomplete="PF('dlgEnProc').hide(); "
 								onstart="PF('dlgEnProc').show();" />								
 						</h:panelGrid>
