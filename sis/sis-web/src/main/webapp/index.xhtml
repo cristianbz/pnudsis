@@ -62,6 +62,31 @@
 		<div id="page">
 			<div id="content" class="container">
 				<h:form id="indexForm">
+				
+				<p:dialog widgetVar="dlgTipoRol" showEffect="fade"
+					hideEffect="fade" modal="true" appendTo="@(body)"
+					header="#{etiquetas['rol']}" width="300" closable="false"
+					resizable="false">
+					<p:outputLabel value="#{etiquetas['usuarioRoles']}"/>
+					<h:panelGrid columns="2" id="roles">
+						<p:outputLabel value="#{etiquetas['rol']}*:"/>
+						<p:selectOneMenu value="#{loginBean.codigoRolUsuario}">
+							<f:selectItems value="#{loginBean.listaRolesUsuario}" var="rol" itemLabel="#{rol.role.roleDescription}" itemValue="#{rol.rousId}"/>							
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<center>
+						<h:panelGrid columns="2">
+							<p:commandButton process="@this roles" value="#{botones['aceptar']}" 
+								action="#{loginController.ubicaRolUsuarioSeleccionado()}" partialSubmit="true"
+								icon="#{botones['icono.check']}"/>
+							<p:commandButton process="@this" oncomplete="PF('dlgTipoRol').hide();" 
+								icon="#{botones['icono.cancelar']}"
+								value="#{botones['cancelar']}"/>	
+						</h:panelGrid>
+					</center>
+				</p:dialog>
+				
+				
 				<p:growl id="growl"/>
 					<center>
 						<p:panel header="" styleClass="panelLogin"

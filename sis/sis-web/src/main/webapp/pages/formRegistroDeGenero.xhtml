@@ -12,8 +12,7 @@
 		href="${facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
 	<link rel="stylesheet" type="text/css"
 		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
-	<link rel="stylesheet" type="text/css"
-		href="${facesContext.externalContext.requestContextPath}/resources/css/primeicons-master/primeicons.css" />
+	
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
@@ -27,14 +26,31 @@
 	</script>
 </h:head>
 <body>
-	<f:event listener="#{loginController.validarSesion()}" type="preRenderView" />
+	<f:event listener="#{loginController.validarSesion()}"
+		type="preRenderView" />
 	<h:form prependId="true" id="form">
-	<p:growl id="growl" life="3000" showDetail="true" />
+		<p:growl id="growl" life="3000" showDetail="true" />
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-6"></div>
+			<div class="p-field p-col-12 p-md-2">
+				<p:outputLabel value="#{etiquetas['cambiarIdioma']}" />
+
+				<h:selectOneMenu value="#{seleccionaIdiomaController.localeCode}"
+					onchange="submit()"
+					valueChangeListener="#{seleccionaIdiomaController.countryLocaleCodeChanged}">
+					<f:selectItems value="#{seleccionaIdiomaController.countriesInMap}" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+
 		<div class="ui-fluid p-formgrid p-grid">
 			<div class="p-field p-col-12 p-md-3"></div>
 			<div class="p-field p-col-12 p-md-6">
 				<div class="ui-fluid p-formgrid p-grid">
-					<div class="p-field p-col-12 p-md-12" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:left;">		
+					<div class="p-field p-col-12 p-md-12"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
 						<p:outputLabel value="#{titulos['registroGenero']}" />
 					</div>
 				</div>
@@ -42,7 +58,8 @@
 					componenteBuscaProyectos="#{registroDeGeneroController.componenteBuscarProyectos}" />
 				<br />
 				<p:outputPanel id="panelOpcionesProyecto">
-					<h:panelGrid columns="2" style="margin:0 auto;" rendered="#{registroDeGeneroController.datosProyecto()}">						
+					<h:panelGrid columns="2" style="margin:0 auto;"
+						rendered="#{registroDeGeneroController.datosProyecto()}">
 						<p:commandButton id="btnVolverInicio"
 							value="#{botones['volverBusqueda']}"
 							icon="#{botones['icono.home']}" update="@form"
@@ -52,7 +69,7 @@
 				</p:outputPanel>
 				<br />
 			</div>
-		</div>	
+		</div>
 	</h:form>
-</body> 
+</body>
 </html>

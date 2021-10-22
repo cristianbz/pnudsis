@@ -72,5 +72,17 @@ public class ProjectsStrategicPartnersFacade extends AbstractFacade<ProjectsStra
 			throw new DaoException();
 		}
 	}
+	/**
+	 * Devuelve los proyectos del socio estrategico
+	 * @param rucSocio  RUC del socio estrategico
+	 * @return Lista de proyectos
+	 * @throws Exception
+	 */
+	public List<ProjectsStrategicPartners> listaProyectosSocioEstrategico(String rucSocio)throws Exception{
+		String sql="SELECT PSP FROM ProjectsStrategicPartners PSP,Projects P, Partners PA WHERE PSP.projects.projId = P.projId AND PSP.partners.partId = PA.partId AND PA.partIdNumber=:rucSocio AND PSP.pspaStatus=TRUE ORDER BY P.projTitle";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("rucSocio", rucSocio);
+		return findByCreateQuery(sql, camposCondicion);
+	}
 }
 

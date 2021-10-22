@@ -30,6 +30,9 @@ public class RolesUser implements Serializable {
 
 	@Column(name="rous_status")
 	private Boolean rousStatus;
+	
+	@Column(name="rous_description")
+	private String rousDescription;
 
 	//bi-directional many-to-one association to Role
 	@ManyToOne
@@ -75,4 +78,14 @@ public class RolesUser implements Serializable {
 	public void setUser(Users user) {
 		this.users = user;
 	}
+
+	public String getRousDescription() {
+		return rousDescription;
+	}
+
+	public void setRousDescription(String rousDescription) {
+		this.rousDescription = rousDescription;
+	}
+	
+	
 }

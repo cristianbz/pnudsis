@@ -64,9 +64,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private String periodoDesde;
 	
+	
 	@Setter
 	@Getter
 	private boolean datosProyecto;
+	
+	@Setter
+	@Getter
+	private boolean habilitaCobeneficio;
 	
 	@Setter
 	@Getter

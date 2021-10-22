@@ -10,8 +10,7 @@
 		href="${facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
 	<link rel="stylesheet" type="text/css"
 		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
-	<link rel="stylesheet" type="text/css"
-		href="${facesContext.externalContext.requestContextPath}/resources/css/primeicons-master/primeicons.css" />
+
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
@@ -31,8 +30,7 @@
 		<p:dialog widgetVar="dlgEnProc" draggable="false" modal="true"
 			resizable="false" closable="false" responsive="true"
 			style="font-size: 10px;">
-			<h:graphicImage value="/resources/images/cargando.gif" width="200"
-				height="200" />
+			<h:graphicImage value="/resources/images/loading3.gif" width="150" height="150"/>
 		</p:dialog>
 
 		<p:dialog widgetVar="dlgEliminaPregunta" showEffect="fade" hideEffect="fade"
@@ -551,6 +549,7 @@
 							</p:column>
 						</p:dataTable>
 					</p:tab>
+					<!-- 
 					<p:tab title="#{etiquetas['usuarioProyecto']}">
 						<p:outputPanel id="panelUsuarios">
 							<p:panel rendered="#{administracionBean.nuevoUsuario}" header="#{titulos['ingresoUsuarios']}">
@@ -700,6 +699,7 @@
 							</p:column>
 						</p:dataTable>
 					</p:tab>
+					 -->
 				</p:tabView>
 				<br />
 				<h:panelGrid style="margin:0 auto;">

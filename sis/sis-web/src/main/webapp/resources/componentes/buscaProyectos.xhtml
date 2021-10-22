@@ -42,7 +42,7 @@
 				hideEffect="fade" modal="true" appendTo="@(body)" 
 				header="#{titulos['nuevaLineaAccion']}" width="400px;" 
 				closable="false" resizable="false" responsive="true">
-				<p:scrollPanel style="width:800px;height:800px;margin:0 auto;" >
+				<p:scrollPanel mode="native" style="max-height:600px; max-width:800px;" >
 				<p:outputPanel id="panelIndicadores" >
 				<div class="ui-fluid p-formgrid p-grid">					
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -195,7 +195,8 @@
 						</p:column>
 						<p:column headerText="#{etiquetas['valoresMeta']}" style="font-size:10px !important;width:100px;">
 							<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
-							<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('B') or pgi.indicators.indiType.equals('N')}"/>							
+							<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('O') or pgi.indicators.indiType.equals('N')}"/>
+							<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('B')}"/>							
 							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
 							<p:message for="valorUno"/>
 							<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
@@ -208,7 +209,7 @@
 							<p:message for="valorCinco"/>
 						</p:column>
 						<p:column style="font-size:10px !important; width:40px;">
-							<p:commandButton icon="#{botones['icono.borrar']}" onclick="PF('dlgEliminaIndicadorGenero').show();" process="@this" resetValues="true">
+							<p:commandButton icon="#{botones['icono.borrar']}" onclick="PF('dlgEliminaIndicadorGenero').show();" process="@this" resetValues="true" partialSubmit="true">
 								<f:setPropertyActionListener value="#{pgi}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.indicadorSeleccionado}"></f:setPropertyActionListener>
 							</p:commandButton>
 						</p:column>
@@ -230,7 +231,7 @@
 						process="@this :form:buscaProyectos:tablaIndicadores  panelIndicadores " partialSubmit="true" update=":form:growl panelIndicadores tabsGenero"
 						></p:commandButton> 
 					<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" oncomplete="PF('dlgAsignaLineaGenero').hide();" process="@this"
-						update="@form"
+						update="@form" action="#{cc.attrs.componenteBuscaProyectos.validatablaIndicadores}"
 						>
 						<f:setPropertyActionListener value="false" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"></f:setPropertyActionListener>
 					</p:commandButton>	
@@ -260,7 +261,7 @@
 	                  draggable="false" 
 	                  modal="true" resizable="false" closable="false" responsive="true"
 	                  style="font-size: 10px;">             
-	            <h:graphicImage value="/resources/images/cargando.gif" width="150" height="150"/>
+	            <h:graphicImage value="/resources/images/loading3.gif" width="150" height="150"/>
 	        </p:dialog> 
 	        <!-- SELECION DE SOCIOS -->
 			<p:dialog widgetVar="dlgSeleccionSocios" showEffect="fade"
@@ -340,6 +341,19 @@
 			<p:outputPanel id="panelBusquedaProyecto">
 				<p:panel header="#{titulos['busquedaProyectos']}"
 					rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}">
+					<div class="ui-fluid p-formgrid p-grid">
+						<div class="p-field p-col-12 p-md-12">
+							<p:outputLabel value="#{titulos['tituloDocSalvaguarda']}" rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero and cc.attrs.componenteBuscaProyectos.esSeguimientoSalvaguardas}"/>
+						</div>
+						<div class="p-field p-col-12 p-md-12">
+						<p:accordionPanel rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero and cc.attrs.componenteBuscaProyectos.esSeguimientoSalvaguardas}" activeIndex="null">
+							<p:tab title="#{etiquetas['mostrarDocumento']}">							
+								<pe:documentViewer height="200" zoom="100"  url="/resources/pdf/resumenSalvaguardas.pdf" rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero and cc.attrs.componenteBuscaProyectos.esSeguimientoSalvaguardas}"/>
+							</p:tab>
+						</p:accordionPanel>
+						
+						</div>	
+					</div>	
 					<div class="ui-fluid p-formgrid p-grid"
 						style="align-content: center">
 
@@ -421,44 +435,7 @@
 									<br />
 									<p:outputLabel value="#{proyecto.partners.partName}" />
 								</p:column>
-<!-- 
-								<p:column width="30"
-									rendered="#{cc.attrs.componenteBuscaProyectos.esReporteSalvaguardas and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
-									Es reporte administrador salvaguardas
-									<p:commandButton id="btnProyEdit"
-										icon="#{botones['icono.nuevo']}"
-										title="#{tooltip['seleccionar']}"
-										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyecto(proyecto)}"
-										process="@this " partialSubmit="true"
-										onclick="PF('dlgEnProc').show()"
-										oncomplete="PF('dlgEnProc').hide()" async="true"
-										global="false" update="@form " />
-									<br />
-									<p:commandButton icon="#{botones['icono.buscar']}"
-										process="@this :form:buscaProyectos:tablaReportados"
-										update=":form:buscaProyectos:tablaReportados"
-										partialSubmit="true"
-										actionListener="#{cc.attrs.componenteBuscaProyectos.cargaProyectosReportados(proyecto)}" />
-								</p:column>
-								 
-								<p:column width="30"
-									rendered="#{(cc.attrs.componenteBuscaProyectos.esReporteGenero or cc.attrs.componenteBuscaProyectos.buscaProyectosBean.esRegistroSalvaguardas) and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">
-									<p:commandButton id="btnProyEditGenero"
-										icon="#{botones['icono.nuevo']}"
-										title="#{tooltip['seleccionar']}"
-										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyecto(proyecto)}"
-										process="@this " partialSubmit="true"
-										onclick="PF('dlgEnProc').show()"
-										oncomplete="PF('dlgEnProc').hide()" async="true"
-										global="false" update="@form " />
-									<br />
-									<p:commandButton icon="#{botones['icono.buscar']}"
-										process="@this :form:buscaProyectos:tablaReportados"
-										update=":form:buscaProyectos:tablaReportados"
-										partialSubmit="true"
-										actionListener="#{cc.attrs.componenteBuscaProyectos.cargaProyectosReportados(proyecto)}" />
-								</p:column>
-								-->
+
 								<!-- Acciones como socio estrategico -->
 								<p:column width="30"
 									rendered="#{(cc.attrs.componenteBuscaProyectos.esReporteGenero or cc.attrs.componenteBuscaProyectos.esReporteSalvaguardas) and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==3}">									
@@ -898,23 +875,23 @@
 								onstart="PF('dlgEnProc').show();" />
 						</h:panelGrid>
 					</p:tab>
-					<p:tab title="#{etiquetas['salvaguarda']}">
+					<p:tab title="#{etiquetas['salvaguardasAsignadas']}">
 						<h:panelGrid columns="2">
 							<p:outputLabel value="#{etiquetas['proyectoSeleccionado']}:"
 								styleClass="estiloHeaderCampoTabla" />
 							<p:outputLabel
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.projTitle}" />
-							<p:outputLabel value="#{etiquetas['socioImplementador']}:"
+							<p:outputLabel value="#{etiquetas['socioImplementador']}:" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								styleClass="estiloHeaderCampoTabla"
 								 />
 							<p:outputLabel
-								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.proyectoSeleccionado.partners.partName}" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								 />
-							<p:outputLabel value="#{etiquetas['socioEstrategico']}:"
+							<p:outputLabel value="#{etiquetas['socioEstrategico']}:" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								styleClass="estiloHeaderCampoTabla"
 								 />
 							<p:outputLabel
-								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}"
+								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico}" rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nombreSocioEstrategico.equals('')}"
 								 />
 						</h:panelGrid>
 						<br />
@@ -984,6 +961,7 @@
 							<p:column headerText="#{titulos['lineaAccionMinima']}" >
 								<p:outputLabel value="#{linea.catyDescription}" />
 							</p:column>
+							
 						</p:dataTable>
 						<br />
 						
@@ -1143,7 +1121,8 @@
 									</p:column>
 									<p:column headerText="#{etiquetas['valoresMeta']}">
 										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['numeroHombres']}: " rendered="#{gi.indicators.indiType.equals('G')}"/>
-										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['valor']}: " rendered="#{gi.indicators.indiType.equals('B') or gi.indicators.indiType.equals('N') or gi.indicators.indiType.equals('O')}"/>
+										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['valor']}: " rendered="#{gi.indicators.indiType.equals('N') or gi.indicators.indiType.equals('O')}"/>
+										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['valorSiNo']}: " rendered="#{gi.indicators.indiType.equals('B')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigGoalValueOne}" rendered="#{gi.indicators.indiType.equals('N')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigGoalValueOne}" rendered="#{gi.indicators.indiType.equals('G')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigValueAnotherIndicator}" rendered="#{gi.indicators.indiType.equals('O')}"/>

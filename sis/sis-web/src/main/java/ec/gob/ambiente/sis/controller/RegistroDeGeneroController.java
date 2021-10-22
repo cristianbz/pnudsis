@@ -43,6 +43,7 @@ public class RegistroDeGeneroController implements Serializable{
 		try{
 			getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroSalvaguardas(false);
 			getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroGenero(true);
+			getComponenteBuscarProyectos().setEsSeguimientoSalvaguardas(false);
 		}catch(Exception e){
 			
 		}

@@ -13,8 +13,7 @@
 		href="${facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
 	<link rel="stylesheet" type="text/css"
 		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
-	<link rel="stylesheet" type="text/css"
-		href="${facesContext.externalContext.requestContextPath}/resources/css/primeicons-master/primeicons.css" />
+	
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
@@ -46,11 +45,14 @@
 					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.componentesGenero}" />
 					<p:outputLabel value="#{etiquetas['indicador']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
 					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiDescription}" />
+					<p:outputLabel value="#{etiquetas['meta']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.pgigGoals}" />
 					<p:outputLabel value="#{etiquetas['presupuesto']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
 					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginBudget}" />
 					
 					<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
-					<p:outputLabel value="#{etiquetas['valor']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+					<p:outputLabel value="#{etiquetas['valor']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+					<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B')}"/>
 					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
 					<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
 					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedTwo}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
@@ -125,8 +127,7 @@
 		<p:dialog widgetVar="dlgEnProc" draggable="false" modal="true"
 			resizable="false" closable="false" responsive="true"
 			style="font-size: 10px;">
-			<h:graphicImage value="/resources/images/cargando.gif" width="150"
-				height="150" />
+			<h:graphicImage value="/resources/images/loading3.gif" width="150" height="150"/>
 		</p:dialog>
 
 		<p:dialog widgetVar="dlgAsignaBeneficiarios" showEffect="fade"
@@ -575,6 +576,7 @@
 						<p:tab title="#{etiquetas['indicadores']}">
 							<p:outputLabel value="#{titulos['indicadoresIngresados']}"/>
 							<br/>
+							<br/>
 							<p:dataTable value="#{seguimientoGeneroBean.listaLineasGenero}" id="tablaAvancesGenero"
 								var="genero" style="font-size:10px !important;">
 								<p:column groupRow="true" headerText="#{etiquetas['temas']}">
@@ -588,7 +590,8 @@
 								</p:column>
 								<p:column headerText="#{etiquetas['valorAlcanzado']}">																		
 									<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G')}"/>
-									<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('B') or genero.projectGenderIndicator.indicators.indiType.equals('N') or genero.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+									<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('N') or genero.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+									<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('B')}"/>
 									<p:outputLabel value="#{genero.aepgValueReachedOne}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G') or genero.projectGenderIndicator.indicators.indiType.equals('N') }"/>
 									<p:outputLabel value="#{genero.aepgValueReachedOne==1?'SI':'NO'}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('B')}"/>							
 									<br/>

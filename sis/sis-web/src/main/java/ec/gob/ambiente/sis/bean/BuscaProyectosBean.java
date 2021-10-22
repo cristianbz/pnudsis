@@ -47,6 +47,8 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter //1 implementador  2 estrategico
 	private int tipoSocio;
 	
+
+	
 	@Getter
 	@Setter
 	private boolean esRegistroGenero;

@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.menu.MenuModel;
 
+import ec.gob.ambiente.sigma.model.Projects;
+import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.services.UserFacade;
 import ec.gob.ambiente.sis.utils.JsfUtil;
@@ -76,6 +78,10 @@ public class LoginBean implements Serializable {
 	
 	@Getter
 	@Setter
+	private int codigoRolUsuario;
+	
+	@Getter
+	@Setter
 	private List<RolesUser> listaRolesUsuario;
 	
 	@Getter
@@ -86,6 +92,14 @@ public class LoginBean implements Serializable {
 	@Getter
 	@Setter
 	private List<ProjectUsers> listaProyectosDelUsuario;
+	
+	@Getter
+	@Setter
+	private List<ProjectsStrategicPartners> listaProyectosDelSocioEstrategico;
+	
+	@Getter
+	@Setter
+	private List<Projects> listaProyectosDelSocioImplementador;
 	
 	@PostConstruct
 	public void init() {

@@ -39,6 +39,7 @@ public class RegistroSalvaguardasController implements Serializable{
 	public void init(){
 		getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroSalvaguardas(true);
 		getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroGenero(false);
+		getComponenteBuscarProyectos().setEsSeguimientoSalvaguardas(false);
 		getAplicacionController().cargarSalvaguardas();
 	}
 	

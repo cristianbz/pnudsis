@@ -138,6 +138,7 @@ public class SeguimientoGeneroController implements Serializable{
 	private void init(){
 		try{
 			getComponenteBuscarProyectos().setEsReporteGenero(true);
+			getComponenteBuscarProyectos().setEsSeguimientoSalvaguardas(false);
 			cargaProvincias();
 			cargaTipoOrganizacion();
 			cargaTipoIncentivo();
@@ -1218,14 +1219,11 @@ public class SeguimientoGeneroController implements Serializable{
 		boolean nocumple=false;
 		if((getSeguimientoGeneroBean().getListaValoresRespuestas().get(0).isVaanYesnoAnswerValue() && getSeguimientoGeneroBean().getTablaRespuestas3().size()==0)){
 			nocumple = true; 
-		}else if(getSeguimientoGeneroBean().getListaValoresRespuestas().get(1).isVaanYesnoAnswerValue() && getSeguimientoGeneroBean().getTablaRespuestas4().size() == 0){
+		}else if(getSeguimientoGeneroBean().getListaValoresRespuestas().get(1).isVaanYesnoAnswerValue() && getSeguimientoGeneroBean().getTablaRespuestas6().size() == 0){
 			nocumple = true;
-		}else if(getSeguimientoGeneroBean().getListaValoresRespuestas().get(2).isVaanYesnoAnswerValue() && getSeguimientoGeneroBean().getTablaRespuestas5().size() == 0){
+		}else if(getSeguimientoGeneroBean().getListaValoresRespuestas().get(2).isVaanYesnoAnswerValue() && getSeguimientoGeneroBean().getTablaRespuestas7().size() == 0){
 			nocumple = true;
-//		}else if(getSeguimientoGeneroBean().getListaValoresRespuestas().get(3).isVaanYesnoAnswerValue() && getSeguimientoGeneroBean().getTablaRespuestas6().size() == 0){
-//			nocumple = true;
-//		}else if(getSeguimientoGeneroBean().getListaValoresRespuestas().get(4).isVaanYesnoAnswerValue() && getSeguimientoGeneroBean().getTablaRespuestas7().size() == 0){
-//			nocumple = true;
+
 		}
 		return nocumple;
 	}
@@ -1245,7 +1243,7 @@ public class SeguimientoGeneroController implements Serializable{
 
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.generarPDF"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "imprimirResumenGenero " + ": ").append(e.getMessage()));
+			log.error(new StringBuilder().append(this.getClass().getName() + "." + "imprimirResumenGenero " + ": ").append(e.getMessage()));			
 		}
 	}
 

@@ -29,7 +29,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "projects_strategic_partners", schema = "sigma")
 @NamedQueries({
-	@NamedQuery(name = "erss",query = "SELECT PSP FROM ProjectsStrategicPartners PSP WHERE PSP.projects.projId=1")	
+	@NamedQuery(name = "erss",query = "SELECT PSP FROM ProjectsStrategicPartners PSP WHERE PSP.projects.projId=1"),
+	@NamedQuery(name = "comoSocioEstrategico",query = "SELECT P FROM Projects P, ProjectsStrategicPartners PSP, Partners PA WHERE PSP.projects.projId = P.projId AND PSP.partners.partId = PA.partId AND PA.partIdNumber=:ruc AND PSP.pspaStatus=TRUE")
 })
 public class ProjectsStrategicPartners implements Serializable {
 

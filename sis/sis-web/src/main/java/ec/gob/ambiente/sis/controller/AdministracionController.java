@@ -142,7 +142,7 @@ public class AdministracionController implements Serializable{
 				}
 			});
 			getAdministracionBean().setListaProyectos(getProjectsFacade().buscarTodosLosProyectos());
-			cargaProyectosUsuarios();
+//			cargaProyectosUsuarios();
 			getAdministracionBean().setNuevaPregunta(false);
 			getAplicacionController().cargarSalvaguardas();
 			cargaSalvaguardas();
@@ -151,28 +151,28 @@ public class AdministracionController implements Serializable{
 		}
 	}
 	
-	public void cargaProyectosUsuarios(){
-		getAdministracionBean().setListaProyectoUsuarios(new ArrayList<>());
-		List<ProjectUsers> listaProyectoUsuario = new ArrayList<>();
-		try{
-			listaProyectoUsuario = getProjectUsersFacade().listaProyectoUsuarios();
-			for(ProjectUsers pu:listaProyectoUsuario){
-				List<Role> roles = getRoleFacade().listRoleByUser(pu.getUsers());
-				StringBuilder rolUsuario= new StringBuilder();
-				for(Role r:roles){
-					rolUsuario.append(r.getRoleName()).append(",");
-				}
-				pu.setPrusRolUsuario(rolUsuario.toString().substring(0,rolUsuario.toString().length()-1));
-				if(pu.getPrusRolUsuario().contains(TipoRolesUsuarioEnum.SIS_socio_estrategico.toString())){
-					pu.setPrusPartner(getProjectsStrategicPartnersFacade().partnerDelProyecto(pu.getProjects().getProjId(), pu.getPspaId()).getPartners().getPartName());
-				}
-
-				getAdministracionBean().getListaProyectoUsuarios().add(pu);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
+//	public void cargaProyectosUsuarios(){
+//		getAdministracionBean().setListaProyectoUsuarios(new ArrayList<>());
+//		List<ProjectUsers> listaProyectoUsuario = new ArrayList<>();
+//		try{
+//			listaProyectoUsuario = getProjectUsersFacade().listaProyectoUsuarios();
+//			for(ProjectUsers pu:listaProyectoUsuario){
+//				List<Role> roles = getRoleFacade().listRoleByUser(pu.getUsers());
+//				StringBuilder rolUsuario= new StringBuilder();
+//				for(Role r:roles){
+//					rolUsuario.append(r.getRoleName()).append(",");
+//				}
+//				pu.setPrusRolUsuario(rolUsuario.toString().substring(0,rolUsuario.toString().length()-1));
+//				if(pu.getPrusRolUsuario().contains(TipoRolesUsuarioEnum.SIS_socio_estrategico.toString())){
+//					pu.setPrusPartner(getProjectsStrategicPartnersFacade().partnerDelProyecto(pu.getProjects().getProjId(), pu.getPspaId()).getPartners().getPartName());
+//				}
+//
+//				getAdministracionBean().getListaProyectoUsuarios().add(pu);
+//			}
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void cargaSalvaguardas(){
 		getAdministracionBean().setListaSalvaguardas(new ArrayList<>());
@@ -251,15 +251,15 @@ public class AdministracionController implements Serializable{
 		getAdministracionBean().setNuevoIndicador(true);
 		getAdministracionBean().setIndicadorSeleccionado(new Indicators());
 	}
-	public void nuevoUsuario(){
-		getAdministracionBean().setListaPartners(new ArrayList<>());
-		getAdministracionBean().setNuevoUsuario(true);
-		getAdministracionBean().setProyectoUsuarioSeleccionado(new ProjectUsers());
-		getAdministracionBean().setCodigoProyecto(null);
-		getAdministracionBean().setListaUsuarios(new ArrayList<>());
-		getAdministracionBean().setNombreUsuario("");
-		getAdministracionBean().setNoEsSocioEstrategico(true);
-	}
+//	public void nuevoUsuario(){
+//		getAdministracionBean().setListaPartners(new ArrayList<>());
+//		getAdministracionBean().setNuevoUsuario(true);
+//		getAdministracionBean().setProyectoUsuarioSeleccionado(new ProjectUsers());
+//		getAdministracionBean().setCodigoProyecto(null);
+//		getAdministracionBean().setListaUsuarios(new ArrayList<>());
+//		getAdministracionBean().setNombreUsuario("");
+//		getAdministracionBean().setNoEsSocioEstrategico(true);
+//	}
 	
 	/**
 	 * Edita una pregunta
@@ -285,22 +285,22 @@ public class AdministracionController implements Serializable{
 		getAdministracionBean().setIndicadorSeleccionado(indicador);
 		getAdministracionBean().setNuevoIndicador(true);
 	}
-	public void editarUsuario(ProjectUsers usuario){
-		getAdministracionBean().setListaPartners(new ArrayList<>());
-		getAdministracionBean().setNuevoUsuario(true);
-		getAdministracionBean().setProyectoUsuarioSeleccionado(usuario);
-		getAdministracionBean().setCodigoProyecto(usuario.getProjects().getProjId());
-		getAdministracionBean().setNombreUsuario(usuario.getUsers().getUserName());
-		if(rolSocioEstrategico(usuario.getPrusRolUsuario())){
-			getAdministracionBean().setNoEsSocioEstrategico(false);
-			getAdministracionBean().setCodigoPartner(usuario.getPspaId());
-			cargaPartnersProyecto();
-		}else{
-			getAdministracionBean().setNoEsSocioEstrategico(true);
-			
-		}
-		buscarUsuarios();
-	}
+//	public void editarUsuario(ProjectUsers usuario){
+//		getAdministracionBean().setListaPartners(new ArrayList<>());
+//		getAdministracionBean().setNuevoUsuario(true);
+//		getAdministracionBean().setProyectoUsuarioSeleccionado(usuario);
+//		getAdministracionBean().setCodigoProyecto(usuario.getProjects().getProjId());
+//		getAdministracionBean().setNombreUsuario(usuario.getUsers().getUserName());
+//		if(rolSocioEstrategico(usuario.getPrusRolUsuario())){
+//			getAdministracionBean().setNoEsSocioEstrategico(false);
+//			getAdministracionBean().setCodigoPartner(usuario.getPspaId());
+//			cargaPartnersProyecto();
+//		}else{
+//			getAdministracionBean().setNoEsSocioEstrategico(true);
+//			
+//		}
+//		buscarUsuarios();
+//	}
 	
 	public boolean rolSocioEstrategico(String roles){
 		boolean respuesta=false;
@@ -442,39 +442,39 @@ public class AdministracionController implements Serializable{
 			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaEditaCatalogo " + ": ").append(e.getMessage()));
 		}
 	}
-	public void agregarEditarUsuario(){
-		try{
-			if(!getAdministracionBean().isNoEsSocioEstrategico() && getAdministracionBean().getCodigoPartner()==null){
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSocio"), "");
-			}else{
-				ProjectUsers pu=getAdministracionBean().getProyectoUsuarioSeleccionado();
-				Projects p=new Projects();
-				p.setProjId(getAdministracionBean().getCodigoProyecto());
-				Users u= new Users();			
-				u=getAdministracionBean().getUsuarioSeleccionado();
-				pu.setProjects(p);
-				pu.setUsers(u);
-				if(getAdministracionBean().isNoEsSocioEstrategico()){
-					pu.setPspaId(null);
-				}else{					
-					pu.setPspaId(getAdministracionBean().getCodigoPartner());
-				}
-				if(getAdministracionBean().isNoEsSocioEstrategico() && pu.getPrusId() == null && getProjectUsersFacade().validaUsuarioAsignado(u.getUserId(), p.getProjId(), null) != null){
-					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.usuarioAsignado"));
-				}else if(!getAdministracionBean().isNoEsSocioEstrategico() && pu.getPrusId() == null && getProjectUsersFacade().validaUsuarioAsignado(u.getUserId(), p.getProjId(), getAdministracionBean().getCodigoPartner())!= null){
-					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.usuarioAsignado"));
-				}else{
-					getProjectUsersFacade().agregarEditarProyectousuario(pu);				
-					cargaProyectosUsuarios();
-					getAdministracionBean().setNuevoUsuario(false);
-					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));
-				}
-			}
-		}catch(Exception e){
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarUsuario " + ": ").append(e.getMessage()));
-		}
-	}
+//	public void agregarEditarUsuario(){
+//		try{
+//			if(!getAdministracionBean().isNoEsSocioEstrategico() && getAdministracionBean().getCodigoPartner()==null){
+//				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, getMensajesController().getPropiedad("error.seleccionSocio"), "");
+//			}else{
+//				ProjectUsers pu=getAdministracionBean().getProyectoUsuarioSeleccionado();
+//				Projects p=new Projects();
+//				p.setProjId(getAdministracionBean().getCodigoProyecto());
+//				Users u= new Users();			
+//				u=getAdministracionBean().getUsuarioSeleccionado();
+//				pu.setProjects(p);
+//				pu.setUsers(u);
+//				if(getAdministracionBean().isNoEsSocioEstrategico()){
+//					pu.setPspaId(null);
+//				}else{					
+//					pu.setPspaId(getAdministracionBean().getCodigoPartner());
+//				}
+//				if(getAdministracionBean().isNoEsSocioEstrategico() && pu.getPrusId() == null && getProjectUsersFacade().validaUsuarioAsignado(u.getUserId(), p.getProjId(), null) != null){
+//					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.usuarioAsignado"));
+//				}else if(!getAdministracionBean().isNoEsSocioEstrategico() && pu.getPrusId() == null && getProjectUsersFacade().validaUsuarioAsignado(u.getUserId(), p.getProjId(), getAdministracionBean().getCodigoPartner())!= null){
+//					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.usuarioAsignado"));
+//				}else{
+//					getProjectUsersFacade().agregarEditarProyectousuario(pu);				
+////					cargaProyectosUsuarios();
+//					getAdministracionBean().setNuevoUsuario(false);
+//					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));
+//				}
+//			}
+//		}catch(Exception e){
+//			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
+//			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarUsuario " + ": ").append(e.getMessage()));
+//		}
+//	}
 	
 	public void eliminarPregunta(){
 		try{
@@ -488,42 +488,42 @@ public class AdministracionController implements Serializable{
 			e.printStackTrace();
 		}
 	}
-	public void buscarUsuarios(){
-		try{
-			getAdministracionBean().setListaUsuarios(getUsersFacade().findByRolEstrategicoImplementador(getAdministracionBean().getNombreUsuario()));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	public void cargaPartnersProyecto(){
-		try{
-			if(!getAdministracionBean().isNoEsSocioEstrategico())
-				getAdministracionBean().setListaPartners(getProjectsStrategicPartnersFacade().listaPartnersActivos(getAdministracionBean().getCodigoProyecto()));
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	public void rolesUsuario(){
-		try{
-			boolean encontrado=false;
-			getAdministracionBean().setListaRolesUsuario(getRoleFacade().listRoleByUser(getAdministracionBean().getUsuarioSeleccionado()));
-			for (Role r : getAdministracionBean().getListaRolesUsuario()) {				
-				if(r.getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.toString())){
-					getAdministracionBean().setNoEsSocioEstrategico(false);
-					encontrado = true;
-					break;
-				}
-			}
-			if(encontrado == false){
-				getAdministracionBean().setNoEsSocioEstrategico(true);
-				getAdministracionBean().setListaPartners(new ArrayList<>());
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
+//	public void buscarUsuarios(){
+//		try{
+//			getAdministracionBean().setListaUsuarios(getUsersFacade().findByRolEstrategicoImplementador(getAdministracionBean().getNombreUsuario()));
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	public void cargaPartnersProyecto(){
+//		try{
+//			if(!getAdministracionBean().isNoEsSocioEstrategico())
+//				getAdministracionBean().setListaPartners(getProjectsStrategicPartnersFacade().listaPartnersActivos(getAdministracionBean().getCodigoProyecto()));
+//
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	public void rolesUsuario(){
+//		try{
+//			boolean encontrado=false;
+//			getAdministracionBean().setListaRolesUsuario(getRoleFacade().listRoleByUser(getAdministracionBean().getUsuarioSeleccionado()));
+//			for (Role r : getAdministracionBean().getListaRolesUsuario()) {				
+//				if(r.getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.toString())){
+//					getAdministracionBean().setNoEsSocioEstrategico(false);
+//					encontrado = true;
+//					break;
+//				}
+//			}
+//			if(encontrado == false){
+//				getAdministracionBean().setNoEsSocioEstrategico(true);
+//				getAdministracionBean().setListaPartners(new ArrayList<>());
+//			}
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
 }
 
