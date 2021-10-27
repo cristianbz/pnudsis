@@ -18,8 +18,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
-import ec.gob.ambiente.sis.model.ProjectUsers;
-import ec.gob.ambiente.sis.model.Questions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -232,12 +230,7 @@ public class Users {
 	@Setter
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<AdvanceExecutionSafeguards> advanceExecutionSaveguardsList;
-	
-	@Getter
-	@Setter
-	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
-	private List<ProjectUsers> projectUsersList;
-	
+		
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)

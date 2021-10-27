@@ -18,7 +18,6 @@ import org.primefaces.model.menu.MenuModel;
 
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
-import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.services.UserFacade;
 import ec.gob.ambiente.sis.utils.JsfUtil;
 import ec.gob.ambiente.suia.model.Organization;
@@ -89,9 +88,6 @@ public class LoginBean implements Serializable {
 	//1 Admin  2 Socio Implementador  3 Socio estrategico
 	private int tipoRol;
 	
-	@Getter
-	@Setter
-	private List<ProjectUsers> listaProyectosDelUsuario;
 	
 	@Getter
 	@Setter

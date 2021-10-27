@@ -58,11 +58,6 @@ public class ValueAnswers  {
 	@Column(name = "vaan_status")
 	private boolean vaanStatus;
 	
-	@Getter
-	@Setter
-	@Column(name = "vaan_answer_ord")
-	private Integer vaanAnswerOrd;
-	
 	
 	@Getter
 	@Setter

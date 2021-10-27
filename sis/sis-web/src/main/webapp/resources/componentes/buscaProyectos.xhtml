@@ -194,12 +194,12 @@
 							<p:message for="metas"/>
 						</p:column>
 						<p:column headerText="#{etiquetas['valoresMeta']}" style="font-size:10px !important;width:100px;">
-							<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
+							<p:outputLabel value="#{pgi.indicators.indiId==9 or pgi.indicators.indiId==10?etiquetas['hombres']:etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
 							<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('O') or pgi.indicators.indiType.equals('N')}"/>
 							<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('B')}"/>							
 							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
 							<p:message for="valorUno"/>
-							<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
+							<p:outputLabel value="#{pgi.indicators.indiId==9 or pgi.indicators.indiId==10?etiquetas['mujeres']:etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
 							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueTwo}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
 							<p:message for="valorDos"/>
 							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
@@ -257,7 +257,7 @@
 				</h:panelGrid>
 			</p:dialog>	
 			
-			<p:dialog  widgetVar="dlgEnProc" 
+			<p:dialog  widgetVar="dlgEnProc" header="En proceso"
 	                  draggable="false" 
 	                  modal="true" resizable="false" closable="false" responsive="true"
 	                  style="font-size: 10px;">             
@@ -642,6 +642,7 @@
 								</p:column>
 								<p:column width="30">
 									<p:commandButton actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyectoReportado(avance)}" title="#{tooltip['visualizaInformacion']}"
+										onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();"
 										process="@this" partialSubmit="true" update="@form" icon="#{botones['icono.checkcirculo']}"/>																		
 								</p:column>
 							</p:dataTable>
@@ -1120,7 +1121,7 @@
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigAnotherIndicator}" rendered="#{gi.indicators.indiType.equals('O')}"/>
 									</p:column>
 									<p:column headerText="#{etiquetas['valoresMeta']}">
-										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['numeroHombres']}: " rendered="#{gi.indicators.indiType.equals('G')}"/>
+										<p:outputLabel style="font-size:10px !important;" value="#{gi.indicators.indiId==9 or gi.indicators.indiId==10?etiquetas['hombres']:etiquetas['numeroHombres']}: " rendered="#{gi.indicators.indiType.equals('G')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['valor']}: " rendered="#{gi.indicators.indiType.equals('N') or gi.indicators.indiType.equals('O')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['valorSiNo']}: " rendered="#{gi.indicators.indiType.equals('B')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigGoalValueOne}" rendered="#{gi.indicators.indiType.equals('N')}"/>
@@ -1128,7 +1129,7 @@
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigValueAnotherIndicator}" rendered="#{gi.indicators.indiType.equals('O')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigGoalValueOne==1?'SI':'NO'}" rendered="#{gi.indicators.indiType.equals('B')}"/>
 										<br/>
-										<p:outputLabel style="font-size:10px !important;" value="#{etiquetas['numeroMujeres']}: " rendered="#{gi.indicators.indiType.equals('G')}"/>
+										<p:outputLabel style="font-size:10px !important;" value="#{gi.indicators.indiId==9 or gi.indicators.indiId==10?etiquetas['mujeres']:etiquetas['numeroMujeres']}: " rendered="#{gi.indicators.indiType.equals('G')}"/>
 										<p:outputLabel style="font-size:10px !important;" value="#{gi.pgigGoalValueTwo}" rendered="#{gi.indicators.indiType.equals('G')}"/>
 									</p:column>
 									<p:column headerText="#{etiquetas['meta']}">

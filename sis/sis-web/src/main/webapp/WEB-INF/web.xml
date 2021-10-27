@@ -36,20 +36,5 @@
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/signout.xhtml?redirected=true</location>
     </error-page>
- <mime-mapping>
-  <extension>ttf</extension>
-  <mime-type>application/x-font-ttf</mime-type>
- </mime-mapping>
- <mime-mapping>
-  <extension>woff</extension>
-  <mime-type>application/x-font-woff</mime-type>
- </mime-mapping>
- <mime-mapping>
-  <extension>woff2</extension>
-  <mime-type>application/x-font-woff2</mime-type>
- </mime-mapping>
- <mime-mapping>
-  <extension>eot</extension>
-  <mime-type>application/x-font-eot</mime-type>
- </mime-mapping>
+ 
 </web-app>

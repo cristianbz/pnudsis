@@ -16,10 +16,8 @@ import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
 import ec.gob.ambiente.sis.model.Indicators;
-import ec.gob.ambiente.sis.model.ProjectUsers;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.suia.model.Role;
-import ec.gob.ambiente.suia.model.RolesUser;
 import ec.gob.ambiente.suia.model.Users;
 import lombok.Getter;
 import lombok.Setter;
@@ -126,10 +124,7 @@ public class AdministracionBean implements Serializable{
 	@Setter
 	private List<Safeguards> listaSalvaguardas;
 	
-	@Getter
-	@Setter
-	private ProjectUsers proyectoUsuarioSeleccionado;
-	
+
 	@Getter
 	@Setter
 	private Users usuarioSeleccionado;
@@ -142,11 +137,7 @@ public class AdministracionBean implements Serializable{
 	@Setter
 	private List<Projects> listaProyectos;
 	
-	
-	@Getter
-	@Setter
-	private List<ProjectUsers> listaProyectoUsuarios;
-	
+		
 	@Getter
 	@Setter
 	private List<Role> listaRolesUsuario;

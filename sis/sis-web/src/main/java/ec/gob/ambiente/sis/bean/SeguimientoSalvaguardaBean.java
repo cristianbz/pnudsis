@@ -75,6 +75,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Setter
 	@Getter
+	private boolean habilitaCobeneficio27;
+	
+	@Setter
+	@Getter
 	private boolean mostrartabs;
 	
 	@Setter

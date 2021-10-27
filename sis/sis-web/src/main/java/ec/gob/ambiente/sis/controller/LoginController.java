@@ -32,7 +32,6 @@ import ec.gob.ambiente.sigma.model.User;
 import ec.gob.ambiente.sigma.services.ProjectsFacade;
 import ec.gob.ambiente.sigma.services.ProjectsStrategicPartnersFacade;
 import ec.gob.ambiente.sis.bean.LoginBean;
-import ec.gob.ambiente.sis.services.ProjectUsersFacade;
 import ec.gob.ambiente.sis.services.UserFacade;
 import ec.gob.ambiente.sis.utils.EncriptarSHA;
 import ec.gob.ambiente.sis.utils.JsfUtil;
@@ -70,9 +69,6 @@ public class LoginController implements Serializable {
 	@Getter
 	private UsersFacade usersFacade;
 	
-	@EJB
-	@Getter
-	private ProjectUsersFacade projectUsersFacade;
 	
 	@EJB
 	@Getter
@@ -688,7 +684,7 @@ public class LoginController implements Serializable {
 	public void validarUsuario(){		
 		try{			
 			getLoginBean().setUser(getUsersFacade().validarUsuario(username,EncriptarSHA.encriptarSHA1(password)));
-			getLoginBean().setListaProyectosDelUsuario(new ArrayList<>());
+			
 			if(getLoginBean().getUser()!=null){
 				ec = FacesContext.getCurrentInstance().getExternalContext();
 				getLoginBean().setSesion( (HttpSession)ec.getSession(true));

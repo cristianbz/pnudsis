@@ -28,7 +28,7 @@
 	<h:form id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
 		<p:dialog widgetVar="dlgEnProc" draggable="false" modal="true"
-			resizable="false" closable="false" responsive="true"
+			resizable="false" closable="false" responsive="true" header="En proceso"
 			style="font-size: 10px;">
 			<h:graphicImage value="/resources/images/loading3.gif" width="150" height="150"/>
 		</p:dialog>
@@ -340,11 +340,27 @@
 							<p:panel rendered="#{administracionBean.nuevoIndicador}" header="#{titulos['ingresoIndicadores']}">
 								<div class="ui-fluid p-formgrid p-grid">																																																																						
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
-									<p:outputLabel value="#{etiquetas['indicador']}" />
+										<p:outputLabel value="#{etiquetas['indicador']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-									<p:inputTextarea tabindex="1"
-										value="#{administracionBean.indicadorSeleccionado.indiDescription}" />
+										<p:inputTextarea tabindex="1"
+											value="#{administracionBean.indicadorSeleccionado.indiDescription}" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>
+									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['tipo']}" />
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+										<p:selectOneMenu value="#{administracionBean.indicadorSeleccionado.indiType}" tabindex="2">
+											<f:selectItem itemValue="#{null}" itemLabel="#{mensajes['seleccionElemento']}"/>
+											<f:selectItem itemValue="B" itemLabel="Boolean"/>
+											<f:selectItem itemValue="G" itemLabel="Genero"/>
+											<f:selectItem itemValue="N" itemLabel="Numérico"/>
+											<f:selectItem itemValue="O" itemLabel="Otro"/>
+											<p:ajax process="@this" event="change"/>
+										</p:selectOneMenu>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -353,7 +369,7 @@
 									<p:outputLabel value="#{etiquetas['estado']}" />
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-										<p:toggleSwitch value="#{administracionBean.indicadorSeleccionado.indiStatus}" tabindex="2">
+										<p:toggleSwitch value="#{administracionBean.indicadorSeleccionado.indiStatus}" tabindex="3">
 											<p:ajax process="@this" event="change"/>
 										</p:toggleSwitch>
 									</div>
@@ -363,13 +379,13 @@
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelIndicadores tablaIndicadores " title="#{tooltip['grabar']}" tabindex="3"																							
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelIndicadores tablaIndicadores " title="#{tooltip['grabar']}" tabindex="4"																							
 															actionListener="#{administracionController.agregaEditaIndicador()}" value="#{botones['guardar']}"															
 															update="panelIndicadores tablaIndicadores :form:growl"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIndicadores" update="panelIndicadores" immediate="true" 
-											tabindex="4"  value="#{botones['cancelar']}"
+											tabindex="5"  value="#{botones['cancelar']}"
 											resetValues="true" title="#{tooltip['cancelar']}">											
 											<f:setPropertyActionListener value="false" target="#{administracionBean.nuevoIndicador}"/>
 										</p:commandButton>
@@ -400,7 +416,10 @@
 							var="indi">
 							<p:column headerText="#{etiquetas['indicador']}" style="width:100px;">
 								#{indi.indiDescription}
-							</p:column> 							
+							</p:column> 	
+							<p:column headerText="#{etiquetas['tipo']}" style="width:40px;">
+								#{indi.indiType.equals('B')?'Boolean':indi.indiType.equals('G')?'Genero':indi.indiType.equals('N')?'Numérico':'Otro'}
+							</p:column>													
 							<p:column headerText="#{etiquetas['estado']}" style="width:70px;">
 								<p:outputLabel
 									value="#{indi.indiStatus==true?'Activa':'Inactiva'}" />

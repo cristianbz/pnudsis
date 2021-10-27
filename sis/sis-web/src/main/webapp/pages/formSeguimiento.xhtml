@@ -35,7 +35,7 @@
 		
 		
 		 <p:dialog  widgetVar="dlgEnProc" 
-                  draggable="false" 
+                  draggable="false" header="En proceso" 
                   modal="true" resizable="false" closable="false" responsive="true"
                   style="font-size: 10px;">             
             <h:graphicImage value="/resources/images/loading3.gif" width="150" height="150"/>
@@ -54,6 +54,102 @@
 					oncomplete="PF('dlgEliminaCobeneficio').hide();" process="@this" />
 			</h:panelGrid>
 		</p:dialog>
+        
+        <p:dialog widgetVar="dlgCobeneficios27" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['informeResumenEjecutivo']}" width="550"
+			closable="false" resizable="false">
+			<p:outputPanel id="pnlDatosCobeneficios27">
+	
+			<div class="ui-fluid p-formgrid p-grid">
+				<div class="p-field p-col-12 p-md-3"
+					style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['provincia']} *" />
+				</div>
+				<div class="p-field p-col-12 p-md-7">
+					<p:selectOneMenu required="true" rendered="#{seguimientoSalvaguardaBean.habilitaCobeneficio27}"
+						 tabindex="1" requiredMessage="#{mensajes['campoRequerido']}"
+						value="#{seguimientoSalvaguardaBean.codProvincia}" id="provinciaCB27">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{mensajes['seleccionElemento']}" />
+						<f:selectItems value="#{seguimientoSalvaguardaBean.listaProvincias }"
+							var="provincia" itemLabel="#{provincia.geloName}"
+							itemValue="#{provincia.geloId}" />
+							<p:ajax process="@this " event="change"
+								update=":form:cantonCB " partialSubmit="true"
+								listener="#{seguimientoSalvaguardaController.filtraCantones()}" />
+						</p:selectOneMenu>
+				</div>
+				<div class="p-field p-col-12 p-md-2">
+					<p:message for="provinciaCB27" />
+				</div>
+				
+				<div class="p-field p-col-12 p-md-3"
+					style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['numBeneficiarios']} *" />
+				</div>
+				<div class="p-field p-col-12 p-md-6">
+					<p:inputNumber required="true" tabindex="2"
+						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiarioCB27" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSix}">
+					</p:inputNumber>
+				</div>
+				<div class="p-field p-col-12 p-md-3">
+					<p:message for="beneficiarioCB27"/>
+				</div>
+				
+				<div class="p-field p-col-12 p-md-3"
+					style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['numBeneficiarias']} *" />
+				</div>
+				<div class="p-field p-col-12 p-md-6">
+					<p:inputNumber required="true" tabindex="3"
+						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiariaCB27" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSeven}">
+					</p:inputNumber>
+				</div>
+				<div class="p-field p-col-12 p-md-3">
+					<p:message for="beneficiariaCB27"/>
+				</div>
+				
+				<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['canton']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+							<p:selectOneMenu required="true" rendered="#{seguimientoSalvaguardaBean.habilitaCobeneficio27}" 
+								requiredMessage="#{mensajes['campoRequerido']}" tabindex="2"
+								value="#{seguimientoSalvaguardaBean.codCanton}"
+								id="cantonCB">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{mensajes['seleccionElemento']}" />
+								<f:selectItems
+									value="#{seguimientoSalvaguardaBean.listaCantones}"
+									var="canton" itemLabel="#{canton.geloName}"
+									itemValue="#{canton.geloId}" />
+								<p:ajax process="@this " event="change"
+									 />
+							</p:selectOneMenu>
+
+						</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="cantonCB"/>
+				</div>
+				
+			</div>
+			
+			</p:outputPanel>
+			<h:panelGrid columns="2" style="margin:0 auto;">
+				<p:commandButton value="#{botones['aceptar']}" action="#{seguimientoSalvaguardaController.grabarCobeneficio27()}" tabindex="5"
+					update=":form:salvaguardas:pnlCobeneficios :form:pnlDatosCobeneficios27 growl" icon="#{botones['icono.check']}"
+					process="@this pnlDatosCobeneficios27 :form:salvaguardas:pnlCobeneficios" partialSubmit="true" >
+					<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaBean.habilitaCobeneficio27}"></f:setPropertyActionListener>
+				</p:commandButton>	
+				<p:commandButton value="#{botones['cancelar']}" process="@this" icon="#{botones['icono.cancelar']}" tabindex="5"
+					oncomplete="PF('dlgCobeneficios27').hide();">
+					<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaBean.habilitaCobeneficio27}"></f:setPropertyActionListener>
+				</p:commandButton>	
+			</h:panelGrid>
+			
+        </p:dialog>
          
         <p:dialog widgetVar="dlgCobeneficios" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
@@ -64,73 +160,359 @@
 			<div class="ui-fluid p-formgrid p-grid">
 				<div class="p-field p-col-12 p-md-3"
 					style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-					<p:outputLabel value="#{etiquetas['provincia']}" />
+					<p:outputLabel value="#{etiquetas['provincia']} *" />
 				</div>
 				<div class="p-field p-col-12 p-md-7">
 					<p:selectOneMenu required="true" rendered="#{seguimientoSalvaguardaBean.habilitaCobeneficio}"
-						 tabindex="1"
+						 tabindex="1" requiredMessage="#{mensajes['campoRequerido']}"
 						value="#{seguimientoSalvaguardaBean.codProvincia}" id="provinciaCB">
 						<f:selectItem itemValue="#{null}"
 							itemLabel="#{mensajes['seleccionElemento']}" />
 						<f:selectItems value="#{seguimientoSalvaguardaBean.listaProvincias }"
 							var="provincia" itemLabel="#{provincia.geloName}"
 							itemValue="#{provincia.geloId}" />
-						<p:ajax process="@this " event="change" />
-					</p:selectOneMenu>
+							<p:ajax process="@this " event="change"/>
+						</p:selectOneMenu>
 				</div>
 				<div class="p-field p-col-12 p-md-2">
 					<p:message for="provinciaCB" />
 				</div>
+					<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio != 31}">
+						<div class="p-field p-col-12 p-md-3"
+							style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+							<p:outputLabel value="#{etiquetas['numBeneficiarios']} *" />
+						</div>
+						<div class="p-field p-col-12 p-md-6">
+							<p:inputNumber required="true" tabindex="2"
+								requiredMessage="#{mensajes['campoRequerido']}"
+								id="beneficiarioCB" decimalPlaces="0"
+								value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSix}">
+							</p:inputNumber>
+						</div>
+						<div class="p-field p-col-12 p-md-3">
+							<p:message for="beneficiarioCB" />
+						</div>
+
+						<div class="p-field p-col-12 p-md-3"
+							style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+							<p:outputLabel value="#{etiquetas['numBeneficiarias']} *" />
+						</div>
+						<div class="p-field p-col-12 p-md-6">
+							<p:inputNumber required="true" tabindex="3"
+								requiredMessage="#{mensajes['campoRequerido']}"
+								id="beneficiariaCB" decimalPlaces="0"
+								value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSeven}">
+							</p:inputNumber>
+						</div>
+						<div class="p-field p-col-12 p-md-3">
+							<p:message for="beneficiariaCB" />
+						</div>
+					</p:panelGrid>
+
+					<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 3 
+						or seguimientoSalvaguardaBean.codigoCobeneficio == 5 or seguimientoSalvaguardaBean.codigoCobeneficio == 14
+						or seguimientoSalvaguardaBean.codigoCobeneficio == 16 or seguimientoSalvaguardaBean.codigoCobeneficio == 17
+						or seguimientoSalvaguardaBean.codigoCobeneficio == 25 or seguimientoSalvaguardaBean.codigoCobeneficio == 26
+						or seguimientoSalvaguardaBean.codigoCobeneficio == 30 or seguimientoSalvaguardaBean.codigoCobeneficio == 34
+						or seguimientoSalvaguardaBean.codigoCobeneficio == 35 or seguimientoSalvaguardaBean.codigoCobeneficio == 37
+						or seguimientoSalvaguardaBean.codigoCobeneficio == 38 or seguimientoSalvaguardaBean.codigoCobeneficio == 15}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['numHectareas']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputNumber required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="hectareasCB" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberEight}">
+						</p:inputNumber>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="hectareasCB"/>
+					</div>
+				</p:panelGrid>
 				
-				<div class="p-field p-col-12 p-md-3"
-					style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-					<p:outputLabel value="#{etiquetas['numBeneficiarios']}" />
-				</div>
-				<div class="p-field p-col-12 p-md-6">
-					<p:inputNumber required="true"
-						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiarioCB" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSix}">
-					</p:inputNumber>
-				</div>
-				<div class="p-field p-col-12 p-md-3">
-					<p:message for="beneficiarioCB"/>
-				</div>
-				
-				<div class="p-field p-col-12 p-md-3"
-					style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-					<p:outputLabel value="#{etiquetas['numBeneficiarias']}" />
-				</div>
-				<div class="p-field p-col-12 p-md-6">
-					<p:inputNumber required="true"
-						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiariaCB" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSeven}">
-					</p:inputNumber>
-				</div>
-				<div class="p-field p-col-12 p-md-3">
-					<p:message for="beneficiariaCB"/>
-				</div>
-				
-				<div class="p-field p-col-12 p-md-3"
-					style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-					<p:outputLabel value="#{etiquetas['numHectareas']}" />
-				</div>
-				<div class="p-field p-col-12 p-md-6">
-					<p:inputNumber required="true"
-						requiredMessage="#{mensajes['campoRequerido']}" id="hectareasCB" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberEight}">
-					</p:inputNumber>
-				</div>
-				<div class="p-field p-col-12 p-md-3">
-					<p:message for="hectareasCB"/>
-				</div>
-				
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 1}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['comunidad']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputText required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="comuniCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="comuniCB"/>
+					</div>
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['puebloNacionalidad']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+							<p:selectOneMenu required="true" rendered="#{seguimientoSalvaguardaBean.habilitaCobeneficio}"
+								requiredMessage="#{mensajes['campoRequerido']}" tabindex="5"
+								value="#{seguimientoSalvaguardaBean.codigoPuebloNacionalidad}"								
+								id="puebloCB">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{mensajes['seleccionElemento']}" />
+								<f:selectItems
+									value="#{aplicacionController.aplicacionBean.listaPueblosNacionalidades}"
+									var="pueblo" itemLabel="#{pueblo.cataText1}"
+									itemValue="#{pueblo.cataId}" />
+								<p:ajax process="@this " event="change" />
+							</p:selectOneMenu>
+
+						</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="puebloCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 4}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['espacioGobernanza']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputText required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="espacioGCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="espacioGCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 6}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['riesgoAbordado']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputText required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="riesgoACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="riesgoACB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 7}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['capacidadesFortalecidas']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputText required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="capacidadFCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="capacidadFCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 10}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['productosIncentivados']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="prodICB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="prodICB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 11}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['orgFortalecida']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="orgFCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="orgFCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 12}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['asoApoyada']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="asoACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="asoACB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 13}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['incIngresos']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputNumber required="true" decimalPlaces="1" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="incrementoICB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnDecimalOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="asoACB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 18}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['fuenteIngApoyo']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="fuenteICB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="fuenteICB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 19}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['comunidad']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="comunidadCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="comunidadCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 20}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['capacidadesFortalecidas']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="capacidadF20CB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="capacidadF20CB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 21}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['iniciativaTurApoyo']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="iniciativaTCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="iniciativaTCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 22}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['instrumentoGobForestal']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="instmecCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="instmecCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 23 or seguimientoSalvaguardaBean.codigoCobeneficio == 24}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['nombreOrgApoyada']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="nomorgACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="nomorgACB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 28 or seguimientoSalvaguardaBean.codigoCobeneficio == 29}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['especiesProtegidas']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="especiesPCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="especiesPCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 31}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['usosAlternativos']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="usosACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="usosACB"/>
+					</div>
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['serviciosValorados']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="serviciosVCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnTwo}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="serviciosVCB"/>
+					</div>
+				</p:panelGrid>
+				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 32}">
+					<div class="p-field p-col-12 p-md-3"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['nombreOrgApoyada']} *" />
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:inputTextarea required="true" tabindex="4"
+							requiredMessage="#{mensajes['campoRequerido']}" id="nameOACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="nameOACB"/>
+					</div>
+					
+				</p:panelGrid>
 			</div>
 			
 			</p:outputPanel>
-			<h:panelGrid columns="2">
-				<p:commandButton value="#{botones['aceptar']}" action="#{seguimientoSalvaguardaController.grabarCobeneficio()}"
-					update=":form:salvaguardas:pnlCobeneficios :form:pnlDatosCobeneficios"
+			<h:panelGrid columns="2" style="margin:0 auto;">
+				<p:commandButton value="#{botones['aceptar']}" action="#{seguimientoSalvaguardaController.grabarCobeneficio()}" tabindex="5"
+					update=":form:salvaguardas:pnlCobeneficios :form:pnlDatosCobeneficios growl" icon="#{botones['icono.check']}"
 					process="@this pnlDatosCobeneficios :form:salvaguardas:pnlCobeneficios" partialSubmit="true" >
 					<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaBean.habilitaCobeneficio}"></f:setPropertyActionListener>
 				</p:commandButton>	
-				<p:commandButton value="#{botones['cancelar']}" process="@this" 
+				<p:commandButton value="#{botones['cancelar']}" process="@this" icon="#{botones['icono.cancelar']}" tabindex="5"
 					oncomplete="PF('dlgCobeneficios').hide();">
 					<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaBean.habilitaCobeneficio}"></f:setPropertyActionListener>
 				</p:commandButton>	
@@ -1624,7 +2006,7 @@
 								</div>
 					</div>			
 					<br/>
-
+					
 					<p:tabView id="salvaguardas" rendered="#{seguimientoSalvaguardaController.componenteBuscarProyectos.buscaProyectosBean.mostrarTabs}"				
 						styleClass="fondoColorSigma"  activeIndex="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tabActual}" >
 						<p:ajax event="tabChange" listener="#{seguimientoSalvaguardaController.tabChange}" process=":form:salvaguardas" update=":form:salvaguardas"/>
@@ -10975,8 +11357,11 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb1.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb1.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb1.tareColumnOne}"/>
+										</p:column>
+										<p:column headerText="#{etiquetas['puebloNacionalidad']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb1.tareGenerico}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11017,9 +11402,6 @@
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb2.tareColumnNumberSeven}"/>
-										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb2.tareColumnNumberEight}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11104,8 +11486,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb4.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb4.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['espacioGobernanza']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb4.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11197,8 +11579,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb6.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb6.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['riesgoAbordado']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb6.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11240,8 +11622,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb7.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb7.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['capacidadesFortalecidas']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb7.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11302,9 +11684,7 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb8.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb8.tareColumnNumberEight}"/>
-										</p:column>
+										
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
 												action="#{seguimientoSalvaguardaController.editarCobeneficio()}">
@@ -11345,9 +11725,7 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb9.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb9.tareColumnNumberEight}"/>
-										</p:column>
+										
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
 												action="#{seguimientoSalvaguardaController.editarCobeneficio()}">
@@ -11388,8 +11766,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb10.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb10.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['productosIncentivados']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb10.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11431,8 +11809,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb11.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb11.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['orgFortalecida']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb11.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11474,8 +11852,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb12.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb12.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['asoApoyada']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb12.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11517,8 +11895,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb13.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb13.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['incIngresos']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb13.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11767,8 +12145,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb18.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb18.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['fuenteIngApoyo']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb18.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11811,8 +12189,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb19.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb19.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb19.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11854,8 +12232,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb20.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb20.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['capacidadesFortalecidas']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb20.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11897,8 +12275,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb21.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb21.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['iniciativaTurApoyo']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb21.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11940,8 +12318,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb22.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb22.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['instrumentoGobForestal']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb22.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11983,8 +12361,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb23.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb23.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['nombreOrgApoyada']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb23.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12026,8 +12404,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb24.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb24.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['nombreOrgApoyada']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb24.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12146,8 +12524,8 @@
 								<div class="p-field p-col-12 p-md-12">
 									<p:toolbar style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">							            
 							            <p:toolbarGroup align="right" >							                
-							                <p:commandButton value="#{botones['agregar']}" process="@this " update=":form:pnlDatosCobeneficios" partialSubmit="true"
-							                action="#{seguimientoSalvaguardaController.nuevoCobeneficio}"
+							                <p:commandButton value="#{botones['agregar']}" process="@this " update=":form:pnlDatosCobeneficios27" partialSubmit="true"
+							                action="#{seguimientoSalvaguardaController.nuevoCobeneficioCanton}"
 							                icon="#{botones['icono.mas']}" styleClass="ui-button-help" >
 							                <f:setPropertyActionListener value="27" target="#{seguimientoSalvaguardaBean.codigoCobeneficio}"></f:setPropertyActionListener>	    
 							                </p:commandButton>
@@ -12165,12 +12543,12 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb27.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb27.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['canton']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb27.tareCanton}"/>
 										</p:column>
 										<p:column style="width:80px;">
-											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
-												action="#{seguimientoSalvaguardaController.editarCobeneficio()}">
+											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios27" partialSubmit="true" 
+												action="#{seguimientoSalvaguardaController.editarCobeneficio27()}">
 												<f:setPropertyActionListener value="#{cb27}" target="#{seguimientoSalvaguardaBean.registroTablaCobeneficios}"></f:setPropertyActionListener>
 												<f:setPropertyActionListener value="27" target="#{seguimientoSalvaguardaBean.codigoCobeneficio}"></f:setPropertyActionListener>
 											</p:commandButton>
@@ -12208,8 +12586,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb28.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb28.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['especiesProtegidas']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb28.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12251,8 +12629,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb29.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb29.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['especiesProtegidas']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb29.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12331,15 +12709,13 @@
 											<p:outputLabel value="#{cb31.tareProvincia}"/>
 										</p:column>
 										
-										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb31.tareColumnNumberSix}"/>
+										<p:column headerText="#{etiquetas['usosAlternativos']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb31.tareColumnOne}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb31.tareColumnNumberSeven}"/>
+										<p:column headerText="#{etiquetas['serviciosValorados']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb31.tareColumnTwo}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb31.tareColumnNumberEight}"/>
-										</p:column>
+										
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
 												action="#{seguimientoSalvaguardaController.editarCobeneficio()}">
@@ -12402,8 +12778,8 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb32.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb32.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['nombreOrgApoyada']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb32.tareColumnOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12445,9 +12821,7 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb33.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb33.tareColumnNumberEight}"/>
-										</p:column>
+										
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
 												action="#{seguimientoSalvaguardaController.editarCobeneficio()}">
@@ -12565,8 +12939,8 @@
 								<div class="p-field p-col-12 p-md-12">
 									<p:toolbar style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">							            
 							            <p:toolbarGroup align="right" >							                
-							                <p:commandButton value="#{botones['agregar']}" process="@this " update=":form:pnlDatosCobeneficios" partialSubmit="true"
-							                action="#{seguimientoSalvaguardaController.nuevoCobeneficio}"
+							                <p:commandButton value="#{botones['agregar']}" process="@this " update=":form:pnlDatosCobeneficios27" partialSubmit="true"
+							                action="#{seguimientoSalvaguardaController.nuevoCobeneficioCanton}"
 							                icon="#{botones['icono.mas']}" styleClass="ui-button-help" >
 							                <f:setPropertyActionListener value="36" target="#{seguimientoSalvaguardaBean.codigoCobeneficio}"></f:setPropertyActionListener>	    
 							                </p:commandButton>
@@ -12584,12 +12958,12 @@
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb36.tareColumnNumberSeven}"/>
 										</p:column>
-										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb36.tareColumnNumberEight}"/>
+										<p:column headerText="#{etiquetas['canton']}" styleClass="cabeceraTabla">
+											<p:outputLabel value="#{cb36.tareCanton}"/>
 										</p:column>
 										<p:column style="width:80px;">
-											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
-												action="#{seguimientoSalvaguardaController.editarCobeneficio()}">
+											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios27" partialSubmit="true" 
+												action="#{seguimientoSalvaguardaController.editarCobeneficio27()}">
 												<f:setPropertyActionListener value="#{cb36}" target="#{seguimientoSalvaguardaBean.registroTablaCobeneficios}"></f:setPropertyActionListener>
 												<f:setPropertyActionListener value="36" target="#{seguimientoSalvaguardaBean.codigoCobeneficio}"></f:setPropertyActionListener>
 											</p:commandButton>
