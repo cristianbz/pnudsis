@@ -420,42 +420,7 @@
 					oncomplete="PF('dlgEliminaItemTabla3').hide();" process="@this" />
 			</h:panelGrid>
 		</p:dialog>
-		<!-- DIALOGO ELIMINA ITEM TABLA 4 -->
-<!-- 		<p:dialog widgetVar="dlgEliminaItemTabla4" showEffect="fade"
-			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['eliminaRegistro']}" width="250" closable="false"
-			resizable="false">
-			<h:panelGrid columns="2">
-				<p:commandButton value="#{botones['borrar']}"
-					update=":form:tabs:panelTablaGenero4 growl"
-					actionListener="#{seguimientoGeneroController.eliminarRegistroTablaGenero(4)}"
-					oncomplete="PF('dlgEliminaItemTabla4').hide();"
-					process="@this :form:tabs:panelTablaGenero4"
-					icon="#{botones['icono.grabar']}" />
-				<p:commandButton icon="#{botones['icono.cancelar']}"
-					value="#{botones['cancelar']}"
-					oncomplete="PF('dlgEliminaItemTabla4').hide();" process="@this" />
-			</h:panelGrid>
-		</p:dialog>
- -->		
-		<!-- DIALOGO ELIMINA ITEM TABLA 5 -->
-<!-- 		<p:dialog widgetVar="dlgEliminaItemTabla5" showEffect="fade"
-			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['eliminaRegistro']}" width="250" closable="false"
-			resizable="false">
-			<h:panelGrid columns="2">
-				<p:commandButton value="#{botones['borrar']}"
-					update=":form:tabs:panelTablaGenero5 growl"
-					actionListener="#{seguimientoGeneroController.eliminarRegistroTablaGenero(5)}"
-					oncomplete="PF('dlgEliminaItemTabla5').hide();"
-					process="@this :form:tabs:panelTablaGenero5"
-					icon="#{botones['icono.grabar']}" />
-				<p:commandButton icon="#{botones['icono.cancelar']}"
-					value="#{botones['cancelar']}"
-					oncomplete="PF('dlgEliminaItemTabla5').hide();" process="@this" />
-			</h:panelGrid>
-		</p:dialog>
--->
+
 		<!-- DIALOGO ELIMINA ITEM TABLA 6 -->
 		<p:dialog widgetVar="dlgEliminaItemTabla6" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
@@ -686,8 +651,8 @@
 											<div class="p-field p-col-12 p-md-1" style="height: 10px;">
 												<p:commandButton id="btnTablaGen3"
 													styleClass="botonAgregaRegistro"
-													value="#{botones['agregar']}"
-													icon="#{botones['icono.mas']}"
+													value="#{botones['agregar']}" immediate="true" resetValues="true"
+													icon="#{botones['icono.mas']}" 
 													process="@this :form:tabs:panelIngresoGenero3 "
 													update=":form:tabs:panelIngresoGenero3  :form:growl"
 													disabled="#{not seguimientoGeneroBean.listaValoresRespuestas.get(0).vaanYesnoAnswerValue or buscaProyectosBean.proyectoReportado}"
@@ -705,7 +670,7 @@
 											<div class="ui-fluid p-formgrid p-grid">
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['provincia']}" />
+													<p:outputLabel value="#{etiquetas['provincia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -729,7 +694,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['canton']}" />
+													<p:outputLabel value="#{etiquetas['canton']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -753,7 +718,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['parroquia']}" />
+													<p:outputLabel value="#{etiquetas['parroquia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -775,7 +740,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}" />
+													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu
@@ -801,7 +766,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['puebloNacionalidad']}" />
+													<p:outputLabel value="#{etiquetas['puebloNacionalidad']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -839,7 +804,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['espacioIdentificado']}" />
+													<p:outputLabel value="#{etiquetas['espacioIdentificado']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true" id="espacioG3"
@@ -855,7 +820,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['tipoOrganizacion']}" />
+													<p:outputLabel value="#{etiquetas['tipoOrganizacion']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectCheckboxMenu id="multipleSeleccionG3"
@@ -873,7 +838,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['finRolOrganizacion']}" />
+													<p:outputLabel value="#{etiquetas['finRolOrganizacion']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true" id="rolG3"
@@ -890,7 +855,7 @@
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel
-														value="#{etiquetas['accionesFortalecimiento']}" />
+														value="#{etiquetas['accionesFortalecimiento']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true" id="accionesG3"
@@ -907,7 +872,7 @@
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel
-														value="#{etiquetas['nroHombresBeneficiarios']}" />
+														value="#{etiquetas['nroHombresBeneficiarios']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputNumber decimalPlaces="0" required="true" id="hombresG3"
@@ -924,7 +889,7 @@
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel
-														value="#{etiquetas['nroMujeresBeneficiarias']}" />
+														value="#{etiquetas['nroMujeresBeneficiarias']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputNumber decimalPlaces="0" required="true"
@@ -940,7 +905,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['linkVerificador']}" />
+													<p:outputLabel value="#{etiquetas['linkVerificador']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputText required="true" id="linkG3"
@@ -1042,12 +1007,7 @@
 														<p:outputLabel value="#{tablarespuestas.tareColumnFive}"
 															style="font-size:10px !important;" />
 													</p:column>
-												<!-- 	<p:column
-														headerText="#{etiquetas['numeroBeneficiariasOrganizacion']}">
-														<p:outputLabel
-															value="#{tablarespuestas.tareColumnNumberSix}"
-															style="font-size:10px !important;" />
-													</p:column>  -->
+
 													<p:column
 														headerText="#{etiquetas['nroHombresBeneficiarios']}">
 														<p:outputLabel
@@ -1066,7 +1026,7 @@
 													</p:column>
 													<p:column>
 														<p:commandButton icon="#{botones['icono.editar']}"
-															title="#{tooltip['editar']}"
+															title="#{tooltip['editar']}" immediate="true" resetValues="true"
 															action="#{seguimientoGeneroController.editarRegistroTabla3()}"
 															process="@this :form:tabs:panelIngresoGenero3"
 															update=":form:tabs:panelIngresoGenero3">
@@ -1130,7 +1090,7 @@
 												<p:commandButton id="btnTablaGen6"
 													styleClass="botonAgregaRegistro"
 													value="#{botones['agregar']}"
-													icon="#{botones['icono.mas']}"
+													icon="#{botones['icono.mas']}" immediate="true" resetValues="true"
 													process="@this :form:tabs:panelIngresoGenero6"
 													update=":form:tabs:panelIngresoGenero6  :form:growl"
 													disabled="#{not seguimientoGeneroBean.listaValoresRespuestas.get(1).vaanYesnoAnswerValue or buscaProyectosBean.proyectoReportado}"
@@ -1149,7 +1109,7 @@
 											<div class="ui-fluid p-formgrid p-grid">
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['provincia']}" />
+													<p:outputLabel value="#{etiquetas['provincia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1173,7 +1133,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['canton']}" />
+													<p:outputLabel value="#{etiquetas['canton']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1197,7 +1157,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['parroquia']}" />
+													<p:outputLabel value="#{etiquetas['parroquia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1219,7 +1179,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}" />
+													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu
@@ -1245,7 +1205,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['puebloNacionalidad']}" />
+													<p:outputLabel value="#{etiquetas['puebloNacionalidad']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1270,7 +1230,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['comunidad']}" />
+													<p:outputLabel value="#{etiquetas['comunidad']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
@@ -1284,7 +1244,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['nombreLideresa']}" />
+													<p:outputLabel value="#{etiquetas['nombreLideresa']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputText required="true" id="lideresaG6"
@@ -1300,7 +1260,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['espacioDialogo']}" />
+													<p:outputLabel value="#{etiquetas['espacioDialogo']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true" id="espacioG6"
@@ -1315,7 +1275,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['rolEspacio']}" />
+													<p:outputLabel value="#{etiquetas['rolEspacio']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true" id="rolG6"
@@ -1330,7 +1290,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['accionesLideresa']}" />
+													<p:outputLabel value="#{etiquetas['accionesLideresa']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
@@ -1345,7 +1305,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['linkVerificador']}" />
+													<p:outputLabel value="#{etiquetas['linkVerificador']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputText required="true"
@@ -1444,11 +1404,11 @@
 													</p:column>
 													<p:column>
 														<p:commandButton icon="#{botones['icono.editar']}"
-															title="#{tooltip['editar']}"
+															title="#{tooltip['editar']}" immediate="true" resetValues="true"
 															action="#{seguimientoGeneroController.editarRegistroTabla6()}"
 															process="@this :form:tabs:panelIngresoGenero6"
 															update=":form:tabs:panelIngresoGenero6">
-
+															
 															<f:setPropertyActionListener value="#{tablarespuestas}"
 																target="#{seguimientoGeneroBean.filaTabla6}" />
 															<f:setPropertyActionListener value="true"
@@ -1507,7 +1467,7 @@
 													styleClass="botonAgregaRegistro"
 													value="#{botones['agregar']}"
 													icon="#{botones['icono.mas']}"
-													process="@this :form:tabs:panelIngresoGenero6"
+													process="@this :form:tabs:panelIngresoGenero7" immediate="true" resetValues="true"
 													update=":form:tabs:panelIngresoGenero7  :form:growl"
 													disabled="#{not seguimientoGeneroBean.listaValoresRespuestas.get(2).vaanYesnoAnswerValue or buscaProyectosBean.proyectoReportado}"
 													actionListener="#{seguimientoGeneroController.nuevoRegistroGeneroTabla7()}"
@@ -1525,7 +1485,7 @@
 											<div class="ui-fluid p-formgrid p-grid">
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['provincia']}" />
+													<p:outputLabel value="#{etiquetas['provincia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1549,7 +1509,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['canton']}" />
+													<p:outputLabel value="#{etiquetas['canton']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1573,7 +1533,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['parroquia']}" />
+													<p:outputLabel value="#{etiquetas['parroquia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1595,7 +1555,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}" />
+													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu
@@ -1621,7 +1581,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['puebloNacionalidad']}" />
+													<p:outputLabel value="#{etiquetas['puebloNacionalidad']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:selectOneMenu required="true"
@@ -1646,7 +1606,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['comunidad']}" />
+													<p:outputLabel value="#{etiquetas['comunidad']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
@@ -1662,7 +1622,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['accion']}" />
+													<p:outputLabel value="#{etiquetas['accion']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
@@ -1678,7 +1638,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['resultado']}" />
+													<p:outputLabel value="#{etiquetas['resultado']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputTextarea required="true"
@@ -1694,7 +1654,7 @@
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel
-														value="#{etiquetas['nroMujeresBeneficiarias']}" />
+														value="#{etiquetas['nroMujeresBeneficiarias']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputNumber decimalPlaces="0" required="true"
@@ -1710,7 +1670,7 @@
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
 													<p:outputLabel
-														value="#{etiquetas['nroHombresBeneficiarios']}" />
+														value="#{etiquetas['nroHombresBeneficiarios']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputNumber decimalPlaces="0" required="true"
@@ -1725,7 +1685,7 @@
 
 												<div class="p-field p-col-12 p-md-3"
 													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
-													<p:outputLabel value="#{etiquetas['linkVerificador']}" />
+													<p:outputLabel value="#{etiquetas['linkVerificador']} *" />
 												</div>
 												<div class="p-field p-col-12 p-md-7">
 													<p:inputText required="true"
@@ -1751,7 +1711,7 @@
 												<div class="p-field p-col-12 p-md-2">
 													<p:commandButton icon="#{botones['icono.cancelar']}"
 														process="@this :form:tabs:panelIngresoGenero7" oncomplete="goToAnchor('iniciotabla7');"
-														update=":form:tabs:panelIngresoGenero7" tabindex="13"
+														update=":form:tabs:panelIngresoGenero7" tabindex="13" partialSubmit="true"
 														value="#{botones['cancelar']}" immediate="true"
 														resetValues="true" title="#{tooltip['cancelar']} ">
 
@@ -1829,13 +1789,13 @@
 													</p:column>
 													<p:column>
 														<p:commandButton icon="#{botones['icono.editar']}"
-															title="#{tooltip['editar']}"
+															title="#{tooltip['editar']}" 
 															action="#{seguimientoGeneroController.editarRegistroTabla7()}"
-															process="@this :form:tabs:panelIngresoGenero7"
+															process="@this " immediate="true" resetValues="true"
 															update=":form:tabs:panelIngresoGenero7">
 
 															<f:setPropertyActionListener value="#{tablarespuestas}"
-																target="#{seguimientoGeneroBean.filaTabla7}" />
+																target="#{seguimientoGeneroController.seguimientoGeneroBean.filaTabla7}" />
 															<f:setPropertyActionListener value="true"
 																target="#{seguimientoGeneroBean.nuevoRegistroTablaGenero7}" />
 														</p:commandButton>
@@ -1844,7 +1804,7 @@
 															action="#{seguimientoGeneroController.mostrarDialogoEliminaDatosTabla(7)}"
 															icon="#{botones['icono.borrar']}" process="@this ">
 															<f:setPropertyActionListener value="#{tablarespuestas}"
-																target="#{seguimientoGeneroBean.filaTabla7}" />
+																target="#{seguimientoGeneroController.seguimientoGeneroBean.filaTabla7}" />
 														</p:commandButton>
 
 													</p:column>

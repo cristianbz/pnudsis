@@ -57,7 +57,7 @@
         
         <p:dialog widgetVar="dlgCobeneficios27" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['informeResumenEjecutivo']}" width="550"
+			header="#{titulos['cobeneficio']}" width="550"
 			closable="false" resizable="false">
 			<p:outputPanel id="pnlDatosCobeneficios27">
 	
@@ -153,7 +153,7 @@
          
         <p:dialog widgetVar="dlgCobeneficios" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['informeResumenEjecutivo']}" width="550"
+			header="#{titulos['cobeneficio']}" width="550"
 			closable="false" resizable="false">
 			<p:outputPanel id="pnlDatosCobeneficios">
 	
@@ -422,7 +422,7 @@
 				</p:panelGrid>
 				<p:panelGrid rendered="#{seguimientoSalvaguardaBean.codigoCobeneficio == 22}">
 					<div class="p-field p-col-12 p-md-3"
-						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						style="background: #00AAC3; color: #FFFFFF;  text-align: right;font-size:10px !important;">
 						<p:outputLabel value="#{etiquetas['instrumentoGobForestal']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
@@ -601,7 +601,7 @@
 			<p:outputPanel id="panelInSitu">
 				<h:panelGrid columns="2">
 					<p:outputLabel value="#{etiquetas['monitoreoInSitu']}"/> 
-					<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoMonitoreoInSitu.cataText1}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+					<p:inputText value="#{seguimientoSalvaguardaBean.nuevoMonitoreoInSitu.cataText2}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
 						<p:ajax process="@this panelInSitu" event="blur" partialSubmit="true"/>
 					</p:inputText>
 				</h:panelGrid>
@@ -625,7 +625,7 @@
 			<p:outputPanel id="panelRemoto">
 				<h:panelGrid columns="2">
 					<p:outputLabel value="#{etiquetas['monitoreoRemoto']}"/> 
-					<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoMonitoreoRemoto.cataText1}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+					<p:inputText value="#{seguimientoSalvaguardaBean.nuevoMonitoreoRemoto.cataText2}" required="true" requiredMessage="#{mensajes['campoRequerido']}">
 						<p:ajax process="@this panelRemoto" event="blur" partialSubmit="true"/>
 					</p:inputText>
 				</h:panelGrid>
@@ -2822,7 +2822,7 @@
 													itemLabel="#{mensajes['seleccionElemento']}" />
 												<f:selectItems
 													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCatalogoModalidad}"
-													var="modalidad" itemLabel="#{modalidad.cataText1}"
+													var="modalidad" itemLabel="#{modalidad.cataText2}"
 													itemValue="#{modalidad.cataId}" />
 												<f:selectItem itemValue="0"
 													itemLabel="Otro.." />	
@@ -3152,9 +3152,14 @@
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="componentetblB51"/>
 									</div>
-									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['beneficiarioa']}" styleClass="pregunta"/>
+									</div>
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['registroBeneficiario']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['notaNoBeneficiario']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-11">
 										<p:dataTable id="tblAux51" var="tabla" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoSalvaguardaBean.tablaSalvaguardaB51Aux}">
@@ -3793,13 +3798,13 @@
 											<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="6"
 												panelStyle="width: 35rem"
 												style="width:300px;"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoActividad}"
+												value="#{seguimientoSalvaguardaBean.codigoActividad}"
 												id="comboActividad">
 												<f:selectItem itemValue="#{null}"
 													itemLabel="#{mensajes['seleccionElemento']}" />
 												<f:selectItems
-													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCatalogoActividad}"
-													var="actividad" itemLabel="#{actividad.cataText1}"
+													value="#{seguimientoSalvaguardaBean.listaCatalogoActividad}"
+													var="actividad" itemLabel="#{actividad.cataText2}"
 													itemValue="#{actividad.cataId}" />
 												
 												<f:selectItem itemValue="0"
@@ -5074,7 +5079,7 @@
 												id="modalidadtblB131">
 												<f:selectItem itemValue="#{null}"
 													itemLabel="#{mensajes['seleccionElemento']}" />	
-								            <f:selectItems value="#{seguimientoSalvaguardaBean.listaCatalogoModalidad}" var="moda" itemLabel="#{moda.cataText1}" itemValue="#{moda.cataId}"/>
+								            <f:selectItems value="#{seguimientoSalvaguardaBean.listaCatalogoModalidad}" var="moda" itemLabel="#{moda.cataText2}" itemValue="#{moda.cataId}"/>
 								        <f:selectItem itemValue="0"
 													itemLabel="Otro.." />	
 												<p:ajax process="@this " event="change" resetValues="true"
@@ -9905,7 +9910,7 @@
 										<p:outputLabel value="#{etiquetas['herramientaPdot']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-										<p:selectOneMenu panelStyle="width: 35rem" style="width:400px;"
+										<p:selectOneMenu panelStyle="width: 35rem" style="width:250px;"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.codigoHerramienta}" tabindex="2"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}"
 												id="herramientaE351">
@@ -9913,7 +9918,7 @@
 													itemLabel="#{mensajes['seleccionElemento']}" />
 												<f:selectItems
 													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaHerramientas}"
-													var="herramienta" itemLabel="#{herramienta.cataText1}"
+													var="herramienta" itemLabel="#{herramienta.cataText2}"
 													itemValue="#{herramienta.cataId}" />
 												<f:selectItem itemValue="0"
 													itemLabel="Otro.." />	
@@ -9927,10 +9932,13 @@
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="3" 
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasE351.tareAnotherCatalog}"/>
 									</div>
-									<div class="p-field p-col-12 p-md-3">
-										<p:message for="herramientaE351"/>
+									<div class="p-field p-col-12 p-md-1">	
 										<comp:ayuda texto="#{tooltip['nuevaHerramienta']}"/>
 									</div>
+									<div class="p-field p-col-12 p-md-2">
+										<p:message for="herramientaE351"/>
+									</div>
+									
 									
 									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
@@ -10378,7 +10386,8 @@
 										process="@this :form:salvaguardas:panelIngreso371E" styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
 										id="btnTablaE371" immediate="true" resetValues="true"
 										action="#{seguimientoSalvaguardaController.nuevaFilaTablaSalvaguardaE371()}"
-										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasE.get(3).vaanYesnoAnswerValue} or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')"
+										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasE.get(3).vaanYesnoAnswerValue 
+											or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										update=":form:salvaguardas:panelIngreso371E" 
 										title="#{tooltip['nuevoRegistro']}">
 										<f:setPropertyActionListener value="true"

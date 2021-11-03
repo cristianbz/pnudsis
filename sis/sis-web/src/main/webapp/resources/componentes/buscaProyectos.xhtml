@@ -42,7 +42,7 @@
 				hideEffect="fade" modal="true" appendTo="@(body)" 
 				header="#{titulos['nuevaLineaAccion']}" width="400px;" 
 				closable="false" resizable="false" responsive="true">
-				<p:scrollPanel mode="native" style="max-height:600px; max-width:800px;" >
+				<p:scrollPanel mode="native" style="max-height:300px; max-width:800px;" >
 				<p:outputPanel id="panelIndicadores" >
 				<div class="ui-fluid p-formgrid p-grid">					
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
@@ -543,7 +543,7 @@
 										</h:panelGrid>
 										
 										
-										<p:outputLabel value="#{etiquetas['periodo']}:"/>
+										<p:outputLabel value="#{etiquetas['anio']}:"/>
 										<h:panelGrid columns="2">
 											<p:selectOneMenu panelStyle="width: 35rem"
 												style="width:200px;" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.anioReporte}">
@@ -843,6 +843,7 @@
 						<br />
 						<br />
 						<p:outputLabel value="#{titulos['escojaPreguntas']}" />
+						<br />
 						<br />
 						<div class="ui-fluid p-formgrid p-grid">
 							<div class="p-field p-col-12 p-md-12">

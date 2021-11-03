@@ -79,7 +79,7 @@ public class ProjectsStrategicPartnersFacade extends AbstractFacade<ProjectsStra
 	 * @throws Exception
 	 */
 	public List<ProjectsStrategicPartners> listaProyectosSocioEstrategico(String rucSocio)throws Exception{
-		String sql="SELECT PSP FROM ProjectsStrategicPartners PSP,Projects P, Partners PA WHERE PSP.projects.projId = P.projId AND PSP.partners.partId = PA.partId AND PA.partIdNumber=:rucSocio AND PSP.pspaStatus=TRUE ORDER BY P.projTitle";
+		String sql="SELECT PSP FROM ProjectsStrategicPartners PSP,Projects P, Partners PA WHERE PSP.projects.projId = P.projId  AND PSP.partners.partId = PA.partId AND PA.partIdNumber=:rucSocio AND PSP.pspaStatus=TRUE AND P.projRegisterStatus='V' ORDER BY P.projTitle";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("rucSocio", rucSocio);
 		return findByCreateQuery(sql, camposCondicion);

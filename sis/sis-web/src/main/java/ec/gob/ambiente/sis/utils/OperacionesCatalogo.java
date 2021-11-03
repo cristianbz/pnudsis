@@ -30,6 +30,16 @@ public class OperacionesCatalogo {
 		return valor;
 	}
 	
+	public static String ubicaDescripcionCatalogoText2(int codigo,List<Catalogs> listaCatalogo){
+		String valor="";
+		Optional<Catalogs> resultado= listaCatalogo.stream().filter((p)->p.getCataId().equals(codigo)).findFirst();
+		if(resultado.isPresent()){
+			Catalogs catalogo= resultado.get();
+			valor=catalogo.getCataText2();
+		}
+		return valor;
+	}
+	
 	/**
 	 * Prepara datos para agregar un nuevo catalogo
 	 * @param tipoCatalogo
