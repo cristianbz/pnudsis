@@ -117,29 +117,12 @@
 								<p:commandButton id="loginButton" value="Ingresar" 
 									action="#{loginController.validarUsuario()}" update=":indexForm"  process="@this username password grid" partialSubmit="true"
 									styleClass="buttonLogin w100" />
-										
-								<h:panelGrid columns="1" styleClass="w100" columnClasses="alRight">
-									<h:outputLink value="#{request.contextPath}/usuario/recuperarClave.xhtml" styleClass="linkForgot">¿Olvidó su contraseña?</h:outputLink>
-								</h:panelGrid>
+								 		
+							
+								 
 							</h:panelGrid>
 							<br />
-							<h:panelGrid columns="1" rendered="false" 
-								columnClasses="w50 alTop alCenter, field_mrg w50 alTop alCenter">
-								<h:outputLabel value="Si aún no es usuario de SUIA, regístrese ahora" 
-									styleClass="labelRegister" />							
-								
-								<p:commandButton value="Regístrese en el sistema" process="@this" action="/registro.xhtml" ajax="false" immediate="true" styleClass="buttonRegister bold w70" />	
-							</h:panelGrid>							
-							<h:panelGrid columns="1" 
-											columnClasses="w50 alTop alCenter, field_mrg w50 alTop alCenter">
-											<h:outputLabel value="Si aún no es usuario de SUIA, regístrese ahora" 
-												styleClass="labelRegister" />
-											
-											<p:commandButton value="Regístrese en el sistema" 
-												actionListener="#{loginController.registrarse()}" immediate="true"  
-												styleClass="buttonRegister bold w70"/>	
-												
-							</h:panelGrid>
+							
 							
 						</p:panel>
 

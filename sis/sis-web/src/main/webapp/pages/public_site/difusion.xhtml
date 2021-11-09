@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script
+		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.5.0"></script>
+	<link
+		href="${facesContext.externalContext.requestContextPath}/css/sigma.css"
+		rel="stylesheet" type="text/css" />
+	<script type="text/javascript"
+		src="${facesContext.externalContext.requestContextPath}/js/sigma.js" />
+
+	<meta name="viewport" content="width=device-width,initial-scale=1"/>
+</h:head>
+<h:body>
+	<h:form id="frm" enctype="multipart/form-data">
+		<div class="ui-fluid">
+			<p:growl id="msgs" showDetail="true" />
+			<ui:include src="/resources/status_gif.xhtml" />
+			<center>
+				<p:panel>
+					<h:panelGrid id="pnlContenido">
+					
+					<h:panelGrid columns="1" columnClasses="ui-g-12 ui-md-12 ui-lg-12" style="margin:0 auto;">
+					<p:graphicImage  value="/resources/images/sis/banner_maate.png"
+                           width="100%"/>
+					</h:panelGrid>
+					<h:panelGrid columns="1" style="margin:0 auto;">
+					<p:graphicImage  value="/resources/images/sis/banner_con_titulo.png"
+                           width="100%"/>
+					</h:panelGrid>
+					<h:panelGrid id="pnlSalvaguardasA_D" columns="4" 
+					columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
+					style="margin:0 auto;text-align:center;">
+					<p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE01')}"
+					process="@this" partialSubmit="true" async="true" global="false"
+					update="pnlCriterios">
+					<p:graphicImage  value="/resources/images/sis/salvaguarda_a.png"
+                           style="max-width:299px;"/>
+                           </p:commandLink>
+                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE02')}"
+					process="@this" partialSubmit="true" async="true" global="false"
+					update="pnlCriterios">
+                           <p:graphicImage  value="/resources/images/sis/salvaguarda_b.png"
+                           style="max-width:299px;"/>
+                           </p:commandLink>
+                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE03')}"
+					process="@this" partialSubmit="true" async="true" global="false"
+					update="pnlCriterios">
+                           <p:graphicImage  value="/resources/images/sis/salvaguarda_c.png"
+                           style="max-width:299px;"/>
+                           </p:commandLink>
+                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE04')}"
+					process="@this" partialSubmit="true" async="true" global="false"
+					update="pnlCriterios">
+                           <p:graphicImage  value="/resources/images/sis/salvaguarda_d.png"
+                           style="max-width:299px;"/>
+                           </p:commandLink>
+					</h:panelGrid>
+					<h:panelGrid id="pnlSalvaguardasE_G" columns="3" 
+					columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
+					style="margin:0 auto;text-align:center;">
+					<p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE01')}"
+					process="@this" partialSubmit="true" async="true" global="false"
+					update="pnlCriterios">
+					<p:graphicImage  value="/resources/images/sis/salvaguarda_e.png"
+                           style="max-width:299px;"/>
+                           </p:commandLink>
+                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE02')}"
+					process="@this" partialSubmit="true" async="true" global="false"
+					update="pnlCriterios">
+                           <p:graphicImage  value="/resources/images/sis/salvaguarda_f.png"
+                           style="max-width:299px;"/>
+                           </p:commandLink>
+                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE03')}"
+					process="@this" partialSubmit="true" async="true" global="false"
+					update="pnlCriterios">
+                           <p:graphicImage  value="/resources/images/sis/salvaguarda_g.png"
+                           style="max-width:299px;"/>
+                           </p:commandLink>
+                           
+					</h:panelGrid>
+					<h:panelGrid id="pnlCriterios" columns="3" style="margin:0 auto;">
+					
+					<f:verbatim/>
+					<p:outputLabel value="#{consulta.componentePAVigente.compName}"/>
+					<f:verbatim/>
+					
+					<p:outputLabel value="Provincia" />
+					<h:selectOneMenu id="codProv" value="#{consulta.codProvincia}">
+						<f:selectItems value="#{app.lstGeoLocProvincias}" var="prov"
+							itemLabel="#{prov[0]}" itemValue="#{prov[1]}" />
+					</h:selectOneMenu>
+					<p:commandButton value="Consultar"
+						action="#{consulta.consultarAccionesRegistradasPorProvincia()}"
+						process="@this,codProv" partialSubmit="true" async="true"
+						global="false" update="pnlConsulta" />
+					</h:panelGrid>
+					<h:panelGrid id="pnlConsulta" width="100%">
+					<p:dataTable id="lstAcciones"
+						value="#{consulta.listaAccionesRegistradas}" var="indicador"
+						reflow="true">
+						<f:facet name="header">
+									#{txt.lbl307}
+									</f:facet>
+						<p:column  headerText="Proyecto">
+						<h:panelGrid styleClass="panelGridSinBorde">
+						<p:outputLabel
+								value="#{indicador.pracParentId.psobId.projId.projCode}" />
+							
+							<p:outputLabel
+								value="#{indicador.pracParentId.psobId.projId.projTitle}" />
+							
+							<p:outputLabel
+								value="#{indicador.pracParentId.psobId.projId.partId.partAcronym}" />
+						</h:panelGrid>
+							
+						</p:column>
+						<p:column  groupRow="true" headerText="#{txt.lbl024}"
+							>
+
+							<h:panelGrid styleClass="panelGridSinBorde">
+								<p:outputLabel
+									value="#{indicador.pracParentId.psobId.geloId.geloName} - "
+									style="font-size:10px;font-weight:bold;"
+									rendered="#{indicador.pracParentId.psobId.geloId!=null}" />
+								<p:outputLabel
+									value="#{indicador.pracParentId.psobId.psobDescription}"
+									style="font-size:10px;font-weight:bold;" />
+								<p:outputLabel
+									value="#{indicador.pracParentId.pracCode} #{indicador.pracParentId.pracDescription}" />
+								<p:outputLabel
+									value="#{indicador.pracParentId.partId.partAcronym}"
+									rendered="#{indicador.pracParentId.partId!=null}"
+									style="font-weight:bold;" />
+
+
+							</h:panelGrid>
+						</p:column>
+						<p:column headerText="#{txt.lbl097}">
+
+							<h:panelGrid styleClass="panelGridSinBorde">
+								<p:outputLabel value="#{indicador.pracDescription}" />
+
+								<p:outputLabel value="#{txt.lbl360}:"
+									style="font-size:10px;font-weight:bold;" />
+								<p:outputLabel
+									value="#{indicador.pracGoal} (#{indicador.pracGoalValue})" />
+
+								<p:fieldset legend="#{txt.lbl367}" toggleable="true"
+									toggleSpeed="500" collapsed="true"
+									rendered="#{(indicador.listaCompatibilidadPA.size() gt 0) or (indicador.listaCompatibilidadIndicadoresPA.size() gt 0)}">
+									<p:dataList value="#{indicador.listaCompatibilidadPA}" var="c"
+										emptyMessage="">
+										<p:outputLabel value="#{c[0]}: " style="font-size:10px;" />
+										<p:outputLabel value="#{c[1]}: " style="font-size:10px;" />
+									</p:dataList>
+									<p:dataList
+										value="#{indicador.listaCompatibilidadIndicadoresPA}" var="i"
+										emptyMessage="">
+										<p:outputLabel value="#{i[0]}: " style="font-size:10px;" />
+										<p:outputLabel value="#{i[1]}: " style="font-size:10px;" />
+									</p:dataList>
+								</p:fieldset>
+							</h:panelGrid>
+
+
+						</p:column>
+
+
+					</p:dataTable>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1">
+					<p:graphicImage  value="/resources/images/sis/pie_maate.png"
+                           width="100%"/>
+					</h:panelGrid>
+					
+					
+					</h:panelGrid>
+				</p:panel>
+			</center>
+		</div>
+	</h:form>
+</h:body>
+</html>

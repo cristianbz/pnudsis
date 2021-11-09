@@ -41,6 +41,7 @@ public class CatalogFacadeTest {
 	@Test
 	public void testCatalog(){
 		try{
+			System.out.println("Funcionado");
 			Assert.assertTrue(catalogEjb.listaLineasAccion()!=null);
 		}catch(Exception e){
 			e.printStackTrace();

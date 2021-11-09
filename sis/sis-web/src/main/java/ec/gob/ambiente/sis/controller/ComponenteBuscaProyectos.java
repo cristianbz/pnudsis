@@ -43,7 +43,6 @@ import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
-import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectGenderIndicator;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
@@ -53,7 +52,6 @@ import ec.gob.ambiente.sis.services.AdvanceExecutionProjectGenderFacade;
 import ec.gob.ambiente.sis.services.AdvanceExecutionSafeguardsFacade;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
 import ec.gob.ambiente.sis.services.CatalogsTypeFacade;
-import ec.gob.ambiente.sis.services.ExecutiveSummariesFacade;
 import ec.gob.ambiente.sis.services.IndicatorsFacade;
 import ec.gob.ambiente.sis.services.ProjectGenderIndicatorFacade;
 import ec.gob.ambiente.sis.services.ProjectQuestionsFacade;
@@ -77,10 +75,6 @@ public class ComponenteBuscaProyectos implements Serializable{
 	@Getter    
 	@Inject
 	private MensajesController mensajesController;
-
-	@EJB
-	@Getter
-	private ExecutiveSummariesFacade executiveSummarieFacade;
 
 	@EJB
 	@Getter
@@ -661,7 +655,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 	public void cargarAvanceEjecucionSalvaguarda(int codigoPartner,int codigoProyecto){
 		try{
 
-			getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
+//			getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
 			getBuscaProyectosBean().setAdvanceExecution(new AdvanceExecutionSafeguards());
 			if(codigoPartner==0)
 				getBuscaProyectosBean().setAdvanceExecution(getAdvanceExecutionSafeguardsFacade().buscarPorProyecto(codigoProyecto));
@@ -685,24 +679,24 @@ public class ComponenteBuscaProyectos implements Serializable{
 				avanceEjecucion.setAdexTermFrom(null);
 				avanceEjecucion.setAdexTermTo(null);
 				getBuscaProyectosBean().setAdvanceExecution(avanceEjecucion);
-				getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
-				getBuscaProyectosBean().getResumenEjecutivo().setExsuCreationDate(new Date());
-				getBuscaProyectosBean().getResumenEjecutivo().setExsuUserCreator(getLoginBean().getUser().getUserName());
-				getBuscaProyectosBean().getResumenEjecutivo().setExsuStatus(true);
-				getBuscaProyectosBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+//				getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
+//				getBuscaProyectosBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+//				getBuscaProyectosBean().getResumenEjecutivo().setExsuUserCreator(getLoginBean().getUser().getUserName());
+//				getBuscaProyectosBean().getResumenEjecutivo().setExsuStatus(true);
+//				getBuscaProyectosBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
 
 			}else{
 				getBuscaProyectosBean().setAnioReporte(Integer.valueOf(getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0,4)));
 				getBuscaProyectosBean().setPeriodoDesde("01");
 				sectoresInteresProyecto();
-				getBuscaProyectosBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getBuscaProyectosBean().getAdvanceExecution().getAdexId()));
-				if(getBuscaProyectosBean().getResumenEjecutivo()==null){
-					getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
-					getBuscaProyectosBean().getResumenEjecutivo().setExsuCreationDate(new Date());
-					getBuscaProyectosBean().getResumenEjecutivo().setExsuUserCreator(getLoginBean().getUser().getUserName());
-					getBuscaProyectosBean().getResumenEjecutivo().setExsuStatus(true);
-					getBuscaProyectosBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
-				}
+//				getBuscaProyectosBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getBuscaProyectosBean().getAdvanceExecution().getAdexId()));
+//				if(getBuscaProyectosBean().getResumenEjecutivo()==null){
+//					getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
+//					getBuscaProyectosBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+//					getBuscaProyectosBean().getResumenEjecutivo().setExsuUserCreator(getLoginBean().getUser().getUserName());
+//					getBuscaProyectosBean().getResumenEjecutivo().setExsuStatus(true);
+//					getBuscaProyectosBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+//				}
 
 			}
 

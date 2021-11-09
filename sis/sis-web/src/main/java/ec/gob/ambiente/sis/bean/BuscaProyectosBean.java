@@ -5,16 +5,12 @@
 package ec.gob.ambiente.sis.bean;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Init;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import ec.gob.ambiente.sigma.model.CatalogType;
 import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
@@ -24,7 +20,6 @@ import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
-import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectGenderIndicator;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
@@ -187,10 +182,7 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private int tipoRol;
 	
-	@Getter
-	@Setter
-	private ExecutiveSummaries resumenEjecutivo;
-	
+
 	@Getter
 	@Setter
 	private List<CatalogsType> listaLineasGenero;

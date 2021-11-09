@@ -15,9 +15,6 @@ import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
-import ec.gob.ambiente.sis.model.ExecutiveSummaries;
-
-import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 
 @Stateless
@@ -36,9 +33,6 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	@EJB
 	private AdvanceExecutionProjectGenderFacade advanceExecutionProjectGenderFacade;
 	
-	@EJB
-	private ExecutiveSummariesFacade executiveSummariesFacade; 
-
 	public AdvanceExecutionSafeguardsFacade() {
 		super(AdvanceExecutionSafeguards.class,Integer.class);
 	}

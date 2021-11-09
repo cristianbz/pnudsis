@@ -48,7 +48,7 @@ import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.CatalogsType;
-import ec.gob.ambiente.sis.model.ExecutiveSummaries;
+
 import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
@@ -56,7 +56,6 @@ import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
 import ec.gob.ambiente.sis.services.AdvanceExecutionSafeguardsFacade;
 import ec.gob.ambiente.sis.services.CatalogsFacade;
-import ec.gob.ambiente.sis.services.ExecutiveSummariesFacade;
 import ec.gob.ambiente.sis.services.ProjectQuestionsFacade;
 import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.SectorsFacade;
@@ -141,10 +140,6 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	@EJB
 	@Getter
 	private SafeguardsFacade safeguardsFacade;
-
-	@EJB
-	@Getter
-	private ExecutiveSummariesFacade executiveSummarieFacade;
 
 	@EJB
 	@Getter
@@ -355,7 +350,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void cargarAvanceEjecucionSalvaguarda(int codigoPartner,int codigoProyecto){
 		try{
 
-			getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
+//			getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
 			getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(new AdvanceExecutionSafeguards());
 			if(codigoPartner==0)
 				getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(getAdvanceExecutionSafeguardsFacade().buscarPorProyecto(codigoProyecto));
@@ -371,24 +366,24 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					avanceEjecucion.setAdexTermFrom(String.valueOf(getSeguimientoSalvaguardaBean().getAnioReporte()).concat("-").concat("12"));
 				}
 				getSeguimientoSalvaguardaBean().setAdvanceExecutionSafeguards(avanceEjecucion);
-				getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
-				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
-				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
-				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
-				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+//				getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
+//				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+//				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+//				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
+//				getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
 
 			}else{
 				getSeguimientoSalvaguardaBean().setAnioReporte(Integer.valueOf(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexTermFrom().substring(0,4)));
 				getSeguimientoSalvaguardaBean().setPeriodoDesde("01");
 
-				getSeguimientoSalvaguardaBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
-				if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()==null){
-					getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
-					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
-					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
-					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
-					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
-				}
+//				getSeguimientoSalvaguardaBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()));
+//				if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()==null){
+//					getSeguimientoSalvaguardaBean().setResumenEjecutivo(new ExecutiveSummaries());
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuCreationDate(new Date());
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuUserCreator(usuario.getUserName());
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuStatus(true);
+//					getSeguimientoSalvaguardaBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
+//				}
 
 			}
 
@@ -8230,19 +8225,19 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	}
 
 
-	public boolean validaIngresoResumenEjecutivo(){
-		boolean estado=false;
-		if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()!=null){
-			if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuId() == null && getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty()){
-				estado=false;
-			}else if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty() || getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().trim().length()<10){
-				estado = false;
-			}else{
-				estado = true;
-			}
-		}
-		return estado;
-	}
+//	public boolean validaIngresoResumenEjecutivo(){
+//		boolean estado=false;
+//		if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()!=null){
+//			if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuId() == null && getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty()){
+//				estado=false;
+//			}else if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty() || getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().trim().length()<10){
+//				estado = false;
+//			}else{
+//				estado = true;
+//			}
+//		}
+//		return estado;
+//	}
 	/**
 	 * Muestra el cuadro de dialogo para finalizar el reporte de ejecucion
 	 * @param salvaguarda

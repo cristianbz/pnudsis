@@ -2,8 +2,6 @@ package ec.gob.ambiente.sis.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.component.tabview.TabView;
-
 import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
@@ -22,7 +18,6 @@ import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
-import ec.gob.ambiente.sis.model.ExecutiveSummaries;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
@@ -1649,9 +1644,6 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	private TableResponses registroTablaCobeneficios;
 	
-	@Getter
-	@Setter
-	private ExecutiveSummaries resumenEjecutivo;
 	
 	@PostConstruct
 	public void init(){
