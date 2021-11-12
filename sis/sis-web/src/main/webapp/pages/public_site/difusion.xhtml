@@ -5,15 +5,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<script
-		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.5.0"></script>
+		<link rel="stylesheet" type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
+	
 	<link
-		href="${facesContext.externalContext.requestContextPath}/css/sigma.css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/sitiopublico.css"
 		rel="stylesheet" type="text/css" />
-	<script type="text/javascript"
-		src="${facesContext.externalContext.requestContextPath}/js/sigma.js" />
+	
 
-	<meta name="viewport" content="width=device-width,initial-scale=1"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
 </h:head>
 <h:body>
 	<h:form id="frm" enctype="multipart/form-data">
@@ -23,163 +23,176 @@
 			<center>
 				<p:panel>
 					<h:panelGrid id="pnlContenido">
-					
-					<h:panelGrid columns="1" columnClasses="ui-g-12 ui-md-12 ui-lg-12" style="margin:0 auto;">
-					<p:graphicImage  value="/resources/images/sis/banner_maate.png"
-                           width="100%"/>
-					</h:panelGrid>
-					<h:panelGrid columns="1" style="margin:0 auto;">
-					<p:graphicImage  value="/resources/images/sis/banner_con_titulo.png"
-                           width="100%"/>
-					</h:panelGrid>
-					<h:panelGrid id="pnlSalvaguardasA_D" columns="4" 
-					columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
-					style="margin:0 auto;text-align:center;">
-					<p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE01')}"
-					process="@this" partialSubmit="true" async="true" global="false"
-					update="pnlCriterios">
-					<p:graphicImage  value="/resources/images/sis/salvaguarda_a.png"
-                           style="max-width:299px;"/>
-                           </p:commandLink>
-                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE02')}"
-					process="@this" partialSubmit="true" async="true" global="false"
-					update="pnlCriterios">
-                           <p:graphicImage  value="/resources/images/sis/salvaguarda_b.png"
-                           style="max-width:299px;"/>
-                           </p:commandLink>
-                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE03')}"
-					process="@this" partialSubmit="true" async="true" global="false"
-					update="pnlCriterios">
-                           <p:graphicImage  value="/resources/images/sis/salvaguarda_c.png"
-                           style="max-width:299px;"/>
-                           </p:commandLink>
-                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE04')}"
-					process="@this" partialSubmit="true" async="true" global="false"
-					update="pnlCriterios">
-                           <p:graphicImage  value="/resources/images/sis/salvaguarda_d.png"
-                           style="max-width:299px;"/>
-                           </p:commandLink>
-					</h:panelGrid>
-					<h:panelGrid id="pnlSalvaguardasE_G" columns="3" 
-					columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
-					style="margin:0 auto;text-align:center;">
-					<p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE01')}"
-					process="@this" partialSubmit="true" async="true" global="false"
-					update="pnlCriterios">
-					<p:graphicImage  value="/resources/images/sis/salvaguarda_e.png"
-                           style="max-width:299px;"/>
-                           </p:commandLink>
-                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE02')}"
-					process="@this" partialSubmit="true" async="true" global="false"
-					update="pnlCriterios">
-                           <p:graphicImage  value="/resources/images/sis/salvaguarda_f.png"
-                           style="max-width:299px;"/>
-                           </p:commandLink>
-                           <p:commandLink action="#{consulta.seleccionarComponenteEstrategicoPA('CE03')}"
-					process="@this" partialSubmit="true" async="true" global="false"
-					update="pnlCriterios">
-                           <p:graphicImage  value="/resources/images/sis/salvaguarda_g.png"
-                           style="max-width:299px;"/>
-                           </p:commandLink>
-                           
-					</h:panelGrid>
-					<h:panelGrid id="pnlCriterios" columns="3" style="margin:0 auto;">
-					
-					<f:verbatim/>
-					<p:outputLabel value="#{consulta.componentePAVigente.compName}"/>
-					<f:verbatim/>
-					
-					<p:outputLabel value="Provincia" />
-					<h:selectOneMenu id="codProv" value="#{consulta.codProvincia}">
-						<f:selectItems value="#{app.lstGeoLocProvincias}" var="prov"
-							itemLabel="#{prov[0]}" itemValue="#{prov[1]}" />
-					</h:selectOneMenu>
-					<p:commandButton value="Consultar"
-						action="#{consulta.consultarAccionesRegistradasPorProvincia()}"
-						process="@this,codProv" partialSubmit="true" async="true"
-						global="false" update="pnlConsulta" />
-					</h:panelGrid>
-					<h:panelGrid id="pnlConsulta" width="100%">
-					<p:dataTable id="lstAcciones"
-						value="#{consulta.listaAccionesRegistradas}" var="indicador"
-						reflow="true">
-						<f:facet name="header">
-									#{txt.lbl307}
-									</f:facet>
-						<p:column  headerText="Proyecto">
-						<h:panelGrid styleClass="panelGridSinBorde">
-						<p:outputLabel
-								value="#{indicador.pracParentId.psobId.projId.projCode}" />
-							
-							<p:outputLabel
-								value="#{indicador.pracParentId.psobId.projId.projTitle}" />
-							
-							<p:outputLabel
-								value="#{indicador.pracParentId.psobId.projId.partId.partAcronym}" />
+
+						<h:panelGrid columns="1" columnClasses="ui-g-12 ui-md-12 ui-lg-12"
+							style="margin:0 auto;">
+							<p:graphicImage value="/resources/images/sis/banner_maate.png"
+								width="100%" />
 						</h:panelGrid>
+						<h:panelGrid columns="1" style="margin:0 auto;">
+							<p:graphicImage
+								value="/resources/images/sis/banner_con_titulo.png" width="100%" />
+						</h:panelGrid>
+						<h:panelGrid id="pnlSalvaguardasDescripcion" columns="4"
+							columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
+							style="margin:0 auto;text-align:center;">
+							<p:outputLabel value="SALVAGUARDAS" />
+						</h:panelGrid>
+						<h:panelGrid id="pnlSalvaguardasA_D" columns="4"
+							columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
+							style="margin:0 auto;text-align:center;">
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaA()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_a.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaB()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_b.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaC()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_c.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaD()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_d.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+						</h:panelGrid>
+						<h:panelGrid id="pnlSalvaguardasE_G" columns="3"
+							columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
+							style="margin:0 auto;text-align:center;">
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaE()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_e.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaF()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_f.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaG()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_g.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+						</h:panelGrid>					
+						
+						<h:panelGrid columns="2" id="pnlSalvaguardas" columnClasses="ui-g-12 ui-md-6 ui-lg-6, ui-g-12 ui-md-12 ui-lg-6"
+							style=" background-color:blue;" styleClass="portada" >
 							
-						</p:column>
-						<p:column  groupRow="true" headerText="#{txt.lbl024}"
-							>
+								<h:panelGrid width="100%" styleClass="alineaizquierda">
+									<p:outputLabel value="#{sitioPublicoBean.salvaguarda}" styleClass="salvaguardapie" style="font-size:30px;"/>
+									<p:outputLabel value="#{sitioPublicoBean.tituloSalvaguarda}" style="font-size:30px;" styleClass="describesalvaguardapie"/>
+								</h:panelGrid>
+								
+								
+								<h:panelGrid  width="100%" styleClass="alineaderecha" >
+									<h:panelGrid style="margin:0 auto;text-align:center;background-color:blue;">
+										<p:outputLabel value="#{sitioPublicoBean.resumenSalvaguarda}"  styleClass="salvaguardapie" style="font-size:30px;width:100%"/>	
+									</h:panelGrid>
+									<h:panelGrid style="margin:0 auto;text-align:center;float:right; top:0; right:0;"  columns="3">
+										<p:graphicImage value="/resources/images/sis/mujeres.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/hombres.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											style="max-width:299px;" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />
+										<p:outputLabel value="#{sitioPublicoBean.numeroProyectosSalvaguardaA}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<p:outputLabel value="#{sitioPublicoBean.totalInversionProyectos}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />
+										
+										
+										<p:graphicImage value="/resources/images/sis/mujeres.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/hombres.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											style="max-width:299px;" />	
+										<p:graphicImage value="/resources/images/sis/comunidades.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											style="max-width:299px;" />												
+										<p:outputLabel value="#{sitioPublicoBean.numeroMujeresSalvaguardaB}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<p:outputLabel value="#{sitioPublicoBean.numeroHombresSalvaguardaB}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<p:outputLabel value="#{sitioPublicoBean.numeroComunidadesSalvaguardaB}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+											
+										<p:graphicImage value="/resources/images/sis/comunidades.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/hombres.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											style="max-width:299px;" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" />
+										<p:outputLabel value="#{sitioPublicoBean.numeroComunidadesSalvaguardaC}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<p:outputLabel value="#{sitioPublicoBean.numeroPracticasAncestralesC}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" />
+										
+										<p:graphicImage value="/resources/images/sis/comunidades.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
+											style="max-width:299px;" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										<p:outputLabel value="#{sitioPublicoBean.totalEventosFortalecimientoD}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										
+										<p:graphicImage value="/resources/images/sis/comunidades.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
+											style="max-width:299px;" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />
+										<p:outputLabel value="#{sitioPublicoBean.numeroFomentoGestionComunitariaE}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />
+										
+										
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<p:graphicImage value="/resources/images/sis/comunidades.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}"
+											style="max-width:299px;" />										
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<h:inputHidden rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<p:outputLabel value="#{sitioPublicoBean.totalRecursosInvertidos}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>		
+										
+										<p:graphicImage value="/resources/images/sis/mujeres.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/hombres.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											style="max-width:299px;" />	
+										<p:graphicImage value="/resources/images/sis/comunidades.png" rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											style="max-width:299px;" />												
+										<p:outputLabel value="#{sitioPublicoBean.numeroAccionesGeneradasG}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<p:outputLabel value="#{sitioPublicoBean.totalBeneficiariosG}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+										<p:outputLabel value="#{sitioPublicoBean.numeroComunidadesSalvaguardaG}" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}" styleClass="valoresSalvaguardas" style="font-size:35px;"/>
+									</h:panelGrid>
+									
+								</h:panelGrid>
+							
+							
+						</h:panelGrid>
 
-							<h:panelGrid styleClass="panelGridSinBorde">
-								<p:outputLabel
-									value="#{indicador.pracParentId.psobId.geloId.geloName} - "
-									style="font-size:10px;font-weight:bold;"
-									rendered="#{indicador.pracParentId.psobId.geloId!=null}" />
-								<p:outputLabel
-									value="#{indicador.pracParentId.psobId.psobDescription}"
-									style="font-size:10px;font-weight:bold;" />
-								<p:outputLabel
-									value="#{indicador.pracParentId.pracCode} #{indicador.pracParentId.pracDescription}" />
-								<p:outputLabel
-									value="#{indicador.pracParentId.partId.partAcronym}"
-									rendered="#{indicador.pracParentId.partId!=null}"
-									style="font-weight:bold;" />
+
+						<h:panelGrid columns="1">
+							<p:graphicImage value="/resources/images/sis/pie_maate.png"
+								width="100%" />
+						</h:panelGrid>
 
 
-							</h:panelGrid>
-						</p:column>
-						<p:column headerText="#{txt.lbl097}">
-
-							<h:panelGrid styleClass="panelGridSinBorde">
-								<p:outputLabel value="#{indicador.pracDescription}" />
-
-								<p:outputLabel value="#{txt.lbl360}:"
-									style="font-size:10px;font-weight:bold;" />
-								<p:outputLabel
-									value="#{indicador.pracGoal} (#{indicador.pracGoalValue})" />
-
-								<p:fieldset legend="#{txt.lbl367}" toggleable="true"
-									toggleSpeed="500" collapsed="true"
-									rendered="#{(indicador.listaCompatibilidadPA.size() gt 0) or (indicador.listaCompatibilidadIndicadoresPA.size() gt 0)}">
-									<p:dataList value="#{indicador.listaCompatibilidadPA}" var="c"
-										emptyMessage="">
-										<p:outputLabel value="#{c[0]}: " style="font-size:10px;" />
-										<p:outputLabel value="#{c[1]}: " style="font-size:10px;" />
-									</p:dataList>
-									<p:dataList
-										value="#{indicador.listaCompatibilidadIndicadoresPA}" var="i"
-										emptyMessage="">
-										<p:outputLabel value="#{i[0]}: " style="font-size:10px;" />
-										<p:outputLabel value="#{i[1]}: " style="font-size:10px;" />
-									</p:dataList>
-								</p:fieldset>
-							</h:panelGrid>
-
-
-						</p:column>
-
-
-					</p:dataTable>
-					</h:panelGrid>
-					
-					<h:panelGrid columns="1">
-					<p:graphicImage  value="/resources/images/sis/pie_maate.png"
-                           width="100%"/>
-					</h:panelGrid>
-					
-					
 					</h:panelGrid>
 				</p:panel>
 			</center>

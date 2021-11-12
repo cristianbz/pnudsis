@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -119,12 +120,12 @@ public class TableResponses  {
 	@Getter
 	@Setter
 	@Column(name = "tare_column_decimal_one")
-	private double tareColumnDecimalOne;
+	private BigDecimal tareColumnDecimalOne;
 	
 	@Getter
 	@Setter
 	@Column(name = "tare_column_decimal_two")
-	private double tareColumnDecimalTwo;
+	private BigDecimal tareColumnDecimalTwo;
 	
 	@Getter
 	@Setter

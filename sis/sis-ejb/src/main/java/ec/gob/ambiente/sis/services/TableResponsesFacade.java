@@ -1,5 +1,7 @@
 package ec.gob.ambiente.sis.services;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,7 +145,6 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		for (TableResponses tableResponses : tabla) {
 			Hibernate.initialize(tableResponses.getQuestions());
 		}
-//		return findByCreateQuery(sql, camposCondicion);
 		return tabla;
 	}
 	
@@ -156,11 +157,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		camposCondicion.put("codigoCan", codigoCan);
 		camposCondicion.put("codigoParr", codigoParr);
 		List<TableResponses> tabla=findByCreateQuery(sql, camposCondicion);
-//		for (TableResponses tableResponses : tabla) {
-//			Hibernate.initialize(tableResponses.getQuestions());
-//		}
 		return findByCreateQuery(sql, camposCondicion);
-//		return tabla;
 	}
 	
 	public List<TableResponses> listaAvanceEjecucionPregunta(int codigoAvanceEjecucion, int codigoPregunta) throws Exception{
@@ -169,6 +166,145 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);
 		camposCondicion.put("codigoPregunta", codigoPregunta);
 		return findByCreateQuery(sql, camposCondicion);
-
+	}
+	/**
+	 * Devuelve los proyectos registrados en la salvaguarda A
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TableResponses> listaProyectosValoresSalvaguardaA() throws Exception{
+		List<Object[]> resultado= null;
+		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
+		String sql ="SELECT tare_column_decimal_one,tare_column_number_six FROM sis.table_responses WHERE ques_id=5;";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				tr.setTareColumnDecimalOne((BigDecimal)dataObj[0]);
+				tr.setTareColumnNumberSix((Integer)dataObj[1]);
+				listaResultado.add(tr);
+			}
+		}
+		return listaResultado;
+	}
+	/**
+	 * Lista comunidades salvaguarda B_C
+	 * @param codigoPregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TableResponses> listaComunidadesSalvaguardaB_C_G(int codigoPregunta) throws Exception{
+		List<Object[]> resultado= null;
+		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
+		String sql ="SELECT lower(tare_column_one),ques_id FROM sis.table_responses WHERE ques_id=" + codigoPregunta;
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				tr.setTareColumnOne((String)dataObj[0]);
+				tr.setTareColumnNumberOne((Integer)dataObj[1]);
+				listaResultado.add(tr);
+			}
+		}
+		return listaResultado;
+	}
+	/**
+	 * Maximo valor de hombres y mujeres salvaguarda B
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TableResponses> listaMaximoHombresMujeresSalvaguardaB() throws Exception{
+		List<Object[]> resultado= null;
+		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
+		String sql ="SELECT MAX(tare_column_number_seven)AS hombres,MAX(tare_column_number_eight)AS mujeres FROM sis.table_responses WHERE ques_id=16;";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				tr.setTareColumnNumberOne((Integer)dataObj[0]);
+				tr.setTareColumnNumberTwo((Integer)dataObj[1]);
+				listaResultado.add(tr);
+			}
+		}
+		return listaResultado;
+	}
+	/**
+	 * Numero de practicas o saberes ancestrales
+	 * @return
+	 * @throws Exception
+	 */
+	public int listaSaberesAncestralesSalvaguardaC() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=45;";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Provincias con gestion comunitaria
+	 * @return
+	 * @throws Exception
+	 */
+	public List<TableResponses> listaFomentoGestionComunitariaE() throws Exception{
+		List<Object[]> resultado= null;
+		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
+		String sql ="SELECT DISTINCT tare_column_number_one FROM sis.table_responses WHERE ques_id = 166;";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				TableResponses tr= new TableResponses();
+				tr.setTareColumnNumberOne(Integer.valueOf(obj.toString()));				
+				listaResultado.add(tr);
+			}
+		}
+		return listaResultado;
+	}
+	
+	public BigDecimal listaRecursosInvertidosF() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT SUM(tare_column_decimal_one) FROM sis.table_responses WHERE ques_id=117;";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = new BigDecimal(obj.toString());
+		}
+		return valor;
+	}
+	
+	public int listaAccionesGeneradasSalvaguardaG() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=131";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	
+	public Integer listaBeneficiariosSalvaguardaG() throws Exception{
+		Integer total=new Integer(0);
+		List<Object[]> resultado= null;
+		String sql ="SELECT SUM(tare_column_number_seven) AS hombres,SUM(tare_column_number_eight) AS mujeres FROM sis.table_responses WHERE ques_id=131";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				tr.setTareColumnNumberOne(Integer.valueOf( dataObj[0].toString()));
+				tr.setTareColumnNumberTwo(Integer.valueOf(dataObj[1].toString()));
+				total = tr.getTareColumnNumberOne() + tr.getTareColumnNumberTwo();
+			}
+		}
+		return total;
 	}
 }

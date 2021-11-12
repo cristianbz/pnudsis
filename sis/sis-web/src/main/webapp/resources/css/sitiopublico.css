@@ -1,0 +1,47 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+.imagenpie{
+	margin:10px auto;
+  border-radius:5px;
+  border: 1px solid #999;
+  padding:13px;
+  width:1220px;
+  height:220px;
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  background:url(../images/sis/mujerShuar.jpg);
+  background-size: cover;
+  }
+  
+  .salvaguardapie{  	
+  	font-weight: bold;
+  	color: white;
+  }
+  
+ .describesalvaguardapie{  	
+  	font-weight: normal;
+  	color: white;
+  }
+.valoresSalvaguardas{
+  font-weight: bold;
+  color: yellow;
+}
+.portada{
+   background:url(../images/sis/mujerShuar.jpg) no-repeat fixed center;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   height: 100%;
+   width: 100% ;
+   text-align: center;
+}
+
+.alineaizquierda{
+	float:left;
+}
+.alineaderecha td{
+	text-align: center;
+}
+.center{
+	display:inline-block;
+}

@@ -1920,7 +1920,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			lista.get(0).setTareCanton(buscaProvinciaCantonParroquia(lista.get(0).getTareColumnNumberTwo(), 2));
 			lista.get(0).setTareParroquia(buscaProvinciaCantonParroquia(lista.get(0).getTareColumnNumberThree(), 3));
 			if(lista.get(0).getTareColumnNumberSix()>0)
-				lista.get(0).setTareGenerico(OperacionesCatalogo.ubicaDescripcionCatalogo(lista.get(0).getTareColumnNumberSix(), getSeguimientoSalvaguardaBean().getListaCatalogoActividad()));
+				lista.get(0).setTareGenerico(OperacionesCatalogo.ubicaDescripcionCatalogoText2(lista.get(0).getTareColumnNumberSix(), getSeguimientoSalvaguardaBean().getListaCatalogoActividad()));
 			else
 				lista.get(0).setTareGenerico(lista.get(0).getTareAnotherCatalog());
 			getSeguimientoSalvaguardaBean().getTablaSalvaguardaB81().add(lista.get(0));
@@ -1933,7 +1933,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					tr.setTareCanton(buscaProvinciaCantonParroquia(tr.getTareColumnNumberTwo(), 2));
 					tr.setTareParroquia(buscaProvinciaCantonParroquia(tr.getTareColumnNumberThree(), 3));
 					if(tr.getTareColumnNumberSix()>0)
-						tr.setTareGenerico(OperacionesCatalogo.ubicaDescripcionCatalogo(tr.getTareColumnNumberSix(), getSeguimientoSalvaguardaBean().getListaCatalogoActividad()));
+						tr.setTareGenerico(OperacionesCatalogo.ubicaDescripcionCatalogoText2(tr.getTareColumnNumberSix(), getSeguimientoSalvaguardaBean().getListaCatalogoActividad()));
 					else
 						tr.setTareGenerico(tr.getTareAnotherCatalog());
 					getSeguimientoSalvaguardaBean().getTablaSalvaguardaB81().add(tr);
@@ -2001,7 +2001,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().setTareProvincia(buscaProvinciaCantonParroquia(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberOne(), 1));
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().setTareCanton(buscaProvinciaCantonParroquia(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberTwo(), 2));
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().setTareParroquia(buscaProvinciaCantonParroquia(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberThree(), 3));
-					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().setTareGenerico(OperacionesCatalogo.ubicaDescripcionCatalogo(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberSix(), getSeguimientoSalvaguardaBean().getListaCatalogoActividad()));
+					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().setTareGenerico(OperacionesCatalogo.ubicaDescripcionCatalogoText2(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberSix(), getSeguimientoSalvaguardaBean().getListaCatalogoActividad()));
 					for(TableResponses tr:getSeguimientoSalvaguardaBean().getTablaSalvaguardaB81Aux()){
 						tr.setTareColumnNumberOne(getSeguimientoSalvaguardaBean().getCodProvincia());
 						tr.setTareColumnNumberTwo(getSeguimientoSalvaguardaBean().getCodCanton());
@@ -2911,7 +2911,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void nuevaFilaTablaSalvaguardaB121(){
 		getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasB121(new TableResponses());
 		getSeguimientoSalvaguardaBean().setCodigoAutoIdentificacion(0);
-		getSeguimientoSalvaguardaBean().setCodigoTipoConformacion(0);
+		getSeguimientoSalvaguardaBean().setCodigoTipoConformacion(null);
 		getSeguimientoSalvaguardaBean().setCodigoPuebloNacionalidad(0);
 		getSeguimientoSalvaguardaBean().setHabilitaPuebloNacionalidad(false);
 		getSeguimientoSalvaguardaBean().setOtroCatalogo121(true);
