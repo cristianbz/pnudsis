@@ -15,6 +15,7 @@
   .salvaguardapie{  	
   	font-weight: bold;
   	color: white;
+  	
   }
   
  .describesalvaguardapie{  	
@@ -37,7 +38,7 @@
 }
 
 .alineaizquierda{
-	float:left;
+	text-align:left;
 }
 .alineaderecha td{
 	text-align: center;

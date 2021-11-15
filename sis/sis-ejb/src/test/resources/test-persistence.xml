@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="sisPU" transaction-type="JTA">
+<provider>org.hibernate.ejb.HibernatePersistence</provider>
+<jta-data-source>java:jboss/datasources/SuiaDS</jta-data-source>
+
+<class>ec.gob.ambiente.sigma.model.Catalog</class>
+<class>ec.gob.ambiente.sigma.model.CatalogType</class>
+<class>ec.gob.ambiente.sigma.model.Partners</class>
+<class>ec.gob.ambiente.sigma.model.People</class>
+<class>ec.gob.ambiente.sigma.model.Projects</class>
+<class>ec.gob.ambiente.sigma.model.ProjectsCobenefits</class>
+<class>ec.gob.ambiente.sis.model.ProjectsGenderInfo</class>
+<class>ec.gob.ambiente.sigma.model.ProjectsRisks</class>
+<class>ec.gob.ambiente.sigma.model.ProjectsSafeguards</class>
+<class>ec.gob.ambiente.sigma.model.ProjectsStrategicPartners</class>
+<class>ec.gob.ambiente.sigma.model.Safeguards</class>
+<class>ec.gob.ambiente.sigma.model.User</class>
+<class>ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards</class>
+<class>ec.gob.ambiente.sis.model.AdvanceSectors</class>
+<class>ec.gob.ambiente.sis.model.Catalogs</class>
+<class>ec.gob.ambiente.sis.model.CatalogsType</class>
+<class>ec.gob.ambiente.sis.model.DetailAdvanceGender</class>
+<class>ec.gob.ambiente.sis.model.ExecutiveSummaries</class>
+<class>ec.gob.ambiente.sis.model.ProjectQuestions</class>
+<class>ec.gob.ambiente.sis.model.Questions</class>
+<class>ec.gob.ambiente.sis.model.Sectors</class>
+<class>ec.gob.ambiente.sis.model.TableResponses</class>
+<class>ec.gob.ambiente.sis.model.ValueAnswers</class>
+<class>ec.gob.ambiente.suia.model.GeographicalLocations</class>
+<class>ec.gob.ambiente.suia.model.Menu</class>
+<class>ec.gob.ambiente.suia.model.MenuRole</class>
+<class>ec.gob.ambiente.suia.model.Organization</class>
+<class>ec.gob.ambiente.suia.model.Role</class>
+<class>ec.gob.ambiente.suia.model.RolesUser</class>
+<class>ec.gob.ambiente.suia.model.Users</class>
+
+</persistence-unit>
+</persistence>

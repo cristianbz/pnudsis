@@ -16,9 +16,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import ec.gob.ambiente.sigma.model.Catalog;
+import ec.gob.ambiente.sigma.model.CatalogType;
 import ec.gob.ambiente.sigma.services.CatalogFacade;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
+import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
+import ec.gob.ambiente.suia.model.GeographicalLocations;
 
 @RunWith(Arquillian.class)
 public class CatalogFacadeTest {
@@ -30,8 +33,13 @@ public class CatalogFacadeTest {
 	public static WebArchive createDeployment(){
 		return ShrinkWrap.create(WebArchive.class,"CatalogFacadeTest.war")
 				.addClass(CatalogFacade.class)
-				.addClass(AbstractFacade.class)
+				.addClass(AbstractFacade.class)				
 				.addClass(Catalog.class)
+				.addClass(CatalogType.class)
+				.addClass(ProjectsGenderInfo.class)
+				.addPackage(Catalog.class.getPackage())
+				.addPackage(ProjectsGenderInfo.class.getPackage())
+				.addPackage(GeographicalLocations.class.getPackage())
 				.addClass(DaoException.class)
 				.addAsResource("test-persistence.xml","META-INF/persistence.xml")
 				.addAsManifestResource(EmptyAsset.INSTANCE,"beans.xml");
@@ -41,26 +49,12 @@ public class CatalogFacadeTest {
 	@Test
 	public void testCatalog(){
 		try{
-			System.out.println("Funcionado");
-			Assert.assertTrue(catalogEjb.listaLineasAccion()!=null);
+			
+			Assert.assertTrue(catalogEjb.listaLineasAccion() != null);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-//	@Test
-//	public void test() throws Exception{
-//		 Properties p = new Properties();
-//	        p.put("movieDatabase", "new://Resource?type=DataSource");
-//	        p.put("movieDatabase.JdbcDriver", "org.hsqldb.jdbcDriver");
-//	        p.put("movieDatabase.JdbcUrl", "jdbc:hsqldb:mem:moviedb");	
-//	        Context context = EJBContainer.createEJBContainer(p).getContext();
-//	        
-//		CatalogFacade bean = (CatalogFacade) context.lookup("java:global/classes/CatalogFacade");
-//		int res= bean.listaLineasAccion().size();
-//		assertEquals(16, res);
-//		
-//	}
-
 }
 

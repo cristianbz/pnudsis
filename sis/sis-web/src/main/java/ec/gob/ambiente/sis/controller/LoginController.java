@@ -702,7 +702,7 @@ public class LoginController implements Serializable {
 //							getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));
 							getLoginBean().setTipoRol(3);
 							break;
-						}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
+						}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIGMA_SOCIO_IMPLEMENTADOR.getEtiqueta())){
 //							getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));				
 							getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
 							getLoginBean().setTipoRol(2);
@@ -740,7 +740,7 @@ public class LoginController implements Serializable {
 					
 						getLoginBean().setTipoRol(3);
 						break;
-					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
+					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIGMA_SOCIO_IMPLEMENTADOR.getEtiqueta())){
 									
 						getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
 						getLoginBean().setTipoRol(2);
