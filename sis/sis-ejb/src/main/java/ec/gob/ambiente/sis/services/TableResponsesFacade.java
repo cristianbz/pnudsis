@@ -47,8 +47,6 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	 * @throws Exception
 	 */
 	public void eliminarRespuestasTabla(TableResponses tableResponses) throws Exception{
-//		TableResponses objetoEliminar = getEntityManager().find(TableResponses.class, tableResponses.getTareId());
-//		remove(objetoEliminar);
 		tableResponses.setTareStatus(false);
 		edit(tableResponses);
 	}

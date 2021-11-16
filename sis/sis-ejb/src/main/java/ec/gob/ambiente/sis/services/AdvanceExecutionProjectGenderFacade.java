@@ -53,17 +53,7 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		else
 			edit(aepg);
 	}
-	
-//	public List<AdvanceExecutionProjectGender> listaReportadosActivosPorProyectoGeneroInfo(int codigoProyectoGenderinfo)throws Exception{
-//		String sql="SELECT AEPG FROM AdvanceExecutionProjectGender AEPG WHERE AEPG.aepgStatus =true AND AEPG.projectsGenderInfo.pginId=:codigoProyectoGenderinfo AND AEPG.advanceExecutionSafeguards.adexIsReported= FALSE AND AEPG.aepgStatus=TRUE";
-//		Map<String, Object> camposCondicion=new HashMap<String, Object>();
-//		camposCondicion.put("codigoProyectoGenderinfo", codigoProyectoGenderinfo);		
-//		List<AdvanceExecutionProjectGender> listaTemp=findByCreateQuery(sql, camposCondicion);
-//		for (AdvanceExecutionProjectGender aepg : listaTemp) {
-//			Hibernate.initialize(aepg.getAdvanceExecutionSafeguards());
-//		}
-//		return listaTemp;
-//	}
+
 	/**
 	 * Carga los indicadores reportados por codigo de AvanceEjecucion
 	 * @param codigoAvance  Codigo del avance ejecucion
@@ -71,10 +61,11 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 	 * @throws Exception
 	 */
 	public List<AdvanceExecutionProjectGender> listaIndicadoresReportados(int codigoAvance)throws Exception{
+		List<AdvanceExecutionProjectGender> listaTemp=null;
 		String sql="SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.adexId=:codigoAvance";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvance", codigoAvance);		
-		List<AdvanceExecutionProjectGender> listaTemp=findByCreateQuery(sql, camposCondicion);
+		listaTemp=findByCreateQuery(sql, camposCondicion);
 		for (AdvanceExecutionProjectGender aepg : listaTemp) {
 			Hibernate.initialize(aepg.getProjectGenderIndicator().getIndicators());
 		}

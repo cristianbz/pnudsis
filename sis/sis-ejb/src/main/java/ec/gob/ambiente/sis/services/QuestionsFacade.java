@@ -39,7 +39,7 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 */
 	
 	public List<Questions> buscarTodasLasPreguntas() throws Exception{
-		String sql="SELECT Q FROM Questions Q AND Q.quesStatus=True AND Q.quesIsGender = FALSE ORDER BY Q.quesId";
+		String sql="SELECT Q FROM Questions Q WHERE Q.quesStatus=True AND Q.quesIsGender = FALSE ORDER BY Q.quesId";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery(sql, camposCondicion);
 	}

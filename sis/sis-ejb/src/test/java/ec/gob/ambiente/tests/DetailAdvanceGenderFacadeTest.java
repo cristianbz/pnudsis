@@ -1,5 +1,5 @@
 /**
-@autor proamazonia [Christian Báez]  22 oct. 2021
+@autor proamazonia [Christian Báez]  16 nov. 2021
 
 **/
 package ec.gob.ambiente.tests;
@@ -17,50 +17,42 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ec.gob.ambiente.sigma.model.Catalog;
-import ec.gob.ambiente.sigma.model.CatalogType;
-import ec.gob.ambiente.sigma.services.CatalogFacade;
+import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
+import ec.gob.ambiente.sis.services.DetailAdvanceGenderFacade;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 
 @RunWith(Arquillian.class)
-public class CatalogFacadeTest {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CatalogFacadeTest.class);
-	
+public class DetailAdvanceGenderFacadeTest {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DetailAdvanceGenderFacadeTest.class);
 	@EJB
-	private CatalogFacade catalogEjb;
+	private DetailAdvanceGenderFacade detailEjb;
 	
 	@Deployment
 	public static WebArchive createDeployment(){
-		return ShrinkWrap.create(WebArchive.class,"CatalogFacadeTest.war")
-				.addClass(CatalogFacade.class)
-				.addClass(AbstractFacade.class)				
-				.addClass(Catalog.class)
-				.addClass(CatalogType.class)
-				.addClass(ProjectsGenderInfo.class)
-				.addPackage(Catalog.class.getPackage())
+		return ShrinkWrap.create(WebArchive.class,"DetailAdvanceGenderFacadeTest.war")				
+				.addClass(DetailAdvanceGenderFacade.class)
+				.addClass(AbstractFacade.class)					
+				.addPackage(Projects.class.getPackage())
 				.addPackage(ProjectsGenderInfo.class.getPackage())
 				.addPackage(GeographicalLocations.class.getPackage())
 				.addClass(DaoException.class)
 				.addAsResource("test-persistence.xml","META-INF/persistence.xml")
-				.addAsManifestResource(EmptyAsset.INSTANCE,"beans.xml");
-				
+				.addAsManifestResource(EmptyAsset.INSTANCE,"beans.xml");			
 	}
-	
 	@Test
-	public void testCatalog(){
-		try{			
-			Assert.assertTrue(catalogEjb.listaLineasAccion() != null);
-			LOGGER.info("CLASE: CatalogFacade");
-			LOGGER.info("METODO: List<Catalog> listaLineasAccion()");			
-			LOGGER.info("RETORNA: List<Catalog>");
+	public void testDetailAdvanceGender(){
+		try{										
+			Assert.assertTrue(detailEjb.listadoDetalleAvanceGenero(1).size() == 0);
+			LOGGER.info("CLASE: DetailAdvanceGenderFacade");
+			LOGGER.info("METODO: List<DetailAdvanceGender> listadoDetalleAvanceGenero(int codigoAvanceGenero)");			
+			LOGGER.info("RETORNA: List<DetailAdvanceGender>");
 			LOGGER.info("RESULTADO: EXITOSO");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
 }
 

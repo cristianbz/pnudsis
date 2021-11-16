@@ -1,5 +1,5 @@
 /**
-@autor proamazonia [Christian Báez]  22 oct. 2021
+@autor proamazonia [Christian Báez]  16 nov. 2021
 
 **/
 package ec.gob.ambiente.tests;
@@ -17,50 +17,42 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ec.gob.ambiente.sigma.model.Catalog;
-import ec.gob.ambiente.sigma.model.CatalogType;
-import ec.gob.ambiente.sigma.services.CatalogFacade;
+import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
+import ec.gob.ambiente.sis.services.CatalogsTypeFacade;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 
 @RunWith(Arquillian.class)
-public class CatalogFacadeTest {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CatalogFacadeTest.class);
-	
+public class CatalogsTypeFacadeTest {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CatalogsTypeFacadeTest.class);
 	@EJB
-	private CatalogFacade catalogEjb;
+	private CatalogsTypeFacade catalogsTypeEjb;
 	
 	@Deployment
 	public static WebArchive createDeployment(){
-		return ShrinkWrap.create(WebArchive.class,"CatalogFacadeTest.war")
-				.addClass(CatalogFacade.class)
-				.addClass(AbstractFacade.class)				
-				.addClass(Catalog.class)
-				.addClass(CatalogType.class)
-				.addClass(ProjectsGenderInfo.class)
-				.addPackage(Catalog.class.getPackage())
+		return ShrinkWrap.create(WebArchive.class,"CatalogsTypeFacadeTest.war")				
+				.addClass(CatalogsTypeFacade.class)
+				.addClass(AbstractFacade.class)					
+				.addPackage(Projects.class.getPackage())
 				.addPackage(ProjectsGenderInfo.class.getPackage())
 				.addPackage(GeographicalLocations.class.getPackage())
 				.addClass(DaoException.class)
 				.addAsResource("test-persistence.xml","META-INF/persistence.xml")
-				.addAsManifestResource(EmptyAsset.INSTANCE,"beans.xml");
-				
+				.addAsManifestResource(EmptyAsset.INSTANCE,"beans.xml");			
 	}
-	
 	@Test
-	public void testCatalog(){
-		try{			
-			Assert.assertTrue(catalogEjb.listaLineasAccion() != null);
-			LOGGER.info("CLASE: CatalogFacade");
-			LOGGER.info("METODO: List<Catalog> listaLineasAccion()");			
-			LOGGER.info("RETORNA: List<Catalog>");
+	public void testCatalogsType(){
+		try{										
+			Assert.assertTrue(catalogsTypeEjb.listaTipoCatalogos().size()>0);
+			LOGGER.info("CLASE: CatalogsTypeFacade");
+			LOGGER.info("METODO: List<CatalogsType> listaTipoCatalogos()");			
+			LOGGER.info("RETORNA: List<CatalogsType>");
 			LOGGER.info("RESULTADO: EXITOSO");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
 }
 
