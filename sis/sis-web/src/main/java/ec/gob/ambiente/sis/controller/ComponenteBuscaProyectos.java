@@ -345,9 +345,6 @@ public class ComponenteBuscaProyectos implements Serializable{
 		}
 	}
 
-//	public void seguimientoProyectoReportado(){
-//		////hacer el seguimiento al proyecto reportado
-//	}
 		
 	public void nuevoSeguimientoProyectoSocioEstrategico(Projects proyecto){
 		try{
@@ -538,7 +535,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 				getBuscaProyectosBean().setSinDatosProyectoPreguntas(true);
 				nuevoIngreso = true;
 			}else{
-				//Aqui consultar si ya respondio preguntas
+
 				nuevoIngreso= false;
 				for(ProjectQuestions preguntas:getBuscaProyectosBean().getListaPreguntasAsignadas()){
 					getBuscaProyectosBean().getPreguntasSelecionadas().add(preguntas.getCatalogs().getCataId());
@@ -655,7 +652,6 @@ public class ComponenteBuscaProyectos implements Serializable{
 	public void cargarAvanceEjecucionSalvaguarda(int codigoPartner,int codigoProyecto){
 		try{
 
-//			getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
 			getBuscaProyectosBean().setAdvanceExecution(new AdvanceExecutionSafeguards());
 			if(codigoPartner==0)
 				getBuscaProyectosBean().setAdvanceExecution(getAdvanceExecutionSafeguardsFacade().buscarPorProyecto(codigoProyecto));
@@ -679,24 +675,11 @@ public class ComponenteBuscaProyectos implements Serializable{
 				avanceEjecucion.setAdexTermFrom(null);
 				avanceEjecucion.setAdexTermTo(null);
 				getBuscaProyectosBean().setAdvanceExecution(avanceEjecucion);
-//				getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
-//				getBuscaProyectosBean().getResumenEjecutivo().setExsuCreationDate(new Date());
-//				getBuscaProyectosBean().getResumenEjecutivo().setExsuUserCreator(getLoginBean().getUser().getUserName());
-//				getBuscaProyectosBean().getResumenEjecutivo().setExsuStatus(true);
-//				getBuscaProyectosBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
 
 			}else{
 				getBuscaProyectosBean().setAnioReporte(Integer.valueOf(getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0,4)));
 				getBuscaProyectosBean().setPeriodoDesde("01");
 				sectoresInteresProyecto();
-//				getBuscaProyectosBean().setResumenEjecutivo(getExecutiveSummarieFacade().buscaPorAvanceEjecucion(getBuscaProyectosBean().getAdvanceExecution().getAdexId()));
-//				if(getBuscaProyectosBean().getResumenEjecutivo()==null){
-//					getBuscaProyectosBean().setResumenEjecutivo(new ExecutiveSummaries());
-//					getBuscaProyectosBean().getResumenEjecutivo().setExsuCreationDate(new Date());
-//					getBuscaProyectosBean().getResumenEjecutivo().setExsuUserCreator(getLoginBean().getUser().getUserName());
-//					getBuscaProyectosBean().getResumenEjecutivo().setExsuStatus(true);
-//					getBuscaProyectosBean().getResumenEjecutivo().setExsuRegisterDate(new Date());
-//				}
 
 			}
 
@@ -1009,16 +992,16 @@ public class ComponenteBuscaProyectos implements Serializable{
 					cargaSectoresInteres();	
 
 					avanceEjecucion.setAdexIsGender(false);
-					if(getBuscaProyectosBean().getCodigoStrategicPartner()== null){					
-
-						avanceEjecucion.setProjectsStrategicPartners(null);
-					}else{			
-						codigoPartner = getBuscaProyectosBean().getCodigoStrategicPartner();
-
-						getBuscaProyectosBean().setCodigoStrategicPartner(codigoPartner);
-						psp.setPspaId(codigoPartner);
-						avanceEjecucion.setProjectsStrategicPartners(psp);
-					}
+//					if(getBuscaProyectosBean().getCodigoStrategicPartner()== null){					
+//
+//						avanceEjecucion.setProjectsStrategicPartners(null);
+//					}else{			
+//						codigoPartner = getBuscaProyectosBean().getCodigoStrategicPartner();
+//
+//						getBuscaProyectosBean().setCodigoStrategicPartner(codigoPartner);
+//						psp.setPspaId(codigoPartner);
+//						avanceEjecucion.setProjectsStrategicPartners(psp);
+//					}
 					getBuscaProyectosBean().setDatosProyecto(true);
 					getBuscaProyectosBean().setSalvaguardasSociosEstrategicos(false);
 					Mensaje.ocultarDialogo("dlgSeleccionSocios");
@@ -1028,6 +1011,18 @@ public class ComponenteBuscaProyectos implements Serializable{
 					getBuscaProyectosBean().setSalvaguardasSociosEstrategicos(false);
 					Mensaje.ocultarDialogo("dlgSeleccionSocios");
 				}
+				
+				if(getBuscaProyectosBean().getCodigoStrategicPartner()== null){					
+					avanceEjecucion.setProjectsStrategicPartners(null);
+				}else{			
+					codigoPartner = getBuscaProyectosBean().getCodigoStrategicPartner();
+					getBuscaProyectosBean().setCodigoStrategicPartner(codigoPartner);
+					psp.setPspaId(codigoPartner);
+					avanceEjecucion.setProjectsStrategicPartners(psp);
+				}
+
+				
+				
 				getBuscaProyectosBean().setAdvanceExecution(avanceEjecucion);
 				if(getBuscaProyectosBean().getAdvanceExecution()!=null && avanceEjecucion.getProjectsStrategicPartners()!=null)
 					getBuscaProyectosBean().setNombreSocioEstrategico(getProjectsStrategicPartnersFacade().partnerEstrategico(avanceEjecucion.getProjectsStrategicPartners().getPspaId()).getPartners().getPartName());

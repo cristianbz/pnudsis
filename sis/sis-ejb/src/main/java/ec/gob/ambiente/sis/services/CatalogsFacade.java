@@ -100,6 +100,22 @@ public class CatalogsFacade extends AbstractFacade<Catalogs,Integer>{
 		}
 		return orden;
 	}
-	
+	/**
+	 * Recupera el codigo del catalogo para la auotidentificacion indigena
+	 * @return
+	 * @throws Exception
+	 */
+	public int codigoIndigena() throws Exception{
+		int codigo=0;
+		String sql="SELECT cata_id FROM sis.catalogs WHERE cata_text1='Indigena' OR cata_text2='Indigena'";		
+		List<Object[]>  resultList = (List<Object[]>) consultaNativa(sql);
+		for (Object object : resultList) {		
+			if(object != null){
+				int dato = (Integer) object;
+				codigo=dato;		
+			}
+		}
+		return codigo;
+	}
 }
 

@@ -24,6 +24,7 @@ import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.SitioPublicoBean;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
+import ec.gob.ambiente.sis.utils.Mensaje;
 import lombok.Getter;
 
 @Named()
@@ -76,6 +77,9 @@ public class SitioPublicoController implements Serializable{
 				sf.setSafeTitle(dataObj[4].toString());
 				getSitioPublicoBean().getListaSalvaguardas().add(sf);
 			}
+			getSitioPublicoBean().setPosicionSalvaguardas(1);
+			informacionSalvaguardaA();
+			Mensaje.actualizarComponente(":frm:pnlSalvaguardas");			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -107,6 +111,7 @@ public class SitioPublicoController implements Serializable{
 			obtieneSalvaguardas(SALVAGUARDA_A, "A");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_A);
 			getSitioPublicoBean().setCodigoSalvaguarda("A");
+			getSitioPublicoBean().setPosicionSalvaguardas(1);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -144,6 +149,7 @@ public class SitioPublicoController implements Serializable{
 			obtieneSalvaguardas(SALVAGUARDA_B, "B");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_B);
 			getSitioPublicoBean().setCodigoSalvaguarda("B");
+			getSitioPublicoBean().setPosicionSalvaguardas(2);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -170,6 +176,7 @@ public class SitioPublicoController implements Serializable{
 			obtieneSalvaguardas(SALVAGUARDA_C, "C");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_C);
 			getSitioPublicoBean().setCodigoSalvaguarda("C");
+			getSitioPublicoBean().setPosicionSalvaguardas(3);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -185,6 +192,7 @@ public class SitioPublicoController implements Serializable{
 			obtieneSalvaguardas(SALVAGUARDA_D, "D");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_D);
 			getSitioPublicoBean().setCodigoSalvaguarda("D");
+			getSitioPublicoBean().setPosicionSalvaguardas(4);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -195,11 +203,11 @@ public class SitioPublicoController implements Serializable{
 		try{			
 			listaTempProvincias = getTableResponsesFacade().listaFomentoGestionComunitariaE();
 			getSitioPublicoBean().setNumeroFomentoGestionComunitariaE(listaTempProvincias.size());
-//			System.out.println("Numero Fomento Gestion");
-//			System.out.println(getSitioPublicoBean().getNumeroFomentoGestionComunitariaE());
+			getSitioPublicoBean().setTotalHectareasCoberturaE(getTableResponsesFacade().totalHectareasCoberturaE());
 			obtieneSalvaguardas(SALVAGUARDA_E, "E");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_E);
 			getSitioPublicoBean().setCodigoSalvaguarda("E");
+			getSitioPublicoBean().setPosicionSalvaguardas(5);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -207,13 +215,11 @@ public class SitioPublicoController implements Serializable{
 	
 	public void informacionSalvaguardaF(){
 		try{			
-			getSitioPublicoBean().setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());
-//			System.out.println("Numero Recursos Invertidos");
-//			System.out.println(getSitioPublicoBean().getTotalRecursosInvertidos());
-			
+			getSitioPublicoBean().setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());			
 			obtieneSalvaguardas(SALVAGUARDA_F, "F");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_F);
 			getSitioPublicoBean().setCodigoSalvaguarda("F");
+			getSitioPublicoBean().setPosicionSalvaguardas(6);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -244,6 +250,7 @@ public class SitioPublicoController implements Serializable{
 			obtieneSalvaguardas(SALVAGUARDA_G, "G");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_G);
 			getSitioPublicoBean().setCodigoSalvaguarda("G");
+			getSitioPublicoBean().setPosicionSalvaguardas(7);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -255,6 +262,65 @@ public class SitioPublicoController implements Serializable{
 				getSitioPublicoBean().setDescripcionSalvaguarda(sf.getSafeDescription());
 				getSitioPublicoBean().setSalvaguarda(salvaguarda);
 				getSitioPublicoBean().setTituloSalvaguarda(sf.getSafeTitle());
+			}
+		}
+	}
+	public void avanzaSalvaguarda(){
+		if(getSitioPublicoBean().getPosicionSalvaguardas() == 7){
+			getSitioPublicoBean().setPosicionSalvaguardas(7);
+			informacionSalvaguardaG();
+		}else{
+			getSitioPublicoBean().setPosicionSalvaguardas(getSitioPublicoBean().getPosicionSalvaguardas()+1);
+			switch(getSitioPublicoBean().getPosicionSalvaguardas()){
+				case 2:
+					informacionSalvaguardaB();
+					break;
+				case 3:
+					informacionSalvaguardaC();
+					break;
+				case 4:
+					informacionSalvaguardaD();
+					break;
+				case 5:
+					informacionSalvaguardaE();
+					break;
+				case 6:
+					informacionSalvaguardaF();
+					break;
+				case 7:
+					informacionSalvaguardaG();
+					break;	
+			}
+		}
+	}
+	public void retrocedeSalvaguarda(){
+		if(getSitioPublicoBean().getPosicionSalvaguardas() == 1){
+			getSitioPublicoBean().setPosicionSalvaguardas(1);
+			informacionSalvaguardaA();
+		}else{
+			getSitioPublicoBean().setPosicionSalvaguardas(getSitioPublicoBean().getPosicionSalvaguardas()-1);
+			switch(getSitioPublicoBean().getPosicionSalvaguardas()){
+				case 1:
+					informacionSalvaguardaA();
+					break;
+				case 2:
+					informacionSalvaguardaB();
+					break;
+				case 3:
+					informacionSalvaguardaC();
+					break;
+				case 4:
+					informacionSalvaguardaD();
+					break;
+				case 5:
+					informacionSalvaguardaE();
+					break;
+				case 6:
+					informacionSalvaguardaF();
+					break;
+				case 7:
+					informacionSalvaguardaG();
+					break;	
 			}
 		}
 	}

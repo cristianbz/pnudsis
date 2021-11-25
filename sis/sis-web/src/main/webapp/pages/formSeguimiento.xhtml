@@ -2069,11 +2069,11 @@
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelLey">
 									<p:inputTextarea id="textNuevaLey" 
-										cols="50"
+										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLeySA.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLey}">
 									
 									</p:inputTextarea>								
-									
+									<p:message for="textNuevaLey" />
 								</p:outputPanel>	
 								</div>
 								<div class="p-field p-col-12 p-md-4">
@@ -2136,11 +2136,11 @@
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelMJN">
 									<p:inputTextarea id="textNuevaLeyMJN" 
-										cols="50"
+										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoMJN.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoIngresoMJN}">
 									
 									</p:inputTextarea>								
-									
+									<p:message for="textNuevaLeyMJN" />
 								</p:outputPanel>	
 								</div>
 								<div class="p-field p-col-12 p-md-4">
@@ -2204,11 +2204,11 @@
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelNSN">
 									<p:inputTextarea id="textNuevaLeyNSN" 
-										cols="50"
+										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaNormativaSN.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoIngresoNSN}">
 									
 									</p:inputTextarea>								
-									
+									<p:message for="textNuevaLeyNSN"/>
 								</p:outputPanel>	
 								</div>
 								<div class="p-field p-col-12 p-md-4">
@@ -2270,11 +2270,11 @@
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelPolitica">
 									<p:inputTextarea 
-										cols="50"
+										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 										id="textNuevaPolitica" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPoliticaSA.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPolitica}">
 									
 									</p:inputTextarea>								
-									
+									<p:message for="textNuevaPolitica"/>
 								</p:outputPanel>	
 								</div>
 								<div class="p-field p-col-12 p-md-4">
@@ -11323,7 +11323,7 @@
 								<div class="p-field p-col-12 p-md-12">								
 									<center>
 										<p:outputLabel value="#{titulos['cobeneficioPoliticas']}"
-											styleClass="etiquetaTitulo" />
+											styleClass="etiquetaCobeneficio" />
 									</center>
 								</div>	
 							</div>							
@@ -11651,7 +11651,7 @@
 								<div class="p-field p-col-12 p-md-12">								
 									<center>
 										<p:outputLabel value="#{titulos['transicionSistemas']}"
-											styleClass="etiquetaTitulo" />
+											styleClass="etiquetaCobeneficio" />
 									</center>
 								</div>	
 							</div>							
@@ -12112,7 +12112,7 @@
 								<div class="p-field p-col-12 p-md-12">								
 									<center>
 										<p:outputLabel value="#{titulos['manejoForestalSostenible']}"
-											styleClass="etiquetaTitulo" />
+											styleClass="etiquetaCobeneficio" />
 									</center>
 								</div>	
 							</div>		
@@ -12429,16 +12429,6 @@
 										</p:column>
 									</p:dataTable>
 								</div>
-																
-							</div>
-							
-							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-12">								
-									<center>
-										<p:outputLabel value="#{titulos['ambientales']}"
-											styleClass="etiquetaTitulo" />
-									</center>
-								</div>
 								<div class="p-field p-col-12 p-md-12">
 									<p:outputLabel
 												value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(38).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(38).quesContentQuestionEnglish}"
@@ -12482,6 +12472,17 @@
 										</p:column>
 									</p:dataTable>
 								</div>
+																
+							</div>
+							
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-12">								
+									<center>
+										<p:outputLabel value="#{titulos['ambientales']}"
+											styleClass="etiquetaTitulo" />
+									</center>
+								</div>
+
 								<div class="p-field p-col-12 p-md-12">
 									<p:outputLabel
 												value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(39).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(39).quesContentQuestionEnglish}"
@@ -12746,7 +12747,7 @@
 								<div class="p-field p-col-12 p-md-12">								
 									<center>
 										<p:outputLabel value="#{titulos['conservacionRestauracion']}"
-											styleClass="etiquetaTitulo" />
+											styleClass="etiquetaCobeneficio" />
 									</center>
 								</div>	
 							</div>
@@ -12844,6 +12845,17 @@
 										</p:column>
 									</p:dataTable>
 								</div>
+								
+							</div>
+							
+
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-12">								
+									<center>
+										<p:outputLabel value="#{titulos['ambientales']}"
+											styleClass="etiquetaTitulo" />
+									</center>
+								</div>
 								<div class="p-field p-col-12 p-md-12">
 									<p:outputLabel
 												value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(47).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasE.get(47).quesContentQuestionEnglish}"
@@ -12886,16 +12898,6 @@
 											</p:commandButton>
 										</p:column>
 									</p:dataTable>
-								</div>
-							</div>
-							
-
-							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-12">								
-									<center>
-										<p:outputLabel value="#{titulos['ambientales']}"
-											styleClass="etiquetaTitulo" />
-									</center>
 								</div>
 								<div class="p-field p-col-12 p-md-12">
 									<p:outputLabel

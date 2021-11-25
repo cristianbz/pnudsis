@@ -27,7 +27,7 @@ public class RegistroDeGeneroController implements Serializable{
 
 	private static final Logger log = Logger.getLogger(RegistroDeGeneroController.class);
 
-	private static final int CODIGO_IDENTIFICACION_INDIGENA = 54;
+	
 
 	@Getter
 	@Setter
@@ -45,7 +45,7 @@ public class RegistroDeGeneroController implements Serializable{
 			getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroGenero(true);
 			getComponenteBuscarProyectos().setEsSeguimientoSalvaguardas(false);
 		}catch(Exception e){
-			
+			e.printStackTrace();
 		}
 	}
 	/**

@@ -42,6 +42,7 @@ import ec.gob.ambiente.suia.model.MenuVO;
 import ec.gob.ambiente.suia.model.Role;
 import ec.gob.ambiente.suia.model.RolesUser;
 import ec.gob.ambiente.suia.service.MenuFacade;
+import ec.gob.ambiente.suia.service.MenuRoleFacade;
 import ec.gob.ambiente.suia.service.PeopleFacade;
 import ec.gob.ambiente.suia.service.RoleFacade;
 import ec.gob.ambiente.suia.service.RolesUserFacade;
@@ -58,6 +59,11 @@ public class LoginController implements Serializable {
 	
 	@EJB
 	private MenuFacade menuFacade;
+	
+	@EJB
+	@Getter
+	private MenuRoleFacade menuRoleFacade;
+
 	
 	@EJB
 	private RoleFacade roleFacade;
@@ -109,10 +115,7 @@ public class LoginController implements Serializable {
 	private String userEmail;
 	private String prefijoRoles;
 	
-	private static String ROL_SOCIO_ESTRATEGICO="SIS_socio_estrategico";
-	private static String ROL_SOCIO_IMPLEMENTADOR="SIS_socio_implementador";
-	private static String ROL_ADMINISTRADOR="SIS_Administrador";
-	
+		
 
 	
 	private ExternalContext ec;
@@ -641,46 +644,6 @@ public class LoginController implements Serializable {
 		}	
 	}
 	
-//	public void validarUsuario(){		
-//		try{
-//			
-//			getLoginBean().setUser(getUsersFacade().validarUsuario(username,EncriptarSHA.encriptarSHA1(password)));
-//			getLoginBean().setListaProyectosDelUsuario(new ArrayList<>());
-//			if(getLoginBean().getUser()!=null){
-//				ec = FacesContext.getCurrentInstance().getExternalContext();
-//				getLoginBean().setSesion( (HttpSession)ec.getSession(true));
-//				getLoginBean().getSesion().setAttribute("logeado", true);
-//				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listRoleByUser(getLoginBean().getUser()));
-//				for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
-//					if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta())){
-//						getLoginBean().setTipoRol(4);
-//						break;
-//					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.getEtiqueta())){
-//						getLoginBean().setListaProyectosDelSocioEstrategico(getProjectsStrategicPartnersFacade().listaProyectosSocioEstrategico(ru.getRousDescription()));
-////						getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));
-//						getLoginBean().setTipoRol(3);
-//						break;
-//					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
-////						getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));				
-//						getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
-//						getLoginBean().setTipoRol(2);
-//						break;
-//					}else{
-//						getLoginBean().setTipoRol(1);
-//						break;
-//					}
-//				}
-////				Mensaje.verDialogo("dlgTipoRol");
-////				JsfUtil.redirect("/pages/inicio.xhtml");
-//			}else{
-//				Mensaje.actualizarComponente(":indexForm:growl");
-//				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.usuarionoValido"), "");
-//			}
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		
-//	}
 	public void validarUsuario(){		
 		try{			
 			getLoginBean().setUser(getUsersFacade().validarUsuario(username,EncriptarSHA.encriptarSHA1(password)));
@@ -689,21 +652,22 @@ public class LoginController implements Serializable {
 				ec = FacesContext.getCurrentInstance().getExternalContext();
 				getLoginBean().setSesion( (HttpSession)ec.getSession(true));
 				getLoginBean().getSesion().setAttribute("logeado", true);
-				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listRoleByUser(getLoginBean().getUser()));
+//				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listRoleByUser(getLoginBean().getUser()));
+				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listarRolesDeUsuario(getLoginBean().getUser()));
 				if(getLoginBean().getListaRolesUsuario().size()>1){
 					Mensaje.verDialogo("dlgTipoRol");
 				}else{
+					getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(getLoginBean().getListaRolesUsuario()));						
+					llenarMenu();
 					for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
 						if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta())){
 							getLoginBean().setTipoRol(4);
 							break;
 						}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.getEtiqueta())){
 							getLoginBean().setListaProyectosDelSocioEstrategico(getProjectsStrategicPartnersFacade().listaProyectosSocioEstrategico(ru.getRousDescription()));
-//							getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));
 							getLoginBean().setTipoRol(3);
 							break;
-						}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIGMA_SOCIO_IMPLEMENTADOR.getEtiqueta())){
-//							getLoginBean().setListaProyectosDelUsuario(getProjectUsersFacade().listaProyectosDelUsuario(getLoginBean().getUser().getUserId()));				
+						}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
 							getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
 							getLoginBean().setTipoRol(2);
 							break;
@@ -715,37 +679,75 @@ public class LoginController implements Serializable {
 					JsfUtil.redirect("/pages/inicio.xhtml");
 				}
 				
-//				Mensaje.verDialogo("dlgTipoRol");
-//				JsfUtil.redirect("/pages/inicio.xhtml");
 			}else{
 				Mensaje.actualizarComponente(":indexForm:growl");
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.usuarionoValido"), "");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-		}
-		
+		}		
 	}
+	
+	private void llenarMenu(){
+    	try{
+    		menuModel=new DefaultMenuModel();
+    		if(!getLoginBean().getListaMenuRolesUsuario().isEmpty()){
+    			for(Menu mr:getLoginBean().getListaMenuRolesUsuario()){
+    				
+    				if(mr.getMenuEndNode()==false){
+    					DefaultSubMenu firstSubmenu = DefaultSubMenu.builder().label(mr.getMenuName()).icon(mr.getMenuIcon()).build();
+    					for(Menu mr1:getLoginBean().getListaMenuRolesUsuario()){
+    						if(mr1.getMenuEndNode()&&mr1.getMenu()!=null&&mr1.getMenu().getMenuId()==mr.getMenuId()){
+    							DefaultMenuItem item = DefaultMenuItem.builder()
+    					                .value(mr1.getMenuName())
+    					                .icon(mr1.getMenuIcon())
+    					                .command(mr1.getMenuAction())
+    					                .update("msgs")
+    					                .build();
+    					        firstSubmenu.getElements().add(item);
+    						}
+    					}
+    					menuModel.getElements().add(firstSubmenu);
+    				}
+    			}
+    			getLoginBean().setMenuModel(menuModel);
+    		}
+    	}catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 	
 	public void ubicaRolUsuarioSeleccionado(){
 		try{
+			List<RolesUser> rolesUsuario=new ArrayList<>();
 			
 			for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
 				if(ru.getRousId() == getLoginBean().getCodigoRolUsuario()){
 					if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta()) ){
+						rolesUsuario.add(ru);
+						getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(rolesUsuario));					
+						llenarMenu();
 						getLoginBean().setTipoRol(4);
 						break;
 					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.getEtiqueta()) ){
-						getLoginBean().setListaProyectosDelSocioEstrategico(getProjectsStrategicPartnersFacade().listaProyectosSocioEstrategico(ru.getRousDescription()));
-					
+						rolesUsuario.add(ru);
+						getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(rolesUsuario));					
+						llenarMenu();
+						
+						getLoginBean().setListaProyectosDelSocioEstrategico(getProjectsStrategicPartnersFacade().listaProyectosSocioEstrategico(ru.getRousDescription()));					
 						getLoginBean().setTipoRol(3);
 						break;
-					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIGMA_SOCIO_IMPLEMENTADOR.getEtiqueta())){
-									
+					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
+						rolesUsuario.add(ru);
+						getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(rolesUsuario));					
+						llenarMenu();
+						
 						getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
 						getLoginBean().setTipoRol(2);
 						break;
 					}else{
+						getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(getLoginBean().getListaRolesUsuario()));					
+						llenarMenu();
 						getLoginBean().setTipoRol(1);
 						break;
 					}

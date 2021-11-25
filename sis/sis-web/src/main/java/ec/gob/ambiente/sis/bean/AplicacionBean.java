@@ -110,12 +110,13 @@ public class AplicacionBean implements Serializable{
 	@Setter
 	private List<Catalogs> listaTipoIncentivo;
 
-//	@Getter
-//	@Setter
-//	private List<Components> listaComponentes;
 	
 	@Getter
 	@Setter
 	private List<CatalogType> listaLineasGenero;
+	
+	@Getter
+	@Setter
+	private Integer codigoIndigena;
 }
 

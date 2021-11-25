@@ -24,28 +24,9 @@
 				<br />
 			</h:panelGrid>
 			<h:panelGrid columns="3">
-				<p:tieredMenu style="width:400px">
-					<p:submenu label="Acciones de Registro">
-						<p:menuitem value="Registro de Salvaguardas"
-							action="#{sesionController.redireccionarAPagina('','formRegistroSalvaguardas')}"
-							update="msgs" />						
-						<p:menuitem value="Registro de líneas de Género"
-							action="#{sesionController.redireccionarAPagina('','formRegistroDeGenero')}"
-							update="msgs" />
-					</p:submenu>
-					<p:submenu label="Seguimiento">
-						<p:menuitem value="Seguimiento de Salvaguardas"
-							action="#{sesionController.redireccionarAPagina('','formSeguimiento')}"
-							update="msgs" />
-						<p:menuitem value="Seguimiento de líneas de Género"
-							action="#{sesionController.redireccionarAPagina('','formSeguimientoGenero')}"
-							update="msgs" />						
-					</p:submenu>
-					<p:submenu label="Administracion">
-						<p:menuitem value="Configuraciones del sistema"
-							action="#{sesionController.redireccionarAPagina('admin','formAdministracion')}"
-							update="msgs" />
-					</p:submenu>
+
+				<p:tieredMenu style="width:400px" model="#{loginBean.menuModel}">
+					
 				</p:tieredMenu>
 				<h:panelGrid width="550">
 

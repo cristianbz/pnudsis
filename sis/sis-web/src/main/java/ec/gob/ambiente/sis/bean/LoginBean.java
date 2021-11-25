@@ -20,6 +20,8 @@ import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sis.services.UserFacade;
 import ec.gob.ambiente.sis.utils.JsfUtil;
+import ec.gob.ambiente.suia.model.Menu;
+import ec.gob.ambiente.suia.model.MenuRole;
 import ec.gob.ambiente.suia.model.Organization;
 import ec.gob.ambiente.suia.model.RolesUser;
 import ec.gob.ambiente.suia.model.Users;
@@ -38,11 +40,11 @@ public class LoginBean implements Serializable {
 	
 	private static final long serialVersionUID = -6576425428957899684L;
 	
-	@EJB
-	private UserFacade userFacade;
-	
-	@EJB
-	private PeopleFacade peopleFacade;
+//	@EJB
+//	private UserFacade userFacade;
+//	
+//	@EJB
+//	private PeopleFacade peopleFacade;
 	
 //	@EJB
 //	private OrganizationFacade organizationFacade;
@@ -54,6 +56,7 @@ public class LoginBean implements Serializable {
 	@Getter
 	@Setter
 	private Users user;
+	
 	
 	@Getter
 	@Setter
@@ -82,6 +85,10 @@ public class LoginBean implements Serializable {
 	@Getter
 	@Setter
 	private List<RolesUser> listaRolesUsuario;
+	
+	@Getter
+	@Setter
+	private List<Menu> listaMenuRolesUsuario;
 	
 	@Getter
 	@Setter

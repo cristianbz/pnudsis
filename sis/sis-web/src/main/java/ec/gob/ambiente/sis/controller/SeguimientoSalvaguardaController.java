@@ -89,8 +89,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(SeguimientoSalvaguardaController.class);
-	private static final int CODIGO_IDENTIFICACION_INDIGENA = 54;
-	
+//	private static final int CODIGO_IDENTIFICACION_INDIGENA = 54;
+	int CODIGO_IDENTIFICACION_INDIGENA = 0;
 
 	@Inject
 	@Getter	
@@ -212,6 +212,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			cargaListadoTipoInvolucramiento();
 			cargaListadoInstitucionAcompania();
 			cargaSociosImplementadores();
+
+			CODIGO_IDENTIFICACION_INDIGENA =getAplicacionBean().getCodigoIndigena();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

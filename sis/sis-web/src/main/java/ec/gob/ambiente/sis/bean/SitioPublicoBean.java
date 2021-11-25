@@ -24,7 +24,15 @@ public class SitioPublicoBean implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer posicionSalvaguardas;
+	
+	@Getter
+	@Setter
 	private BigDecimal totalInversionProyectos;
+	
+	@Getter
+	@Setter
+	private BigDecimal totalHectareasCoberturaE;
 	
 	@Getter
 	@Setter

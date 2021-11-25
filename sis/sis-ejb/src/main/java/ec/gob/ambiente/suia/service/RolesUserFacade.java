@@ -115,5 +115,18 @@ public class RolesUserFacade extends AbstractFacade <RolesUser, Integer> impleme
 		}
         return result;
     }
-
+	
+	public List<RolesUser> listarRolesDeUsuario(Users usuario) throws Exception{
+		String sql=" SELECT ru FROM RolesUser ru, Role r WHERE ru.rousStatus=true and r.roleStatus=true and ru.role.roleId=r.roleId and ru.users.userId = :param1"; 
+		Query query = getEntityManager().createQuery(sql);		
+		query.setParameter("param1",usuario.getUserId());
+         
+         @SuppressWarnings("unchecked")
+		List<RolesUser> res = query.getResultList();
+         if (res != null && res.size() > 0) {
+             return res;
+         } else {
+             return null;
+         }
+	}
 }

@@ -173,7 +173,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaProyectosValoresSalvaguardaA() throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT tare_column_decimal_one,tare_column_number_six FROM sis.table_responses WHERE ques_id=5;";
+		String sql ="SELECT tare_column_decimal_one,tare_column_number_six FROM sis.table_responses WHERE ques_id=5 AND tare_status= TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -195,7 +195,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaComunidadesSalvaguardaB_C_G(int codigoPregunta) throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT lower(tare_column_one),ques_id FROM sis.table_responses WHERE ques_id=" + codigoPregunta;
+		String sql ="SELECT lower(tare_column_one),ques_id FROM sis.table_responses WHERE tare_status=TRUE AND ques_id=" + codigoPregunta;
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -216,7 +216,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaMaximoHombresMujeresSalvaguardaB() throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT MAX(tare_column_number_seven)AS hombres,MAX(tare_column_number_eight)AS mujeres FROM sis.table_responses WHERE ques_id=16;";
+		String sql ="SELECT MAX(tare_column_number_seven)AS hombres,MAX(tare_column_number_eight)AS mujeres FROM sis.table_responses WHERE ques_id=16 AND tare_status= TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -237,7 +237,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public int listaSaberesAncestralesSalvaguardaC() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=45;";
+		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=45 AND tare_status= TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
 			for(Object obj:resultado)
@@ -253,7 +253,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaFomentoGestionComunitariaE() throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT DISTINCT tare_column_number_one FROM sis.table_responses WHERE ques_id = 166;";
+		String sql ="SELECT DISTINCT tare_column_number_one FROM sis.table_responses WHERE ques_id = 166 AND tare_status= TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -264,15 +264,34 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return listaResultado;
 	}
-	
+	/**
+	 * Total de hectareas de cobertura vegetal
+	 * @return
+	 * @throws Exception
+	 */
+	public BigDecimal totalHectareasCoberturaE() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT SUM(tare_column_number_eight) FROM sis.table_responses WHERE ques_id= 169 AND tare_status= TRUE;";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
 	public BigDecimal listaRecursosInvertidosF() throws Exception{
 		List<Object[]> resultado= null;
 		BigDecimal valor= new BigDecimal(0);		
-		String sql ="SELECT SUM(tare_column_decimal_one) FROM sis.table_responses WHERE ques_id=117;";
+		String sql ="SELECT SUM(tare_column_decimal_one) FROM sis.table_responses WHERE ques_id=117 AND tare_status= TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
-			for(Object obj:resultado)
-				valor = new BigDecimal(obj.toString());
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
 		}
 		return valor;
 	}
@@ -280,11 +299,13 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public int listaAccionesGeneradasSalvaguardaG() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=131";
+		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=131 AND tare_status= TRUE";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
-			for(Object obj:resultado)
-				valor = Integer.valueOf(obj.toString());
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = Integer.valueOf(obj.toString());
+			}
 		}
 		return valor;
 	}
@@ -292,7 +313,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public Integer listaBeneficiariosSalvaguardaG() throws Exception{
 		Integer total=new Integer(0);
 		List<Object[]> resultado= null;
-		String sql ="SELECT SUM(tare_column_number_seven) AS hombres,SUM(tare_column_number_eight) AS mujeres FROM sis.table_responses WHERE ques_id=131";
+		String sql ="SELECT SUM(tare_column_number_seven) AS hombres,SUM(tare_column_number_eight) AS mujeres FROM sis.table_responses WHERE ques_id=131 AND tare_status= TRUE";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){

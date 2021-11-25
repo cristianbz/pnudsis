@@ -64,8 +64,8 @@ public class SeguimientoGeneroController implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(SeguimientoGeneroController.class);
 
-	private static final int CODIGO_IDENTIFICACION_INDIGENA = 54;
-
+//	private static final int CODIGO_IDENTIFICACION_INDIGENA = 54;
+	int CODIGO_IDENTIFICACION_INDIGENA =0;
 	@Getter
 	@Setter
 	@Inject
@@ -143,6 +143,7 @@ public class SeguimientoGeneroController implements Serializable{
 			cargaTipoIncentivo();
 			getSeguimientoGeneroBean().setPosicionTab(0);
 			
+			CODIGO_IDENTIFICACION_INDIGENA =getAplicacionBean().getCodigoIndigena();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

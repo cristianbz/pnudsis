@@ -164,3 +164,11 @@
   text-align: center;
   background: #5499C7
 }
+.etiquetaCobeneficio{
+	display: block;
+	background: #00AAC3;
+	color: #FFFFFF;
+	font-size:13px !important;
+	font-weight: bold;
+	text-align: center;
+}
