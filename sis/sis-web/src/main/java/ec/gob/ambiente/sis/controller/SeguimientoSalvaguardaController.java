@@ -88,7 +88,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(SeguimientoSalvaguardaController.class);
+	private static final Logger LOG = Logger.getLogger(SeguimientoSalvaguardaController.class);
 //	private static final int CODIGO_IDENTIFICACION_INDIGENA = 54;
 	int CODIGO_IDENTIFICACION_INDIGENA = 0;
 
@@ -215,7 +215,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 			CODIGO_IDENTIFICACION_INDIGENA =getAplicacionBean().getCodigoIndigena();
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -249,7 +249,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setListaProyectos(getProjectsFacade().buscarTodosLosProyectos());
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.cargarProyectos"));			
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarProyectos " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarProyectos " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -276,7 +276,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.proyectoReportado"));
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaSalvaguardasDelProyectoSeleccionado " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -330,7 +330,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaSalvaguardasProyecto " + ": ").append(e.getMessage()));		
 		}
 	}
 	/**
@@ -342,7 +342,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setListaSalvaguardasplanAccion(getSafeguardsFacade().buscarTodosLosProyectos());
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaSalvaguardasPlanAccion " + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -391,9 +391,9 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 
 		}catch(NoResultException e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarAvanceEjecucionSalvaguarda " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarAvanceEjecucionSalvaguarda " + ": ").append(e.getMessage()));
 		} catch (Exception e) {
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarAvanceEjecucionSalvaguarda " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarAvanceEjecucionSalvaguarda " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -646,7 +646,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "", getMensajesController().getPropiedad("error.respuestasPreguntas"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaValoresRespuestaPorSalvaguarda " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaValoresRespuestaPorSalvaguarda " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -672,7 +672,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "valoresRespuestasPorDefecto " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -699,7 +699,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevosValoresRespuestas " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -925,7 +925,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabarSalvaguarda"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaA " + ": ").append(e.getMessage()));			
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaA " + ": ").append(e.getMessage()));			
 		}
 	}
 
@@ -1095,7 +1095,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPA(OperacionesListas.filtrar(listaSalvaguardaA, 159));
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaInformacionSalvaguardaA " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1232,7 +1232,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setCatalogoPlanGobierno(new ArrayList<>());
 			getSeguimientoSalvaguardaBean().setCatalogoPlanGobierno(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PLANPROYECTO.getCodigo()));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoPlanGobierno " + ": ").append(e.getMessage()));
 		}
 	}
 	public void cargaCatalogoModalidad(){
@@ -1244,7 +1244,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getListadoModalidades().add(catalog.getCataText2());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoModalidad " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1258,7 +1258,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			});
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoHerramientas " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1271,7 +1271,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getListadoActividades().add(catalogo.getCataText2());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoActividad " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1282,7 +1282,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getListadoMonitoreoRemoto().add(catalogo.getCataText2());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoMonitoreoRemoto " + ": ").append(e.getMessage()));
 		}
 	}
 	public void cargaCatalogoInstitucionAcompania(){		
@@ -1298,7 +1298,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			});
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoInstitucionAcompania " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1309,7 +1309,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getListadoMonitoreoInSitu().add(catalogo.getCataText2());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoMonitoreoinSitu " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1320,7 +1320,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getListadoPeriodicidad().add(catalogo.getCataText2());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoPeriodicidad " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1329,7 +1329,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setListaServicio(new ArrayList<>());
 			getSeguimientoSalvaguardaBean().setListaServicio(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.SERVICIO.getCodigo()));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarCatalogoServicio " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1341,7 +1341,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setListadoActividades(new ArrayList<>());
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoTipoDeAcceso " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1369,7 +1369,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setListaSociosImplementadores(new ArrayList<>());
 			getSeguimientoSalvaguardaBean().setListaSociosImplementadores(getPartnersFacade().listarSociosImplementadores());
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaSociosImplementadores " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1378,7 +1378,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setListaCatalogoAccionImplementada(new ArrayList<>());
 			getSeguimientoSalvaguardaBean().setListaCatalogoAccionImplementada(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.ACCIONESIMPLEMENTADAS.getCodigo()));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaCatalogoAccionImplementada " + ": ").append(e.getMessage()));
 		}
 	}
 	public boolean validaDatosAvanceEjecucion(){
@@ -1739,7 +1739,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 			getTableResponsesFacade().eliminarRespuestasTabla(getSeguimientoSalvaguardaBean().getRegistroTabla());			
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminaRegistroTabla " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1766,7 +1766,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getListaProvincias().add(catalogo);
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarProvincias " + ": ").append(e.getMessage()));
 		}
 	}
 	public void cancelaIngresoTablaB143(){
@@ -1825,7 +1825,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaB41(false); 
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB41 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB41 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -1876,7 +1876,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.beneficiarios"));
 				}
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB51 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB51 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -1965,7 +1965,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 				vaciarDatosProvinciaCantonParroquia();
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB61 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB61 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -1986,7 +1986,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaB71(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarAvanceEjecucionSalvaguarda " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarAvanceEjecucionSalvaguarda " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2048,7 +2048,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 		
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB81 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB81 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2098,7 +2098,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaB9(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB9 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB9 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2141,7 +2141,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaB102(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB102 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB102 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2162,7 +2162,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaB11(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB11 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB11 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2191,7 +2191,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB143 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB143 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2255,7 +2255,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setHabilitaPuebloNacionalidad(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB121 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB121 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2290,7 +2290,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoModalidad(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB131 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaB131 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2348,7 +2348,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "", getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC201 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC201 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2396,7 +2396,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				vaciarDatosProvinciaCantonParroquia();
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC211 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC211 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2418,7 +2418,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaC241(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC241 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC241 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2440,7 +2440,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaC242(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC242 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC242 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2469,7 +2469,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC26 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC26 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2510,7 +2510,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC271 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC271 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2546,7 +2546,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC28 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC28 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2596,7 +2596,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC291 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC291 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2629,7 +2629,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC301 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC301 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2677,7 +2677,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				vaciarDatosProvinciaCantonParroquia();
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC301 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaC301 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -2725,7 +2725,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaD321 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaD321 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2745,7 +2745,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaOPA(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPA " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPA " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2765,7 +2765,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaOPB(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPB " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPB " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2785,7 +2785,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaOPC(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPC " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPC " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2805,7 +2805,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaOPD(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPD " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPD " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2824,7 +2824,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaOPE(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPE " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPE " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2843,7 +2843,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaOPF(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPE " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPE " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -2862,7 +2862,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaOPG(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPE " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaOPE " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3254,7 +3254,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaD331 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaD331 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 
@@ -3291,7 +3291,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE341 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE341 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3326,7 +3326,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE351 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE351 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3374,7 +3374,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE361 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE361 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3419,7 +3419,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE371 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE371 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3460,7 +3460,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE381 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE381 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3507,7 +3507,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE381 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaE381 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3557,7 +3557,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF411 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF411 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3612,7 +3612,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF421 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF421 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3640,7 +3640,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF431 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF431 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3696,7 +3696,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF441 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF441 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3718,7 +3718,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodProvincia(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF452 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF452 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3754,7 +3754,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG461 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG461 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3809,7 +3809,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoControlVigilancia(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,"",   getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF441 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaF441 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3860,7 +3860,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoAutoIdentificacion(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,"",   getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG481 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG481 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3921,7 +3921,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,"",   getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG491 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG491 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3945,7 +3945,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setCodigoComponente(0);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG501 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG501 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -3995,7 +3995,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setNuevoRegistroTablaG512(false);
 				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG512 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarFilasTablaSalvaguardaG512 " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -4049,7 +4049,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			});
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaTodosLosCantones " + ": ").append(e.getMessage()));
 		}
 	}
 	public void grabarSalvaguardaB(){
@@ -4085,7 +4085,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabarSalvaguarda"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaB " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaB " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -4124,7 +4124,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabarSalvaguarda"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaC " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaC " + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -4238,7 +4238,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			});
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPB(OperacionesListas.filtrar(listaSalvaguardaB, 160));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaInformacionSalvaguardaB " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -4329,7 +4329,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			});
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPC(OperacionesListas.filtrar(listaSalvaguardaC, 161));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaInformacionSalvaguardaC " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -4361,7 +4361,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		}catch(Exception e){
 
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabarSalvaguarda"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaD " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaD " + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -4396,7 +4396,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabarSalvaguarda"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaE " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaE " + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -4430,7 +4430,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabarSalvaguarda"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaF " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaF " + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -4461,7 +4461,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabarSalvaguarda"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaG " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaG " + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -4499,7 +4499,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 			vaciarDatosProvinciaCantonParroquia();
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaInformacionSalvaguardaD " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -4741,7 +4741,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPE(OperacionesListas.filtrar(listaSalvaguardaE, 163));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaInformacionSalvaguardaE " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -4812,7 +4812,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPF(OperacionesListas.filtrar(listaSalvaguardaF, 164));
 			vaciarDatosProvinciaCantonParroquia();
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaInformacionSalvaguardaF " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -4905,7 +4905,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaOPG(OperacionesListas.filtrar(listaSalvaguardaG, 165));
 			vaciarDatosProvinciaCantonParroquia();
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaInformacionSalvaguardaG " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -5103,7 +5103,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "recargaPreguntasRespuestasSalvaguardas " + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -5120,7 +5120,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			catalogo = getSeguimientoSalvaguardaBean().getListaTodosCantones().stream().filter(can->can.getGeloId().equals(codigo)).findFirst().get();
 			respuesta = catalogo.getGeloName();
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "buscarCanton " + ": ").append(e.getMessage()));
 		}
 		return respuesta;
 	}
@@ -5195,7 +5195,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			listaTemp = getTableResponsesFacade().buscarPorAvanceEjecucionPreguntaProCanParr(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB51().getAdvanceExecutionSaveguards().getAdexId(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB51().getQuestions().getQuesId(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB51().getTareColumnNumberOne(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB51().getTareColumnNumberTwo(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB51().getTareColumnNumberThree());
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaB51Aux(listaTemp);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "editarTablaB51 " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -5220,7 +5220,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			listaTemp = getTableResponsesFacade().buscarPorAvanceEjecucionPreguntaProCanParr(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getAdvanceExecutionSaveguards().getAdexId(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getQuestions().getQuesId(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberOne(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberTwo(), getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB81().getTareColumnNumberThree());
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaB81Aux(listaTemp);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "editarTablaB81 " + ": ").append(e.getMessage()));
 		}
 
 		if(getSeguimientoSalvaguardaBean().getCodigoActividad()==0){			
@@ -5857,7 +5857,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "buscaProvinciaCantonParroquia " + ": ").append(e.getMessage()));
 		}
 		return respuesta;
 	}	
@@ -5995,7 +5995,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminaInformacionRespuestas " + ": ").append(e.getMessage()));
 		}
 	}
 	public void cancelaEliminaInformacionRespuestas(){
@@ -6845,7 +6845,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.actualizarComponente(":form:salvaguardas:panelTabla512G");				
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminaValoresTablaDatos " + ": ").append(e.getMessage()));
 		}
 	}
 	public void cancelaEliminaValoresTablaDatos(){
@@ -7692,7 +7692,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevaModalidad " + ": ").append(e.getMessage()));
 		}
 	}
 	public void nuevaModalidad(int contador){
@@ -7720,7 +7720,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevaActividad " + ": ").append(e.getMessage()));
 		}
 	}
 	public void nuevaActividad(int contador){
@@ -7764,7 +7764,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.ocultarDialogo("dlgNuevoControlVigilancia");
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoControlVigilancia " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -7778,7 +7778,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.ocultarDialogo("dlgNuevoIncentivo");
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  getMensajesController().getPropiedad("info.infoGrabada"), "");
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoIncentivo " + ": ").append(e.getMessage()));
 		}
 	}
 	public void agregaNuevoRiesgo(){
@@ -7792,7 +7792,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoRiesgo " + ": ").append(e.getMessage()));
 		}
 	}
 	public void agregaNuevoRecurso(){
@@ -7808,7 +7808,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoRecurso " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -7824,7 +7824,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoServicio " + ": ").append(e.getMessage()));
 		}
 	}
 	public void agregaNuevoTipoAcceso(){
@@ -7836,21 +7836,10 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 			getSeguimientoSalvaguardaBean().setNuevoTipoAcceso(new Catalogs());
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoTipoAcceso " + ": ").append(e.getMessage()));
 		}
 	}
-//	public void agregaNuevaAccionImplementada(){
-//		try{
-//			Catalogs catalogo=OperacionesCatalogo.agregarNuevoCatalogo(TipoCatalogoEnum.ACCIONESIMPLEMENTADAS.getCodigo(), getSeguimientoSalvaguardaBean().getListaCatalogoAccionImplementada(), getSeguimientoSalvaguardaBean().getCatalogoAccionImplementada(), usuario.getUserName());
-//			getSeguimientoSalvaguardaBean().getListaCatalogoAccionImplementada().add(catalogo);
-//			getCatalogsFacade().create(catalogo);
-//			Mensaje.ocultarDialogo("dlgNuevaAccionImplementada");
-//			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
-//			getSeguimientoSalvaguardaBean().setCatalogoAccionImplementada(new Catalogs());
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//	}
+
 	public void nuevaAccionImplementada(){
 		getSeguimientoSalvaguardaBean().setCatalogoAccionImplementada(new Catalogs());
 		Mensaje.verDialogo("dlgNuevaAccionImplementada");
@@ -7872,7 +7861,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevaHerramienta " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -7897,7 +7886,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoMonitoreoRemoto " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -7913,7 +7902,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,"",  getMensajesController().getPropiedad("info.infoGrabada") );
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevoMonitoreoInSitu " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -7929,7 +7918,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevaEjecucion " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -7945,7 +7934,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "", getMensajesController().getPropiedad("info.infoGrabada"));
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaNuevaComunicacion " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -8034,7 +8023,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "controlAgregaEditaLeyes " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -8112,7 +8101,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "controlAgregaEditaPoliticas " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -8125,7 +8114,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaListadoInformaComunica " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -8136,7 +8125,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getListadoInformaEjecucion().add(catalogo.getCataText2());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaListadoInformaEjecucion " + ": ").append(e.getMessage()));
 		}
 	}	
 
@@ -8167,7 +8156,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR ,"" , getMensajesController().getPropiedad("error.seleccionBusqueda"));
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "buscarProyectos " + ": ").append(e.getMessage()));
 		}
 	}
 	public void vaciaDatosBusqueda(){
@@ -8214,7 +8203,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getComponenteBuscarProyectos().getBuscaProyectosBean().setNuevoSeguimiento(false);
 			getComponenteBuscarProyectos().getBuscaProyectosBean().setMostrarTabs(false);
 		}catch(Exception e){
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "finalizarReporteSalvaguardas " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "finalizarReporteSalvaguardas " + ": ").append(e.getMessage()));
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",  getMensajesController().getPropiedad("error.grabar"));
 		}
 	}
@@ -8227,19 +8216,6 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	}
 
 
-//	public boolean validaIngresoResumenEjecutivo(){
-//		boolean estado=false;
-//		if(getSeguimientoSalvaguardaBean().getResumenEjecutivo()!=null){
-//			if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuId() == null && getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty()){
-//				estado=false;
-//			}else if(getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().isEmpty() || getSeguimientoSalvaguardaBean().getResumenEjecutivo().getExsuSummaryContent().trim().length()<10){
-//				estado = false;
-//			}else{
-//				estado = true;
-//			}
-//		}
-//		return estado;
-//	}
 	/**
 	 * Muestra el cuadro de dialogo para finalizar el reporte de ejecucion
 	 * @param salvaguarda
@@ -8438,7 +8414,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.actualizarComponente(":form:growl");
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaDatosProyectoSeleccionado " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -8449,7 +8425,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarSalvaguardaPrimeraVez " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -8476,7 +8452,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}	
 
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "obtenerSalvaguardasAsignadas " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -8688,7 +8664,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.actualizarComponente(":form:growl");
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminaRegistroTblAux81 " + ": ").append(e.getMessage()));
 		}
 	}
 	public void eliminaRegistroTblAux51(){
@@ -8702,7 +8678,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				Mensaje.actualizarComponente(":form:growl");
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminaRegistroTblAux51 " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -8761,7 +8737,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setHabilitaCobeneficio27(false);
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",  getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarCobeneficio27 " + ": ").append(e.getMessage()));
 		}
 	}
 	public void grabarCobeneficio(){
@@ -8996,7 +8972,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setHabilitaCobeneficio(false);
 			getSeguimientoSalvaguardaBean().setHabilitaCobeneficio27(false);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarCobeneficio " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -9180,7 +9156,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			Mensaje.ocultarDialogo("dlgEliminaCobeneficio");
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,   "",getMensajesController().getPropiedad("info.eliminar"));
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminarCobeneficio " + ": ").append(e.getMessage()));
 		}		
 	}
 }

@@ -19,14 +19,30 @@ public class MeetingsFacade extends AbstractFacade<Meetings, Integer>{
 		super(Meetings.class,Integer.class);
 	}
 	/**
-	 * Lista de eventos de fortalecimiento
+	 * Lista de eventos de fortalecimiento hombres
 	 * @return
 	 * @throws Exception
 	 */
-	public int listaEventosFortalecimiento() throws Exception{
+	public int listaEventosFortalecimientoHombres() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(meet_id) FROM sigma.meetings";
+		String sql ="SELECT COUNT(meto_id) as total FROM sigma.meetings_totals  where meto_number1 >0 AND meto_status=TRUE;";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Lista de eventos de fortalecimiento mujeres
+	 * @return
+	 * @throws Exception
+	 */
+	public int listaEventosFortalecimientoMujeres() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(meto_id) as total FROM sigma.meetings_totals where meto_number2 >0 AND meto_status=TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
 			for(Object obj:resultado)

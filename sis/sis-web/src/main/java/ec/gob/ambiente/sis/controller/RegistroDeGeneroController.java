@@ -25,7 +25,7 @@ public class RegistroDeGeneroController implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(RegistroDeGeneroController.class);
+	private static final Logger LOG = Logger.getLogger(RegistroDeGeneroController.class);
 
 	
 
@@ -45,7 +45,7 @@ public class RegistroDeGeneroController implements Serializable{
 			getComponenteBuscarProyectos().getBuscaProyectosBean().setEsRegistroGenero(true);
 			getComponenteBuscarProyectos().setEsSeguimientoSalvaguardas(false);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init" + ": ").append(e.getMessage()));
 		}
 	}
 	/**

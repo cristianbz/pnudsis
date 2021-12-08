@@ -37,7 +37,7 @@ public class AplicacionController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(AplicacionController.class);
+	private static final Logger LOG = Logger.getLogger(AplicacionController.class);
 	
 	@Getter
     @Setter
@@ -79,7 +79,7 @@ public class AplicacionController implements Serializable{
     private MensajesController mensajesController;
     
     @PostConstruct
-    public void ini(){
+    public void init(){
     	cargarCatalogos();   
 		FacesContext context = FacesContext.getCurrentInstance();
 		bundle = context.getApplication().evaluateExpressionGet(context, "#{txt}", ResourceBundle.class);
@@ -122,7 +122,7 @@ public class AplicacionController implements Serializable{
     		getAplicacionBean().setCodigoIndigena(getCatalogsFacade().codigoIndigena());
 
     	}catch(Exception e ){
-    		e.printStackTrace();
+    		LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarCatalogos " + ": ").append(e.getMessage()));
     	}
     }  
     
@@ -132,7 +132,7 @@ public class AplicacionController implements Serializable{
     			getAplicacionBean().setListaSalvaguardas(getSafeguardsFacade().listarSalvaguardas());
     		}
     	}catch(Exception e){
-    		e.printStackTrace();
+    		LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargarSalvaguardas " + ": ").append(e.getMessage()));
     	}
     }
 }

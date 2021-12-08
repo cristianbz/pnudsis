@@ -319,8 +319,14 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 			for(Object obj:resultado){
 				Object[] dataObj = (Object[]) obj;
 				TableResponses tr= new TableResponses();
-				tr.setTareColumnNumberOne(Integer.valueOf( dataObj[0].toString()));
-				tr.setTareColumnNumberTwo(Integer.valueOf(dataObj[1].toString()));
+				if(dataObj[0]!=null)
+					tr.setTareColumnNumberOne(Integer.valueOf( dataObj[0].toString()));
+				else
+					tr.setTareColumnNumberOne(0);
+				if(dataObj[1]!=null)
+					tr.setTareColumnNumberTwo(Integer.valueOf(dataObj[1].toString()));
+				else
+					tr.setTareColumnNumberTwo(0);
 				total = tr.getTareColumnNumberOne() + tr.getTareColumnNumberTwo();
 			}
 		}

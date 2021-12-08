@@ -251,6 +251,10 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private boolean mostrarOpcionesBusqueda;
 	
+	@Getter
+	@Setter
+	private boolean mostrarOpcionesBusquedaGenero;
+	
 //	@Getter
 //	@Setter
 //	private List<ProjectsSpecificObjectives> listaComponentesParaBusqueda;

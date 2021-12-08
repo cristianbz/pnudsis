@@ -62,7 +62,7 @@ import lombok.Setter;
 public class SeguimientoGeneroController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(SeguimientoGeneroController.class);
+	private static final Logger LOG = Logger.getLogger(SeguimientoGeneroController.class);
 
 //	private static final int CODIGO_IDENTIFICACION_INDIGENA = 54;
 	int CODIGO_IDENTIFICACION_INDIGENA =0;
@@ -145,7 +145,7 @@ public class SeguimientoGeneroController implements Serializable{
 			
 			CODIGO_IDENTIFICACION_INDIGENA =getAplicacionBean().getCodigoIndigena();
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init" + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -279,7 +279,7 @@ public class SeguimientoGeneroController implements Serializable{
 				Mensaje.actualizarComponente(":form:growl");
 			}	
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaDatosProyectoSeleccionado" + ": ").append(e.getMessage()));
 		}
 
 	}
@@ -323,7 +323,7 @@ public class SeguimientoGeneroController implements Serializable{
 			Mensaje.ocultarDialogo("dlgRegistroSeguimiento");
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAvanceLineaGenero " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAvanceLineaGenero " + ": ").append(e.getMessage()));
 		}
 	}
 	public void cargaProvincias(){
@@ -423,7 +423,7 @@ public class SeguimientoGeneroController implements Serializable{
 			getSeguimientoGeneroBean().setHabilitaPuebloNacionalidad(false);
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminarRegistroTablaGenero " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminarRegistroTablaGenero " + ": ").append(e.getMessage()));
 		}
 	}
 	/**
@@ -555,7 +555,7 @@ public class SeguimientoGeneroController implements Serializable{
 
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.eliminarInfo"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminarRegistroTablaGenero " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminarRegistroTablaGenero " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -576,7 +576,7 @@ public class SeguimientoGeneroController implements Serializable{
 			}
 			Mensaje.verDialogo("dlgAsignaBeneficiarios");
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "mostrarDatosTablaBeneficiarios" + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -714,7 +714,7 @@ public class SeguimientoGeneroController implements Serializable{
 			}
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaDetalleRegistroGeneroTabla3 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaDetalleRegistroGeneroTabla3 " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -763,7 +763,7 @@ public class SeguimientoGeneroController implements Serializable{
 			}
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaDetalleRegistroGeneroTabla6 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaDetalleRegistroGeneroTabla6 " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -812,7 +812,7 @@ public class SeguimientoGeneroController implements Serializable{
 			}
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaDetalleRegistroGeneroTabla7 " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaDetalleRegistroGeneroTabla7 " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -881,7 +881,7 @@ public class SeguimientoGeneroController implements Serializable{
 	 */
 	public void imprimirResumenGenero(){
 		try{
-//			organizaBeneficiariosLineasAcccion();
+
 			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 			String directorioArchivoPDF = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append(1).append(".pdf").toString();
 			rutaPDF=directorioArchivoPDF;
@@ -892,7 +892,7 @@ public class SeguimientoGeneroController implements Serializable{
 
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.generarPDF"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "imprimirResumenGenero " + ": ").append(e.getMessage()));			
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "imprimirResumenGenero " + ": ").append(e.getMessage()));			
 		}
 	}
 
@@ -929,7 +929,7 @@ public class SeguimientoGeneroController implements Serializable{
 			getSeguimientoGeneroBean().setPreguntasGenero(true);
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.respuestasPreguntas"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaValoresPreguntasRespuestas " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaValoresPreguntasRespuestas " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -969,7 +969,7 @@ public class SeguimientoGeneroController implements Serializable{
 			});
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "", getMensajesController().getPropiedad("error.respuestasPreguntas"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaRespuestasGenero " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "preparaRespuestasGenero " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -992,7 +992,7 @@ public class SeguimientoGeneroController implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "",getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.grabarAvanceGenero"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAvanceGenero " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarAvanceGenero " + ": ").append(e.getMessage()));
 		}
 	}
 
@@ -1056,7 +1056,7 @@ public class SeguimientoGeneroController implements Serializable{
 				Mensaje.actualizarComponente(":form:tabs:panelTablaGenero7");
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminaValoresTablaDatos" + ": ").append(e.getMessage()));
 		}
 	}
 	public void cancelaEliminaValoresTablaDatos(){

@@ -55,7 +55,7 @@ import lombok.Setter;
 public class LoginController implements Serializable {
 	
 	private static final long serialVersionUID = -8722324921427912257L;
-	private static final Logger log = Logger.getLogger(LoginController.class);
+	private static final Logger LOG = Logger.getLogger(LoginController.class);
 	
 	@EJB
 	private MenuFacade menuFacade;
@@ -684,7 +684,7 @@ public class LoginController implements Serializable {
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.usuarionoValido"), "");
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "validarUsuario " + ": ").append(e.getMessage()));
 		}		
 	}
 	
@@ -712,8 +712,8 @@ public class LoginController implements Serializable {
     			}
     			getLoginBean().setMenuModel(menuModel);
     		}
-    	}catch (Exception ex) {
-            ex.printStackTrace();
+    	}catch (Exception e) {
+    		LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "llenarMenu " + ": ").append(e.getMessage()));
         }
     }
 	
@@ -756,7 +756,7 @@ public class LoginController implements Serializable {
 			}
 			JsfUtil.redirect("/pages/inicio.xhtml");
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "ubicaRolUsuarioSeleccionado " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -771,7 +771,7 @@ public class LoginController implements Serializable {
 				ec.redirect(ec.getRequestContextPath() + "/index.xhtml");
 			}
 		}catch(IOException e) {
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "validarSesion" + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "validarSesion" + ": ").append(e.getMessage()));
 		}
 	}
 

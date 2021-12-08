@@ -341,4 +341,27 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 		listaTemp = findByCreateQuery(sql, camposCondicion);
 		return listaTemp;
 	}
+	
+	public List<AdvanceExecutionSafeguards> listarProyGeneroReportadosConCriteriosBusqueda(Integer codigoProyecto, Integer codigoSocio, String codigoPeriodo, String codigoEstado) throws Exception{
+		String sql="";
+		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		if (codigoSocio == null && codigoPeriodo!=null){
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.projectsStrategicPartners.pspaId IS NULL";
+			camposCondicion.put("codigoPeriodo", codigoPeriodo);
+		}else if(codigoSocio == null && codigoPeriodo==null){
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.projectsStrategicPartners.pspaId IS NULL";			
+		}else if(codigoSocio != null && codigoPeriodo != null){
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE";
+			camposCondicion.put("codigoSocio", codigoSocio);
+			camposCondicion.put("codigoPeriodo", codigoPeriodo);
+		}else if(codigoSocio != null && codigoPeriodo == null){
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE";
+			camposCondicion.put("codigoSocio", codigoSocio);			
+		}
+		camposCondicion.put("codigoProyecto", codigoProyecto);		
+		camposCondicion.put("codigoEstado", codigoEstado);
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+		return listaTemp;
+	}
 }

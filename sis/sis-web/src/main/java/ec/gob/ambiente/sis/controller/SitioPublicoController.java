@@ -4,9 +4,14 @@
 **/
 package ec.gob.ambiente.sis.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +19,29 @@ import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+
+import org.apache.log4j.Logger;
+
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
 
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sigma.services.MeetingsFacade;
 import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.SitioPublicoBean;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoA;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoB;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoC;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoD;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoE;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoF;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoG;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
 import ec.gob.ambiente.sis.utils.Mensaje;
@@ -32,6 +52,7 @@ import lombok.Getter;
 public class SitioPublicoController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(SitioPublicoController.class);
 	private static final String SALVAGUARDA_A="SALVAGUARDA A";
 	private static final String SALVAGUARDA_B="SALVAGUARDA B";
 	private static final String SALVAGUARDA_C="SALVAGUARDA C";
@@ -77,11 +98,16 @@ public class SitioPublicoController implements Serializable{
 				sf.setSafeTitle(dataObj[4].toString());
 				getSitioPublicoBean().getListaSalvaguardas().add(sf);
 			}
-			getSitioPublicoBean().setPosicionSalvaguardas(1);
-			informacionSalvaguardaA();
+//			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+//			String archivoJSON = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("archivo").append(".json").toString();			
+//			File file = new File(archivoJSON);
+//			if(!file.exists())
+//				generarResumen();
+//			getSitioPublicoBean().setPosicionSalvaguardas(1);
+//			informacionSalvaguardaA();
 			Mensaje.actualizarComponente(":frm:pnlSalvaguardas");			
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -92,167 +118,158 @@ public class SitioPublicoController implements Serializable{
 		List<TableResponses> listaTemp= new ArrayList<>();
 		try{
 
-			List<Integer> listaProyectos=new ArrayList<>();
-			BigDecimal totalInversion = new BigDecimal(0);
-			getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(0));
-			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
-			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
-			for(TableResponses tr: listaTemp){
-				mapaTemp.put(tr.getTareColumnNumberSix(), tr.getTareColumnDecimalOne());
-				totalInversion = totalInversion.add(tr.getTareColumnDecimalOne());
-			}
-			for(Entry<Integer,BigDecimal> proy: mapaTemp.entrySet()){
-				listaProyectos.add(proy.getKey());
-			}
-			getSitioPublicoBean().setTotalInversionProyectos(totalInversion);
-			getSitioPublicoBean().setNumeroProyectosSalvaguardaA(listaProyectos.size());
-//			System.out.println(listaProyectos.size());
-//			System.out.println(getSitioPublicoBean().getTotalInversionProyectos());
+//			List<Integer> listaProyectos=new ArrayList<>();
+//			BigDecimal totalInversion = new BigDecimal(0);
+//			getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(0));
+//			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
+//			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
+//			for(TableResponses tr: listaTemp){
+//				mapaTemp.put(tr.getTareColumnNumberSix(), tr.getTareColumnDecimalOne());
+//				totalInversion = totalInversion.add(tr.getTareColumnDecimalOne());
+//			}
+//			for(Entry<Integer,BigDecimal> proy: mapaTemp.entrySet()){
+//				listaProyectos.add(proy.getKey());
+//			}
+//			getSitioPublicoBean().setTotalInversionProyectos(totalInversion);
+//			getSitioPublicoBean().setNumeroProyectosSalvaguardaA(listaProyectos.size());
+			leerJson();
 			obtieneSalvaguardas(SALVAGUARDA_A, "A");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_A);
 			getSitioPublicoBean().setCodigoSalvaguarda("A");
 			getSitioPublicoBean().setPosicionSalvaguardas(1);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "informacionSalvaguardaA " + ": ").append(e.getMessage()));
 		}
 	}
 
 	public void informacionSalvaguardaB(){
-		List<TableResponses> listaTempComunidades= new ArrayList<>();
-		
-		List<String> listaComunidades=new ArrayList<>();
+//		List<TableResponses> listaTempComunidades= new ArrayList<>();		
+//		List<String> listaComunidades=new ArrayList<>();
 		try{
 			
-			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);
-			Map<String,Integer> mapaTemp=new HashMap<String,Integer>();
-			for(TableResponses tr: listaTempComunidades){
-				mapaTemp.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
-			}
-			for(Entry<String,Integer> proy: mapaTemp.entrySet()){
-				listaComunidades.add(proy.getKey());
-			}
-			getSitioPublicoBean().setNumeroComunidadesSalvaguardaB(listaComunidades.size());
-			
-			listaTempComunidades = new ArrayList<>();
-			listaTempComunidades = getTableResponsesFacade().listaMaximoHombresMujeresSalvaguardaB();
-			
-			for(TableResponses tr: listaTempComunidades){
-				getSitioPublicoBean().setNumeroHombresSalvaguardaB(tr.getTareColumnNumberOne());
-				getSitioPublicoBean().setNumeroMujeresSalvaguardaB(tr.getTareColumnNumberTwo());
-			}
-//			System.out.println("Numero comunidades");
-//			System.out.println(getSitioPublicoBean().getNumeroComunidadesSalvaguardaB());
-//			System.out.println("Numero hombres");
-//			System.out.println(getSitioPublicoBean().getNumeroHombresSalvaguardaB());
-//			System.out.println("Numero mujeres");
-//			System.out.println(getSitioPublicoBean().getNumeroMujeresSalvaguardaB());
+//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);
+//			Map<String,Integer> mapaTemp=new HashMap<String,Integer>();
+//			for(TableResponses tr: listaTempComunidades){
+//				mapaTemp.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+//			}
+//			for(Entry<String,Integer> proy: mapaTemp.entrySet()){
+//				listaComunidades.add(proy.getKey());
+//			}
+//			getSitioPublicoBean().setNumeroComunidadesSalvaguardaB(listaComunidades.size());
+//			
+//			listaTempComunidades = new ArrayList<>();
+//			listaTempComunidades = getTableResponsesFacade().listaMaximoHombresMujeresSalvaguardaB();
+//			
+//			for(TableResponses tr: listaTempComunidades){
+//				if(tr.getTareColumnNumberOne() != null)
+//					getSitioPublicoBean().setNumeroHombresSalvaguardaB(tr.getTareColumnNumberOne());
+//				else
+//					getSitioPublicoBean().setNumeroHombresSalvaguardaB(0);
+//				if(tr.getTareColumnNumberTwo() != null)
+//					getSitioPublicoBean().setNumeroMujeresSalvaguardaB(tr.getTareColumnNumberTwo());
+//				else
+//					getSitioPublicoBean().setNumeroMujeresSalvaguardaB(0);
+//			}
+			leerJson();
 			obtieneSalvaguardas(SALVAGUARDA_B, "B");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_B);
 			getSitioPublicoBean().setCodigoSalvaguarda("B");
 			getSitioPublicoBean().setPosicionSalvaguardas(2);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "informacionSalvaguardaB " + ": ").append(e.getMessage()));
 		}
 	}
 	
 	public void informacionSalvaguardaC(){
-		List<TableResponses> listaTempComunidades= new ArrayList<>();
-		List<String> listaComunidades=new ArrayList<>();
+//		List<TableResponses> listaTempComunidades= new ArrayList<>();
+//		List<String> listaComunidades=new ArrayList<>();
 		try{			
-			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(57);
-			Map<String,Integer> mapaTemp=new HashMap<String,Integer>();
-			for(TableResponses tr: listaTempComunidades){
-				mapaTemp.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
-			}
-			for(Entry<String,Integer> proy: mapaTemp.entrySet()){
-				listaComunidades.add(proy.getKey());
-			}
-			getSitioPublicoBean().setNumeroComunidadesSalvaguardaC(listaComunidades.size());			
-			getSitioPublicoBean().setNumeroPracticasAncestralesC(getTableResponsesFacade().listaSaberesAncestralesSalvaguardaC());
-//			System.out.println("Numero comunidades");
-//			System.out.println(getSitioPublicoBean().getNumeroComunidadesSalvaguardaC());
-//			System.out.println("Numero Saberes Ancestrales");
-//			System.out.println(getSitioPublicoBean().getNumeroPracticasAncestralesC());
+//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(57);
+//			Map<String,Integer> mapaTemp=new HashMap<String,Integer>();
+//			for(TableResponses tr: listaTempComunidades){
+//				mapaTemp.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+//			}
+//			for(Entry<String,Integer> proy: mapaTemp.entrySet()){
+//				listaComunidades.add(proy.getKey());
+//			}
+//			getSitioPublicoBean().setNumeroComunidadesSalvaguardaC(listaComunidades.size());			
+//			getSitioPublicoBean().setNumeroPracticasAncestralesC(getTableResponsesFacade().listaSaberesAncestralesSalvaguardaC());
+			leerJson();
 			obtieneSalvaguardas(SALVAGUARDA_C, "C");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_C);
 			getSitioPublicoBean().setCodigoSalvaguarda("C");
 			getSitioPublicoBean().setPosicionSalvaguardas(3);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "informacionSalvaguardaC " + ": ").append(e.getMessage()));
 		}
 	}
 	
 	public void informacionSalvaguardaD(){
 		
 		try{			
-			getSitioPublicoBean().setTotalEventosFortalecimientoD(getMeetingsFacade().listaEventosFortalecimiento());
-			
-//			System.out.println("Numero Eventos");
-//			System.out.println(getSitioPublicoBean().getTotalEventosFortalecimientoD());
+//			getSitioPublicoBean().setTotalEventosFortalecimientoHomD(getMeetingsFacade().listaEventosFortalecimientoHombres());
+//			getSitioPublicoBean().setTotalEventosFortalecimientoMujD(getMeetingsFacade().listaEventosFortalecimientoMujeres());
+			leerJson();
 			obtieneSalvaguardas(SALVAGUARDA_D, "D");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_D);
 			getSitioPublicoBean().setCodigoSalvaguarda("D");
 			getSitioPublicoBean().setPosicionSalvaguardas(4);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "informacionSalvaguardaD " + ": ").append(e.getMessage()));
 		}
 	}
 	
 	public void informacionSalvaguardaE(){
-		List<TableResponses> listaTempProvincias= new ArrayList<>();
+//		List<TableResponses> listaTempProvincias= new ArrayList<>();
 		try{			
-			listaTempProvincias = getTableResponsesFacade().listaFomentoGestionComunitariaE();
-			getSitioPublicoBean().setNumeroFomentoGestionComunitariaE(listaTempProvincias.size());
-			getSitioPublicoBean().setTotalHectareasCoberturaE(getTableResponsesFacade().totalHectareasCoberturaE());
+//			listaTempProvincias = getTableResponsesFacade().listaFomentoGestionComunitariaE();
+//			getSitioPublicoBean().setNumeroFomentoGestionComunitariaE(listaTempProvincias.size());
+//			getSitioPublicoBean().setTotalHectareasCoberturaE(getTableResponsesFacade().totalHectareasCoberturaE());
+			leerJson();
 			obtieneSalvaguardas(SALVAGUARDA_E, "E");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_E);
 			getSitioPublicoBean().setCodigoSalvaguarda("E");
 			getSitioPublicoBean().setPosicionSalvaguardas(5);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "informacionSalvaguardaE " + ": ").append(e.getMessage()));
 		}
 	}
 	
 	public void informacionSalvaguardaF(){
 		try{			
-			getSitioPublicoBean().setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());			
+//			getSitioPublicoBean().setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());
+			leerJson();
 			obtieneSalvaguardas(SALVAGUARDA_F, "F");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_F);
 			getSitioPublicoBean().setCodigoSalvaguarda("F");
 			getSitioPublicoBean().setPosicionSalvaguardas(6);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "informacionSalvaguardaF " + ": ").append(e.getMessage()));
 		}
 	}
 	
 	public void informacionSalvaguardaG(){
-		List<TableResponses> listaTempComunidades= new ArrayList<>();
-		List<String> listaComunidades=new ArrayList<>();
+//		List<TableResponses> listaTempComunidades= new ArrayList<>();
+//		List<String> listaComunidades=new ArrayList<>();
 		try{			
-			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(136);
-			Map<String,Integer> mapaTemp=new HashMap<String,Integer>();
-			for(TableResponses tr: listaTempComunidades){
-				mapaTemp.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
-			}
-			for(Entry<String,Integer> proy: mapaTemp.entrySet()){
-				listaComunidades.add(proy.getKey());
-			}
-			getSitioPublicoBean().setNumeroComunidadesSalvaguardaG(listaComunidades.size());
-			getSitioPublicoBean().setTotalBeneficiariosG(getTableResponsesFacade().listaBeneficiariosSalvaguardaG());
-			getSitioPublicoBean().setNumeroAccionesGeneradasG(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
-			
-//			System.out.println("Numero comunidades");
-//			System.out.println(getSitioPublicoBean().getNumeroComunidadesSalvaguardaG());
-//			System.out.println("Numero Acciones");
-//			System.out.println(getSitioPublicoBean().getNumeroAccionesGeneradasG());
-//			System.out.println("Numero Beneficiarios");
-//			System.out.println(getSitioPublicoBean().getTotalBeneficiariosG());
+//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(136);
+//			Map<String,Integer> mapaTemp=new HashMap<String,Integer>();
+//			for(TableResponses tr: listaTempComunidades){
+//				mapaTemp.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+//			}
+//			for(Entry<String,Integer> proy: mapaTemp.entrySet()){
+//				listaComunidades.add(proy.getKey());
+//			}
+//			getSitioPublicoBean().setNumeroComunidadesSalvaguardaG(listaComunidades.size());
+//			getSitioPublicoBean().setTotalBeneficiariosG(getTableResponsesFacade().listaBeneficiariosSalvaguardaG());
+//			getSitioPublicoBean().setNumeroAccionesGeneradasG(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
+			leerJson();			
 			obtieneSalvaguardas(SALVAGUARDA_G, "G");
 			getSitioPublicoBean().setResumenSalvaguarda(DESCRIPCION_G);
 			getSitioPublicoBean().setCodigoSalvaguarda("G");
 			getSitioPublicoBean().setPosicionSalvaguardas(7);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "informacionSalvaguardaG " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -324,5 +341,294 @@ public class SitioPublicoController implements Serializable{
 			}
 		}
 	}
+
+	
+	
+//	public void generarResumen(){
+//		List<TableResponses> listaTemp= new ArrayList<>();
+//		List<TableResponses> listaTempComunidades= new ArrayList<>();		
+//		List<String> listaComunidades=new ArrayList<>();
+//		List<TableResponses> listaTempProvincias= new ArrayList<>();
+//		try{
+//			List<Integer> listaProyectos=new ArrayList<>();
+//			BigDecimal totalInversion = new BigDecimal(0);
+//			getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(0));
+//			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
+//			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
+//			for(TableResponses tr: listaTemp){
+//				mapaTemp.put(tr.getTareColumnNumberSix(), tr.getTareColumnDecimalOne());
+//				totalInversion = totalInversion.add(tr.getTareColumnDecimalOne());
+//			}
+//			for(Entry<Integer,BigDecimal> proy: mapaTemp.entrySet()){
+//				listaProyectos.add(proy.getKey());
+//			}			
+//			DtoDatosSitioPublicoA dtoSalvaguardaA = new DtoDatosSitioPublicoA("A");
+//			dtoSalvaguardaA.setNumeroProyectos(listaProyectos.size());
+//			dtoSalvaguardaA.setTotalInversionProyectos(totalInversion);
+//			////B
+//			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
+//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);
+//			Map<String,Integer> mapaTempB=new HashMap<String,Integer>();
+//			for(TableResponses tr: listaTempComunidades){
+//				mapaTempB.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+//			}
+//			for(Entry<String,Integer> proy: mapaTempB.entrySet()){
+//				listaComunidades.add(proy.getKey());
+//			}
+//			dtoSalvaguardaB.setNumeroComunidadesB(listaComunidades.size());
+//			
+//			listaTempComunidades = new ArrayList<>();
+//			listaTempComunidades = getTableResponsesFacade().listaMaximoHombresMujeresSalvaguardaB();
+//			
+//			for(TableResponses tr: listaTempComunidades){
+//				if(tr.getTareColumnNumberOne() != null)
+//					dtoSalvaguardaB.setNumeroHombresB(tr.getTareColumnNumberOne());
+//				else
+//					dtoSalvaguardaB.setNumeroHombresB(0);
+//				if(tr.getTareColumnNumberTwo() != null)	
+//					dtoSalvaguardaB.setNumeroMujeresB(tr.getTareColumnNumberTwo());
+//				else
+//					dtoSalvaguardaB.setNumeroMujeresB(0);
+//			}
+//			
+//			///// C
+//			DtoDatosSitioPublicoC dtoSalvaguardaC = new DtoDatosSitioPublicoC("C");
+//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(57);
+//			Map<String,Integer> mapaTempC=new HashMap<String,Integer>();
+//			for(TableResponses tr: listaTempComunidades){
+//				mapaTempC.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+//			}
+//			for(Entry<String,Integer> proy: mapaTempC.entrySet()){
+//				listaComunidades.add(proy.getKey());
+//			}			
+//			dtoSalvaguardaC.setNumeroComunidadesC(listaComunidades.size());
+//			dtoSalvaguardaC.setNumeroPracticas(getTableResponsesFacade().listaSaberesAncestralesSalvaguardaC());
+//			
+//			///// D
+//			DtoDatosSitioPublicoD dtoSalvaguardaD = new DtoDatosSitioPublicoD("D");
+//			
+//			dtoSalvaguardaD.setTotalEventosHombres(getMeetingsFacade().listaEventosFortalecimientoHombres());
+//			dtoSalvaguardaD.setTotalEventosMujeres(getMeetingsFacade().listaEventosFortalecimientoMujeres());
+//			
+//			// E
+//			DtoDatosSitioPublicoE dtoSalvaguardaE = new DtoDatosSitioPublicoE("E");
+//			listaTempProvincias = getTableResponsesFacade().listaFomentoGestionComunitariaE();
+//			
+//			dtoSalvaguardaE.setNumeroFomentoGestionComunitaria(listaTempProvincias.size());
+//			dtoSalvaguardaE.setTotalHectareasCobertura(getTableResponsesFacade().totalHectareasCoberturaE());
+//			
+//			// F
+//			DtoDatosSitioPublicoF dtoSalvaguardaF = new DtoDatosSitioPublicoF("F");			
+//			dtoSalvaguardaF.setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());
+//			
+//			// G
+//			DtoDatosSitioPublicoG dtoSalvaguardaG = new DtoDatosSitioPublicoG("G");
+//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(136);
+//			Map<String,Integer> mapaTempG=new HashMap<String,Integer>();
+//			for(TableResponses tr: listaTempComunidades){
+//				mapaTempG.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+//			}
+//			for(Entry<String,Integer> proy: mapaTempG.entrySet()){
+//				listaComunidades.add(proy.getKey());
+//			}
+//						
+//			dtoSalvaguardaG.setNumeroAcciones(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
+//			dtoSalvaguardaG.setNumeroComunidades(listaComunidades.size());
+//			dtoSalvaguardaG.setTotalBeneficiarios(getTableResponsesFacade().listaBeneficiariosSalvaguardaG());
+//			
+//			
+////			String json = Jsoner.serialize(dtoSalvaguardaA);
+////			System.out.println(json);
+////			json = Jsoner.prettyPrint(json);
+////			System.out.println(json +"DATOSSSS");
+//						
+//			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+//			String archivoJSON = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("archivo").append(".json").toString();
+//	
+//			List<Object> lista = Arrays.asList(dtoSalvaguardaA, dtoSalvaguardaB,dtoSalvaguardaC,dtoSalvaguardaD, dtoSalvaguardaE , dtoSalvaguardaF , dtoSalvaguardaG);
+//			try (FileWriter fileWriter = new FileWriter(archivoJSON)) {
+//	            Jsoner.serialize(lista, fileWriter);
+//	        }
+//			
+//		}catch(Exception e){
+//			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumen " + ": ").append(e.getMessage()));
+//		}
+//	}
+	public void leerJson(){
+		
+		try{
+			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+			String archivoJSON = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("archivo").append(".json").toString();
+			
+//			File file = new File(archivoJSON);
+//			if(!file.exists())
+//				generarResumen();
+			
+			try (FileReader fileReader = new FileReader((archivoJSON))) {
+
+	            JsonArray objects = Jsoner.deserializeMany(fileReader);
+	            
+	            JsonArray o = (JsonArray) objects.get(0);
+	            
+	            for(int i=0; i<o.size();i++){	            	
+	            	JsonObject obj = (JsonObject) o.get(i);
+	            	switch(i){
+	            		case 0:
+	            			getSitioPublicoBean().setNumeroProyectosSalvaguardaA(Integer.valueOf(obj.get("numeroProyectosA").toString()));
+	            			getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(obj.get("totalInversionProyectosA").toString()));
+	            			break;
+	            		case 1:
+	            			getSitioPublicoBean().setNumeroComunidadesSalvaguardaB(Integer.valueOf(obj.get("numeroComunidadesB").toString()));
+	            			getSitioPublicoBean().setNumeroHombresSalvaguardaB(Integer.valueOf(obj.get("numeroHombresB").toString()));
+	            			getSitioPublicoBean().setNumeroMujeresSalvaguardaB(Integer.valueOf(obj.get("numeroMujeresB").toString()));
+	            			break;
+	            		case 2:
+	            			getSitioPublicoBean().setNumeroComunidadesSalvaguardaC(Integer.valueOf(obj.get("numeroComunidadesC").toString()));			
+	            			getSitioPublicoBean().setNumeroPracticasAncestralesC(Integer.valueOf(obj.get("numeroPracticasC").toString()));	
+	            			break;
+	            		case 3:
+	            			getSitioPublicoBean().setTotalEventosFortalecimientoHomD(Integer.valueOf(obj.get("totalEventosHombresD").toString()));
+	            			getSitioPublicoBean().setTotalEventosFortalecimientoMujD(Integer.valueOf(obj.get("totalEventosMujeresD").toString()));
+	            			break;
+	            		case 4:
+	            			getSitioPublicoBean().setNumeroFomentoGestionComunitariaE(Integer.valueOf(obj.get("numeroFomentoGestionComunitariaE").toString()));
+	            			getSitioPublicoBean().setTotalHectareasCoberturaE(new BigDecimal(obj.get("totalHectareasCoberturaE").toString()));
+	            			break;
+	            		case 5:
+	            			getSitioPublicoBean().setTotalRecursosInvertidos(new BigDecimal(obj.get("totalRecursosInvertidosF").toString()));
+	            			break;
+	            		case 6:
+	            			getSitioPublicoBean().setNumeroComunidadesSalvaguardaG(Integer.valueOf(obj.get("numeroComunidadesG").toString()));
+	            			getSitioPublicoBean().setTotalBeneficiariosG(Integer.valueOf(obj.get("totalBeneficiariosG").toString()));
+	            			getSitioPublicoBean().setNumeroAccionesGeneradasG(Integer.valueOf(obj.get("numeroAccionesG").toString()));
+	            			break;
+	            	}
+	            	
+	            }
+			}
+		}catch(FileNotFoundException e){
+			System.out.println("Archivo JSON no encontrado");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void generarResumen(){
+
+		List<TableResponses> listaTemp= new ArrayList<>();
+		List<TableResponses> listaTempComunidades= new ArrayList<>();		
+		List<String> listaComunidades=new ArrayList<>();
+		List<TableResponses> listaTempProvincias= new ArrayList<>();
+		try{
+			List<Integer> listaProyectos=new ArrayList<>();
+			BigDecimal totalInversion = new BigDecimal(0);
+			//			getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(0));
+			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
+			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
+			for(TableResponses tr: listaTemp){
+				mapaTemp.put(tr.getTareColumnNumberSix(), tr.getTareColumnDecimalOne());
+				totalInversion = totalInversion.add(tr.getTareColumnDecimalOne());
+			}
+			for(Entry<Integer,BigDecimal> proy: mapaTemp.entrySet()){
+				listaProyectos.add(proy.getKey());
+			}			
+			DtoDatosSitioPublicoA dtoSalvaguardaA = new DtoDatosSitioPublicoA("A");
+			dtoSalvaguardaA.setNumeroProyectos(listaProyectos.size());
+			dtoSalvaguardaA.setTotalInversionProyectos(totalInversion);
+			
+			////B
+			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
+			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);
+			Map<String,Integer> mapaTempB=new HashMap<String,Integer>();
+			for(TableResponses tr: listaTempComunidades){
+				mapaTempB.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+			}
+			for(Entry<String,Integer> proy: mapaTempB.entrySet()){
+				listaComunidades.add(proy.getKey());
+			}
+			dtoSalvaguardaB.setNumeroComunidadesB(listaComunidades.size());
+
+			listaTempComunidades = new ArrayList<>();
+			listaTempComunidades = getTableResponsesFacade().listaMaximoHombresMujeresSalvaguardaB();
+
+			for(TableResponses tr: listaTempComunidades){
+				if(tr.getTareColumnNumberOne() != null)
+					dtoSalvaguardaB.setNumeroHombresB(tr.getTareColumnNumberOne());
+				else
+					dtoSalvaguardaB.setNumeroHombresB(0);
+				if(tr.getTareColumnNumberTwo() != null)	
+					dtoSalvaguardaB.setNumeroMujeresB(tr.getTareColumnNumberTwo());
+				else
+					dtoSalvaguardaB.setNumeroMujeresB(0);
+			}
+
+			///// C
+			DtoDatosSitioPublicoC dtoSalvaguardaC = new DtoDatosSitioPublicoC("C");
+			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(57);
+			Map<String,Integer> mapaTempC=new HashMap<String,Integer>();
+			for(TableResponses tr: listaTempComunidades){
+				mapaTempC.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+			}
+			for(Entry<String,Integer> proy: mapaTempC.entrySet()){
+				listaComunidades.add(proy.getKey());
+			}			
+			dtoSalvaguardaC.setNumeroComunidadesC(listaComunidades.size());
+			dtoSalvaguardaC.setNumeroPracticas(getTableResponsesFacade().listaSaberesAncestralesSalvaguardaC());
+
+			///// D
+			DtoDatosSitioPublicoD dtoSalvaguardaD = new DtoDatosSitioPublicoD("D");
+
+			dtoSalvaguardaD.setTotalEventosHombres(getMeetingsFacade().listaEventosFortalecimientoHombres());
+			dtoSalvaguardaD.setTotalEventosMujeres(getMeetingsFacade().listaEventosFortalecimientoMujeres());
+
+			// E
+			DtoDatosSitioPublicoE dtoSalvaguardaE = new DtoDatosSitioPublicoE("E");
+			listaTempProvincias = getTableResponsesFacade().listaFomentoGestionComunitariaE();
+
+			dtoSalvaguardaE.setNumeroFomentoGestionComunitaria(listaTempProvincias.size());
+			dtoSalvaguardaE.setTotalHectareasCobertura(getTableResponsesFacade().totalHectareasCoberturaE());
+
+			// F
+			DtoDatosSitioPublicoF dtoSalvaguardaF = new DtoDatosSitioPublicoF("F");			
+			dtoSalvaguardaF.setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());
+
+			// G
+			DtoDatosSitioPublicoG dtoSalvaguardaG = new DtoDatosSitioPublicoG("G");
+			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(136);
+			Map<String,Integer> mapaTempG=new HashMap<String,Integer>();
+			for(TableResponses tr: listaTempComunidades){
+				mapaTempG.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+			}
+			for(Entry<String,Integer> proy: mapaTempG.entrySet()){
+				listaComunidades.add(proy.getKey());
+			}
+
+			dtoSalvaguardaG.setNumeroAcciones(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
+			dtoSalvaguardaG.setNumeroComunidades(listaComunidades.size());
+			dtoSalvaguardaG.setTotalBeneficiarios(getTableResponsesFacade().listaBeneficiariosSalvaguardaG());
+
+
+			//			String json = Jsoner.serialize(dtoSalvaguardaA);
+			//			json = Jsoner.prettyPrint(json);
+			//			System.out.println(json);
+//			String ruta = this.getClass().getClassLoader().toString();
+//			System.out.println(this.webPath);			
+			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+//
+			String archivoJSON = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("archivo").append(".json").toString();
+//			String archivoJSON = new StringBuilder().append(this.webPath).append(File.separator).append("archivo").append(".json").toString();
+			List<Object> lista = Arrays.asList(dtoSalvaguardaA,dtoSalvaguardaB,dtoSalvaguardaC,dtoSalvaguardaD, dtoSalvaguardaE , dtoSalvaguardaF , dtoSalvaguardaG);
+									
+			try (FileWriter fileWriter = new FileWriter(archivoJSON)) {
+				
+				Jsoner.serialize(lista, fileWriter);
+//				System.out.println(Jsoner.serialize(lista));
+			}			
+		}catch(Exception e){
+			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumen " + ": ").append(e.getMessage()));
+		}
+	}
+	
 }
 

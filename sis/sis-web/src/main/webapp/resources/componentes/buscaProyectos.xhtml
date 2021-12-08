@@ -22,6 +22,20 @@
 			</p:confirmDialog>
 
 			<p:growl id="growl" life="3000" showDetail="true" showSummary="false"/>
+			<!-- Dialogo reactivacion reporte -->
+			<p:dialog widgetVar="dlgVolverActivarReporte" showEffect="fade"
+				hideEffect="fade" modal="true" appendTo="@(body)"
+				header="#{titulos['activarReporte']}" width="290"
+				closable="false" resizable="false">				 
+				<h:panelGrid columns="2" style="margin:0 auto;">
+					<p:commandButton process="@this :form:buscaProyectos:tablaReportados" icon="#{botones['icono.check']}" oncomplete="PF('dlgVolverActivarReporte').hide();"
+						update=":form:buscaProyectos:tablaReportados" action="#{cc.attrs.componenteBuscaProyectos.volverActivarReporte}" partialSubmit="true"
+						value="#{botones['aceptar']}"/>
+					<p:commandButton process="@this" icon="#{botones['icono.cancelar']}" 
+						oncomplete="PF('dlgVolverActivarReporte').hide();"
+						value="#{botones['cancelar']}"/>
+				</h:panelGrid>	
+			</p:dialog>
 			
 			<p:dialog widgetVar="dlgEliminaIndicadorGenero" showEffect="fade" positionType="absolute"
 				hideEffect="fade" modal="true" appendTo="@(body)" position="center top"
@@ -29,7 +43,7 @@
 				closable="false" resizable="false" responsive="true">
 				<h:panelGrid columns="2">
 					<p:commandButton process="@this :form:buscaProyectos:tablaIndicadores" icon="#{botones['icono.check']}" oncomplete="PF('dlgEliminaIndicadorGenero').hide();"
-						update=":form:buscaProyectos:tablaIndicadores" action="#{cc.attrs.componenteBuscaProyectos.eliminaIndicadorGenero}" partialSubmit="true"
+						update=":form:buscaProyectos:tablaIndicadores" action="#{cc.attrs.componenteBuscaProyectos.eliminaIndicadorGenero}" partialSubmit="true" immediate="true"
 						value="#{botones['aceptar']}"/>
 					<p:commandButton process="@this" icon="#{botones['icono.cancelar']}" 
 						oncomplete="PF('dlgEliminaIndicadorGenero').hide();"
@@ -158,7 +172,7 @@
 							id="tablaIndicadores"  rows="2" paginator="true"
 						var="pgi">
 						<p:column headerText="#{etiquetas['indicador']}" style="font-size:10px !important;">
-							<p:selectOneMenu id="temasObj"
+							<p:selectOneMenu id="temasObj" 
 									value="#{pgi.indicators}" 
 									converter="selectOneMenuConverter" filterMatchMode="contains" filter="true"
 									panelStyle="width:420px" effect="fade" var="c" 
@@ -391,7 +405,7 @@
 								</f:selectItems>
 								<p:ajax event="change" process="@this" partialSubmit="true"
 									listener="#{cc.attrs.componenteBuscaProyectos.vaciaDatosBusqueda}"
-									update="pnlListaProy  panelDatos" />
+									update="pnlListaProy  panelDatos :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero" />
 							</p:selectOneMenu>
 
 							<p:inputText id="tituloBusq"
@@ -488,8 +502,8 @@
 										global="false" update="@form" />
 									<br />
 									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} "
-										process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda"
-										update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda"
+										process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero"
+										update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero"
 										partialSubmit="true"
 										actionListener="#{cc.attrs.componenteBuscaProyectos.mostrarPanelBusquedaProyectos(proyecto)}" />
 								</p:column>
@@ -518,7 +532,7 @@
 												
 											</p:selectOneRadio>
 											<componentes:ayuda
-												texto="#{tooltip['asignacionSalvaguarda']}"
+												texto="#{tooltip['busquedaSalvaguardas']}"
 												rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}" />
 										</h:panelGrid>
 									</div>
@@ -580,7 +594,7 @@
 											process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda"
 											update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:growl"/>
 										<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" 			
-											update=":form:buscaProyectos:panelOpcionesBusqueda"								
+											update=":form:buscaProyectos:panelOpcionesBusqueda "								
 											process="@this">
 											<f:setPropertyActionListener value="false" 
 												target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.mostrarOpcionesBusqueda}"/>
@@ -591,6 +605,102 @@
 									
 								</p:panel>
 							</p:outputPanel>
+							
+							<p:outputPanel id="panelOpcionesBusquedaGenero">
+								<p:panel header="#{titulos['opcionesBusqueda']}" 
+									rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.mostrarOpcionesBusquedaGenero}">
+									<div class="ui-fluid p-formgrid p-grid">
+										<h:panelGrid columns="2">
+											<p:selectOneRadio layout="grid"
+												rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}"
+												styleClass="etiquetaSubtitulo" columns="3"
+												value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoSocio}"
+												unselectable="false">
+												<f:selectItem
+													itemLabel="#{etiquetas['generoSocioImp']}"
+													itemValue="1" />
+												<f:selectItem itemLabel="#{etiquetas['generoSocioEst']}"
+													itemValue="2" />
+												<p:ajax process="selSociosBusqueda  @this " event="change"
+													update="selSociosBusquedaGenero "
+													listener="#{cc.attrs.componenteBuscaProyectos.quitaSeleccionSalvaguardaSocioEstrategico}">
+												</p:ajax>
+												
+											</p:selectOneRadio>
+											<componentes:ayuda
+												texto="#{tooltip['busquedaGenero']}"
+												rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}" />
+										</h:panelGrid>
+									</div>
+
+									<h:panelGrid columns="2" style="margin:0 auto;">										
+										<h:inputHidden rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}"/>
+										<h:panelGrid id="selSociosBusquedaGenero" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">												
+											<p:fieldset legend="#{titulos['sociosPDI']}">
+												<p:selectOneRadio layout="pageDirection"
+													value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.codigoStrategicPartner}"
+													disabled="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoSocio ==1}"
+													unselectable="false">
+													<f:selectItems
+														value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaPartnersProyectos}"
+														var="partner"
+														itemLabel="#{partner.partners.partName} (#{partner.pspaType=='E'?'Estratégico':'Apoyo'})"
+														itemValue="#{partner.pspaId}" />
+													<p:ajax process="@this " event="change" partialSubmit="true" />
+												</p:selectOneRadio>
+											</p:fieldset>
+											<p:messages showDetail="true" showSummary="false"/>
+										</h:panelGrid>
+										
+										
+										<p:outputLabel value="#{etiquetas['anio']}:"/>
+										<h:panelGrid columns="2">
+											<p:selectOneMenu panelStyle="width: 35rem"
+												style="width:200px;" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.anioReporte}">
+												<f:selectItem itemValue="#{null}"
+													itemLabel="#{mensajes['seleccionElemento']}" />
+												<f:selectItem itemValue="2016" itemLabel="2016" />
+												<f:selectItem itemValue="2017" itemLabel="2017" />
+												<f:selectItem itemValue="2018" itemLabel="2018" />
+												<f:selectItem itemValue="2019" itemLabel="2019" />
+												<f:selectItem itemValue="2020" itemLabel="2020" />
+												<f:selectItem itemValue="2021" itemLabel="2021" />
+												<f:selectItem itemValue="2022" itemLabel="2022" />
+												<f:selectItem itemValue="2023" itemLabel="2023" />
+												<f:selectItem itemValue="2024" itemLabel="2024" />
+												<f:selectItem itemValue="2025" itemLabel="2025" />
+												<p:ajax process="@this" event="change" />
+											</p:selectOneMenu>
+											<componentes:ayuda texto="#{tooltip['seleccionPeriodo']}" />
+										</h:panelGrid>
+										<p:outputLabel value="#{etiquetas['estado']}:"/>
+										<p:selectOneMenu panelStyle="width: 35rem" requiredMessage="#{mensajes['campoRequerido']}"
+											value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.estadoReporte}"
+											style="width:200px;" required="true"
+											>
+											<f:selectItem itemValue="I" itemLabel="Iniciado" />
+											<f:selectItem itemValue="F" itemLabel="Finalizado" />
+											<p:ajax process="@this" event="change"/>
+										</p:selectOneMenu>
+										
+									</h:panelGrid>
+									<h:panelGrid columns="2" style="margin:0 auto;">										
+										<p:commandButton value="#{botones['buscar']}" icon="#{botones['icono.buscar']}" 
+											actionListener="#{cc.attrs.componenteBuscaProyectos.cargarProyectosGeneroCriterioBusqueda}"
+											process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusquedaGenero"
+											update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusquedaGenero :form:growl"/>
+										<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" 			
+											update=":form:buscaProyectos:panelOpcionesBusquedaGenero"								
+											process="@this">
+											<f:setPropertyActionListener value="false" 
+												target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.mostrarOpcionesBusquedaGenero}"/>
+											<f:setPropertyActionListener value="#{null}" 
+												target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.anioReporte}"/>		
+										</p:commandButton>	
+									</h:panelGrid>
+									
+								</p:panel>
+							</p:outputPanel>							
 							
 							<p:dataTable id="tablaReportados"
 								value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaProyectosReportados}"
@@ -643,7 +753,12 @@
 								<p:column width="30">
 									<p:commandButton actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyectoReportado(avance)}" title="#{tooltip['visualizaInformacion']}"
 										onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();"
-										process="@this" partialSubmit="true" update="@form" icon="#{botones['icono.checkcirculo']}"/>																		
+										process="@this" partialSubmit="true" update="@form" icon="#{botones['icono.checkcirculo']}"/>		
+									<p:commandButton icon="#{botones['icono.editar']}" process="@this" rendered="#{loginBean.tipoRol==4}" 
+										action="#{cc.attrs.componenteBuscaProyectos.mostrarDialogoActivarReporte}"
+										title="#{tooltip['activarReporte']}" disabled="#{not avance.adexIsReported}">
+										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
+									</p:commandButton>																	
 								</p:column>
 							</p:dataTable>
 						</h:panelGrid>

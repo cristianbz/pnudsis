@@ -47,7 +47,7 @@ public class MeetingsFacadeTest {
 	@Test
 	public void testMeetings(){
 		try{			
-			Assert.assertTrue(meetingsEjb.listaEventosFortalecimiento() == 0);
+			Assert.assertTrue(meetingsEjb.listaEventosFortalecimientoHombres() == 0);
 			LOGGER.info("CLASE: MeetingsFacade");
 			LOGGER.info("METODO: int listaEventosFortalecimiento()");			
 			LOGGER.info("RETORNA: int");

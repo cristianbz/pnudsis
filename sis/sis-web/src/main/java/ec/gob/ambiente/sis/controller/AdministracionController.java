@@ -46,7 +46,7 @@ import lombok.Setter;
 public class AdministracionController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(AdministracionController.class);
+	private static final Logger LOG = Logger.getLogger(AdministracionController.class);
 	
 	private static final int TIPO_RESPUESTA=1;
 	
@@ -137,7 +137,7 @@ public class AdministracionController implements Serializable{
 			getAplicacionController().cargarSalvaguardas();
 			cargaSalvaguardas();
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -176,7 +176,7 @@ public class AdministracionController implements Serializable{
 			getAdministracionBean().setCodigoSalvaguarda(null);
 			getAdministracionBean().setCodigoTipoRespuesta(null);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "nuevaPregunta " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -190,7 +190,7 @@ public class AdministracionController implements Serializable{
 				numeroOrden++;
 			getAdministracionBean().getPreguntaSeleccionada().setQuesQuestionOrder(numeroOrden);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "obtieneValorOrden " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -205,7 +205,7 @@ public class AdministracionController implements Serializable{
 			getAdministracionBean().getCatalogoSeleccionado().setCataOrder(numeroOrden);
 			getAdministracionBean().getCatalogoSeleccionado().setCataNumber(numeroOrden);
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "obtieneValorOrdenCatalogo " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -295,7 +295,7 @@ public class AdministracionController implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "",getMensajesController().getPropiedad("info.infoGrabada"));						
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarPregunta " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarPregunta " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -314,7 +314,7 @@ public class AdministracionController implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "",getMensajesController().getPropiedad("info.infoGrabada"));
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaEditaIndicador " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaEditaIndicador " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -349,7 +349,7 @@ public class AdministracionController implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "",getMensajesController().getPropiedad("info.infoGrabada"));						
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarPregunta " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregarEditarPregunta " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -381,7 +381,7 @@ public class AdministracionController implements Serializable{
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));						
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.grabar"));
-			log.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaEditaCatalogo " + ": ").append(e.getMessage()));
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "agregaEditaCatalogo " + ": ").append(e.getMessage()));
 		}
 	}
 	
@@ -394,7 +394,7 @@ public class AdministracionController implements Serializable{
 			getQuestionsFacade().edit(pregunta);
 			getAdministracionBean().setListaPreguntas(getQuestionsFacade().listaPreguntasIngresadas());	
 		}catch(Exception e){
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminarPregunta " + ": ").append(e.getMessage()));
 		}
 	}
 }

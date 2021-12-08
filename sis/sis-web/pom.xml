@@ -84,7 +84,11 @@
 			<artifactId>primefaces-extensions</artifactId>
 			<version>8.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.github.cliftonlabs</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>4.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

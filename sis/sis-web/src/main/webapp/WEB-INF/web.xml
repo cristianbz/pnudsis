@@ -36,5 +36,7 @@
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/signout.xhtml?redirected=true</location>
     </error-page>
- 
+ <listener>
+		<listener-class>ec.gob.ambiente.sis.utils.ContextListener</listener-class>
+	</listener>
 </web-app>

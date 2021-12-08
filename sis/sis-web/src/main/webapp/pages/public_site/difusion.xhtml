@@ -36,13 +36,6 @@
 							<p:graphicImage
 								value="/resources/images/sis/banner_con_titulo.png" width="100%" />
 						</h:panelGrid>
-						<h:panelGrid id="pnlSalvaguardasDescripcion" columns="1"
-							
-							style="margin:0 auto;text-align:center;">
-							<p:outputLabel value="SALVAGUARDAS" style="font-size: 40px;	font-style: bold;color: green;font-weight: bold;"/>
-							<br/>
-							<p:outputLabel value="#{titulos['describeSIS']}" />
-						</h:panelGrid>
 						<h:panelGrid id="pnlSalvaguardasA_D" columns="4"
 							columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
 							style="margin:0 auto;text-align:center;">
@@ -162,10 +155,12 @@
 											value="#{sitioPublicoBean.numeroProyectosSalvaguardaA}"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:35px;" />
-										<p:outputLabel
+										<p:outputLabel id="valorProyectos"
 											value="#{sitioPublicoBean.totalInversionProyectos}"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
-											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+											styleClass="valoresSalvaguardas" style="font-size:35px;" >
+											<f:convertNumber for="valorProyectos" pattern="###,###,###.##" locale="es" />
+										</p:outputLabel>	
 										
 									
 
@@ -240,17 +235,32 @@
 										
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
-										<h:inputHidden
-											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
-										<p:graphicImage value="/resources/images/sis/c.png"
+										<p:graphicImage value="/resources/images/sis/m.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />																					
+											width="150px;" height="200px;" style="max-width:299px;" />				
+										<p:graphicImage value="/resources/images/sis/h.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />	
+										
 										<h:inputHidden
-											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />	
+										<p:outputLabel
+											value="Nro. eventos para mujeres"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel
+											value="Nro. eventos para hombres"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />	
+																															
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
 										<p:outputLabel
-											value="#{sitioPublicoBean.totalEventosFortalecimientoD}"
+											value="#{sitioPublicoBean.totalEventosFortalecimientoMujD}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.totalEventosFortalecimientoHomD}"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:35px;" />	
 										

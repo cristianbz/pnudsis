@@ -51,20 +51,29 @@
 					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginBudget}" />
 					
 					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==9 or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==10?etiquetas['hombres']:etiquetas['numeroHombres']}:  " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
-					<p:outputLabel value="#{etiquetas['valor']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+					<p:outputLabel value="#{etiquetas['valor']}: *" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
 					<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B')}"/>
-					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
-					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==9 or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==10?etiquetas['mujeres']:etiquetas['numeroMujeres']}:  " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:message for="valorUno" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>							
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==9 or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==10?etiquetas['mujeres']:etiquetas['numeroMujeres']}: *" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
 					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedTwo}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:message for="valorDos" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
 					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N')}"/>
+					<p:message for="valorTres" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N')}"/>
 					<p:toggleSwitch value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgBooleanValue}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B')}" id="valorCuatro"/>
 					<p:inputTextarea style="width:450px;" rows="2"
 						value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedAnotherIndicator}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
-					
-					<p:outputLabel value="#{etiquetas['accionesImplementadas']}" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>
+					<p:message for="valorCinco" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>
+					<p:outputLabel value="#{etiquetas['accionesImplementadas']}:*" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
 					<p:inputTextarea 
-						style="width:450px;"
+						style="width:450px;" id="valorAcciones" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 						value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgActionsDone}" cols="20" rows="2"/>
+					<h:inputHidden />
+					<p:message for="valorAcciones" />	
 				</h:panelGrid>
 				<!-- 
 				<p:dataTable style="font-size:10px !important;"
@@ -98,7 +107,7 @@
 						disabled="#{buscaProyectosBean.proyectoReportado}"
 						icon="#{botones['icono.grabar']}" partialSubmit="true"
 						action="#{seguimientoGeneroController.grabarAvanceLineaGenero()}"
-						update=":form:tabs:tablaAvancesGenero growl"
+						update=":form:tabs:tablaAvancesGenero growl panelIngresoDatosSeg"
 						process="@this panelIngresoDatosSeg :form:tabs:tablaAvancesGenero" />
 					<p:commandButton value="#{botones['cancelar']}" resetValues="true"
 						icon="#{botones['icono.cancelar']}" process="@this"

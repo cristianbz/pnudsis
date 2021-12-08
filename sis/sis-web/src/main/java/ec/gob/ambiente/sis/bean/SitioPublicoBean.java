@@ -80,7 +80,11 @@ public class SitioPublicoBean implements Serializable{
 	
 	@Getter
 	@Setter
-	private Integer totalEventosFortalecimientoD;
+	private Integer totalEventosFortalecimientoHomD;
+	
+	@Getter
+	@Setter
+	private Integer totalEventosFortalecimientoMujD;
 	
 	@Getter
 	@Setter
