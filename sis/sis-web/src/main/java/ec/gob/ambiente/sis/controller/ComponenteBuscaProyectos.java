@@ -1173,6 +1173,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 	}
 	
 	public void validatablaIndicadores(){
+//		cargarLineasGeneroAsignadas();
 		if(getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getProjectGenderIndicatorList() !=null){
 			Iterator itera= getBuscaProyectosBean().getProjectGenderInfoSeleccionado().getProjectGenderIndicatorList().iterator();
 			while (itera.hasNext()){
@@ -1181,6 +1182,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 					itera.remove();
 			}
 		}
+		Mensaje.ocultarDialogo("dlgAsignaLineaGenero");
 	}
 	
 	public void editarLineaAccion(ProjectsGenderInfo linea){
@@ -1190,6 +1192,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			for (CatalogsType c : getBuscaProyectosBean().getListaLineasGenero()) {
 				if(c.getCatyDescription().equals(linea.getCataId().getCatalogsType().getCatyDescription())){
 					getBuscaProyectosBean().setLineaGeneroSel(c);
+//					System.out.println(c.getCatyDescription());
 					break;
 				}
 			}

@@ -37,13 +37,13 @@
 				</h:panelGrid>	
 			</p:dialog>
 			
-			<p:dialog widgetVar="dlgEliminaIndicadorGenero" showEffect="fade" positionType="absolute"
-				hideEffect="fade" modal="true" appendTo="@(body)" position="center top"
+			<p:dialog widgetVar="dlgEliminaIndicadorGenero" showEffect="fade" 
+				hideEffect="fade" modal="true" appendTo="@(body)" 
 				header="#{titulos['borrarLineaGenero']}" width="400px;" 
 				closable="false" resizable="false" responsive="true">
 				<h:panelGrid columns="2">
-					<p:commandButton process="@this :form:buscaProyectos:tablaIndicadores" icon="#{botones['icono.check']}" oncomplete="PF('dlgEliminaIndicadorGenero').hide();"
-						update=":form:buscaProyectos:tablaIndicadores" action="#{cc.attrs.componenteBuscaProyectos.eliminaIndicadorGenero}" partialSubmit="true" immediate="true"
+					<p:commandButton process="@this :form:buscaProyectos:tablaIndicadores panelIndicadores" icon="#{botones['icono.check']}" oncomplete="PF('dlgEliminaIndicadorGenero').hide();"
+						update=":form:buscaProyectos:tablaIndicadores panelIndicadores" action="#{cc.attrs.componenteBuscaProyectos.eliminaIndicadorGenero}" partialSubmit="true" immediate="true"
 						value="#{botones['aceptar']}"/>
 					<p:commandButton process="@this" icon="#{botones['icono.cancelar']}" 
 						oncomplete="PF('dlgEliminaIndicadorGenero').hide();"
@@ -244,8 +244,8 @@
 					<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" action="#{cc.attrs.componenteBuscaProyectos.grabarLineasAccion()}"
 						process="@this :form:buscaProyectos:tablaIndicadores  panelIndicadores " partialSubmit="true" update=":form:growl panelIndicadores tabsGenero"
 						></p:commandButton> 
-					<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" oncomplete="PF('dlgAsignaLineaGenero').hide();" process="@this"
-						update="@form" action="#{cc.attrs.componenteBuscaProyectos.validatablaIndicadores}"
+					<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" process="@this panelIndicadores :form:buscaProyectos:tabsGenero:tablaLineasGenero"
+						 action="#{cc.attrs.componenteBuscaProyectos.validatablaIndicadores}" partialSubmit="true" update="panelIndicadores :form:buscaProyectos:tabsGenero:tablaLineasGenero"
 						>
 						<f:setPropertyActionListener value="false" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"></f:setPropertyActionListener>
 					</p:commandButton>	
@@ -1212,7 +1212,7 @@
 							</div>
 							<div class="p-field p-col-12 p-md-4"></div>
 						</div>
-						<p:dataTable 
+						<p:dataTable id="tablaLineasGenero"
 							var="lineas" emptyMessage="#{mensajes['noRegistros']}"
 							value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaAccionesdeGeneroProyecto}">
 							<p:column>
@@ -1255,7 +1255,7 @@
 								
 							</p:column>
 							<p:column style="width:30px;">
-								<p:commandButton icon="#{botones['icono.editar']}" process="@this " 
+								<p:commandButton icon="#{botones['icono.editar']}" process="@this :form:buscaProyectos:temasObj :form:buscaProyectos:lineaObj" 
 									action="#{cc.attrs.componenteBuscaProyectos.editarLineaAccion(lineas)}"
 									partialSubmit="true" update=":form:buscaProyectos:panelIndicadores"/>
 								<p:commandButton icon="#{botones['icono.borrar']}" process="@this" oncomplete="PF('dlgEliminaLineaGenero').show();">

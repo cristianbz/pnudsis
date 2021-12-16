@@ -332,4 +332,24 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return total;
 	}
+	/**
+	 * Listado de proyectos registrados
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> listadoProyectos() throws Exception{
+		List<Object[]> resultado= null;
+		List<String> listaResultado = new ArrayList<String>();
+		String sql ="SELECT DISTINCT tr.tare_column_number_six ,  ca.cata_text2 FROM sis.questions q, sis.table_responses tr, sis.catalogs ca " +
+				" WHERE q.ques_id = tr.ques_id AND tr.ques_id=5 AND ca.cata_id=tr.tare_column_number_six AND tr.tare_status = true "+
+				" ORDER BY ca.cata_text2";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				listaResultado.add(dataObj[1].toString());
+			}
+		}
+		return listaResultado;
+	}
 }

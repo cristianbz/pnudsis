@@ -63,7 +63,7 @@ public class SitioPublicoController implements Serializable{
 	private static final String DESCRIPCION_A="Programas o proyectos del gobierno nacional dedicados a la conservación de bosques";
 	private static final String DESCRIPCION_B="Comunidades vinculadas con manejo forestal sostenible, hombres y mujeres beneficiarios";
 	private static final String DESCRIPCION_C="Prácticas y saberes ancestrales ";
-	private static final String DESCRIPCION_D="Eventos de fortalecimiento y capacidades para hombres y mujeres";
+	private static final String DESCRIPCION_D="Eventos de fortalecimiento de capacidades para hombres y mujeres";
 	private static final String DESCRIPCION_E="Fomento de la gestión comunitaria y apoyo al fortalecimiento de las organizaciones campesinas e indígenas";
 	private static final String DESCRIPCION_F="Cantidad de recursos invertidos";
 	private static final String DESCRIPCION_G="Acciones para generar alternativas económicas sostenibles a nivel local";
@@ -103,8 +103,8 @@ public class SitioPublicoController implements Serializable{
 //			File file = new File(archivoJSON);
 //			if(!file.exists())
 //				generarResumen();
-//			getSitioPublicoBean().setPosicionSalvaguardas(1);
-//			informacionSalvaguardaA();
+			getSitioPublicoBean().setPosicionSalvaguardas(1);
+			informacionSalvaguardaA();
 			Mensaje.actualizarComponente(":frm:pnlSalvaguardas");			
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
@@ -476,6 +476,13 @@ public class SitioPublicoController implements Serializable{
 	            		case 0:
 	            			getSitioPublicoBean().setNumeroProyectosSalvaguardaA(Integer.valueOf(obj.get("numeroProyectosA").toString()));
 	            			getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(obj.get("totalInversionProyectosA").toString()));
+	            			getSitioPublicoBean().setListadoProyectosA(new ArrayList<>());
+	            			JsonArray vector =(JsonArray) obj.get("proyectos");
+	            			if (vector != null) { 
+	            				for (int n=0;n<vector.size();n++){ 	            				    
+	            					getSitioPublicoBean().getListadoProyectosA().add(vector.getString(n));
+	            				} 
+	            			}	            			
 	            			break;
 	            		case 1:
 	            			getSitioPublicoBean().setNumeroComunidadesSalvaguardaB(Integer.valueOf(obj.get("numeroComunidadesB").toString()));
@@ -629,6 +636,18 @@ public class SitioPublicoController implements Serializable{
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumen " + ": ").append(e.getMessage()));
 		}
 	}
+
+	public void saludar(){
+		System.out.println("Saludar" + getSitioPublicoBean().getListadoProyectosA().size());
+		
+		Mensaje.verDialogo("dlgA1");
+		
+	}
+	public void salir(){
+		System.out.println("Salir");
+		Mensaje.ocultarDialogo("dlgA1");
+	}
+	
 	
 }
 

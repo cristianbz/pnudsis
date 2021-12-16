@@ -110,5 +110,9 @@ public class SitioPublicoBean implements Serializable{
 	@Setter
 	private String codigoSalvaguarda;
 	
+	@Getter
+	@Setter
+	private List<String> listadoProyectosA;
+	
 }
 

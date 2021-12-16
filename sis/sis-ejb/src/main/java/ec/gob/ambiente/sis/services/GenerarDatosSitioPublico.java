@@ -59,9 +59,9 @@ public class GenerarDatosSitioPublico implements Serializable {
 	@Getter
 	private MeetingsFacade meetingsFacade;
 	
-//	@Schedule(second = "0", minute = "01", hour = "23",dayOfWeek="Sun" , persistent = false)
+	@Schedule(second = "0", minute = "01", hour = "23",dayOfWeek="Sun" , persistent = false)
 //	@Schedule(minute = "*/1", hour="*", persistent = false)
-	@Schedule(hour="23",minute = "0", second="0", persistent = false)
+//	@Schedule(hour="23",minute = "0", second="0", persistent = false)
 	public void generarResumen(){
 
 		List<TableResponses> listaTemp= new ArrayList<>();
@@ -84,6 +84,7 @@ public class GenerarDatosSitioPublico implements Serializable {
 			DtoDatosSitioPublicoA dtoSalvaguardaA = new DtoDatosSitioPublicoA("A");
 			dtoSalvaguardaA.setNumeroProyectos(listaProyectos.size());
 			dtoSalvaguardaA.setTotalInversionProyectos(totalInversion);
+			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
 			////B
 			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
 			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsonable;
@@ -25,9 +26,14 @@ public class DtoDatosSitioPublicoA extends DtoSitioPublico implements Jsonable {
 	@Getter
 	@Setter
 	private BigDecimal totalInversionProyectos;
+	
 	@Getter
 	@Setter
 	private Integer numeroProyectos;
+	
+	@Getter
+	@Setter
+	private List<String> listadoProyectos;
 	
 	@Override
 	public String toJson() {
@@ -47,7 +53,8 @@ public class DtoDatosSitioPublicoA extends DtoSitioPublico implements Jsonable {
         final JsonObject json = new JsonObject();
         json.put("salvaguarda", super.salvaguarda);
         json.put("totalInversionProyectosA", getTotalInversionProyectos());
-        json.put("numeroProyectosA", getNumeroProyectos());        
+        json.put("numeroProyectosA", getNumeroProyectos());    
+        json.put("proyectos", listadoProyectos.toArray());
         json.toJson(writer);
 
     }

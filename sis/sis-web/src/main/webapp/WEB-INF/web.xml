@@ -39,4 +39,11 @@
  <listener>
 		<listener-class>ec.gob.ambiente.sis.utils.ContextListener</listener-class>
 	</listener>
+<listener>
+  <listener-class>se.jiderhamn.classloader.leak.prevention.ClassLoaderLeakPreventorListener</listener-class>
+</listener>
+<context-param>
+  <param-name>ClassLoaderLeakPreventor.stopThreads</param-name>
+  <param-value>false</param-value>
+</context-param>	
 </web-app>
