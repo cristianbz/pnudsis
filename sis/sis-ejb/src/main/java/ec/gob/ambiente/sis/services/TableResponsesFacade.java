@@ -352,4 +352,42 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return listaResultado;
 	}
+	/**
+	 * Numero de acciones para evitar riesgos de reversión
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroAccionesEvitarRiesgos_F() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tare_id) as total FROM sis.table_responses WHERE ques_id=115 AND tare_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = Integer.valueOf(obj.toString());
+			}
+		}
+		return valor;
+	}
+
+	/**
+	 * Listado de medidas tomadas
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> listaMedidasTomadas_F() throws Exception{
+		List<Object[]> resultado= null;
+		List<String> listaResultado = new ArrayList<String>();
+		String sql ="SELECT DISTINCT tr.tare_column_number_six ,ca.cata_text2 FROM sis.table_responses  tr, sis.catalogs ca " +
+				"WHERE tr.tare_column_number_six = ca.cata_id AND tr.ques_id=115 AND tr.tare_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				listaResultado.add(dataObj[1].toString());
+			}
+		}
+		return listaResultado;
+	}
 }

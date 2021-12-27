@@ -7,6 +7,7 @@ package ec.gob.ambiente.sis.dto;
 import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsonable;
@@ -25,6 +26,14 @@ public class DtoDatosSitioPublicoF extends DtoSitioPublico implements Jsonable {
 	@Setter
 	private BigDecimal totalRecursosInvertidos;
 	
+	@Getter
+	@Setter
+	private Integer totalAccionesReversion;
+	
+	@Getter
+	@Setter
+	private List<String> listadoMedidasTomadas;
+	
 	@Override
 	public String toJson() {
 		// TODO Auto-generated method stub
@@ -35,7 +44,8 @@ public class DtoDatosSitioPublicoF extends DtoSitioPublico implements Jsonable {
 	public void toJson(Writer writer) throws IOException {
         final JsonObject json = new JsonObject();
         json.put("salvaguarda", super.salvaguarda);
-        json.put("totalRecursosInvertidosF", getTotalRecursosInvertidos());                     
+        json.put("totalAccionesReversionF", getTotalAccionesReversion());
+        json.put("medidasTomadas", listadoMedidasTomadas.toArray());
         json.toJson(writer);
     }
 	

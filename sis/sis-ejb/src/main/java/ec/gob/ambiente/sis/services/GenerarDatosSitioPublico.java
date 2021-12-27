@@ -22,6 +22,7 @@ import javax.ejb.Singleton;
 import org.apache.log4j.Logger;
 
 import com.github.cliftonlabs.json_simple.Jsoner;
+import com.opencsv.CSVWriter;
 
 import ec.gob.ambiente.sigma.services.MeetingsFacade;
 import ec.gob.ambiente.sigma.services.SafeguardsFacade;
@@ -32,6 +33,8 @@ import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoD;
 import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoE;
 import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoF;
 import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoG;
+import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoGenero;
+import ec.gob.ambiente.sis.dto.DtoGenero;
 import ec.gob.ambiente.sis.model.TableResponses;
 import lombok.Getter;
 
@@ -50,6 +53,10 @@ public class GenerarDatosSitioPublico implements Serializable {
 	@EJB
 	@Getter
 	private TableResponsesFacade tableResponsesFacade;
+	
+	@EJB
+	@Getter
+	private AdvanceExecutionProjectGenderFacade avanceExecutionFacade;
 	
 	@EJB
 	@Getter
@@ -87,15 +94,15 @@ public class GenerarDatosSitioPublico implements Serializable {
 			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
 			////B
 			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
-			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);
-			Map<String,Integer> mapaTempB=new HashMap<String,Integer>();
-			for(TableResponses tr: listaTempComunidades){
-				mapaTempB.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
-			}
-			for(Entry<String,Integer> proy: mapaTempB.entrySet()){
-				listaComunidades.add(proy.getKey());
-			}
-			dtoSalvaguardaB.setNumeroComunidadesB(listaComunidades.size());
+//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);
+//			Map<String,Integer> mapaTempB=new HashMap<String,Integer>();
+//			for(TableResponses tr: listaTempComunidades){
+//				mapaTempB.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
+//			}
+//			for(Entry<String,Integer> proy: mapaTempB.entrySet()){
+//				listaComunidades.add(proy.getKey());
+//			}
+//			dtoSalvaguardaB.setNumeroComunidadesB(listaComunidades.size());
 
 			listaTempComunidades = new ArrayList<>();
 			listaTempComunidades = getTableResponsesFacade().listaMaximoHombresMujeresSalvaguardaB();
@@ -139,7 +146,9 @@ public class GenerarDatosSitioPublico implements Serializable {
 
 			// F
 			DtoDatosSitioPublicoF dtoSalvaguardaF = new DtoDatosSitioPublicoF("F");			
-			dtoSalvaguardaF.setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());
+//			dtoSalvaguardaF.setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());
+			dtoSalvaguardaF.setTotalAccionesReversion(getTableResponsesFacade().numeroAccionesEvitarRiesgos_F());
+			dtoSalvaguardaF.setListadoMedidasTomadas(getTableResponsesFacade().listaMedidasTomadas_F());
 
 			// G
 			DtoDatosSitioPublicoG dtoSalvaguardaG = new DtoDatosSitioPublicoG("G");
@@ -154,26 +163,57 @@ public class GenerarDatosSitioPublico implements Serializable {
 
 			dtoSalvaguardaG.setNumeroAcciones(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
 			dtoSalvaguardaG.setNumeroComunidades(listaComunidades.size());
-			dtoSalvaguardaG.setTotalBeneficiarios(getTableResponsesFacade().listaBeneficiariosSalvaguardaG());
+//			dtoSalvaguardaG.setTotalBeneficiarios(getTableResponsesFacade().listaBeneficiariosSalvaguardaG());
+			
+			DtoDatosSitioPublicoGenero dtoGenero = new DtoDatosSitioPublicoGenero("GENERO");
+			List<DtoGenero> listTempTemas = getAvanceExecutionFacade().listaTemasGenero();
+			List<String> listTempAcciones = getAvanceExecutionFacade().listadoAccionesGenero();
+			dtoGenero.setTotalPresupuesto(getAvanceExecutionFacade().presupuestoGenero());
+			int totalTemas = 0;			
+			if(listTempTemas!=null && listTempTemas.size()>0){
+				dtoGenero.setListaTemasGenero(listTempTemas);
+				for (DtoGenero genero : listTempTemas) {
+					totalTemas = totalTemas + genero.getNumero();
+				}
+				dtoGenero.setTotalTemasAplicados(totalTemas);
+			}else{
+				dtoGenero.setTotalTemasAplicados(0);
+				dtoGenero.setListaTemasGenero(null);
+			}
+			
+			if(listTempAcciones!=null && listTempAcciones.size()>0){
+				dtoGenero.setListaAccionesGenero(listTempAcciones);
+				dtoGenero.setTotalAccionesImplementadas(listTempAcciones.size());
+			}else{
+				dtoGenero.setListaAccionesGenero(null);
+				dtoGenero.setTotalAccionesImplementadas(0);
+			}
 
 
-			//			String json = Jsoner.serialize(dtoSalvaguardaA);
-			//			json = Jsoner.prettyPrint(json);
-			//			System.out.println(json);
-//			String ruta = this.getClass().getClassLoader().toString();
-//			System.out.println(this.webPath);			
-//			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-//
-//			String archivoJSON = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("archivo").append(".json").toString();
 			String archivoJSON = new StringBuilder().append(this.webPath).append(File.separator).append("archivo").append(".json").toString();
-			List<Object> lista = Arrays.asList(dtoSalvaguardaA, dtoSalvaguardaB,dtoSalvaguardaC,dtoSalvaguardaD, dtoSalvaguardaE , dtoSalvaguardaF , dtoSalvaguardaG);
+			String archivoCSVA = new StringBuilder().append(this.webPath).append(File.separator).append("salvaguardaA").append(".csv").toString();
+			List<Object> lista = Arrays.asList(dtoSalvaguardaA, dtoSalvaguardaB,dtoSalvaguardaC,dtoSalvaguardaD, dtoSalvaguardaE , dtoSalvaguardaF , dtoSalvaguardaG,dtoGenero);
 			try (FileWriter fileWriter = new FileWriter(archivoJSON)) {
 				Jsoner.serialize(lista, fileWriter);
-			}			
+			}
+			generarcsv(archivoCSVA);
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumen " + ": ").append(e.getMessage()));
 		}
 	}
-
+	
+	public void generarcsv(String path){
+		try{			 				
+			CSVWriter writer = new CSVWriter(new FileWriter(path));			        
+			//Create record
+			String [] record = "4,David,Miller,Australia,30".split(",");
+			//Write the record to file
+			writer.writeNext(record);				        
+			//close the writer
+			writer.close();            
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }
 

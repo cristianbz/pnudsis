@@ -95,6 +95,13 @@
 		  <artifactId>classloader-leak-prevention-servlet3</artifactId>
 		  <version>2.7.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<dependency>
+		    <groupId>com.opencsv</groupId>
+		    <artifactId>opencsv</artifactId>
+		    <version>5.5.2</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

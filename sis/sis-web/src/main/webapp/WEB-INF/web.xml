@@ -3,6 +3,10 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
  <display-name>Archetype Created Web Application</display-name>
  <context-param>
+  <param-name>ClassLoaderLeakPreventor.stopThreads</param-name>
+  <param-value>false</param-value>
+ </context-param>
+ <context-param>
   <param-name>javax.faces.PROJECT_STAGE</param-name>
   <param-value>Production</param-value>
  </context-param>
@@ -14,6 +18,14 @@
   <param-name>primefaces.THEME</param-name>
   <param-value>nova-light</param-value>
  </context-param>
+ <listener>
+  <description>Controla el contexto al iniciar la aplicacion</description>
+  <display-name>ContextListener</display-name>
+  <listener-class>ec.gob.ambiente.sis.utils.ContextListener</listener-class>
+ </listener>
+ <listener>
+  <listener-class>se.jiderhamn.classloader.leak.prevention.ClassLoaderLeakPreventorListener</listener-class>
+ </listener>
  <servlet>
   <servlet-name>Faces Servlet</servlet-name>
   <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -30,20 +42,10 @@
   <session-timeout>30</session-timeout>
  </session-config>
  <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
-    </welcome-file-list>
-    <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/signout.xhtml?redirected=true</location>
-    </error-page>
- <listener>
-		<listener-class>ec.gob.ambiente.sis.utils.ContextListener</listener-class>
-	</listener>
-<listener>
-  <listener-class>se.jiderhamn.classloader.leak.prevention.ClassLoaderLeakPreventorListener</listener-class>
-</listener>
-<context-param>
-  <param-name>ClassLoaderLeakPreventor.stopThreads</param-name>
-  <param-value>false</param-value>
-</context-param>	
+  <welcome-file>index.xhtml</welcome-file>
+ </welcome-file-list>
+ <error-page>
+  <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+  <location>/signout.xhtml?redirected=true</location>
+ </error-page>
 </web-app>

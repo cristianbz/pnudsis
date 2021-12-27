@@ -4,6 +4,8 @@
 **/
 package ec.gob.ambiente.sis.services;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import javax.ejb.Stateless;
 import org.hibernate.Hibernate;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.dto.DtoGenero;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 
 @Stateless
@@ -77,10 +80,67 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoIndicador", codigoIndicador);		
 		List<AdvanceExecutionProjectGender> listaTemp=findByCreateQuery(sql, camposCondicion);
-//		for (AdvanceExecutionProjectGender aepg : listaTemp) {
-//			Hibernate.initialize(aepg.getAdvanceExecutionSafeguards());
-//		}
 		return listaTemp;
+	}
+	/**
+	 * Temas tratados para genero 
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoGenero> listaTemasGenero() throws Exception{
+		List<Object[]> resultado= null;
+		List<DtoGenero> listaResultado = new ArrayList<DtoGenero>();
+		String sql ="SELECT COUNT(pgi.cata_id), c.cata_text2 FROM sis.advance_execution_safeguards aes, sis.advance_execution_project_gender aepg, " +
+					"sis.project_gender_indicator pgig, sis.projects_gender_info pgi, sis.catalogs c " +
+					" WHERE c.cata_id = pgi.cata_id AND pgig.pgin_id = pgi.pgin_id AND aepg.adex_id = aes.adex_id AND " + 
+					" pgig.pgig_id = aepg.pgig_id AND aepg.aepg_status = TRUE " +
+					" GROUP BY c.cata_text2";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoGenero genero = new DtoGenero();
+				genero.setNumero(Integer.valueOf(dataObj[0].toString()));
+				genero.setTema(dataObj[1].toString());
+				listaResultado.add(genero);
+			}
+		}
+		return listaResultado;
+	}
+	/**
+	 * Lista de acciones de genero
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> listadoAccionesGenero() throws Exception{
+		List<Object[]> resultado= null;
+		List<String> listaResultado = new ArrayList<String>();
+		String sql ="SELECT aepg_id,aepg_actions_done FROM sis.advance_execution_project_gender WHERE LENGTH(aepg_actions_done)>0 AND aepg_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				listaResultado.add(dataObj[1].toString());
+			}
+		}
+		return listaResultado;
+	}
+	
+	public BigDecimal presupuestoGenero() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT SUM(pgi.pgin_budget) FROM sis.projects_gender_info pgi, sis.project_gender_indicator pgig, sis.advance_execution_safeguards aes, "
+				+ " sis.advance_execution_project_gender aepg "
+				+ " WHERE pgig.pgin_id = pgi.pgin_id AND aepg.adex_id = aes.adex_id AND " 
+				+ "	pgig.pgig_id = aepg.pgig_id AND aepg.aepg_status = TRUE AND pgi.pgin_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
 	}
 }
 

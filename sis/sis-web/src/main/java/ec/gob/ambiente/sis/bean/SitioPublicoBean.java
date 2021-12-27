@@ -12,6 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import ec.gob.ambiente.sigma.model.Safeguards;
+import ec.gob.ambiente.sis.dto.DtoGenero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -114,5 +115,36 @@ public class SitioPublicoBean implements Serializable{
 	@Setter
 	private List<String> listadoProyectosA;
 	
+	@Getter
+	@Setter
+	private Integer totalAccionesReversionF;
+	
+	@Getter
+	@Setter
+	private List<String> listadoMedidasTomadasF;
+	
+	@Getter
+	@Setter
+	private List<DtoGenero> listaTemasGenero;
+	
+	@Getter
+	@Setter
+	private List<DtoGenero> listaAccionesGenero;
+	
+	@Getter
+	@Setter
+	private Integer numeroTemasGenero;
+	
+	@Getter
+	@Setter
+	private Integer numeroAccionesGenero;
+	
+	@Getter
+	@Setter
+	private BigDecimal totalPresupuestoGenero;
+	
+	@Getter
+	@Setter
+	private List<String> listadoAccionesGenero;
 }
 
