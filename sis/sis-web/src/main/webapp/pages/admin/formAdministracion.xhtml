@@ -568,6 +568,39 @@
 							</p:column>
 						</p:dataTable>
 					</p:tab>
+					<p:tab title="#{etiquetas['infoSitioPublico']}">
+						<br/>
+						<p:outputLabel value="#{titulos['datosSitioPublico']}"/>
+						<center>
+							<div class="ui-fluid p-formgrid p-grid">
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+										<p:commandButton value="#{botones['datosSitioPublico']}" process="@this" icon="#{botones['icono.basedatos']}"
+											onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();" update=":form:growl"
+											partialSubmit="true" actionListener="#{administracionController.generarResumen()}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+							</div>
+						</center>
+						<br/>
+						<p:outputLabel value="#{titulos['bdSitioPublico']}"/>
+						<center>
+							<div class="ui-fluid p-formgrid p-grid">
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+										<p:commandButton value="#{botones['bdSitioPublico']}" process="@this" icon="#{botones['icono.excel']}"
+											onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();" update=":form:growl"
+											partialSubmit="true" actionListener="#{administracionController.generaArchivoExcel()}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-4">
+									</div>
+							</div>
+						</center>
+						
+					</p:tab>
 					<!-- 
 					<p:tab title="#{etiquetas['usuarioProyecto']}">
 						<p:outputPanel id="panelUsuarios">
@@ -722,7 +755,7 @@
 				</p:tabView>
 				<br />
 				<h:panelGrid style="margin:0 auto;">
-					<p:commandButton id="btnVolverInicio"
+					<p:commandButton id="btnVolverInicio" 
 						value="#{botones['volverInicio']}" icon="fa fa-home"
 						action="#{sesionController.redireccionarAPagina('','inicio')}"
 						process="@this" />

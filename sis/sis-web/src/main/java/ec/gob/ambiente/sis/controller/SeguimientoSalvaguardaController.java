@@ -8078,7 +8078,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						if(encontrado==false){
 							TableResponses nuevoRegistroTableResponse=new TableResponses();
 							Questions question=new Questions();
-							question.setQuesId(2);
+							question.setQuesId(4);
 							nuevoRegistroTableResponse.setTareStatus(true);
 							nuevoRegistroTableResponse.setQuestions(question);
 							nuevoRegistroTableResponse.setTareLawPolitical(valorNuevo);

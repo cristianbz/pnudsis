@@ -47,9 +47,6 @@ public class GenerarDatosSitioPublico implements Serializable {
 	public static final String FOLDER_NAME = "/reportes";
 	
 	public static String webPath;
-	
-	private File folder;
-	
 	@EJB
 	@Getter
 	private TableResponsesFacade tableResponsesFacade;
@@ -78,7 +75,6 @@ public class GenerarDatosSitioPublico implements Serializable {
 		try{
 			List<Integer> listaProyectos=new ArrayList<>();
 			BigDecimal totalInversion = new BigDecimal(0);
-			//			getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(0));
 			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
 			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
 			for(TableResponses tr: listaTemp){
@@ -94,15 +90,6 @@ public class GenerarDatosSitioPublico implements Serializable {
 			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
 			////B
 			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
-//			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(16);
-//			Map<String,Integer> mapaTempB=new HashMap<String,Integer>();
-//			for(TableResponses tr: listaTempComunidades){
-//				mapaTempB.put(tr.getTareColumnOne().trim(), tr.getTareColumnNumberOne());				
-//			}
-//			for(Entry<String,Integer> proy: mapaTempB.entrySet()){
-//				listaComunidades.add(proy.getKey());
-//			}
-//			dtoSalvaguardaB.setNumeroComunidadesB(listaComunidades.size());
 
 			listaTempComunidades = new ArrayList<>();
 			listaTempComunidades = getTableResponsesFacade().listaMaximoHombresMujeresSalvaguardaB();
@@ -146,7 +133,6 @@ public class GenerarDatosSitioPublico implements Serializable {
 
 			// F
 			DtoDatosSitioPublicoF dtoSalvaguardaF = new DtoDatosSitioPublicoF("F");			
-//			dtoSalvaguardaF.setTotalRecursosInvertidos(getTableResponsesFacade().listaRecursosInvertidosF());
 			dtoSalvaguardaF.setTotalAccionesReversion(getTableResponsesFacade().numeroAccionesEvitarRiesgos_F());
 			dtoSalvaguardaF.setListadoMedidasTomadas(getTableResponsesFacade().listaMedidasTomadas_F());
 
@@ -163,7 +149,6 @@ public class GenerarDatosSitioPublico implements Serializable {
 
 			dtoSalvaguardaG.setNumeroAcciones(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
 			dtoSalvaguardaG.setNumeroComunidades(listaComunidades.size());
-//			dtoSalvaguardaG.setTotalBeneficiarios(getTableResponsesFacade().listaBeneficiariosSalvaguardaG());
 			
 			DtoDatosSitioPublicoGenero dtoGenero = new DtoDatosSitioPublicoGenero("GENERO");
 			List<DtoGenero> listTempTemas = getAvanceExecutionFacade().listaTemasGenero();
@@ -188,11 +173,10 @@ public class GenerarDatosSitioPublico implements Serializable {
 				dtoGenero.setListaAccionesGenero(null);
 				dtoGenero.setTotalAccionesImplementadas(0);
 			}
-
-
 			String archivoJSON = new StringBuilder().append(this.webPath).append(File.separator).append("archivo").append(".json").toString();
 			String archivoCSVA = new StringBuilder().append(this.webPath).append(File.separator).append("salvaguardaA").append(".csv").toString();
-			List<Object> lista = Arrays.asList(dtoSalvaguardaA, dtoSalvaguardaB,dtoSalvaguardaC,dtoSalvaguardaD, dtoSalvaguardaE , dtoSalvaguardaF , dtoSalvaguardaG,dtoGenero);
+	
+			List<Object> lista = Arrays.asList(dtoSalvaguardaA.toJson(), dtoSalvaguardaB.toJson(),dtoSalvaguardaC.toJson(),dtoSalvaguardaD.toJson(), dtoSalvaguardaE.toJson() , dtoSalvaguardaF.toJson() , dtoSalvaguardaG.toJson(),dtoGenero.toJson());
 			try (FileWriter fileWriter = new FileWriter(archivoJSON)) {
 				Jsoner.serialize(lista, fileWriter);
 			}

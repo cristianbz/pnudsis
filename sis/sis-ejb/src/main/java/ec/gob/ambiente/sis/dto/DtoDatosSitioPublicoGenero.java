@@ -5,6 +5,7 @@
 package ec.gob.ambiente.sis.dto;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
 import java.util.List;
@@ -45,8 +46,14 @@ public class DtoDatosSitioPublicoGenero extends DtoSitioPublico implements Jsona
 
 	@Override
 	public String toJson() {
-		// TODO Auto-generated method stub
-		return null;
+		final StringWriter writable = new StringWriter();
+        try {
+            this.toJson(writable);
+        } catch (final IOException e) {
+        	e.printStackTrace();
+        }
+        return writable.toString();
+
 	}
 
 	@Override

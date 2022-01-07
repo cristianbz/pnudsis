@@ -5,13 +5,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-		<link rel="stylesheet" type="text/css"
+	<link rel="stylesheet" type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
 		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
-	
+	<link rel="stylesheet" type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeicons-master/primeicons.css" />
 	<link
 		href="${facesContext.externalContext.requestContextPath}/resources/css/sitiopublico.css"
 		rel="stylesheet" type="text/css" />
-		<h:outputStylesheet library="webjars"
+	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
@@ -25,7 +28,7 @@
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['proyectosConservacion']}"   
 			width="20%" closable="true" >
-			<p:dataTable value="#{sitioPublicoBean.listadoProyectosA}" var="proy" id="tblproyectos" >
+			<p:dataTable value="#{sitioPublicoBean.listadoProyectosA}" var="proy" id="tblproyectos" paginator="true" rows="6" emptyMessage="#{mensajes['noRegistros']}">
 				<p:column headerText="#{etiquetas['proyectos']}">
 					#{proy}
 				</p:column>
@@ -34,9 +37,9 @@
 		
 		<p:dialog widgetVar="dlgF1"  resizable="false" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['medidasTomadas']}"   
+			header="#{titulos['medidasTomadas']}"    
 			width="20%" closable="true" >
-			<p:dataTable value="#{sitioPublicoBean.listadoMedidasTomadasF}" var="med" id="tblmedidas" >
+			<p:dataTable value="#{sitioPublicoBean.listadoMedidasTomadasF}" var="med" id="tblmedidas" paginator="true" rows="6" emptyMessage="#{mensajes['noRegistros']}">
 				<p:column headerText="#{etiquetas['medidaTomada']}">
 					#{med}
 				</p:column>
@@ -47,7 +50,7 @@
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['accionesImplementadas']}"   
 			width="20%" closable="true" >
-			<p:dataTable value="#{sitioPublicoBean.listadoAccionesGenero}" var="genero" id="tblacciones" >
+			<p:dataTable value="#{sitioPublicoBean.listadoAccionesGenero}" var="genero" id="tblacciones" paginator="true" rows="6" emptyMessage="#{mensajes['noRegistros']}">
 				<p:column headerText="#{etiquetas['acciones']}">
 					#{genero}
 				</p:column>
@@ -56,10 +59,10 @@
 		
 		<p:dialog widgetVar="dlgTemasGenero"  resizable="false" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
-			header="#{titulos['accionesImplementadas']}"   
+			header="#{titulos['temasAplicados']}"   
 			width="40%" closable="true" >
-			<p:dataTable value="#{sitioPublicoBean.listaTemasGenero}" var="genero" id="tbltemasgenero" >
-				<p:column headerText="#{etiquetas['temas']}">
+			<p:dataTable value="#{sitioPublicoBean.listaTemasGenero}" var="genero" id="tbltemasgenero" emptyMessage="#{mensajes['noRegistros']}">
+				<p:column headerText="#{etiquetas['areas']}">
 					#{genero.tema}
 				</p:column>
 				<p:column headerText="#{etiquetas['valor']}" width="30px;">
@@ -72,6 +75,7 @@
 			<p:growl id="msgs" showDetail="true" />
 			<ui:include src="/resources/status_gif.xhtml" />
 			<center>
+				
 				<p:panel>
 					<h:panelGrid id="pnlContenido">
 
@@ -179,9 +183,9 @@
 										<p:outputLabel value="#{sitioPublicoBean.resumenSalvaguarda}"
 											styleClass="salvaguardapie"
 											style="font-size:15px;width:100%;" />
-										<p:commandButton value="#{botones['descargarInfo']}" icon="#{botones['icono.descargar']}" 
+										<h:commandButton value="#{botones['descargarInfo']}" icon="#{botones['icono.descargar']}" 
 											title="#{tooltip['descargarInfo']}"
-											iconPos="left" process="@this"/>	
+											iconPos="left" action="#{sitioPublicoController.descargarBD()}"/>	
 									</h:panelGrid>
 									<br />
 									<br />
@@ -191,10 +195,10 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />
 										<p:graphicImage value="/resources/images/sis/proyecto.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
-											width="100px;" height="80px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										<p:graphicImage value="/resources/images/sis/i.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
-											width="100px;" height="80px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />
@@ -219,12 +223,12 @@
 											value="#{sitioPublicoBean.totalInversionProyectos}"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:35px;" >
-											<f:convertNumber for="valorProyectos" pattern="###,###,###.##" locale="es" />
+											<f:convertNumber for="valorProyectos" pattern="###,###,###.##" locale="es_ES" />											
 										</p:outputLabel>
 										
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />	
-										<p:commandButton icon="#{botones['icono.info']}" process="@this" 
+										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Proyectos de conservación"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
 											actionListener="#{sitioPublicoController.dialogoA1()}" update=":frm:tblproyectos" partialSubmit="true"/>
 										<h:inputHidden
@@ -234,10 +238,10 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}" />
 										<p:graphicImage value="/resources/images/sis/m.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										<p:graphicImage value="/resources/images/sis/h.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />	
+											width="150px;" height="150px;" style="max-width:299px;" />	
 											
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}" />
@@ -266,10 +270,10 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" />
 										<p:graphicImage value="/resources/images/sis/c.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										<p:graphicImage value="/resources/images/sis/p.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" />
@@ -299,10 +303,10 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
 										<p:graphicImage value="/resources/images/sis/mujer.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />				
+											width="150px;" height="150px;" style="max-width:299px;" />				
 										<p:graphicImage value="/resources/images/sis/hombre.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />	
+											width="150px;" height="150px;" style="max-width:299px;" />	
 										
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />	
@@ -330,10 +334,10 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />
 										<p:graphicImage value="/resources/images/sis/c.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										<p:graphicImage value="/resources/images/sis/hectareas.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />	
@@ -363,16 +367,16 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
-										<p:graphicImage value="/resources/images/sis/i.png"
+										<p:graphicImage value="/resources/images/sis/a.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 										
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
 										<p:outputLabel
-											value="Nro acciones para evitar riesgos de reversión"
+											value="Acciones para evitar riesgos de reversión"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />
 										
@@ -390,7 +394,7 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />	
-										<p:commandButton icon="#{botones['icono.info']}" process="@this" 
+										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Medidas tomadas"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}"
 											actionListener="#{sitioPublicoController.dialogoF1()}" update=":frm:tblmedidas" partialSubmit="true"/>
 										
@@ -399,20 +403,20 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}" />
 										<p:graphicImage value="/resources/images/sis/a.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />										
+											width="150px;" height="150px;" style="max-width:299px;" />										
 										<p:graphicImage value="/resources/images/sis/c.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 											
 											
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}" />
 										<p:outputLabel
-											value="Nro. acciones generadas para prevenir desplazamientos"
+											value="Acciones generadas para prevenir desplazamientos"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />										
 										<p:outputLabel
-											value="Nro. comunidades que participan en monitoreo comunitario"
+											value="Comunidades que participan en monitoreo comunitario"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />
 												
@@ -428,21 +432,22 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:35px;" />
 											
-										<h:inputHidden
-											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}" />
+										<p:graphicImage value="/resources/images/sis/genero.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
+											width="150px;" height="150px;" style="max-width:299px;" />
 										<p:graphicImage value="/resources/images/sis/a.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />										
-										<p:graphicImage value="/resources/images/sis/c.png"
+											width="150px;" height="150px;" style="max-width:299px;" />										
+										<p:graphicImage value="/resources/images/sis/i.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											width="150px;" height="200px;" style="max-width:299px;" />
+											width="150px;" height="150px;" style="max-width:299px;" />
 																						
 										<p:outputLabel
-											value="Nro. principales temas aplicados a género"
+											value="Principales áreas de intervención."
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />
 										<p:outputLabel
-											value="Nro. acciones enfocadas en género"
+											value="Acciones ejecutadas"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />										
 										<p:outputLabel
@@ -460,14 +465,16 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:35px;" />										
 										<p:outputLabel
-											value="#{sitioPublicoBean.totalPresupuestoGenero}"
+											value="#{sitioPublicoBean.totalPresupuestoGenero}" id="presupuestoGenero"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+											styleClass="valoresSalvaguardas" style="font-size:35px;" >
+											<f:convertNumber for="presupuestoGenero" pattern="###,###.##" locale="es_ES"/>
+										</p:outputLabel>	
 										
-										<p:commandButton icon="#{botones['icono.info']}" process="@this" 
+										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Temas abordados" 
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											actionListener="#{sitioPublicoController.dialogoTemasGenero()}" update=":frm:tbltemasgenero" partialSubmit="true"/>	
-										<p:commandButton icon="#{botones['icono.info']}" process="@this" 
+										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Acciones abordadas"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											actionListener="#{sitioPublicoController.dialogoAccionesGenero()}" update=":frm:tblacciones" partialSubmit="true"/>
 										<h:inputHidden

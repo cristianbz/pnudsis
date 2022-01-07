@@ -26,11 +26,13 @@ public class MeetingsFacade extends AbstractFacade<Meetings, Integer>{
 	public int listaEventosFortalecimientoHombres() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(meto_id) as total FROM sigma.meetings_totals  where meto_number1 >0 AND meto_status=TRUE;";
+		String sql ="SELECT sum(meet_total_male) FROM sigma.meetings WHERE meet_status=TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
-			for(Object obj:resultado)
-				valor = Integer.valueOf(obj.toString());
+			for(Object obj:resultado){
+				if (obj!=null)
+					valor = Integer.valueOf(obj.toString());
+			}
 		}
 		return valor;
 	}
@@ -42,11 +44,13 @@ public class MeetingsFacade extends AbstractFacade<Meetings, Integer>{
 	public int listaEventosFortalecimientoMujeres() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(meto_id) as total FROM sigma.meetings_totals where meto_number2 >0 AND meto_status=TRUE;";
+		String sql ="SELECT sum(meet_total_female) FROM sigma.meetings WHERE meet_status=TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
-			for(Object obj:resultado)
-				valor = Integer.valueOf(obj.toString());
+			for(Object obj:resultado){
+				if (obj!=null)
+					valor = Integer.valueOf(obj.toString());
+			}
 		}
 		return valor;
 	}

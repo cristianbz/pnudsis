@@ -84,7 +84,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 
 	public TableResponses buscaLeyPolitica(int codigoLeyPolitica,int codigoAvanceEjecucion,int codigoPregunta) throws DaoException{
 		try{
-			String sql="SELECT TR FROM TableResponses TR WHERE TR.tareColumnNumberOne  =:codigoLeyPolitica AND TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId =:codigoPregunta";
+			String sql="SELECT TR FROM TableResponses TR WHERE TR.tareLawPolitical  =:codigoLeyPolitica AND TR.advanceExecutionSaveguards.adexId=:codigoAvanceEjecucion AND TR.tareStatus=TRUE AND TR.questions.quesId =:codigoPregunta";
 			Map<String, Object> camposCondicion=new HashMap<String, Object>();
 			camposCondicion.put("codigoAvanceEjecucion", codigoAvanceEjecucion);		
 			camposCondicion.put("codigoLeyPolitica", codigoLeyPolitica);
@@ -282,6 +282,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return valor;
 	}
+	
 	public BigDecimal listaRecursosInvertidosF() throws Exception{
 		List<Object[]> resultado= null;
 		BigDecimal valor= new BigDecimal(0);		
@@ -389,5 +390,237 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 			}
 		}
 		return listaResultado;
+	}
+	/**
+	 * Instrumentos de politica publica.
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroInstrumentosPolitica_A() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tare_id) as total FROM sis.table_responses WHERE ques_id=4 AND tare_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = Integer.valueOf(obj.toString());
+			}
+		}
+		return valor;
+	}
+	/**
+	 * Lista de proyectos invertidos
+	 * @return
+	 * @throws Exception
+	 */
+	public BigDecimal cantidadProyectosInvertidos_A() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT SUM(tare_column_decimal_one) FROM sis.table_responses WHERE ques_id=5 AND tare_status= TRUE;";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
+	/**
+	 * Permite consultar el numero de registros de acuerdo al tipo de pregunta
+	 * @param pregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroDeRegistros(Integer pregunta) throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tare_id) as total FROM sis.table_responses WHERE tare_status = TRUE AND ques_id = " + pregunta;
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = Integer.valueOf(obj.toString());
+			}
+		}
+		return valor;
+	}
+	
+	public BigDecimal numeroDeHectareas(Integer pregunta) throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT SUM(tare_column_decimal_one) FROM sis.table_responses WHERE tare_status= TRUE  AND ques_id= "+pregunta;
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
+	
+	public Integer totalActores() throws Exception{
+		Integer total=new Integer(0);
+		List<Object[]> resultado= null;
+		String sql ="SELECT sum(tare_column_number_five) as h, sum(tare_column_number_six) as m FROM sis.table_responses WHERE tare_status= true AND ques_id=27";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				if(dataObj[0]!=null)
+					tr.setTareColumnNumberOne(Integer.valueOf( dataObj[0].toString()));
+				else
+					tr.setTareColumnNumberOne(0);
+				if(dataObj[1]!=null)
+					tr.setTareColumnNumberTwo(Integer.valueOf(dataObj[1].toString()));
+				else
+					tr.setTareColumnNumberTwo(0);
+				total = tr.getTareColumnNumberOne() + tr.getTareColumnNumberTwo();
+			}
+		}
+		return total;
+	}
+	
+	public int numeroCanalesHabilitados() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(cata_id) FROM sis.catalogs WHERE caty_id=5 AND cata_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = Integer.valueOf(obj.toString());
+			}
+		}
+		return valor;
+	}
+	
+	public BigDecimal numeroAccionesTenenciaTierra() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses tr, sis.catalogs c " +
+					" WHERE c.cata_id=tr.tare_column_number_eight AND tr.ques_id=43 AND tr.tare_status = TRUE AND cata_text1 like 'Acceso a propiedad de la tierra'" ;
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
+	
+	public Integer totalActoresDialogo() throws Exception{
+		Integer total=new Integer(0);
+		List<Object[]> resultado= null;
+		String sql ="SELECT sum(tare_column_number_six) as h, sum(tare_column_number_seven) as m FROM sis.table_responses WHERE tare_status= true AND ques_id=65";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				if(dataObj[0]!=null)
+					tr.setTareColumnNumberOne(Integer.valueOf( dataObj[0].toString()));
+				else
+					tr.setTareColumnNumberOne(0);
+				if(dataObj[1]!=null)
+					tr.setTareColumnNumberTwo(Integer.valueOf(dataObj[1].toString()));
+				else
+					tr.setTareColumnNumberTwo(0);
+				total = tr.getTareColumnNumberOne() + tr.getTareColumnNumberTwo();
+			}
+		}
+		return total;
+	}
+	
+	public BigDecimal totalMujeresDialogo() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);
+		String sql ="SELECT sum(tare_column_number_seven) as m FROM sis.table_responses WHERE tare_status= true AND ques_id=65";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
+	
+	public BigDecimal numeroHectareasConsolidadas() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT sum(tare_column_decimal_one) as h FROM sis.table_responses WHERE tare_status= true AND ques_id=69";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
+	
+	public Integer totalActoresMonitoreo() throws Exception{
+		Integer total=new Integer(0);
+		List<Object[]> resultado= null;
+		String sql ="SELECT sum(tare_column_number_seven) as h, sum(tare_column_number_eight) as m FROM sis.table_responses WHERE tare_status= true AND ques_id=126";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				if(dataObj[0]!=null)
+					tr.setTareColumnNumberOne(Integer.valueOf( dataObj[0].toString()));
+				else
+					tr.setTareColumnNumberOne(0);
+				if(dataObj[1]!=null)
+					tr.setTareColumnNumberTwo(Integer.valueOf(dataObj[1].toString()));
+				else
+					tr.setTareColumnNumberTwo(0);
+				total = tr.getTareColumnNumberOne() + tr.getTareColumnNumberTwo();
+			}
+		}
+		return total;
+	}
+	
+	public Integer totalBeneficiariosAlternativasEconomicas() throws Exception{
+		Integer total=new Integer(0);
+		List<Object[]> resultado= null;
+		String sql ="SELECT sum(tare_column_number_seven) as h, sum(tare_column_number_eight) as m FROM sis.table_responses WHERE tare_status= true AND ques_id=131";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				TableResponses tr= new TableResponses();
+				if(dataObj[0]!=null)
+					tr.setTareColumnNumberOne(Integer.valueOf( dataObj[0].toString()));
+				else
+					tr.setTareColumnNumberOne(0);
+				if(dataObj[1]!=null)
+					tr.setTareColumnNumberTwo(Integer.valueOf(dataObj[1].toString()));
+				else
+					tr.setTareColumnNumberTwo(0);
+				total = tr.getTareColumnNumberOne() + tr.getTareColumnNumberTwo();
+			}
+		}
+		return total;
+	}
+	
+	public BigDecimal totalPresupuestoSNMB() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT sum(tare_column_decimal_one) as p FROM sis.table_responses WHERE tare_status= true AND ques_id=133";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
 	}
 }
