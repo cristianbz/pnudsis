@@ -1,7 +1,9 @@
 package ec.gob.ambiente.sis.services;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import javax.persistence.NoResultException;
 import org.hibernate.Hibernate;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.dto.DtoTableResponses;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.model.ValueAnswers;
@@ -622,5 +625,1731 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 			}
 		}
 		return valor;
+	}
+	
+	/**
+	 * Lista de politicas leyes para archivo bd
+	 * @param pregunta
+	 * @param cataTipo
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoTableResponses> listaPoliticasLeyes(Integer pregunta,Integer cataTipo) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador, CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END,ca.cata_text2 FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND ca.cata_id = tr.tare_law_political AND tr.ques_id = " +pregunta 
+				+ " AND ca.caty_id = " + cataTipo; 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();
+				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	/**
+	 * Lista los programas, proyectos pregunta 3 salvaguarda A
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoTableResponses> listaProgProyA_3() throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo, par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END,ca.cata_text2 , tr.tare_column_decimal_one " +
+				"FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND ca.cata_id = tr.tare_column_number_six AND tr.ques_id = 5 " ;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();
+				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[5].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	/**
+	 * Informacion adicioanal para la salvaguarda
+	 * @param pregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoTableResponses> listaInformacionAdicional(Integer pregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, tr.tare_column_two, tr.tare_column_three " + 
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id ="+ pregunta ;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();
+				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	/**
+	 * Recupera la informacion de las preguntas B_4
+	 * @param codigoPregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoTableResponses> listaPreguntas_B_4(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_nine, tr.tare_column_number_one , tr.tare_column_number_two , tr.tare_column_number_three, tr.tare_column_number_four , tr.tare_column_number_five , tr.tare_column_number_six , tr.tare_column_number_seven , tr.tare_column_number_eight " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();
+				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[5].toString());
+					dto.setFecha(fecha);					
+				}
+				if(dataObj[6]!=null){
+					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));					
+				}
+				if(dataObj[7]!=null){
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));					
+				}
+				if(dataObj[8]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[13].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	/**
+	 * Informacion pregunta B_5
+	 * @param codigoPregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoTableResponses> listaPreguntas_B_5(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_number_one , tr.tare_column_number_two , tr.tare_column_number_three, tr.tare_column_number_six , tr.tare_column_number_seven , tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id "+
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());								
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));									
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[12].toString()));				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	/**
+	 * Información pregunta B_6
+	 * @param codigoPregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoTableResponses> listaPreguntas_B_6(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one," + 
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_number_one , tr.tare_column_number_two  " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());								
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));									
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+								
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_B_7(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_four FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());								
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());										
+												
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_B_8(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				"tr.tare_column_nine,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				"AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id  AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[5].toString());
+					dto.setFecha(fecha);					
+				}
+				if(dataObj[6]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[6].toString()));				
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));									
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));										
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[14].toString()));
+
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_B_9(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				"tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+								
+				if(dataObj[5]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[5].toString()));									
+				if(dataObj[6]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[6].toString()));										
+				if(dataObj[7]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[9].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_B_10(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				"tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight , tr.tare_column_decimal_one" +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+								
+				if(dataObj[5]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[5].toString()));									
+				if(dataObj[6]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[6].toString()));										
+				if(dataObj[7]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[13].toString()));		
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_B_11(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two, tr.tare_column_number_six, tr.tare_column_number_seven " +
+				"FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());				
+				if(dataObj[6]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));									
+				if(dataObj[7]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));										
+						
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_B_12(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_column_number_nine " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());				
+				if(dataObj[6]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));									
+				if(dataObj[7]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));										
+				if(dataObj[8]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[8].toString()));									
+				if(dataObj[9]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[10].toString()));									
+				if(dataObj[11]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[11].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_B_13(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two, tr.tare_column_nine, tr.tare_column_number_one, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[6].toString());
+					dto.setFecha(fecha);					
+				}
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));									
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));										
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));									
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_B_14(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two ,tr.tare_column_three,tr.tare_column_four, tr.tare_column_nine, tr.tare_column_number_one, tr.tare_column_number_six, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " + 
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());
+				if(dataObj[8]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[8].toString());
+					dto.setFecha(fecha);					
+				}
+				if(dataObj[9]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[9].toString()));									
+				if(dataObj[10]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[10].toString()));										
+				if(dataObj[11]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[11].toString()));									
+				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_C_20(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two ,tr.tare_column_decimal_one, tr.tare_column_decimal_two,tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_code_component "+
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[6].toString()));
+				if(dataObj[7]!=null)
+					dto.setDecimalDos(new BigDecimal(dataObj[7].toString()));				
+				if(dataObj[8]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[8].toString()));									
+				if(dataObj[9]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[9].toString()));										
+				if(dataObj[10]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[14].toString()));
+				if(dataObj[15]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[15].toString()));
+				if(dataObj[16]!=null)
+					dto.setNumeroNueve(Integer.valueOf(dataObj[16].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_C_21(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_five, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());				
+				if(dataObj[8]!=null)
+					dto.setTextoCinco(dataObj[8].toString());									
+				if(dataObj[9]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[9].toString()));										
+				if(dataObj[10]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[10].toString()));					
+				if(dataObj[11]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[11].toString()));					
+				if(dataObj[12]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[12].toString()));					
+				if(dataObj[13]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[13].toString()));					
+				if(dataObj[14]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[14].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_C_24(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				"tr.tare_column_two,tr.tare_column_three, tr.tare_column_nine, tr.tare_column_number_six, tr.tare_column_number_seven " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[7].toString());
+					dto.setFecha(fecha);					
+				}
+				if(dataObj[8]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[8].toString()));										
+				if(dataObj[9]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[9].toString()));					
+				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_C_24_2(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				"tr.tare_column_two " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_C_26(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " +
+		" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_number_one,tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());
+				if(dataObj[8]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[8].toString()));										
+				if(dataObj[9]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[9].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	public List<DtoTableResponses> listaPreguntas_C_27(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " +
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_four,tr.tare_column_number_five, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[7].toString()));				
+				if(dataObj[8]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[8].toString()));										
+				if(dataObj[9]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[11].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_C_28(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_decimal_one, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[7].toString()));				
+				if(dataObj[8]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[8].toString()));										
+				if(dataObj[9]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[10].toString()));
+				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	public List<DtoTableResponses> listaPreguntas_C_29(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());								
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));										
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[13].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_C_30(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_five,tr.tare_column_six, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());
+				if(dataObj[8]!=null)
+					dto.setTextoCinco(dataObj[8].toString());
+				if(dataObj[9]!=null)
+					dto.setTextoSeis(dataObj[9].toString());
+				if(dataObj[10]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[10].toString()));										
+				if(dataObj[11]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[13].toString()));
+				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_C_31(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_nine, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[6].toString());
+					dto.setFecha(fecha);					
+				}				
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));										
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[14].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_D_32(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null){
+					dto.setTextoTres(dataObj[6].toString());						
+				}				
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());										
+				if(dataObj[8]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[14].toString()));
+				if(dataObj[15]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[15].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_D_33(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());									
+				if(dataObj[6]!=null){
+					dto.setTextoTres(dataObj[6].toString());						
+				}				
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());										
+				if(dataObj[8]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[8].toString()));	
+				if(dataObj[9]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[12].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_E_34(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_six, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa  " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());																							
+				if(dataObj[6]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[6].toString()));	
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[11].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_E_35(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two, tr.tare_column_number_six, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());																												
+				if(dataObj[6]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));
+				if(dataObj[7]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_E_36(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " +
+				" tr.tare_column_two, tr.tare_column_decimal_one,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_four,tr.tare_column_number_five, tr.tare_code_component " + 
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[6].toString()));	
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[12].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_E_37(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_nine,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_number_nine, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[7].toString());
+					dto.setFecha(fecha);					
+				}					
+				if(dataObj[8]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[14].toString()));
+				if(dataObj[15]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[15].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_E_37_2(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, va.vaan_text_answer_value " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.value_answers va, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND va.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND va.vaan_status = TRUE AND LENGTH (va.vaan_text_answer_value)>1 AND va.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
+	public List<DtoTableResponses> listaPreguntas_E_38(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+									
+				if(dataObj[6]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));
+				if(dataObj[7]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[10].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_E_39(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six,tr.tare_column_number_seven, tr.tare_code_component " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id =  " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());
+									
+				if(dataObj[6]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));
+				if(dataObj[7]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[11].toString()));
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_E_40(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_number_one,tr.tare_column_number_five,tr.tare_column_number_six,tr.tare_column_number_seven " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());									
+				if(dataObj[5]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[5].toString()));
+				if(dataObj[6]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[6].toString()));
+				if(dataObj[7]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[8].toString()));				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<DtoTableResponses> listaPreguntas_E_40_X(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_decimal_one,tr.tare_column_number_one,tr.tare_column_number_five,tr.tare_column_number_six,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_number_two,tr.tare_column_two " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[5].toString()));	
+				if(dataObj[6]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));
+				if(dataObj[7]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setTextoDos(dataObj[12].toString());
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	public List<DtoTableResponses> listaPreguntas_F_41_1(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_four,tr.tare_column_number_five,tr.tare_column_number_six, tr.tare_code_component, " +
+				" tr.tare_column_four,tr.tare_column_decimal_one ,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_nine" +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());	
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[9].toString()));
+				if(dataObj[10]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setTextoCuatro(dataObj[14].toString());
+				if(dataObj[15]!=null)
+					dto.setDecimalUno(new BigDecimal(dataObj[15].toString()));
+				if(dataObj[16]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[16].toString()));
+				if(dataObj[17]!=null)
+					dto.setNumeroNueve(Integer.valueOf(dataObj[17].toString()));
+				if(dataObj[18]!=null){
+					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
+					Date fecha = formato.parse(dataObj[18].toString());
+					dto.setFecha(fecha);					
+				}	
+				lista.add(dto);
+			}
+		}
+		return lista;
 	}
 }

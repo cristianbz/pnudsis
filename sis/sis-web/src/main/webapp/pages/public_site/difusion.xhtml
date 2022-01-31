@@ -60,15 +60,11 @@
 		<p:dialog widgetVar="dlgTemasGenero"  resizable="false" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['temasAplicados']}"   
-			width="40%" closable="true" >
-			<p:dataTable value="#{sitioPublicoBean.listaTemasGenero}" var="genero" id="tbltemasgenero" emptyMessage="#{mensajes['noRegistros']}">
-				<p:column headerText="#{etiquetas['areas']}">
-					#{genero.tema}
-				</p:column>
-				<p:column headerText="#{etiquetas['valor']}" width="30px;">
-					#{genero.numero}
-				</p:column>
-			</p:dataTable>
+			width="60%" closable="true" >
+			
+			<p:outputPanel id="chart">
+				<p:pieChart model="#{sitioPublicoController.pieModel}" style="width: 100%; height: 500px;" />
+			</p:outputPanel>
 		</p:dialog>
 	
 		<div class="ui-fluid">
@@ -431,39 +427,33 @@
 											value="#{sitioPublicoBean.numeroComunidadesSalvaguardaG}"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:35px;" />
-											
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}" />	
 										<p:graphicImage value="/resources/images/sis/genero.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											width="150px;" height="150px;" style="max-width:299px;" />
-										<p:graphicImage value="/resources/images/sis/a.png"
-											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											width="150px;" height="150px;" style="max-width:299px;" />										
+											width="150px;" height="150px;" style="max-width:299px;" />																				
 										<p:graphicImage value="/resources/images/sis/i.png"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											width="150px;" height="150px;" style="max-width:299px;" />
-																						
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}" />												
 										<p:outputLabel
 											value="Principales áreas de intervención."
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />																				
 										<p:outputLabel
-											value="Acciones ejecutadas"
-											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											styleClass="valoresSalvaguardas" style="font-size:17px;" />										
-										<p:outputLabel
-											value="Presupuesto asignado"
+											value="Presupuesto referencial asignado"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />
 												
-											
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}" />	
 										<p:outputLabel
 											value="#{sitioPublicoBean.numeroTemasGenero}"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											styleClass="valoresSalvaguardas" style="font-size:35px;" />
-										<p:outputLabel
-											value="#{sitioPublicoBean.numeroAccionesGenero}"
-											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											styleClass="valoresSalvaguardas" style="font-size:35px;" />										
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />																				
 										<p:outputLabel
 											value="#{sitioPublicoBean.totalPresupuestoGenero}" id="presupuestoGenero"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
@@ -471,12 +461,11 @@
 											<f:convertNumber for="presupuestoGenero" pattern="###,###.##" locale="es_ES"/>
 										</p:outputLabel>	
 										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}" />
 										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Temas abordados" 
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											actionListener="#{sitioPublicoController.dialogoTemasGenero()}" update=":frm:tbltemasgenero" partialSubmit="true"/>	
-										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Acciones abordadas"
-											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
-											actionListener="#{sitioPublicoController.dialogoAccionesGenero()}" update=":frm:tblacciones" partialSubmit="true"/>
+											actionListener="#{sitioPublicoController.createPieModel()}" update=" chart" partialSubmit="true"/>											
 										<h:inputHidden
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}" />	
 											

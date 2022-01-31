@@ -4350,10 +4350,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberFive()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberNine()),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));

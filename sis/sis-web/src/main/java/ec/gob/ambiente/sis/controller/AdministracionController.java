@@ -17,8 +17,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -40,6 +40,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import com.github.cliftonlabs.json_simple.Jsoner;
 
 import ec.gob.ambiente.sigma.model.Safeguards;
+import ec.gob.ambiente.sigma.services.ComponentsFacade;
 import ec.gob.ambiente.sigma.services.MeetingsFacade;
 import ec.gob.ambiente.sigma.services.ProjectsFacade;
 import ec.gob.ambiente.sigma.services.ProjectsStrategicPartnersFacade;
@@ -68,6 +69,14 @@ import ec.gob.ambiente.sis.services.CatalogsTypeFacade;
 import ec.gob.ambiente.sis.services.IndicatorsFacade;
 import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
+import ec.gob.ambiente.sis.utils.GeneraBDSalvaguardaB;
+import ec.gob.ambiente.sis.utils.GenerarBDGenero;
+import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaA;
+import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaC;
+import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaD;
+import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaE;
+import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaF;
+import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaG;
 import ec.gob.ambiente.sis.utils.Mensaje;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoRolesUsuarioEnum;
 import ec.gob.ambiente.suia.service.RoleFacade;
@@ -96,6 +105,9 @@ public class AdministracionController implements Serializable{
 	@Getter
 	private ProjectsFacade projectsFacade;
 	
+	@EJB
+	@Getter
+	private AdvanceExecutionProjectGenderFacade generoFacade;
 	@EJB
 	@Getter
 	private IndicatorsFacade indicatorsFacade;
@@ -155,6 +167,10 @@ public class AdministracionController implements Serializable{
 	@EJB
 	@Getter
 	private MeetingsFacade meetingsFacade;
+	
+	@EJB
+	@Getter
+	private ComponentsFacade componentsFacade;
 
 	@EJB
 	@Getter
@@ -193,6 +209,7 @@ public class AdministracionController implements Serializable{
 			getAplicacionController().cargarSalvaguardas();
 			cargaSalvaguardas();
 			rb = ResourceBundle.getBundle("resources.indicadores");
+			getAdministracionBean().setListaComponentes(getComponentsFacade().listaComponentesActivos());
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
@@ -1121,5 +1138,19 @@ public class AdministracionController implements Serializable{
 			e.printStackTrace();
 		}
 	}
+
+
+	public void generarArchivosSalvaguardas(){
+		generaArchivoExcel();
+		GenerarBDSalvaguardaA.generaArchivoSalvaguardaA(getTableResponsesFacade(), getQuestionsFacade());
+		GeneraBDSalvaguardaB.generaArchivoSalvaguardaB(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		GenerarBDSalvaguardaC.generaArchivoSalvaguardaC(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		GenerarBDSalvaguardaD.generaArchivoSalvaguardaD(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		GenerarBDSalvaguardaE.generaArchivoSalvaguardaE(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		GenerarBDSalvaguardaF.generaArchivoSalvaguardaF(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		GenerarBDSalvaguardaG.generaArchivoSalvaguardaG(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		GenerarBDGenero.generaArchivoGenero(getGeneroFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+	}
+
 }
 

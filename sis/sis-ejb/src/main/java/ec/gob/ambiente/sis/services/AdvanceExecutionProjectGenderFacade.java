@@ -5,7 +5,9 @@
 package ec.gob.ambiente.sis.services;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.hibernate.Hibernate;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.dto.DtoGenero;
+import ec.gob.ambiente.sis.dto.DtoTableResponses;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 
 @Stateless
@@ -142,5 +145,56 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		}
 		return valor;
 	}
+	public List<DtoTableResponses> listaResumenIndicadoresGenero() throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, " +
+				" ct.caty_description,ca.cata_text2 ,indi.indi_description , aepg.aepg_value_reached_one, aepg.aepg_value_reached_two, aepg.aepg_value_reached_another_indicator,aepg_actions_done,indi.indi_type " +
+				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" ,sis.catalogs ca, sigma.partners par,sis.advance_execution_project_gender aepg,sis.project_gender_indicator pgi,sis.projects_gender_info pginfo,sis.catalogs_types ct, " +
+				" sis.indicators indi " +
+				" WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE " + 
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND aes.adex_is_gender = TRUE " +
+				" AND aes.adex_id = aepg.adex_id AND    aepg.pgig_id = pgi.pgig_id AND pgi.pgin_id = pginfo.pgin_id AND pginfo.cata_id =ca.cata_id " +
+				" AND ct.caty_id = ca.caty_id AND pgi.indi_id = indi.indi_id ";
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());	
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[8].toString()));
+				if(dataObj[9]!=null)
+					dto.setTextoCuatro(dataObj[9].toString());
+				if(dataObj[10]!=null)
+					dto.setTextoCinco(dataObj[10].toString());
+				if(dataObj[11]!=null)
+					dto.setTextoSeis(dataObj[11].toString());
+					
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
 }
 

@@ -244,7 +244,7 @@
 					<p:commandButton value="#{botones['grabar']}" icon="#{botones['icono.grabar']}" action="#{cc.attrs.componenteBuscaProyectos.grabarLineasAccion()}"
 						process="@this :form:buscaProyectos:tablaIndicadores  panelIndicadores " partialSubmit="true" update=":form:growl panelIndicadores tabsGenero"
 						></p:commandButton> 
-					<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" process="@this panelIndicadores :form:buscaProyectos:tabsGenero:tablaLineasGenero"
+					<p:commandButton value="#{botones['cancelar']}" icon="#{botones['icono.cancelar']}" process="@this panelIndicadores :form:buscaProyectos:tabsGenero:tablaLineasGenero" immediate="true"
 						 action="#{cc.attrs.componenteBuscaProyectos.validatablaIndicadores}" partialSubmit="true" update="panelIndicadores :form:buscaProyectos:tabsGenero:tablaLineasGenero"
 						>
 						<f:setPropertyActionListener value="false" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"></f:setPropertyActionListener>

@@ -32,6 +32,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.pie.PieChartDataSet;
+import org.primefaces.model.charts.pie.PieChartModel;
 
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
@@ -83,13 +86,17 @@ public class SitioPublicoController implements Serializable{
 	@EJB
 	@Getter
 	private AdvanceExecutionProjectGenderFacade avanceExecutionFacade;
-	
-    @Getter
-    @Setter
-    @Inject
-    private MensajesController mensajesController;
+
+	@Getter
+	@Setter
+	@Inject
+	private MensajesController mensajesController;
 
 	private ResourceBundle rb;
+
+	@Getter
+	@Setter
+	private PieChartModel pieModel;
 
 	@PostConstruct
 	public void init(){
@@ -107,8 +114,10 @@ public class SitioPublicoController implements Serializable{
 			}
 			rb = ResourceBundle.getBundle("resources.salvaguardas");
 			getSitioPublicoBean().setPosicionSalvaguardas(1);
-			//			informacionSalvaguardaA();
-			Mensaje.actualizarComponente(":frm:pnlSalvaguardas");			
+			//			informacionSalvaguardaA();			
+			Mensaje.actualizarComponente(":frm:pnlSalvaguardas");
+			pieModel = new PieChartModel();
+			iniciaColores();
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
@@ -511,44 +520,134 @@ public class SitioPublicoController implements Serializable{
 		Mensaje.verDialogo("dlgAccionesGenero");		
 	}
 	public void dialogoTemasGenero(){
+		int color=0;
+		pieModel = new PieChartModel();
+		ChartData data = new ChartData();
+		PieChartDataSet dataSet = new PieChartDataSet();
+		dataSet.setData(new ArrayList<>());
+
+		List<String> bgColors = new ArrayList<>();
+		bgColors.add("rgb(255,0,0)");
+		bgColors.add("rgb(0,255,0)");
+		bgColors.add("rgb(0,0,255)");
+		bgColors.add("rgb(255,255,0)");
+		bgColors.add("rgb(0,255,255)");
+		bgColors.add("rgb(255,0,255)");
+		bgColors.add("rgb(192,192,192)");
+		bgColors.add("rgb(128,128,128)");
+		bgColors.add("rgb(128,0,0)");
+		for (DtoGenero g : getSitioPublicoBean().getListaTemasGenero()) {
+			dataSet.getData().add(g.getNumero());
+			data.setLabels(g.getTema());
+		}
+		dataSet.setBackgroundColor(bgColors);
+		data.addChartDataSet(dataSet);
+		pieModel.setData(data);
 		Mensaje.verDialogo("dlgTemasGenero");		
 	}
 
 	public void descargarBD(){
 		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-		String archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BaseDatosSIS").append(".xls").toString();
-		try{
-			File ficheroXLS = new File(archivo);
-			if(ficheroXLS.exists()){
-				FacesContext fctx = FacesContext.getCurrentInstance();
-				FileInputStream fis = new FileInputStream(ficheroXLS);
-				byte[] bytes = new byte[1000];
-				int read = 0;
+		//		String archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BaseDatosSIS").append(".xls").toString();
+		String archivo="";
+		switch (getSitioPublicoBean().getPosicionSalvaguardas()){
+		case 1:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_A").append(".xls").toString();
+			break;
+		case 2:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_B").append(".xls").toString();
+			break;
+		case 3:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_C").append(".xls").toString();
+			break;
+		case 4:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_D").append(".xls").toString();
+			break;
+		case 5:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_E").append(".xls").toString();
+			break;
+		case 6:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_F").append(".xls").toString();
+			break;
+		case 7:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_G").append(".xls").toString();
+			break;
+		}
 
-				if (!fctx.getResponseComplete()) {
-					String fileName = ficheroXLS.getName();
-					String contentType = "application/vnd.ms-excel";
-					HttpServletResponse response =(HttpServletResponse) fctx.getExternalContext().getResponse();
-					response.setContentType(contentType);
-					response.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
-					ServletOutputStream out = response.getOutputStream();
-					while ((read = fis.read(bytes)) != -1) {
-						out.write(bytes, 0, read);
+		try{
+			if(archivo.length()>0){
+				File ficheroXLS = new File(archivo);
+				if(ficheroXLS.exists()){
+					FacesContext fctx = FacesContext.getCurrentInstance();
+					FileInputStream fis = new FileInputStream(ficheroXLS);
+					byte[] bytes = new byte[1000];
+					int read = 0;
+
+					if (!fctx.getResponseComplete()) {
+						String fileName = ficheroXLS.getName();
+						String contentType = "application/vnd.ms-excel";
+						HttpServletResponse response =(HttpServletResponse) fctx.getExternalContext().getResponse();
+						response.setContentType(contentType);
+						response.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
+						ServletOutputStream out = response.getOutputStream();
+						while ((read = fis.read(bytes)) != -1) {
+							out.write(bytes, 0, read);
+						}
+						out.flush();
+						out.close();
+						System.out.println("\nDescargado\n");
+						fctx.responseComplete();
 					}
-					out.flush();
-					out.close();
-					System.out.println("\nDescargado\n");
-					fctx.responseComplete();
+				}else{
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.archivo"));
+					Mensaje.actualizarComponente(":frm:growl");	
 				}
-			}else{
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.archivo"));
-				Mensaje.actualizarComponente(":frm:growl");	
 			}
 		} catch (IOException err) {  
 			err.printStackTrace();  
 		} 
 	}
 
+	public void createPieModel() {
+		pieModel = new PieChartModel();
+		ChartData data = new ChartData();
+		PieChartDataSet dataSet = new PieChartDataSet();
+		List<Number> values = new ArrayList<>();
+		List<String> labels = new ArrayList<>();
+		List<String> bgColors = new ArrayList<>();
+		int cont = 0;
+		for (DtoGenero g : getSitioPublicoBean().getListaTemasGenero()) {
+			values.add(g.getNumero());
+			labels.add(g.getTema());
+			bgColors.add(getSitioPublicoBean().getColores().get(cont));
+			cont++;
+		}        
+		dataSet.setData(values);
 
+		dataSet.setBackgroundColor(bgColors);
+
+		data.addChartDataSet(dataSet);
+		data.setLabels(labels);
+
+		pieModel.setData(data);        
+		Mensaje.verDialogo("dlgTemasGenero");		
+	}
+	public void iniciaColores(){
+		getSitioPublicoBean().setColores(new ArrayList<>());
+		getSitioPublicoBean().getColores().add("rgb(255,0,0)");
+		getSitioPublicoBean().getColores().add("rgb(0,255,0)");
+		getSitioPublicoBean().getColores().add("rgb(0,0,255)");
+		getSitioPublicoBean().getColores().add("rgb(255,255,0)");
+		getSitioPublicoBean().getColores().add("rgb(0,255,255)");
+		getSitioPublicoBean().getColores().add("rgb(255,0,255)");
+		getSitioPublicoBean().getColores().add("rgb(192,192,192)");
+		getSitioPublicoBean().getColores().add("rgb(128,128,128)");
+		getSitioPublicoBean().getColores().add("rgb(128,0,0)");
+		getSitioPublicoBean().getColores().add("rgb(128,128,0)");
+		getSitioPublicoBean().getColores().add("rgb(0,128,0)");
+		getSitioPublicoBean().getColores().add("rgb(128,0,128)");
+		getSitioPublicoBean().getColores().add("rgb(0,128,128)");
+		getSitioPublicoBean().getColores().add("rgb(0,0,128)");
+	}
 }
 

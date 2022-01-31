@@ -146,5 +146,9 @@ public class SitioPublicoBean implements Serializable{
 	@Getter
 	@Setter
 	private List<String> listadoAccionesGenero;
+	
+	@Getter
+	@Setter
+	private List<String> colores;
 }
 

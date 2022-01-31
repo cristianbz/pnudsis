@@ -10,6 +10,7 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sigma.model.Safeguards;
@@ -87,6 +88,10 @@ public class AdministracionBean implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> listaCatalogos;
+	
+	@Getter
+	@Setter
+	private List<Components> listaComponentes;
 	
 	@Getter
 	@Setter
