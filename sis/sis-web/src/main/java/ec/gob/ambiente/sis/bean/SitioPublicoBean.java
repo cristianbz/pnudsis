@@ -13,6 +13,8 @@ import javax.inject.Named;
 
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.dto.DtoGenero;
+import ec.gob.ambiente.sis.dto.DtoSalvaguardaA;
+import ec.gob.ambiente.sis.dto.DtoSalvaguardaF;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -111,9 +113,17 @@ public class SitioPublicoBean implements Serializable{
 	@Setter
 	private String codigoSalvaguarda;
 	
+//	@Getter
+//	@Setter
+//	private List<String> listadoProyectosA;
+	
 	@Getter
 	@Setter
-	private List<String> listadoProyectosA;
+	private List<DtoSalvaguardaA> listadoProyectosConservacion;
+	
+	@Getter
+	@Setter
+	private List<DtoSalvaguardaF> listadoRiesgoMedidaTomada;
 	
 	@Getter
 	@Setter

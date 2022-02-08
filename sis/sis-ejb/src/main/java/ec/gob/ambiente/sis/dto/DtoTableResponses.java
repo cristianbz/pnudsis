@@ -23,6 +23,7 @@ public class DtoTableResponses {
 	private String textoCuatro;
 	private String textoCinco;
 	private String textoSeis;
+	private String textoSiete;
 	private String provincia;
 	private String canton;
 	private String parroquia;

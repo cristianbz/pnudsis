@@ -1,6 +1,7 @@
 package ec.gob.ambiente.sis.services;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,8 @@ import javax.persistence.NoResultException;
 import org.hibernate.Hibernate;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.dto.DtoSalvaguardaA;
+import ec.gob.ambiente.sis.dto.DtoSalvaguardaF;
 import ec.gob.ambiente.sis.dto.DtoTableResponses;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.TableResponses;
@@ -176,14 +179,21 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaProyectosValoresSalvaguardaA() throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT tare_column_decimal_one,tare_column_number_six FROM sis.table_responses WHERE ques_id=5 AND tare_status= TRUE;";
+//		String sql ="SELECT tare_column_decimal_one,tare_column_number_six FROM sis.table_responses WHERE ques_id=5 AND tare_status= TRUE;";
+		String sql ="SELECT tr.tare_column_decimal_one,CASE WHEN tr.tare_column_number_six > 0 THEN ca.cata_text2 ELSE tr.tare_another_catalog END " + 
+					" FROM sis.table_responses tr, sis.catalogs ca, sis.advance_execution_safeguards aex,sigma.projects p  " +
+					" WHERE tr.tare_column_number_six = ca.cata_id AND tr.ques_id=5 AND tr.tare_status= TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE" +
+					" UNION " +
+					" SELECT tr.tare_column_decimal_one,tr.tare_another_catalog " + 
+					" FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p   WHERE tr.ques_id=5 AND tr.tare_status= TRUE AND tr.tare_column_number_six = 0 AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE;"; 
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
 				Object[] dataObj = (Object[]) obj;
 				TableResponses tr= new TableResponses();
 				tr.setTareColumnDecimalOne((BigDecimal)dataObj[0]);
-				tr.setTareColumnNumberSix((Integer)dataObj[1]);
+//				tr.setTareColumnNumberSix((Integer)dataObj[1]);
+				tr.setTareColumnOne(dataObj[1].toString());
 				listaResultado.add(tr);
 			}
 		}
@@ -198,7 +208,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaComunidadesSalvaguardaB_C_G(int codigoPregunta) throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT lower(tare_column_one),ques_id FROM sis.table_responses WHERE tare_status=TRUE AND ques_id=" + codigoPregunta;
+		String sql ="SELECT lower(tr.tare_column_one),tr.ques_id FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.tare_status=TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE AND tr.ques_id=" + codigoPregunta;
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -219,7 +229,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaMaximoHombresMujeresSalvaguardaB() throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT MAX(tare_column_number_seven)AS hombres,MAX(tare_column_number_eight)AS mujeres FROM sis.table_responses WHERE ques_id=16 AND tare_status= TRUE;";
+		String sql ="SELECT MAX(tr.tare_column_number_seven)AS hombres,MAX(tr.tare_column_number_eight)AS mujeres FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=16 AND tr.tare_status= TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -240,7 +250,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public int listaSaberesAncestralesSalvaguardaC() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=45 AND tare_status= TRUE;";
+		String sql ="SELECT COUNT(tr.tare_id) FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p WHERE tr.ques_id=45 AND tr.tare_status= TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
 			for(Object obj:resultado)
@@ -256,7 +266,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public List<TableResponses> listaFomentoGestionComunitariaE() throws Exception{
 		List<Object[]> resultado= null;
 		List<TableResponses> listaResultado = new ArrayList<TableResponses>();
-		String sql ="SELECT DISTINCT tare_column_number_one FROM sis.table_responses WHERE ques_id = 166 AND tare_status= TRUE;";
+		String sql ="SELECT DISTINCT tr.tare_column_number_one FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p WHERE ques_id = 166 AND tare_status= TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -275,7 +285,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public BigDecimal totalHectareasCoberturaE() throws Exception{
 		List<Object[]> resultado= null;
 		BigDecimal valor= new BigDecimal(0);		
-		String sql ="SELECT SUM(tare_column_number_eight) FROM sis.table_responses WHERE ques_id= 169 AND tare_status= TRUE;";
+		String sql ="SELECT SUM(tr.tare_column_number_eight) FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p WHERE tr.ques_id= 169 AND tr.tare_status= TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE;";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -303,7 +313,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public int listaAccionesGeneradasSalvaguardaG() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(tare_id) FROM sis.table_responses WHERE ques_id=131 AND tare_status= TRUE";
+		String sql ="SELECT COUNT(tr.tare_id) FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p WHERE tr.ques_id=131 AND tr.tare_status= TRUE AND p.proj_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -337,6 +347,39 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		return total;
 	}
 	/**
+	 * Lista de proyectos de conservacion
+	 * @return
+	 * @throws Exception
+	 */
+	
+	public List<DtoSalvaguardaA> listadoProyectosConservacion() throws Exception{
+		List<Object[]> resultado= null;
+		List<DtoSalvaguardaA> listaResultado = new ArrayList<DtoSalvaguardaA>();
+//		String sql ="SELECT  ca.cata_text2, sum(tr.tare_column_decimal_one) FROM sis.questions q, sis.table_responses tr, sis.catalogs ca " + 
+//				 " WHERE q.ques_id = tr.ques_id AND tr.ques_id=5 AND ca.cata_id=tr.tare_column_number_six AND tr.tare_status = true " + 
+//				 " GROUP BY ca.cata_text2";
+		String sql ="SELECT  CASE WHEN LENGTH(ca.cata_text2)>40 THEN substring(ca.cata_text2 from 1 for 39) ELSE ca.cata_text2 END, sum(tr.tare_column_decimal_one) FROM sis.questions q, sis.table_responses tr, sis.catalogs ca , sis.advance_execution_safeguards aex,sigma.projects p " + 
+					" WHERE q.ques_id = tr.ques_id AND tr.ques_id=5 AND ca.cata_id=tr.tare_column_number_six AND tr.tare_status = true AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE" + 
+					" GROUP BY ca.cata_text2 " +
+					" UNION " +
+					" SELECT  CASE WHEN LENGTH(tr.tare_another_catalog) > 40 THEN substring(tr.tare_another_catalog from 1 for 39) ELSE tr.tare_another_catalog END,  sum(tr.tare_column_decimal_one) FROM sis.questions q, sis.table_responses tr , sis.advance_execution_safeguards aex,sigma.projects p " +
+					" WHERE q.ques_id = tr.ques_id AND tr.ques_id=5 AND tr.tare_status = true AND tr.tare_column_number_six = 0 AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE" + 
+					" GROUP BY tr.tare_another_catalog ";	
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				DtoSalvaguardaA dto= new DtoSalvaguardaA();
+				Object[] dataObj = (Object[]) obj;
+				dto.setProyecto(dataObj[0].toString());
+				dto.setPresupuesto(Double.parseDouble(dataObj[1].toString()));				
+				listaResultado.add(dto);
+			}
+		}
+		return listaResultado;
+	}
+	
+	
+	/**
 	 * Listado de proyectos registrados
 	 * @return
 	 * @throws Exception
@@ -364,7 +407,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	public int numeroAccionesEvitarRiesgos_F() throws Exception{
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
-		String sql ="SELECT COUNT(tare_id) as total FROM sis.table_responses WHERE ques_id=115 AND tare_status = TRUE";
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=115 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
 			for(Object obj:resultado){
@@ -380,16 +423,19 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 	 * @return
 	 * @throws Exception
 	 */
-	public List<String> listaMedidasTomadas_F() throws Exception{
+	public List<DtoSalvaguardaF> listaMedidasTomadas_F() throws Exception{
 		List<Object[]> resultado= null;
-		List<String> listaResultado = new ArrayList<String>();
-		String sql ="SELECT DISTINCT tr.tare_column_number_six ,ca.cata_text2 FROM sis.table_responses  tr, sis.catalogs ca " +
-				"WHERE tr.tare_column_number_six = ca.cata_id AND tr.ques_id=115 AND tr.tare_status = TRUE";
+		List<DtoSalvaguardaF> listaResultado = new ArrayList<DtoSalvaguardaF>();
+		String sql ="SELECT  tr.tare_column_two ,ca.cata_text2 FROM sis.table_responses  tr, sis.catalogs ca , sis.advance_execution_safeguards aex,sigma.projects p " +
+					" WHERE tr.tare_column_number_six = ca.cata_id AND tr.ques_id=115 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ORDER BY ca.cata_text2";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
 				Object[] dataObj = (Object[]) obj;
-				listaResultado.add(dataObj[1].toString());
+				DtoSalvaguardaF tr= new DtoSalvaguardaF();
+				tr.setTextoUno(dataObj[0].toString());
+				tr.setTextoDos(dataObj[1].toString());
+				listaResultado.add(tr);
 			}
 		}
 		return listaResultado;
@@ -639,7 +685,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador, CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END,ca.cata_text2 FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE " +
 				" AND tr.tare_status = TRUE AND ca.cata_id = tr.tare_law_political AND tr.ques_id = " +pregunta 
 				+ " AND ca.caty_id = " + cataTipo; 
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -676,7 +722,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo, par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END,ca.cata_text2 , tr.tare_column_decimal_one " +
 				"FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND ca.cata_id = tr.tare_column_number_six AND tr.ques_id = 5 " ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -717,7 +763,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, tr.tare_column_two, tr.tare_column_three " + 
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id ="+ pregunta ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -760,7 +806,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_nine, tr.tare_column_number_one , tr.tare_column_number_two , tr.tare_column_number_three, tr.tare_column_number_four , tr.tare_column_number_five , tr.tare_column_number_six , tr.tare_column_number_seven , tr.tare_column_number_eight " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -822,7 +868,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_number_one , tr.tare_column_number_two , tr.tare_column_number_three, tr.tare_column_number_six , tr.tare_column_number_seven , tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id "+
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE"+
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -876,7 +922,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_number_one , tr.tare_column_number_two  " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -917,7 +963,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
 				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_four FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -954,10 +1000,10 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				"tr.tare_column_nine,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight " +
+				" tr.tare_column_nine,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
-				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				"AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id  AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id AND p.proj_status = TRUE" +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id  AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
@@ -1012,7 +1058,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
 				"tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
-				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id AND p.proj_status = TRUE" +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
@@ -1056,7 +1102,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
 				"tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight , tr.tare_column_decimal_one" +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
-				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id AND p.proj_status = TRUE" +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
@@ -1109,7 +1155,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two, tr.tare_column_number_six, tr.tare_column_number_seven " +
 				"FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1149,7 +1195,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_column_number_nine " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1196,7 +1242,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two, tr.tare_column_nine, tr.tare_column_number_one, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1244,7 +1290,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two ,tr.tare_column_three,tr.tare_column_four, tr.tare_column_nine, tr.tare_column_number_one, tr.tare_column_number_six, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " + 
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1295,7 +1341,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two ,tr.tare_column_decimal_one, tr.tare_column_decimal_two,tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_code_component "+
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1352,7 +1398,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_five, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1405,7 +1451,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				"tr.tare_column_two,tr.tare_column_three, tr.tare_column_nine, tr.tare_column_number_six, tr.tare_column_number_seven " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1452,7 +1498,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				"tr.tare_column_two " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1488,7 +1534,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_number_one,tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1530,7 +1576,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_four,tr.tare_column_number_five, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1577,7 +1623,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_decimal_one, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1622,7 +1668,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1673,7 +1719,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_five,tr.tare_column_six, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1725,7 +1771,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_nine, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1781,7 +1827,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1837,7 +1883,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1887,7 +1933,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_six, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa  " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1934,7 +1980,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two, tr.tare_column_number_six, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -1973,7 +2019,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two, tr.tare_column_decimal_one,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_four,tr.tare_column_number_five, tr.tare_code_component " + 
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2022,7 +2068,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_nine,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_number_nine, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2079,7 +2125,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, va.vaan_text_answer_value " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.value_answers va, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND va.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND va.vaan_status = TRUE AND LENGTH (va.vaan_text_answer_value)>1 AND va.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2112,7 +2158,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2158,7 +2204,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_two,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six,tr.tare_column_number_seven, tr.tare_code_component " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id =  " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2206,7 +2252,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_number_one,tr.tare_column_number_five,tr.tare_column_number_six,tr.tare_column_number_seven " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id =" + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2247,7 +2293,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_decimal_one,tr.tare_column_number_one,tr.tare_column_number_five,tr.tare_column_number_six,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_number_two,tr.tare_column_two " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2288,6 +2334,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return lista;
 	}
+	
 	public List<DtoTableResponses> listaPreguntas_F_41_1(int codigoPregunta) throws Exception{
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
@@ -2296,7 +2343,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				" tr.tare_column_four,tr.tare_column_decimal_one ,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_nine" +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
-				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
 				" AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2352,4 +2399,69 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return lista;
 	}
+	/**
+	 * Preguntas de Genero
+	 * @param codigoPregunta
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoTableResponses> listaPreguntas_Genero(int codigoPregunta) throws Exception{
+		List<DtoTableResponses> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
+				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_four,tr.tare_column_five,tr.tare_column_six,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_four,tr.tare_column_number_five,tr.tare_column_number_six, " +
+				" tr.tare_column_number_seven,tr.tare_column_number_eight FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
+				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
+				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id " +
+				" AND aes.adex_is_gender = TRUE AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoTableResponses dto = new DtoTableResponses();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPeriodo(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSocioImplementador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSocioEstrategico(dataObj[3].toString());
+				else
+					dto.setSocioEstrategico("");
+				if(dataObj[4]!=null)
+					dto.setTextoUno(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTextoDos(dataObj[5].toString());	
+				if(dataObj[6]!=null)
+					dto.setTextoTres(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setTextoCuatro(dataObj[7].toString());
+				if(dataObj[8]!=null)
+					dto.setTextoCinco(dataObj[8].toString());
+				if(dataObj[9]!=null)
+					dto.setTextoSeis(dataObj[9].toString());
+				if(dataObj[10]!=null)
+					dto.setNumeroUno(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setNumeroDos(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setNumeroCinco(Integer.valueOf(dataObj[14].toString()));
+				if(dataObj[15]!=null)
+					dto.setNumeroSeis(Integer.valueOf(dataObj[15].toString()));
+				if(dataObj[16]!=null)
+					dto.setNumeroSiete(Integer.valueOf(dataObj[16].toString()));
+				if(dataObj[17]!=null)
+					dto.setNumeroOcho(Integer.valueOf(dataObj[17].toString()));					
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
 }

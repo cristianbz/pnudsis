@@ -149,13 +149,14 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, " +
-				" ct.caty_description,ca.cata_text2 ,indi.indi_description , aepg.aepg_value_reached_one, aepg.aepg_value_reached_two, aepg.aepg_value_reached_another_indicator,aepg_actions_done,indi.indi_type " +
+				" ct.caty_description,ca.cata_text2 ,indi.indi_description , aepg.aepg_value_reached_one, aepg.aepg_value_reached_two, aepg.aepg_value_reached_another_indicator,aepg_actions_done,indi.indi_type, " +
+				" pgi.pgig_goals, pgi.pgig_goal_value_one, pgi.pgig_goal_value_two" +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" ,sis.catalogs ca, sigma.partners par,sis.advance_execution_project_gender aepg,sis.project_gender_indicator pgi,sis.projects_gender_info pginfo,sis.catalogs_types ct, " +
 				" sis.indicators indi " +
 				" WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE " + 
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND aes.adex_is_gender = TRUE " +
-				" AND aes.adex_id = aepg.adex_id AND    aepg.pgig_id = pgi.pgig_id AND pgi.pgin_id = pginfo.pgin_id AND pginfo.cata_id =ca.cata_id " +
+				" AND aes.adex_id = aepg.adex_id AND    aepg.pgig_id = pgi.pgig_id AND pgi.pgin_id = pginfo.pgin_id AND pginfo.cata_id =ca.cata_id AND p.proj_status = TRUE" +
 				" AND ct.caty_id = ca.caty_id AND pgi.indi_id = indi.indi_id ";
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -189,7 +190,12 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 					dto.setTextoCinco(dataObj[10].toString());
 				if(dataObj[11]!=null)
 					dto.setTextoSeis(dataObj[11].toString());
-					
+				if(dataObj[12]!=null)
+					dto.setTextoSiete(dataObj[12].toString());
+				if(dataObj[13]!=null)
+					dto.setNumeroTres(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setNumeroCuatro(Integer.valueOf(dataObj[14].toString()));
 				lista.add(dto);
 			}
 		}

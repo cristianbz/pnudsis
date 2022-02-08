@@ -479,21 +479,22 @@ public class AdministracionController implements Serializable{
 		List<String> listaComunidades=new ArrayList<>();
 		List<TableResponses> listaTempProvincias= new ArrayList<>();
 		try{
-			List<Integer> listaProyectos=new ArrayList<>();
+			List<String> listaProyectos=new ArrayList<>();
 			BigDecimal totalInversion = new BigDecimal(0);
 			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
-			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
+			Map<String,BigDecimal> mapaTemp=new HashMap<String,BigDecimal>();
 			for(TableResponses tr: listaTemp){
-				mapaTemp.put(tr.getTareColumnNumberSix(), tr.getTareColumnDecimalOne());
+				mapaTemp.put(tr.getTareColumnOne(), tr.getTareColumnDecimalOne());
 				totalInversion = totalInversion.add(tr.getTareColumnDecimalOne());
 			}
-			for(Entry<Integer,BigDecimal> proy: mapaTemp.entrySet()){
+			for(Entry<String,BigDecimal> proy: mapaTemp.entrySet()){
 				listaProyectos.add(proy.getKey());
 			}			
 			DtoDatosSitioPublicoA dtoSalvaguardaA = new DtoDatosSitioPublicoA("A");
 			dtoSalvaguardaA.setNumeroProyectos(listaProyectos.size());
 			dtoSalvaguardaA.setTotalInversionProyectos(totalInversion);
-			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
+//			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
+			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectosConservacion());
 			////B
 			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
 			listaTempComunidades = new ArrayList<>();
@@ -1149,7 +1150,7 @@ public class AdministracionController implements Serializable{
 		GenerarBDSalvaguardaE.generaArchivoSalvaguardaE(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
 		GenerarBDSalvaguardaF.generaArchivoSalvaguardaF(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
 		GenerarBDSalvaguardaG.generaArchivoSalvaguardaG(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
-		GenerarBDGenero.generaArchivoGenero(getGeneroFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		GenerarBDGenero.generaArchivoGenero(getTableResponsesFacade(),getGeneroFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
 	}
 
 }

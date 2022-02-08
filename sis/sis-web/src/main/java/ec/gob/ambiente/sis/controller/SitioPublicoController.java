@@ -33,6 +33,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.axes.cartesian.CartesianScales;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
+import org.primefaces.model.charts.bar.BarChartDataSet;
+import org.primefaces.model.charts.bar.BarChartModel;
+import org.primefaces.model.charts.bar.BarChartOptions;
+import org.primefaces.model.charts.optionconfig.legend.Legend;
+import org.primefaces.model.charts.optionconfig.legend.LegendLabel;
+import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.pie.PieChartDataSet;
 import org.primefaces.model.charts.pie.PieChartModel;
 
@@ -53,6 +62,8 @@ import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoF;
 import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoG;
 import ec.gob.ambiente.sis.dto.DtoDatosSitioPublicoGenero;
 import ec.gob.ambiente.sis.dto.DtoGenero;
+import ec.gob.ambiente.sis.dto.DtoSalvaguardaA;
+import ec.gob.ambiente.sis.dto.DtoSalvaguardaF;
 import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.services.AdvanceExecutionProjectGenderFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
@@ -98,10 +109,15 @@ public class SitioPublicoController implements Serializable{
 	@Setter
 	private PieChartModel pieModel;
 
+	@Getter
+	@Setter
+	private BarChartModel barModel;
+	
 	@PostConstruct
 	public void init(){
 		try{
 			List<Object[]> listSalvaguardas=new ArrayList<>();
+			getSitioPublicoBean().setListadoProyectosConservacion(new ArrayList<>());
 			getSitioPublicoBean().setListaSalvaguardas(new ArrayList<>());
 			listSalvaguardas = getSafeguardsFacade().listarSalvaguardas();
 			for(Object obj:listSalvaguardas){
@@ -117,6 +133,7 @@ public class SitioPublicoController implements Serializable{
 			//			informacionSalvaguardaA();			
 			Mensaje.actualizarComponente(":frm:pnlSalvaguardas");
 			pieModel = new PieChartModel();
+			barModel = new BarChartModel();
 			iniciaColores();
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
@@ -316,13 +333,25 @@ public class SitioPublicoController implements Serializable{
 					case 0:
 						getSitioPublicoBean().setNumeroProyectosSalvaguardaA(Integer.valueOf(obj.get("numeroProyectosA").toString()));
 						getSitioPublicoBean().setTotalInversionProyectos(new BigDecimal(obj.get("totalInversionProyectosA").toString()));
-						getSitioPublicoBean().setListadoProyectosA(new ArrayList<>());
-						JsonArray vector =(JsonArray) obj.get("proyectos");
-						if (vector != null) { 
-							for (int n=0;n<vector.size();n++){ 	            				    
-								getSitioPublicoBean().getListadoProyectosA().add(vector.getString(n));
+						getSitioPublicoBean().setListadoProyectosConservacion(new ArrayList<>());
+//						getSitioPublicoBean().setListadoProyectosA(new ArrayList<>());
+//						JsonArray vector =(JsonArray) obj.get("proyectos");
+//						if (vector != null) { 
+//							for (int n=0;n<vector.size();n++){ 	            				    
+//								getSitioPublicoBean().getListadoProyectosA().add(vector.getString(n));
+//							} 
+//						}	    
+						JsonArray vectorP =(JsonArray) obj.get("listadoProyectos");
+						if (vectorP != null) { 
+							for (int n=0;n<vectorP.size();n++){
+								DtoSalvaguardaA objP = new DtoSalvaguardaA();
+								JsonObject objeto= (JsonObject) vectorP.get(n);
+								objP.setProyecto(objeto.get("proyecto").toString());
+								objP.setPresupuesto(Double.parseDouble(objeto.get("inversion").toString()));
+								getSitioPublicoBean().getListadoProyectosConservacion().add(objP);								
 							} 
-						}	            			
+						}
+						
 						break;
 					case 1:
 						getSitioPublicoBean().setNumeroHombresSalvaguardaB(Integer.valueOf(obj.get("numeroHombresB").toString()));
@@ -342,11 +371,22 @@ public class SitioPublicoController implements Serializable{
 						break;
 					case 5:
 						getSitioPublicoBean().setTotalAccionesReversionF(Integer.valueOf(obj.get("totalAccionesReversionF").toString()));
-						getSitioPublicoBean().setListadoMedidasTomadasF(new ArrayList<>());
+//						getSitioPublicoBean().setListadoMedidasTomadasF(new ArrayList<>());
+//						JsonArray vectorF =(JsonArray) obj.get("medidasTomadas");
+//						if (vectorF != null) { 
+//							for (int n=0;n<vectorF.size();n++){ 	            				    
+//								getSitioPublicoBean().getListadoMedidasTomadasF().add(vectorF.getString(n));
+//							} 
+//						}
+						getSitioPublicoBean().setListadoRiesgoMedidaTomada(new ArrayList<>());
 						JsonArray vectorF =(JsonArray) obj.get("medidasTomadas");
 						if (vectorF != null) { 
-							for (int n=0;n<vectorF.size();n++){ 	            				    
-								getSitioPublicoBean().getListadoMedidasTomadasF().add(vectorF.getString(n));
+							for (int n=0;n<vectorF.size();n++){
+								DtoSalvaguardaF objP = new DtoSalvaguardaF();
+								JsonObject objeto= (JsonObject) vectorF.get(n);
+								objP.setTextoUno(objeto.get("riesgo").toString());
+								objP.setTextoDos(objeto.get("medidatomada").toString());
+								getSitioPublicoBean().getListadoRiesgoMedidaTomada().add(objP);								
 							} 
 						}
 						break;
@@ -397,21 +437,22 @@ public class SitioPublicoController implements Serializable{
 		List<String> listaComunidades=new ArrayList<>();
 		List<TableResponses> listaTempProvincias= new ArrayList<>();
 		try{
-			List<Integer> listaProyectos=new ArrayList<>();
+			List<String> listaProyectos=new ArrayList<>();
 			BigDecimal totalInversion = new BigDecimal(0);
 			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
-			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
+			Map<String,BigDecimal> mapaTemp=new HashMap<String,BigDecimal>();
 			for(TableResponses tr: listaTemp){
-				mapaTemp.put(tr.getTareColumnNumberSix(), tr.getTareColumnDecimalOne());
+				mapaTemp.put(tr.getTareColumnOne(), tr.getTareColumnDecimalOne());
 				totalInversion = totalInversion.add(tr.getTareColumnDecimalOne());
 			}
-			for(Entry<Integer,BigDecimal> proy: mapaTemp.entrySet()){
+			for(Entry<String,BigDecimal> proy: mapaTemp.entrySet()){
 				listaProyectos.add(proy.getKey());
 			}			
 			DtoDatosSitioPublicoA dtoSalvaguardaA = new DtoDatosSitioPublicoA("A");
 			dtoSalvaguardaA.setNumeroProyectos(listaProyectos.size());
 			dtoSalvaguardaA.setTotalInversionProyectos(totalInversion);
-			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
+//			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
+			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectosConservacion());
 			////B
 			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
 			listaTempComunidades = new ArrayList<>();
@@ -545,10 +586,36 @@ public class SitioPublicoController implements Serializable{
 		pieModel.setData(data);
 		Mensaje.verDialogo("dlgTemasGenero");		
 	}
+	
+	public void dialogoProyectosA(){
+		int color=0;
+		pieModel = new PieChartModel();
+		ChartData data = new ChartData();
+		PieChartDataSet dataSet = new PieChartDataSet();
+		dataSet.setData(new ArrayList<>());
+
+		List<String> bgColors = new ArrayList<>();
+		bgColors.add("rgb(255,0,0)");
+		bgColors.add("rgb(0,255,0)");
+		bgColors.add("rgb(0,0,255)");
+		bgColors.add("rgb(255,255,0)");
+		bgColors.add("rgb(0,255,255)");
+		bgColors.add("rgb(255,0,255)");
+		bgColors.add("rgb(192,192,192)");
+		bgColors.add("rgb(128,128,128)");
+		bgColors.add("rgb(128,0,0)");
+		for (DtoSalvaguardaA dto : getSitioPublicoBean().getListadoProyectosConservacion()) {
+			dataSet.getData().add(dto.getPresupuesto());
+			data.setLabels(dto.getProyecto());
+		}
+		dataSet.setBackgroundColor(bgColors);
+		data.addChartDataSet(dataSet);
+		pieModel.setData(data);
+		Mensaje.verDialogo("dlgA1");		
+	}
 
 	public void descargarBD(){
 		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-		//		String archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BaseDatosSIS").append(".xls").toString();
 		String archivo="";
 		switch (getSitioPublicoBean().getPosicionSalvaguardas()){
 		case 1:
@@ -572,6 +639,9 @@ public class SitioPublicoController implements Serializable{
 		case 7:
 			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_SALV_G").append(".xls").toString();
 			break;
+		case 8:
+			archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BDSIS_GENERO").append(".xls").toString();
+			break;	
 		}
 
 		try{
@@ -608,6 +678,58 @@ public class SitioPublicoController implements Serializable{
 		} 
 	}
 
+	public void createPieModelA() {
+		barModel = new BarChartModel();
+		ChartData data = new ChartData();
+		BarChartDataSet dataSet = new BarChartDataSet();
+		dataSet.setLabel("Inversión en proyectos");
+		List<Number> values = new ArrayList<>();
+		List<String> labels = new ArrayList<>();
+		List<String> bgColors = new ArrayList<>();
+		int cont = 0;
+		for (DtoSalvaguardaA dto : getSitioPublicoBean().getListadoProyectosConservacion()) {
+			values.add(dto.getPresupuesto());
+			labels.add(dto.getProyecto());
+			bgColors.add(getSitioPublicoBean().getColores().get(cont));
+			cont++;
+		}        
+		dataSet.setData(values);
+
+		dataSet.setBackgroundColor(bgColors);
+
+		data.addChartDataSet(dataSet);
+		data.setLabels(labels);
+
+		barModel.setData(data);     
+		BarChartOptions options = new BarChartOptions();
+        CartesianScales cScales = new CartesianScales();
+        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
+        linearAxes.setOffset(true);
+        CartesianLinearTicks ticks = new CartesianLinearTicks();
+        ticks.setBeginAtZero(true);
+        linearAxes.setTicks(ticks);
+        cScales.addYAxesData(linearAxes);
+        options.setScales(cScales);
+
+        Title title = new Title();
+        title.setDisplay(true);
+        title.setText("Proyectos Conservación de bósques");
+        options.setTitle(title);
+
+        Legend legend = new Legend();
+        legend.setDisplay(true);
+        legend.setPosition("top");
+        LegendLabel legendLabels = new LegendLabel();
+        legendLabels.setFontStyle("bold");
+        legendLabels.setFontColor("#2980B9");
+        legendLabels.setFontSize(24);
+        legend.setLabels(legendLabels);
+        options.setLegend(legend);
+
+        barModel.setOptions(options);
+		Mensaje.verDialogo("dlgA1");		
+	}
+	
 	public void createPieModel() {
 		pieModel = new PieChartModel();
 		ChartData data = new ChartData();

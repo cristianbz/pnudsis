@@ -10,6 +10,7 @@ import java.io.Writer;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsonable;
 
@@ -31,9 +32,13 @@ public class DtoDatosSitioPublicoA extends DtoSitioPublico implements Jsonable {
 	@Setter
 	private Integer numeroProyectos;
 	
+//	@Getter
+//	@Setter
+//	private List<String> listadoProyectos;
+	
 	@Getter
 	@Setter
-	private List<String> listadoProyectos;
+	private List<DtoSalvaguardaA> listadoProyectos;
 	
 	@Override
 	public String toJson() {
@@ -49,12 +54,20 @@ public class DtoDatosSitioPublicoA extends DtoSitioPublico implements Jsonable {
 
 	@Override
 	public void toJson(Writer writer) throws IOException {
-
+		final JsonArray jsonArray = new JsonArray();
+		for (DtoSalvaguardaA dto : listadoProyectos) {
+			JsonObject json = new JsonObject();
+			json.put("proyecto",dto.proyecto);
+			json.put("inversion", dto.presupuesto);
+			jsonArray.add(json);
+		}
+		
         final JsonObject json = new JsonObject();
         json.put("salvaguarda", super.salvaguarda);
         json.put("totalInversionProyectosA", getTotalInversionProyectos());
         json.put("numeroProyectosA", getNumeroProyectos());    
-        json.put("proyectos", listadoProyectos.toArray());
+//        json.put("proyectos", listadoProyectos.toArray());
+        json.put("listadoProyectos", jsonArray);
         json.toJson(writer);
 
     }

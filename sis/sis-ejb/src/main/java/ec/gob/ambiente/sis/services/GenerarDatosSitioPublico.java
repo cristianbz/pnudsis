@@ -73,21 +73,22 @@ public class GenerarDatosSitioPublico implements Serializable {
 		List<String> listaComunidades=new ArrayList<>();
 		List<TableResponses> listaTempProvincias= new ArrayList<>();
 		try{
-			List<Integer> listaProyectos=new ArrayList<>();
+			List<String> listaProyectos=new ArrayList<>();
 			BigDecimal totalInversion = new BigDecimal(0);
 			listaTemp = getTableResponsesFacade().listaProyectosValoresSalvaguardaA();
-			Map<Integer,BigDecimal> mapaTemp=new HashMap<Integer,BigDecimal>();
+			Map<String,BigDecimal> mapaTemp=new HashMap<String,BigDecimal>();
 			for(TableResponses tr: listaTemp){
-				mapaTemp.put(tr.getTareColumnNumberSix(), tr.getTareColumnDecimalOne());
+				mapaTemp.put(tr.getTareColumnOne(), tr.getTareColumnDecimalOne());
 				totalInversion = totalInversion.add(tr.getTareColumnDecimalOne());
 			}
-			for(Entry<Integer,BigDecimal> proy: mapaTemp.entrySet()){
+			for(Entry<String,BigDecimal> proy: mapaTemp.entrySet()){
 				listaProyectos.add(proy.getKey());
 			}			
 			DtoDatosSitioPublicoA dtoSalvaguardaA = new DtoDatosSitioPublicoA("A");
 			dtoSalvaguardaA.setNumeroProyectos(listaProyectos.size());
 			dtoSalvaguardaA.setTotalInversionProyectos(totalInversion);
-			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
+//			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectos());
+			dtoSalvaguardaA.setListadoProyectos(getTableResponsesFacade().listadoProyectosConservacion());
 			////B
 			DtoDatosSitioPublicoB dtoSalvaguardaB = new DtoDatosSitioPublicoB("B");
 
@@ -174,13 +175,13 @@ public class GenerarDatosSitioPublico implements Serializable {
 				dtoGenero.setTotalAccionesImplementadas(0);
 			}
 			String archivoJSON = new StringBuilder().append(this.webPath).append(File.separator).append("archivo").append(".json").toString();
-			String archivoCSVA = new StringBuilder().append(this.webPath).append(File.separator).append("salvaguardaA").append(".csv").toString();
+//			String archivoCSVA = new StringBuilder().append(this.webPath).append(File.separator).append("salvaguardaA").append(".csv").toString();
 	
 			List<Object> lista = Arrays.asList(dtoSalvaguardaA.toJson(), dtoSalvaguardaB.toJson(),dtoSalvaguardaC.toJson(),dtoSalvaguardaD.toJson(), dtoSalvaguardaE.toJson() , dtoSalvaguardaF.toJson() , dtoSalvaguardaG.toJson(),dtoGenero.toJson());
 			try (FileWriter fileWriter = new FileWriter(archivoJSON)) {
 				Jsoner.serialize(lista, fileWriter);
 			}
-			generarcsv(archivoCSVA);
+			
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumen " + ": ").append(e.getMessage()));
 		}
