@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -28,6 +30,7 @@ import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GenerarBDSalvaguardaG {
+	private static final Logger LOG = Logger.getLogger(GenerarBDSalvaguardaG.class);
 	public static void generaArchivoSalvaguardaG(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas, List<Catalogs> listaCatalogos,List<Object[]> listaProvincias,List<Object[]> listaCanton,List<Object[]> listaParroquia,List<Components> listaComponentes){
 		try{
 			ResourceBundle rb;
@@ -91,6 +94,10 @@ public class GenerarBDSalvaguardaG {
 			cell = row.createCell(3);
 			cell = row.createCell(0);
 			cell.setCellValue(rb.getString("G_102"));
+			cell.setCellStyle(styleBold);
+			
+			cell = row.createCell(1);
+			cell.setCellValue(servicio.numeroDeRegistros(136));
 			cell.setCellStyle(styleBold);
 			
 			///PREGUNTA 46.1
@@ -200,15 +207,30 @@ public class GenerarBDSalvaguardaG {
 				cell = row.createCell(7);
 				cell.setCellValue(dt.getTextoTres());
 				
+//				catalogo ="";
+//				for (Catalogs cat : listaCatalogos) {	
+//					if(cat.getCataId() == dt.getNumeroSeis()){
+//						catalogo = cat.getCataText2();				
+//						break;
+//					}
+//				}				
+//				cell = row.createCell(8);
+//				cell.setCellValue(catalogo);
+				
 				catalogo ="";
-				for (Catalogs cat : listaCatalogos) {	
-					if(cat.getCataId() == dt.getNumeroSeis()){
-						catalogo = cat.getCataText2();				
-						break;
+				if(dt.getNumeroSeis()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroSeis()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
-				}				
-				cell = row.createCell(8);
-				cell.setCellValue(catalogo);
+					cell = row.createCell(8);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(8);
+					cell.setCellValue(dt.getTextoCinco());
+				}
 				
 				if(dt.getNumeroSiete() != 1000){
 					catalogo ="";
@@ -391,15 +413,30 @@ public class GenerarBDSalvaguardaG {
 				cell = row.createCell(9);
 				cell.setCellValue(dt.getTextoUno());
 				
+//				catalogo ="";
+//				for (Catalogs cat : listaCatalogos) {	
+//					if(cat.getCataId() == dt.getNumeroSeis()){
+//						catalogo = cat.getCataText2();				
+//						break;
+//					}
+//				}				
+//				cell = row.createCell(10);
+//				cell.setCellValue(catalogo);
+				
 				catalogo ="";
-				for (Catalogs cat : listaCatalogos) {	
-					if(cat.getCataId() == dt.getNumeroSeis()){
-						catalogo = cat.getCataText2();				
-						break;
+				if(dt.getNumeroSeis()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroSeis()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
-				}				
-				cell = row.createCell(10);
-				cell.setCellValue(catalogo);
+					cell = row.createCell(10);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(10);
+					cell.setCellValue(dt.getTextoCinco());
+				}
 				
 				cell = row.createCell(11);
 				cell.setCellValue(dt.getNumeroOcho());
@@ -789,15 +826,30 @@ public class GenerarBDSalvaguardaG {
 				cell = row.createCell(10);
 				cell.setCellValue(dt.getTextoDos());
 				
+//				catalogo ="";
+//				for (Catalogs cat : listaCatalogos) {	
+//					if(cat.getCataId() == dt.getNumeroSeis()){
+//						catalogo = cat.getCataText2();				
+//						break;
+//					}
+//				}				
+//				cell = row.createCell(11);
+//				cell.setCellValue(catalogo);
+				
 				catalogo ="";
-				for (Catalogs cat : listaCatalogos) {	
-					if(cat.getCataId() == dt.getNumeroSeis()){
-						catalogo = cat.getCataText2();				
-						break;
+				if(dt.getNumeroSeis()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroSeis()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
-				}				
-				cell = row.createCell(11);
-				cell.setCellValue(catalogo);
+					cell = row.createCell(11);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(11);
+					cell.setCellValue(dt.getTextoCinco());
+				}
 				
 				cell = row.createCell(12);
 				cell.setCellValue(dt.getNumeroOcho());
@@ -1278,7 +1330,8 @@ public class GenerarBDSalvaguardaG {
 	        workbook.write(file);
 	        file.close();
 		}catch(Exception e){
-			e.printStackTrace();
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
+			LOG.error(new StringBuilder().append("GenerarBDSalvaguardaG " + "." + "generaArchivoSalvaguardaG" + ": ").append(e.getMessage()));
 		}
 	}	
 }

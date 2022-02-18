@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -26,7 +28,7 @@ import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GenerarBDSalvaguardaA {
-	
+	private static final Logger LOG = Logger.getLogger(GenerarBDSalvaguardaA.class);
 	public static void generaArchivoSalvaguardaA(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas){
 		try{
 			ResourceBundle rb;
@@ -52,9 +54,7 @@ public class GenerarBDSalvaguardaA {
 			cell = row.createCell(1);
 			cell.setCellValue(servicio.numeroInstrumentosPolitica_A());
 			cell.setCellStyle(styleBold);
-			
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 4000);
+
 			row = sheet.createRow(5);
 			cell = row.createCell(3);
 			cell = row.createCell(0);
@@ -404,18 +404,21 @@ public class GenerarBDSalvaguardaA {
 				cell.setCellValue(dt.getProyecto());
 				
 				cell = row.createCell(1);
-				cell.setCellValue(dt.getSocioImplementador());
+				cell.setCellValue(dt.getPeriodo());
 				
 				cell = row.createCell(2);
-				cell.setCellValue(dt.getSocioEstrategico());
+				cell.setCellValue(dt.getSocioImplementador());
 				
 				cell = row.createCell(3);
-				cell.setCellValue(dt.getTextoUno());
+				cell.setCellValue(dt.getSocioEstrategico());
 				
 				cell = row.createCell(4);
-				cell.setCellValue(dt.getTextoDos());
+				cell.setCellValue(dt.getTextoUno());
 				
 				cell = row.createCell(5);
+				cell.setCellValue(dt.getTextoDos());
+				
+				cell = row.createCell(6);
 				cell.setCellValue(dt.getTextoTres());
 				cuentaFila++;
 			}
@@ -428,7 +431,8 @@ public class GenerarBDSalvaguardaA {
 	        file.close();
 	        
 		}catch(Exception e){
-			e.printStackTrace();
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
+			LOG.error(new StringBuilder().append("GenerarBDSalvaguardaA " + "." + "generaArchivoSalvaguardaA" + ": ").append(e.getMessage()));
 		}
 
 	}

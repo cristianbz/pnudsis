@@ -2360,7 +2360,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().setTareGenericoTres(OperacionesCatalogo.ubicaDescripcionCatalogo(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().getTareColumnNumberEight(),getSeguimientoSalvaguardaBean().getListaCatalogoTipoAcceso() ));					
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().setTareAnotherCatalog("");
 				}else
-					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().setTareGenerico(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().getTareAnotherCatalog());
+					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().setTareGenericoTres(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().getTareAnotherCatalog());
 				
 				if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().getTareId()==null){
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasC201().setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());

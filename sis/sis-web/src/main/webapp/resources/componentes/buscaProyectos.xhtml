@@ -283,6 +283,7 @@
 				header="#{titulos['reporteSocioImpEst']}" width="490"
 				closable="false" resizable="false">
 				<p:outputPanel id="sociosReportar">
+					<p:scrollPanel mode="native" style="width:450px;height:300px">
 					<div class="ui-fluid p-formgrid p-grid">
 						<h:panelGrid columns="2">
 							<p:selectOneRadio layout="grid"
@@ -335,7 +336,8 @@
 							resetValues="true"
 							actionListener="#{cc.attrs.componenteBuscaProyectos.cancelaSeleccionSocio}" />
 					</h:panelGrid>
-				</p:outputPanel>
+					</p:scrollPanel>
+				</p:outputPanel>				
 			</p:dialog>
 
 			<p:dialog widgetVar="dlgAsignaSalvaguardas" showEffect="fade"

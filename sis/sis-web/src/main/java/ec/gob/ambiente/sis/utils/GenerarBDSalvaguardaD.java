@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -28,7 +30,7 @@ import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GenerarBDSalvaguardaD {
-
+	private static final Logger LOG = Logger.getLogger(GenerarBDSalvaguardaD.class);
 	public static void generaArchivoSalvaguardaD(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas, List<Catalogs> listaCatalogos,List<Object[]> listaProvincias,List<Object[]> listaCanton,List<Object[]> listaParroquia,List<Components> listaComponentes){
 		try{
 			ResourceBundle rb;
@@ -539,9 +541,10 @@ public class GenerarBDSalvaguardaD {
 			FileOutputStream file = new FileOutputStream(archivo);
 	        workbook.write(file);
 	        file.close();
-//	        Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.generaArchivo"));
+
 		}catch(Exception e){
-			e.printStackTrace();
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
+			LOG.error(new StringBuilder().append("GenerarBDSalvaguardaD " + "." + "generaArchivoSalvaguardaD" + ": ").append(e.getMessage()));
 		}
 	}	
 }

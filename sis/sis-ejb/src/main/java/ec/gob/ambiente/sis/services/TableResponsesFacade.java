@@ -496,7 +496,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		return valor;
 	}
 	
-	public BigDecimal numeroDeHectareas(Integer pregunta) throws Exception{
+	public BigDecimal sumaDecimalUno(Integer pregunta) throws Exception{
 		List<Object[]> resultado= null;
 		BigDecimal valor= new BigDecimal(0);		
 		String sql ="SELECT SUM(tare_column_decimal_one) FROM sis.table_responses WHERE tare_status= TRUE  AND ques_id= "+pregunta;
@@ -531,6 +531,20 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 			}
 		}
 		return total;
+	}
+	
+	public BigDecimal totalPersonasInfoRedd() throws Exception{
+		BigDecimal valor= new BigDecimal(0);
+		List<Object[]> resultado= null;
+		String sql ="SELECT sum(tare_column_number_seven) as t FROM sis.table_responses WHERE tare_status= true AND ques_id=29";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
 	}
 	
 	public int numeroCanalesHabilitados() throws Exception{
@@ -803,7 +817,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				" tr.tare_column_nine, tr.tare_column_number_one , tr.tare_column_number_two , tr.tare_column_number_three, tr.tare_column_number_four , tr.tare_column_number_five , tr.tare_column_number_six , tr.tare_column_number_seven , tr.tare_column_number_eight " +
+				" tr.tare_column_nine, tr.tare_column_number_one , tr.tare_column_number_two , tr.tare_column_number_three, tr.tare_column_number_four , tr.tare_column_number_five , tr.tare_column_number_six , tr.tare_column_number_seven , tr.tare_column_number_eight,tr.tare_another_catalog " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
@@ -850,6 +864,8 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 					dto.setNumeroSiete(Integer.valueOf(dataObj[12].toString()));
 				if(dataObj[13]!=null)
 					dto.setNumeroOcho(Integer.valueOf(dataObj[13].toString()));
+				if(dataObj[14]!=null)
+					dto.setTextoDos(dataObj[14].toString());
 				lista.add(dto);
 			}
 		}
@@ -1000,7 +1016,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				" tr.tare_column_nine,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight " +
+				" tr.tare_column_nine,tr.tare_column_decimal_one, tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight,tr.tare_another_catalog " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id AND p.proj_status = TRUE" +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id  AND tr.tare_status = TRUE AND tr.ques_id = " + codigoPregunta;
@@ -1045,7 +1061,8 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 					dto.setNumeroSiete(Integer.valueOf(dataObj[13].toString()));
 				if(dataObj[14]!=null)
 					dto.setNumeroOcho(Integer.valueOf(dataObj[14].toString()));
-
+				if(dataObj[15]!=null)
+					dto.setTextoDos(dataObj[15].toString());
 				lista.add(dto);
 			}
 		}
@@ -1192,7 +1209,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				" tr.tare_column_two, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_column_number_nine " +
+				" tr.tare_column_two, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_column_number_nine,tr.tare_another_catalog " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
@@ -1229,6 +1246,8 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 					dto.setNumeroCinco(Integer.valueOf(dataObj[10].toString()));									
 				if(dataObj[11]!=null)
 					dto.setNumeroSeis(Integer.valueOf(dataObj[11].toString()));
+				if(dataObj[12]!=null)
+					dto.setTextoTres(dataObj[12].toString());	
 				lista.add(dto);
 			}
 		}
@@ -1338,7 +1357,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				" tr.tare_column_two ,tr.tare_column_decimal_one, tr.tare_column_decimal_two,tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_code_component "+
+				" tr.tare_column_two ,tr.tare_column_decimal_one, tr.tare_column_decimal_two,tr.tare_column_number_one, tr.tare_column_number_two, tr.tare_column_number_three, tr.tare_column_number_four, tr.tare_column_number_five, tr.tare_column_number_six, tr.tare_column_number_seven, tr.tare_column_number_eight, tr.tare_code_component, tr.tare_another_catalog "+
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				", sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
@@ -1385,6 +1404,8 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 					dto.setNumeroOcho(Integer.valueOf(dataObj[15].toString()));
 				if(dataObj[16]!=null)
 					dto.setNumeroNueve(Integer.valueOf(dataObj[16].toString()));
+				if(dataObj[17]!=null)
+					dto.setTextoTres(dataObj[17].toString());
 				lista.add(dto);
 			}
 		}
@@ -1977,7 +1998,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				" tr.tare_column_two, tr.tare_column_number_six, tr.tare_code_component " +
+				" tr.tare_column_two, tr.tare_column_number_six, tr.tare_code_component,tr.tare_another_catalog " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
@@ -2005,7 +2026,9 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				if(dataObj[6]!=null)
 					dto.setNumeroUno(Integer.valueOf(dataObj[6].toString()));
 				if(dataObj[7]!=null)
-					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));				
+					dto.setNumeroDos(Integer.valueOf(dataObj[7].toString()));
+				if(dataObj[8]!=null)
+					dto.setTextoTres(dataObj[8].toString());
 				lista.add(dto);
 			}
 		}
@@ -2065,7 +2088,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_nine,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_number_nine, tr.tare_code_component " +
+				" tr.tare_column_two,tr.tare_column_three, tr.tare_column_nine,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_number_nine, tr.tare_code_component,tr.tare_another_catalog " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
@@ -2113,6 +2136,8 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 					dto.setNumeroSiete(Integer.valueOf(dataObj[14].toString()));
 				if(dataObj[15]!=null)
 					dto.setNumeroOcho(Integer.valueOf(dataObj[15].toString()));
+				if(dataObj[16]!=null)
+					dto.setTextoCuatro(dataObj[16].toString());
 				lista.add(dto);
 			}
 		}
@@ -2155,7 +2180,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<DtoTableResponses> lista = new ArrayList<>();
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
-				" tr.tare_column_two,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six, tr.tare_code_component " +
+				" tr.tare_column_two,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_six, tr.tare_code_component,tr.tare_another_catalog " +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
@@ -2191,6 +2216,8 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 					dto.setNumeroCuatro(Integer.valueOf(dataObj[9].toString()));
 				if(dataObj[10]!=null)
 					dto.setNumeroCinco(Integer.valueOf(dataObj[10].toString()));
+				if(dataObj[11]!=null)
+					dto.setTextoTres(dataObj[11].toString());
 				lista.add(dto);
 			}
 		}
@@ -2340,7 +2367,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		List<Object[]> resultado= null;
 		String sql ="SELECT DISTINCT  p.proj_title,CONCAT(aes.adex_term_from,' / ',aes.adex_term_to)as periodo,par.part_name as socioimplementador , CASE WHEN aes.pspa_id IS NULL THEN '' ELSE pa.part_name END, tr.tare_column_one, " + 
 				" tr.tare_column_two,tr.tare_column_three,tr.tare_column_number_one,tr.tare_column_number_two,tr.tare_column_number_three,tr.tare_column_number_four,tr.tare_column_number_five,tr.tare_column_number_six, tr.tare_code_component, " +
-				" tr.tare_column_four,tr.tare_column_decimal_one ,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_nine" +
+				" tr.tare_column_four,tr.tare_column_decimal_one ,tr.tare_column_number_seven,tr.tare_column_number_eight,tr.tare_column_nine,tr.tare_another_catalog" +
 				" FROM sis.advance_execution_safeguards aes, sigma.projects p, sigma.projects_strategic_partners psp, sigma.partners pa " +
 				" , sis.table_responses tr,sis.catalogs ca, sigma.partners par WHERE p.proj_id = aes.proj_id AND aes.adex_status = TRUE AND p.proj_status = TRUE AND tr.adex_id = aes.adex_id " +
 				" AND (psp.pspa_id = aes.pspa_id OR aes.pspa_id IS NULL) AND pa.part_id =psp.part_id AND par.part_id=p.part_id AND p.proj_status = TRUE" +
@@ -2393,7 +2420,9 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 					SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");					
 					Date fecha = formato.parse(dataObj[18].toString());
 					dto.setFecha(fecha);					
-				}	
+				}
+				if(dataObj[19]!=null)
+					dto.setTextoCinco(dataObj[19].toString());
 				lista.add(dto);
 			}
 		}

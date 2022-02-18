@@ -117,7 +117,7 @@ public class RolesUserFacade extends AbstractFacade <RolesUser, Integer> impleme
     }
 	
 	public List<RolesUser> listarRolesDeUsuario(Users usuario) throws Exception{
-		String sql=" SELECT ru FROM RolesUser ru, Role r WHERE ru.rousStatus=true and r.roleStatus=true and ru.role.roleId=r.roleId and ru.users.userId = :param1"; 
+		String sql=" SELECT ru FROM RolesUser ru, Role r WHERE ru.rousStatus= TRUE AND r.roleStatus= TRUE AND ru.role.roleId=r.roleId AND ru.users.userId = :param1 AND ru.role.roleName like 'SIS%' "; 
 		Query query = getEntityManager().createQuery(sql);		
 		query.setParameter("param1",usuario.getUserId());
          

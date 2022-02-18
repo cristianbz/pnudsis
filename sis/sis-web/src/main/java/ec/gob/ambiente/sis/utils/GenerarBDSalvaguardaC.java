@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -28,7 +30,7 @@ import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GenerarBDSalvaguardaC {
-	
+	private static final Logger LOG = Logger.getLogger(GenerarBDSalvaguardaC.class);
 	public static void generaArchivoSalvaguardaC(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas, List<Catalogs> listaCatalogos,List<Object[]> listaProvincias,List<Object[]> listaCanton,List<Object[]> listaParroquia,List<Components> listaComponentes){
 		try{
 			ResourceBundle rb;
@@ -93,7 +95,7 @@ public class GenerarBDSalvaguardaC {
 			cell.setCellStyle(styleBold);
 
 			cell = row.createCell(1);
-			cell.setCellValue(0);
+			cell.setCellValue(servicio.numeroDeRegistros(54));
 			cell.setCellStyle(styleBold);
 
 			row = sheet.createRow(21);
@@ -103,7 +105,7 @@ public class GenerarBDSalvaguardaC {
 			cell.setCellStyle(styleBold);
 
 			cell = row.createCell(1);
-			cell.setCellValue(0);
+			cell.setCellValue(Double.parseDouble( servicio.sumaDecimalUno(55).toString()));
 			cell.setCellStyle(styleBold);
 			
 			row = sheet.createRow(25);
@@ -123,7 +125,7 @@ public class GenerarBDSalvaguardaC {
 			cell.setCellStyle(styleBold);
 
 			cell = row.createCell(1);
-			cell.setCellValue(0);
+			cell.setCellValue(servicio.numeroDeRegistros(57));
 			cell.setCellStyle(styleBold);
 
 			row = sheet.createRow(33);
@@ -331,14 +333,28 @@ public class GenerarBDSalvaguardaC {
 				cell = row.createCell(15);
 				cell.setCellValue(catalogo);
 				
-				for (Catalogs ca : listaCatalogos) {
-					if(ca.getCataId() == dt.getNumeroOcho()){
-						cata = ca;
-						break;
+//				for (Catalogs ca : listaCatalogos) {
+//					if(ca.getCataId() == dt.getNumeroOcho()){
+//						cata = ca;
+//						break;
+//					}
+//				}				
+//				cell = row.createCell(16);
+//				cell.setCellValue(cata.getCataText2());
+				catalogo ="";
+				if(dt.getNumeroOcho()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroOcho()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
-				}				
-				cell = row.createCell(16);
-				cell.setCellValue(cata.getCataText2());
+					cell = row.createCell(16);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(16);
+					cell.setCellValue(dt.getTextoTres());
+				}
 				
 				cuentaFila++;
 			}
@@ -1718,9 +1734,10 @@ public class GenerarBDSalvaguardaC {
 			FileOutputStream file = new FileOutputStream(archivo);
 	        workbook.write(file);
 	        file.close();
-//	        Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.generaArchivo"));
+
 		}catch(Exception e){
-			e.printStackTrace();
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
+			LOG.error(new StringBuilder().append("GenerarBDSalvaguardaC " + "." + "generaArchivoSalvaguardaC" + ": ").append(e.getMessage()));
 		}
 	}	
 }

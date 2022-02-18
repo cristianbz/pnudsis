@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -28,6 +30,7 @@ import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GenerarBDSalvaguardaF {
+	private static final Logger LOG = Logger.getLogger(GenerarBDSalvaguardaF.class);	
 	public static void generaArchivoSalvaguardaF(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas, List<Catalogs> listaCatalogos,List<Object[]> listaProvincias,List<Object[]> listaCanton,List<Object[]> listaParroquia,List<Components> listaComponentes){
 		try{
 			ResourceBundle rb;
@@ -77,11 +80,11 @@ public class GenerarBDSalvaguardaF {
 			cell.setCellValue(servicio.numeroDeRegistros(119));
 			cell.setCellStyle(styleBold);
 			
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("F_91"));
-			cell.setCellStyle(styleBold);
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("F_91"));
+//			cell.setCellStyle(styleBold);
 			
 			///PREGUNTA 41.1
 			sheet = workbook.createSheet("PREGUNTA 41.1");
@@ -729,15 +732,30 @@ public class GenerarBDSalvaguardaF {
 				cell = row.createCell(9);
 				cell.setCellValue(dt.getTextoUno());
 				
+//				catalogo ="";
+//				for (Catalogs cat : listaCatalogos) {	
+//					if(cat.getCataId() == dt.getNumeroSeis()){
+//						catalogo = cat.getCataText2();				
+//						break;
+//					}
+//				}				
+//				cell = row.createCell(10);
+//				cell.setCellValue(catalogo);
+				
 				catalogo ="";
-				for (Catalogs cat : listaCatalogos) {	
-					if(cat.getCataId() == dt.getNumeroSeis()){
-						catalogo = cat.getCataText2();				
-						break;
+				if(dt.getNumeroSeis()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroSeis()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
-				}				
-				cell = row.createCell(10);
-				cell.setCellValue(catalogo);
+					cell = row.createCell(10);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(10);
+					cell.setCellValue(dt.getTextoCinco());
+				}
 				
 				cell = row.createCell(11);
 				cell.setCellValue(dt.getTextoDos());
@@ -942,7 +960,8 @@ public class GenerarBDSalvaguardaF {
 	        workbook.write(file);
 	        file.close();
 		}catch(Exception e){
-			e.printStackTrace();
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
+			LOG.error(new StringBuilder().append("GenerarBDSalvaguardaF " + "." + "generaArchivoSalvaguardaF" + ": ").append(e.getMessage()));
 		}
 	}	
 }

@@ -591,558 +591,558 @@ public class AdministracionController implements Serializable{
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumen " + ": ").append(e.getMessage()));
 		}
 	}
-	public void generaArchivoExcel(){
-		try{
-			HSSFWorkbook workbook = new HSSFWorkbook();			
-			HSSFFont bold = workbook.createFont();
-			bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-			HSSFCellStyle styleBold = workbook.createCellStyle();
-			styleBold.setFont( bold );
-			HSSFSheet sheet = workbook.createSheet("SALVAGUARDA_A");
-			sheet.setColumnWidth((short) 0,(short) 30200);
-			sheet.setColumnWidth((short) 1,(short) 4000);
-
-			HSSFRow row = sheet.createRow(1);
-			HSSFCell cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("A_3"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroInstrumentosPolitica_A());
-			cell.setCellStyle(styleBold);
-			
+//	public void generaArchivoExcel(){
+//		try{
+//			HSSFWorkbook workbook = new HSSFWorkbook();			
+//			HSSFFont bold = workbook.createFont();
+//			bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+//			HSSFCellStyle styleBold = workbook.createCellStyle();
+//			styleBold.setFont( bold );
+//			HSSFSheet sheet = workbook.createSheet("SALVAGUARDA_A");
 //			sheet.setColumnWidth((short) 0,(short) 30200);
 //			sheet.setColumnWidth((short) 1,(short) 4000);
-			row = sheet.createRow(5);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("A_4"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().cantidadProyectosInvertidos_A().toString()));
-			cell.setCellStyle(styleBold);
-
-			
-			
-			sheet = workbook.createSheet("SALVAGUARDA_B");
-			sheet.setColumnWidth((short) 0,(short) 30200);
-			sheet.setColumnWidth((short) 1,(short) 4000);
-
-			row = sheet.createRow(1);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_6"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(7));
-			cell.setCellStyle(styleBold);
-			
+//
+//			HSSFRow row = sheet.createRow(1);
+//			HSSFCell cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("A_3"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroInstrumentosPolitica_A());
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 4000);
+//			row = sheet.createRow(5);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("A_4"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().cantidadProyectosInvertidos_A().toString()));
+//			cell.setCellStyle(styleBold);
+//
+//			
+//			
+//			sheet = workbook.createSheet("SALVAGUARDA_B");
 //			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(5);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_8"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(11));
-			cell.setCellStyle(styleBold);
-
+//			sheet.setColumnWidth((short) 1,(short) 4000);
+//
+//			row = sheet.createRow(1);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_6"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(7));
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(5);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_8"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(11));
+//			cell.setCellStyle(styleBold);
+//
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_10"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().sumaDecimalUno(20).toString()));
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(13);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_12"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(20));
+//			cell.setCellStyle(styleBold);
+//
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(17);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_14"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(21);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_18"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(25);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_19"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(29);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_23"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(27));
+//			cell.setCellStyle(styleBold);
+//
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(33);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_25"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().totalActores());
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(37);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_26"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(29));
+//			cell.setCellStyle(styleBold);
+//
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(37);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_27"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroCanalesHabilitados());
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(41);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_30"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(31));
+//			cell.setCellStyle(styleBold);
+//
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(45);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_32"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(49);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_34"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+////			sheet.setColumnWidth((short) 0,(short) 30200);
+////			sheet.setColumnWidth((short) 1,(short) 8000);
+//			row = sheet.createRow(49);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_37"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+//			sheet = workbook.createSheet("SALVAGUARDA_C");
 //			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_10"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().numeroDeHectareas(20).toString()));
-			cell.setCellStyle(styleBold);
-			
+//			sheet.setColumnWidth((short) 1,(short) 4000);
+//
+//			row = sheet.createRow(1);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_41"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(Double.parseDouble( getTableResponsesFacade().numeroAccionesTenenciaTierra().toString()));
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(5);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_44"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_45"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(54));
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(13);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_46"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(45));
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(17);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_49"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(21);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_51"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(25);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_53"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(57));
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(29);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_54"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(33);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("C_57"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(61));
+//			cell.setCellStyle(styleBold);
+//
+//			sheet = workbook.createSheet("SALVAGUARDA_D");
 //			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(13);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_12"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(20));
-			cell.setCellStyle(styleBold);
-
+//			sheet.setColumnWidth((short) 1,(short) 4000);
+//
+//			row = sheet.createRow(1);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("D_58"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(65));
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(5);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("D_61"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().totalActoresDialogo());
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("D_63"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(13);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("D_64"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(17);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("D_67"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().totalMujeresDialogo().toString()));
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(22);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("D_69"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(67));
+//			cell.setCellStyle(styleBold);
+//			
+//			sheet = workbook.createSheet("SALVAGUARDA_E");
 //			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(17);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_14"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
+//			sheet.setColumnWidth((short) 1,(short) 4000);
+//
+//			row = sheet.createRow(1);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("E_71"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(69));
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(5);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("E_72"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().numeroHectareasConsolidadas().toString()));
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("E_76"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(13);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("E_77"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(17);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("E_79"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(21);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("E_80"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			sheet = workbook.createSheet("SALVAGUARDA_F");
 //			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(21);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_18"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
+//			sheet.setColumnWidth((short) 1,(short) 4000);
+//
+//			row = sheet.createRow(1);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("F_83"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(113));
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(5);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("F_86"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("F_89"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(119));
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("F_91"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+//			sheet = workbook.createSheet("SALVAGUARDA_G");
 //			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(25);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_19"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(29);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_23"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(27));
-			cell.setCellStyle(styleBold);
-
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(33);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_25"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().totalActores());
-			cell.setCellStyle(styleBold);
-			
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(37);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_26"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(29));
-			cell.setCellStyle(styleBold);
-
-			
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(37);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_27"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroCanalesHabilitados());
-			cell.setCellStyle(styleBold);
-			
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(41);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_30"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(31));
-			cell.setCellStyle(styleBold);
-
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(45);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_32"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(49);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_34"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-//			sheet.setColumnWidth((short) 0,(short) 30200);
-//			sheet.setColumnWidth((short) 1,(short) 8000);
-			row = sheet.createRow(49);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_37"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-			sheet = workbook.createSheet("SALVAGUARDA_C");
-			sheet.setColumnWidth((short) 0,(short) 30200);
-			sheet.setColumnWidth((short) 1,(short) 4000);
-
-			row = sheet.createRow(1);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_41"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(Double.parseDouble( getTableResponsesFacade().numeroAccionesTenenciaTierra().toString()));
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(5);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_44"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_45"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(54));
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(13);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_46"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(45));
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(17);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_49"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(21);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_51"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(25);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_53"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(57));
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(29);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_54"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(33);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("C_57"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(61));
-			cell.setCellStyle(styleBold);
-
-			sheet = workbook.createSheet("SALVAGUARDA_D");
-			sheet.setColumnWidth((short) 0,(short) 30200);
-			sheet.setColumnWidth((short) 1,(short) 4000);
-
-			row = sheet.createRow(1);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("D_58"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(65));
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(5);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("D_61"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().totalActoresDialogo());
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("D_63"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(13);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("D_64"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(17);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("D_67"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().totalMujeresDialogo().toString()));
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(22);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("D_69"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(67));
-			cell.setCellStyle(styleBold);
-			
-			sheet = workbook.createSheet("SALVAGUARDA_E");
-			sheet.setColumnWidth((short) 0,(short) 30200);
-			sheet.setColumnWidth((short) 1,(short) 4000);
-
-			row = sheet.createRow(1);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("E_71"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(69));
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(5);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("E_72"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().numeroHectareasConsolidadas().toString()));
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("E_76"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(13);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("E_77"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(17);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("E_79"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(21);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("E_80"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			sheet = workbook.createSheet("SALVAGUARDA_F");
-			sheet.setColumnWidth((short) 0,(short) 30200);
-			sheet.setColumnWidth((short) 1,(short) 4000);
-
-			row = sheet.createRow(1);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("F_83"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(113));
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(5);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("F_86"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("F_89"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().numeroDeRegistros(119));
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("F_91"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-			sheet = workbook.createSheet("SALVAGUARDA_G");
-			sheet.setColumnWidth((short) 0,(short) 30200);
-			sheet.setColumnWidth((short) 1,(short) 4000);
-
-			row = sheet.createRow(1);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("G_93"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().totalActoresMonitoreo());
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(5);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("G_94"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(9);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("G_97"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(getTableResponsesFacade().totalBeneficiariosAlternativasEconomicas());
-			cell.setCellStyle(styleBold);
-			
-			row = sheet.createRow(13);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("G_100"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().totalPresupuestoSNMB().toString()));
-			cell.setCellStyle(styleBold);
-
-			row = sheet.createRow(13);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("G_102"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
-
-			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-			String archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BaseDatosSIS").append(".xls").toString();
-			FileOutputStream file = new FileOutputStream(archivo);
-	        workbook.write(file);
-	        file.close();
-	        Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.generaArchivo"));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
+//			sheet.setColumnWidth((short) 1,(short) 4000);
+//
+//			row = sheet.createRow(1);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("G_93"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().totalActoresMonitoreo());
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(5);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("G_94"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(9);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("G_97"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(getTableResponsesFacade().totalBeneficiariosAlternativasEconomicas());
+//			cell.setCellStyle(styleBold);
+//			
+//			row = sheet.createRow(13);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("G_100"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(Double.parseDouble(getTableResponsesFacade().totalPresupuestoSNMB().toString()));
+//			cell.setCellStyle(styleBold);
+//
+//			row = sheet.createRow(13);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("G_102"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
+//
+//			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+//			String archivo = new StringBuilder().append(ctx.getRealPath("")).append(File.separator).append("reportes").append(File.separator).append("BaseDatosSIS").append(".xls").toString();
+//			FileOutputStream file = new FileOutputStream(archivo);
+//	        workbook.write(file);
+//	        file.close();
+//	        Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.generaArchivo"));
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
 
 
 	public void generarArchivosSalvaguardas(){
-		generaArchivoExcel();
+
 		GenerarBDSalvaguardaA.generaArchivoSalvaguardaA(getTableResponsesFacade(), getQuestionsFacade());
 		GeneraBDSalvaguardaB.generaArchivoSalvaguardaB(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
 		GenerarBDSalvaguardaC.generaArchivoSalvaguardaC(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
@@ -1151,6 +1151,7 @@ public class AdministracionController implements Serializable{
 		GenerarBDSalvaguardaF.generaArchivoSalvaguardaF(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
 		GenerarBDSalvaguardaG.generaArchivoSalvaguardaG(getTableResponsesFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
 		GenerarBDGenero.generaArchivoGenero(getTableResponsesFacade(),getGeneroFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
+		Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.generaArchivo"));
 	}
 
 }

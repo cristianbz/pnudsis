@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -29,7 +31,7 @@ import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GeneraBDSalvaguardaB {
 
-	
+	private static final Logger LOG = Logger.getLogger(GeneraBDSalvaguardaB.class);
 	public static void generaArchivoSalvaguardaB(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas, List<Catalogs> listaCatalogos,List<Object[]> listaProvincias,List<Object[]> listaCanton,List<Object[]> listaParroquia,List<Components> listaComponentes){
 		try{
 			ResourceBundle rb;
@@ -74,7 +76,7 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellStyle(styleBold);
 
 			cell = row.createCell(1);
-			cell.setCellValue(Double.parseDouble(servicio.numeroDeHectareas(20).toString()));
+			cell.setCellValue(Double.parseDouble(servicio.sumaDecimalUno(20).toString()));
 			cell.setCellStyle(styleBold);
 			
 			row = sheet.createRow(13);
@@ -94,7 +96,7 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellStyle(styleBold);
 
 			cell = row.createCell(1);
-			cell.setCellValue(0);
+			cell.setCellValue(servicio.numeroDeRegistros(69));
 			cell.setCellStyle(styleBold);
 			
 			row = sheet.createRow(21);
@@ -107,17 +109,17 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellValue(0);
 			cell.setCellStyle(styleBold);
 
-			row = sheet.createRow(25);
-			cell = row.createCell(3);
-			cell = row.createCell(0);
-			cell.setCellValue(rb.getString("B_19"));
-			cell.setCellStyle(styleBold);
-
-			cell = row.createCell(1);
-			cell.setCellValue(0);
-			cell.setCellStyle(styleBold);
+//			row = sheet.createRow(25);
+//			cell = row.createCell(3);
+//			cell = row.createCell(0);
+//			cell.setCellValue(rb.getString("B_19"));
+//			cell.setCellStyle(styleBold);
+//
+//			cell = row.createCell(1);
+//			cell.setCellValue(0);
+//			cell.setCellStyle(styleBold);
 			
-			row = sheet.createRow(29);
+			row = sheet.createRow(25);
 			cell = row.createCell(3);
 			cell = row.createCell(0);
 			cell.setCellValue(rb.getString("B_23"));
@@ -127,7 +129,7 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellValue(servicio.numeroDeRegistros(27));
 			cell.setCellStyle(styleBold);
 
-			row = sheet.createRow(33);
+			row = sheet.createRow(29);
 			cell = row.createCell(3);
 			cell = row.createCell(0);
 			cell.setCellValue(rb.getString("B_25"));
@@ -137,7 +139,7 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellValue(servicio.totalActores());
 			cell.setCellStyle(styleBold);
 			
-			row = sheet.createRow(37);
+			row = sheet.createRow(33);
 			cell = row.createCell(3);
 			cell = row.createCell(0);
 			cell.setCellValue(rb.getString("B_26"));
@@ -174,7 +176,7 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellStyle(styleBold);
 
 			cell = row.createCell(1);
-			cell.setCellValue(0);
+			cell.setCellValue(Double.parseDouble(servicio.totalPersonasInfoRedd().toString()));
 			cell.setCellStyle(styleBold);
 
 			row = sheet.createRow(49);
@@ -187,7 +189,7 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellValue(0);
 			cell.setCellStyle(styleBold);
 		
-			row = sheet.createRow(49);
+			row = sheet.createRow(53);
 			cell = row.createCell(3);
 			cell = row.createCell(0);
 			cell.setCellValue(rb.getString("B_37"));
@@ -300,18 +302,33 @@ public class GeneraBDSalvaguardaB {
 				cell = row.createCell(3);
 				cell.setCellValue(dt.getSocioEstrategico());
 				
-				for (Catalogs ca : listaCatalogos) {
-					if(ca.getCataId() == dt.getNumeroSeis()){
-						cata = ca;
-						break;
+//				for (Catalogs ca : listaCatalogos) {
+//					if(ca.getCataId() == dt.getNumeroSeis()){
+//						cata = ca;
+//						break;
+//					}
+//				}				
+//				cell = row.createCell(4);
+//				cell.setCellValue(cata.getCataText2());
+				
+				String catalogo ="";
+				if(dt.getNumeroSeis()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroSeis()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
-				}				
-				cell = row.createCell(4);
-				cell.setCellValue(cata.getCataText2());
+					cell = row.createCell(4);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(4);
+					cell.setCellValue(dt.getTextoDos());
+				}
 				
 				cell = row.createCell(5);
 				cell.setCellValue(dt.getFecha());
-				String catalogo ="";
+				catalogo ="";
 				for (Object[] objects : listaProvincias) {	
 					if(Integer.valueOf( objects[1].toString()) == dt.getNumeroUno()){
 						catalogo = objects[0].toString();					
@@ -894,16 +911,21 @@ public class GeneraBDSalvaguardaB {
 				
 				cell = row.createCell(12);
 				cell.setCellValue(dt.getFecha());
-								
+				
 				catalogo ="";
-				for (Catalogs cat : listaCatalogos) {	
-					if(cat.getCataId() == dt.getNumeroSeis()){
-						catalogo = cat.getCataText2();				
-						break;
+				if(dt.getNumeroSeis()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroSeis()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
-				}				
-				cell = row.createCell(13);
-				cell.setCellValue(catalogo);
+					cell = row.createCell(13);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(13);
+					cell.setCellValue(dt.getTextoDos());
+				}
 				
 				cell = row.createCell(14);
 				cell.setCellValue( dt.getDecimalUno().toString());												
@@ -1408,15 +1430,30 @@ public class GeneraBDSalvaguardaB {
 				cell = row.createCell(6);
 				cell.setCellValue(catalogo);
 				
+//				catalogo ="";
+//				for (Catalogs cat : listaCatalogos) {	
+//					if(cat.getCataId() == dt.getNumeroCuatro()){
+//						catalogo = cat.getCataText2();				
+//						break;
+//					}
+//				}
+//				cell = row.createCell(7);
+//				cell.setCellValue(catalogo);
+				
 				catalogo ="";
-				for (Catalogs cat : listaCatalogos) {	
-					if(cat.getCataId() == dt.getNumeroCuatro()){
-						catalogo = cat.getCataText2();				
-						break;
+				if(dt.getNumeroCuatro()>0){				
+					for (Catalogs cat : listaCatalogos) {	
+						if(cat.getCataId() == dt.getNumeroCuatro()){
+							catalogo = cat.getCataText2();				
+							break;
+						}
 					}
+					cell = row.createCell(7);
+					cell.setCellValue(catalogo);
+				}else{
+					cell = row.createCell(7);
+					cell.setCellValue(dt.getTextoTres());
 				}
-				cell = row.createCell(7);
-				cell.setCellValue(catalogo);
 				
 				cell = row.createCell(8);
 				cell.setCellValue(dt.getNumeroTres()==1?"Hombres":dt.getNumeroTres()==2?"Mujeres":"Mixta");
@@ -1774,9 +1811,9 @@ public class GeneraBDSalvaguardaB {
 			FileOutputStream file = new FileOutputStream(archivo);
 	        workbook.write(file);
 	        file.close();
-//	        Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.generaArchivo"));
 		}catch(Exception e){
-			e.printStackTrace();
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
+			LOG.error(new StringBuilder().append("GeneraBDSalvaguardaB " + "." + "generaArchivoSalvaguardaB" + ": ").append(e.getMessage()));
 		}
 	}	
 }
