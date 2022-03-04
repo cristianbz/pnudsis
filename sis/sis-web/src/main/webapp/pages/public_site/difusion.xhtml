@@ -38,7 +38,7 @@
 			header="#{titulos['medidasTomadas']}"    
 			width="20%" closable="true" >
 			<p:dataTable value="#{sitioPublicoBean.listadoRiesgoMedidaTomada}" var="med" id="tblmedidas" paginator="true" rows="6" emptyMessage="#{mensajes['noRegistros']}">
-				<p:column headerText="#{etiquetas['medidaTomada']}">
+				<p:column headerText="#{etiquetas['riesgo']}">
 					#{med.textoUno}
 				</p:column>
 				<p:column headerText="#{etiquetas['medidaTomada']}">
@@ -279,7 +279,7 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />
 										<p:outputLabel
-											value="Nro. prácticas ancestrales que se fortalecierón con REDD+"
+											value="Nro. prácticas ancestrales que se fortalecieron con REDD+"
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
 											styleClass="valoresSalvaguardas" style="font-size:17px;" />
 										

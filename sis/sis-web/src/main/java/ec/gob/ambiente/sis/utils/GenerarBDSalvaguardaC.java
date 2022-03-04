@@ -31,6 +31,8 @@ import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GenerarBDSalvaguardaC {
 	private static final Logger LOG = Logger.getLogger(GenerarBDSalvaguardaC.class);
+
+	@SuppressWarnings("resource")
 	public static void generaArchivoSalvaguardaC(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas, List<Catalogs> listaCatalogos,List<Object[]> listaProvincias,List<Object[]> listaCanton,List<Object[]> listaParroquia,List<Components> listaComponentes){
 		try{
 			ResourceBundle rb;
@@ -241,7 +243,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_20(listaPreguntas.get(1).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -453,7 +455,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_21(listaPreguntas.get(3).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -613,7 +615,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_24(listaPreguntas.get(5).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -788,7 +790,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_26(listaPreguntas.get(8).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -916,7 +918,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_27(listaPreguntas.get(10).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -1061,7 +1063,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_28(listaPreguntas.get(11).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -1210,7 +1212,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_29(listaPreguntas.get(13).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -1390,7 +1392,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_30(listaPreguntas.get(15).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());
@@ -1562,7 +1564,7 @@ public class GenerarBDSalvaguardaC {
 			lista = servicio.listaPreguntas_C_31(listaPreguntas.get(17).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+//				Catalogs cata = new Catalogs();
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());

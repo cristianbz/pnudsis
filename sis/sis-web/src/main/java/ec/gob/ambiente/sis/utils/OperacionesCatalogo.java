@@ -4,10 +4,10 @@
 **/
 package ec.gob.ambiente.sis.utils;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sis.model.Catalogs;
@@ -22,20 +22,32 @@ public class OperacionesCatalogo {
 	 */
 	public static String ubicaDescripcionCatalogo(int codigo,List<Catalogs> listaCatalogo){
 		String valor="";
-		Optional<Catalogs> resultado= listaCatalogo.stream().filter((p)->p.getCataId().equals(codigo)).findFirst();
-		if(resultado.isPresent()){
-			Catalogs catalogo= resultado.get();
-			valor=catalogo.getCataText1();
+//		Optional<Catalogs> resultado= listaCatalogo.stream().filter((p)->p.getCataId().equals(codigo)).findFirst();
+//		if(resultado.isPresent()){
+//			Catalogs catalogo= resultado.get();
+//			valor=catalogo.getCataText1();
+//		}
+		for (Catalogs c : listaCatalogo) {
+			if(c.getCataId() == codigo){
+				valor = c.getCataText1();
+				break;
+			}
 		}
 		return valor;
 	}
 	
 	public static String ubicaDescripcionCatalogoText2(int codigo,List<Catalogs> listaCatalogo){
 		String valor="";
-		Optional<Catalogs> resultado= listaCatalogo.stream().filter((p)->p.getCataId().equals(codigo)).findFirst();
-		if(resultado.isPresent()){
-			Catalogs catalogo= resultado.get();
-			valor=catalogo.getCataText2();
+//		Optional<Catalogs> resultado= listaCatalogo.stream().filter((p)->p.getCataId().equals(codigo)).findFirst();
+//		if(resultado.isPresent()){
+//			Catalogs catalogo= resultado.get();
+//			valor=catalogo.getCataText2();
+//		}
+		for (Catalogs c : listaCatalogo) {
+			if(c.getCataId() == codigo){
+				valor = c.getCataText2();
+				break;
+			}
 		}
 		return valor;
 	}
@@ -54,7 +66,13 @@ public class OperacionesCatalogo {
 		tipo.setCatyId(tipoCatalogo);
 		catalogo.setCatalogsType(tipo);
 
-		listaCatalogo = listaCatalogo.stream().sorted((cl1,cl2)->cl1.getCataOrder().compareTo(cl2.getCataOrder())).collect(Collectors.toList());
+//		listaCatalogo = listaCatalogo.stream().sorted((cl1,cl2)->cl1.getCataOrder().compareTo(cl2.getCataOrder())).collect(Collectors.toList());
+		Collections.sort(listaCatalogo, new Comparator<Catalogs>(){
+			@Override
+			public int compare(Catalogs o1, Catalogs o2) {
+				return o1.getCataOrder().compareTo(o2.getCataOrder());
+			}
+		});
 		if(listaCatalogo.size()==0)
 			catalogo.setCataOrder(1);
 		else

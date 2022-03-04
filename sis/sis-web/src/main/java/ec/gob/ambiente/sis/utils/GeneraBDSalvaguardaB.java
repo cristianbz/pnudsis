@@ -32,6 +32,7 @@ import ec.gob.ambiente.sis.services.TableResponsesFacade;
 public class GeneraBDSalvaguardaB {
 
 	private static final Logger LOG = Logger.getLogger(GeneraBDSalvaguardaB.class);
+	@SuppressWarnings("resource")
 	public static void generaArchivoSalvaguardaB(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas, List<Catalogs> listaCatalogos,List<Object[]> listaProvincias,List<Object[]> listaCanton,List<Object[]> listaParroquia,List<Components> listaComponentes){
 		try{
 			ResourceBundle rb;
@@ -288,7 +289,7 @@ public class GeneraBDSalvaguardaB {
 			lista = servicio.listaPreguntas_B_4(listaPreguntas.get(1).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
-				Catalogs cata = new Catalogs();
+				
 				row = sheet.createRow(cuentaFila);			
 				cell = row.createCell(0);
 				cell.setCellValue(dt.getProyecto());

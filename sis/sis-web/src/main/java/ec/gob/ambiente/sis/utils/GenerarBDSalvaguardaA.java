@@ -29,6 +29,7 @@ import ec.gob.ambiente.sis.services.TableResponsesFacade;
 
 public class GenerarBDSalvaguardaA {
 	private static final Logger LOG = Logger.getLogger(GenerarBDSalvaguardaA.class);
+	@SuppressWarnings("resource")
 	public static void generaArchivoSalvaguardaA(TableResponsesFacade servicio, QuestionsFacade servicioPreguntas){
 		try{
 			ResourceBundle rb;
