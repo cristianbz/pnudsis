@@ -464,7 +464,7 @@
 										oncomplete="PF('dlgEnProc').hide()" async="true"
 										global="false" update="@form " />
 									<br />
-									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} "
+									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} " oncomplete="goToAnchor('busqueda'); "
 										process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda"
 										update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda"
 										partialSubmit="true"
@@ -503,7 +503,7 @@
 										 async="true"
 										global="false" update="@form" />
 									<br />
-									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} "
+									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} " oncomplete="goToAnchor('busqueda'); "
 										process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero"
 										update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero"
 										partialSubmit="true"
@@ -511,7 +511,7 @@
 								</p:column>
 							</p:dataTable>
 							<br />
-							
+							<a name="busqueda"> </a>
 							<p:outputPanel id="panelOpcionesBusqueda">
 								<p:panel header="#{titulos['opcionesBusqueda']}" 
 									rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.mostrarOpcionesBusqueda}">
@@ -585,6 +585,7 @@
 											style="width:200px;" required="true"
 											>
 											<f:selectItem itemValue="I" itemLabel="Iniciado" />
+											<f:selectItem itemValue="P" itemLabel="Presentado" />
 											<f:selectItem itemValue="F" itemLabel="Finalizado" />
 											<p:ajax process="@this" event="change"/>
 										</p:selectOneMenu>
@@ -681,6 +682,7 @@
 											style="width:200px;" required="true"
 											>
 											<f:selectItem itemValue="I" itemLabel="Iniciado" />
+											<f:selectItem itemValue="P" itemLabel="Presentado" />
 											<f:selectItem itemValue="F" itemLabel="Finalizado" />
 											<p:ajax process="@this" event="change"/>
 										</p:selectOneMenu>
@@ -744,17 +746,21 @@
 									<p:outputLabel value="Enero-Diciembre" />
 									<br />
 									<h:outputText styleClass="ui-icon fa fa-file"
-										style="color:#99A3A4;" rendered="#{avance.adexIsReported}" />
+										style="color:#99A3A4;" rendered="#{avance.adexIsReported and avance.adexReportedStatus.equals('F')}" />
 									<p:outputLabel value=" #{etiquetas['reportado']}"
-										rendered="#{avance.adexIsReported}" />
+										rendered="#{avance.adexIsReported and avance.adexReportedStatus.equals('F')}" />
 									<h:outputText styleClass="ui-icon fa fa-save"
-										style="color:blue;" rendered="#{not avance.adexIsReported}" />
+										style="color:blue;" rendered="#{not avance.adexIsReported and avance.adexReportedStatus.equals('I')}" />
 									<p:outputLabel value=" #{etiquetas['parcialGuardado']}"
-										rendered="#{not avance.adexIsReported}" />
+										rendered="#{not avance.adexIsReported and avance.adexReportedStatus.equals('I')}" />
+									<h:outputText styleClass="ui-icon fa fa-save"
+										style="color:green;" rendered="#{not avance.adexIsReported and avance.adexReportedStatus.equals('P')}" />
+									<p:outputLabel value=" #{etiquetas['reportePresentado']}"
+										rendered="#{not avance.adexIsReported and avance.adexReportedStatus.equals('P')}" />	
 								</p:column>
 								<p:column width="30">
 									<p:commandButton actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyectoReportado(avance)}" title="#{tooltip['visualizaInformacion']}"
-										onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();"
+										onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();" disabled="#{loginBean.tipoRol==3 and avance.adexReportedStatus.equals('P')}"
 										process="@this" partialSubmit="true" update="@form" icon="#{botones['icono.checkcirculo']}"/>		
 									<p:commandButton icon="#{botones['icono.editar']}" process="@this" rendered="#{loginBean.tipoRol==4}" 
 										action="#{cc.attrs.componenteBuscaProyectos.mostrarDialogoActivarReporte}"

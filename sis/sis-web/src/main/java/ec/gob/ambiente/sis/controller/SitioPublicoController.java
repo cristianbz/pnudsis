@@ -135,6 +135,14 @@ public class SitioPublicoController implements Serializable{
 			pieModel = new PieChartModel();
 			barModel = new BarChartModel();
 			iniciaColores();
+			getSitioPublicoBean().setDescripcionSalvaguardaA("Las iniciativas REDD+ deben aportar al cumplimiento de las leyes nacionales, política pública nacional para la protección de los bosques del país y los instrumentos de planificación local. De igual manera, REDD+ debe fortalecer el cumplimiento de los acuerdos internacionales suscritos y ratificados por el Ecuador.");
+			getSitioPublicoBean().setDescripcionSalvaguardaB("La transparencia y eficacia en REDD+ están asociados al acceso a la información, el marco operativo de REDD+, el buen manejo de los recursos, la rendición de cuentas y el fortalecimiento de la gobernanza forestal local a través de alianzas estratégicas con actores clave.");
+			getSitioPublicoBean().setDescripcionSalvaguardaC("Las acciones REDD+ deben fortalecer el enfoque de derechos y promover el respeto a los sistemas de vida local, fundamentalmente de pueblos y nacionalidades indígenas, con especial atención en garantizar la participación voluntaria de los actores, el respeto a libre determinación y la garantía de los derechos colectivos");
+			getSitioPublicoBean().setDescripcionSalvaguardaD("Las iniciativas REDD+ deben fortalecer las capacidades y conocimiento de actores locales con el objetivo de generar espacios de participación en igualdad de condiciones. Además, promoverá la inclusión de mujeres, jóvenes y pueblos indígenas en la implementación de iniciativas REDD+ y su participación en espacios de toma de decisiones relacionados con la implementación de REDD+ a nivel nacional.");
+			getSitioPublicoBean().setDescripcionSalvaguardaE("Las iniciativas REDD+ deben promover la conservación de bosques naturales y la diversidad biológica que habita en estos ecosistemas. De igual manera, las iniciativas REDD+ promoverán la conservación de los servicios que brindan los ecosistemas de bosque. Finalmente, REDD+ promoverá cobeneficios asociados con su implementación tales como el fortalecimiento de la gobernanza forestal local, promover iniciativas de manejo forestal, el fortalecimiento de liderazgos locales, entre otras");
+			getSitioPublicoBean().setDescripcionSalvaguardaF("Esta salvaguarda debe promover actividades que fomenten la sostenibilidad de las áreas de bosque nativo bajo conservación en iniciativas REDD+, con el objetivo de evitar su deforestación en el futuro y una reversión de las emisiones evitadas.");
+			getSitioPublicoBean().setDescripcionSalvaguardaG("Los riesgos de fugas se producen cuando la deforestación se desplaza de una jurisdicción o país que implementa actividades REDD+ a otra que no cuentan con iniciativas REDD+.");
+			getSitioPublicoBean().setDescripcionSalvaguardaGE("Es uno de los ejes principales dentro de la implementación estratégica de REDD+, que tiene por objetivo mejorar las condiciones de vida de hombres y mujeres en las zonas en las que se interviene, con lo que se garantiza participación equitativa de los beneficios de REDD+ en el país, promover el mejoramiento en el acceso y control de medios de producción, el financiamiento, capacitación y acceso a la información por parte de las mujeres a través de acciones culturalmente adecuadas, que no profundicen las brechas existentes y su vulnerabilidad frente a los efectos negativos del cambio climático. ");
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
@@ -245,9 +253,43 @@ public class SitioPublicoController implements Serializable{
 	public void obtieneSalvaguardas(String salvaguarda, String codigo){
 		for(Safeguards sf:getSitioPublicoBean().getListaSalvaguardas()){
 			if(sf.getSafeCode().equals(codigo)){
-				getSitioPublicoBean().setDescripcionSalvaguarda(sf.getSafeDescription());
+				switch (codigo){
+				case "A":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaA());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("DESCRIPCION_A"));
+					break;
+				case "B":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaB());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("DESCRIPCION_B"));
+					break;
+				case "C":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaC());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("DESCRIPCION_C"));
+					break;
+				case "D":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaD());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("DESCRIPCION_D"));
+					break;
+				case "E":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaE());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("DESCRIPCION_E"));
+					break;
+				case "F":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaF());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("DESCRIPCION_F"));
+					break;
+				case "G":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaG());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("DESCRIPCION_G"));
+					break;
+				case "GE":
+					getSitioPublicoBean().setDescripcionSalvaguarda(getSitioPublicoBean().getDescripcionSalvaguardaGE());
+					getSitioPublicoBean().setTituloSalvaguarda(rb.getString("TITULO_GENERO"));
+					break;
+				}
+//				getSitioPublicoBean().setDescripcionSalvaguarda(sf.getSafeDescription());
 				getSitioPublicoBean().setSalvaguarda(salvaguarda);
-				getSitioPublicoBean().setTituloSalvaguarda(sf.getSafeTitle());
+//				getSitioPublicoBean().setTituloSalvaguarda(sf.getSafeTitle());
 			}
 		}
 	}

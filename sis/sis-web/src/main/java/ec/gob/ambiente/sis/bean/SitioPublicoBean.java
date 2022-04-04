@@ -104,6 +104,30 @@ public class SitioPublicoBean implements Serializable{
 	@Getter
 	@Setter
 	private String descripcionSalvaguarda;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaA;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaB;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaC;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaD;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaE;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaF;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaG;
+	@Getter
+	@Setter
+	private String descripcionSalvaguardaGE;
 	
 	@Getter
 	@Setter

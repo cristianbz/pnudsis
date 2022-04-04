@@ -716,7 +716,10 @@ public class LoginController implements Serializable {
     		LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "llenarMenu " + ": ").append(e.getMessage()));
         }
     }
-	
+	/**
+	 * Ubica el rol del usuario
+	 * tipoRol 1 Administrador  2 Implementador  3 Estrategico 4 Tecnico
+	 */
 	public void ubicaRolUsuarioSeleccionado(){
 		try{
 			List<RolesUser> rolesUsuario=new ArrayList<>();

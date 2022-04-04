@@ -24,7 +24,8 @@
   }
 .valoresSalvaguardas{
   font-weight: bold;
-  color: yellow;
+  color: green;
+  text-align: center;
 }
 .portada{
    background:url(../images/sis/fondoA.png) no-repeat center;
@@ -43,7 +44,7 @@
    -moz-background-size: cover;
    -o-background-size: cover;
    background-size: cover;
-   height: 100%;
+   height: auto;
    width: 100% ;
    
    
@@ -63,3 +64,21 @@
    width: 100% ;
    
 }
+.iconos{
+	max-width:299px; 
+	
+}
+.descripcionIndicador{
+	
+	font-weight: bold;
+  	color: yellow;	
+	font-size:17px;
+}
+.valorIndicador{
+	display:block;
+	font-weight: bold;
+  	color: yellow;
+	text-align: center;
+	font-size:65px;
+}
+

@@ -364,4 +364,29 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 		listaTemp = findByCreateQuery(sql, camposCondicion);
 		return listaTemp;
 	}
+	/**
+	 * 
+	 * @param codigoProyecto Codigo del proyecti/pdi/programa
+	 * @param tipoProyecto  1 Salvaguarda  2 Genero
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean noExistenProyectosPresentadosIniciados(int codigoProyecto, int tipoProyecto) throws Exception{
+		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
+		boolean respuesta=false;
+		String sql ="";
+		if(tipoProyecto ==1)
+			sql ="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=false AND AE.adexIsReported=false AND AE.adexStatus=true AND (AE.adexReportedStatus = 'I' OR AE.adexReportedStatus = 'P')";
+		else if(tipoProyecto ==2)
+			sql ="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=true AND AE.adexIsReported=false AND AE.adexStatus=true AND (AE.adexReportedStatus = 'I' OR AE.adexReportedStatus = 'P')";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoProyecto", codigoProyecto);
+		listaTemp = findByCreateQuery(sql, camposCondicion);
+		if(listaTemp.size()==0)
+			respuesta = true;
+		else
+			respuesta = false;
+		return respuesta;
+	}
+
 }

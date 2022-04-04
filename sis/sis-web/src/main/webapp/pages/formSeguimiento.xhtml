@@ -33,6 +33,18 @@
 	<h:form prependId="true" id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
 		
+		<p:dialog widgetVar="dlgPresentado" width="450" closable="false" modal="true" resizable="false">
+			<p:outputLabel value="#{titulos['mensajePresentado']}"/>
+			<center>
+				<h:panelGrid columns="2">
+					<p:commandButton value="#{botones['aceptar']}"  
+						actionListener="#{seguimientoSalvaguardaController.finalizarReporteSalvaguardas}"
+						update="@form"	partialSubmit="true" oncomplete="PF('dlgPresentado').hide();" 
+							process="@this :form:panelsalvaguarda  :form:idResumenEjecutivo panelsalvaguarda" icon="#{botones['icono.check']}" />	
+					<p:commandButton value="#{botones['cancelar']}" process="@this" oncomplete="PF('dlgPresentado').hide();" icon="#{botones['icono.cancelar']}"/>
+				</h:panelGrid>
+			</center>
+		</p:dialog>
 		
 		 <p:dialog  widgetVar="dlgEnProc" 
                   draggable="false" header="En proceso" 
@@ -2652,6 +2664,7 @@
 							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
 								id="msgTablaRequerida41"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(0)}"/>
+							<a name="41B"> </a>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB1" styleClass="etiquetaSubtitulo"
@@ -2895,7 +2908,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso41B radiopSB1" title="#{tooltip['grabar']}" tabindex="12"																							
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB41()}" value="#{botones['guardar']}"
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB41()}" value="#{botones['guardar']}" oncomplete="goToAnchor('41B'); "
 															update="panelTablaB41 :form:growl panelIngreso41B"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">

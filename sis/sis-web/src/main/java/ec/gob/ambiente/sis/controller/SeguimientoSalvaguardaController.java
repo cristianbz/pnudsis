@@ -68,6 +68,7 @@ import ec.gob.ambiente.sis.utils.enumeraciones.TipoAreaConsolidadaEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoConformacionEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoEstadoEnum;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoEstadoReporteEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoInstitucionEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoNivelInvolucramientoEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoParticipanteEnum;
@@ -8503,9 +8504,16 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 * Finaliza el reporte de salvaguardas y graba el resumen ejecutivo
 	 */
 	public void finalizarReporteSalvaguardas(){
-		try{
-			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexIsReported(true);
-			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexReportedStatus("F");
+		try{			
+			if(getLoginBean().getTipoRol() == 3){
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexIsReported(false);
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexExecutiveSummary("");
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexReportedStatus(TipoEstadoReporteEnum.ENPROCESO.getCodigo());
+			}else{
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexIsReported(true);
+				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexReportedStatus(TipoEstadoReporteEnum.FINALIZADO.getCodigo());
+			}
+
 			getAdvanceExecutionSafeguardsFacade().actualizaAvanceEjecucionGenero(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			getSeguimientoSalvaguardaBean().setDatosProyecto(false);
 			vaciaDatosBusqueda();
@@ -8531,43 +8539,86 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	 * @param salvaguarda
 	 */
 	public void mostrarDialogoFinalizarReporte(int salvaguarda){
+		
 		if (salvaguarda == 1){
 			if (validaCamposTablasSalvaguardas(salvaguarda)){
 				grabarSalvaguardaA();
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				if(getLoginBean().getTipoRol() == 3)
+					Mensaje.verDialogo("dlgPresentado");
+				else
+					validaFinalizarReporte();
+//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			}
 		}else if(salvaguarda == 2){
 			if (validaDatosOpcionSiSalvaguardaB()){
 				grabarSalvaguardaB();
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				if(getLoginBean().getTipoRol() == 3)
+					Mensaje.verDialogo("dlgPresentado");
+				else
+					validaFinalizarReporte();
+//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			}
 		}else if(salvaguarda == 3){
 			if (validaDatosOpcionSiSalvaguardaC()){		
 				grabarSalvaguardaC();
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				if(getLoginBean().getTipoRol() == 3)
+					Mensaje.verDialogo("dlgPresentado");
+				else
+					validaFinalizarReporte();
+//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			}
 		}else if(salvaguarda == 4){
 			if (validaDatosOpcionSiSalvaguardaD()){
 				grabarSalvaguardaD();
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				if(getLoginBean().getTipoRol() == 3)
+					Mensaje.verDialogo("dlgPresentado");
+				else
+					validaFinalizarReporte();
+//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			}
 		}else if(salvaguarda == 5){
 			if (validaDatosOpcionSiSalvaguardaE()){
 				grabarSalvaguardaE();
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				if(getLoginBean().getTipoRol() == 3)
+					Mensaje.verDialogo("dlgPresentado");
+				else
+					validaFinalizarReporte();
+//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			}
 		}else if(salvaguarda == 6){
 			if (validaDatosOpcionSiSalvaguardaF()){
 				grabarSalvaguardaF();
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				if(getLoginBean().getTipoRol() == 3)
+					Mensaje.verDialogo("dlgPresentado");
+				else
+					validaFinalizarReporte();
+//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			}
 		} else if(salvaguarda == 7){
 			if (validaDatosOpcionSiSalvaguardaG()){
 				grabarSalvaguardaG();
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				if(getLoginBean().getTipoRol() == 3)
+					Mensaje.verDialogo("dlgPresentado");
+				else
+					validaFinalizarReporte();
+//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			}
 		}
 
+	}
+	public void validaFinalizarReporte(){
+		try{
+			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null || getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() != null)
+				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+			else if(getAdvanceExecutionSafeguardsFacade().noExistenProyectosPresentadosIniciados(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjects().getProjId(), 1) && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null)
+				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+			else{
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.cerrarProyectos"));
+				Mensaje.actualizarComponente("growl");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * Imprime el resumen de salvaguardas vacio
