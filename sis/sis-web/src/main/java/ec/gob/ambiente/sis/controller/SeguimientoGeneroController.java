@@ -52,6 +52,7 @@ import ec.gob.ambiente.sis.services.ValueAnswersFacade;
 import ec.gob.ambiente.sis.utils.Mensaje;
 import ec.gob.ambiente.sis.utils.OperacionesCatalogo;
 import ec.gob.ambiente.sis.utils.ResumenPDF;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoEstadoReporteEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoRespuestaEnum;
 import ec.gob.ambiente.suia.model.GeographicalLocations;
 import lombok.Getter;
@@ -900,15 +901,42 @@ public class SeguimientoGeneroController implements Serializable{
 	 * Muestra el dialogo para finalizar reporte de genero
 	 */
 	public void mostrarDialogoFinalizarReporte(){
-		if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null ){
-			if(validaOpcionSiTablas())
-				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.seleccionSi"));
-			else 
-				Mensaje.verDialogo("dlgFinalizarReporteGenero");
+		try{
+			if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards()!=null ){
+				if(validaOpcionSiTablas())
+					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "",getMensajesController().getPropiedad("error.seleccionSi"));
+				else{
+//					Mensaje.verDialogo("dlgFinalizarReporteGenero");
+					if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null){
+						//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+						getSeguimientoGeneroBean().setListaPresentadosIniciados(new ArrayList<>());
+						//					List<AdvanceExecutionSafeguards> listaTemp= new ArrayList<>();
+						getSeguimientoGeneroBean().setListaPresentadosIniciados(getAdvanceExecutionSafeguardsFacade().listadoProyectosPresentadosIniciados(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards(), 2));
+						if(getSeguimientoGeneroBean().getListaPresentadosIniciados().size()==0 && getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null)
+							Mensaje.verDialogo("dlgFinalizarReporteGenero");
+						else{
 
-		}else{
-			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.avanceGenero"));
-			Mensaje.actualizarComponente(":form:growl");
+
+							Mensaje.verDialogo("dlgReportesNoCerrados");
+							Mensaje.actualizarComponente(":form:listaSegEstado");
+
+						}
+
+					}else if(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() != null)
+						Mensaje.verDialogo("dlgFinalizarReporteGenero");
+					else{
+						Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.cerrarProyectos"));
+						Mensaje.actualizarComponente("growl");
+					}
+				}
+
+
+			}else{
+				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.avanceGenero"));
+				Mensaje.actualizarComponente(":form:growl");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -1000,13 +1028,24 @@ public class SeguimientoGeneroController implements Serializable{
 	 * Finaliza el reporte de genero del proyecto
 	 */
 	public void finalizaReporteGenero(){
-		getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexIsReported(true);
-		getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexReportedStatus("F");
-		getAdvanceExecutionSafeguardsFacade().edit(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
-		getSeguimientoGeneroBean().setDatosGeneroParaMostrar(false);
-		getComponenteBuscarProyectos().volverABuscarProyectos();
-		vaciaDatosGenero();
-		getSeguimientoGeneroBean().setDatosSeguimiento(false);
+		try{
+			getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
+			if(getLoginBean().getTipoRol()==3){
+				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexIsReported(false);
+				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexReportedStatus(TipoEstadoReporteEnum.ENPROCESO.getCodigo());
+			}else{
+				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexIsReported(true);
+				getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexReportedStatus(TipoEstadoReporteEnum.FINALIZADO.getCodigo());
+			}
+			getAdvanceExecutionSafeguardsFacade().actualizaAvanceEjecucionGenero(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());
+			getSeguimientoGeneroBean().setDatosGeneroParaMostrar(false);
+			getComponenteBuscarProyectos().volverABuscarProyectos();
+			vaciaDatosGenero();
+			getSeguimientoGeneroBean().setDatosSeguimiento(false);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public void vaciaDatosGenero(){

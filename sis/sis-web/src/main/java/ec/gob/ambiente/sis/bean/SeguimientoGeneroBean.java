@@ -61,6 +61,10 @@ public class SeguimientoGeneroBean implements Serializable{
 	private String codigoTablaDatos;
 	
 
+	@Getter
+	@Setter
+	private List<AdvanceExecutionSafeguards> listaPresentadosIniciados;
+	
 //	@Getter
 //	@Setter
 //	private List<GenderAdvances> listaAvancesGenero;

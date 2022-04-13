@@ -67,7 +67,7 @@
 									requiredMessage="#{mensajes['campoRequerido']}" required="true"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineaGeneroSel}"
 									converter="selectOneMenuConverter"
-									panelStyle="width:420px" effect="fade" var="c" 
+									panelStyle="width:420px;" effect="fade" var="c" 
 									style="width:420px;">
 									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
 									<f:selectItems value="#{buscaProyectosBean.listaLineasGenero}"
@@ -94,7 +94,7 @@
 									requiredMessage="#{mensajes['campoRequerido']}" required="true"
 									value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.lineaAccionSel}"
 									converter="selectOneMenuConverter"
-									panelStyle="width:420px" effect="fade" var="c" 
+									panelStyle="width:420px;" effect="fade" var="c" 
 									style="width:420px;">
 									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
 									<f:selectItems value="#{buscaProyectosBean.listaLineasAccion}"
@@ -128,7 +128,7 @@
 					</div>
 					<div class="p-field p-col-12 p-md-7">
 						<p:selectCheckboxMenu id="multipleSeleccionComponentes" value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listadoComponentesSeleccionados}" 
-											panelStyle="width: 400px" requiredMessage="#{mensajes['campoRequerido']}" required="true"
+											panelStyle="width: 400px;" requiredMessage="#{mensajes['campoRequerido']}" required="true"
 											style="width:200px;" rendered="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.nuevaLineaAccion}"
 											label="#{etiquetas['componente']}" tabindex="9" multiple="true"
 								            scrollHeight="250">
@@ -175,7 +175,7 @@
 							<p:selectOneMenu id="temasObj" 
 									value="#{pgi.indicators}" 
 									converter="selectOneMenuConverter" filterMatchMode="contains" filter="true"
-									panelStyle="width:420px" effect="fade" var="c" 
+									panelStyle="width:420px;" effect="fade" var="c" 
 									style="width:220px; font-size:10px !important;">
 									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
 									<f:selectItems value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listaIndicadores}" 
@@ -747,11 +747,11 @@
 									<br />
 									<h:outputText styleClass="ui-icon fa fa-file"
 										style="color:#99A3A4;" rendered="#{avance.adexIsReported and avance.adexReportedStatus.equals('F')}" />
-									<p:outputLabel value=" #{etiquetas['reportado']}"
+									<p:outputLabel value=" #{etiquetas['reporteFinalizado']}"
 										rendered="#{avance.adexIsReported and avance.adexReportedStatus.equals('F')}" />
 									<h:outputText styleClass="ui-icon fa fa-save"
 										style="color:blue;" rendered="#{not avance.adexIsReported and avance.adexReportedStatus.equals('I')}" />
-									<p:outputLabel value=" #{etiquetas['parcialGuardado']}"
+									<p:outputLabel value=" #{etiquetas['reporteIniciado']}"
 										rendered="#{not avance.adexIsReported and avance.adexReportedStatus.equals('I')}" />
 									<h:outputText styleClass="ui-icon fa fa-save"
 										style="color:green;" rendered="#{not avance.adexIsReported and avance.adexReportedStatus.equals('P')}" />

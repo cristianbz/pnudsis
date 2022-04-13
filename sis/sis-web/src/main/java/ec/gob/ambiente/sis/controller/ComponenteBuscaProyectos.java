@@ -345,6 +345,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 					sectoresInteresProyecto();
 					
 			}
+			getBuscaProyectosBean().setListaProyectosReportados(new ArrayList<>());
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "buscaAvanceEjecucionDelProyectoReportado " + ": ").append(e.getMessage()));
 		}

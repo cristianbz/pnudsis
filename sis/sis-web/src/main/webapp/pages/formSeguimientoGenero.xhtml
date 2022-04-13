@@ -32,6 +32,22 @@
 	<h:form prependId="true" id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
 		
+		<p:dialog widgetVar="dlgReportesNoCerrados" width="450" 
+			header="#{titulos['seguimientoReportes']}"
+			closable="true" modal="true" resizable="false">
+			<p:outputPanel id="listaSegEstado">
+				<p:outputLabel value="#{titulos['cerrarSeguimiento']}"/>
+				<p:dataTable styleClass="sinBordesAncho100" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoGeneroController.seguimientoGeneroBean.listaPresentadosIniciados}" var="seg" >
+					<p:column headerText="#{etiquetas['socioEstrategico']}">
+						<p:outputLabel value="#{seg.projectsStrategicPartners.partners.partName}"/>
+					</p:column>
+					<p:column headerText="#{etiquetas['estado']}" style="width:100px;">
+						<p:outputLabel value="#{seg.adexReportedStatus.equals('I')?'Iniciado':seg.adexReportedStatus.equals('P')?'Presentado':'Finalizado'}"/>
+					</p:column>				
+				</p:dataTable>
+			</p:outputPanel>
+		</p:dialog>
+		
 		<p:dialog widgetVar="dlgRegistroSeguimiento" showEffect="fade"
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['registroGenero']}" width="690" closable="false"
@@ -384,14 +400,14 @@
 			resizable="false">
 			<p:outputLabel value="#{etiquetas['finReporteSeguimiento']}" />
 			<h:panelGrid columns="2" style="margin:0 auto;">
-				<p:commandButton value="#{botones['grabar']}" update="@form"
+				<p:commandButton value="#{botones['grabar']}" update="@form :form:buscaProyectos:tablaReportados" partialSubmit="true"
 					actionListener="#{seguimientoGeneroController.finalizaReporteGenero()}"
 					oncomplete="PF('dlgFinalizarReporteGenero').hide();"
-					process="@this " icon="#{botones['icono.grabar']}" />
+					process="@this :form:buscaProyectos:tablaReportados" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgFinalizarReporteGenero').hide();"
-					process="@this" />
+					process="@this :form:panelDatosSeguimiento" />
 			</h:panelGrid>
 		</p:dialog>
 

@@ -935,6 +935,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			datosTablaConcatenados.addAll(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getTableResponsesList());
 			
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(datosTablaConcatenados);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
 
 			controlaCambiosFechaPeriodoReportar();
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
@@ -4132,6 +4134,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			recargaPreguntasRespuestasSalvaguardas();
 			preparaInformacionSalvaguardaB();
@@ -4181,6 +4185,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			recargaPreguntasRespuestasSalvaguardas();
 			preparaInformacionSalvaguardaC();
@@ -4575,6 +4581,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			recargaPreguntasRespuestasSalvaguardas();
 			preparaInformacionSalvaguardaD();
@@ -4617,6 +4625,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			recargaPreguntasRespuestasSalvaguardas();
 			preparaInformacionSalvaguardaE();
@@ -4656,6 +4666,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			recargaPreguntasRespuestasSalvaguardas();
 			preparaInformacionSalvaguardaF();
@@ -4689,6 +4701,8 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			}
 			controlaCambiosFechaPeriodoReportar();
 			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setTableResponsesList(respuestasTabla);
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateUser(getLoginBean().getUser().getUserName());
+			getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setAdexUpdateDate(new Date());
 			getAdvanceExecutionSafeguardsFacade().grabarAvanceEjecucionSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 			recargaPreguntasRespuestasSalvaguardas();
 			preparaInformacionSalvaguardaG();
@@ -8608,9 +8622,24 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	}
 	public void validaFinalizarReporte(){
 		try{
-			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null || getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() != null)
-				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
-			else if(getAdvanceExecutionSafeguardsFacade().noExistenProyectosPresentadosIniciados(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjects().getProjId(), 1) && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null)
+			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null){
+//				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				getSeguimientoSalvaguardaBean().setListaPresentadosIniciados(new ArrayList<>());
+//				List<AdvanceExecutionSafeguards> listaTemp= new ArrayList<>();
+				getSeguimientoSalvaguardaBean().setListaPresentadosIniciados(getAdvanceExecutionSafeguardsFacade().listadoProyectosPresentadosIniciados(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(), 1));
+				if(getSeguimientoSalvaguardaBean().getListaPresentadosIniciados().size()==0 && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null)
+					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+				else{
+					
+//					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.cerrarProyectos"));
+//					Mensaje.actualizarComponente("growl");
+					
+					Mensaje.verDialogo("dlgReportesNoCerrados");
+					Mensaje.actualizarComponente(":form:listaSegEstado");
+					
+				}
+					
+			}else if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() != null)
 				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 			else{
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.cerrarProyectos"));

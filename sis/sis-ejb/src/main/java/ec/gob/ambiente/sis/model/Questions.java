@@ -48,10 +48,6 @@ public class Questions  {
     @Column(name = "ques_id")
     private Integer quesId;
 	
-//	@Getter
-//	@Setter
-//	@Column(name = "ques_parent_id")
-//	private Integer quesParentId;
 	
 	@Getter
 	@Setter

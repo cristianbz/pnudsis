@@ -1157,6 +1157,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<AdvanceExecutionSafeguards> listaPresentadosIniciados;
+	
+	@Getter
+	@Setter
 	private boolean salvaguardaA;
 	
 	@Getter

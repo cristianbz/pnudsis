@@ -33,6 +33,24 @@
 	<h:form prependId="true" id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
 		
+		<p:dialog widgetVar="dlgReportesNoCerrados" width="450" 
+			header="#{titulos['seguimientoReportes']}"
+			closable="true" modal="true" resizable="false">
+			<p:outputPanel id="listaSegEstado">
+				<p:outputLabel value="#{titulos['cerrarSeguimiento']}"/>				
+				<p:dataTable styleClass="sinBordesAncho100" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPresentadosIniciados}" var="seg" >
+					
+					<p:column headerText="#{etiquetas['socioEstrategico']}">
+						<p:outputLabel value="#{seg.projectsStrategicPartners.partners.partName}"/>
+					</p:column>
+					<p:column headerText="#{etiquetas['estado']}" style="width:100px;" >						
+						<p:outputLabel value="#{seg.adexReportedStatus.equals('I')?'Iniciado':seg.adexReportedStatus.equals('P')?'Presentado':'Finalizado'}"/>
+					</p:column>				
+				</p:dataTable>
+			</p:outputPanel>
+		</p:dialog>
+		
+		
 		<p:dialog widgetVar="dlgPresentado" width="450" closable="false" modal="true" resizable="false">
 			<p:outputLabel value="#{titulos['mensajePresentado']}"/>
 			<center>
@@ -13243,7 +13261,7 @@
 									
 									</p:commandButton>
 								<p:commandButton value="#{botones['finalizar']}" styleClass="botonRegistroProyecto" 
-										process="@this  :form:panelsalvaguarda" update=" :form:growl :form:panelsalvaguarda"
+										process="@this  :form:panelsalvaguarda" update=" :form:growl :form:panelsalvaguarda" partialSubmit="true"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoFinalizarReporte(5)}" icon="#{botones['icono.check']}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">

@@ -371,22 +371,26 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean noExistenProyectosPresentadosIniciados(int codigoProyecto, int tipoProyecto) throws Exception{
+	public List<AdvanceExecutionSafeguards> listadoProyectosPresentadosIniciados(AdvanceExecutionSafeguards adex, int tipoProyecto) throws Exception{
 		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
-		boolean respuesta=false;
+//		boolean respuesta=false;
 		String sql ="";
 		if(tipoProyecto ==1)
-			sql ="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=false AND AE.adexIsReported=false AND AE.adexStatus=true AND (AE.adexReportedStatus = 'I' OR AE.adexReportedStatus = 'P')";
+			sql ="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=false AND AE.adexIsReported=false AND AE.adexStatus=true AND (AE.adexReportedStatus = 'I' OR AE.adexReportedStatus = 'P') AND AE.adexTermFrom=:desde AND AE.adexTermTo=:hasta AND AE.projectsStrategicPartners IS NOT NULL";
 		else if(tipoProyecto ==2)
-			sql ="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=true AND AE.adexIsReported=false AND AE.adexStatus=true AND (AE.adexReportedStatus = 'I' OR AE.adexReportedStatus = 'P')";
+			sql ="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=true AND AE.adexIsReported=false AND AE.adexStatus=true AND (AE.adexReportedStatus = 'I' OR AE.adexReportedStatus = 'P') AND AE.adexTermFrom=:desde AND AE.adexTermTo=:hasta AND AE.projectsStrategicPartners IS NOT NULL";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
-		camposCondicion.put("codigoProyecto", codigoProyecto);
+		camposCondicion.put("codigoProyecto", adex.getProjects().getProjId());
+		camposCondicion.put("desde", adex.getAdexTermFrom());
+		camposCondicion.put("hasta", adex.getAdexTermTo());
 		listaTemp = findByCreateQuery(sql, camposCondicion);
-		if(listaTemp.size()==0)
-			respuesta = true;
-		else
-			respuesta = false;
-		return respuesta;
+//		if(listaTemp.size()==0)
+//			respuesta = true;
+//		else{
+//			respuesta = false;
+//			listadoProyectosPresentadosIniciados(listaTemp);
+//		}
+		return listaTemp;
 	}
 
 }
