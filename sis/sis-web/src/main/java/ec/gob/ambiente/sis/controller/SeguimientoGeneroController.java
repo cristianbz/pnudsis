@@ -137,6 +137,7 @@ public class SeguimientoGeneroController implements Serializable{
 	@PostConstruct
 	private void init(){
 		try{
+			getComponenteBuscarProyectos().getBuscaProyectosBean().setMenuAdministrador(false);
 			getComponenteBuscarProyectos().setEsReporteGenero(true);
 			getComponenteBuscarProyectos().setEsSeguimientoSalvaguardas(false);
 			cargaProvincias();

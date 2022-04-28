@@ -195,6 +195,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	@PostConstruct
 	public void init(){
 		try{
+			getComponenteBuscarProyectos().getBuscaProyectosBean().setMenuAdministrador(false);
 			getComponenteBuscarProyectos().setEsReporteGenero(false);
 			getComponenteBuscarProyectos().setEsReporteSalvaguardas(true);
 			getComponenteBuscarProyectos().setEsSeguimientoSalvaguardas(true);

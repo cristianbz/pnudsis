@@ -20,6 +20,34 @@
 				<p:commandButton value="#{botones['no']}" type="button"
 					styleClass="ui-confirmdialog-no" icon="#{botones['icono.cancelar']}" />
 			</p:confirmDialog>
+			
+			<p:dialog widgetVar="dlgTipoRol" showEffect="fade"
+					hideEffect="fade" modal="true" appendTo="@(body)"
+					header="#{etiquetas['rol']}" width="300" closable="false"
+					resizable="false">
+					<p:outputLabel value="#{etiquetas['usuarioRoles']}"/>
+					<h:panelGrid columns="2" id="roles">
+						<p:outputLabel value="#{etiquetas['rol']}*:"/>
+						<p:selectOneMenu value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.rolUsuarioSeleccionado}" converter="selectOneMenuConverter">
+							<f:selectItems value="#{cc.attrs.componenteBuscaProyectos.loginBean.listaRolesUsuario}" var="rol" itemLabel="#{rol.role.roleDescription}" itemValue="#{rol}"/>							
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<center>
+						<h:panelGrid columns="2">
+							<p:commandButton value="#{botones['aceptar']}" 
+								action="#{cc.attrs.componenteBuscaProyectos.seleccionaProyectosRolUsuario}" 
+								process="@this tituloBusq pnlCritBusq roles" onstart="PF('dlgEnProc').show()"
+								update="listadoProyectos :form:growl codSocioBusq tituloBusq"
+								oncomplete="PF('dlgEnProc').hide()" partialSubmit="true"
+								async="true" global="false" 
+								icon="#{botones['icono.check']}"/>
+							<p:commandButton process="@this" oncomplete="PF('dlgTipoRol').hide();" 
+								icon="#{botones['icono.cancelar']}"
+								value="#{botones['cancelar']}"/>	
+						</h:panelGrid>
+					</center>
+			</p:dialog>
+			
 
 			<p:growl id="growl" life="3000" showDetail="true" showSummary="false"/>
 			<!-- Dialogo reactivacion reporte -->
@@ -422,10 +450,10 @@
 					<div class="ui-fluid p-formgrid p-grid">
 						<h:panelGrid style="margin:0 auto;">
 							<p:commandButton id="btnBusqProy" value="#{botones['buscar']}"
-								actionListener="#{cc.attrs.componenteBuscaProyectos.buscarProyectos}"
+								actionListener="#{cc.attrs.componenteBuscaProyectos.validarRol}"
 								icon="#{botones['icono.buscar']}"
 								onclick="PF('dlgEnProc').show()"
-								process="@this tituloBusq pnlCritBusq"
+								process="@this tituloBusq pnlCritBusq listadoProyectos"
 								update="listadoProyectos :form:growl codSocioBusq tituloBusq"
 								oncomplete="PF('dlgEnProc').hide()" partialSubmit="true"
 								async="true" global="false" />
@@ -766,7 +794,9 @@
 										action="#{cc.attrs.componenteBuscaProyectos.mostrarDialogoActivarReporte}"
 										title="#{tooltip['activarReporte']}" disabled="#{not avance.adexIsReported}">
 										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
-									</p:commandButton>																	
+									</p:commandButton>	
+									<p:commandButton icon="#{botones['icono.pdf']}" style="background-color:#9dce2c;">
+									</p:commandButton>																
 								</p:column>
 							</p:dataTable>
 						</h:panelGrid>

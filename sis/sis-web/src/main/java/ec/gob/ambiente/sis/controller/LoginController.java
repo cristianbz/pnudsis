@@ -644,6 +644,48 @@ public class LoginController implements Serializable {
 		}	
 	}
 	
+//	public void validarUsuario(){		
+//		try{			
+//			getLoginBean().setUser(getUsersFacade().validarUsuario(username,EncriptarSHA.encriptarSHA1(password)));
+//			
+//			if(getLoginBean().getUser()!=null){
+//				ec = FacesContext.getCurrentInstance().getExternalContext();
+//				getLoginBean().setSesion( (HttpSession)ec.getSession(true));
+//				getLoginBean().getSesion().setAttribute("logeado", true);
+//				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listarRolesDeUsuario(getLoginBean().getUser()));
+//				if(getLoginBean().getListaRolesUsuario().size()>1){
+//					Mensaje.verDialogo("dlgTipoRol");
+//				}else{
+//					getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(getLoginBean().getListaRolesUsuario()));						
+//					llenarMenu();
+//					for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
+//						if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta())){
+//							getLoginBean().setTipoRol(4);
+//							break;
+//						}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.getEtiqueta())){
+//							getLoginBean().setListaProyectosDelSocioEstrategico(getProjectsStrategicPartnersFacade().listaProyectosSocioEstrategico(ru.getRousDescription()));
+//							getLoginBean().setTipoRol(3);
+//							break;
+//						}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
+//							getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
+//							getLoginBean().setTipoRol(2);
+//							break;
+//						}else{
+//							getLoginBean().setTipoRol(1);
+//							break;
+//						}
+//					}
+//					JsfUtil.redirect("/pages/inicio.xhtml");
+//				}
+//				
+//			}else{
+//				Mensaje.actualizarComponente(":indexForm:growl");
+//				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.usuarionoValido"), "");
+//			}
+//		}catch(Exception e){
+//			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "validarUsuario " + ": ").append(e.getMessage()));
+//		}		
+//	}
 	public void validarUsuario(){		
 		try{			
 			getLoginBean().setUser(getUsersFacade().validarUsuario(username,EncriptarSHA.encriptarSHA1(password)));
@@ -652,13 +694,23 @@ public class LoginController implements Serializable {
 				ec = FacesContext.getCurrentInstance().getExternalContext();
 				getLoginBean().setSesion( (HttpSession)ec.getSession(true));
 				getLoginBean().getSesion().setAttribute("logeado", true);
-//				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listRoleByUser(getLoginBean().getUser()));
 				getLoginBean().setListaRolesUsuario(getRolesUserFacade().listarRolesDeUsuario(getLoginBean().getUser()));
+//				if(getLoginBean().getListaRolesUsuario().size()>1){
+//					Mensaje.verDialogo("dlgTipoRol");
+//				}else{
+				getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(getLoginBean().getListaRolesUsuario()));						
+				llenarMenu();
 				if(getLoginBean().getListaRolesUsuario().size()>1){
-					Mensaje.verDialogo("dlgTipoRol");
+					for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {						
+						if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
+							getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
+							getLoginBean().setTipoRol(2);
+							break;
+						}
+					}
 				}else{
-					getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(getLoginBean().getListaRolesUsuario()));						
-					llenarMenu();
+//					getLoginBean().setListaMenuRolesUsuario(getMenuRoleFacade().listarMenusPorRol(getLoginBean().getListaRolesUsuario()));						
+//					llenarMenu();
 					for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
 						if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta())){
 							getLoginBean().setTipoRol(4);
@@ -676,9 +728,9 @@ public class LoginController implements Serializable {
 							break;
 						}
 					}
-					JsfUtil.redirect("/pages/inicio.xhtml");
+					
 				}
-				
+				JsfUtil.redirect("/pages/inicio.xhtml");
 			}else{
 				Mensaje.actualizarComponente(":indexForm:growl");
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  getMensajesController().getPropiedad("error.usuarionoValido"), "");

@@ -2926,7 +2926,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso41B radiopSB1" title="#{tooltip['grabar']}" tabindex="12"																							
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB41()}" value="#{botones['guardar']}" oncomplete="goToAnchor('41B'); "
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB41()}" value="#{botones['guardar']}" oncomplete="goToAnchor('41B');"
 															update="panelTablaB41 :form:growl panelIngreso41B"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -3018,6 +3018,7 @@
 								id="msgTablaRequerida51B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(1)}"/>
 							<br />
+							<a name="51B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB2" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -3230,7 +3231,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB51 panelIngreso51B radiopSB2"	title="#{tooltip['grabar']}" tabindex="11"																					
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB51()}" value="#{botones['grabar']}"
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB51()}" value="#{botones['grabar']}" oncomplete="goToAnchor('51B');"
 															update="panelTablaB51 :form:growl panelIngreso51B"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -3306,6 +3307,7 @@
 								id="msgTablaRequerida61B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(2)}"/>
 							<br />
+							<a name="612B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB3" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -3435,7 +3437,7 @@
 									
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB61 panelIngreso61B"	title="#{tooltip['grabar']}" tabindex="6"																					
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB61()}" value="#{botones['guardar']}"
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB61()}" value="#{botones['guardar']}" oncomplete="goToAnchor('612B');"
 															update="panelTablaB61 :form:growl panelIngreso61B"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
@@ -3512,6 +3514,7 @@
 								id="msgTablaRequerida71B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(3)}"/>
 							<br />
+							<a name="71B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB4" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -3611,7 +3614,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso71B radiopSB4" tabindex="5" value="#{botones['guardar']}"																					
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB71()}"
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB71()}" oncomplete="goToAnchor('71B');"
 															update="panelTablaB71 :form:growl panelIngreso71B"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -3687,6 +3690,7 @@
 								id="msgTablaRequerida81B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(4)}"/>
 							<br />
+							<a name="81B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB5" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -3943,7 +3947,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 											<p:commandButton icon="#{botones['icono.grabar']}" tabindex="13" value="#{botones['guardar']}"
-												process="@this panelTablaB81 panelIngreso81B radiopSB5"
+												process="@this panelTablaB81 panelIngreso81B radiopSB5" oncomplete="goToAnchor('81B');"
 												actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB81()}"
 												update="panelTablaB81 :form:growl panelIngreso81B " />
 									</div>			
@@ -4029,6 +4033,7 @@
 								id="msgTablaRequerida9B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(5)}"/>	
 							<br />
+							<a name="9B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB6" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4190,7 +4195,7 @@
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:commandButton icon="#{botones['icono.grabar']}" tabindex="7"
+											<p:commandButton icon="#{botones['icono.grabar']}" tabindex="7" oncomplete="goToAnchor('9B');"
 												process="@this panelTablaB9 panelIngreso9B radiopSB6" value="#{botones['guardar']}"
 												actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB9()}"
 												update="panelTablaB9 :form:growl panelIngreso9B" />
@@ -4272,6 +4277,7 @@
 								id="msgTablaRequerida102B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(6)}"/>
 							<br />
+							<a name="102B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB7" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4497,6 +4503,7 @@
 									<div class="p-field p-col-12 p-md-2">
 											<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB102 panelIngreso102B radiopSB7" title="#{tooltip['grabar']}"	tabindex="11"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB102()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('102B');"
 															update="panelTablaB102 :form:growl panelIngreso102B"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -4595,6 +4602,7 @@
 								id="msgTablaRequerida11B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(7)}"/>	
 							<br />
+							<a name="11B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB8" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4695,6 +4703,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla11B panelIngreso11B radiopSB8" value="#{botones['guardar']}"																							
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB11()}"
+															oncomplete="goToAnchor('11B');"
 															update="panelTabla11B :form:growl panelIngreso11B"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -4773,6 +4782,7 @@
 								id="msgTablaRequerida121B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(8)}"/>
 							<br />
+							<a name="121B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB9" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -4972,6 +4982,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso121B radiopSB9" title="#{tooltip['grabar']}"	tabindex="10"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB121()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('121B');"
 															update="panelTablaB121 :form:growl panelIngreso121B"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -5057,6 +5068,7 @@
 								id="msgTablaRequerida131B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(9)}"/>
 							<br />
+							<a name="131B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB10" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -5222,6 +5234,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB131 panelIngreso131B radiopSB10" title="#{tooltip['grabar']}" tabindex="9"																							
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB131()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('131B');"
 															update="panelTablaB131 :form:growl panelIngreso131B"/>
 									</div>					
 									<div class="p-field p-col-12 p-md-2">
@@ -5304,6 +5317,7 @@
 								id="msgTablaRequerida143B"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(10)}"/>
 							<br />
+							<a name="143B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB11" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -5481,6 +5495,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB143 panelIngreso143B radiopSB11" title="#{tooltip['grabar']}" tabindex="11"																							
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB143()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('143B');"
 															update="panelTablaB143 :form:growl panelIngreso143B"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -5784,6 +5799,7 @@
 								id="msgTablaRequerida201C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(0)}"/>
 							<br/>
+							<a name="201C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC1" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -6069,6 +6085,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla201C panelIngreso201C radiopSC1"	tabindex="15"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC201()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('201C');"
 															update="panelTabla201C :form:growl panelIngreso201C"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">						
@@ -6174,6 +6191,7 @@
 								id="msgTablaRequerida211C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(1)}"/>
 							<br/>
+							<a name="211C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC2" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -6411,6 +6429,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla211C panelIngreso211C radiopSC2" title="#{tooltip['grabar']}"	tabindex="13"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC211()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('211C');"
 															update="panelTabla211C :form:growl panelIngreso211C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -6501,6 +6520,7 @@
 								id="msgTablaRequerida242C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(2)}"/>
 							<br/>
+							<a name="241C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC3" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -6625,6 +6645,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla241C panelIngreso241C radiopSC3"	tabindex="7"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC241()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('241C');"
 															update="panelTabla241C :form:growl panelIngreso241C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -6825,6 +6846,7 @@
 								id="msgTablaRequerida26C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(3)}"/>
 							<br/>
+							<a name="26C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC4" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -6965,6 +6987,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla26C panelIngreso26C radiopSC4" title="#{tooltip['grabar']}"	tabindex="7"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC26()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('26C');"
 															update="panelTabla26C :form:growl panelIngreso26C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -7039,6 +7062,7 @@
 								id="msgTablaRequerida271C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(4)}"/>
 							<br/>
+							<a name="271C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC5" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -7221,6 +7245,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla271C panelIngreso271C radiopSC5"	tabindex="9"	value="#{botones['guardar']}"																					
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC271()}"
+															oncomplete="goToAnchor('271C');"
 															update="panelTabla271C :form:growl panelIngreso271C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -7303,6 +7328,7 @@
 									styleClass="pregunta" />
 							</div>							
 							<br/>
+							<a name="28C"> </a>
 							
 									<div class="p-field p-col-12 p-md-12" style="background: #00AAC3;color: #FFFFFF;display: block;">
 							<div class="ui-fluid p-formgrid p-grid">
@@ -7445,6 +7471,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla28C panelIngreso28C" tabindex="8"	value="#{botones['guardar']}"	 																					
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC28()}" title="#{tooltip['grabar']}"
+															oncomplete="goToAnchor('28C');"
 															update="panelTabla28C :form:growl panelIngreso28C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -7529,6 +7556,7 @@
 								id="msgTablaRequerida291C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(5)}"/>
 							<br/>
+							<a name="291C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC6" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -7769,6 +7797,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla291C panelIngreso291C radiopSC6" title="#{tooltip['grabar']}"	tabindex="10"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC291()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('291C');"
 															update="panelTabla291C :form:growl panelIngreso291C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">
@@ -7861,6 +7890,7 @@
 								id="msgTablaRequerida301C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(6)}"/>
 							<br/>
+							<a name="301C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC8" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -8070,6 +8100,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla301C panelIngreso301C radiopSC8"	title="#{tooltip['grabar']}"	tabindex="11"																					
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC301()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('301C');"
 															update="panelTabla301C :form:growl panelIngreso301C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -8161,6 +8192,7 @@
 								id="msgTablaRequerida311C"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasC.get(7)}"/>
 							<br/>
+							<a name="311C"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSC9" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -8410,6 +8442,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla311C panelIngreso311C radiopSC9"	title="#{tooltip['grabar']}" tabindex="11"	 																					
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaC311()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('311C');"
 															update="panelTabla311C :form:growl panelIngreso311C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -8722,6 +8755,7 @@
 								id="msgTablaRequerida321D"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasD.get(0)}"/>
 							<br/>
+							<a name="321D"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSD1" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -8982,6 +9016,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla321D panelIngreso321D radiopSD1"	tabindex="12"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaD321()}" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('321D');"
 															update="panelTabla321D :form:growl panelIngreso321D"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -9087,6 +9122,7 @@
 								id="msgTablaRequerida331D"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasD.get(1)}"/>
 							<br/>
+							<a name="331D"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSD2" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -9281,6 +9317,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla331D panelIngreso331D radiopSD2"	tabindex="10" value="#{botones['guardar']}"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaD331()}"
+															oncomplete="goToAnchor('331D');"
 															update="panelTabla331D :form:growl panelIngreso331D"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -9580,6 +9617,7 @@
 								id="msgTablaRequerida341E"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(0)}"/>
 							<br/>
+							<a name="341E"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE1" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -9772,7 +9810,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla341E panelIngreso341E radiopSE1"	tabindex="9" value="#{botones['guardar']}"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE341()}"
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE341()}" oncomplete="goToAnchor('341E');"
 															update="panelTabla341E :form:growl panelIngreso341E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -9858,6 +9896,7 @@
 								id="msgTablaRequerida351E"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(1)}"/>
 							<br/>
+							<a name="351E"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE2" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -10010,7 +10049,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla351E panelIngreso351E radiopSE2" tabindex="6" value="#{botones['guardar']}"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE351()}" 
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE351()}" oncomplete="goToAnchor('351E');"
 															update="panelTabla351E :form:growl panelIngreso351E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
@@ -10083,6 +10122,7 @@
 								id="msgTablaRequerida361E"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(2)}"/>
 							<br/>
+							<a name="361E"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE3" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -10296,7 +10336,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla361E panelIngreso361E radiopSE3"	tabindex="10" value="#{botones['guardar']}"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE361()}"
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE361()}" oncomplete="goToAnchor('361E');"
 															update="panelTabla361E :form:growl panelIngreso361E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -10385,6 +10425,7 @@
 								id="msgTablaRequerida371E"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(3)}"/>
 							<br/>
+							<a name="371E"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE4" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -10655,7 +10696,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla371E panelIngreso371E radiopSE4"	 tabindex="13" value="#{botones['guardar']}"																						
 															disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE371()}" 
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE371()}" oncomplete="goToAnchor('371E');"
 															update="panelTabla371E :form:growl panelIngreso371E"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">						 
@@ -10770,6 +10811,7 @@
 								id="msgTablaRequerida381E"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(4)}"/>
 							<br/>
+							<a name="381E"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE5" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -10965,7 +11007,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla381E panelIngreso381E radiopSE5"	tabindex="9" value="#{botones['guardar']}" 																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE381()}" 
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE381()}" oncomplete="goToAnchor('381E');"
 															update="panelTabla381E :form:growl panelIngreso381E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -11047,6 +11089,7 @@
 								id="msgTablaRequerida391E"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasE.get(5)}"/>
 							<br/>
+							<a name="391E"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSE6" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -11261,7 +11304,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla391E panelIngreso391E radiopSE6"	tabindex="10" value="#{botones['guardar']}" 																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE391()}"  
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE391()}"  oncomplete="goToAnchor('391E');"
 															update="panelTabla391E :form:growl panelIngreso391E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -13325,6 +13368,7 @@
 								id="msgTablaRequerida411F"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(0)}"/>
 							<br/>
+							<a name="411F"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF1" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -13537,7 +13581,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla411F panelIngreso411F radiopSF1"	tabindex="10" value="#{botones['guardar']}"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF411()}"  
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF411()}"  oncomplete="goToAnchor('411F');"
 															update="panelTabla411F :form:growl panelIngreso411F"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -13628,6 +13672,7 @@
 								id="msgTablaRequerida421F"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(1)}"/>
 							<br/>
+							<a name="421F"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF2" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -13865,7 +13910,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla421F panelIngreso421F radiopSF2"	tabindex="12" value="#{botones['guardar']}"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF421()}" 
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF421()}" oncomplete="goToAnchor('421F');"
 															update="panelTabla421F :form:growl panelIngreso421F"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -13962,6 +14007,7 @@
 								id="msgTablaRequerida431F"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(2)}"/>
 							<br/>
+							<a name="431F"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF3" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -14109,7 +14155,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla431F panelIngreso431F radiopSF3"	title="#{tooltip['grabar']}" tabindex="8" value="#{botones['guardar']}"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF431()}" 
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF431()}" oncomplete="goToAnchor('431F');"
 															update="panelTabla431F :form:growl panelIngreso431F"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -14198,6 +14244,7 @@
 								id="msgTablaRequerida441F"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(3)}"/>
 							<br/>
+							<a name="441F"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF4" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -14442,7 +14489,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla441F panelIngreso441F radiopSF4"	title="#{tooltip['grabar']}" tabindex="12"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF441()}" value="#{botones['guardar']}" 
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF441()}" value="#{botones['guardar']}" oncomplete="goToAnchor('441F');"
 															update="panelTabla441F :form:growl panelIngreso441F"/>
 										</div>					
 										<div class="p-field p-col-12 p-md-2">					 
@@ -14531,6 +14578,7 @@
 								id="msgTablaRequerida452F"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasF.get(4)}"/>
 							<br/>
+							<a name="452F"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSF5" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -14645,7 +14693,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla452F panelIngreso452F radiopSF5"	title="#{tooltip['grabar']}" tabindex="6"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF452()}" value="#{botones['guardar']}" 
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaF452()}" value="#{botones['guardar']}" oncomplete="goToAnchor('452F');"
 															update="panelTabla452F :form:growl panelIngreso452F"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -14938,6 +14986,7 @@
 								id="msgTablaRequerida461G"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(0)}"/>
 							<br/>
+							<a name="461G"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG1" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -15108,6 +15157,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla461G panelIngreso461G radiopSG1"	title="#{tooltip['grabar']}"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG461()}" tabindex="9" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('461G');"
 															update="panelTabla461G :form:growl panelIngreso461G"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -15194,6 +15244,7 @@
 								id="msgTablaRequerida471G"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(1)}"/>
 							<br/>
+							<a name="471G"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG2" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -15459,7 +15510,8 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla471G panelIngreso471G radiopSG2"	title="#{tooltip['grabar']}" tabindex="13"																						
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG471()}" value="#{botones['guardar']}"  
+															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG471()}" value="#{botones['guardar']}" 
+															 oncomplete="goToAnchor('471G');"
 															update="panelTabla471G :form:growl panelIngreso471G"/>
 									</div>						 
 									<div class="p-field p-col-12 p-md-2">						
@@ -15557,6 +15609,7 @@
 								id="msgTablaRequerida481G"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(2)}"/>
 							<br/>
+							<a name="481G"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG3" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -15804,6 +15857,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla481G panelIngreso481G radiopSG3"	title="#{tooltip['grabar']}" tabindex="12"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG481()}" value="#{botones['guardar']}"  
+															oncomplete="goToAnchor('481G');"
 															update="panelTabla481G :form:growl panelIngreso481G"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -15903,6 +15957,7 @@
 								id="msgTablaRequerida491G"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(3)}"/>
 							<br/>
+							<a name="491G"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG4" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -16193,6 +16248,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla491G panelIngreso491G radiopSG4"	title="#{tooltip['grabar']}"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG491()}"  tabindex="16" value="#{botones['guardar']}"
+															oncomplete="goToAnchor('491G');"
 															update="panelTabla491G :form:growl panelIngreso491G"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -16302,6 +16358,7 @@
 								id="msgTablaRequerida501G"
 								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasG.get(4)}"/>
 							<br/>
+							<a name="501G"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG5" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -16424,6 +16481,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla501G panelIngreso501G radiopSG5"	title="#{tooltip['grabar']}" tabindex="6"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG501()}" value="#{botones['guardar']} "  
+															oncomplete="goToAnchor('501G');"
 															update="panelTabla501G :form:growl panelIngreso501G"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -16498,6 +16556,7 @@
 							</div>
 							
 							<br/>
+							<a name="512G"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG6" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
@@ -16783,6 +16842,7 @@
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla512G panelIngreso512G radiopSG6"	title="#{tooltip['grabar']}" value="#{botones['guardar']}"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG512()}"  tabindex="12"
+															oncomplete="goToAnchor('512G');"
 															update="panelTabla512G :form:growl panelIngreso512G"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
@@ -16878,9 +16938,9 @@
 									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(13).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasG.get(13).quesContentQuestionEnglish}"
 									styleClass="pregunta" />
 							</div>
-							
-							
+														
 							<br/>
+							
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSG7" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"

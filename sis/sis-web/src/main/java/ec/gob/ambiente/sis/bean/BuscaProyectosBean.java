@@ -26,6 +26,7 @@ import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.utils.dtos.DtoComponenteSalvaguarda;
+import ec.gob.ambiente.suia.model.RolesUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -161,6 +162,10 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private boolean asignacionSalvaguardas;
 	
+	@Getter
+	@Setter
+	private boolean menuAdministrador;
+	
 	
 	@Getter
 	@Setter
@@ -182,7 +187,14 @@ public class BuscaProyectosBean implements Serializable{
 	@Setter
 	private int tipoRol;
 	
-
+//	@Getter
+//	@Setter
+//	private int codigoRolUsuario;
+	
+	@Getter
+	@Setter
+	private RolesUser rolUsuarioSeleccionado;
+	
 	@Getter
 	@Setter
 	private List<CatalogsType> listaLineasGenero;

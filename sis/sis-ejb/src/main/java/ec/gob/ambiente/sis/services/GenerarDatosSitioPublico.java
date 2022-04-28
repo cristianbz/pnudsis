@@ -171,18 +171,20 @@ public class GenerarDatosSitioPublico implements Serializable {
 				dtoGenero.setListaAccionesGenero(listTempAcciones);
 				dtoGenero.setTotalAccionesImplementadas(listTempAcciones.size());
 			}else{
-				dtoGenero.setListaAccionesGenero(null);
+				dtoGenero.setListaAccionesGenero(new ArrayList<>());
 				dtoGenero.setTotalAccionesImplementadas(0);
 			}
 			String archivoJSON = new StringBuilder().append(this.webPath).append(File.separator).append("archivo").append(".json").toString();
 //			String archivoCSVA = new StringBuilder().append(this.webPath).append(File.separator).append("salvaguardaA").append(".csv").toString();
 	
-			List<Object> lista = Arrays.asList(dtoSalvaguardaA.toJson(), dtoSalvaguardaB.toJson(),dtoSalvaguardaC.toJson(),dtoSalvaguardaD.toJson(), dtoSalvaguardaE.toJson() , dtoSalvaguardaF.toJson() , dtoSalvaguardaG.toJson(),dtoGenero.toJson());
+//			List<Object> lista = Arrays.asList(dtoSalvaguardaA.toJson(), dtoSalvaguardaB.toJson(),dtoSalvaguardaC.toJson(),dtoSalvaguardaD.toJson(), dtoSalvaguardaE.toJson() , dtoSalvaguardaF.toJson() , dtoSalvaguardaG.toJson(),dtoGenero.toJson());
+			List<Object> lista = Arrays.asList(dtoSalvaguardaA.toJson(), dtoSalvaguardaB.toJson(),dtoSalvaguardaC.toJson(),dtoSalvaguardaD.toJson(), dtoSalvaguardaE.toJson(), dtoSalvaguardaF.toJson(), dtoSalvaguardaG.toJson(),dtoGenero.toJson());
 			try (FileWriter fileWriter = new FileWriter(archivoJSON)) {
 				Jsoner.serialize(lista, fileWriter);
 			}
 			
 		}catch(Exception e){
+			e.printStackTrace();
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumen " + ": ").append(e.getMessage()));
 		}
 	}

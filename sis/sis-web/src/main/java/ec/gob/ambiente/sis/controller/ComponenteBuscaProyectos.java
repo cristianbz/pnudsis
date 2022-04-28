@@ -59,6 +59,8 @@ import ec.gob.ambiente.sis.services.ProjectsGenderInfoFacade;
 import ec.gob.ambiente.sis.services.SectorsFacade;
 import ec.gob.ambiente.sis.utils.Mensaje;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoRolesUsuarioEnum;
+import ec.gob.ambiente.suia.model.RolesUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,6 +69,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(ComponenteBuscaProyectos.class);
+
 
 	@Inject
 	@Getter
@@ -170,6 +173,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 	@Getter
 	@Setter
 	private Integer codigoPartner;
+	
 
 	private boolean esProyecto;
 	private boolean nuevoIngreso;
@@ -247,7 +251,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 	 */
 	public void buscarProyectos(){
 		try{
-
+			getBuscaProyectosBean().setTipoRol(getLoginBean().getTipoRol());
 			getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
 			if(getBuscaProyectosBean().getTipoRol()==4 || getBuscaProyectosBean().getTipoRol()==1){
 				if(getBuscaProyectosBean().getCodigoBusquedaProyecto()==1){			
@@ -276,6 +280,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			}else if(getBuscaProyectosBean().getTipoRol()==2){
 				List<Projects> listaProyectousuarios=new ArrayList<>();
 				getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
+				
 				if(getLoginBean().getListaProyectosDelSocioImplementador().size()>0){	
 					listaProyectousuarios=getLoginBean().getListaProyectosDelSocioImplementador();
 					for (Projects pu : listaProyectousuarios) {
@@ -287,7 +292,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 				}
 			}else if(getBuscaProyectosBean().getTipoRol()==3){
 				List<ProjectsStrategicPartners> listaProyectousuarios=new ArrayList<>();
-				getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
+				getBuscaProyectosBean().setListaProyectos(new ArrayList<>());					
 				if(getLoginBean().getListaProyectosDelSocioEstrategico().size()>0){	
 					listaProyectousuarios=getLoginBean().getListaProyectosDelSocioEstrategico();
 					for (ProjectsStrategicPartners pu : listaProyectousuarios) {
@@ -301,6 +306,85 @@ public class ComponenteBuscaProyectos implements Serializable{
 
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "buscarProyectos " + ": ").append(e.getMessage()));
+		}
+	}
+	/**
+	 * Valida si el usuario tiene mas roles
+	 */
+	public void validarRol(){
+		getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
+		if(getLoginBean().getListaRolesUsuario().size()>1 && !getBuscaProyectosBean().isMenuAdministrador()){
+			Mensaje.verDialogo("dlgTipoRol");
+		}else{
+			buscarProyectos();
+		}
+	}
+	/**
+	 * Selecciona el proyecto del rol usuario
+	 */
+	public void seleccionaProyectosRolUsuario(){
+		try{
+			
+			for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
+				if(ru.getRousId() == getBuscaProyectosBean().getRolUsuarioSeleccionado().getRousId()){
+					if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta()) ){
+
+						getLoginBean().setTipoRol(4);
+						break;
+					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.getEtiqueta()) ){
+
+						getLoginBean().setListaProyectosDelSocioEstrategico(getProjectsStrategicPartnersFacade().listaProyectosSocioEstrategico(ru.getRousDescription()));					
+						getLoginBean().setTipoRol(3);
+						seleccionaProyectosdelUsuario(getLoginBean().getTipoRol());
+						break;
+					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
+
+						getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
+						getLoginBean().setTipoRol(2);
+						seleccionaProyectosdelUsuario(getLoginBean().getTipoRol());
+						break;
+					}else{
+
+						getLoginBean().setTipoRol(1);
+						break;
+					}
+				}
+			}
+			Mensaje.ocultarDialogo("dlgTipoRol");
+		}catch(Exception e){
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "ubicaRolUsuarioSeleccionado " + ": ").append(e.getMessage()));
+		}
+	}
+	/**
+	 * Permite cargar los proyectos del usuario
+	 * @param codigoRol Codigo del rol
+	 */
+	public void seleccionaProyectosdelUsuario(int codigoRol){
+		
+		if(codigoRol == 2){
+			List<Projects> listaProyectousuarios=new ArrayList<>();
+			getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
+			if(getLoginBean().getListaProyectosDelSocioImplementador().size()>0){	
+				listaProyectousuarios=getLoginBean().getListaProyectosDelSocioImplementador();
+				for (Projects pu : listaProyectousuarios) {
+					getBuscaProyectosBean().getListaProyectos().add(pu);
+				}
+			}else{
+				Mensaje.actualizarComponente(":form:growl");				
+				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.proyectosUsuario"));
+			}
+		}else if(codigoRol == 3){
+			List<ProjectsStrategicPartners> listaProyectousuarios=new ArrayList<>();
+			getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
+			if(getLoginBean().getListaProyectosDelSocioEstrategico().size()>0){	
+				listaProyectousuarios=getLoginBean().getListaProyectosDelSocioEstrategico();
+				for (ProjectsStrategicPartners pu : listaProyectousuarios) {
+					getBuscaProyectosBean().getListaProyectos().add(pu.getProjects());
+				}
+			}else{
+				Mensaje.actualizarComponente(":form:growl");				
+				Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.proyectosUsuario"));
+			}
 		}
 	}
 
@@ -1193,7 +1277,6 @@ public class ComponenteBuscaProyectos implements Serializable{
 			for (CatalogsType c : getBuscaProyectosBean().getListaLineasGenero()) {
 				if(c.getCatyDescription().equals(linea.getCataId().getCatalogsType().getCatyDescription())){
 					getBuscaProyectosBean().setLineaGeneroSel(c);
-//					System.out.println(c.getCatyDescription());
 					break;
 				}
 			}
@@ -1288,4 +1371,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "volverActivarReporte " + ": ").append(e.getMessage()));
 		}
 	}
+	
+	
+	
 }
