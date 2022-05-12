@@ -244,6 +244,27 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_column_number_mens")
+	private Integer tareColumnNumberMens;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_women")
+	private Integer tareColumnNumberWomen;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_generic_one")
+	private Integer tareColumnGenericOne;
+
+	@Getter
+	@Setter
+	@Column(name = "tare_column_generic_two")
+	private Integer tareColumnGenericTwo;
+
+
+	@Getter
+	@Setter
 	@Column(name = "tare_status")
 	private boolean tareStatus;
 	
