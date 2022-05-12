@@ -120,7 +120,7 @@
 				</div>
 				<div class="p-field p-col-12 p-md-6">
 					<p:inputNumber required="true" tabindex="2"
-						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiarioCB27" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSix}">
+						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiarioCB27" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberMens}">
 					</p:inputNumber>
 				</div>
 				<div class="p-field p-col-12 p-md-3">
@@ -133,7 +133,7 @@
 				</div>
 				<div class="p-field p-col-12 p-md-6">
 					<p:inputNumber required="true" tabindex="3"
-						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiariaCB27" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSeven}">
+						requiredMessage="#{mensajes['campoRequerido']}" id="beneficiariaCB27" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberWomen}">
 					</p:inputNumber>
 				</div>
 				<div class="p-field p-col-12 p-md-3">
@@ -216,7 +216,7 @@
 							<p:inputNumber required="true" tabindex="2"
 								requiredMessage="#{mensajes['campoRequerido']}"
 								id="beneficiarioCB" decimalPlaces="0"
-								value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSix}">
+								value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberMens}">
 							</p:inputNumber>
 						</div>
 						<div class="p-field p-col-12 p-md-3">
@@ -231,7 +231,7 @@
 							<p:inputNumber required="true" tabindex="3"
 								requiredMessage="#{mensajes['campoRequerido']}"
 								id="beneficiariaCB" decimalPlaces="0"
-								value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberSeven}">
+								value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberWomen}">
 							</p:inputNumber>
 						</div>
 						<div class="p-field p-col-12 p-md-3">
@@ -252,7 +252,7 @@
 					</div>
 					<div class="p-field p-col-12 p-md-6">
 						<p:inputNumber required="true" tabindex="4"
-							requiredMessage="#{mensajes['campoRequerido']}" id="hectareasCB" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnNumberEight}">
+							requiredMessage="#{mensajes['campoRequerido']}" id="hectareasCB" decimalPlaces="0" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnDecimalOne}">
 						</p:inputNumber>
 					</div>
 					<div class="p-field p-col-12 p-md-3">
@@ -2639,6 +2639,11 @@
 										value="#{botones['vistaPrevia']}" process="@this">
 									
 									</p:commandButton>
+									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirSalvaguardasVacias}" styleClass="botonRegistroProyecto"										
+										icon="#{botones['icono.imprimir']}" 
+										value="#{botones['vistaPrevia']}" process="@this">
+									
+									</p:commandButton>
 									<p:commandButton value="#{botones['finalizar']}" styleClass="botonRegistroProyecto" 
 										process="@this  :form:panelsalvaguarda" update=" :form:growl :form:panelsalvaguarda"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoFinalizarReporte(1)}" icon="#{botones['icono.check']}"
@@ -2901,7 +2906,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="10" decimalPlaces="0"
-												id="hombres41" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnNumberSeven}">
+												id="hombres41" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnNumberMens}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -2914,7 +2919,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="11" decimalPlaces="0"
-												id="mujeres41" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnNumberEight}">
+												id="mujeres41" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnNumberWomen}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -2981,10 +2986,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>													
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTablaLarga" width="30">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>													
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>													
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTablaLarga" width="30" > 
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 													
 											</p:column>
 											<p:column style="width:80px;">
@@ -4479,7 +4484,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="9" decimalPlaces="0"
-											id="hombresB102" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnNumberSeven}" />
+											id="hombresB102" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnNumberMens}" />
 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -4491,7 +4496,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="10" decimalPlaces="0"
-											id="mujeresB102" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnNumberEight}" />
+											id="mujeresB102" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnNumberWomen}" />
 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -4548,7 +4553,7 @@
 											</p:column>
 											<p:column headerText="#{etiquetas['hectareas']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" id="hectarea101B" style="font-size:10px !important;">
-													<f:convertNumber for="hectarea101B" pattern="#,000.00" locale="es"/>
+													<f:convertNumber for="hectarea101B" pattern="###,###.##" locale="es_ES"/>													
 												</p:outputLabel>
 													
 											</p:column>
@@ -4557,11 +4562,11 @@
 													
 											</p:column>
 											<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}" styleClass="cabeceraTablaLarga" width="42">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 													
 											</p:column>
 											<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}" styleClass="cabeceraTablaLarga" width="42">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 													
 											</p:column>
 											<p:column style="width:80px;">
@@ -4666,7 +4671,7 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber decimalPlaces="0" id="casosreportadosB11"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnNumberSix}" tabindex="2"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnGenericOne}" tabindex="2"/>
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="casosreportadosB11"/>
@@ -4677,7 +4682,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
-											 	id="casosatendidosB11" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnNumberSeven}" tabindex="3"/>
+											 	id="casosatendidosB11" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnGenericTwo}" tabindex="3"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="casosatendidosB11"/>
@@ -4734,10 +4739,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['cuantosCasosReportados']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnGenericOne}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['cuantosCasosAtendidos']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnGenericTwo}" style="font-size:10px !important;"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
@@ -4911,7 +4916,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="5" decimalPlaces="0"
-										id="hombresB121" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnNumberEight}"/>
+										id="hombresB121" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnNumberMens}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="hombresB121"/>
@@ -4922,7 +4927,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="6" decimalPlaces="0"
-										id="mujeresB121" value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnNumberNine}"/>
+										id="mujeresB121" value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnNumberWomen}"/>
 									</div>	
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="mujeresB121"/>
@@ -5023,10 +5028,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTabla" width="35">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTabla" width="35">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberNine}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
@@ -5167,7 +5172,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="5" decimalPlaces="0"
-										id="personasB131" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnNumberSeven}"/>
+										id="personasB131" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnGenericOne}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="personasB131"/>
@@ -5271,7 +5276,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 											</p:column>											
 											<p:column headerText="#{etiquetas['personasInformacion']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnGenericOne}" style="font-size:10px !important;"/>
 											</p:column>											
 											<p:column headerText="#{etiquetas['provincia']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareProvincia}" style="font-size:10px !important;"/>
@@ -5391,7 +5396,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="3" decimalPlaces="0"
-										id="personasB143" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB143.tareColumnNumberSix}"/>
+										id="personasB143" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB143.tareColumnGenericOne}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="personasB143"/>
@@ -5531,7 +5536,7 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroPersonas']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnGenericOne}" style="font-size:10px !important;"/>
 											</p:column>
 											
 											<p:column headerText="#{etiquetas['comoSeComunica']}" styleClass="cabeceraTabla">
@@ -5968,7 +5973,7 @@
 										<p:outputLabel value="#{etiquetas['nroHombresBeneficiarios']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnNumberSix}" tabindex="7"
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnNumberMens}" tabindex="7"
 												decimalPlaces="0" id="hombresC201"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
 											
@@ -5982,7 +5987,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber id="mujeresC201"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnNumberSeven}" tabindex="8" decimalPlaces="0"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnNumberWomen}" tabindex="8" decimalPlaces="0"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
 												
 									</div>									
@@ -6130,14 +6135,14 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}" styleClass="cabeceraTablaLarga" width="45">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}" styleClass="cabeceraTablaLarga" width="45">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['hectareas']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" id="hectareas201C" style="font-size:10px !important;">
-													<f:convertNumber for="hectareas201C" pattern="#,000.00" locale="es"/>
+													<f:convertNumber for="hectareas201C" pattern="###,###.##" locale="es_ES"/>
 												</p:outputLabel>
 											</p:column>														
 											<p:column headerText="#{etiquetas['inversionRealizada']}" styleClass="cabeceraTablaLarga">
@@ -6596,7 +6601,7 @@
 										<p:outputLabel value="#{etiquetas['numeroHombres']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnNumberSix}" tabindex="3"
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnNumberMens}" tabindex="3"
 												decimalPlaces="0" id="hombresC241"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/> 
 									</div>
@@ -6608,7 +6613,7 @@
 										<p:outputLabel value="#{etiquetas['numeroMujeres']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnNumberSeven}" tabindex="4"
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnNumberWomen}" tabindex="4"
 												decimalPlaces="0" id="mujeresC241"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/> 
 									</div>
@@ -6679,11 +6684,11 @@
 													
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 													
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 													
 											</p:column>
 											<p:column headerText="#{etiquetas['tematica']}" styleClass="cabeceraTabla">
@@ -7286,7 +7291,7 @@
 											</p:column>
 											<p:column headerText="#{etiquetas['hectareasRed']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" id="hectareas271C" style="font-size:10px !important;" >
-													<f:convertNumber for="hectareas271C" pattern="#,000.00" locale="es"/>
+													<f:convertNumber for="hectareas271C" pattern="###,###.##" locale="es_ES"/>
 												</p:outputLabel>
 											</p:column>
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTabla">
@@ -7510,7 +7515,7 @@
 											</p:column>	
 											<p:column headerText="#{etiquetas['presupuesto']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" id="presupuesto28C" style="font-size:10px !important;" >
-													<f:convertNumber for="presupuesto28C" pattern="#,000.00" locale="es"/>
+													<f:convertNumber for="presupuesto28C" pattern="###,###.##" locale="es_ES"/>
 												</p:outputLabel>
 											</p:column>
 											<p:column headerText="#{etiquetas['fomentoDerechoLaboral']}" styleClass="cabeceraTabla">
@@ -8381,7 +8386,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="8" decimalPlaces="0"
-												id="hombresC311" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnNumberSix}">
+												id="hombresC311" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnNumberMens}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -8395,7 +8400,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="9" decimalPlaces="0"
-												id="mujeresC311" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnNumberSeven}">
+												id="mujeresC311" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnNumberWomen}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -8493,10 +8498,10 @@
 											</p:column>
 											
 											<p:column headerText="#{etiquetas['asisteHombres']}" styleClass="cabeceraTablaLarga" width="39">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['asisteMujeres']}" styleClass="cabeceraTablaLarga" width="39">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareComponente}" style="font-size:10px !important;"/>
@@ -8940,7 +8945,7 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber id="mujeresD321"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnNumberSix}" tabindex="8" decimalPlaces="0"/>
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnNumberWomen}" tabindex="8" decimalPlaces="0"/>
 									</div>
 									
 									<div class="p-field p-col-12 p-md-3">
@@ -8955,7 +8960,7 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber id="hombresD321"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnNumberSeven}" tabindex="9" decimalPlaces="0"/>
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnNumberMens}" tabindex="9" decimalPlaces="0"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="hombresD321"/>
@@ -9068,10 +9073,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['asisteHombres']}" styleClass="cabeceraTablaLarga" width="39">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>	
 											<p:column headerText="#{etiquetas['asisteMujeres']}" styleClass="cabeceraTablaLarga" width="39">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareComponente}" style="font-size:10px !important;"/>
@@ -9359,7 +9364,7 @@
 											</p:column>	
 											<p:column headerText="#{etiquetas['inversionRealizada']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" id="inversion331D" style="font-size:10px !important;" >
-													<f:convertNumber for="inversion331D" pattern="#,000.00" locale="es"/>
+													<f:convertNumber for="inversion331D" pattern="###,###.##" locale="es_ES"/>
 												</p:outputLabel>
 											</p:column>																							
 											<p:column headerText="#{etiquetas['nivelInvolucramiento']}" styleClass="cabeceraTabla">
@@ -9854,7 +9859,7 @@
 											</p:column>																							
 											<p:column headerText="#{etiquetas['hectareas']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" id="hectareas341E" style="font-size:10px !important;" >
-													<f:convertNumber for="hectarea341E" pattern="#,000.00" locale="es"/>
+													<f:convertNumber for="hectarea341E" pattern="###,###.##" locale="es_ES"/>
 												</p:outputLabel>
 											</p:column>	
 											<p:column headerText="#{etiquetas['tipoAreaConsolidada']}" styleClass="cabeceraTabla">
@@ -10386,7 +10391,7 @@
 											</p:column>																							
 											<p:column headerText="#{etiquetas['hectareas']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" id="hectareas361E" style="font-size:10px !important;" >
-													<f:convertNumber for="hectarea361E" pattern="#,000.00" locale="es"/>
+													<f:convertNumber for="hectarea361E" pattern="###,###.##" locale="es_ES"/>
 												</p:outputLabel>
 											</p:column>																		
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTabla">
@@ -10634,7 +10639,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber tabindex="9" decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											id="hombresE371"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareColumnNumberEight}">
+											id="hombresE371"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareColumnNumberMens}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>									
@@ -10647,7 +10652,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber tabindex="10" decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											id="mujeresE371"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareColumnNumberNine}">
+											id="mujeresE371"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareColumnNumberWomen}">
 												<p:ajax process="@this" />
 											</p:inputNumber>
 									</div>
@@ -10749,10 +10754,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareGenericoDos}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTablaLarga" width="30">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTablaLarga" width="30">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberNine}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareComponente}" style="font-size:10px !important;"/>
@@ -11435,10 +11440,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb1.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb1.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb1.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb1.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb1.tareColumnOne}"/>
@@ -11481,10 +11486,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb2.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb2.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb2.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb2.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11521,13 +11526,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb3.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb3.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb3.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb3.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb3.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb3.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11564,10 +11569,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb4.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb4.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb4.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb4.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['espacioGobernanza']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb4.tareColumnOne}"/>
@@ -11614,13 +11619,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb5.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb5.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb5.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb5.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb5.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb5.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -11657,10 +11662,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb6.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb6.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb6.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb6.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['riesgoAbordado']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb6.tareColumnOne}"/>
@@ -11700,10 +11705,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb7.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb7.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb7.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb7.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['capacidadesFortalecidas']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb7.tareColumnOne}"/>
@@ -11762,10 +11767,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb8.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb8.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb8.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb8.tareColumnNumberWomen}"/>
 										</p:column>
 										
 										<p:column style="width:80px;">
@@ -11803,10 +11808,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb9.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb9.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb9.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb9.tareColumnNumberWomen}"/>
 										</p:column>
 										
 										<p:column style="width:80px;">
@@ -11844,10 +11849,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb10.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb10.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb10.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb10.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['productosIncentivados']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb10.tareColumnOne}"/>
@@ -11887,10 +11892,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb11.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb11.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb11.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb11.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['orgFortalecida']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb11.tareColumnOne}"/>
@@ -11930,10 +11935,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb12.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb12.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb12.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb12.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['asoApoyada']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb12.tareColumnOne}"/>
@@ -11973,10 +11978,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb13.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb13.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb13.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb13.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['incIngresos']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb13.tareColumnDecimalOne}"/>
@@ -12028,13 +12033,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb14.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb14.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb14.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb14.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb14.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb14.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12071,13 +12076,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb15.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb15.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb15.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb15.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb15.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb15.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12114,13 +12119,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb16.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb16.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb16.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb16.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb16.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb16.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12157,13 +12162,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb17.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb17.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb17.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb17.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb17.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb17.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12223,10 +12228,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb18.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb18.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb18.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb18.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['fuenteIngApoyo']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb18.tareColumnOne}"/>
@@ -12267,10 +12272,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb19.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb19.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb19.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb19.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['comunidad']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb19.tareColumnOne}"/>
@@ -12310,10 +12315,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb20.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb20.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb20.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb20.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['capacidadesFortalecidas']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb20.tareColumnOne}"/>
@@ -12353,10 +12358,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb21.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb21.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb21.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb21.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['iniciativaTurApoyo']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb21.tareColumnOne}"/>
@@ -12396,10 +12401,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb22.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb22.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb22.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb22.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['instrumentoGobForestal']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb22.tareColumnOne}"/>
@@ -12439,10 +12444,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb23.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb23.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb23.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb23.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['nombreOrgApoyada']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb23.tareColumnOne}"/>
@@ -12482,10 +12487,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb24.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb24.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb24.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb24.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['nombreOrgApoyada']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb24.tareColumnOne}"/>
@@ -12525,13 +12530,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb25.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb25.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb25.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb25.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb25.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb25.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12579,13 +12584,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb26.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb26.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb26.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb26.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb26.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb26.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12622,10 +12627,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb27.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb27.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb27.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb27.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['canton']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb27.tareCanton}"/>
@@ -12665,10 +12670,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb28.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb28.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb28.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb28.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['especiesProtegidas']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb28.tareColumnOne}"/>
@@ -12708,10 +12713,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb29.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb29.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb29.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb29.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['especiesProtegidas']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb29.tareColumnOne}"/>
@@ -12751,13 +12756,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb30.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb30.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb30.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb30.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb30.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb30.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12857,10 +12862,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb32.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb32.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb32.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb32.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['nombreOrgApoyada']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb32.tareColumnOne}"/>
@@ -12900,10 +12905,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb33.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb33.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb33.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb33.tareColumnNumberWomen}"/>
 										</p:column>
 										
 										<p:column style="width:80px;">
@@ -12952,13 +12957,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb34.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb34.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb34.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb34.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb34.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb34.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -12995,13 +13000,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb35.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb35.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb35.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb35.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb35.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb35.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -13038,10 +13043,10 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb36.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb36.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb36.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb36.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['canton']}" styleClass="cabeceraTabla">
 											<p:outputLabel value="#{cb36.tareCanton}"/>
@@ -13081,13 +13086,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb37.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb37.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb37.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb37.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb37.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb37.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -13124,13 +13129,13 @@
 										</p:column>
 										
 										<p:column headerText="#{etiquetas['numBeneficiarios']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb38.tareColumnNumberSix}"/>
+											<p:outputLabel value="#{cb38.tareColumnNumberMens}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numBeneficiarias']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb38.tareColumnNumberSeven}"/>
+											<p:outputLabel value="#{cb38.tareColumnNumberWomen}"/>
 										</p:column>
 										<p:column headerText="#{etiquetas['numHectareas']}" styleClass="cabeceraTabla">
-											<p:outputLabel value="#{cb38.tareColumnNumberEight}"/>
+											<p:outputLabel value="#{cb38.tareColumnDecimalOne}"/>
 										</p:column>
 										<p:column style="width:80px;">
 											<p:commandButton process="@this " icon="#{botones['icono.editar']}" update=":form:pnlDatosCobeneficios" partialSubmit="true" 
@@ -14659,7 +14664,7 @@
 										<p:outputLabel value="#{etiquetas['casosReportados']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF452.tareColumnNumberSix}" tabindex="3" decimalPlaces="0"
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF452.tareColumnGenericOne}" tabindex="3" decimalPlaces="0"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -14669,7 +14674,7 @@
 										<p:outputLabel value="#{etiquetas['casosAtendidos']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF452.tareColumnNumberSeven}" tabindex="4" decimalPlaces="0"
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF452.tareColumnGenericTwo}" tabindex="4" decimalPlaces="0"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -14726,10 +14731,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnOne}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['casosReportados']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnGenericOne}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['casosAtendidos']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnGenericTwo}"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}"/>
@@ -15451,7 +15456,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber required="true" requiredMessage="#{mensajes['campoRequerido']}" decimalPlaces="0" id="hombresG471"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnNumberSeven}" tabindex="9"/>											
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnNumberMens}" tabindex="9"/>											
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="hombresG471"/>
@@ -15463,7 +15468,7 @@
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputNumber id="mujeresG471"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" decimalPlaces="0"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnNumberEight}" tabindex="10"/>
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnNumberWomen}" tabindex="10"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="mujeresG471"/>
@@ -15562,10 +15567,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareGenericoTres}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTablaLarga" width="30">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTablaLarga" width="30">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['fecha']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareColumnNine}" id="fechaG471" style="font-size:10px !important;">
@@ -16177,7 +16182,7 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber id="hombresG491"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="11" decimalPlaces="0"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnNumberSeven}"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnNumberMens}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="hombresG491"/>
@@ -16189,7 +16194,7 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber id="mujeresG491"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="12" decimalPlaces="0"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnNumberEight}"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnNumberWomen}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="mujeresG491"/>
@@ -16301,10 +16306,10 @@
 											</p:column>
 											
 											<p:column headerText="#{etiquetas['nroHombresBeneficiarios']}" styleClass="cabeceraTablaLarga">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}" styleClass="cabeceraTablaLarga">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberEight}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['suportValueChain']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
@@ -16738,7 +16743,7 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber decimalPlaces="0" id="hombresG512"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="7" 
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG512.tareColumnNumberSix}"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG512.tareColumnNumberMens}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="hombresG512"/>
@@ -16750,7 +16755,7 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputNumber decimalPlaces="0" id="mujeresG512"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="8"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG512.tareColumnNumberSeven}"/>
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG512.tareColumnNumberWomen}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="mujeresG512"/>
@@ -16889,10 +16894,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroHombres']}" styleClass="cabeceraTablaLarga" width="30">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSix}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTablaLarga" width="30">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberSeven}" style="font-size:10px !important;"/>
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['monitoreoRemoto']}" styleClass="cabeceraTablaLarga">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" id="idmonitoreoRG512" style="font-size:10px !important;"/>

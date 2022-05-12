@@ -23,20 +23,31 @@
 				<br />
 				<br />
 			</h:panelGrid>
-			<h:panelGrid columns="3">
-
-				<p:tieredMenu style="width:400px" model="#{loginBean.menuModel}">
+			<h:panelGrid >
+				<center>
+				<p:menubar model="#{loginBean.menuModel}">
 					
-				</p:tieredMenu>
+				</p:menubar>
+				<p:toolbar>
+            		<p:toolbarGroup align="left">
+            			<span class="fa fa-user"></span>
+            			<p:outputLabel value="#{etiquetas['bienvenido']}: #{loginBean.user.userName}"/>
+            					
+            		</p:toolbarGroup>
+            		<p:toolbarGroup align="right">
+            			<p:commandLink action="#{sesionController.cerrarSesion}"
+							process="@this" partialSubmit="true" async="true" global="false">
+							<i class="fa fa-power-off"></i>
+							<span>Cerrar Sesión</span>
+						</p:commandLink>
+            		</p:toolbarGroup>
+            	</p:toolbar>	
+				</center>
 				<h:panelGrid width="550">
 
 				</h:panelGrid>
 				
-				<p:commandLink action="#{sesionController.cerrarSesion}"
-					process="@this" partialSubmit="true" async="true" global="false">
-					<i class="fa fa-power-off"></i>
-					<span>Salir</span>
-				</p:commandLink>
+				
 			</h:panelGrid>
 		</center>
 
