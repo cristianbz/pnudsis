@@ -2639,11 +2639,7 @@
 										value="#{botones['vistaPrevia']}" process="@this">
 									
 									</p:commandButton>
-									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirSalvaguardasVacias}" styleClass="botonRegistroProyecto"										
-										icon="#{botones['icono.imprimir']}" 
-										value="#{botones['vistaPrevia']}" process="@this">
 									
-									</p:commandButton>
 									<p:commandButton value="#{botones['finalizar']}" styleClass="botonRegistroProyecto" 
 										process="@this  :form:panelsalvaguarda" update=" :form:growl :form:panelsalvaguarda"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoFinalizarReporte(1)}" icon="#{botones['icono.check']}"

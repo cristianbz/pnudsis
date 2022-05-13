@@ -28,27 +28,27 @@ public class GeographicalLocationsFacade extends AbstractFacade<GeographicalLoca
 	}
 
 	public List<Object[]> listarProvincias() throws Exception {
-		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec from geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true order by g.gelo_codification_inec";
+		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec from public.geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true order by g.gelo_codification_inec";
 		return consultaNativa(sql);
 	}
 
 	public List<Object[]> listarCantones() throws Exception {
-		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from geographical_locations g "
-				+ " where gelo_parent_id in (select g.gelo_id from geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true) "
+		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from public.geographical_locations g "
+				+ " where gelo_parent_id in (select g.gelo_id from public.geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true) "
 				+ " and g.gelo_status=true order by g.gelo_codification_inec";
 		return consultaNativa(sql);
 	}
 
 	public List<Object[]> listarParroquias() throws Exception {
-		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from geographical_locations g"
-				+ " where  gelo_parent_id in ( select g.gelo_id from geographical_locations g "
-				+ " where gelo_parent_id in (select g.gelo_id from geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true)"
+		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from public.geographical_locations g"
+				+ " where  gelo_parent_id in ( select g.gelo_id from public.geographical_locations g "
+				+ " where gelo_parent_id in (select g.gelo_id from public.geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true)"
 				+ " and g.gelo_status=true order by g.gelo_codification_inec )" + " order by g.gelo_codification_inec";
 		return consultaNativa(sql);
 	}
 	public List<Object[]> listarCantonesPorProvincia(String codigoProvincia) throws Exception {
-		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from geographical_locations g " 
-				 + " where gelo_parent_id in (select g.gelo_id from geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true) " 
+		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from public.geographical_locations g " 
+				 + " where gelo_parent_id in (select g.gelo_id from public.geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true) " 
 				 + " and SUBSTRING(gelo_codification_inec FROM 1 FOR 2)=  '"+ codigoProvincia + "'"
 				 + "and g.gelo_status=true order by g.gelo_codification_inec";
 		
@@ -56,9 +56,9 @@ public class GeographicalLocationsFacade extends AbstractFacade<GeographicalLoca
 	}
 
 	public List<Object[]> listarParroquiasPorCanton(String codigoCanton) throws Exception {
-		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from geographical_locations g"
-				+ " where  gelo_parent_id in ( select g.gelo_id from geographical_locations g "
-				+ " where gelo_parent_id in (select g.gelo_id from geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true)"
+		String sql = "select g.gelo_name,g.gelo_id,g.gelo_codification_inec,g.gelo_parent_id from public.geographical_locations g"
+				+ " where  gelo_parent_id in ( select g.gelo_id from public.geographical_locations g "
+				+ " where gelo_parent_id in (select g.gelo_id from public.geographical_locations g where g.gelo_parent_id=1 and g.gelo_status=true)"
 				+ " and SUBSTRING(gelo_codification_inec FROM 1 FOR 4)=  '"+ codigoCanton + "'"
 				+ " and g.gelo_status=true order by g.gelo_codification_inec )" + " order by g.gelo_codification_inec";		
 		return consultaNativa(sql);

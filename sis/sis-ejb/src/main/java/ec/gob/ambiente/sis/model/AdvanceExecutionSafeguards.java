@@ -34,13 +34,15 @@ import lombok.Setter;
 @Table(name = "advance_execution_safeguards", schema = "sis")
 @NamedQueries({
 	@NamedQuery(name = "pro",query = "SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexIsGender = FALSE"),
-	@NamedQuery(name = AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO,query = "SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsReported=false")	
+	@NamedQuery(name = AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO,query = "SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsReported=false"),
+	@NamedQuery(name = AdvanceExecutionSafeguards.BUSCA_AVANCE_EJECUCION_SALVAGUARDA,query = "SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.projectsStrategicPartners IS NULL AND AP.adexIsReported=false AND AP.adexIsGender = FALSE AND AP.adexTermFrom =:desde AND AP.adexTermTo=:hasta")
 })
 public class AdvanceExecutionSafeguards {
 
 	
 	
 	public static final String CARGAR_AVANCE_POR_PROYECTO="cargarAvancePorProyecto";
+	public static final String BUSCA_AVANCE_EJECUCION_SALVAGUARDA="buscaAvanceEjecucionSalvaguarda";
 
 	@Getter
 	@Setter

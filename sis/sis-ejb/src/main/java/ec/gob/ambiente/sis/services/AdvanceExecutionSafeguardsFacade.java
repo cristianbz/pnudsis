@@ -392,5 +392,25 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 //		}
 		return listaTemp;
 	}
+	/**
+	 * Busca el avance de ejeucion de un socio implementador
+	 * @param aes
+	 * @return
+	 * @throws DaoException
+	 */
+	public AdvanceExecutionSafeguards buscaAvanceEjecucionSocioImplementador(AdvanceExecutionSafeguards aes) throws DaoException{
+		try{
+			String sql ="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.projectsStrategicPartners.pspaId IS NULL AND AP.adexIsReported=false AND AP.adexIsGender = FALSE AND AP.adexTermFrom =:desde AND AP.adexTermTo=:hasta";
+			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+			camposCondicion.put("codigoProyecto", aes.getProjects().getProjId());
+			camposCondicion.put("desde",aes.getAdexTermFrom());
+			camposCondicion.put("hasta", aes.getAdexTermTo());
+			return findByCreateQuerySingleResult(sql, camposCondicion);
+		}catch(NoResultException e){
+			return null;
+		}catch(Exception e){
+			throw new DaoException();
+		}
+	}
 
 }

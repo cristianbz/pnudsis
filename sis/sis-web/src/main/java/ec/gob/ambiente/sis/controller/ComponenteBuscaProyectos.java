@@ -924,6 +924,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 				getBuscaProyectosBean().setCodigoStrategicPartner(null);
 				getBuscaProyectosBean().setAnioReporte(null);
 				getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));
+				Collections.sort(getBuscaProyectosBean().getListaPartnersProyectos(), new Comparator<ProjectsStrategicPartners>(){
+					@Override
+					public int compare(ProjectsStrategicPartners o1, ProjectsStrategicPartners o2) {
+						return o1.getPartners().getPartName().compareToIgnoreCase(o2.getPartners().getPartName());
+					}
+				});
 			}else{
 				if(getLoginBean().getTipoRol() == 3)
 					cargaProyectosReportados(proyecto);
@@ -937,6 +943,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 					getBuscaProyectosBean().setCodigoStrategicPartner(null);
 					getBuscaProyectosBean().setAnioReporte(null);
 					getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));
+					Collections.sort(getBuscaProyectosBean().getListaPartnersProyectos(), new Comparator<ProjectsStrategicPartners>(){
+						@Override
+						public int compare(ProjectsStrategicPartners o1, ProjectsStrategicPartners o2) {
+							return o1.getPartners().getPartName().compareToIgnoreCase(o2.getPartners().getPartName());
+						}
+					});
 				}
 			}
 		}catch(Exception e){
@@ -1362,6 +1374,13 @@ public class ComponenteBuscaProyectos implements Serializable{
 	}
 	public void volverActivarReporte(){
 		try{
+			AdvanceExecutionSafeguards avanceImplementador = getAdvanceExecutionSafeguardsFacade().buscaAvanceEjecucionSocioImplementador(getBuscaProyectosBean().getAdvanceExecution());
+			if(avanceImplementador != null){
+				avanceImplementador.setAdexIsReported(false);
+				avanceImplementador.setAdexReportedStatus("I");
+				getAdvanceExecutionSafeguardsFacade().edit(avanceImplementador);
+			}
+				
 			getBuscaProyectosBean().getAdvanceExecution().setAdexIsReported(false);
 			getBuscaProyectosBean().getAdvanceExecution().setAdexReportedStatus("I");
 			getBuscaProyectosBean().getAdvanceExecution().setAdexUpdateUser(getLoginBean().getUser().getUserName());
