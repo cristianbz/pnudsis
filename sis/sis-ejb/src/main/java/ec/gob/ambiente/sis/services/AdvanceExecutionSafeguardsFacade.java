@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.dto.DtoDatosProyectoResumen;
 import ec.gob.ambiente.sis.excepciones.DaoException;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
@@ -392,5 +393,51 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 //		}
 		return listaTemp;
 	}
-
+	/**
+	 * Busca el avance de ejeucion de un socio implementador
+	 * @param aes
+	 * @return
+	 * @throws DaoException
+	 */
+	public AdvanceExecutionSafeguards buscaAvanceEjecucionSocioImplementador(AdvanceExecutionSafeguards aes) throws DaoException{
+		try{
+			String sql ="SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.projectsStrategicPartners.pspaId IS NULL AND AP.adexIsReported = TRUE AND AP.adexIsGender = FALSE AND AP.adexTermFrom =:desde AND AP.adexTermTo=:hasta";
+			Map<String, Object> camposCondicion=new HashMap<String, Object>();
+			camposCondicion.put("codigoProyecto", aes.getProjects().getProjId());
+			camposCondicion.put("desde",aes.getAdexTermFrom());
+			camposCondicion.put("hasta", aes.getAdexTermTo());
+			return findByCreateQuerySingleResult(sql, camposCondicion);
+		}catch(NoResultException e){
+			return null;
+		}catch(Exception e){
+			throw new DaoException();
+		}
+	}
+	/**
+	 * Datos del proyecto 
+	 * @param codigoReporte
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoDatosProyectoResumen> buscaDatosProyecto(int codigoReporte)throws Exception{
+		List<DtoDatosProyectoResumen> listaTemp= new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT p.proj_title,pa.part_name,s.sect_name FROM sigma.projects p, sis.advance_execution_safeguards aex, sis.advance_sectors ase, sis.sectors s, sigma.partners pa " +
+				    " WHERE p.proj_id = aex.proj_id AND aex.adex_id = ase.adex_id AND s.sect_id = ase.sect_id AND pa.part_id = p.part_id AND aex.adex_id =" + codigoReporte;
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoDatosProyectoResumen dto = new DtoDatosProyectoResumen();				
+				if(dataObj[0]!=null)
+					dto.setProyecto(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setPartner(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setSector(dataObj[2].toString());													
+				listaTemp.add(dto);
+			}
+		}
+		return listaTemp;
+	}
 }

@@ -4,7 +4,10 @@
  **/
 package ec.gob.ambiente.sis.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,8 +22,12 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -38,6 +45,8 @@ import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.BuscaProyectosBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
+import ec.gob.ambiente.sis.dto.DtoRespuestasSalvaguardas;
+import ec.gob.ambiente.sis.dto.DtoResumenSalvaguarda;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.AdvanceSectors;
@@ -47,6 +56,7 @@ import ec.gob.ambiente.sis.model.Indicators;
 import ec.gob.ambiente.sis.model.ProjectGenderIndicator;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.ProjectsGenderInfo;
+import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.services.AdvanceExecutionProjectGenderFacade;
 import ec.gob.ambiente.sis.services.AdvanceExecutionSafeguardsFacade;
@@ -56,7 +66,11 @@ import ec.gob.ambiente.sis.services.IndicatorsFacade;
 import ec.gob.ambiente.sis.services.ProjectGenderIndicatorFacade;
 import ec.gob.ambiente.sis.services.ProjectQuestionsFacade;
 import ec.gob.ambiente.sis.services.ProjectsGenderInfoFacade;
+import ec.gob.ambiente.sis.services.QuestionsFacade;
 import ec.gob.ambiente.sis.services.SectorsFacade;
+import ec.gob.ambiente.sis.services.TableResponsesFacade;
+import ec.gob.ambiente.sis.utils.GeneradorPdfHtml;
+import ec.gob.ambiente.sis.utils.GenerarPdfResumen;
 import ec.gob.ambiente.sis.utils.Mensaje;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoRolesUsuarioEnum;
@@ -71,6 +85,10 @@ public class ComponenteBuscaProyectos implements Serializable{
 	private static final Logger LOG = Logger.getLogger(ComponenteBuscaProyectos.class);
 
 
+	@Inject
+	@Getter
+	private GeneradorPdfHtml generadorPdfHtml;
+	
 	@Inject
 	@Getter
 	private BuscaProyectosBean buscaProyectosBean;
@@ -173,6 +191,14 @@ public class ComponenteBuscaProyectos implements Serializable{
 	@Getter
 	@Setter
 	private Integer codigoPartner;
+	
+	@EJB
+	@Getter
+	private QuestionsFacade questionsFacade;
+	
+	@EJB
+	@Getter
+	private TableResponsesFacade tableResponsesFacade;
 	
 
 	private boolean esProyecto;
@@ -849,6 +875,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 
 				getBuscaProyectosBean().setListaProyectosReportados(new ArrayList<>());
 				getBuscaProyectosBean().setListaProyectosReportados(getAdvanceExecutionSafeguardsFacade().listarProyReportadosConCriteriosBusqueda(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(), getBuscaProyectosBean().getCodigoStrategicPartner(),  periodoReporte, getBuscaProyectosBean().getEstadoReporte()));
+				Collections.sort(getBuscaProyectosBean().getListaProyectosReportados(), new Comparator<AdvanceExecutionSafeguards>(){
+					@Override
+					public int compare(AdvanceExecutionSafeguards o1, AdvanceExecutionSafeguards o2) {
+						return o1.getAdexTermFrom().compareToIgnoreCase(o2.getAdexTermFrom());
+					}
+				});
 				if(getBuscaProyectosBean().getListaProyectosReportados().size()==0){
 					Mensaje.actualizarComponente(":form:growl");				
 					Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "" ,getMensajesController().getPropiedad("info.noReportesGenerados") );
@@ -924,6 +956,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 				getBuscaProyectosBean().setCodigoStrategicPartner(null);
 				getBuscaProyectosBean().setAnioReporte(null);
 				getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));
+				Collections.sort(getBuscaProyectosBean().getListaPartnersProyectos(), new Comparator<ProjectsStrategicPartners>(){
+					@Override
+					public int compare(ProjectsStrategicPartners o1, ProjectsStrategicPartners o2) {
+						return o1.getPartners().getPartName().compareToIgnoreCase(o2.getPartners().getPartName());
+					}
+				});
 			}else{
 				if(getLoginBean().getTipoRol() == 3)
 					cargaProyectosReportados(proyecto);
@@ -937,6 +975,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 					getBuscaProyectosBean().setCodigoStrategicPartner(null);
 					getBuscaProyectosBean().setAnioReporte(null);
 					getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));
+					Collections.sort(getBuscaProyectosBean().getListaPartnersProyectos(), new Comparator<ProjectsStrategicPartners>(){
+						@Override
+						public int compare(ProjectsStrategicPartners o1, ProjectsStrategicPartners o2) {
+							return o1.getPartners().getPartName().compareToIgnoreCase(o2.getPartners().getPartName());
+						}
+					});
 				}
 			}
 		}catch(Exception e){
@@ -1360,18 +1404,98 @@ public class ComponenteBuscaProyectos implements Serializable{
 	public void mostrarDialogoActivarReporte(){
 		Mensaje.verDialogo("dlgVolverActivarReporte");
 	}
+	/**
+	 * Permite volver a activar el reporte
+	 */
 	public void volverActivarReporte(){
 		try{
+			AdvanceExecutionSafeguards avanceImplementador = getAdvanceExecutionSafeguardsFacade().buscaAvanceEjecucionSocioImplementador(getBuscaProyectosBean().getAdvanceExecution());
+			if(avanceImplementador != null){
+				avanceImplementador.setAdexIsReported(false);
+				avanceImplementador.setAdexReportedStatus("I");
+				avanceImplementador.setAdexUpdateUser(getLoginBean().getUser().getUserName());
+				avanceImplementador.setAdexUpdateDate(new Date());
+				getAdvanceExecutionSafeguardsFacade().edit(avanceImplementador);
+			}
+
 			getBuscaProyectosBean().getAdvanceExecution().setAdexIsReported(false);
 			getBuscaProyectosBean().getAdvanceExecution().setAdexReportedStatus("I");
 			getBuscaProyectosBean().getAdvanceExecution().setAdexUpdateUser(getLoginBean().getUser().getUserName());
 			getBuscaProyectosBean().getAdvanceExecution().setAdexUpdateDate(new Date());
 			getAdvanceExecutionSafeguardsFacade().edit(getBuscaProyectosBean().getAdvanceExecution());
+			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO,  "", getMensajesController().getPropiedad("info.reactivacion"));
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "volverActivarReporte " + ": ").append(e.getMessage()));
 		}
 	}
 	
+	public void generarPdf(){
+		try{
+			String pattern = "MMM yy HH:mm";
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+			String date = simpleDateFormat.format(new Date());
+			List<Questions> preguntasActivas = getQuestionsFacade().listaPreguntasActivas();
+			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+			String logoQR = ctx.getRealPath("/") + "/resources/images/logoQR.png";
+			DtoResumenSalvaguarda dto = new DtoResumenSalvaguarda();
+			dto.setFecha(date);
+			dto.setProyecto(getBuscaProyectosBean().getAdvanceExecution().getProjects().getProjTitle());
+			dto.setSocioImplementador(getBuscaProyectosBean().getAdvanceExecution().getProjects().getPartners().getPartName());
+			StringBuffer sectores= new StringBuffer();
+			for (AdvanceSectors ava : getBuscaProyectosBean().getAdvanceExecution().getAdvanceSectorsList()) {
+				sectores.append(ava.getSectors().getSectName()).append(" , ");				
+			}
+			dto.setSectores(sectores.toString());
+			dto.setPregunta1(preguntasActivas.get(1).getQuesContentQuestion());
+			
+			llenarTablasPdfA(dto);
+			
+			String html = GenerarPdfResumen.REPORTE_RESUMEN_SALVAGUARDAS;
+			html = getGeneradorPdfHtml().procesar(html, dto);
+
+			byte[] array = getGeneradorPdfHtml().crearPdf(html, 25, 25, 25, 25, null);
+			descargarReporte("application/pdf", "SALVO" , array);
+		}catch(Exception e){
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarPdf " + ": ").append(e.getMessage()));
+		}
+	}
 	
+	private void descargarReporte(String mimeType, String nombreArchivo, byte[] bs) throws IOException {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
+
+		response.reset();
+		response.setContentType(mimeType);
+		response.setHeader("Content-disposition", "attachment; filename=\"" + nombreArchivo + ".pdf");
+
+		OutputStream output = response.getOutputStream();
+		output.write(bs);
+		output.flush();
+		output.close();
+
+		facesContext.responseComplete();
+	}
+	
+	public void llenarTablasPdfA(DtoResumenSalvaguarda dtoResumen){
+		try{
+			
+			List<DtoRespuestasSalvaguardas> listaA = getTableResponsesFacade().resumenSalvaguardaA(getBuscaProyectosBean().getAdvanceExecution().getAdexId());
+			List<Catalogs> catalogos= new ArrayList<>();
+			catalogos = getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MARCOJURIDICOINTERNACIONAL.getCodigo());
+			String tablaJuridicoInternacional = "<table width='30%' style='margin-left: 3em;border-style:none;border-collapse: collapse;font-size:11px;font-family: sans-serif;'>\r\n";
+			for (DtoRespuestasSalvaguardas valores : listaA) {
+				for (Catalogs catalogs : catalogos) {
+					if(catalogs.getCataId().equals(valores.getCodigoPoliticaLey()) && valores.getCodigoPoliticaLey()!=null){
+						tablaJuridicoInternacional += "  <tr>\r\n" + " <td bgcolor='#FFFFFF' width='30%'>" + valores.getPoliticaLey()+ "</td></tr>\r\n";
+					}
+				}
+			}
+			tablaJuridicoInternacional += "</table>\r\n";
+			dtoResumen.setTablaJuridicoInternacional(tablaJuridicoInternacional);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 }

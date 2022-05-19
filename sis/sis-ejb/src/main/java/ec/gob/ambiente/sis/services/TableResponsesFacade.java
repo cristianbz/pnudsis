@@ -17,6 +17,8 @@ import javax.persistence.NoResultException;
 import org.hibernate.Hibernate;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.dto.DtoRespuestasSalvaguardas;
+import ec.gob.ambiente.sis.dto.DtoResumenSalvaguarda;
 import ec.gob.ambiente.sis.dto.DtoSalvaguardaA;
 import ec.gob.ambiente.sis.dto.DtoSalvaguardaF;
 import ec.gob.ambiente.sis.dto.DtoTableResponses;
@@ -2492,5 +2494,51 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return lista;
 	}
+	/**
+	 * Recupera datos para salvaguarda A del resumen de seguimiento
+	 * @param codigoProyecto
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoRespuestasSalvaguardas> resumenSalvaguardaA(int codigoReporte) throws Exception{
+		List<DtoRespuestasSalvaguardas> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT q.ques_id, tr.tare_column_one, tr.tare_column_two, " + 
+            " tr.tare_column_three, tr.tare_column_decimal_one, " +
+            " CASE WHEN tr.tare_law_political IS NOT NULL THEN (SELECT cata_text2 FROM sis.catalogs WHERE cata_id = tr.tare_law_political) END as politicaley, " +             
+            " CASE WHEN tr.tare_column_number_six IS NOT NULL THEN (SELECT cata_text2 FROM sis.catalogs WHERE cata_id = tr.tare_column_number_six) END as plangobierno, " + 
+            " tr.tare_another_catalog, tr.tare_law_political  FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, " + 
+            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+            " AND sa.safe_code='A' AND aex.adex_id= " + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoRespuestasSalvaguardas dto = new DtoRespuestasSalvaguardas();				
+				if(dataObj[0]!=null)
+					dto.setCodigoPregunta(Integer.valueOf(dataObj[0].toString()));					
+				if(dataObj[1]!=null)
+					dto.setTexto1(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setTexto2(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setTexto3(dataObj[3].toString());				
+				if(dataObj[4]!=null)
+					dto.setDecimal1(Double.parseDouble(dataObj[4].toString()));
+				if(dataObj[5]!=null)
+					dto.setPoliticaLey(dataObj[5].toString());	
+				if(dataObj[6]!=null)
+					dto.setCatalogo1(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setOtrocatalogo(dataObj[7].toString());
+				if(dataObj[8]!=null)
+					dto.setCodigoPoliticaLey(Integer.valueOf(dataObj[8].toString()));									
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
 
 }

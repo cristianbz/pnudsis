@@ -126,4 +126,14 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 		}
 		return orden;
 	}
+	/**
+	 * Busca las preguntas activas
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Questions> listaPreguntasActivas() throws Exception{
+		String sql="SELECT Q FROM Questions Q WHERE Q.quesStatus= TRUE ORDER BY Q.safeguards.safeCode,Q.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		return findByCreateQuery(sql, camposCondicion);
+	}
 }

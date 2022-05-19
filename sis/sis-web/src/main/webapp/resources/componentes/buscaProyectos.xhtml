@@ -57,7 +57,7 @@
 				closable="false" resizable="false">				 
 				<h:panelGrid columns="2" style="margin:0 auto;">
 					<p:commandButton process="@this :form:buscaProyectos:tablaReportados" icon="#{botones['icono.check']}" oncomplete="PF('dlgVolverActivarReporte').hide();"
-						update=":form:buscaProyectos:tablaReportados" action="#{cc.attrs.componenteBuscaProyectos.volverActivarReporte}" partialSubmit="true"
+						update=":form:buscaProyectos:tablaReportados growl" action="#{cc.attrs.componenteBuscaProyectos.volverActivarReporte}" partialSubmit="true"
 						value="#{botones['aceptar']}"/>
 					<p:commandButton process="@this" icon="#{botones['icono.cancelar']}" 
 						oncomplete="PF('dlgVolverActivarReporte').hide();"
@@ -372,6 +372,7 @@
 				hideEffect="fade" modal="true" appendTo="@(body)"
 				header="#{titulos['asignaSalvaguardas']}" width="390"
 				closable="false" resizable="false">
+				<p:outputLabel value="#{titulos['asignaSalvaguarda']}"/>
 				<h:panelGrid columns="2" style="margin:0 auto;">
 					<p:commandButton value="#{botones['grabar']}" update="@form"
 						actionListener="#{cc.attrs.componenteBuscaProyectos.grabarAsignacionSalvaguardas}"
@@ -790,13 +791,15 @@
 									<p:commandButton actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyectoReportado(avance)}" title="#{tooltip['visualizaInformacion']}"
 										onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();" disabled="#{loginBean.tipoRol==3 and avance.adexReportedStatus.equals('P')}"
 										process="@this" partialSubmit="true" update="@form" icon="#{botones['icono.checkcirculo']}"/>		
-									<p:commandButton icon="#{botones['icono.editar']}" process="@this" rendered="#{loginBean.tipoRol==4}" 
+									<p:commandButton icon="#{botones['icono.editar']}" process="@this" rendered="#{loginBean.tipoRol==4  or loginBean.tipoRol==2}" 
 										action="#{cc.attrs.componenteBuscaProyectos.mostrarDialogoActivarReporte}"
-										title="#{tooltip['activarReporte']}" disabled="#{not avance.adexIsReported}">
+										title="#{tooltip['activarReporte']}" disabled="#{avance.adexReportedStatus.equals('I') }">
 										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
 									</p:commandButton>	
-									<p:commandButton icon="#{botones['icono.pdf']}" style="background-color:#9dce2c;">
-									</p:commandButton>																
+									 
+									<p:commandButton ajax="false" process="@this" icon="#{botones['icono.pdf']}" style="background-color:#9dce2c;" action="#{cc.attrs.componenteBuscaProyectos.generarPdf}">
+										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
+									</p:commandButton>   																
 								</p:column>
 							</p:dataTable>
 						</h:panelGrid>
