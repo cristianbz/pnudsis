@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,10 +48,6 @@ public class Questions  {
     @Column(name = "ques_id")
     private Integer quesId;
 	
-	@Getter
-	@Setter
-	@Column(name = "ques_parent_id")
-	private Integer quesParentId;
 	
 	@Getter
 	@Setter
@@ -61,6 +58,16 @@ public class Questions  {
 	@Setter
 	@Column(name = "ques_is_gender")
 	private boolean quesIsGender;
+	
+	@Getter
+	@Setter
+	@Column(name = "ques_principal_question")
+	private boolean quesPrincipalQuestion;
+	
+	@Getter
+	@Setter
+	@Column(name = "ques_important_question")
+	private boolean quesImportantQuestion;
 	
 	@Getter
 	@Setter
@@ -119,5 +126,16 @@ public class Questions  {
 	@Setter
 	@OneToMany(mappedBy = "questions", fetch = FetchType.EAGER)
 	private List<TableResponses> tableResponsesList;
+	
+	@Getter
+	@Setter
+    @OneToMany(mappedBy = "quesParentId" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Questions> questionsList;
+    
+	@Getter
+	@Setter
+    @JoinColumn(name = "ques_parent_id", referencedColumnName = "ques_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Questions quesParentId;
    
 }

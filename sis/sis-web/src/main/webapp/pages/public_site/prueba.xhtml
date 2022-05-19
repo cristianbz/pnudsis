@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+		<link rel="stylesheet" type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
+	
+	<link
+		href="${facesContext.externalContext.requestContextPath}/resources/css/sitiopublico.css"
+		rel="stylesheet" type="text/css" />
+		<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+</h:head>
+<h:body>
+	<h:form id="frm" enctype="multipart/form-data">
+		<div class="ui-fluid">
+			<p:growl id="msgs" showDetail="true" />
+			<ui:include src="/resources/status_gif.xhtml" />
+			<center>
+				<p:panel>
+					<h:panelGrid id="pnlContenido">
+
+						<h:panelGrid columns="1" columnClasses="ui-g-12 ui-md-12 ui-lg-12"
+							style="margin:0 auto;">
+							<p:graphicImage value="/resources/images/sis/banner_maate.png"
+								width="100%" />
+						</h:panelGrid>
+						<h:panelGrid columns="1" style="margin:0 auto;">
+							<p:graphicImage
+								value="/resources/images/sis/banner_con_titulo.png" width="100%" />
+						</h:panelGrid>
+						<h:panelGrid id="pnlSalvaguardasDescripcion" columns="1"
+							
+							style="margin:0 auto;text-align:center;">
+							<p:outputLabel value="SALVAGUARDAS" style="font-size: 40px;	font-style: bold;color: green;font-weight: bold;"/>
+							<br/>
+							<p:outputLabel value="#{titulos['describeSIS']}" />
+						</h:panelGrid>
+						<h:panelGrid id="pnlSalvaguardasA_D" columns="4"
+							columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
+							style="margin:0 auto;text-align:center;">
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaA()}" update="pnlSalvaguardas "
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_a.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaB()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_b.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaC()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_c.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaD()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_d.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+						</h:panelGrid>
+						<h:panelGrid id="pnlSalvaguardasE_G" columns="3"
+							columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3"
+							style="margin:0 auto;text-align:center;">
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaE()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_e.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaF()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_f.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{sitioPublicoController.informacionSalvaguardaG()}" update="pnlSalvaguardas"
+								process="@this" partialSubmit="true" async="true" global="false">
+								<p:graphicImage value="/resources/images/sis/salvaguarda_g.png"
+									style="max-width:299px;" />
+							</p:commandLink>
+						</h:panelGrid>					
+						
+					</h:panelGrid>
+					<div class="ui-fluid p-formgrid p-grid">
+						<div class="p-field p-col-12 p-md-1">
+							<p:commandButton icon="#{botones['icono.atras']}" actionListener="#{sitioPublicoController.retrocedeSalvaguarda()}" update="pnlSalvaguardas"
+								title="#{tooltip['anteriorSalvaguarda']}"  process="@this" partialSubmit="true" async="true" global="false"/>
+							<p:commandButton icon="#{botones['icono.siguiente']}" actionListener="#{sitioPublicoController.avanzaSalvaguarda()}" update="pnlSalvaguardas"
+								title="#{tooltip['siguienteSalvaguarda']}"
+								process="@this" partialSubmit="true" async="true" global="false"/>	
+						</div>
+
+						<div class="p-field p-col-12 p-md-11 portadaA">
+							<p:outputPanel id="pnlSalvaguardas">
+							<h:panelGrid columns="2" 
+								columnClasses="ui-g-1 ui-md-6 ui-lg-6, ui-g-1 ui-md-6 ui-lg-6"
+								styleClass="portadaA">
+
+								<h:panelGrid width="100%"
+									styleClass="justify-content-start align-items-start"
+									style="position:absolute; left:5%;">
+									<p:outputLabel value="#{sitioPublicoBean.salvaguarda}"
+										styleClass="salvaguardapie align-items-start"
+										style="font-size:30px;" />
+									<p:outputLabel value="#{sitioPublicoBean.tituloSalvaguarda}"
+										style="font-size:30px;" styleClass="describesalvaguardapie" />
+									<p:outputLabel
+										value="#{sitioPublicoBean.descripcionSalvaguarda}"
+										style="font-size:15px; max-width:400px; display:block; " 
+										styleClass="describesalvaguardapie" />
+								</h:panelGrid>
+
+
+								<h:panelGrid width="100%" styleClass="alineaderecha" >
+									<h:panelGrid
+										style="margin:0 auto;text-align:center;background-color:#082CAC; position:relative; right:0%; height:100px; width:350px;">
+										<p:outputLabel value="#{sitioPublicoBean.resumenSalvaguarda}"
+											styleClass="salvaguardapie"
+											style="font-size:15px;width:100%;" />
+									</h:panelGrid>
+									<br />
+									<br />
+									<h:panelGrid style="position:relative; right:0%;" columns="3" width="100%"  columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3 ">
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />
+										<p:graphicImage value="/resources/images/sis/proyecto.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/i.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />
+										<p:outputLabel
+											value="Nro Proyectos"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel
+											value="Presupuesto asignado"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}" />	
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroProyectosSalvaguardaA}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.totalInversionProyectos}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('A')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										
+									
+
+										<p:graphicImage value="/resources/images/sis/m.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/h.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/c.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+											
+										<p:outputLabel
+											value="Nro. mujeres"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel
+											value="Nro. hombres"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel
+											value="Nro. Comunidades vinculadas"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+											
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroMujeresSalvaguardaB}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroHombresSalvaguardaB}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroComunidadesSalvaguardaB}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('B')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" />
+										<p:graphicImage value="/resources/images/sis/c.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/p.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" />
+										<p:outputLabel
+											value="Nro. comunidades"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel
+											value="Nro. prácticas ancestrales"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroComunidadesSalvaguardaC}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroPracticasAncestralesC}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('C')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										
+
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										<p:graphicImage value="/resources/images/sis/c.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />																					
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.totalEventosFortalecimientoD}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('D')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />	
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />
+										<p:graphicImage value="/resources/images/sis/c.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/hectareas.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />	
+										<p:outputLabel
+											value="Nro. apoyos gestión comunitaria"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel
+											value="Nro. hectareas conservadas"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+											
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}" />	
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroFomentoGestionComunitariaE}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.totalHectareasCoberturaE}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('E')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										
+
+
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<p:graphicImage value="/resources/images/sis/i.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<p:outputLabel
+											value="Recursos invertidos"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<h:inputHidden
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.totalRecursosInvertidos}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('F')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" >											
+										</p:outputLabel>
+
+										<p:graphicImage value="/resources/images/sis/a.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/h.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+										<p:graphicImage value="/resources/images/sis/c.png"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											width="150px;" height="200px;" style="max-width:299px;" />
+											
+										<p:outputLabel
+											value="Nro. acciones generadas"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel value="Nro. beneficiario/as"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />
+										<p:outputLabel
+											value="Nro. comunidades participan en monitoreo"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:17px;" />	
+											
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroAccionesGeneradasG}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel value="#{sitioPublicoBean.totalBeneficiariosG}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+										<p:outputLabel
+											value="#{sitioPublicoBean.numeroComunidadesSalvaguardaG}"
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('G')?true:false}"
+											styleClass="valoresSalvaguardas" style="font-size:35px;" />
+									</h:panelGrid>
+
+								</h:panelGrid>
+							</h:panelGrid>
+							</p:outputPanel>
+						</div>
+						
+					</div>
+					<h:panelGrid columns="1">
+							<p:graphicImage value="/resources/images/sis/pie_maate.png"
+								width="100%" />
+					</h:panelGrid>
+				</p:panel>
+			</center>
+		
+		</div>
+		<p:commandButton value="Generar" actionListener="#{sitioPublicoController.generarResumen()}" process="@this"/>
+		<p:commandButton value="LEER" actionListener="#{sitioPublicoController.leerJson()}" process="@this"/>
+	</h:form>
+</h:body>
+</html>

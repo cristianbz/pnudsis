@@ -5,9 +5,16 @@
 package ec.gob.ambiente.suia.model;
 import java.io.Serializable;
 
-import javax.persistence.*;
-
-import ec.gob.ambiente.sigma.model.User;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="roles_users", schema="suia_iii")
@@ -23,6 +30,9 @@ public class RolesUser implements Serializable {
 
 	@Column(name="rous_status")
 	private Boolean rousStatus;
+	
+	@Column(name="rous_description")
+	private String rousDescription;
 
 	//bi-directional many-to-one association to Role
 	@ManyToOne
@@ -32,7 +42,7 @@ public class RolesUser implements Serializable {
 	//bi-directional many-to-one association to Role
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User user;
+	private Users users;
 
 	public RolesUser() {
 	}
@@ -61,11 +71,21 @@ public class RolesUser implements Serializable {
 		this.role = role;
 	}
 
-	public User getUser() {
-		return user;
+	public Users getUser() {
+		return users;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(Users user) {
+		this.users = user;
 	}
+
+	public String getRousDescription() {
+		return rousDescription;
+	}
+
+	public void setRousDescription(String rousDescription) {
+		this.rousDescription = rousDescription;
+	}
+	
+	
 }

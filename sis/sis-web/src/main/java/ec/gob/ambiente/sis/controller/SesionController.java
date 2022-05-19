@@ -21,14 +21,14 @@ public class SesionController implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(SesionController.class);
+	private static final Logger LOG = Logger.getLogger(SesionController.class);
     public void cerrarSesion() {
         try {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(Boolean.FALSE);
             session.invalidate();
             redirect("/sis-web/index.xhtml?faces-redirect=true&redirected=true");
         } catch (Exception e) {
-        	log.error(new StringBuilder().append(this.getClass().getName() + "." + "cerrarSesion " + ": ").append(e.getMessage()));
+        	LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cerrarSesion " + ": ").append(e.getMessage()));
         }
     }
     public void redirect(final String url) throws IOException {
@@ -44,7 +44,7 @@ public class SesionController implements Serializable{
             }
 
         } catch (Exception e) {
-        	log.error(new StringBuilder().append(this.getClass().getName() + "." + "redireccionarAPagina " + ": ").append(e.getMessage()));
+        	LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "redireccionarAPagina " + ": ").append(e.getMessage()));
         }
     }
     

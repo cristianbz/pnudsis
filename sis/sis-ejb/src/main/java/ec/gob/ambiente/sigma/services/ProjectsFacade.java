@@ -53,4 +53,13 @@ public class ProjectsFacade extends AbstractFacade<Projects, Integer>  {
 		camposCondicion.put("param1", "%"+textoTitulo.toUpperCase()+"%");
 		return findByCreateQuery(sql, camposCondicion);
 	}
+
+	public List<Projects> listarProyectosSocioImplementador(String ruc) throws Exception{
+		String sql="SELECT P FROM Projects P WHERE P.projStatus=true AND P.projRegisterStatus='V' AND P.partners.partStatus = TRUE AND P.partners.partIdNumber=:ruc ORDER BY P.projTitle";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("ruc", ruc);
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	
+	
 }

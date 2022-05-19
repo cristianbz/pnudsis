@@ -12,12 +12,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +32,9 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "catalogs", schema = "sis")
-
+@NamedQueries({
+	@NamedQuery(name = "p1",query = "SELECT C FROM Catalogs C WHERE C.catalogsType.catyMnemonic=:catalogo AND C.cataNumber=:numero")	
+})
 public class Catalogs {
 
 	
@@ -119,6 +125,13 @@ public class Catalogs {
     @ManyToOne
     private Catalogs cataParentId;
     
+    public Catalogs(){
+    	
+    }
+    public Catalogs(Integer cataId){
+    	this.cataId = cataId;
+    }
+    
 	@Getter
 	@Setter
     @JoinColumn(name = "caty_id", referencedColumnName = "caty_id")
@@ -127,5 +140,8 @@ public class Catalogs {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogs")
     private List<Questions> questionsList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogs")
+    private List<ProjectQuestions> projectQuestionsList;
 
 }

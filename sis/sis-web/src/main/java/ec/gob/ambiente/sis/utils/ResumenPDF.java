@@ -7,6 +7,8 @@ package ec.gob.ambiente.sis.utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.faces.context.FacesContext;
@@ -28,11 +30,10 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import ec.gob.ambiente.sigma.model.CatalogType;
-import ec.gob.ambiente.sis.bean.RegistroGeneroBean;
+import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
 import ec.gob.ambiente.sis.bean.SeguimientoSalvaguardaBean;
+import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.Catalogs;
-import ec.gob.ambiente.sis.model.DetailAdvanceGender;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
 
@@ -41,22 +42,23 @@ public class ResumenPDF {
 	public static void reporteSalvaguardaVacio(String directorioArchivoPDF, SeguimientoSalvaguardaBean seguimientoSalvaguardas){
 		try{
 			Document document = new Document();
-			document.setPageSize(PageSize.A4);
-			document.setMargins(35, 35, 35, 35);
+			document.setPageSize(PageSize.A4.rotate());
+			document.setMargins(35, 35, 65, 88);//iz dere arriba abajo
 			document.setMarginMirroring(true);
 
 			PdfWriter writer =PdfWriter.getInstance(document, new FileOutputStream(directorioArchivoPDF));
 			Rectangle rect = new Rectangle(100, 30, 500, 800);
 			writer.setBoxSize("art", rect);
-			HeaderFooterPageEvent event = new HeaderFooterPageEvent("PIE");
-			event.valoresPiePagina("", "Pag: ");
+			HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+//			event.valoresPiePagina("", "Pag: ");
 			writer.setPageEvent(event);
 			document.open();
 
 			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
 			Font fontTitulosSalvaguardas = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 12);
-			Font fontCabecera = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
+			fontTitulosSalvaguardas.setColor(13, 165, 196);
+
 			Font fontCabeceraTabla = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 
@@ -188,7 +190,7 @@ public class ResumenPDF {
 			encabezadoTablaB.add(new Phrase("Autoidentificación étnica",fontCabeceraTabla));
 			tablaB41.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaB41.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -216,7 +218,7 @@ public class ResumenPDF {
 			salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaB);
 
-			PdfPTable tablaB51 = new PdfPTable(new float[] { 3, 3, 3  });
+			PdfPTable tablaB51 = new PdfPTable(new float[] { 3, 3, 3 ,3, 3, 3  });
 			tablaB51.setWidthPercentage(100);
 			tablaB51.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaB51.getDefaultCell().setPadding(3);
@@ -226,6 +228,15 @@ public class ResumenPDF {
 			tablaB51.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 			encabezadoTablaB=new Paragraph();				
+			encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaB51.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Cantón",fontCabeceraTabla));
+			tablaB51.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
+			tablaB51.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Institución",fontCabeceraTabla));
 			tablaB51.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
@@ -234,7 +245,6 @@ public class ResumenPDF {
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Link verificador del convenio",fontCabeceraTabla));
 			tablaB51.addCell(encabezadoTablaB);
-
 
 			document.add(tablaB51);
 
@@ -252,7 +262,7 @@ public class ResumenPDF {
 			salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaB);
 
-			PdfPTable tablaB61 = new PdfPTable(new float[] { 3, 3, 3  });
+			PdfPTable tablaB61 = new PdfPTable(new float[] { 3, 3, 3 ,3,3 });
 			tablaB61.setWidthPercentage(100);
 			tablaB61.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaB61.getDefaultCell().setPadding(3);
@@ -260,7 +270,13 @@ public class ResumenPDF {
 			tablaB61.getDefaultCell().setUseDescender(true);
 			tablaB61.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 			tablaB61.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-
+			
+			encabezadoTablaB=new Paragraph();				
+			encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaB61.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Cantón",fontCabeceraTabla));
+			tablaB61.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Institución",fontCabeceraTabla));
 			tablaB61.addCell(encabezadoTablaB);
@@ -288,7 +304,7 @@ public class ResumenPDF {
 			salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaB);
 
-			PdfPTable tablaB71 = new PdfPTable(new float[] { 3, 3, 3  });
+			PdfPTable tablaB71 = new PdfPTable(new float[] { 3, 3, 3,3  });
 			tablaB71.setWidthPercentage(100);
 			tablaB71.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaB71.getDefaultCell().setPadding(3);
@@ -299,6 +315,9 @@ public class ResumenPDF {
 
 			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Instrumento",fontCabeceraTabla));
+			tablaB71.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Relevancia o importancia del instrumento",fontCabeceraTabla));
 			tablaB71.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Mecanismo de Institucionalización",fontCabeceraTabla));
@@ -323,7 +342,7 @@ public class ResumenPDF {
 			salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaB);
 
-			PdfPTable tablaB81 = new PdfPTable(new float[] { 3, 3, 3,3, 3, 3,3, 3, 3,3,3  });
+			PdfPTable tablaB81 = new PdfPTable(new float[] { 3, 3, 3,3, 3, 3,3  });
 			tablaB81.setWidthPercentage(100);
 			tablaB81.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaB81.getDefaultCell().setPadding(3);
@@ -332,9 +351,7 @@ public class ResumenPDF {
 			tablaB81.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 			tablaB81.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
-			encabezadoTablaB=new Paragraph();				
-			encabezadoTablaB.add(new Phrase("Fecha",fontCabeceraTabla));
-			tablaB81.addCell(encabezadoTablaB);
+			
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
 			tablaB81.addCell(encabezadoTablaB);
@@ -344,14 +361,11 @@ public class ResumenPDF {
 			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaB81.addCell(encabezadoTablaB);
-			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
-			tablaB81.addCell(encabezadoTablaB);
-			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
-			tablaB81.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
+			tablaB81.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();				
+			encabezadoTablaB.add(new Phrase("Fecha",fontCabeceraTabla));
 			tablaB81.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Actividad",fontCabeceraTabla));
@@ -359,13 +373,6 @@ public class ResumenPDF {
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Hectáreas",fontCabeceraTabla));
 			tablaB81.addCell(encabezadoTablaB);
-			encabezadoTablaB=new Paragraph();				
-			encabezadoTablaB.add(new Phrase("Nro hombres",fontCabeceraTabla));
-			tablaB81.addCell(encabezadoTablaB);
-			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Nro mujeres",fontCabeceraTabla));
-			tablaB81.addCell(encabezadoTablaB);
-
 			document.add(tablaB81);
 
 			salvaguardaB = new Paragraph();
@@ -400,10 +407,10 @@ public class ResumenPDF {
 			encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaB9.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaB9.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaB9.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -444,10 +451,10 @@ public class ResumenPDF {
 			encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaB102.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaB102.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaB102.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -529,16 +536,16 @@ public class ResumenPDF {
 			tablaB121.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Nombre de la organización",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Nombre de la organización Beneficiaria",fontCabeceraTabla));
 			tablaB121.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Acciones implementadas",fontCabeceraTabla));
 			tablaB121.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaB121.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaB121.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();				
 			encabezadoTablaB.add(new Phrase("Conformación de la organización",fontCabeceraTabla));
@@ -570,7 +577,7 @@ public class ResumenPDF {
 			salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaB);
 
-			PdfPTable tablaB131 = new PdfPTable(new float[] { 3, 3, 3,3 });
+			PdfPTable tablaB131 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3});
 			tablaB131.setWidthPercentage(100);
 			tablaB131.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaB131.getDefaultCell().setPadding(3);
@@ -586,12 +593,20 @@ public class ResumenPDF {
 			encabezadoTablaB.add(new Phrase("Actividad",fontCabeceraTabla));
 			tablaB131.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
-			tablaB131.addCell(encabezadoTablaB);
+			encabezadoTablaB.add(new Phrase("Temática tratada",fontCabeceraTabla));
+			tablaB131.addCell(encabezadoTablaB);				
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Nro de personas que acceden a la info",fontCabeceraTabla));
 			tablaB131.addCell(encabezadoTablaB);
-
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaB131.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaB131.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
+			tablaB131.addCell(encabezadoTablaB);
 
 			document.add(tablaB131);
 
@@ -609,7 +624,7 @@ public class ResumenPDF {
 			salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaB);
 
-			PdfPTable tablaB143 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3});
+			PdfPTable tablaB143 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3,3});
 			tablaB143.setWidthPercentage(100);
 			tablaB143.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaB143.getDefaultCell().setPadding(3);
@@ -626,17 +641,22 @@ public class ResumenPDF {
 			tablaB143.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("Número de personas",fontCabeceraTabla));
-			tablaB143.addCell(encabezadoTablaB);
-			encabezadoTablaB=new Paragraph();	
-			encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
-			tablaB143.addCell(encabezadoTablaB);
+			tablaB143.addCell(encabezadoTablaB);				
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("¿Que información se comunica a los beneficiarios?",fontCabeceraTabla));
 			tablaB143.addCell(encabezadoTablaB);
 			encabezadoTablaB=new Paragraph();	
 			encabezadoTablaB.add(new Phrase("¿Como se informa a la gente sobre la ejecución del proyecto/programa?",fontCabeceraTabla));
 			tablaB143.addCell(encabezadoTablaB);
-
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaB143.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaB143.addCell(encabezadoTablaB);
+			encabezadoTablaB=new Paragraph();	
+			encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
+			tablaB143.addCell(encabezadoTablaB);
 
 			document.add(tablaB143);
 
@@ -685,7 +705,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC201 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3,3});
+			PdfPTable tablaC201 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3,3,3});
 			tablaC201.setWidthPercentage(100);
 			tablaC201.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC201.getDefaultCell().setPadding(3);
@@ -704,10 +724,10 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaC201.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaC201.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaC201.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -716,7 +736,7 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Nro Hombres beneficiarios",fontCabeceraTabla));
 			tablaC201.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Nro Mujeres Beneficiarias",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Nro Mujeres beneficiarias",fontCabeceraTabla));
 			tablaC201.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Hectáreas",fontCabeceraTabla));
@@ -728,9 +748,11 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaC201.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaC201.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Tipo de acceso",fontCabeceraTabla));
 			tablaC201.addCell(encabezadoTablaC);
-
 			document.add(tablaC201);
 
 			salvaguardaC = new Paragraph();
@@ -747,7 +769,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC211 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3});
+			PdfPTable tablaC211 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3,3});
 			tablaC211.setWidthPercentage(100);
 			tablaC211.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC211.getDefaultCell().setPadding(3);
@@ -766,10 +788,10 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaC211.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaC211.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaC211.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -782,11 +804,14 @@ public class ResumenPDF {
 			tablaC211.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("¿Cómo se han promovido estas prácticas?",fontCabeceraTabla));
-			tablaC211.addCell(encabezadoTablaC);					
+			tablaC211.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaC211.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaC211.addCell(encabezadoTablaC);
-
+			
 			document.add(tablaC211);
 
 			salvaguardaC = new Paragraph();
@@ -803,7 +828,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC241 = new PdfPTable(new float[] { 3, 3, 3,3 ,3});
+			PdfPTable tablaC241 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3});
 			tablaC241.setWidthPercentage(100);
 			tablaC241.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC241.getDefaultCell().setPadding(3);
@@ -819,7 +844,10 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Organizaciones que participan",fontCabeceraTabla));
 			tablaC241.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Num participantes",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Num hombres",fontCabeceraTabla));
+			tablaC241.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Num mujeres",fontCabeceraTabla));
 			tablaC241.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Temática",fontCabeceraTabla));
@@ -838,7 +866,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC242 = new PdfPTable(new float[] { 3, 3, 3});
+			PdfPTable tablaC242 = new PdfPTable(new float[] { 3, 3});
 			tablaC242.setWidthPercentage(100);
 			tablaC242.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC242.getDefaultCell().setPadding(3);
@@ -849,10 +877,7 @@ public class ResumenPDF {
 
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Medidas que se han tomado para motivar la participación de mujeres",fontCabeceraTabla));
-			tablaC242.addCell(encabezadoTablaC);
-			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("No de mujeres que participan en el intercambio de experiencias",fontCabeceraTabla));
-			tablaC242.addCell(encabezadoTablaC);					
+			tablaC242.addCell(encabezadoTablaC);								
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaC242.addCell(encabezadoTablaC);
@@ -874,7 +899,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC26 = new PdfPTable(new float[] { 3, 3, 3,3,3});
+			PdfPTable tablaC26 = new PdfPTable(new float[] { 3, 3, 3,3,3,3});
 			tablaC26.setWidthPercentage(100);
 			tablaC26.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC26.getDefaultCell().setPadding(3);
@@ -884,7 +909,7 @@ public class ResumenPDF {
 			tablaC26.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Línea de acción",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Provincia",fontCabeceraTabla));
 			tablaC26.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -894,6 +919,9 @@ public class ResumenPDF {
 			tablaC26.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Cargo",fontCabeceraTabla));
+			tablaC26.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
 			tablaC26.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -915,7 +943,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC271 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3});
+			PdfPTable tablaC271 = new PdfPTable(new float[] {3, 3, 3, 3,3,3,3,3});
 			tablaC271.setWidthPercentage(100);
 			tablaC271.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC271.getDefaultCell().setPadding(3);
@@ -925,16 +953,16 @@ public class ResumenPDF {
 			tablaC271.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Línea de acción",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaC271.addCell(encabezadoTablaC);									
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
+			tablaC271.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaC271.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
-			tablaC271.addCell(encabezadoTablaC);					
-			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Autoidentificación étnica",fontCabeceraTabla));
-			tablaC271.addCell(encabezadoTablaC);
-			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Pueblo/Nacionalidad",fontCabeceraTabla));
 			tablaC271.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Objeto del convenio",fontCabeceraTabla));
@@ -943,9 +971,12 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Hectáreas bajo actividad REDD+",fontCabeceraTabla));
 			tablaC271.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaC271.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaC271.addCell(encabezadoTablaC);
-
+			
 			document.add(tablaC271);
 
 			salvaguardaC = new Paragraph();
@@ -955,7 +986,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC28 = new PdfPTable(new float[] { 3, 3, 3, 3, 3});
+			PdfPTable tablaC28 = new PdfPTable(new float[] { 3, 3, 3, 3, 3,3,3});
 			tablaC28.setWidthPercentage(100);
 			tablaC28.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC28.getDefaultCell().setPadding(3);
@@ -965,10 +996,10 @@ public class ResumenPDF {
 			tablaC28.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 			encabezadoTablaC=new Paragraph();		
-			encabezadoTablaC.add(new Phrase("Autoidentificación étnica",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Entina",fontCabeceraTabla));
 			tablaC28.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Pueblo/Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaC28.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Objeto de contratación",fontCabeceraTabla));
@@ -979,7 +1010,13 @@ public class ResumenPDF {
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Presupuesto",fontCabeceraTabla));
 			tablaC28.addCell(encabezadoTablaC);
-
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Cómo se están promoviendo y fomentando el derecho laboral en pueblos indígenas a través del PDI, programa y/ proyecto",fontCabeceraTabla));
+			tablaC28.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaC28.addCell(encabezadoTablaC);
+			
 			document.add(tablaC28);
 
 			salvaguardaC = new Paragraph();
@@ -996,7 +1033,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC291 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3});
+			PdfPTable tablaC291 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3,3});
 			tablaC291.setWidthPercentage(100);
 			tablaC291.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC291.getDefaultCell().setPadding(3);
@@ -1015,10 +1052,10 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaC291.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaC291.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaC291.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -1031,6 +1068,9 @@ public class ResumenPDF {
 			tablaC291.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Objeto del acuerdo",fontCabeceraTabla));
+			tablaC291.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
 			tablaC291.addCell(encabezadoTablaC);
 
 			document.add(tablaC291);
@@ -1049,7 +1089,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC301 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3});
+			PdfPTable tablaC301 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3,3});
 			tablaC301.setWidthPercentage(100);
 			tablaC301.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC301.getDefaultCell().setPadding(3);
@@ -1085,6 +1125,9 @@ public class ResumenPDF {
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Link de la Compensación",fontCabeceraTabla));
 			tablaC301.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaC301.addCell(encabezadoTablaC);
 
 			document.add(tablaC301);
 
@@ -1102,7 +1145,7 @@ public class ResumenPDF {
 			salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaC);
 
-			PdfPTable tablaC311 = new PdfPTable(new float[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3});
+			PdfPTable tablaC311 = new PdfPTable(new float[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3});
 			tablaC311.setWidthPercentage(100);
 			tablaC311.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaC311.getDefaultCell().setPadding(3);
@@ -1121,10 +1164,10 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaC311.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaC311.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
-			encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaC311.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -1139,9 +1182,12 @@ public class ResumenPDF {
 			encabezadoTablaC.add(new Phrase("Asistentes mujeres",fontCabeceraTabla));
 			tablaC311.addCell(encabezadoTablaC);
 			encabezadoTablaC=new Paragraph();	
+			encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaC311.addCell(encabezadoTablaC);
+			encabezadoTablaC=new Paragraph();	
 			encabezadoTablaC.add(new Phrase("Link verificador participantes",fontCabeceraTabla));
 			tablaC311.addCell(encabezadoTablaC);
-
+			
 			document.add(tablaC311);
 
 			informacionOpcional = new Paragraph();
@@ -1190,7 +1236,7 @@ public class ResumenPDF {
 			salvaguardaD.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaD);
 
-			PdfPTable tablaD321 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3});
+			PdfPTable tablaD321 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3,3});
 			tablaD321.setWidthPercentage(100);
 			tablaD321.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaD321.getDefaultCell().setPadding(3);
@@ -1209,19 +1255,19 @@ public class ResumenPDF {
 			encabezadoTablaD.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
 			encabezadoTablaD.add(new Phrase("Comunidad",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Espacio",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Espacio de difusión de la información",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Actores",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Actores Asistentes que hombres participan en el proceso de acceso a la información",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
 			encabezadoTablaD.add(new Phrase("Asistentes hombres",fontCabeceraTabla));
@@ -1230,9 +1276,11 @@ public class ResumenPDF {
 			encabezadoTablaD.add(new Phrase("Asistentes mujeres",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
+			encabezadoTablaD.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaD321.addCell(encabezadoTablaD);
+			encabezadoTablaD=new Paragraph();	
 			encabezadoTablaD.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaD321.addCell(encabezadoTablaD);
-
 
 			document.add(tablaD321);
 
@@ -1250,7 +1298,7 @@ public class ResumenPDF {
 			salvaguardaD.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaD);
 
-			PdfPTable tablaD331 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3});
+			PdfPTable tablaD331 = new PdfPTable(new float[] {3,3, 3, 3, 3,3 ,3,3,3});
 			tablaD331.setWidthPercentage(100);
 			tablaD331.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaD331.getDefaultCell().setPadding(3);
@@ -1260,27 +1308,33 @@ public class ResumenPDF {
 			tablaD331.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 			encabezadoTablaD=new Paragraph();	
+			encabezadoTablaD.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaD331.addCell(encabezadoTablaD);
+			encabezadoTablaD=new Paragraph();	
 			encabezadoTablaD.add(new Phrase("Actor / Organización",fontCabeceraTabla));
 			tablaD331.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaD331.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaD331.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Objetivo",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Actividad que realiza la comunidad",fontCabeceraTabla));
 			tablaD331.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
-			encabezadoTablaD.add(new Phrase("Inversión realizada",fontCabeceraTabla));
+			encabezadoTablaD.add(new Phrase("Presupuesto asignado a la actividad",fontCabeceraTabla));
 			tablaD331.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
 			encabezadoTablaD.add(new Phrase("Nivel de involucramiento",fontCabeceraTabla));
-			tablaD331.addCell(encabezadoTablaD);					
+			tablaD331.addCell(encabezadoTablaD);
+			encabezadoTablaD=new Paragraph();	
+			encabezadoTablaD.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaD331.addCell(encabezadoTablaD);
 			encabezadoTablaD=new Paragraph();	
 			encabezadoTablaD.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaD331.addCell(encabezadoTablaD);
-
+			
 			document.add(tablaD331);
 
 			informacionOpcional = new Paragraph();
@@ -1330,7 +1384,7 @@ public class ResumenPDF {
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaE);
 
-			PdfPTable tablaE341 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 });
+			PdfPTable tablaE341 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3,3,3 });
 			tablaE341.setWidthPercentage(100);
 			tablaE341.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaE341.getDefaultCell().setPadding(3);
@@ -1352,12 +1406,18 @@ public class ResumenPDF {
 			encabezadoTablaE.add(new Phrase("Comunidad",fontCabeceraTabla));
 			tablaE341.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Actores involucrados clave",fontCabeceraTabla));
+			tablaE341.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Hectáreas",fontCabeceraTabla));
 			tablaE341.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Tipo de área consolidada",fontCabeceraTabla));
 			tablaE341.addCell(encabezadoTablaE);
-
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaE341.addCell(encabezadoTablaE);
+			
 			document.add(tablaE341);
 
 			salvaguardaE = new Paragraph();
@@ -1374,7 +1434,7 @@ public class ResumenPDF {
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaE);
 
-			PdfPTable tablaE351 = new PdfPTable(new float[] { 3, 3, 3});
+			PdfPTable tablaE351 = new PdfPTable(new float[] { 3, 3, 3,3});
 			tablaE351.setWidthPercentage(100);
 			tablaE351.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaE351.getDefaultCell().setPadding(3);
@@ -1388,6 +1448,9 @@ public class ResumenPDF {
 			tablaE351.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Herramienta (PDOT, ACUS, Ordenanza, etc)",fontCabeceraTabla));
+			tablaE351.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
 			tablaE351.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -1409,7 +1472,7 @@ public class ResumenPDF {
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaE);
 
-			PdfPTable tablaE361 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3});
+			PdfPTable tablaE361 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3});
 			tablaE361.setWidthPercentage(100);
 			tablaE361.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaE361.getDefaultCell().setPadding(3);
@@ -1426,15 +1489,15 @@ public class ResumenPDF {
 			tablaE361.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Parroquia",fontCabeceraTabla));
+			tablaE361.addCell(encabezadoTablaE);				
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Etnia",fontCabeceraTabla));
+			tablaE361.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaE361.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Comunidad",fontCabeceraTabla));
-			tablaE361.addCell(encabezadoTablaE);
-			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
-			tablaE361.addCell(encabezadoTablaE);
-			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
 			tablaE361.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Actores clave",fontCabeceraTabla));
@@ -1442,7 +1505,10 @@ public class ResumenPDF {
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Hectareas",fontCabeceraTabla));
 			tablaE361.addCell(encabezadoTablaE);
-
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaE361.addCell(encabezadoTablaE);
+			
 			document.add(tablaE361);
 
 			salvaguardaE = new Paragraph();
@@ -1459,7 +1525,7 @@ public class ResumenPDF {
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaE);
 
-			PdfPTable tablaE371 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3,3,3});
+			PdfPTable tablaE371 = new PdfPTable(new float[] {3, 3, 3, 3,3,3,3,3,3,3,3,3});
 			tablaE371.setWidthPercentage(100);
 			tablaE371.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaE371.getDefaultCell().setPadding(3);
@@ -1499,6 +1565,9 @@ public class ResumenPDF {
 			encabezadoTablaE.add(new Phrase("Nro mujeres",fontCabeceraTabla));
 			tablaE371.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaE371.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaE371.addCell(encabezadoTablaE);
 
@@ -1525,7 +1594,7 @@ public class ResumenPDF {
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaE);
 
-			PdfPTable tablaE381 = new PdfPTable(new float[] { 3, 3, 3,3,3,3});
+			PdfPTable tablaE381 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3});
 			tablaE381.setWidthPercentage(100);
 			tablaE381.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaE381.getDefaultCell().setPadding(3);
@@ -1548,11 +1617,14 @@ public class ResumenPDF {
 			tablaE381.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Servicio",fontCabeceraTabla));
-			tablaE381.addCell(encabezadoTablaE);					
+			tablaE381.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaE381.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaE381.addCell(encabezadoTablaE);
-
+			
 			document.add(tablaE381);
 
 			salvaguardaE = new Paragraph();
@@ -1569,7 +1641,7 @@ public class ResumenPDF {
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaE);
 
-			PdfPTable tablaE391 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3});
+			PdfPTable tablaE391 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3});
 			tablaE391.setWidthPercentage(100);
 			tablaE391.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaE391.getDefaultCell().setPadding(3);
@@ -1597,9 +1669,11 @@ public class ResumenPDF {
 			encabezadoTablaE.add(new Phrase("Periodicidad",fontCabeceraTabla));
 			tablaE391.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaE391.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
 			encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaE391.addCell(encabezadoTablaE);
-
 
 			document.add(tablaE391);
 
@@ -1611,381 +1685,1127 @@ public class ResumenPDF {
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 			document.add(salvaguardaE);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(14).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
 
-			PdfPTable tablaCobeneficio1 = new PdfPTable(new float[] { 9, 1, 9, 1});
-			tablaCobeneficio1.setWidthPercentage(100);
-			tablaCobeneficio1.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tablaCobeneficio1.getDefaultCell().setPadding(3);
-			tablaCobeneficio1.getDefaultCell().setUseAscender(true);
-			tablaCobeneficio1.getDefaultCell().setUseDescender(true);
-			tablaCobeneficio1.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-			tablaCobeneficio1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			PdfPTable valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3,3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-			tablaCobeneficio1.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio1.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-			tablaCobeneficio1.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio1.addCell(encabezadoTablaE);										
-			Paragraph datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(14).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(8).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(18).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(12).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(15).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(9).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(19).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(13).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(16).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(10).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(20).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(14).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(17).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(11).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio1.addCell(datosTablaE);
-			document.add(tablaCobeneficio1);
-
+			encabezadoTablaE.add(new Phrase("Comunidad",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nacionalidad",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(15).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(16).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(17).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Espacio de gobernanza",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(18).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(19).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Riesgo abordado",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(20).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Capacidades fortalecidas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
 			salvaguardaE = new Paragraph();
-			salvaguardaE.add(new Phrase(Chunk.NEWLINE));										
-
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
 			salvaguardaE.add(new Phrase("TRANSICIÓN A SISTEMAS PRODUCTIVOS SOSTENIBLES", fontTitulos));	
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(21).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 			document.add(salvaguardaE);
-
-			PdfPTable tablaCobeneficio2 = new PdfPTable(new float[] { 9, 1, 9, 1});
-			tablaCobeneficio2.setWidthPercentage(100);
-			tablaCobeneficio2.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tablaCobeneficio2.getDefaultCell().setPadding(3);
-			tablaCobeneficio2.getDefaultCell().setUseAscender(true);
-			tablaCobeneficio2.getDefaultCell().setUseDescender(true);
-			tablaCobeneficio2.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-			tablaCobeneficio2.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-			tablaCobeneficio2.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio2.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-			tablaCobeneficio2.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(22).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio2.addCell(encabezadoTablaE);										
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(21).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(15).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(27).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(21).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(22).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(16).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(28).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(22).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(23).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(17).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(29).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(23).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(24).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(18).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(30).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(24).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);					
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(25).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(19).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(26).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(20).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio2.addCell(datosTablaE);
-			document.add(tablaCobeneficio2);
-
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(23).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Productos incentivados",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(24).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Organización fortalecida",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(25).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Asociación apoyada",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(26).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("% Incremento ingresos",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(27).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(28).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(29).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(30).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
 			salvaguardaE = new Paragraph();
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
-
 			salvaguardaE.add(new Phrase("MANEJO FORESTAL SOSTENIBLE", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(31).getQuesContentQuestion(), fontContenidoTablas));
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 			document.add(salvaguardaE);
-			PdfPTable tablaCobeneficio3 = new PdfPTable(new float[] { 9, 1, 9, 1});
-			tablaCobeneficio3.setWidthPercentage(100);
-			tablaCobeneficio3.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tablaCobeneficio3.getDefaultCell().setPadding(3);
-			tablaCobeneficio3.getDefaultCell().setUseAscender(true);
-			tablaCobeneficio3.getDefaultCell().setUseDescender(true);
-			tablaCobeneficio3.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-			tablaCobeneficio3.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-			tablaCobeneficio3.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio3.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-			tablaCobeneficio3.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio3.addCell(encabezadoTablaE);										
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(31).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(25).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(38).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(32).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(32).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(26).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(39).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(33).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(33).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(27).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(40).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(34).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(34).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(28).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(41).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(35).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);					
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(35).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(29).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(42).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(36).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(36).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(30).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(43).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(37).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(37).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(31).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio3.addCell(datosTablaE);					
-			document.add(tablaCobeneficio3);
-
+			encabezadoTablaE.add(new Phrase("Fuentes de ingreso apoyadas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(32).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Comunidad",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(33).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Capacidades fortalecidas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(34).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Iniciativa turismo apoyada",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(35).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Instrumento/mecanismo que mejora la gobernanza forestal",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(36).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nombre de las Organizaciones Apoyadas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(37).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nombre de las Organizaciones Apoyadas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(38).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(39).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(40).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Cantón",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(41).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Especies protegidas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(42).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Especies protegidas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(43).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
 			salvaguardaE = new Paragraph();
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
-
 			salvaguardaE.add(new Phrase("CONSERVACION Y RESTAURACION", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(44).getQuesContentQuestion(), fontContenidoTablas));
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 			document.add(salvaguardaE);
-			PdfPTable tablaCobeneficio4 = new PdfPTable(new float[] { 9, 1, 9, 1});
-			tablaCobeneficio4.setWidthPercentage(100);
-			tablaCobeneficio4.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tablaCobeneficio4.getDefaultCell().setPadding(3);
-			tablaCobeneficio4.getDefaultCell().setUseAscender(true);
-			tablaCobeneficio4.getDefaultCell().setUseDescender(true);
-			tablaCobeneficio4.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-			tablaCobeneficio4.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-			tablaCobeneficio4.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio4.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Usos alternativos",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-			tablaCobeneficio4.addCell(encabezadoTablaE);
+			encabezadoTablaE.add(new Phrase("Servicios valorados",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(45).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 			encabezadoTablaE=new Paragraph();	
-			encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-			tablaCobeneficio4.addCell(encabezadoTablaE);										
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(44).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(38).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(46).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(40).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(45).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(39).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(47).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(41).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(48).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);																						
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(42).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(49).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(43).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);					
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase("",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(50).getQuesContentQuestion(),fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			datosTablaE=new Paragraph();
-			datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(44).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-			tablaCobeneficio4.addCell(datosTablaE);
-			document.add(tablaCobeneficio4);
-
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nombre de las Organizaciones Apoyadas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();												
+			salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(46).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(47).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(48).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(49).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Canton",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(50).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			salvaguardaE = new Paragraph();																	
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+			salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(51).getQuesContentQuestion(), fontContenidoTablas));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+			salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+			document.add(salvaguardaE);
+			
+			valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+			valoresCobeneficios.setWidthPercentage(100);
+			valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+			valoresCobeneficios.getDefaultCell().setPadding(3);
+			valoresCobeneficios.getDefaultCell().setUseAscender(true);
+			valoresCobeneficios.getDefaultCell().setUseDescender(true);
+			valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+			valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			encabezadoTablaE=new Paragraph();	
+			encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+			valoresCobeneficios.addCell(encabezadoTablaE);
+			document.add(valoresCobeneficios);
+			
+			
+			
 			informacionOpcional = new Paragraph();
 			informacionOpcional.add(new Phrase("INFORMACION ADICIONAL OPCIONAL", fontTitulos));
 			informacionOpcional.add(new Phrase(Chunk.NEWLINE));
@@ -2052,10 +2872,10 @@ public class ResumenPDF {
 			encabezadoTablaF.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaF411.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaF.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaF411.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaF.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaF411.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2084,7 +2904,7 @@ public class ResumenPDF {
 			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaF);
 
-			PdfPTable tablaF421 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 ,3,3,3});
+			PdfPTable tablaF421 = new PdfPTable(new float[] {3, 3, 3, 3,3 ,3, 3 ,3,3,3});
 			tablaF421.setWidthPercentage(100);
 			tablaF421.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaF421.getDefaultCell().setPadding(3);
@@ -2103,10 +2923,10 @@ public class ResumenPDF {
 			encabezadoTablaF.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaF421.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaF.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaF421.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaF.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaF421.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2116,6 +2936,9 @@ public class ResumenPDF {
 			tablaF421.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Medida tomada",fontCabeceraTabla));
+			tablaF421.addCell(encabezadoTablaF);
+			encabezadoTablaF=new Paragraph();	
+			encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
 			tablaF421.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -2137,7 +2960,7 @@ public class ResumenPDF {
 			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaF);
 
-			PdfPTable tablaF431 = new PdfPTable(new float[] { 5, 3, 3,3 ,3, 3});
+			PdfPTable tablaF431 = new PdfPTable(new float[] { 5, 3, 3,3 ,3, 3,3});
 			tablaF431.setWidthPercentage(100);
 			tablaF431.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaF431.getDefaultCell().setPadding(3);
@@ -2160,11 +2983,13 @@ public class ResumenPDF {
 			tablaF431.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Resultado",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);					
+			tablaF431.addCell(encabezadoTablaF);
+			encabezadoTablaF=new Paragraph();	
+			encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaF431.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaF431.addCell(encabezadoTablaF);
-
 
 			document.add(tablaF431);
 
@@ -2182,7 +3007,7 @@ public class ResumenPDF {
 			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaF);
 
-			PdfPTable tablaF441 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 ,3,3,3});
+			PdfPTable tablaF441 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 ,3,3,3,3});
 			tablaF441.setWidthPercentage(100);
 			tablaF441.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaF441.getDefaultCell().setPadding(3);
@@ -2201,10 +3026,10 @@ public class ResumenPDF {
 			encabezadoTablaF.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaF441.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaF.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaF441.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaF.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaF441.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2216,9 +3041,11 @@ public class ResumenPDF {
 			encabezadoTablaF.add(new Phrase("Actividad para mitigar",fontCabeceraTabla));
 			tablaF441.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
+			encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaF441.addCell(encabezadoTablaF);
+			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaF441.addCell(encabezadoTablaF);
-
 			document.add(tablaF441);
 
 			salvaguardaF = new Paragraph();
@@ -2235,7 +3062,7 @@ public class ResumenPDF {
 			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaF);
 
-			PdfPTable tablaF452 = new PdfPTable(new float[] { 5, 3, 3,3 });
+			PdfPTable tablaF452 = new PdfPTable(new float[] { 5, 3, 3,3,3 });
 			tablaF452.setWidthPercentage(100);
 			tablaF452.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaF452.getDefaultCell().setPadding(3);
@@ -2244,6 +3071,9 @@ public class ResumenPDF {
 			tablaF452.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 			tablaF452.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
+			encabezadoTablaF=new Paragraph();	
+			encabezadoTablaF.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaF452.addCell(encabezadoTablaF);
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Sistemas",fontCabeceraTabla));
 			tablaF452.addCell(encabezadoTablaF);
@@ -2256,7 +3086,6 @@ public class ResumenPDF {
 			encabezadoTablaF=new Paragraph();	
 			encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaF452.addCell(encabezadoTablaF);
-
 			document.add(tablaF452);
 
 			informacionOpcional = new Paragraph();
@@ -2305,7 +3134,7 @@ public class ResumenPDF {
 			salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaG);
 
-			PdfPTable tablaG461 = new PdfPTable(new float[] { 3, 3, 3,3 ,3});
+			PdfPTable tablaG461 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3});
 			tablaG461.setWidthPercentage(100);
 			tablaG461.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaG461.getDefaultCell().setPadding(3);
@@ -2314,17 +3143,23 @@ public class ResumenPDF {
 			tablaG461.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 			tablaG461.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
-			Paragraph encabezadoTablaG=new Paragraph();	
+			Paragraph encabezadoTablaG=new Paragraph();
+			encabezadoTablaG.add(new Phrase("Provincia",fontCabeceraTabla));
+			tablaG461.addCell(encabezadoTablaG);
+			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Responsable del estudio",fontCabeceraTabla));
 			tablaG461.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Autores de la investigación",fontCabeceraTabla));
 			tablaG461.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Riesgo PrincipalIdentificado",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Riesgo Principal Identificado",fontCabeceraTabla));
 			tablaG461.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Nombre del estudio",fontCabeceraTabla));
+			tablaG461.addCell(encabezadoTablaG);
+			encabezadoTablaG=new Paragraph();	
+			encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
 			tablaG461.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Verificador",fontCabeceraTabla));
@@ -2365,10 +3200,10 @@ public class ResumenPDF {
 			encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaG471.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaG471.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaG471.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2385,7 +3220,6 @@ public class ResumenPDF {
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Fecha",fontCabeceraTabla));
 			tablaG471.addCell(encabezadoTablaG);
-
 			document.add(tablaG471);
 
 			salvaguardaG = new Paragraph();					
@@ -2421,10 +3255,10 @@ public class ResumenPDF {
 			encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaG481.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaG481.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaG481.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2444,7 +3278,6 @@ public class ResumenPDF {
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaG481.addCell(encabezadoTablaG);
-
 			document.add(tablaG481);
 
 			salvaguardaG = new Paragraph();					
@@ -2461,7 +3294,7 @@ public class ResumenPDF {
 			salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaG);
 
-			PdfPTable tablaG491 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3,3});
+			PdfPTable tablaG491 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3,3,3});
 			tablaG491.setWidthPercentage(100);
 			tablaG491.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaG491.getDefaultCell().setPadding(3);
@@ -2480,10 +3313,10 @@ public class ResumenPDF {
 			encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaG491.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaG491.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaG491.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2504,9 +3337,11 @@ public class ResumenPDF {
 			encabezadoTablaG.add(new Phrase("Support value chain",fontCabeceraTabla));
 			tablaG491.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
+			encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaG491.addCell(encabezadoTablaG);
+			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaG491.addCell(encabezadoTablaG);
-
 			document.add(tablaG491);
 
 			salvaguardaG = new Paragraph();					
@@ -2523,7 +3358,7 @@ public class ResumenPDF {
 			salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaG);
 
-			PdfPTable tablaG501 = new PdfPTable(new float[] { 3, 3, 3,3});
+			PdfPTable tablaG501 = new PdfPTable(new float[] { 3, 3, 3,3,3});
 			tablaG501.setWidthPercentage(100);
 			tablaG501.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaG501.getDefaultCell().setPadding(3);
@@ -2540,11 +3375,13 @@ public class ResumenPDF {
 			tablaG501.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Resultado",fontCabeceraTabla));
-			tablaG501.addCell(encabezadoTablaG);					
+			tablaG501.addCell(encabezadoTablaG);
+			encabezadoTablaG=new Paragraph();	
+			encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
+			tablaG501.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Link verificador",fontCabeceraTabla));
 			tablaG501.addCell(encabezadoTablaG);
-
 			document.add(tablaG501);
 
 			salvaguardaG = new Paragraph();					
@@ -2561,7 +3398,7 @@ public class ResumenPDF {
 			salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 			document.add(salvaguardaG);
 
-			PdfPTable tablaG511 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3});
+			PdfPTable tablaG511 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3,3});
 			tablaG511.setWidthPercentage(100);
 			tablaG511.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaG511.getDefaultCell().setPadding(3);
@@ -2580,10 +3417,10 @@ public class ResumenPDF {
 			encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 			tablaG511.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 			tablaG511.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
-			encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tablaG511.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2602,6 +3439,9 @@ public class ResumenPDF {
 			tablaG511.addCell(encabezadoTablaG);
 			encabezadoTablaG=new Paragraph();	
 			encabezadoTablaG.add(new Phrase("Periodicidad",fontCabeceraTabla));
+			tablaG511.addCell(encabezadoTablaG);
+			encabezadoTablaG=new Paragraph();	
+			encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
 			tablaG511.addCell(encabezadoTablaG);
 
 
@@ -2678,64 +3518,101 @@ public class ResumenPDF {
 	 */
 	public static void reporteSalvaguardaConDatos(String directorioArchivoPDF, SeguimientoSalvaguardaBean seguimientoSalvaguardas){
 		try{
+			String pattern = "MMM yy HH:mm";
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+			String date = simpleDateFormat.format(new Date());
+			
 			Document document = new Document();
-			document.setPageSize(PageSize.A4);
-			document.setMargins(35, 35, 35, 35);
+			document.setPageSize(PageSize.A4.rotate());
+			document.setMargins(35, 35, 78, 88);//iz dere arriba abajo
 			document.setMarginMirroring(true);
 
 			PdfWriter writer =PdfWriter.getInstance(document, new FileOutputStream(directorioArchivoPDF));
 			Rectangle rect = new Rectangle(100, 30, 500, 800);
 			writer.setBoxSize("art", rect);
-			HeaderFooterPageEvent event = new HeaderFooterPageEvent("PIE");
-			event.valoresPiePagina("", "Pag: ");
+			HeaderFooterPageEvent event = new HeaderFooterPageEvent();
 			writer.setPageEvent(event);
 			document.open();
 
+			Font fontCabecera = new Font(FontFamily.HELVETICA, 9, Font.NORMAL, BaseColor.BLACK);
 			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
 			Font fontTitulosSalvaguardas = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 12);
-			Font fontCabecera = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
+			fontTitulosSalvaguardas.setColor(13, 165, 196);
+
 			Font fontCabeceraTabla = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
 			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 
-
-
-			Paragraph parrafoHoja = new Paragraph();
-			parrafoHoja.add(new Phrase("RESUMEN DE LAS SALVAGUARDAS REPORTADAS", fontTitulosSalvaguardas));
-			parrafoHoja.add(new Phrase(Chunk.NEWLINE));
-			parrafoHoja.setAlignment(Element.ALIGN_CENTER);
-			parrafoHoja.add(new Phrase(Chunk.NEWLINE));			
-			document.add(parrafoHoja);
+			PdfPTable tablaTituloSistema = new PdfPTable(3);
+			
+			tablaTituloSistema.setWidths(new int[]{50, 50,50});
+			PdfPCell celda1 = new PdfPCell(new Phrase("Sistema de Información de Salvaguardas SIS", fontCabecera));
+			celda1.setBackgroundColor(new BaseColor(13, 165, 196));
+			celda1.setBorderColor(new BaseColor(13, 165, 196));
+			celda1.setFixedHeight(15);
+			
+			PdfPCell celda2 = new PdfPCell();
+			celda2.setBackgroundColor(new BaseColor(255, 255, 255));
+			celda2.setBorderColor(new BaseColor(255, 255, 255));
+			
+			PdfPCell celda3 = new PdfPCell(new Phrase("Resumen de las salvaguardas reportadas", fontCabecera));
+			celda3.setBackgroundColor(new BaseColor(13, 165, 196));
+			celda3.setBorderColor(new BaseColor(13, 165, 196));
+			
+			PdfPCell celda4 = new PdfPCell();
+			celda4.setBackgroundColor(new BaseColor(255, 255, 255));
+			celda4.setBorderColor(new BaseColor(255, 255, 255));
+			
+			PdfPCell celda5 = new PdfPCell();
+			celda5.setBackgroundColor(new BaseColor(255, 255, 255));
+			celda5.setBorderColor(new BaseColor(255, 255, 255));
+			
+			PdfPCell celda6 = new PdfPCell(new Phrase(date, fontCabecera));
+			celda6.setBackgroundColor(new BaseColor(255, 255, 255));
+			celda6.setBorderColor(new BaseColor(255, 255, 255));
+			
+			
+			tablaTituloSistema.addCell(celda1);
+			tablaTituloSistema.addCell(celda2);
+			tablaTituloSistema.addCell(celda3);
+			tablaTituloSistema.addCell(celda4);
+			tablaTituloSistema.addCell(celda5);
+			tablaTituloSistema.addCell(celda6);
+			document.add(tablaTituloSistema);
+			
+			Paragraph salto = new Paragraph();
+			salto.add(new Phrase(Chunk.NEWLINE));
+			document.add(salto);
 
 			PdfPTable tablaCabecera = new PdfPTable(2);
 
 			PdfPCell celda = new PdfPCell(new Phrase("Título del Plan de implementación, Programa o Proyecto:", fontTitulos));
-			//			celda.setColspan(1);
 			celda.setBorderColor(BaseColor.WHITE);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
 			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			tablaCabecera.addCell(celda);
 
 
 			celda = new PdfPCell(new Phrase(seguimientoSalvaguardas.getProyectoSeleccionado().getProjTitle(), fontContenido));
-			//			celda.setColspan(1);
 			celda.setBorderColor(BaseColor.WHITE);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaCabecera.addCell(celda);
 
 			celda = new PdfPCell(new Phrase("Socio implementador: ", fontTitulos));
-			//			celda.setColspan(1);
 			celda.setBorderColor(BaseColor.WHITE);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
 			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			tablaCabecera.addCell(celda);
 
 			celda = new PdfPCell(new Phrase(seguimientoSalvaguardas.getSocioImplementador().getPartName(), fontContenido));
-			//			celda.setColspan(1);
 			celda.setBorderColor(BaseColor.WHITE);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaCabecera.addCell(celda);
 
 			celda = new PdfPCell(new Phrase("Con qué sector se identifica:  ", fontTitulos));
-			//			celda.setColspan(1);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			tablaCabecera.addCell(celda);
@@ -2752,7 +3629,7 @@ public class ResumenPDF {
 				}
 			}
 			celda = new PdfPCell(sectores);
-			//			celda.setColspan(1);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaCabecera.addCell(celda);
@@ -2778,7 +3655,7 @@ public class ResumenPDF {
 					while(itera.hasNext()){
 						int key = Integer.valueOf(itera.next().toString());
 						if(key == cata.getCataId()){
-							marcoJuridico.add(new Phrase(cata.getCataText1(), fontContenido));
+							marcoJuridico.add(new Phrase(cata.getCataText2(), fontContenido));
 							marcoJuridico.add(new Phrase(Chunk.NEWLINE));
 						}
 					}
@@ -2796,7 +3673,7 @@ public class ResumenPDF {
 					while(itera.hasNext()){
 						int key = Integer.valueOf(itera.next().toString());
 						if(key == cata.getCataId()){
-							marcoJuridicoNacional.add(new Phrase(cata.getCataText1(), fontContenido));
+							marcoJuridicoNacional.add(new Phrase(cata.getCataText2(), fontContenido));
 							marcoJuridicoNacional.add(new Phrase(Chunk.NEWLINE));
 						}
 					}
@@ -2814,7 +3691,7 @@ public class ResumenPDF {
 					while(itera.hasNext()){
 						int key = Integer.valueOf(itera.next().toString());
 						if(key == cata.getCataId()){
-							normativa.add(new Phrase(cata.getCataText1(), fontContenido));
+							normativa.add(new Phrase(cata.getCataText2(), fontContenido));
 							normativa.add(new Phrase(Chunk.NEWLINE));
 						}
 					}
@@ -2831,7 +3708,7 @@ public class ResumenPDF {
 					while(itera.hasNext()){
 						int key = Integer.valueOf(itera.next().toString());
 						if(key == cata.getCataId()){
-							politica.add(new Phrase(cata.getCataText1(), fontContenido));
+							politica.add(new Phrase(cata.getCataText2(), fontContenido));
 							politica.add(new Phrase(Chunk.NEWLINE));
 						}
 					}
@@ -2954,7 +3831,7 @@ public class ResumenPDF {
 				encabezadoTablaB.add(new Phrase("Autoidentificación étnica",fontCabeceraTabla));
 				tablaB41.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaB41.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -2992,10 +3869,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB41.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaB41.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaB41.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 				}
@@ -3015,7 +3892,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB51 = new PdfPTable(new float[] { 3, 3, 3  });
+				PdfPTable tablaB51 = new PdfPTable(new float[] { 3, 3, 3 ,3, 3, 3  });
 				tablaB51.setWidthPercentage(100);
 				tablaB51.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB51.getDefaultCell().setPadding(3);
@@ -3024,6 +3901,15 @@ public class ResumenPDF {
 				tablaB51.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 				tablaB51.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
+				encabezadoTablaB=new Paragraph();				
+				encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaB51.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Cantón",fontCabeceraTabla));
+				tablaB51.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
+				tablaB51.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Institución",fontCabeceraTabla));
 				tablaB51.addCell(encabezadoTablaB);
@@ -3037,6 +3923,15 @@ public class ResumenPDF {
 
 				datosTablaB=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaB51()){
+					datosTablaB.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaB51.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareCanton(),fontContenidoTablas));
+					tablaB51.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareParroquia(),fontContenidoTablas));
+					tablaB51.addCell(datosTablaB);						
+					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB51.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
@@ -3063,7 +3958,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB61 = new PdfPTable(new float[] { 3, 3, 3  });
+				PdfPTable tablaB61 = new PdfPTable(new float[] {3,3, 3, 3, 3  });
 				tablaB61.setWidthPercentage(100);
 				tablaB61.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB61.getDefaultCell().setPadding(3);
@@ -3073,10 +3968,16 @@ public class ResumenPDF {
 				tablaB61.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 				encabezadoTablaB=new Paragraph();				
+				encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaB61.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Cantón",fontCabeceraTabla));
+				tablaB61.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Institución",fontCabeceraTabla));
 				tablaB61.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Objetivo",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Actividad que realiza la comunidad",fontCabeceraTabla));
 				tablaB61.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -3085,6 +3986,12 @@ public class ResumenPDF {
 
 				datosTablaB=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaB61()){
+					datosTablaB.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaB61.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareCanton(),fontContenidoTablas));
+					tablaB61.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB61.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
@@ -3111,7 +4018,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB71 = new PdfPTable(new float[] { 3, 3, 3  });
+				PdfPTable tablaB71 = new PdfPTable(new float[] { 3, 3, 3 ,3 });
 				tablaB71.setWidthPercentage(100);
 				tablaB71.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB71.getDefaultCell().setPadding(3);
@@ -3122,6 +4029,9 @@ public class ResumenPDF {
 
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Instrumento",fontCabeceraTabla));
+				tablaB71.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();				
+				encabezadoTablaB.add(new Phrase("Relevancia o importancia del instrumento",fontCabeceraTabla));
 				tablaB71.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Mecanismo de Institucionalización",fontCabeceraTabla));
@@ -3140,7 +4050,10 @@ public class ResumenPDF {
 					tablaB71.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
-					tablaB71.addCell(datosTablaB);						
+					tablaB71.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+					tablaB71.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 				}
 				document.add(tablaB71);
@@ -3159,7 +4072,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB81 = new PdfPTable(new float[] { 3, 3, 3,3, 3, 3,3, 3, 3,3,3  });
+				PdfPTable tablaB81 = new PdfPTable(new float[] { 3, 3, 3,3, 3, 3,3  });
 				tablaB81.setWidthPercentage(100);
 				tablaB81.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB81.getDefaultCell().setPadding(3);
@@ -3168,9 +4081,7 @@ public class ResumenPDF {
 				tablaB81.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 				tablaB81.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
-				encabezadoTablaB=new Paragraph();				
-				encabezadoTablaB.add(new Phrase("Fecha",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
+				
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
@@ -3180,14 +4091,11 @@ public class ResumenPDF {
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
+				tablaB81.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();				
+				encabezadoTablaB.add(new Phrase("Fecha",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Actividad",fontCabeceraTabla));
@@ -3195,20 +4103,12 @@ public class ResumenPDF {
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Hectáreas",fontCabeceraTabla));
 				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();				
-				encabezadoTablaB.add(new Phrase("Nro hombres",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
-				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Nro mujeres",fontCabeceraTabla));
-				tablaB81.addCell(encabezadoTablaB);
 
 
 
 				datosTablaB=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaB81()){
-					datosTablaB.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
+					
 					datosTablaB.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
@@ -3218,26 +4118,17 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareParroquia(),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB81.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
+					datosTablaB.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
+					tablaB81.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
+					tablaB81.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);
-					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
-					tablaB81.addCell(datosTablaB);						
+					tablaB81.addCell(datosTablaB);											
 					datosTablaB=new Paragraph();
 				}
 				document.add(tablaB81);
@@ -3275,10 +4166,10 @@ public class ResumenPDF {
 				encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaB9.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaB9.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaB9.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -3305,7 +4196,7 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaB9.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB9.addCell(datosTablaB);												
 					datosTablaB=new Paragraph();
 				}
@@ -3344,10 +4235,10 @@ public class ResumenPDF {
 				encabezadoTablaB.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaB102.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaB102.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaB102.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -3395,10 +4286,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaB102.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaB102.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaB102.addCell(datosTablaB);						
 					datosTablaB=new Paragraph();
 				}
@@ -3447,10 +4338,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB11.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnGenericOne()),fontContenidoTablas));
 					tablaB11.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberTwo()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnGenericTwo()),fontContenidoTablas));
 					tablaB11.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
@@ -3483,16 +4374,16 @@ public class ResumenPDF {
 				tablaB121.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Nombre de la organización",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Nombre de la organización Beneficiaria",fontCabeceraTabla));
 				tablaB121.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Acciones implementadas",fontCabeceraTabla));
 				tablaB121.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaB121.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
-				encabezadoTablaB.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaB.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaB121.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();				
 				encabezadoTablaB.add(new Phrase("Conformación de la organización",fontCabeceraTabla));
@@ -3526,10 +4417,10 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberFive()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaB121.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
@@ -3552,7 +4443,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB131 = new PdfPTable(new float[] { 3, 3, 3,3 });
+				PdfPTable tablaB131 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3});
 				tablaB131.setWidthPercentage(100);
 				tablaB131.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB131.getDefaultCell().setPadding(3);
@@ -3566,9 +4457,18 @@ public class ResumenPDF {
 				tablaB131.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Actividad",fontCabeceraTabla));
+				tablaB131.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Temática tratada",fontCabeceraTabla));
 				tablaB131.addCell(encabezadoTablaB);				
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Nro de personas que acceden a la info",fontCabeceraTabla));
+				tablaB131.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaB131.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaB131.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -3581,10 +4481,19 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
 					tablaB131.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
+					tablaB131.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB131.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnGenericOne()),fontContenidoTablas));
+					tablaB131.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaB131.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaB131.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
@@ -3607,7 +4516,7 @@ public class ResumenPDF {
 				salvaguardaB.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaB);
 
-				PdfPTable tablaB143 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3});
+				PdfPTable tablaB143 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3,3});
 				tablaB143.setWidthPercentage(100);
 				tablaB143.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaB143.getDefaultCell().setPadding(3);
@@ -3632,6 +4541,12 @@ public class ResumenPDF {
 				encabezadoTablaB.add(new Phrase("¿Como se informa a la gente sobre la ejecución del proyecto/programa?",fontCabeceraTabla));
 				tablaB143.addCell(encabezadoTablaB);
 				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaB143.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
+				encabezadoTablaB.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaB143.addCell(encabezadoTablaB);
+				encabezadoTablaB=new Paragraph();	
 				encabezadoTablaB.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaB143.addCell(encabezadoTablaB);
 
@@ -3645,13 +4560,19 @@ public class ResumenPDF {
 					datosTablaB.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaB143.addCell(datosTablaB);					
 					datosTablaB=new Paragraph();
-					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
+					datosTablaB.add(new Phrase(String.valueOf(tabla.getTareColumnGenericOne()),fontContenidoTablas));
 					tablaB143.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaB143.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaB143.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaB143.addCell(datosTablaB);
+					datosTablaB=new Paragraph();
+					datosTablaB.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaB143.addCell(datosTablaB);
 					datosTablaB=new Paragraph();
 					datosTablaB.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
@@ -3716,7 +4637,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC201 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3,3});
+				PdfPTable tablaC201 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3,3,3});
 				tablaC201.setWidthPercentage(100);
 				tablaC201.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC201.getDefaultCell().setPadding(3);
@@ -3735,10 +4656,10 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaC201.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaC201.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaC201.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -3753,10 +4674,13 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Hectáreas",fontCabeceraTabla));
 				tablaC201.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Inversión realizada",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Presupuesto asignado a la actividad",fontCabeceraTabla));
 				tablaC201.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
+				tablaC201.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaC201.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Tipo de acceso",fontCabeceraTabla));
@@ -3786,10 +4710,10 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
@@ -3799,6 +4723,9 @@ public class ResumenPDF {
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					tablaC201.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaC201.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
@@ -3821,7 +4748,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC211 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3});
+				PdfPTable tablaC211 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3,3});
 				tablaC211.setWidthPercentage(100);
 				tablaC211.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC211.getDefaultCell().setPadding(3);
@@ -3840,10 +4767,10 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaC211.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaC211.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaC211.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -3856,7 +4783,10 @@ public class ResumenPDF {
 				tablaC211.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("¿Cómo se han promovido estas prácticas?",fontCabeceraTabla));
-				tablaC211.addCell(encabezadoTablaC);					
+				tablaC211.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaC211.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaC211.addCell(encabezadoTablaC);
@@ -3893,6 +4823,9 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaC211.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnFive(),fontContenidoTablas));
 					tablaC211.addCell(datosTablaC);						
 					datosTablaC=new Paragraph();
@@ -3913,7 +4846,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC241 = new PdfPTable(new float[] { 3, 3, 3,3 ,3});
+				PdfPTable tablaC241 = new PdfPTable(new float[] { 3,3, 3, 3,3 ,3});
 				tablaC241.setWidthPercentage(100);
 				tablaC241.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC241.getDefaultCell().setPadding(3);
@@ -3929,7 +4862,10 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Organizaciones que participan",fontCabeceraTabla));
 				tablaC241.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Num participantes",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Num hombres",fontCabeceraTabla));
+				tablaC241.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Num mujeres",fontCabeceraTabla));
 				tablaC241.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Temática",fontCabeceraTabla));
@@ -3950,7 +4886,10 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaC241.addCell(datosTablaC);					
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					tablaC241.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaC241.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
@@ -3970,7 +4909,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC242 = new PdfPTable(new float[] { 3, 3, 3});
+				PdfPTable tablaC242 = new PdfPTable(new float[] { 3, 3});
 				tablaC242.setWidthPercentage(100);
 				tablaC242.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC242.getDefaultCell().setPadding(3);
@@ -3981,10 +4920,7 @@ public class ResumenPDF {
 
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Medidas que se han tomado para motivar la participación de mujeres",fontCabeceraTabla));
-				tablaC242.addCell(encabezadoTablaC);
-				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("No de mujeres que participan en el intercambio de experiencias",fontCabeceraTabla));
-				tablaC242.addCell(encabezadoTablaC);					
+				tablaC242.addCell(encabezadoTablaC);									
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaC242.addCell(encabezadoTablaC);
@@ -4019,7 +4955,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC26 = new PdfPTable(new float[] { 3, 3, 3,3,3});
+				PdfPTable tablaC26 = new PdfPTable(new float[] { 3, 3, 3,3,3,3});
 				tablaC26.setWidthPercentage(100);
 				tablaC26.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC26.getDefaultCell().setPadding(3);
@@ -4029,7 +4965,7 @@ public class ResumenPDF {
 				tablaC26.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Línea de acción",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Provincia",fontCabeceraTabla));
 				tablaC26.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -4041,6 +4977,9 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Cargo",fontCabeceraTabla));
 				tablaC26.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaC26.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaC26.addCell(encabezadoTablaC);
 
@@ -4048,7 +4987,7 @@ public class ResumenPDF {
 				datosTablaC=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaC26()){
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
 					tablaC26.addCell(datosTablaC);					
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
@@ -4058,6 +4997,9 @@ public class ResumenPDF {
 					tablaC26.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaC26.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaC26.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
@@ -4080,7 +5022,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC271 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3});
+				PdfPTable tablaC271 = new PdfPTable(new float[] {3, 3, 3, 3,3,3,3,3});
 				tablaC271.setWidthPercentage(100);
 				tablaC271.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC271.getDefaultCell().setPadding(3);
@@ -4090,13 +5032,13 @@ public class ResumenPDF {
 				tablaC271.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Línea de acción",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Provincia",fontCabeceraTabla));
 				tablaC271.addCell(encabezadoTablaC);									
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Autoidentificación étnica",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaC271.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Pueblo/Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaC271.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -4108,13 +5050,16 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Hectáreas bajo actividad REDD+",fontCabeceraTabla));
 				tablaC271.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaC271.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaC271.addCell(encabezadoTablaC);
 
 				datosTablaC=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaC271()){
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
+					datosTablaC.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);										
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
@@ -4132,6 +5077,9 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaC271.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaC271.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
@@ -4145,7 +5093,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC28 = new PdfPTable(new float[] { 3, 3, 3, 3, 3});
+				PdfPTable tablaC28 = new PdfPTable(new float[] { 3, 3, 3, 3, 3,3,3});
 				tablaC28.setWidthPercentage(100);
 				tablaC28.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC28.getDefaultCell().setPadding(3);
@@ -4155,10 +5103,10 @@ public class ResumenPDF {
 				tablaC28.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 				encabezadoTablaC=new Paragraph();		
-				encabezadoTablaC.add(new Phrase("Autoidentificación étnica",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Entina",fontCabeceraTabla));
 				tablaC28.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Pueblo/Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaC28.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Objeto de contratación",fontCabeceraTabla));
@@ -4168,6 +5116,12 @@ public class ResumenPDF {
 				tablaC28.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Presupuesto",fontCabeceraTabla));
+				tablaC28.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Cómo se están promoviendo y fomentando el derecho laboral en pueblos indígenas a través del PDI, programa y/ proyecto",fontCabeceraTabla));
+				tablaC28.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaC28.addCell(encabezadoTablaC);
 
 				datosTablaC=new Paragraph();
@@ -4186,7 +5140,13 @@ public class ResumenPDF {
 					tablaC28.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
-					tablaC28.addCell(datosTablaC);						
+					tablaC28.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaC28.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaC28.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 				}
 				document.add(tablaC28);
@@ -4205,7 +5165,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC291 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3});
+				PdfPTable tablaC291 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3,3});
 				tablaC291.setWidthPercentage(100);
 				tablaC291.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC291.getDefaultCell().setPadding(3);
@@ -4224,10 +5184,10 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaC291.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaC291.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaC291.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -4240,6 +5200,9 @@ public class ResumenPDF {
 				tablaC291.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Objeto del acuerdo",fontCabeceraTabla));
+				tablaC291.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaC291.addCell(encabezadoTablaC);
 
 				datosTablaC=new Paragraph();
@@ -4272,6 +5235,9 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaC291.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaC291.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
 				}
 				document.add(tablaC291);
 
@@ -4289,7 +5255,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC301 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3});
+				PdfPTable tablaC301 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3,3});
 				tablaC301.setWidthPercentage(100);
 				tablaC301.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC301.getDefaultCell().setPadding(3);
@@ -4325,6 +5291,9 @@ public class ResumenPDF {
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Link de la Compensación",fontCabeceraTabla));
 				tablaC301.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaC301.addCell(encabezadoTablaC);
 
 				datosTablaC=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaC301()){
@@ -4356,6 +5325,9 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
 					tablaC301.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaC301.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
 				}
 				document.add(tablaC301);
 
@@ -4373,7 +5345,7 @@ public class ResumenPDF {
 				salvaguardaC.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaC);
 
-				PdfPTable tablaC311 = new PdfPTable(new float[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3});
+				PdfPTable tablaC311 = new PdfPTable(new float[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,3});
 				tablaC311.setWidthPercentage(100);
 				tablaC311.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaC311.getDefaultCell().setPadding(3);
@@ -4392,10 +5364,10 @@ public class ResumenPDF {
 				encabezadoTablaC.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaC311.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaC311.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
-				encabezadoTablaC.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaC.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaC311.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -4408,6 +5380,9 @@ public class ResumenPDF {
 				tablaC311.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Asistentes mujeres",fontCabeceraTabla));
+				tablaC311.addCell(encabezadoTablaC);
+				encabezadoTablaC=new Paragraph();	
+				encabezadoTablaC.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaC311.addCell(encabezadoTablaC);
 				encabezadoTablaC=new Paragraph();	
 				encabezadoTablaC.add(new Phrase("Link verificador participantes",fontCabeceraTabla));
@@ -4437,10 +5412,13 @@ public class ResumenPDF {
 					datosTablaC.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
-					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaC.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					tablaC311.addCell(datosTablaC);
+					datosTablaC=new Paragraph();
+					datosTablaC.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaC311.addCell(datosTablaC);
 					datosTablaC=new Paragraph();
 					datosTablaC.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
@@ -4506,7 +5484,7 @@ public class ResumenPDF {
 				salvaguardaD.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaD);
 
-				PdfPTable tablaD321 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3});
+				PdfPTable tablaD321 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3, 3, 3,3 ,3,3});
 				tablaD321.setWidthPercentage(100);
 				tablaD321.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaD321.getDefaultCell().setPadding(3);
@@ -4525,25 +5503,28 @@ public class ResumenPDF {
 				encabezadoTablaD.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
 				encabezadoTablaD.add(new Phrase("Comunidad",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Espacio",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Espacio de difusión de la información",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Actores",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Actores que participan en el proceso de acceso a la información",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
 				encabezadoTablaD.add(new Phrase("Asistentes hombres",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
 				encabezadoTablaD.add(new Phrase("Asistentes mujeres",fontCabeceraTabla));
+				tablaD321.addCell(encabezadoTablaD);
+				encabezadoTablaD=new Paragraph();	
+				encabezadoTablaD.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaD321.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
 				encabezadoTablaD.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -4580,10 +5561,13 @@ public class ResumenPDF {
 					datosTablaD.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					datosTablaD.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
-					datosTablaD.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaD.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					tablaD321.addCell(datosTablaD);
+					datosTablaD=new Paragraph();
+					datosTablaD.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaD321.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
 					datosTablaD.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
@@ -4606,7 +5590,7 @@ public class ResumenPDF {
 				salvaguardaD.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaD);
 
-				PdfPTable tablaD331 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3});
+				PdfPTable tablaD331 = new PdfPTable(new float[] {3,3, 3, 3, 3,3 ,3,3,3});
 				tablaD331.setWidthPercentage(100);
 				tablaD331.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaD331.getDefaultCell().setPadding(3);
@@ -4616,23 +5600,29 @@ public class ResumenPDF {
 				tablaD331.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
 				encabezadoTablaD=new Paragraph();	
+				encabezadoTablaD.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaD331.addCell(encabezadoTablaD);
+				encabezadoTablaD=new Paragraph();	
 				encabezadoTablaD.add(new Phrase("Actor / Organización",fontCabeceraTabla));
 				tablaD331.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaD331.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaD331.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Objetivo",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Actividad que realiza la comunidad",fontCabeceraTabla));
 				tablaD331.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
-				encabezadoTablaD.add(new Phrase("Inversión realizada",fontCabeceraTabla));
+				encabezadoTablaD.add(new Phrase("Presupuesto asignado a la actividad",fontCabeceraTabla));
 				tablaD331.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
 				encabezadoTablaD.add(new Phrase("Nivel de involucramiento",fontCabeceraTabla));
-				tablaD331.addCell(encabezadoTablaD);					
+				tablaD331.addCell(encabezadoTablaD);
+				encabezadoTablaD=new Paragraph();	
+				encabezadoTablaD.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaD331.addCell(encabezadoTablaD);
 				encabezadoTablaD=new Paragraph();	
 				encabezadoTablaD.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaD331.addCell(encabezadoTablaD);
@@ -4640,6 +5630,9 @@ public class ResumenPDF {
 				datosTablaD=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaD331()){
 
+					datosTablaD=new Paragraph();
+					datosTablaD.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaD331.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
 					datosTablaD.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaD331.addCell(datosTablaD);						
@@ -4657,6 +5650,9 @@ public class ResumenPDF {
 					tablaD331.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
 					datosTablaD.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaD331.addCell(datosTablaD);
+					datosTablaD=new Paragraph();
+					datosTablaD.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaD331.addCell(datosTablaD);
 					datosTablaD=new Paragraph();
 					datosTablaD.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
@@ -4723,7 +5719,7 @@ public class ResumenPDF {
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaE);
 
-				PdfPTable tablaE341 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 });
+				PdfPTable tablaE341 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3,3,3 });
 				tablaE341.setWidthPercentage(100);
 				tablaE341.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaE341.getDefaultCell().setPadding(3);
@@ -4745,10 +5741,16 @@ public class ResumenPDF {
 				encabezadoTablaE.add(new Phrase("Comunidad",fontCabeceraTabla));
 				tablaE341.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Actores involucrados clave",fontCabeceraTabla));
+				tablaE341.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Hectáreas",fontCabeceraTabla));
 				tablaE341.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Tipo de área consolidada",fontCabeceraTabla));
+				tablaE341.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaE341.addCell(encabezadoTablaE);
 
 				Paragraph datosTablaE=new Paragraph();
@@ -4767,11 +5769,17 @@ public class ResumenPDF {
 					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaE341.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					tablaE341.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
 					tablaE341.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
-					tablaE341.addCell(datosTablaE);												
+					tablaE341.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaE341.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 				}
 				document.add(tablaE341);
@@ -4790,7 +5798,7 @@ public class ResumenPDF {
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaE);
 
-				PdfPTable tablaE351 = new PdfPTable(new float[] { 3, 3, 3});
+				PdfPTable tablaE351 = new PdfPTable(new float[] { 3, 3, 3,3});
 				tablaE351.setWidthPercentage(100);
 				tablaE351.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaE351.getDefaultCell().setPadding(3);
@@ -4806,6 +5814,9 @@ public class ResumenPDF {
 				encabezadoTablaE.add(new Phrase("Herramienta (PDOT, ACUS, Ordenanza, etc)",fontCabeceraTabla));
 				tablaE351.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaE351.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaE351.addCell(encabezadoTablaE);
 
@@ -4816,6 +5827,9 @@ public class ResumenPDF {
 					tablaE351.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
+					tablaE351.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaE351.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
@@ -4838,7 +5852,7 @@ public class ResumenPDF {
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaE);
 
-				PdfPTable tablaE361 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3});
+				PdfPTable tablaE361 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3});
 				tablaE361.setWidthPercentage(100);
 				tablaE361.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaE361.getDefaultCell().setPadding(3);
@@ -4857,10 +5871,10 @@ public class ResumenPDF {
 				encabezadoTablaE.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaE361.addCell(encabezadoTablaE);				
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaE.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaE361.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaE.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaE361.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -4870,6 +5884,9 @@ public class ResumenPDF {
 				tablaE361.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Hectareas",fontCabeceraTabla));
+				tablaE361.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaE361.addCell(encabezadoTablaE);
 
 				datosTablaE=new Paragraph();
@@ -4897,7 +5914,10 @@ public class ResumenPDF {
 					tablaE361.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
-					tablaE361.addCell(datosTablaE);																	
+					tablaE361.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaE361.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 				}
 				document.add(tablaE361);
@@ -4916,7 +5936,7 @@ public class ResumenPDF {
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaE);
 
-				PdfPTable tablaE371 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3,3,3,3});
+				PdfPTable tablaE371 = new PdfPTable(new float[] {3, 3, 3, 3,3,3,3,3,3,3,3,3});
 				tablaE371.setWidthPercentage(100);
 				tablaE371.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaE371.getDefaultCell().setPadding(3);
@@ -4956,6 +5976,9 @@ public class ResumenPDF {
 				encabezadoTablaE.add(new Phrase("Nro mujeres",fontCabeceraTabla));
 				tablaE371.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaE371.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaE371.addCell(encabezadoTablaE);
 
@@ -4988,10 +6011,13 @@ public class ResumenPDF {
 					tablaE371.addCell(datosTablaE);																	
 					datosTablaE=new Paragraph();
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);																							
 					datosTablaE=new Paragraph();
-					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaE.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					tablaE371.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaE371.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
@@ -5021,7 +6047,7 @@ public class ResumenPDF {
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaE);
 
-				PdfPTable tablaE381 = new PdfPTable(new float[] { 3, 3, 3,3,3,3});
+				PdfPTable tablaE381 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3});
 				tablaE381.setWidthPercentage(100);
 				tablaE381.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaE381.getDefaultCell().setPadding(3);
@@ -5044,7 +6070,10 @@ public class ResumenPDF {
 				tablaE381.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Servicio",fontCabeceraTabla));
-				tablaE381.addCell(encabezadoTablaE);					
+				tablaE381.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaE381.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaE381.addCell(encabezadoTablaE);
@@ -5068,6 +6097,9 @@ public class ResumenPDF {
 					datosTablaE.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaE381.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaE381.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaE381.addCell(datosTablaE);																																								
 					datosTablaE=new Paragraph();
@@ -5088,7 +6120,7 @@ public class ResumenPDF {
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaE);
 
-				PdfPTable tablaE391 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3});
+				PdfPTable tablaE391 = new PdfPTable(new float[] { 3, 3, 3,3,3,3,3,3});
 				tablaE391.setWidthPercentage(100);
 				tablaE391.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaE391.getDefaultCell().setPadding(3);
@@ -5116,6 +6148,9 @@ public class ResumenPDF {
 				encabezadoTablaE.add(new Phrase("Periodicidad",fontCabeceraTabla));
 				tablaE391.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaE391.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
 				encabezadoTablaE.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaE391.addCell(encabezadoTablaE);
 
@@ -5141,6 +6176,9 @@ public class ResumenPDF {
 					datosTablaE.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaE391.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaE391.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
 					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaE391.addCell(datosTablaE);
 					datosTablaE=new Paragraph();
@@ -5153,382 +6191,1793 @@ public class ResumenPDF {
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 				salvaguardaE.add(new Phrase("COBENEFICIOS POLÍTICAS Y GESTIÓN INSTITUCIONAL", fontTitulos));	
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(14).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 				document.add(salvaguardaE);
+				
+				PdfPTable valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3,3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Comunidad",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nacionalidad",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_1()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																						
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase( tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(15).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_2()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+																										
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(16).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_3()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();					
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
 
-				PdfPTable tablaCobeneficio1 = new PdfPTable(new float[] { 9, 1, 9, 1});
-				tablaCobeneficio1.setWidthPercentage(100);
-				tablaCobeneficio1.setHorizontalAlignment(Element.ALIGN_LEFT);
-				tablaCobeneficio1.getDefaultCell().setPadding(3);
-				tablaCobeneficio1.getDefaultCell().setUseAscender(true);
-				tablaCobeneficio1.getDefaultCell().setUseDescender(true);
-				tablaCobeneficio1.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-				tablaCobeneficio1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(17).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-				tablaCobeneficio1.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio1.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-				tablaCobeneficio1.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio1.addCell(encabezadoTablaE);										
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(14).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(8).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(18).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(12).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(15).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(9).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(19).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(13).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(16).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(10).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(20).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(14).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(17).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(11).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio1.addCell(datosTablaE);
-				document.add(tablaCobeneficio1);
-
+				encabezadoTablaE.add(new Phrase("Espacio de gobernanza",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_4()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();					
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(18).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_5()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();					
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(19).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Riesgo abordado",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_6()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();					
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(20).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Capacidades fortalecidas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_7()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
 				salvaguardaE = new Paragraph();
-				salvaguardaE.add(new Phrase(Chunk.NEWLINE));										
-
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
 				salvaguardaE.add(new Phrase("TRANSICIÓN A SISTEMAS PRODUCTIVOS SOSTENIBLES", fontTitulos));	
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(21).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 				document.add(salvaguardaE);
-
-				PdfPTable tablaCobeneficio2 = new PdfPTable(new float[] { 9, 1, 9, 1});
-				tablaCobeneficio2.setWidthPercentage(100);
-				tablaCobeneficio2.setHorizontalAlignment(Element.ALIGN_LEFT);
-				tablaCobeneficio2.getDefaultCell().setPadding(3);
-				tablaCobeneficio2.getDefaultCell().setUseAscender(true);
-				tablaCobeneficio2.getDefaultCell().setUseDescender(true);
-				tablaCobeneficio2.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-				tablaCobeneficio2.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-				tablaCobeneficio2.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio2.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-				tablaCobeneficio2.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_8()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																																										
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(22).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio2.addCell(encabezadoTablaE);										
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(21).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(15).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(27).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(21).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(22).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(16).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(28).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(22).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(23).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(17).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(29).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(23).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(24).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(18).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(30).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(24).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);					
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(25).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(19).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(26).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(20).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio2.addCell(datosTablaE);
-				document.add(tablaCobeneficio2);
-
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_9()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																																																
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(23).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Productos incentivados",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_10()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(24).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Organización fortalecida",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_11()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(25).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Asociación apoyada",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_12()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(26).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("% Incremento ingresos",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_13()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(27).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_14()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(28).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_15()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(29).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_16()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(30).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_17()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
 				salvaguardaE = new Paragraph();
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
-
 				salvaguardaE.add(new Phrase("MANEJO FORESTAL SOSTENIBLE", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(31).getQuesContentQuestion(), fontContenidoTablas));
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 				document.add(salvaguardaE);
-				PdfPTable tablaCobeneficio3 = new PdfPTable(new float[] { 9, 1, 9, 1});
-				tablaCobeneficio3.setWidthPercentage(100);
-				tablaCobeneficio3.setHorizontalAlignment(Element.ALIGN_LEFT);
-				tablaCobeneficio3.getDefaultCell().setPadding(3);
-				tablaCobeneficio3.getDefaultCell().setUseAscender(true);
-				tablaCobeneficio3.getDefaultCell().setUseDescender(true);
-				tablaCobeneficio3.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-				tablaCobeneficio3.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-				tablaCobeneficio3.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio3.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-				tablaCobeneficio3.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio3.addCell(encabezadoTablaE);										
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(31).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(25).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(38).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(32).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(32).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(26).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(39).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(33).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(33).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(27).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(40).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(34).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(34).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(28).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(41).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(35).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);					
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(35).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(29).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(42).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(36).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(36).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(30).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(43).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(37).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(37).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(31).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio3.addCell(datosTablaE);					
-				document.add(tablaCobeneficio3);
-
+				encabezadoTablaE.add(new Phrase("Fuentes de ingreso apoyadas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_18()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(32).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Comunidad",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_19()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(33).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Capacidades fortalecidas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_20()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(34).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Iniciativa turismo apoyada",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_21()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(35).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Instrumento/mecanismo que mejora la gobernanza forestal",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_22()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(36).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nombre de las Organizaciones Apoyadas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_23()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(37).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nombre de las Organizaciones Apoyadas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_24()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(38).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_25()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(39).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_26()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(40).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Cantón",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_27()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareCanton(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(41).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Especies protegidas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_28()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(42).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Especies protegidas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_29()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(43).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_30()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
 				salvaguardaE = new Paragraph();
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
-
 				salvaguardaE.add(new Phrase("CONSERVACION Y RESTAURACION", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("SOCIALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(44).getQuesContentQuestion(), fontContenidoTablas));
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
 				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
 				document.add(salvaguardaE);
-				PdfPTable tablaCobeneficio4 = new PdfPTable(new float[] { 9, 1, 9, 1});
-				tablaCobeneficio4.setWidthPercentage(100);
-				tablaCobeneficio4.setHorizontalAlignment(Element.ALIGN_LEFT);
-				tablaCobeneficio4.getDefaultCell().setPadding(3);
-				tablaCobeneficio4.getDefaultCell().setUseAscender(true);
-				tablaCobeneficio4.getDefaultCell().setUseDescender(true);
-				tablaCobeneficio4.getDefaultCell().setBorderColor(BaseColor.WHITE);				
-				tablaCobeneficio4.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("SOCIALES",fontCabeceraTabla));
-				tablaCobeneficio4.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio4.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Usos alternativos",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("AMBIENTALES",fontCabeceraTabla));
-				tablaCobeneficio4.addCell(encabezadoTablaE);
+				encabezadoTablaE.add(new Phrase("Servicios valorados",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_31()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+																										
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(45).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
 				encabezadoTablaE=new Paragraph();	
-				encabezadoTablaE.add(new Phrase("",fontCabeceraTabla));
-				tablaCobeneficio4.addCell(encabezadoTablaE);										
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(44).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(38).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(46).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(40).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(45).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(39).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(47).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(41).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(48).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);																						
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(42).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(49).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(43).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);					
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase("",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(50).getQuesContentQuestion(),fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				datosTablaE=new Paragraph();
-				datosTablaE.add(new Phrase(seguimientoSalvaguardas.getListaValoresRespuestasE().get(44).isVaanYesnoAnswerValue()?"SI":"",fontContenidoTablas));
-				tablaCobeneficio4.addCell(datosTablaE);
-				document.add(tablaCobeneficio4);
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nombre de las Organizaciones Apoyadas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_32()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();												
+				salvaguardaE.add(new Phrase("AMBIENTALES", fontTitulos));	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(46).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_33()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																											
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(47).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_34()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(48).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_35()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(49).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Canton",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_36()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareCanton(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(50).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_37()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
+				salvaguardaE = new Paragraph();																	
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));					
+				salvaguardaE.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasE().get(51).getQuesContentQuestion(), fontContenidoTablas));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));
+				salvaguardaE.add(new Phrase(Chunk.NEWLINE));	
+				document.add(salvaguardaE);
+				
+				valoresCobeneficios = new PdfPTable(new float[] { 3, 3, 3, 3});
+				valoresCobeneficios.setWidthPercentage(100);
+				valoresCobeneficios.setHorizontalAlignment(Element.ALIGN_LEFT);
+				valoresCobeneficios.getDefaultCell().setPadding(3);
+				valoresCobeneficios.getDefaultCell().setUseAscender(true);
+				valoresCobeneficios.getDefaultCell().setUseDescender(true);
+				valoresCobeneficios.getDefaultCell().setBorderColor(BaseColor.WHITE);				
+				valoresCobeneficios.getDefaultCell().setHorizontalAlignment(Element.ALIGN_MIDDLE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("PROVINCIA",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarios",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Beneficiarias",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				encabezadoTablaE=new Paragraph();	
+				encabezadoTablaE.add(new Phrase("Nro Hectareas",fontContenidoTablas));
+				valoresCobeneficios.addCell(encabezadoTablaE);
+				
+				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaE40_38()){
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberMens()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnNumberWomen()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																	
+					datosTablaE=new Paragraph();
+					datosTablaE=new Paragraph();
+					datosTablaE.add(new Phrase(String.valueOf( tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+					valoresCobeneficios.addCell(datosTablaE);																					
+					
+					datosTablaE=new Paragraph();
+				}
+				document.add(valoresCobeneficios);
+				
 
 				Paragraph informacionOpcional = new Paragraph();
 				informacionOpcional.add(new Phrase("INFORMACION ADICIONAL OPCIONAL", fontTitulos));
@@ -5606,10 +8055,10 @@ public class ResumenPDF {
 				encabezadoTablaF.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaF411.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
-				encabezadoTablaF.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaF.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaF411.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
-				encabezadoTablaF.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaF.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaF411.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -5640,13 +8089,13 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareGenericoDos(),fontContenidoTablas));
 					tablaF411.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnSix(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaF411.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnSeven(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaF411.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(tabla.getTareColumnEight(),fontContenidoTablas));
+					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaF411.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
 				}
@@ -5666,7 +8115,7 @@ public class ResumenPDF {
 				salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaF);
 
-				PdfPTable tablaF421 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 ,3,3,3});
+				PdfPTable tablaF421 = new PdfPTable(new float[] {3, 3, 3, 3,3 ,3, 3 ,3,3,3});
 				tablaF421.setWidthPercentage(100);
 				tablaF421.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaF421.getDefaultCell().setPadding(3);
@@ -5685,10 +8134,10 @@ public class ResumenPDF {
 				encabezadoTablaF.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaF421.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
-				encabezadoTablaF.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaF.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaF421.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
-				encabezadoTablaF.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaF.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaF421.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -5698,6 +8147,9 @@ public class ResumenPDF {
 				tablaF421.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Medida tomada",fontCabeceraTabla));
+				tablaF421.addCell(encabezadoTablaF);
+				encabezadoTablaF=new Paragraph();	
+				encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaF421.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -5731,6 +8183,9 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaF421.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
+					datosTablaF.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaF421.addCell(datosTablaF);
+					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaF421.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
@@ -5751,7 +8206,7 @@ public class ResumenPDF {
 				salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaF);
 
-				PdfPTable tablaF431 = new PdfPTable(new float[] { 5, 3, 3,3 ,3, 3});
+				PdfPTable tablaF431 = new PdfPTable(new float[] { 5, 3, 3,3 ,3, 3,3});
 				tablaF431.setWidthPercentage(100);
 				tablaF431.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaF431.getDefaultCell().setPadding(3);
@@ -5774,7 +8229,10 @@ public class ResumenPDF {
 				tablaF431.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Resultado",fontCabeceraTabla));
-				tablaF431.addCell(encabezadoTablaF);					
+				tablaF431.addCell(encabezadoTablaF);
+				encabezadoTablaF=new Paragraph();	
+				encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaF431.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaF431.addCell(encabezadoTablaF);
@@ -5798,6 +8256,9 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaF431.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
+					datosTablaF.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaF431.addCell(datosTablaF);
+					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaF431.addCell(datosTablaF);						
 					datosTablaF=new Paragraph();
@@ -5818,7 +8279,7 @@ public class ResumenPDF {
 				salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaF);
 
-				PdfPTable tablaF441 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 ,3,3,3});
+				PdfPTable tablaF441 = new PdfPTable(new float[] { 3, 3, 3,3 ,3, 3 ,3,3,3,3});
 				tablaF441.setWidthPercentage(100);
 				tablaF441.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaF441.getDefaultCell().setPadding(3);
@@ -5837,10 +8298,10 @@ public class ResumenPDF {
 				encabezadoTablaF.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaF441.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
-				encabezadoTablaF.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaF.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaF441.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
-				encabezadoTablaF.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaF.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaF441.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -5850,6 +8311,9 @@ public class ResumenPDF {
 				tablaF441.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Actividad para mitigar",fontCabeceraTabla));
+				tablaF441.addCell(encabezadoTablaF);
+				encabezadoTablaF=new Paragraph();	
+				encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaF441.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -5883,6 +8347,9 @@ public class ResumenPDF {
 					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaF441.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
+					datosTablaF.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaF441.addCell(datosTablaF);
+					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaF441.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
@@ -5903,7 +8370,7 @@ public class ResumenPDF {
 				salvaguardaF.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaF);
 
-				PdfPTable tablaF452 = new PdfPTable(new float[] { 5, 3, 3,3 });
+				PdfPTable tablaF452 = new PdfPTable(new float[] { 5, 3, 3,3,3 });
 				tablaF452.setWidthPercentage(100);
 				tablaF452.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaF452.getDefaultCell().setPadding(3);
@@ -5912,6 +8379,9 @@ public class ResumenPDF {
 				tablaF452.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 				tablaF452.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
+				encabezadoTablaF=new Paragraph();	
+				encabezadoTablaF.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaF452.addCell(encabezadoTablaF);
 				encabezadoTablaF=new Paragraph();	
 				encabezadoTablaF.add(new Phrase("Sistemas",fontCabeceraTabla));
 				tablaF452.addCell(encabezadoTablaF);
@@ -5929,13 +8399,16 @@ public class ResumenPDF {
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaF452()){
 
 					datosTablaF=new Paragraph();
+					datosTablaF.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaF452.addCell(datosTablaF);
+					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaF452.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnNumberOne()),fontContenidoTablas));
+					datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnGenericOne()),fontContenidoTablas));
 					tablaF452.addCell(datosTablaF);					
 					datosTablaF=new Paragraph();
-					datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnNumberTwo()),fontContenidoTablas));
+					datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnGenericTwo()),fontContenidoTablas));
 					tablaF452.addCell(datosTablaF);
 					datosTablaF=new Paragraph();
 					datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
@@ -6001,7 +8474,7 @@ public class ResumenPDF {
 				salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaG);
 
-				PdfPTable tablaG461 = new PdfPTable(new float[] { 3, 3, 3,3 ,3});
+				PdfPTable tablaG461 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3,3});
 				tablaG461.setWidthPercentage(100);
 				tablaG461.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaG461.getDefaultCell().setPadding(3);
@@ -6010,7 +8483,10 @@ public class ResumenPDF {
 				tablaG461.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 				tablaG461.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
-				Paragraph encabezadoTablaG=new Paragraph();	
+				Paragraph encabezadoTablaG=new Paragraph();
+				encabezadoTablaG.add(new Phrase("Provincia",fontCabeceraTabla));
+				tablaG461.addCell(encabezadoTablaG);
+				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Responsable del estudio",fontCabeceraTabla));
 				tablaG461.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
@@ -6023,6 +8499,9 @@ public class ResumenPDF {
 				encabezadoTablaG.add(new Phrase("Nombre del estudio",fontCabeceraTabla));
 				tablaG461.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
+				encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaG461.addCell(encabezadoTablaG);
+				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Verificador",fontCabeceraTabla));
 				tablaG461.addCell(encabezadoTablaG);
 
@@ -6030,6 +8509,9 @@ public class ResumenPDF {
 				Paragraph datosTablaG=new Paragraph();
 				for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaG461()){
 
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(tabla.getTareProvincia(),fontContenidoTablas));
+					tablaG461.addCell(datosTablaG);
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaG461.addCell(datosTablaG);
@@ -6041,6 +8523,9 @@ public class ResumenPDF {
 					tablaG461.addCell(datosTablaG);
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+					tablaG461.addCell(datosTablaG);
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
 					tablaG461.addCell(datosTablaG);
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
@@ -6082,10 +8567,10 @@ public class ResumenPDF {
 				encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaG471.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaG471.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaG471.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -6128,10 +8613,10 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareGenericoTres(),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaG471.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(Fechas.cambiarFormato(tabla.getTareColumnNine(),"yyyy-MM-dd"),fontContenidoTablas));
@@ -6173,10 +8658,10 @@ public class ResumenPDF {
 				encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaG481.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaG481.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaG481.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -6251,7 +8736,7 @@ public class ResumenPDF {
 				salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaG);
 
-				PdfPTable tablaG491 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3,3});
+				PdfPTable tablaG491 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3,3,3});
 				tablaG491.setWidthPercentage(100);
 				tablaG491.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaG491.getDefaultCell().setPadding(3);
@@ -6270,10 +8755,10 @@ public class ResumenPDF {
 				encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaG491.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaG491.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaG491.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -6292,6 +8777,9 @@ public class ResumenPDF {
 				tablaG491.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Support value chain",fontCabeceraTabla));
+				tablaG491.addCell(encabezadoTablaG);
+				encabezadoTablaG=new Paragraph();	
+				encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaG491.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Link verificador",fontCabeceraTabla));
@@ -6325,16 +8813,18 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberEight()),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
-					tablaG491.addCell(datosTablaG);						
-					datosTablaG=new Paragraph();
-					datosTablaG=new Paragraph();
+					tablaG491.addCell(datosTablaG);
+					datosTablaG=new Paragraph();					
+					datosTablaG.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaG491.addCell(datosTablaG);
+					datosTablaG=new Paragraph();					
 					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaG491.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
@@ -6355,7 +8845,7 @@ public class ResumenPDF {
 				salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaG);
 
-				PdfPTable tablaG501 = new PdfPTable(new float[] { 3, 3, 3,3});
+				PdfPTable tablaG501 = new PdfPTable(new float[] { 3, 3, 3,3,3});
 				tablaG501.setWidthPercentage(100);
 				tablaG501.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaG501.getDefaultCell().setPadding(3);
@@ -6372,7 +8862,10 @@ public class ResumenPDF {
 				tablaG501.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Resultado",fontCabeceraTabla));
-				tablaG501.addCell(encabezadoTablaG);					
+				tablaG501.addCell(encabezadoTablaG);
+				encabezadoTablaG=new Paragraph();	
+				encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
+				tablaG501.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Link verificador",fontCabeceraTabla));
 				tablaG501.addCell(encabezadoTablaG);
@@ -6388,6 +8881,9 @@ public class ResumenPDF {
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaG501.addCell(datosTablaG);						
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaG501.addCell(datosTablaG);
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 					tablaG501.addCell(datosTablaG);																		
@@ -6409,7 +8905,7 @@ public class ResumenPDF {
 				salvaguardaG.add(new Phrase(Chunk.NEWLINE));
 				document.add(salvaguardaG);
 
-				PdfPTable tablaG511 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3});
+				PdfPTable tablaG511 = new PdfPTable(new float[] { 3, 3, 3,3 ,3,3, 3, 3,3 ,3,3,3});
 				tablaG511.setWidthPercentage(100);
 				tablaG511.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaG511.getDefaultCell().setPadding(3);
@@ -6428,10 +8924,10 @@ public class ResumenPDF {
 				encabezadoTablaG.add(new Phrase("Parroquia",fontCabeceraTabla));
 				tablaG511.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Auto identificación étnica",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Etnia",fontCabeceraTabla));
 				tablaG511.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
-				encabezadoTablaG.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+				encabezadoTablaG.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 				tablaG511.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -6450,6 +8946,9 @@ public class ResumenPDF {
 				tablaG511.addCell(encabezadoTablaG);
 				encabezadoTablaG=new Paragraph();	
 				encabezadoTablaG.add(new Phrase("Periodicidad",fontCabeceraTabla));
+				tablaG511.addCell(encabezadoTablaG);
+				encabezadoTablaG=new Paragraph();	
+				encabezadoTablaG.add(new Phrase("Componente",fontCabeceraTabla));
 				tablaG511.addCell(encabezadoTablaG);
 
 
@@ -6475,17 +8974,20 @@ public class ResumenPDF {
 					datosTablaG.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
 					tablaG511.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSix()),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberMens()),fontContenidoTablas));
 					tablaG511.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
-					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberSeven()),fontContenidoTablas));
+					datosTablaG.add(new Phrase(String.valueOf(tabla.getTareColumnNumberWomen()),fontContenidoTablas));
 					tablaG511.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 					tablaG511.addCell(datosTablaG);						
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
-					tablaG511.addCell(datosTablaG);						
+					tablaG511.addCell(datosTablaG);
+					datosTablaG=new Paragraph();
+					datosTablaG.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+					tablaG511.addCell(datosTablaG);
 					datosTablaG=new Paragraph();
 					datosTablaG.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
 					tablaG511.addCell(datosTablaG);						
@@ -6547,6 +9049,25 @@ public class ResumenPDF {
 				}
 				document.add(tablaOPG);
 
+				Paragraph resumenEjecutivo = new Paragraph();
+				resumenEjecutivo.add(new Phrase("RESUMEN EJECUTIVO", fontTitulos));
+				resumenEjecutivo.add(new Phrase(Chunk.NEWLINE));
+				resumenEjecutivo.add(new Phrase(Chunk.NEWLINE));
+				document.add(resumenEjecutivo);
+
+				PdfPTable tablaRE = new PdfPTable(new float[] { 10});
+				tablaRE.setWidthPercentage(100);
+				tablaRE.setHorizontalAlignment(Element.ALIGN_LEFT);
+				tablaRE.getDefaultCell().setPadding(3);
+				tablaRE.getDefaultCell().setUseAscender(true);
+				tablaRE.getDefaultCell().setUseDescender(true);
+				tablaRE.getDefaultCell().setBorderColor(BaseColor.BLACK);				
+				tablaRE.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+				
+				datosTablaG=new Paragraph();
+				datosTablaG.add(new Phrase(seguimientoSalvaguardas.getAdvanceExecutionSafeguards().getAdexExecutiveSummary(),fontContenidoTablas ));
+				tablaRE.addCell(datosTablaG);
+				document.add(tablaRE);
 
 			}
 
@@ -6578,32 +9099,26 @@ public class ResumenPDF {
 	 * @param directorioArchivoPDF
 	 * @param seguimientoSalvaguardas
 	 */
-	public static void reporteGenero(String directorioArchivoPDF, RegistroGeneroBean beanGenero){
+	public static void reporteGenero(String directorioArchivoPDF, SeguimientoGeneroBean beanGenero){
 		try{
-			String tema="";
-			
+			String tema="";			
 			Document document = new Document();
 			document.setPageSize(PageSize.A4);
 			document.setMargins(35, 35, 35, 35);
 			document.setMarginMirroring(true);
-
 			PdfWriter writer =PdfWriter.getInstance(document, new FileOutputStream(directorioArchivoPDF));
 			Rectangle rect = new Rectangle(100, 30, 500, 800);
 			writer.setBoxSize("art", rect);
-			HeaderFooterPageEvent event = new HeaderFooterPageEvent("PIE");
-			event.valoresPiePagina("", "Pag: ");
+			HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+//			event.valoresPiePagina("", "Pag: ");
 			writer.setPageEvent(event);
 			document.open();
 
 			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
 			Font fontTitulosSalvaguardas = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 12);
-			Font fontCabecera = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
 			Font fontCabeceraTabla = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
-			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
-
-
-
+			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
 			Paragraph parrafoHoja = new Paragraph();
 			parrafoHoja.add(new Phrase("RESUMEN DE GENERO", fontTitulosSalvaguardas));
 			parrafoHoja.add(new Phrase(Chunk.NEWLINE));
@@ -6612,46 +9127,50 @@ public class ResumenPDF {
 			document.add(parrafoHoja);
 
 			PdfPTable tablaCabecera = new PdfPTable(2);
-
 			PdfPCell celda = new PdfPCell(new Phrase("Título del Plan de implementación, Programa o Proyecto:", fontTitulos));
-			//			celda.setColspan(1);
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			tablaCabecera.addCell(celda);
-
-
 			celda = new PdfPCell(new Phrase(beanGenero.getProyectoSeleccionado().getProjTitle(), fontContenido));
-			//			celda.setColspan(1);
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaCabecera.addCell(celda);
 
-			celda = new PdfPCell(new Phrase("Socio implementador: ", fontTitulos));
-			//			celda.setColspan(1);
+			celda = new PdfPCell(new Phrase("Socio implementador: ", fontTitulos));			
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			tablaCabecera.addCell(celda);
+			
+			if(beanGenero.getSocioImplementador()!=null)
+				celda = new PdfPCell(new Phrase(beanGenero.getSocioImplementador().getPartName(), fontContenido));
+			else
+				celda = new PdfPCell(new Phrase("", fontContenido));
 
-			celda = new PdfPCell(new Phrase(beanGenero.getSocioImplementador().getPartName(), fontContenido));
-			//			celda.setColspan(1);
+			celda.setBorderColor(BaseColor.WHITE);
+			celda.setHorizontalAlignment(Element.ALIGN_LEFT);			
+			tablaCabecera.addCell(celda);
+			
+			celda = new PdfPCell(new Phrase("Periodo a reportar: ", fontTitulos));			
+			celda.setBorderColor(BaseColor.WHITE);
+			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			tablaCabecera.addCell(celda);
+			
+			celda = new PdfPCell(new Phrase(beanGenero.getAdvanceExecutionSafeguards().getAdexTermFrom().substring(0, 4).concat(" Enero-Diciembre"), fontContenido));
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaCabecera.addCell(celda);
+			
 			document.add(tablaCabecera);
 
 			Paragraph temaAbarcado = new Paragraph();
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
-			temaAbarcado.add(new Phrase("Tema abarcado: ", fontTitulos));
-			for (CatalogType tipo : beanGenero.getListadoLineaGenero()) {
-				if(beanGenero.getCodigoLineaGenero() == tipo.getCatyId())
-					tema = tipo.getCatyDescription();
-			}
+			temaAbarcado.add(new Phrase("Seguimiento de acciones relacionadas a genero: ", fontTitulos));
 			temaAbarcado.add(new Phrase(tema,fontContenido));
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
 			document.add(temaAbarcado);
 			
-			PdfPTable tabla1 = new PdfPTable(new float[] { 5, 5, 5, 5 ,5, 5 });
+			PdfPTable tabla1 = new PdfPTable(new float[] { 5, 5, 5, 5 ,5 });
 			tabla1.setWidthPercentage(100);
 			tabla1.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tabla1.getDefaultCell().setPadding(3);
@@ -6660,111 +9179,63 @@ public class ResumenPDF {
 			tabla1.getDefaultCell().setBorderColor(BaseColor.BLACK);				
 			tabla1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
-			Paragraph encabezadoTabla1=new Paragraph();				
+			Paragraph encabezadoTabla1=new Paragraph();
+			encabezadoTabla1.add(new Phrase("Temas",fontCabeceraTabla));
+			tabla1.addCell(encabezadoTabla1);
+			encabezadoTabla1=new Paragraph();
 			encabezadoTabla1.add(new Phrase("Línea de acción",fontCabeceraTabla));
 			tabla1.addCell(encabezadoTabla1);
 			encabezadoTabla1=new Paragraph();	
-			encabezadoTabla1.add(new Phrase("Línea base",fontCabeceraTabla));
-			tabla1.addCell(encabezadoTabla1);
-			encabezadoTabla1=new Paragraph();	
 			encabezadoTabla1.add(new Phrase("Indicador",fontCabeceraTabla));
+			tabla1.addCell(encabezadoTabla1);			
+			encabezadoTabla1=new Paragraph();	
+			encabezadoTabla1.add(new Phrase("Valor alcanzado",fontCabeceraTabla));
 			tabla1.addCell(encabezadoTabla1);
 			encabezadoTabla1=new Paragraph();	
-			encabezadoTabla1.add(new Phrase("Resultado asociado al PDI, programa o proyecto",fontCabeceraTabla));
-			tabla1.addCell(encabezadoTabla1);
-			encabezadoTabla1=new Paragraph();	
-			encabezadoTabla1.add(new Phrase("Tipo resultado",fontCabeceraTabla));
-			tabla1.addCell(encabezadoTabla1);
-			encabezadoTabla1=new Paragraph();	
-			encabezadoTabla1.add(new Phrase("Presupuesto",fontCabeceraTabla));
+			encabezadoTabla1.add(new Phrase("Acciones implementadas",fontCabeceraTabla));
 			tabla1.addCell(encabezadoTabla1);
 			
-			Paragraph datosTabla1;
-			
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getCataId().getCataText2(),fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginActivities() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginIndicator() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginResults() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginResultsType().equals("1")?"Transformador":"Trans" ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-				datosTabla1=new Paragraph();
-				datosTabla1.add(new Phrase(beanGenero.getInformacionProyectoGeneroSeleccionado().getPginBudget() ,fontContenidoTablas));
-				tabla1.addCell(datosTabla1);
-			
-			document.add(tabla1);
 						
-			Paragraph avance = new Paragraph();
-			avance.add(new Phrase(Chunk.NEWLINE));	
-			avance.add(new Phrase("DATOS DEL AVANCE", fontTitulosSalvaguardas));
-			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase("Porcentaje de avance", fontTitulos));
-			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase(String.valueOf( beanGenero.getAvanceGeneroSeleccionado().getGeadPercentageAdvance()), fontContenido));
-			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase("Descripción del avance", fontTitulos));
-			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase(String.valueOf( beanGenero.getAvanceGeneroSeleccionado().getGeadAdvanceDescription()), fontContenido));
-			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase("INFORMACION DE BENEFICIARIOS", fontTitulos));
-			avance.add(new Phrase(Chunk.NEWLINE));
-			avance.add(new Phrase(Chunk.NEWLINE));
-			document.add(avance);
-			
-			PdfPTable tabla2 = new PdfPTable(new float[] { 5, 5, 5, 5 , 5 });
-			tabla2.setWidthPercentage(100);
-			tabla2.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tabla2.getDefaultCell().setPadding(3);
-			tabla2.getDefaultCell().setUseAscender(true);
-			tabla2.getDefaultCell().setUseDescender(true);
-			tabla2.getDefaultCell().setBorderColor(BaseColor.BLACK);				
-			tabla2.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+			Paragraph datosTabla1;
+			for (AdvanceExecutionProjectGender ga : beanGenero.getListaLineasGenero()) {						
+				datosTabla1=new Paragraph();
+				datosTabla1.add(new Phrase(ga.getProjectGenderIndicator().getProjectsGenderInfo().getCataId().getCatalogsType().getCatyDescription(),fontContenidoTablas));
+				tabla1.addCell(datosTabla1);
 
-			
-			Paragraph encabezadoTabla2=new Paragraph();				
-			encabezadoTabla2.add(new Phrase("Nro. beneficiarias",fontCabeceraTabla));
-			tabla2.addCell(encabezadoTabla2);
-			encabezadoTabla2=new Paragraph();	
-			encabezadoTabla2.add(new Phrase("Provincia",fontCabeceraTabla));
-			tabla2.addCell(encabezadoTabla2);
-			encabezadoTabla2=new Paragraph();	
-			encabezadoTabla2.add(new Phrase("Cantón",fontCabeceraTabla));
-			tabla2.addCell(encabezadoTabla2);
-			encabezadoTabla2=new Paragraph();	
-			encabezadoTabla2.add(new Phrase("Parroquia",fontCabeceraTabla));
-			tabla2.addCell(encabezadoTabla2);
-			encabezadoTabla2=new Paragraph();	
-			encabezadoTabla2.add(new Phrase("Comunidad",fontCabeceraTabla));
-			tabla2.addCell(encabezadoTabla2);
-			
-			Paragraph datosTabla2;
-			for(DetailAdvanceGender genero:beanGenero.getListaDatosAvanceGenero()){
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(String.valueOf(genero.getDtagNumberOfWomen()),fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getProvincia() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getCanton() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getParroquia() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
-				datosTabla2=new Paragraph();
-				datosTabla2.add(new Phrase(genero.getDtagComunity() ,fontContenidoTablas));
-				tabla2.addCell(datosTabla2);
+				datosTabla1=new Paragraph();
+				datosTabla1.add(new Phrase(ga.getProjectGenderIndicator().getProjectsGenderInfo().getCataId().getCataText2().equals("Otro")?ga.getProjectGenderIndicator().getProjectsGenderInfo().getPginOtherLine() :ga.getProjectGenderIndicator().getProjectsGenderInfo().getCataId().getCataText2() ,fontContenidoTablas));
+				tabla1.addCell(datosTabla1);
 				
+				datosTabla1=new Paragraph();				
+				datosTabla1.add(new Phrase(ga.getProjectGenderIndicator().getIndicators().getIndiId()==0?ga.getProjectGenderIndicator().getPgigAnotherIndicator():ga.getProjectGenderIndicator().getIndicators().getIndiDescription() ,fontContenidoTablas));
+				tabla1.addCell(datosTabla1);
+
+				datosTabla1=new Paragraph();
+				StringBuilder valorIndicador=new StringBuilder();
+				if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("G")){
+					if(ga.getProjectGenderIndicator().getIndicators().getIndiId() == 9 || ga.getProjectGenderIndicator().getIndicators().getIndiId() == 10)
+						valorIndicador.append("Valor Hombres: ").append(ga.getAepgValueReachedOne()).append(" Valor Mujeres: ").append(ga.getAepgValueReachedTwo());
+					else
+						valorIndicador.append("Nro Hombres: ").append(ga.getAepgValueReachedOne()).append(" Nro Mujeres: ").append(ga.getAepgValueReachedTwo());
+				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("N")){
+					valorIndicador.append("Valor: ").append(ga.getAepgValueReachedOne());
+				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("B")){
+					if(ga.getAepgValueReachedOne()!=null)
+						valorIndicador.append("Valor: ").append(ga.getAepgValueReachedOne()==1?"Si":"No");
+					else
+						valorIndicador.append("Valor: ");
+				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("O")){
+					valorIndicador.append("Valor: ").append(ga.getAepgValueReachedAnotherIndicator());
+				}
+				datosTabla1.add(new Phrase(valorIndicador.toString(),fontContenidoTablas));
+				tabla1.addCell(datosTabla1);
+				datosTabla1=new Paragraph();
+				datosTabla1.add(new Phrase(ga.getAepgActionsDone() ,fontContenidoTablas));
+				tabla1.addCell(datosTabla1);
 			}
-			document.add(tabla2);
+			document.add(tabla1);
+			
+
 			
 			Paragraph preguntas = new Paragraph();
 			preguntas.add(new Phrase(Chunk.NEWLINE));
@@ -6778,7 +9249,7 @@ public class ResumenPDF {
 			preguntas.add(new Phrase(Chunk.NEWLINE));
 			document.add(preguntas);
 			
-			PdfPTable tabla3 = new PdfPTable(new float[] { 3, 3, 3 , 3, 3, 3, 3, 3 , 3,3, 3, 3, 3 , 3 });
+			PdfPTable tabla3 = new PdfPTable(new float[] { 3, 3, 3 , 3, 3, 3, 3, 3 , 3,3, 3, 3, 3  });
 			tabla3.setWidthPercentage(100);
 			tabla3.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tabla3.getDefaultCell().setPadding(3);
@@ -6800,7 +9271,7 @@ public class ResumenPDF {
 			encabezadoTabla.add(new Phrase("Etnia",fontCabeceraTabla));
 			tabla3.addCell(encabezadoTabla);
 			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTabla.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tabla3.addCell(encabezadoTabla);
 			encabezadoTabla=new Paragraph();
 			encabezadoTabla.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -6817,9 +9288,7 @@ public class ResumenPDF {
 			encabezadoTabla=new Paragraph();
 			encabezadoTabla.add(new Phrase("Acciones implementadas para fortalecer a la organización",fontCabeceraTabla));
 			tabla3.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("# de beneficiarias que son parte de la organización",fontCabeceraTabla));
-			tabla3.addCell(encabezadoTabla);
+			
 			encabezadoTabla=new Paragraph();
 			encabezadoTabla.add(new Phrase("Nro Hombres beneficiarios",fontCabeceraTabla));
 			tabla3.addCell(encabezadoTabla);
@@ -6868,238 +9337,18 @@ public class ResumenPDF {
 				datosTabla3=new Paragraph();
 				datosTabla3.add(new Phrase(String.valueOf(genero.getTareColumnNumberSeven()) ,fontContenidoTablas));
 				tabla3.addCell(datosTabla3);
-				datosTabla3=new Paragraph();
-				datosTabla3.add(new Phrase(String.valueOf(genero.getTareColumnNumberEight()) ,fontContenidoTablas));
-				tabla3.addCell(datosTabla3);
+				
 				datosTabla3=new Paragraph();
 				datosTabla3.add(new Phrase(genero.getTareColumnSix() ,fontContenidoTablas));
 				tabla3.addCell(datosTabla3);
 			}
 			document.add(tabla3);
 			
+			
 			preguntas = new Paragraph();
 			preguntas.add(new Phrase(Chunk.NEWLINE));
 			preguntas.add(new Phrase(Chunk.NEWLINE));
 			preguntas.add(new Phrase(beanGenero.getListaPreguntas().get(1) .getQuesContentQuestion(), fontTitulos));
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			if(beanGenero.getListaValoresRespuestas().get(1).isVaanYesnoAnswerValue())
-				preguntas.add(new Phrase("SI", fontTitulos));
-			else
-				preguntas.add(new Phrase("NO", fontContenido));					
-			preguntas.add(new Phrase(Chunk.NEWLINE));			
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			document.add(preguntas);
-			
-			PdfPTable tabla4 = new PdfPTable(new float[] { 3, 3, 3 , 3, 3, 3, 3, 3 , 3,3, 3, 3, 3 , 3,3 });
-			tabla4.setWidthPercentage(100);
-			tabla4.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tabla4.getDefaultCell().setPadding(3);
-			tabla4.getDefaultCell().setUseAscender(true);
-			tabla4.getDefaultCell().setUseDescender(true);
-			tabla4.getDefaultCell().setBorderColor(BaseColor.BLACK);				
-			tabla4.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-			
-			encabezadoTabla=new Paragraph();					
-			encabezadoTabla.add(new Phrase("Provincia",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();	
-			encabezadoTabla.add(new Phrase("Cantón",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();	
-			encabezadoTabla.add(new Phrase("Parroquia",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();	
-			encabezadoTabla.add(new Phrase("Etnia",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Comunidad",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Nombre del espacio de capacitación",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Instituciones que organizan la capacitación",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Objetivo de la capacitación",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Temas tratados en la capacitación",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Instituciones que son parte de la capacitación",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Nro mujeres",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Dificultades identificadas que impiden la participación de mujeres en la capacitación",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Medidas tomadas para garantizar la participación de mujeres en los procesos de capacitación",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Link verificador",fontCabeceraTabla));
-			tabla4.addCell(encabezadoTabla);
-			
-			Paragraph datosTabla4;
-			for(TableResponses genero:beanGenero.getTablaRespuestas4()){
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareProvincia(),fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareCanton() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareParroquia() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareGenerico(),fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareGenericoDos() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnOne() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnTwo() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnTree() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnFour() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnFive() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnSix() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(String.valueOf(genero.getTareColumnNumberSix()) ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnSeven() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnEight() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				datosTabla4=new Paragraph();
-				datosTabla4.add(new Phrase(genero.getTareColumnTen() ,fontContenidoTablas));
-				tabla4.addCell(datosTabla4);
-				
-			}
-			document.add(tabla4);
-			
-			preguntas = new Paragraph();
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			preguntas.add(new Phrase(beanGenero.getListaPreguntas().get(2) .getQuesContentQuestion(), fontTitulos));
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			if(beanGenero.getListaValoresRespuestas().get(2).isVaanYesnoAnswerValue())
-				preguntas.add(new Phrase("SI", fontTitulos));
-			else
-				preguntas.add(new Phrase("NO", fontContenido));					
-			preguntas.add(new Phrase(Chunk.NEWLINE));			
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			document.add(preguntas);
-			
-			PdfPTable tabla5 = new PdfPTable(new float[] { 3, 3, 3 , 3, 3, 3, 3, 3 , 3,3, 3, 3 });
-			tabla5.setWidthPercentage(100);
-			tabla5.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tabla5.getDefaultCell().setPadding(3);
-			tabla5.getDefaultCell().setUseAscender(true);
-			tabla5.getDefaultCell().setUseDescender(true);
-			tabla5.getDefaultCell().setBorderColor(BaseColor.BLACK);				
-			tabla5.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-			
-			encabezadoTabla=new Paragraph();					
-			encabezadoTabla.add(new Phrase("Provincia",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();	
-			encabezadoTabla.add(new Phrase("Cantón",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();	
-			encabezadoTabla.add(new Phrase("Parroquia",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();	
-			encabezadoTabla.add(new Phrase("Etnia",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Comunidad",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Tipo de incentivo",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Nro mujeres",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Nro hombres",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Dificultades identificadas que impiden la participación de mujeres en el acceso a los incentivos",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Medidas tomadas para garantizar la participación de mujeres en el acceso a los incentivos",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);			
-			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Link verificador",fontCabeceraTabla));
-			tabla5.addCell(encabezadoTabla);
-			
-			Paragraph datosTabla5;
-			for(TableResponses genero:beanGenero.getTablaRespuestas5()){
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareProvincia(),fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareCanton() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareParroquia() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareGenerico(),fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareGenericoDos() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareColumnOne() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareColumnTwo() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(String.valueOf(genero.getTareColumnNumberSix()) ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(String.valueOf(genero.getTareColumnNumberSeven()) ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareColumnTree() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareColumnFour() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);
-				datosTabla5=new Paragraph();
-				datosTabla5.add(new Phrase(genero.getTareColumnFive() ,fontContenidoTablas));
-				tabla5.addCell(datosTabla5);								
-			}
-			document.add(tabla5);
-			
-			preguntas = new Paragraph();
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			preguntas.add(new Phrase(Chunk.NEWLINE));
-			preguntas.add(new Phrase(beanGenero.getListaPreguntas().get(3) .getQuesContentQuestion(), fontTitulos));
 			preguntas.add(new Phrase(Chunk.NEWLINE));						
 			preguntas.add(new Phrase(Chunk.NEWLINE));
 			document.add(preguntas);
@@ -7126,7 +9375,7 @@ public class ResumenPDF {
 			encabezadoTabla.add(new Phrase("Etnia",fontCabeceraTabla));
 			tabla6.addCell(encabezadoTabla);
 			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTabla.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tabla6.addCell(encabezadoTabla);
 			encabezadoTabla=new Paragraph();
 			encabezadoTabla.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -7188,7 +9437,7 @@ public class ResumenPDF {
 			preguntas = new Paragraph();
 			preguntas.add(new Phrase(Chunk.NEWLINE));
 			preguntas.add(new Phrase(Chunk.NEWLINE));
-			preguntas.add(new Phrase(beanGenero.getListaPreguntas().get(4) .getQuesContentQuestion(), fontTitulos));
+			preguntas.add(new Phrase(beanGenero.getListaPreguntas().get(2) .getQuesContentQuestion(), fontTitulos));
 			preguntas.add(new Phrase(Chunk.NEWLINE));						
 			preguntas.add(new Phrase(Chunk.NEWLINE));
 			document.add(preguntas);
@@ -7215,7 +9464,7 @@ public class ResumenPDF {
 			encabezadoTabla.add(new Phrase("Etnia",fontCabeceraTabla));
 			tabla7.addCell(encabezadoTabla);
 			encabezadoTabla=new Paragraph();
-			encabezadoTabla.add(new Phrase("Pueblo / Nacionalidad",fontCabeceraTabla));
+			encabezadoTabla.add(new Phrase("Nacionalidad",fontCabeceraTabla));
 			tabla7.addCell(encabezadoTabla);
 			encabezadoTabla=new Paragraph();
 			encabezadoTabla.add(new Phrase("Comunidad",fontCabeceraTabla));
@@ -7287,7 +9536,7 @@ public class ResumenPDF {
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 			response.setContentType("application/pdf");				
-			response.setHeader("Content-Disposition","attachment; filename=" + new StringBuilder().append("resumenSalvaguardas").append(".pdf").toString());				
+			response.setHeader("Content-Disposition","attachment; filename=" + new StringBuilder().append("seguimientoGenero").append(".pdf").toString());				
 			response.getOutputStream().write(Archivos.getBytesFromFile(new File(directorioArchivoPDF)));
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -7301,5 +9550,7 @@ public class ResumenPDF {
 
 	}
 
+	
+		
 }
 

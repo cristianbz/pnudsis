@@ -5,7 +5,25 @@
         <dependent-module archiveName="sis-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/sis-ejb/sis-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="html2pdf-2.0.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/itextpdf/html2pdf/2.0.2/html2pdf-2.0.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="forms-7.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/itextpdf/forms/7.1.2/forms-7.1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="kernel-7.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/itextpdf/kernel/7.1.2/kernel-7.1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="io-7.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/itextpdf/io/7.1.2/io-7.1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="layout-7.1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/itextpdf/layout/7.1.2/layout-7.1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="log4j-1.2.17.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.17/log4j-1.2.17.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="slf4j-api-1.7.25.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="hibernate-core-5.2.12.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-core/5.2.12.Final/hibernate-core-5.2.12.Final.jar">
@@ -35,10 +53,43 @@
         <dependent-module archiveName="hibernate-commons-annotations-5.0.1.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/common/hibernate-commons-annotations/5.0.1.Final/hibernate-commons-annotations-5.0.1.Final.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="commons-io-2.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.6/commons-io-2.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="itext-pdfa-5.5.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/itextpdf/itext-pdfa/5.5.1/itext-pdfa-5.5.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="itextpdf-5.5.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/itextpdf/itextpdf/5.5.1/itextpdf-5.5.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="hibernate-entitymanager-5.2.12.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-entitymanager/5.2.12.Final/hibernate-entitymanager-5.2.12.Final.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="byte-buddy-1.6.14.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/net/bytebuddy/byte-buddy/1.6.14/byte-buddy-1.6.14.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="json-simple-4.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/github/cliftonlabs/json-simple/4.0.0/json-simple-4.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="opencsv-5.5.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/opencsv/opencsv/5.5.2/opencsv-5.5.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-lang3-3.12.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-text-1.9.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-text/1.9/commons-text-1.9.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-beanutils-1.9.4.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-logging-1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-collections-3.2.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-collections4-4.4.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="sis-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/sis-web/sis-web">

@@ -53,6 +53,11 @@ public class Partners implements Serializable {
 	
 	@Getter
 	@Setter
+	@Column(name = "part_id_number")
+	private String partIdNumber;
+	
+	@Getter
+	@Setter
 	@Column(name = "part_status")
 	private boolean partStatus;
 	

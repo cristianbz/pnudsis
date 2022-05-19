@@ -46,5 +46,33 @@ public class DetailAdvanceGenderFacade extends AbstractFacade<DetailAdvanceGende
 		detalle.setDtagStatus(false);
 		edit(detalle);
 	}
+	
+	public List<DetailAdvanceGender> listadoDetalleAvanceGenero(int codigoAvanceGenero)throws Exception{
+		String sql="SELECT DA FROM DetailAdvanceGender DA WHERE DA.advanceExecutionProjectGender.aepgId =:codigoAvanceGenero AND DA.dtagStatus=TRUE";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoAvanceGenero", codigoAvanceGenero);
+		return findByCreateQuery(sql, camposCondicion);	
+	}
+	
+	public String lineaDeAccion(int codigoDetalle)throws Exception{
+		String valor="";
+		String sql="SELECT c.cata_text2 FROM sis.detail_advance_gender dag, sis.gender_advances ga, sis.projects_gender_info pgi, sis.catalogs c "				
+					+ " WHERE dag.gead_id = ga.gead_id AND pgi.pgin_id = ga.pgin_id AND c.cata_id = pgi.cata_id AND dag.dtag_id=" + codigoDetalle;
+		List<Object[]> resultado = (List<Object[]>)consultaNativa(sql);		
+		for(Object obj:resultado){
+			valor = obj.toString();
+		}
+		return valor;
+	}
+	public String lineaDeAccionOtrosTemas(int codigoDetalle)throws Exception{
+		String valor="";
+		String sql="SELECT pgi.pgin_other_line FROM sis.detail_advance_gender dag, sis.gender_advances ga, sis.projects_gender_info pgi "				
+					+ " WHERE dag.gead_id = ga.gead_id AND pgi.pgin_id = ga.pgin_id AND dag.dtag_id=" + codigoDetalle;
+		List<Object[]> resultado = (List<Object[]>)consultaNativa(sql);		
+		for(Object obj:resultado){
+			valor = obj.toString();
+		}
+		return valor;
+	}
 }
 

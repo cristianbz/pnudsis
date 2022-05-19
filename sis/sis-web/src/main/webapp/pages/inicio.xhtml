@@ -11,6 +11,7 @@
 		rel="stylesheet" type="text/css" />
 </h:head>
 <h:body>
+	<f:event listener="#{loginController.validarSesion()}" type="preRenderView" />
 	<h:form id="frm">
 		<p:growl id="msgs" showDetail="true" />
 
@@ -18,33 +19,35 @@
 			<br />
 
 			<h:panelGrid style="margin:0 auto;">
-				<p:outputLabel
-					value="Sistema de Información de Salvaguardas"></p:outputLabel>
+				<p:outputLabel value="Sistema de Información de Salvaguardas"></p:outputLabel>
 				<br />
 				<br />
 			</h:panelGrid>
-			<h:panelGrid columns="3">
-				<p:tieredMenu style="width:400px">
-					<p:submenu label="Seguimiento" >
-						
-						<p:menuitem value="Seguimiento de Salvaguardas" 							
-							action="#{sesionController.redireccionarAPagina('','formSeguimiento')}"
-							update="msgs"  />
-						<p:menuitem value="Seguimiento de Genero" 							
-							action="#{sesionController.redireccionarAPagina('','formRegistroGenero')}"
-							update="msgs"  />	
-					</p:submenu>
-					</p:tieredMenu>
+			<h:panelGrid >
+				<center>
+				<p:menubar model="#{loginBean.menuModel}">
+					
+				</p:menubar>
+				<p:toolbar>
+            		<p:toolbarGroup align="left">
+            			<span class="fa fa-user"></span>
+            			<p:outputLabel value="#{etiquetas['bienvenido']}: #{loginBean.user.userName}"/>
+            					
+            		</p:toolbarGroup>
+            		<p:toolbarGroup align="right">
+            			<p:commandLink action="#{sesionController.cerrarSesion}"
+							process="@this" partialSubmit="true" async="true" global="false">
+							<i class="fa fa-power-off"></i>
+							<span>Cerrar Sesión</span>
+						</p:commandLink>
+            		</p:toolbarGroup>
+            	</p:toolbar>	
+				</center>
 				<h:panelGrid width="550">
-				
+
 				</h:panelGrid>
-				<p:commandLink 
-                    action="#{sesionController.cerrarSesion}"
-                                         process="@this" partialSubmit="true"
-                                         async="true" global="false">
-                     <i class="fa fa-power-off"></i>
-                     <span>Salir</span>  
-                </p:commandLink>
+				
+				
 			</h:panelGrid>
 		</center>
 

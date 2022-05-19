@@ -60,5 +60,10 @@ public class ActionPlans implements Serializable {
 	@Setter
 	@OneToMany(mappedBy = "actionPlans", fetch = FetchType.LAZY)
 	private List<Projects> projectsList;
+	
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "actionPlans", fetch = FetchType.LAZY)
+	private List<Components> componentsList;
    
 }

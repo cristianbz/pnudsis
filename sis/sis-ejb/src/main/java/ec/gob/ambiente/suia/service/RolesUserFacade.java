@@ -1,10 +1,11 @@
 package ec.gob.ambiente.suia.service;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -14,12 +15,13 @@ import ec.gob.ambiente.sigma.model.User;
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.suia.model.Role;
 import ec.gob.ambiente.suia.model.RolesUser;
-
+import ec.gob.ambiente.suia.model.Users;
 
 
 
 
 @Stateless
+@LocalBean
 public class RolesUserFacade extends AbstractFacade <RolesUser, Integer> implements Serializable {
 
 	private static final long serialVersionUID = 5978766190183771960L;
@@ -56,7 +58,7 @@ public class RolesUserFacade extends AbstractFacade <RolesUser, Integer> impleme
 	 * @param user
 	 * @param role
 	 */
-	public void save(User user,Role role)
+	public void save(Users user,Role role)
 	{
 		RolesUser ru=new RolesUser();
 		ru.setRousStatus(true);
@@ -101,10 +103,10 @@ public class RolesUserFacade extends AbstractFacade <RolesUser, Integer> impleme
 	 * @return Devuelve null si no encuntra ningun registro
 	 */
 	@SuppressWarnings("unchecked")
-    public List<RolesUser> listRoleByUser(User usuario) throws Exception {
+    public List<RolesUser> listRoleByUser(Users usuario) throws Exception {
         List<RolesUser> result = null;
         try {
-        	Query query = getEntityManager().createQuery(" SELECT ru FROM RolesUser ru, Role r WHERE ru.role.roleId=r.roleId and ru.user.userId = :userId");		
+        	Query query = getEntityManager().createQuery(" SELECT ru FROM RolesUser ru, Role r WHERE ru.role.roleId=r.roleId and ru.users.userId = :userId");		
 			query.setParameter("userId",usuario.getUserId());
 			return (List<RolesUser>) query.getResultList();
         } catch (NoResultException e) {
@@ -114,4 +116,17 @@ public class RolesUserFacade extends AbstractFacade <RolesUser, Integer> impleme
         return result;
     }
 	
+	public List<RolesUser> listarRolesDeUsuario(Users usuario) throws Exception{
+		String sql=" SELECT ru FROM RolesUser ru, Role r WHERE ru.rousStatus= TRUE AND r.roleStatus= TRUE AND ru.role.roleId=r.roleId AND ru.users.userId = :param1 AND ru.role.roleName like 'SIS%' "; 
+		Query query = getEntityManager().createQuery(sql);		
+		query.setParameter("param1",usuario.getUserId());
+         
+         @SuppressWarnings("unchecked")
+		List<RolesUser> res = query.getResultList();
+         if (res != null && res.size() > 0) {
+             return res;
+         } else {
+             return null;
+         }
+	}
 }

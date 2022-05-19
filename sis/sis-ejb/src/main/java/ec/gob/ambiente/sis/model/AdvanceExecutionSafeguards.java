@@ -17,8 +17,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import ec.gob.ambiente.sigma.model.Projects;
+import ec.gob.ambiente.sigma.model.ProjectsSpecificObjectives;
+import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.suia.model.Users;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +33,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "advance_execution_safeguards", schema = "sis")
 @NamedQueries({
+	@NamedQuery(name = "pro",query = "SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexIsGender = FALSE"),
 	@NamedQuery(name = AdvanceExecutionSafeguards.CARGAR_AVANCE_POR_PROYECTO,query = "SELECT AP FROM AdvanceExecutionSafeguards AP WHERE AP.projects.projId=:codigoProyecto AND AP.adexIsReported=false")	
 })
 public class AdvanceExecutionSafeguards {
@@ -83,6 +87,11 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@Column(name = "adex_reported_status")	
+	private String adexReportedStatus;
+	
+	@Getter
+	@Setter
 	@Column(name = "adex_creation_date")
 	private Date adexCreationDate;
 	
@@ -93,13 +102,28 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@Column(name = "adex_executive_summary")
+	private String adexExecutiveSummary;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String adexStrategicPartner;
+	
+	@Getter
+	@Setter
+	@Transient
+	private String adexComponente;
+	
+	@Getter
+	@Setter
 	@Column(name = "adex_update_date")
 	private Date adexUpdateDate;
 	
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
-	private List<GenderAdvances> genderAdvancesList;
+	private List<AdvanceExecutionProjectGender> advanceExecutionProjectGenderList;
 	
 	@Getter
 	@Setter
@@ -110,12 +134,7 @@ public class AdvanceExecutionSafeguards {
 	@Setter
 	@OneToMany(mappedBy = "advanceExecutionSaveguards", fetch = FetchType.LAZY)
 	private List<TableResponses> tableResponsesList;
-	
-	@Getter
-	@Setter
-	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
-	private List<ExecutiveSummaries> executiveSummariesList;
-	
+		
 	@Getter
 	@Setter
 	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.EAGER,cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE})
@@ -124,8 +143,20 @@ public class AdvanceExecutionSafeguards {
 	@Getter
 	@Setter
 	@JoinColumn(name = "proj_id")
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private Projects projects;
+	
+//	@Getter
+//	@Setter
+//	@JoinColumn(name = "psob_id",referencedColumnName = "psob_id")
+//	@ManyToOne	
+//	private ProjectsSpecificObjectives projectsSpecificObjectives;
+	
+	@Getter
+	@Setter
+	@JoinColumn(name = "pspa_id")
+	@ManyToOne(fetch = FetchType.EAGER)	
+	private ProjectsStrategicPartners projectsStrategicPartners;
 	
 	@Getter
 	@Setter

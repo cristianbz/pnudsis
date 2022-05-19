@@ -144,3 +144,31 @@
 	text-align: left;
 	font-weight: bold;
 }
+.ui-growl {
+	width: 350px !important;
+}
+
+.ui-growl-message {
+	width: 220px !important;
+}
+.estiloComboLetraPequenia .ui-selectonemenu-label{
+	font-size:10px !important;
+}
+.textCircle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 10px;
+  color: #fff;
+  line-height: 25px;
+  text-align: center;
+  background: #5499C7
+}
+.etiquetaCobeneficio{
+	display: block;
+	background: #00AAC3;
+	color: #FFFFFF;
+	font-size:13px !important;
+	font-weight: bold;
+	text-align: center;
+}

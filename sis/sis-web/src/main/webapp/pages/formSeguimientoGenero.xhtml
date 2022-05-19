@@ -1,0 +1,1886 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	
+	xmlns:comp="http://java.sun.com/jsf/composite/componentes"
+	xmlns:val="http://java.sun.com/jsf/composite/componentes">
+
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/primeflex/primeflex.css" />
+	
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	<script>
+	function goToAnchor(nombre) {
+		
+		window.location.hash = "";
+		window.location.hash = nombre;
+	}
+	</script>
+</h:head>
+<body>
+	<f:event listener="#{loginController.validarSesion()}"
+		type="preRenderView" />
+	<h:form prependId="true" id="form">
+		<p:growl id="growl" life="3000" showDetail="true" />
+		
+		<p:dialog widgetVar="dlgReportesNoCerrados" width="450" 
+			header="#{titulos['seguimientoReportes']}"
+			closable="true" modal="true" resizable="false">
+			<p:outputPanel id="listaSegEstado">
+				<p:outputLabel value="#{titulos['cerrarSeguimiento']}"/>
+				<p:dataTable styleClass="sinBordesAncho100" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoGeneroController.seguimientoGeneroBean.listaPresentadosIniciados}" var="seg" >
+					<p:column headerText="#{etiquetas['socioEstrategico']}">
+						<p:outputLabel value="#{seg.projectsStrategicPartners.partners.partName}"/>
+					</p:column>
+					<p:column headerText="#{etiquetas['estado']}" style="width:100px;">
+						<p:outputLabel value="#{seg.adexReportedStatus.equals('I')?'Iniciado':seg.adexReportedStatus.equals('P')?'Presentado':'Finalizado'}"/>
+					</p:column>				
+				</p:dataTable>
+			</p:outputPanel>
+		</p:dialog>
+		
+		<p:dialog widgetVar="dlgRegistroSeguimiento" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['registroGenero']}" width="690" closable="false"
+			resizable="false">
+			<p:outputPanel id="panelIngresoDatosSeg">
+				<h:panelGrid columns="2" id="datosAvanceGenero"
+					style="margin:0 auto;">
+					<p:outputLabel value="#{etiquetas['lineaAccion']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.cataId.cataText2.equals('Otro')?seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginOtherLine:seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}" />
+					<p:outputLabel value="#{etiquetas['componentesEstrategicos']}" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.componentesGenero}" />
+					<p:outputLabel value="#{etiquetas['indicador']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiDescription}" />
+					<p:outputLabel value="#{etiquetas['meta']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.pgigGoals}" />
+					<p:outputLabel value="#{etiquetas['presupuesto']}:" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.pginBudget}" />
+					
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==9 or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==10?etiquetas['hombres']:etiquetas['numeroHombres']}:  " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:outputLabel value="#{etiquetas['valor']}: *" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N') or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+					<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B')}"/>
+					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:message for="valorUno" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>							
+					<p:outputLabel value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==9 or seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiId==10?etiquetas['mujeres']:etiquetas['numeroMujeres']}: *" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"  rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedTwo}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:message for="valorDos" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+					<p:inputNumber decimalPlaces="0" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedOne}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N')}"/>
+					<p:message for="valorTres" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('N')}"/>
+					<p:toggleSwitch value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgBooleanValue}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('B')}" id="valorCuatro"/>
+					<p:inputTextarea style="width:450px;" rows="2"
+						value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgValueReachedAnotherIndicator}" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
+					<h:inputHidden rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>
+					<p:message for="valorCinco" rendered="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.indicators.indiType.equals('O')}"/>
+					<p:outputLabel value="#{etiquetas['accionesImplementadas']}:*" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;"/>
+					<p:inputTextarea 
+						style="width:450px;" id="valorAcciones" required="true" requiredMessage="#{mensajes['campoRequerido']}"
+						value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.aepgActionsDone}" cols="20" rows="2"/>
+					<h:inputHidden />
+					<p:message for="valorAcciones" />	
+				</h:panelGrid>
+				<!-- 
+				<p:dataTable style="font-size:10px !important;"
+					styleClass="sinBordesAncho100" value="#{seguimientoGeneroBean.advanceExecutionProjectGenderSeleccionado.projectGenderIndicator.projectsGenderInfo.projectGenderIndicatorList}"
+					var="indicador">
+					<p:column headerText="#{etiquetas['indicador']}">
+						<p:outputLabel value="#{indicador.indicators.indiDescription != 'Otro'? indicador.indicators.indiDescription: indicador.pgigAnotherIndicator }" style="font-size:10px !important;"/>
+						<br/>
+						<p:outputLabel value="#{etiquetas['meta']}:" style="font-size:10px !important;" styleClass="estiloHeaderCampoTabla"/>
+						<br/>
+						<p:outputLabel value="#{indicador.pgigGoals}" style="font-size:10px !important;"/>
+					</p:column>
+					<p:column headerText="#{etiquetas['valorAlcanzado']}" >
+						<p:outputLabel value="#{etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('G')}"/>
+						<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('B') or indicador.indicators.indiType.equals('N')}"/>							
+						<p:inputNumber decimalPlaces="0" value="#{indicador.pgigValueReachedOne}" rendered="#{indicador.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+						<p:outputLabel value="#{etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('G')}"/>
+						<p:inputNumber decimalPlaces="0" value="#{indicador.pgigValueReachedTwo}" rendered="#{indicador.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+						<p:inputNumber decimalPlaces="0" value="#{indicador.pgigValueReachedOne}" rendered="#{indicador.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+						<p:toggleSwitch value="#{indicador.pgigBooleanValue}" rendered="#{indicador.indicators.indiType.equals('B')}" id="valorCuatro"/>
+						<p:inputTextarea value="#{indicador.pgigValueReachedAnotherIndicator}" style="font-size:10px !important;" rendered="#{indicador.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
+					</p:column>
+					<p:column headerText="#{etiquetas['accionesRealizadas']}">
+						<p:inputTextarea value="#{indicador.pgigActionsDone}" style="font-size:10px !important;">
+						
+						</p:inputTextarea>
+					</p:column>
+				</p:dataTable>  -->
+				<h:panelGrid columns="2" style="margin:0 auto;">
+					<p:commandButton value="#{botones['guardar']}"
+						disabled="#{buscaProyectosBean.proyectoReportado}"
+						icon="#{botones['icono.grabar']}" partialSubmit="true"
+						action="#{seguimientoGeneroController.grabarAvanceLineaGenero()}"
+						update=":form:tabs:tablaAvancesGenero growl panelIngresoDatosSeg"
+						process="@this panelIngresoDatosSeg :form:tabs:tablaAvancesGenero" />
+					<p:commandButton value="#{botones['cancelar']}" resetValues="true"
+						icon="#{botones['icono.cancelar']}" process="@this"
+						oncomplete="PF('dlgRegistroSeguimiento').hide();" />
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+		
+		<p:dialog widgetVar="dlgEliminaDatosTabla" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaDatosTabla']}" width="250" closable="false"
+			resizable="false">
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{botones['borrar']}"
+					update=":form:tabs:panelTablasGenero growl"
+					actionListener="#{seguimientoGeneroController.eliminaValoresTablaDatos()}"
+					oncomplete="PF('dlgEliminaDatosTabla').hide();" immediate="true"
+					process="@this :form:tabs:panelTablasGenero"
+					icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					actionListener="#{seguimientoGeneroController.cancelaEliminaValoresTablaDatos()}"
+					oncomplete="PF('dlgEliminaDatosTabla').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		<p:dialog widgetVar="dlgEnProc" draggable="false" modal="true"
+			resizable="false" closable="false" responsive="true" header="En proceso"
+			style="font-size: 10px;">
+			<h:graphicImage value="/resources/images/loading3.gif" width="150" height="150"/>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgAsignaBeneficiarios" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['beneficiariosLineaAccion']}" width="750" closable="false"
+			resizable="false">
+			<p:outputPanel id="detalleBeneGenero">
+				<h:panelGrid columns="4"
+					rendered="#{seguimientoGeneroBean.nuevoDetalleGenero}">
+					<p:outputLabel value="#{etiquetas['beneficiarios']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:inputNumber decimalPlaces="0" required="true" style="width:30px;" id="ben1"
+						requiredMessage="#{mensajes['campoRequerido']}"
+						value="#{seguimientoGeneroBean.detalleAdvanceGender.dtagNumberOfMens}"
+						tabindex="1" />						
+					<p:outputLabel value="#{etiquetas['beneficiarias']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:inputNumber decimalPlaces="0" required="true" style="width:30px;" id="ben2"
+						requiredMessage="#{mensajes['campoRequerido']}"
+						value="#{seguimientoGeneroBean.detalleAdvanceGender.dtagNumberOfWomen}"
+						tabindex="2" />
+					
+					<h:inputHidden />
+					<p:message for="ben1"/>
+					<h:inputHidden />
+					<p:message for="ben2"/>
+						
+					<p:outputLabel value="#{etiquetas['provincia']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:selectOneMenu required="true" style="width:150px;" 
+						requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
+						value="#{seguimientoGeneroBean.codProvincia}" id="provinciaAS">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{mensajes['seleccionElemento']}" />
+						<f:selectItems value="#{seguimientoGeneroBean.listaProvincias }"
+							var="provincia" itemLabel="#{provincia.geloName}"
+							itemValue="#{provincia.geloId}" />
+						<p:ajax process="@this " event="change"
+							update="cantonAS parroquiaAS" partialSubmit="true"
+							listener="#{seguimientoGeneroController.filtraCantones()}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="#{etiquetas['canton']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:selectOneMenu required="true" style="width:150px;"
+						requiredMessage="#{mensajes['campoRequerido']}" tabindex="4"
+						value="#{seguimientoGeneroBean.codCanton}" id="cantonAS">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{mensajes['seleccionElemento']}" />
+						<f:selectItems value="#{seguimientoGeneroBean.listaCantones}"
+							var="canton" itemLabel="#{canton.geloName}"
+							itemValue="#{canton.geloId}" />
+						<p:ajax process="@this " event="change" update="parroquiaAS"
+							partialSubmit="true"
+							listener="#{seguimientoGeneroController.filtraParroquias()}" />
+					</p:selectOneMenu>
+					
+					<h:inputHidden />
+					<p:message for="provinciaAS"/>
+					<h:inputHidden />
+					<p:message for="cantonAS"/>
+
+					<p:outputLabel value="#{etiquetas['parroquia']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:selectOneMenu required="true" style="width:150px;"
+						requiredMessage="#{mensajes['campoRequerido']}" tabindex="5"
+						value="#{seguimientoGeneroBean.codParroquia}" id="parroquiaAS">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{mensajes['seleccionElemento']}" />
+						<f:selectItems value="#{seguimientoGeneroBean.listaParroquias}"
+							var="parroquia" itemLabel="#{parroquia.geloName}"
+							itemValue="#{parroquia.geloId}" />
+						<p:ajax process="@this " event="change" />
+					</p:selectOneMenu>
+					<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:selectOneMenu style="width:150px;"
+						value="#{seguimientoGeneroBean.codigoAutoIdentificacion}"
+						tabindex="6" required="true"
+						requiredMessage="#{mensajes['campoRequerido']}"
+						id="identificacionAS">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{mensajes['seleccionElemento']}" />
+						<f:selectItems
+							value="#{aplicacionController.aplicacionBean.listaAutoIdentificacion}"
+							var="identificacion" itemLabel="#{identificacion.cataText1}"
+							itemValue="#{identificacion.cataId}" />
+						<p:ajax process="@this :form:puebloAS" event="change" update=":form:puebloAS" partialSubmit="true"
+							listener="#{seguimientoGeneroController.habilitaPuebloNacionalidad()}"
+							 />
+					</p:selectOneMenu>
+					
+					<h:inputHidden />
+					<p:message for="parroquiaAS"/>
+					<h:inputHidden />
+					<p:message for="identificacionAS"/>
+
+					<p:outputLabel value="#{etiquetas['puebloNacionalidad']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:selectOneMenu  style="width:150px;"
+						value="#{seguimientoGeneroBean.codigoPuebloNacionalidad}"
+						tabindex="7"
+						required="true"
+						disabled="#{not seguimientoGeneroBean.habilitaPuebloNacionalidad}"
+						requiredMessage="#{mensajes['campoRequerido']}"
+						id="puebloAS">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{mensajes['seleccionElemento']}" />
+						<f:selectItems
+							value="#{aplicacionController.aplicacionBean.listaPueblosNacionalidades}"
+							var="pueblo" itemLabel="#{pueblo.cataText1}"							
+							itemValue="#{pueblo.cataId}" />						
+					</p:selectOneMenu>									
+					<p:outputLabel value="#{etiquetas['comunidad']}"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;" />
+					<p:inputTextarea required="true" cols="20" id="comunidadAS"
+						requiredMessage="#{mensajes['campoRequerido']}" tabindex="8"
+						value="#{seguimientoGeneroBean.detalleAdvanceGender.dtagComunity}" />
+					
+					<h:inputHidden />
+					<p:message for="puebloAS"/>
+					<h:inputHidden />
+					<p:message for="comunidadAS"/>	
+
+				</h:panelGrid>
+				<h:panelGrid columns="4" style="margin: 0 auto;"
+					rendered="#{seguimientoGeneroBean.nuevoDetalleGenero}">
+					<p:commandButton icon="#{botones['icono.grabar']}"
+						disabled="#{buscaProyectosBean.proyectoReportado}"
+						process="@this :form:detalleBeneficiarios :form:detalleBeneGenero" partialSubmit="true"
+						tabindex="9" title="#{tooltip['grabar']}"
+						value="#{botones['grabar']}"
+						actionListener="#{seguimientoGeneroController.agregaDetalleRegistroGeneroTabla1()}"
+						update=" :form:growl  :form:detalleBeneficiarios :form:detalleBeneGenero" />
+					<p:commandButton icon="#{botones['icono.cancelar']}"
+						process="@this :form:detalleBeneGenero"
+						update=":form:detalleBeneGenero" tabindex="10"
+						value="#{botones['cancelar']}" immediate="true" resetValues="true"
+						title="#{tooltip['cancelar']} ">
+						<f:setPropertyActionListener value="false"
+							target="#{seguimientoGeneroBean.nuevoDetalleGenero}" />
+					</p:commandButton>
+				</h:panelGrid>
+			</p:outputPanel>
+			<p:outputPanel id="detalleBeneficiarios">			
+			<p:scrollPanel style="width:700px;height:250px;margin:0 auto;">
+					<h:panelGrid
+						>
+						<p:outputLabel value="#{etiquetas['beneficiariosLineaAccion']}"
+							style="font-size:11px !important;font-weight: bold;" />
+						<p:outputLabel
+							value=""
+							style="font-size:10px !important;font-weight: bold;" />
+
+					</h:panelGrid>
+					<p:dataTable style="font-size:10px !important;width:1200px;"
+					styleClass="sinBordesAncho100" id="panelTablaGeneroAS"
+					emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5"
+					paginator="true"
+					value="#{seguimientoGeneroBean.listaDetalleAvancesGenero}"
+					var="tablarespuestas">
+					<f:facet name="header">
+						<p:commandButton style="width:200px;"
+							value="#{etiquetas['ingresoBeneficiarios']}"
+							icon="#{botones['icono.mas']}"
+							disabled="#{buscaProyectosBean.proyectoReportado}"
+							process="@this :form:detalleBeneGenero "
+							update=":form:detalleBeneGenero  :form:growl"
+							actionListener="#{seguimientoGeneroController.nuevoRegistroDetalleGenero()}"
+							title="#{tooltip['nuevoRegistro']}" />
+					</f:facet>
+					<p:column headerText="#{etiquetas['beneficiarios']}">
+						<p:outputLabel value="#{tablarespuestas.dtagNumberOfMens}"
+							style="font-size:10px !important;" />
+
+					</p:column>
+
+					<p:column headerText="#{etiquetas['beneficiarias']}">
+						<p:outputLabel value="#{tablarespuestas.dtagNumberOfWomen}"
+							style="font-size:10px !important;" />
+
+					</p:column>
+					<p:column headerText="#{etiquetas['provincia']}">
+						<p:outputLabel value="#{tablarespuestas.provincia}"
+							style="font-size:10px !important;" />
+
+					</p:column>
+					<p:column headerText="#{etiquetas['canton']}">
+						<p:outputLabel value="#{tablarespuestas.canton}"
+							style="font-size:10px !important;" />
+
+					</p:column>
+					<p:column headerText="#{etiquetas['parroquia']}">
+						<p:outputLabel value="#{tablarespuestas.parroquia}"
+							style="font-size:10px !important;" />
+
+					</p:column>
+					<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+						<p:outputLabel value="#{tablarespuestas.etnia}"
+							style="font-size:10px !important;" />
+					</p:column>
+					<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+						<p:outputLabel value="#{tablarespuestas.pueblo}"
+							style="font-size:10px !important;" />
+					</p:column>
+					<p:column headerText="#{etiquetas['comunidad']}">
+						<p:outputLabel value="#{tablarespuestas.dtagComunity}"
+							style="font-size:10px !important;" />
+
+					</p:column>
+					<p:column width="30">
+						<p:commandButton icon="#{botones['icono.editar']}"
+							title="#{tooltip['editar']}"
+							action="#{seguimientoGeneroController.editarRegistroTabla1()}"
+							process="@this :form:detalleBeneGenero"
+							update=":form:detalleBeneGenero">
+
+							<f:setPropertyActionListener value="#{tablarespuestas}"
+								target="#{seguimientoGeneroBean.detalleAdvanceGender}" />
+							<f:setPropertyActionListener value="true"
+								target="#{seguimientoGeneroBean.nuevoDetalleGenero}" />
+						</p:commandButton>
+					</p:column>
+					<p:column width="30">
+						<p:commandButton
+							action="#{seguimientoGeneroController.mostrarDialogoEliminaDatosTabla(1)}"
+							disabled="#{buscaProyectosBean.proyectoReportado}"
+							icon="#{botones['icono.borrar']}" process="@this ">
+							<f:setPropertyActionListener value="#{tablarespuestas}"
+								target="#{seguimientoGeneroBean.registroTablaGenero}"></f:setPropertyActionListener>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+			</p:scrollPanel>
+			</p:outputPanel>
+			<h:panelGrid style="margin: 0 auto;">
+				<p:commandButton oncomplete="PF('dlgAsignaBeneficiarios').hide();" icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFinalizarReporteGenero" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['finalizarReporte']}" width="390" closable="false"
+			resizable="false">
+			<p:outputLabel value="#{etiquetas['finReporteSeguimiento']}" />
+			<h:panelGrid columns="2" style="margin:0 auto;">
+				<p:commandButton value="#{botones['grabar']}" update="@form :form:buscaProyectos:tablaReportados" partialSubmit="true"
+					actionListener="#{seguimientoGeneroController.finalizaReporteGenero()}"
+					oncomplete="PF('dlgFinalizarReporteGenero').hide();"
+					process="@this :form:buscaProyectos:tablaReportados" icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgFinalizarReporteGenero').hide();"
+					process="@this :form:panelDatosSeguimiento" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<!-- DIALOGO ELIMINA ITEM TABLA 1 -->
+		<p:dialog widgetVar="dlgEliminaItemTabla1" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaRegistro']}" width="250" closable="false"
+			resizable="false">
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{botones['borrar']}"
+					update=":form:detalleBeneGenero growl"
+					actionListener="#{seguimientoGeneroController.eliminarRegistroTablaGenero(1)}"
+					oncomplete="PF('dlgEliminaItemTabla1').hide();"
+					process="@this :form:detalleBeneGenero"
+					icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgEliminaItemTabla1').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		<!-- DIALOGO ELIMINA ITEM TABLA 3 -->
+		<p:dialog widgetVar="dlgEliminaItemTabla3" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaRegistro']}" width="250" closable="false"
+			resizable="false">
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{botones['borrar']}"
+					update=":form:tabs:panelTablaGenero3 growl"
+					actionListener="#{seguimientoGeneroController.eliminarRegistroTablaGenero(3)}"
+					oncomplete="PF('dlgEliminaItemTabla3').hide();"
+					process="@this :form:tabs:panelTablaGenero3"
+					icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgEliminaItemTabla3').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+
+		<!-- DIALOGO ELIMINA ITEM TABLA 6 -->
+		<p:dialog widgetVar="dlgEliminaItemTabla6" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaRegistro']}" width="250" closable="false"
+			resizable="false">
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{botones['borrar']}"
+					update=":form:tabs:panelTablaGenero6 growl"
+					actionListener="#{seguimientoGeneroController.eliminarRegistroTablaGenero(6)}"
+					oncomplete="PF('dlgEliminaItemTabla6').hide();"
+					process="@this :form:tabs:panelTablaGenero6"
+					icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgEliminaItemTabla6').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		<!-- DIALOGO ELIMINA ITEM TABLA 7 -->
+		<p:dialog widgetVar="dlgEliminaItemTabla7" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaRegistro']}" width="250" closable="false"
+			resizable="false">
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{botones['borrar']}"
+					update=":form:tabs:panelTablaGenero7 growl"
+					actionListener="#{seguimientoGeneroController.eliminarRegistroTablaGenero(7)}"
+					oncomplete="PF('dlgEliminaItemTabla7').hide();"
+					process="@this :form:tabs:panelTablaGenero7"
+					icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgEliminaItemTabla7').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		<!-- Dialogo graba avances de genero -->
+		<p:dialog widgetVar="dlgGrabaAvanceGenero" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['grabarAvanceGenero']}" width="300"
+			closable="false" resizable="false">
+			<h:panelGrid columns="3">
+				<p:commandButton value="#{botones['grabar']}" update="growl  "
+					id="btngrabar" onstart="PF('dlgEnProc').show();"
+					actionListener="#{seguimientoGeneroController.grabarAvanceGenero()}"
+					oncomplete="PF('dlgGrabaAvanceGenero').hide(); PF('dlgEnProc').hide();"
+					process="@this " icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"
+					oncomplete="PF('dlgGrabaAvanceGenero').hide(); " process="@this" />
+
+			</h:panelGrid>
+		</p:dialog>
+
+
+				
+		
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-6"></div>
+			<div class="p-field p-col-12 p-md-2">
+				<p:outputLabel value="#{etiquetas['cambiarIdioma']}" />
+
+				<h:selectOneMenu value="#{seleccionaIdiomaController.localeCode}"
+					onchange="submit()"
+					valueChangeListener="#{seleccionaIdiomaController.countryLocaleCodeChanged}">
+					<f:selectItems value="#{seleccionaIdiomaController.countriesInMap}" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+
+
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-3"></div>
+			<div class="p-field p-col-12 p-md-6">
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-12"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+						<p:outputLabel value="#{titulos['seguimientoGenero']}"
+							style="font-size:18px;font-weight:bold;" />
+					</div>
+				</div>
+				<comp:buscaProyectos id="buscaProyectos"
+					componenteBuscaProyectos="#{seguimientoGeneroController.componenteBuscarProyectos}" />
+				<br />
+				<p:outputPanel id="panelOpcionesProyecto">
+					<h:panelGrid columns="2" style="margin:0 auto;"
+						rendered="#{seguimientoGeneroController.datosProyecto()}">
+						<p:commandButton
+							actionListener="#{seguimientoGeneroController.cargaDatosProyectoSeleccionado()}"
+							process="@this :form:buscaProyectos:panelDatosProyecto"
+							onstart="PF('dlgEnProc').show();"
+							icon="#{botones['icono.check']}" update="@form"
+							oncomplete="PF('dlgEnProc').hide();"
+							value="#{botones['mostrarInformacion']}" />
+						<p:commandButton id="btnVolverInicio"
+							value="#{botones['volverBusqueda']}"
+							icon="#{botones['icono.home']}" update="@form"
+							actionListener="#{seguimientoGeneroController.volverBuscarProyectos}"
+							partialSubmit="true" process="@this " />
+					</h:panelGrid>
+				</p:outputPanel>
+				<br /> <br />
+				<p:outputPanel id="panelDatosSeguimiento">
+					<div class="ui-fluid p-formgrid p-grid">
+						<div class="p-field p-col-12 p-md-11"></div>
+						<div class="p-field p-col-12 p-md-1">
+							<h:panelGrid
+								rendered="#{seguimientoGeneroBean.datosSeguimiento}">
+								<comp:ayuda texto="#{tooltip['desplazamientoTabs']}" />
+							</h:panelGrid>
+						</div>
+					</div>
+					<p:tabView rendered="#{seguimientoGeneroBean.datosSeguimiento}"
+						id="tabs" activeIndex="#{seguimientoGeneroBean.posicionTab}">
+						<p:ajax event="tabChange"
+							listener="#{seguimientoGeneroController.tabChange}"
+							process=":form:tabs" update=":form:tabs" />
+						<p:tab title="#{etiquetas['indicadores']}">
+							<p:outputLabel value="#{titulos['indicadoresIngresados']}"/>
+							<br/>
+							<br/>
+							<p:dataTable value="#{seguimientoGeneroBean.listaLineasGenero}" id="tablaAvancesGenero"
+								var="genero" style="font-size:10px !important;">
+								<p:column groupRow="true" headerText="#{etiquetas['temas']}">
+									<p:outputLabel value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.catalogsType.catyDescription}" style="font-size:10px !important;"/>
+								</p:column>
+								<p:column groupRow="true" headerText="#{etiquetas['lineaAccion']}">
+									<p:outputLabel value="#{genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2.equals('Otro')?genero.projectGenderIndicator.projectsGenderInfo.pginOtherLine:genero.projectGenderIndicator.projectsGenderInfo.cataId.cataText2}" style="font-size:10px !important;"/>									
+								</p:column>								
+								<p:column headerText="#{etiquetas['indicador']}">
+									<p:outputLabel value="#{genero.projectGenderIndicator.indicators.indiId==0?genero.projectGenderIndicator.pgigAnotherIndicator:genero.projectGenderIndicator.indicators.indiDescription }" style="font-size:10px !important;"/>
+								</p:column>
+								<p:column headerText="#{etiquetas['valorAlcanzado']}">																		
+									<p:outputLabel value="#{genero.projectGenderIndicator.indicators.indiId==9 or genero.projectGenderIndicator.indicators.indiId==10?etiquetas['hombres']:etiquetas['numeroHombres']}:  " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+									<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('N') or genero.projectGenderIndicator.indicators.indiType.equals('O')}"/>							
+									<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('B')}"/>
+									<p:outputLabel value="#{genero.aepgValueReachedOne}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G') or genero.projectGenderIndicator.indicators.indiType.equals('N') }"/>
+									<p:outputLabel value="#{genero.aepgValueReachedOne==1?'SI':'NO'}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('B')}"/>							
+									<br/>
+									<p:outputLabel value="#{genero.projectGenderIndicator.indicators.indiId==9 or genero.projectGenderIndicator.indicators.indiId==10?etiquetas['mujeres']:etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G')}"/>
+									<p:outputLabel value="#{genero.aepgValueReachedTwo}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('G')}"/>																		
+									<p:outputLabel value="#{genero.aepgValueReachedAnotherIndicator}" style="font-size:10px !important;" rendered="#{genero.projectGenderIndicator.indicators.indiType.equals('O')}" />
+								</p:column>
+								<p:column headerText="#{etiquetas['accionesImplementadas']}">
+									<p:outputLabel value="#{genero.aepgActionsDone}" style="font-size:10px !important;"/>
+								</p:column>
+								<p:column width="30px;">
+									<p:commandButton icon="#{botones['icono.checkcirculo']}"
+										title="#{tooltip['registrarSeguimiento']}"
+										process="@this "
+										partialSubmit="true"
+										update=":form:panelIngresoDatosSeg "
+										action="#{seguimientoGeneroController.asignaInformacionLineaGenero(genero)}"
+										oncomplete="PF('dlgRegistroSeguimiento').show();">
+										
+									</p:commandButton>		
+								</p:column>
+								<p:column width="30px;">
+									<p:commandButton icon="#{botones['icono.beneficiario']}"
+										title="#{tooltip['registrarBeneficiarios']}"
+										process="@this :form:detalleBeneficiarios"
+										partialSubmit="true" update=":form:detalleBeneficiarios"
+										action="#{seguimientoGeneroController.mostrarDatosTablaBeneficiarios(genero)}" />
+								</p:column>
+							</p:dataTable>
+							
+							<br/> 							
+														
+							<h:panelGrid style="margin: 0 auto;">
+
+								<p:commandButton value="#{botones['siguiente']}"
+									oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio'); "
+									icon="#{botones['icono.siguiente']}"
+									process="@this :form:tabs " styleClass="botonRegistroProyecto"
+									actionListener="#{seguimientoGeneroController.siguienteTab}"
+									onstart="PF('dlgEnProc').show()"
+									update=":form:growl :form:tabs " />
+
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="#{etiquetas['preguntasSeguimiento']}">
+							<p:outputPanel id="panelTablasGenero">
+								<p:panel header="#{etiquetas['datosAvanceGenero']}"
+									rendered="#{seguimientoGeneroBean.preguntasGenero}">
+
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:outputLabel value="#{titulos['actividadesSalvaguardas']}"
+											styleClass="etiquetaTituloSalvaguarda" />
+									</div>
+
+									<br />
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:outputLabel
+											value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoGeneroBean.listaPreguntas.get(0).quesContentQuestion:seguimientoGeneroBean.listaPreguntas.get(0).quesContentQuestionEnglish}"
+											styleClass="pregunta" />
+									</div>
+									<br />
+
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:selectOneRadio id="radiopSB1"
+											disabled="#{buscaProyectosBean.proyectoReportado}"
+											styleClass="etiquetaSubtitulo"
+											value="#{seguimientoGeneroBean.listaValoresRespuestas.get(0).vaanYesnoAnswerValue}"
+											unselectable="false">
+											<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+											<f:selectItem itemLabel="#{etiquetas['no']}"
+												itemValue="false" />
+											<p:ajax process="radiopSB1 @this :form:tabs:btnTablaGen3"
+												event="change" partialSubmit="true"
+												update=":form:tabs:btnTablaGen3"
+												listener="#{seguimientoGeneroController.mostrarDialogoEliminaValoresTabla('G3')}">
+
+											</p:ajax>
+										</p:selectOneRadio>
+									</div>
+									<br />
+									<p:message for="radiopSB1" showDetail="true">
+										<p:autoUpdate/>
+									</p:message>
+									<br />
+									<div class="p-field p-col-12 p-md-12"
+										style="background: #00AAC3; color: #FFFFFF; display: block;">
+										<div class="ui-fluid p-formgrid p-grid">
+											<div class="p-field p-col-12 p-md-11"
+												style="font-weight: bold;">
+												<p:outputLabel value="#{etiquetas['ingresoInformacion']}" />
+											</div>
+											<div class="p-field p-col-12 p-md-1" style="height: 10px;">
+												<p:commandButton id="btnTablaGen3"
+													styleClass="botonAgregaRegistro"
+													value="#{botones['agregar']}" immediate="true" resetValues="true"
+													icon="#{botones['icono.mas']}" 
+													process="@this :form:tabs:panelIngresoGenero3 "
+													update=":form:tabs:panelIngresoGenero3  :form:growl"
+													disabled="#{not seguimientoGeneroBean.listaValoresRespuestas.get(0).vaanYesnoAnswerValue or buscaProyectosBean.proyectoReportado}"
+													actionListener="#{seguimientoGeneroController.nuevoRegistroGeneroTabla3()}"
+													title="#{tooltip['nuevoRegistro']}">
+
+												</p:commandButton>
+											</div>
+										</div>
+									</div>
+									<p:outputPanel id="panelIngresoGenero3">
+										<p:panel id="panelBeneficio3"
+											rendered="#{seguimientoGeneroBean.nuevoRegistroTablaGenero3}"
+											header="#{titulos['datosSolicitados']}">
+											<div class="ui-fluid p-formgrid p-grid">
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['provincia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="1" value="#{seguimientoGeneroBean.codProvincia}"
+														id="provincia3">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaProvincias }"
+															var="provincia" itemLabel="#{provincia.geloName}"
+															itemValue="#{provincia.geloId}" />
+														<p:ajax process="@this " event="change"
+															update="canton3 parroquia3"
+															listener="#{seguimientoGeneroController.filtraCantones()}" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="provincia3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['canton']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="2" value="#{seguimientoGeneroBean.codCanton}"
+														id="canton3">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaCantones}"
+															var="canton" itemLabel="#{canton.geloName}"
+															itemValue="#{canton.geloId}" />
+														<p:ajax process="@this " event="change"
+															update="parroquia3"
+															listener="#{seguimientoGeneroController.filtraParroquias()}" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="canton3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['parroquia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="3" value="#{seguimientoGeneroBean.codParroquia}"
+														id="parroquia3">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaParroquias}"
+															var="parroquia" itemLabel="#{parroquia.geloName}"
+															itemValue="#{parroquia.geloId}" />
+														<p:ajax process="@this " event="change" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="parroquia3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu
+														value="#{seguimientoGeneroBean.codigoAutoIdentificacion}"
+														tabindex="4" required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														id="identificacionG3">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{aplicacionController.aplicacionBean.listaAutoIdentificacion}"
+															var="identificacion"
+															itemLabel="#{identificacion.cataText1}"
+															itemValue="#{identificacion.cataId}" />
+														<p:ajax process="@this " event="change"
+															listener="#{seguimientoGeneroController.habilitaPuebloNacionalidad()}"
+															update="puebloG3" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="identificacionG3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['puebloNacionalidad']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														value="#{seguimientoGeneroBean.codigoPuebloNacionalidad}"
+														tabindex="5"
+														disabled="#{not seguimientoGeneroBean.habilitaPuebloNacionalidad}"
+														id="puebloG3">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{aplicacionController.aplicacionBean.listaPueblosNacionalidades}"
+															var="pueblo" itemLabel="#{pueblo.cataText1}"
+															itemValue="#{pueblo.cataId}" />
+														<p:ajax process="@this " event="change" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="puebloG3"/>
+												</div>
+
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['comunidad']}" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea 
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla3.tareColumnOne}"
+														tabindex="6" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2"></div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['espacioIdentificado']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true" id="espacioG3"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla3.tareColumnTwo}"
+														tabindex="7" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="espacioG3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['tipoOrganizacion']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectCheckboxMenu id="multipleSeleccionG3"
+														multiple="true" tabindex="8" requiredMessage="#{mensajes['campoRequerido']}" required="true"
+														value="#{seguimientoGeneroBean.tipoOrganizacionSeleccionados}"
+														label="#{etiquetas['seleccioneElemento']}" filter="true"
+														filterMatchMode="startsWith" scrollHeight="250">
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listadoTipoOrganizaciones}" />
+													</p:selectCheckboxMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="multipleSeleccionG3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['finRolOrganizacion']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true" id="rolG3"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla3.tareColumnFour}"
+														tabindex="9" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="rolG3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel
+														value="#{etiquetas['accionesFortalecimiento']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true" id="accionesG3"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla3.tareColumnFive}"
+														tabindex="10" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="accionesG3"/>
+												</div>
+												
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel
+														value="#{etiquetas['nroHombresBeneficiarios']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputNumber decimalPlaces="0" required="true" id="hombresG3"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla3.tareColumnNumberSix}"
+														tabindex="12" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="hombresG3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel
+														value="#{etiquetas['nroMujeresBeneficiarias']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputNumber decimalPlaces="0" required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="mujeresG3"
+														value="#{seguimientoGeneroBean.filaTabla3.tareColumnNumberSeven}"
+														tabindex="13" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="mujeresG3"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['linkVerificador']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputText required="true" id="linkG3"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla3.tareColumnSix}"
+														tabindex="14" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="linkG3"/>
+												</div>
+
+
+
+
+												<div class="p-field p-col-12 p-md-4"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:commandButton icon="#{botones['icono.grabar']}"
+														process="@this  panelIngresoGenero3 radiopSB1"
+														disabled="#{buscaProyectosBean.proyectoReportado}" oncomplete="goToAnchor('iniciotabla3');"
+														tabindex="15" title="#{tooltip['grabar']}"
+														value="#{botones['grabar']}"
+														actionListener="#{seguimientoGeneroController.agregaDetalleRegistroGeneroTabla3()}"
+														update=" :form:growl  panelTablaGenero3 panelIngresoGenero3" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:commandButton icon="#{botones['icono.cancelar']}"
+														process="@this panelIngresoGenero3" oncomplete="goToAnchor('iniciotabla3');"
+														update="panelIngresoGenero3" tabindex="16"
+														value="#{botones['cancelar']}" immediate="true"
+														resetValues="true" title="#{tooltip['cancelar']} ">
+
+														<f:setPropertyActionListener value="false"
+															target="#{seguimientoGeneroBean.nuevoRegistroTablaGenero3}" />
+													</p:commandButton>
+												</div>
+												<div class="p-field p-col-12 p-md-4"></div>
+
+											</div>
+										</p:panel>
+
+									</p:outputPanel>
+									<br />
+									<br />
+									<a name="iniciotabla3"> </a>
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:scrollPanel style="width:800px;height:400px;margin:0 auto;">
+											<h:panelGrid id="panelTablaGenero3">
+												<p:dataTable styleClass="sinBordesAncho100"
+													style="width:1400px;font-size:10px !important;"
+													emptyMessage="#{mensajes['noRegistros']}" reflow="true"
+													rows="5" paginator="true" 
+													value="#{seguimientoGeneroBean.tablaRespuestas3}"
+													var="tablarespuestas">
+													<p:column headerText="#{etiquetas['provincia']}">
+														<p:outputLabel value="#{tablarespuestas.tareProvincia}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['canton']}">
+														<p:outputLabel value="#{tablarespuestas.tareCanton}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['parroquia']}">
+														<p:outputLabel value="#{tablarespuestas.tareParroquia}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+														<p:outputLabel value="#{tablarespuestas.tareGenerico}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+														<p:outputLabel value="#{tablarespuestas.tareGenericoDos}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['comunidad']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnOne}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['espacioIdentificado']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnTwo}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['tipoOrganizacion']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnTree}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['finRolOrganizacion']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnFour}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column
+														headerText="#{etiquetas['accionesFortalecimiento']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnFive}"
+															style="font-size:10px !important;" />
+													</p:column>
+
+													<p:column
+														headerText="#{etiquetas['nroHombresBeneficiarios']}">
+														<p:outputLabel
+															value="#{tablarespuestas.tareColumnNumberSix}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column
+														headerText="#{etiquetas['nroMujeresBeneficiarias']}">
+														<p:outputLabel
+															value="#{tablarespuestas.tareColumnNumberSeven}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['linkVerificador']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnSix}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column>
+														<p:commandButton icon="#{botones['icono.editar']}"
+															title="#{tooltip['editar']}" immediate="true" resetValues="true"
+															action="#{seguimientoGeneroController.editarRegistroTabla3()}"
+															process="@this :form:tabs:panelIngresoGenero3"
+															update=":form:tabs:panelIngresoGenero3">
+
+															<f:setPropertyActionListener value="#{tablarespuestas}"
+																target="#{seguimientoGeneroBean.filaTabla3}" />
+															<f:setPropertyActionListener value="true"
+																target="#{seguimientoGeneroBean.nuevoRegistroTablaGenero3}" />
+														</p:commandButton>
+														<p:commandButton
+															disabled="#{buscaProyectosBean.proyectoReportado}"
+															action="#{seguimientoGeneroController.mostrarDialogoEliminaDatosTabla(3)}"
+															icon="#{botones['icono.borrar']}" process="@this ">
+															<f:setPropertyActionListener value="#{tablarespuestas}"
+																target="#{seguimientoGeneroBean.filaTabla3}" />
+														</p:commandButton>
+
+													</p:column>
+												</p:dataTable>
+											</h:panelGrid>
+										</p:scrollPanel>
+									</div>
+									<br />
+
+									<br />
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:outputLabel
+											value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoGeneroBean.listaPreguntas.get(1).quesContentQuestion:seguimientoGeneroBean.listaPreguntas.get(1).quesContentQuestionEnglish}"
+											styleClass="pregunta" />
+									</div>
+									<br />
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:selectOneRadio id="radiopSB4"
+											styleClass="etiquetaSubtitulo"
+											disabled="#{buscaProyectosBean.proyectoReportado}"
+											value="#{seguimientoGeneroBean.listaValoresRespuestas.get(1).vaanYesnoAnswerValue}"
+											unselectable="false">
+											<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+											<f:selectItem itemLabel="#{etiquetas['no']}"
+												itemValue="false" />
+											<p:ajax process="radiopSB4 @this :form:tabs:btnTablaGen6"
+												event="change" update=":form:tabs:btnTablaGen6"
+												partialSubmit="true"
+												listener="#{seguimientoGeneroController.mostrarDialogoEliminaValoresTabla('G6')}">
+
+											</p:ajax>
+										</p:selectOneRadio>
+									</div>
+									<br />
+
+									<br />
+									<div class="p-field p-col-12 p-md-12"
+										style="background: #00AAC3; color: #FFFFFF; display: block;">
+										<div class="ui-fluid p-formgrid p-grid">
+											<div class="p-field p-col-12 p-md-11"
+												style="font-weight: bold;">
+												<p:outputLabel
+													value="#{etiquetas['ingresoInformacionLideresa']}" />
+											</div>
+											<div class="p-field p-col-12 p-md-1" style="height: 10px;">
+												<p:commandButton id="btnTablaGen6"
+													styleClass="botonAgregaRegistro"
+													value="#{botones['agregar']}"
+													icon="#{botones['icono.mas']}" immediate="true" resetValues="true"
+													process="@this :form:tabs:panelIngresoGenero6"
+													update=":form:tabs:panelIngresoGenero6  :form:growl"
+													disabled="#{not seguimientoGeneroBean.listaValoresRespuestas.get(1).vaanYesnoAnswerValue or buscaProyectosBean.proyectoReportado}"
+													actionListener="#{seguimientoGeneroController.nuevoRegistroGeneroTabla6()}"
+													title="#{tooltip['nuevoRegistro']}">
+
+												</p:commandButton>
+											</div>
+										</div>
+									</div>
+									<br />
+									<p:outputPanel id="panelIngresoGenero6">
+										<p:panel id="panelBeneficio6"
+											rendered="#{seguimientoGeneroBean.nuevoRegistroTablaGenero6}"
+											header="#{titulos['datosSolicitados']}">
+											<div class="ui-fluid p-formgrid p-grid">
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['provincia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="1" value="#{seguimientoGeneroBean.codProvincia}"
+														id="provincia6">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaProvincias }"
+															var="provincia" itemLabel="#{provincia.geloName}"
+															itemValue="#{provincia.geloId}" />
+														<p:ajax process="@this " event="change"
+															update="canton6 parroquia6"
+															listener="#{seguimientoGeneroController.filtraCantones()}" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="provincia6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['canton']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="2" value="#{seguimientoGeneroBean.codCanton}"
+														id="canton6">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaCantones}"
+															var="canton" itemLabel="#{canton.geloName}"
+															itemValue="#{canton.geloId}" />
+														<p:ajax process="@this " event="change"
+															update="parroquia6"
+															listener="#{seguimientoGeneroController.filtraParroquias()}" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="canton6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['parroquia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="3" value="#{seguimientoGeneroBean.codParroquia}"
+														id="parroquia6">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaParroquias}"
+															var="parroquia" itemLabel="#{parroquia.geloName}"
+															itemValue="#{parroquia.geloId}" />
+														<p:ajax process="@this " event="change" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="parroquia6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu
+														value="#{seguimientoGeneroBean.codigoAutoIdentificacion}"
+														tabindex="4" required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														id="identificacionG6">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{aplicacionController.aplicacionBean.listaAutoIdentificacion}"
+															var="identificacion"
+															itemLabel="#{identificacion.cataText1}"
+															itemValue="#{identificacion.cataId}" />
+														<p:ajax process="@this " event="change"
+															listener="#{seguimientoGeneroController.habilitaPuebloNacionalidad()}"
+															update="puebloG6" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="identificacionG6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['puebloNacionalidad']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														value="#{seguimientoGeneroBean.codigoPuebloNacionalidad}"
+														tabindex="5"
+														disabled="#{not seguimientoGeneroBean.habilitaPuebloNacionalidad}"
+														id="puebloG6">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{aplicacionController.aplicacionBean.listaPueblosNacionalidades}"
+															var="pueblo" itemLabel="#{pueblo.cataText1}"
+															itemValue="#{pueblo.cataId}" />
+														<p:ajax process="@this " event="change" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="puebloG6"/>
+												</div>
+
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['comunidad']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla6.tareColumnOne}"
+														tabindex="6" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2"></div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['nombreLideresa']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputText required="true" id="lideresaG6"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla6.tareColumnTwo}"
+														tabindex="7" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="lideresaG6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['espacioDialogo']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true" id="espacioG6"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla6.tareColumnTree}"
+														tabindex="8" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="espacioG6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['rolEspacio']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true" id="rolG6"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true"
+														value="#{seguimientoGeneroBean.filaTabla6.tareColumnFour}"
+														tabindex="9" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="rolG6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['accionesLideresa']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="accionG6"
+														value="#{seguimientoGeneroBean.filaTabla6.tareColumnFive}"
+														tabindex="10" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="accionG6"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['linkVerificador']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputText required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="linkG6"
+														value="#{seguimientoGeneroBean.filaTabla6.tareColumnSix}"
+														tabindex="11" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="linkG6"/>
+												</div>
+												
+												<div class="p-field p-col-12 p-md-4"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:commandButton icon="#{botones['icono.grabar']}"
+														process="@this  :form:tabs:panelIngresoGenero6 " tabindex="12"
+														disabled="#{buscaProyectosBean.proyectoReportado}" oncomplete="goToAnchor('iniciotabla6');"
+														title="#{tooltip['grabar']}" value="#{botones['grabar']}"
+														actionListener="#{seguimientoGeneroController.agregaDetalleRegistroGeneroTabla6()}"
+														update=" :form:growl  panelTablaGenero6 :form:tabs:panelIngresoGenero6" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:commandButton icon="#{botones['icono.cancelar']}"
+														process="@this panelIngresoGenero6" oncomplete="goToAnchor('iniciotabla6');"
+														update="panelIngresoGenero6" tabindex="13"
+														value="#{botones['cancelar']}" immediate="true"
+														resetValues="true" title="#{tooltip['cancelar']} ">
+
+														<f:setPropertyActionListener value="false"
+															target="#{seguimientoGeneroBean.nuevoRegistroTablaGenero6}" />
+													</p:commandButton>
+												</div>
+												<div class="p-field p-col-12 p-md-4"></div>
+											</div>
+										</p:panel>
+									</p:outputPanel>
+									<br />
+									<a name="iniciotabla6"> </a>
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:scrollPanel style="width:800px;height:400px;margin:0 auto;">
+											<h:panelGrid id="panelTablaGenero6">
+												<p:dataTable styleClass="sinBordesAncho100"
+													style="width:1200px;font-size:10px !important;"
+													emptyMessage="#{mensajes['noRegistros']}" reflow="true"
+													rows="5" paginator="true"
+													value="#{seguimientoGeneroBean.tablaRespuestas6}"
+													var="tablarespuestas">
+													<p:column headerText="#{etiquetas['provincia']}">
+														<p:outputLabel value="#{tablarespuestas.tareProvincia}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['canton']}">
+														<p:outputLabel value="#{tablarespuestas.tareCanton}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['parroquia']}">
+														<p:outputLabel value="#{tablarespuestas.tareParroquia}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+														<p:outputLabel value="#{tablarespuestas.tareGenerico}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+														<p:outputLabel value="#{tablarespuestas.tareGenericoDos}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['comunidad']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnOne}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['nombreLideresa']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnTwo}"
+															style="font-size:10px !important;" />
+													</p:column>
+
+													<p:column headerText="#{etiquetas['espacioDialogo']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnTree}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['rolEspacio']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnFour}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['accionesLideresa']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnFive}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['linkVerificador']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnSix}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column>
+														<p:commandButton icon="#{botones['icono.editar']}"
+															title="#{tooltip['editar']}" immediate="true" resetValues="true"
+															action="#{seguimientoGeneroController.editarRegistroTabla6()}"
+															process="@this :form:tabs:panelIngresoGenero6"
+															update=":form:tabs:panelIngresoGenero6">
+															
+															<f:setPropertyActionListener value="#{tablarespuestas}"
+																target="#{seguimientoGeneroBean.filaTabla6}" />
+															<f:setPropertyActionListener value="true"
+																target="#{seguimientoGeneroBean.nuevoRegistroTablaGenero6}" />
+														</p:commandButton>
+														<p:commandButton
+															disabled="#{buscaProyectosBean.proyectoReportado}"
+															action="#{seguimientoGeneroController.mostrarDialogoEliminaDatosTabla(6)}"
+															icon="#{botones['icono.borrar']}" process="@this ">
+															<f:setPropertyActionListener value="#{tablarespuestas}"
+																target="#{seguimientoGeneroBean.filaTabla6}" />
+														</p:commandButton>
+
+													</p:column>
+												</p:dataTable>
+											</h:panelGrid>
+										</p:scrollPanel>
+									</div>
+									<br />
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:outputLabel
+											value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoGeneroBean.listaPreguntas.get(2).quesContentQuestion:seguimientoGeneroBean.listaPreguntas.get(2).quesContentQuestionEnglish}"
+											styleClass="pregunta" />
+									</div>
+									<br />
+
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:selectOneRadio id="radiopSB5"
+											disabled="#{buscaProyectosBean.proyectoReportado}"
+											styleClass="etiquetaSubtitulo"
+											value="#{seguimientoGeneroBean.listaValoresRespuestas.get(2).vaanYesnoAnswerValue}"
+											unselectable="false">
+											<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
+											<f:selectItem itemLabel="#{etiquetas['no']}"
+												itemValue="false" />
+											<p:ajax process="radiopSB5 @this :form:tabs:btnTablaGen7"
+												event="change" update=":form:tabs:btnTablaGen7"
+												partialSubmit="true"
+												listener="#{seguimientoGeneroController.mostrarDialogoEliminaValoresTabla('G7')}">
+
+											</p:ajax>
+										</p:selectOneRadio>
+									</div>
+									<br />
+
+									<br />
+									<div class="p-field p-col-12 p-md-12"
+										style="background: #00AAC3; color: #FFFFFF; display: block;">
+										<div class="ui-fluid p-formgrid p-grid">
+											<div class="p-field p-col-12 p-md-11"
+												style="font-weight: bold;">
+												<p:outputLabel value="#{etiquetas['ingresoInformacion']}" />
+											</div>
+											<div class="p-field p-col-12 p-md-1" style="height: 10px;">
+												<p:commandButton id="btnTablaGen7"
+													styleClass="botonAgregaRegistro"
+													value="#{botones['agregar']}"
+													icon="#{botones['icono.mas']}"
+													process="@this :form:tabs:panelIngresoGenero7" immediate="true" resetValues="true"
+													update=":form:tabs:panelIngresoGenero7  :form:growl"
+													disabled="#{not seguimientoGeneroBean.listaValoresRespuestas.get(2).vaanYesnoAnswerValue or buscaProyectosBean.proyectoReportado}"
+													actionListener="#{seguimientoGeneroController.nuevoRegistroGeneroTabla7()}"
+													title="#{tooltip['nuevoRegistro']}">
+
+												</p:commandButton>
+											</div>
+										</div>
+									</div>
+									<br />
+									<p:outputPanel id="panelIngresoGenero7">
+										<p:panel id="panelBeneficio7"
+											rendered="#{seguimientoGeneroBean.nuevoRegistroTablaGenero7}"
+											header="#{titulos['datosSolicitados']}">
+											<div class="ui-fluid p-formgrid p-grid">
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['provincia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="1" value="#{seguimientoGeneroBean.codProvincia}"
+														id="provincia7">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaProvincias }"
+															var="provincia" itemLabel="#{provincia.geloName}"
+															itemValue="#{provincia.geloId}" />
+														<p:ajax process="@this " event="change"
+															update="canton7 parroquia7"
+															listener="#{seguimientoGeneroController.filtraCantones()}" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="provincia7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['canton']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="2" value="#{seguimientoGeneroBean.codCanton}"
+														id="canton7">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaCantones}"
+															var="canton" itemLabel="#{canton.geloName}"
+															itemValue="#{canton.geloId}" />
+														<p:ajax process="@this " event="change"
+															update="parroquia7"
+															listener="#{seguimientoGeneroController.filtraParroquias()}" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="canton7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['parroquia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														tabindex="3" value="#{seguimientoGeneroBean.codParroquia}"
+														id="parroquia7">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{seguimientoGeneroBean.listaParroquias}"
+															var="parroquia" itemLabel="#{parroquia.geloName}"
+															itemValue="#{parroquia.geloId}" />
+														<p:ajax process="@this " event="change" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="parroquia7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['autoDeterminaEtnia']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu
+														value="#{seguimientoGeneroBean.codigoAutoIdentificacion}"
+														tabindex="4" required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														id="identificacionG7">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{aplicacionController.aplicacionBean.listaAutoIdentificacion}"
+															var="identificacion"
+															itemLabel="#{identificacion.cataText1}"
+															itemValue="#{identificacion.cataId}" />
+														<p:ajax process="@this " event="change"
+															listener="#{seguimientoGeneroController.habilitaPuebloNacionalidad()}"
+															update="puebloG7" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="identificacionG7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['puebloNacionalidad']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:selectOneMenu required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														value="#{seguimientoGeneroBean.codigoPuebloNacionalidad}"
+														tabindex="5"
+														disabled="#{not seguimientoGeneroBean.habilitaPuebloNacionalidad}"
+														id="puebloG7">
+														<f:selectItem itemValue="#{null}"
+															itemLabel="#{mensajes['seleccionElemento']}" />
+														<f:selectItems
+															value="#{aplicacionController.aplicacionBean.listaPueblosNacionalidades}"
+															var="pueblo" itemLabel="#{pueblo.cataText1}"
+															itemValue="#{pueblo.cataId}" />
+														<p:ajax process="@this " event="change" />
+													</p:selectOneMenu>
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="puebloG7"/>
+												</div>
+
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['comunidad']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="comunidadG7"
+														value="#{seguimientoGeneroBean.filaTabla7.tareColumnOne}"
+														tabindex="6" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="comunidadG7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['accion']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="accionG7"
+														value="#{seguimientoGeneroBean.filaTabla7.tareColumnTwo}"
+														tabindex="7" />
+
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="accionG7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['resultado']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputTextarea required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="resultadoG7"
+														value="#{seguimientoGeneroBean.filaTabla7.tareColumnTree}"
+														tabindex="8" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="resultadoG7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel
+														value="#{etiquetas['nroMujeresBeneficiarias']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputNumber decimalPlaces="0" required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="mujeresG7"
+														value="#{seguimientoGeneroBean.filaTabla7.tareColumnNumberSix}"
+														tabindex="9" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="mujeresG7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel
+														value="#{etiquetas['nroHombresBeneficiarios']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputNumber decimalPlaces="0" required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="hombresG7"
+														value="#{seguimientoGeneroBean.filaTabla7.tareColumnNumberSeven}"
+														tabindex="10" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="hombresG7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-3"
+													style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+													<p:outputLabel value="#{etiquetas['linkVerificador']} *" />
+												</div>
+												<div class="p-field p-col-12 p-md-7">
+													<p:inputText required="true"
+														requiredMessage="#{mensajes['campoRequerido']}"
+														immediate="true" id="linkG7"
+														value="#{seguimientoGeneroBean.filaTabla7.tareColumnFour}"
+														tabindex="11" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:message for="linkG7"/>
+												</div>
+
+												<div class="p-field p-col-12 p-md-4"></div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:commandButton icon="#{botones['icono.grabar']}"
+														disabled="#{buscaProyectosBean.proyectoReportado}"
+														process="@this  :form:tabs:panelIngresoGenero7 "
+														tabindex="12" title="#{tooltip['grabar']}"
+														value="#{botones['grabar']}" oncomplete="goToAnchor('iniciotabla7');"
+														actionListener="#{seguimientoGeneroController.agregaDetalleRegistroGeneroTabla7()}"
+														update=" :form:growl  :form:tabs:panelTablaGenero7 :form:tabs:panelIngresoGenero7" />
+												</div>
+												<div class="p-field p-col-12 p-md-2">
+													<p:commandButton icon="#{botones['icono.cancelar']}"
+														process="@this :form:tabs:panelIngresoGenero7" oncomplete="goToAnchor('iniciotabla7');"
+														update=":form:tabs:panelIngresoGenero7" tabindex="13" partialSubmit="true"
+														value="#{botones['cancelar']}" immediate="true"
+														resetValues="true" title="#{tooltip['cancelar']} ">
+
+														<f:setPropertyActionListener value="false"
+															target="#{seguimientoGeneroBean.nuevoRegistroTablaGenero7}" />
+													</p:commandButton>
+												</div>
+												<div class="p-field p-col-12 p-md-4"></div>
+											</div>
+										</p:panel>
+									</p:outputPanel>
+									<br />
+									<a name="iniciotabla7"> </a>
+									<div class="ui-fluid p-formgrid p-grid">
+										<p:scrollPanel style="width:800px;height:400px;margin:0 auto;">
+											<h:panelGrid id="panelTablaGenero7">
+												<p:dataTable styleClass="sinBordesAncho100"
+													style="width:1200px;font-size:10px !important;"
+													emptyMessage="#{mensajes['noRegistros']}" reflow="true"
+													rows="5" paginator="true"
+													value="#{seguimientoGeneroBean.tablaRespuestas7}"
+													var="tablarespuestas">
+													<p:column headerText="#{etiquetas['provincia']}">
+														<p:outputLabel value="#{tablarespuestas.tareProvincia}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['canton']}">
+														<p:outputLabel value="#{tablarespuestas.tareCanton}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['parroquia']}">
+														<p:outputLabel value="#{tablarespuestas.tareParroquia}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['autoDeterminaEtnia']}">
+														<p:outputLabel value="#{tablarespuestas.tareGenerico}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['puebloNacionalidad']}">
+														<p:outputLabel value="#{tablarespuestas.tareGenericoDos}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['comunidad']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnOne}"
+															style="font-size:10px !important;" />
+
+													</p:column>
+													<p:column headerText="#{etiquetas['accion']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnTwo}"
+															style="font-size:10px !important;" />
+													</p:column>
+
+													<p:column headerText="#{etiquetas['resultado']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnTree}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column
+														headerText="#{etiquetas['nroMujeresBeneficiarias']}">
+														<p:outputLabel
+															value="#{tablarespuestas.tareColumnNumberSix}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column
+														headerText="#{etiquetas['nroHombresBeneficiarios']}">
+														<p:outputLabel
+															value="#{tablarespuestas.tareColumnNumberSeven}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column headerText="#{etiquetas['linkVerificador']}">
+														<p:outputLabel value="#{tablarespuestas.tareColumnFour}"
+															style="font-size:10px !important;" />
+													</p:column>
+													<p:column>
+														<p:commandButton icon="#{botones['icono.editar']}"
+															title="#{tooltip['editar']}" 
+															action="#{seguimientoGeneroController.editarRegistroTabla7()}"
+															process="@this " immediate="true" resetValues="true"
+															update=":form:tabs:panelIngresoGenero7">
+
+															<f:setPropertyActionListener value="#{tablarespuestas}"
+																target="#{seguimientoGeneroController.seguimientoGeneroBean.filaTabla7}" />
+															<f:setPropertyActionListener value="true"
+																target="#{seguimientoGeneroBean.nuevoRegistroTablaGenero7}" />
+														</p:commandButton>
+														<p:commandButton
+															disabled="#{buscaProyectosBean.proyectoReportado}"
+															action="#{seguimientoGeneroController.mostrarDialogoEliminaDatosTabla(7)}"
+															icon="#{botones['icono.borrar']}" process="@this ">
+															<f:setPropertyActionListener value="#{tablarespuestas}"
+																target="#{seguimientoGeneroController.seguimientoGeneroBean.filaTabla7}" />
+														</p:commandButton>
+
+													</p:column>
+												</p:dataTable>
+											</h:panelGrid>
+										</p:scrollPanel>
+									</div>
+									<br />
+								</p:panel>
+							</p:outputPanel>
+							<br />
+
+							<h:panelGrid columns="4" style="margin: 0 auto;">
+								<p:commandButton value="#{botones['atras']}"
+									styleClass="botonRegistroProyecto"
+									actionListener="#{seguimientoGeneroController.retrocederTab}"
+									icon="#{botones['icono.atras']}" process="@this :form:tabs"
+									update=":form:growl :form:tabs"
+									oncomplete="goToAnchor('inicio')" />
+								<p:commandButton value="#{botones['guardar']}"
+									styleClass="botonRegistroProyecto"
+									update=":form:growl :form:tabs "
+									icon="#{botones['icono.grabar']}" process="@this :form:tabs "
+									disabled="#{buscaProyectosBean.proyectoReportado}"
+									actionListener="#{seguimientoGeneroController.mostrarDialogoGrabarAvanceGenero()}"
+									rendered="#{seguimientoGeneroBean.datosGeneroParaMostrar}" />
+
+								<p:commandButton ajax="false"
+									action="#{seguimientoGeneroController.imprimirResumenGenero()}"
+									styleClass="botonRegistroProyecto" partialSubmit="true"
+									rendered="#{seguimientoGeneroBean.datosGeneroParaMostrar}"
+									icon="#{botones['icono.imprimir']}"
+									value="#{botones['vistaPrevia']}" process="@this :form:tabs :form:buscaProyectos:panelDatosProyecto">
+
+								</p:commandButton>
+								<p:commandButton value="#{botones['finalizar']}"
+									styleClass="botonRegistroProyecto" process="@this "
+									update=":form:growl"
+									disabled="#{buscaProyectosBean.proyectoReportado}"
+									rendered="#{seguimientoGeneroBean.datosGeneroParaMostrar}"
+									actionListener="#{seguimientoGeneroController.mostrarDialogoFinalizarReporte()}"
+									icon="#{botones['icono.check']}">
+
+								</p:commandButton>
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</p:outputPanel>
+				<br />
+			</div>
+		</div>
+	</h:form>
+</body>
+</html>

@@ -63,6 +63,31 @@
 			<div id="content" class="container">
 				<h:form id="indexForm">
 				
+				<p:dialog widgetVar="dlgTipoRol" showEffect="fade"
+					hideEffect="fade" modal="true" appendTo="@(body)"
+					header="#{etiquetas['rol']}" width="300" closable="false"
+					resizable="false">
+					<p:outputLabel value="#{etiquetas['usuarioRoles']}"/>
+					<h:panelGrid columns="2" id="roles">
+						<p:outputLabel value="#{etiquetas['rol']}*:"/>
+						<p:selectOneMenu value="#{loginBean.codigoRolUsuario}">
+							<f:selectItems value="#{loginBean.listaRolesUsuario}" var="rol" itemLabel="#{rol.role.roleDescription}" itemValue="#{rol.rousId}"/>							
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<center>
+						<h:panelGrid columns="2">
+							<p:commandButton process="@this roles" value="#{botones['aceptar']}" 
+								action="#{loginController.ubicaRolUsuarioSeleccionado()}" partialSubmit="true"
+								icon="#{botones['icono.check']}"/>
+							<p:commandButton process="@this" oncomplete="PF('dlgTipoRol').hide();" 
+								icon="#{botones['icono.cancelar']}"
+								value="#{botones['cancelar']}"/>	
+						</h:panelGrid>
+					</center>
+				</p:dialog>
+				
+				
+				<p:growl id="growl"/>
 					<center>
 						<p:panel header="" styleClass="panelLogin"
 							style="margin-top:60px;">
@@ -90,31 +115,14 @@
 											styleClass="w100" autocomplete="off"/>
 								</h:panelGrid>
 								<p:commandButton id="loginButton" value="Ingresar" 
-									action="#{loginController.acceder()}" update=":indexForm" 
+									action="#{loginController.validarUsuario()}" update=":indexForm"  process="@this username password grid" partialSubmit="true"
 									styleClass="buttonLogin w100" />
-										
-								<h:panelGrid columns="1" styleClass="w100" columnClasses="alRight">
-									<h:outputLink value="#{request.contextPath}/usuario/recuperarClave.xhtml" styleClass="linkForgot">¿Olvidó su contraseña?</h:outputLink>
-								</h:panelGrid>
+								 		
+							
+								 
 							</h:panelGrid>
 							<br />
-							<h:panelGrid columns="1" rendered="false" 
-								columnClasses="w50 alTop alCenter, field_mrg w50 alTop alCenter">
-								<h:outputLabel value="Si aún no es usuario de SUIA, regístrese ahora" 
-									styleClass="labelRegister" />							
-								
-								<p:commandButton value="Regístrese en el sistema" process="@this" action="/registro.xhtml" ajax="false" immediate="true" styleClass="buttonRegister bold w70" />	
-							</h:panelGrid>							
-							<h:panelGrid columns="1" 
-											columnClasses="w50 alTop alCenter, field_mrg w50 alTop alCenter">
-											<h:outputLabel value="Si aún no es usuario de SUIA, regístrese ahora" 
-												styleClass="labelRegister" />
-											
-											<p:commandButton value="Regístrese en el sistema" 
-												actionListener="#{loginController.registrarse()}" immediate="true"  
-												styleClass="buttonRegister bold w70"/>	
-												
-							</h:panelGrid>
+							
 							
 						</p:panel>
 

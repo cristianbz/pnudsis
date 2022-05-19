@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -119,12 +120,12 @@ public class TableResponses  {
 	@Getter
 	@Setter
 	@Column(name = "tare_column_decimal_one")
-	private double tareColumnDecimalOne;
+	private BigDecimal tareColumnDecimalOne;
 	
 	@Getter
 	@Setter
 	@Column(name = "tare_column_decimal_two")
-	private double tareColumnDecimalTwo;
+	private BigDecimal tareColumnDecimalTwo;
 	
 	@Getter
 	@Setter
@@ -168,6 +169,26 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
+	@Column(name = "tare_column_number_nine")
+	private Integer tareColumnNumberNine;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_code_component")
+	private Integer tareCodeComponent;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_law_political")
+	private Integer tareLawPolitical;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_another_catalog")
+	private String tareAnotherCatalog;
+	
+	@Getter
+	@Setter
 	@Transient
 	private String tareProvincia;
 	
@@ -188,9 +209,9 @@ public class TableResponses  {
 	
 	@Getter
 	@Setter
-	@Column(name = "tare_answer_ord")
-	private Integer tareAnswerOrd;
-	
+	@Transient
+	private String tareComponente;
+		
 	@Getter
 	@Setter
 	@Transient
@@ -221,6 +242,27 @@ public class TableResponses  {
 	@Column(name = "tare_GenericoNumerico")
 	private double tareGenericoNumerico;
 	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_mens")
+	private Integer tareColumnNumberMens;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_number_women")
+	private Integer tareColumnNumberWomen;
+	
+	@Getter
+	@Setter
+	@Column(name = "tare_column_generic_one")
+	private Integer tareColumnGenericOne;
+
+	@Getter
+	@Setter
+	@Column(name = "tare_column_generic_two")
+	private Integer tareColumnGenericTwo;
+
+
 	@Getter
 	@Setter
 	@Column(name = "tare_status")

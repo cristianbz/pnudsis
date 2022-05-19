@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,10 +27,11 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "users", schema = "public")
+@NamedQueries({
+	@NamedQuery(name = "q",query = "SELECT U FROM Users U WHERE U.userName=:usuario AND U.userPassword=:clave AND U.userStatus=TRUE")
+	
+})
 public class Users {
-
-	
-	
 
 	@Getter
 	@Setter
@@ -227,7 +230,10 @@ public class Users {
 	@Setter
 	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private List<AdvanceExecutionSafeguards> advanceExecutionSaveguardsList;
-	
-	
+		
+	@Getter
+	@Setter
+	@OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	private List<RolesUser> rolesUserList;
    
 }

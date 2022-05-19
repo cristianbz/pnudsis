@@ -2,7 +2,6 @@ package ec.gob.ambiente.sis.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -12,15 +11,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.component.tabview.TabView;
-
+import ec.gob.ambiente.sigma.model.Components;
 import ec.gob.ambiente.sigma.model.Partners;
 import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
 import ec.gob.ambiente.sis.model.Catalogs;
-import ec.gob.ambiente.sis.model.ExecutiveSummaries;
+import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
@@ -47,15 +45,48 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private Integer codigoCobeneficio;
+	
+	@Getter
+	@Setter
+	private Integer codigoStrategicPartner;
+	
+	@Getter
+	@Setter
 	private Integer anioReporte;
 	
 	@Getter
 	@Setter
 	private String periodoDesde;
 	
+	
 	@Setter
 	@Getter
 	private boolean datosProyecto;
+	
+	@Setter
+	@Getter
+	private boolean habilitaCobeneficio;
+	
+	@Setter
+	@Getter
+	private boolean habilitaCobeneficio27;
+	
+	@Setter
+	@Getter
+	private boolean mostrartabs;
+	
+	@Setter
+	@Getter
+	private boolean esNuevoRegistroTbl51;
+	
+	@Setter
+	@Getter
+	private boolean esNuevoRegistroTbl81;
+	
+	@Getter
+	@Setter
+	private List<Components> listaComponentes;
 	
 	@Setter
 	@Getter
@@ -80,6 +111,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	@Getter
 	private List<Boolean> mensajeRequeridosTablasG;
+	
+	@Getter
+	@Setter
+	private List<ProjectQuestions> listaSalvaguardasAsignadas;
 
 	@Setter
 	@Getter
@@ -181,6 +216,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<String> listadoMonitoreoRemoto;
+	
+	@Getter
+	@Setter
+	private List<String> listadoInstitucionAcompania;
 	
 	@Getter
 	@Setter
@@ -332,7 +371,71 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private boolean otroCatalogo121;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoE371;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoF421;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoG461;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoA1;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoB81;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoB41;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoB131;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoC201;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoE351;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoE381;
+
+	@Getter
+	@Setter
+	private boolean otroCatalogoE391;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoF441;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoG491;
+	
+	@Getter
+	@Setter
+	private boolean otroCatalogoG471;
+	
+	@Getter
+	@Setter
 	private Integer codigoTipoInstitucion;
+	
+	@Getter
+	@Setter
+	private Integer codigoPlanGobierno;
 	
 	@Getter
 	@Setter
@@ -377,6 +480,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private Integer codigoRiesgo;
+	
+	@Getter
+	@Setter
+	private Integer codigoComponente;
 	
 	@Getter
 	@Setter
@@ -669,11 +776,19 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<TableResponses> tablaSalvaguardaB51Aux;
+	
+	@Getter
+	@Setter
 	private List<TableResponses> tablaSalvaguardaB71;
 	
 	@Getter
 	@Setter
 	private List<TableResponses> tablaSalvaguardaB81;
+	
+	@Getter
+	@Setter
+	private List<TableResponses> tablaSalvaguardaB81Aux;
 	
 	@Getter
 	@Setter
@@ -710,6 +825,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<TableResponses> tablaSalvaguardaB181;
+	
 	
 	@Getter
 	@Setter
@@ -1041,6 +1157,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<AdvanceExecutionSafeguards> listaPresentadosIniciados;
+	
+	@Getter
+	@Setter
 	private boolean salvaguardaA;
 	
 	@Getter
@@ -1327,11 +1447,19 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private TableResponses registroTablaRespuestasB51Aux;
+	
+	@Getter
+	@Setter
 	private TableResponses registroTablaRespuestasB71;
 	
 	@Getter
 	@Setter
 	private TableResponses registroTablaRespuestasB81;
+	
+	@Getter
+	@Setter
+	private TableResponses registroTablaRespuestasB81Aux;
 	
 	@Getter
 	@Setter
@@ -1518,7 +1646,8 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
-	private ExecutiveSummaries resumenEjecutivo;
+	private TableResponses registroTablaCobeneficios;
+	
 	
 	@PostConstruct
 	public void init(){
@@ -1531,8 +1660,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasB131 = new TableResponses();
 		registroTablaRespuestasB41 = new TableResponses();
 		registroTablaRespuestasB51 = new TableResponses();
+		registroTablaRespuestasB51Aux = new TableResponses();
 		registroTablaRespuestasB71 = new TableResponses();
 		registroTablaRespuestasB81 = new TableResponses();
+		registroTablaRespuestasB81Aux = new TableResponses();
 		registroTablaRespuestasC201 = new TableResponses();
 		registroTablaRespuestasC211 = new TableResponses();
 		registroTablaRespuestasC241= new TableResponses();
@@ -1576,7 +1707,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		registroTablaRespuestasB11= new TableResponses();
 		registroTablaRespuestasB143= new TableResponses();
 		registroTablaRespuestasC242= new TableResponses();
-		
+		registroTablaCobeneficios= new TableResponses();
 		
 		listaProyectos=new ArrayList<>();
 		listaValoresRespuestas= new ArrayList<>();
@@ -1592,8 +1723,10 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 		tablaSalvaguardaA=new ArrayList<>();
 		tablaSalvaguardaB41=new ArrayList<>();
 		tablaSalvaguardaB51=new ArrayList<>();
+		tablaSalvaguardaB51Aux=new ArrayList<>();
 		tablaSalvaguardaB71= new ArrayList<>();
 		tablaSalvaguardaB81= new ArrayList<>();
+		tablaSalvaguardaB81Aux= new ArrayList<>();
 		tablaSalvaguardaB102= new ArrayList<>();
 		tablaSalvaguardaB103= new ArrayList<>();
 		tablaSalvaguardaB121= new ArrayList<>();
@@ -1705,6 +1838,7 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 			mensajeRequeridosTablasG.add(false);			
 		}
 		setDatosProyecto(false);
+		
 	}
 
 	public TipoParticipanteEnum[] getTipoParticipanteEnum() {

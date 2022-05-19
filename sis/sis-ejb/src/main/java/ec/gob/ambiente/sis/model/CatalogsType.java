@@ -53,6 +53,12 @@ public class CatalogsType {
 	@Setter
 	@Column(name = "caty_status")
     private Boolean catyStatus;
+	
+    public CatalogsType() {
+    }
+    public CatalogsType(Integer catyId) {
+        this.catyId = catyId;
+    }
     
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogsType")
     private List<Catalogs> catalogsList;

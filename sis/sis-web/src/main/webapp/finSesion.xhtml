@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link rel="shortcut icon"
+		href="#{request.contextPath}/resources/images/favicon.ico" />
+
+        <title>SIGMA REDD+</title>
+        <meta name="viewport" content="initial-scale=1"/>
+        <style type="text/css">
+            .ui-tooltip {
+                max-width: 330px;
+                white-space:pre-wrap;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="frm">
+            <div class="ui-fluid">
+                <ui:include src="/resources/status_gif.xhtml"/>
+                <center>
+                    <p:panel>
+                        <h:panelGrid id="pnlContenido">
+
+
+                            <p:panel>
+                                <p:outputLabel value="Su sesión ha expirado por inactividad."/>
+                                
+                                <h:panelGrid>
+                                    <p:commandLink 
+                    action="#{sesionController.redireccionarAPagina('public_site', 'difusion')}"
+                     onclick="PF('dlgEnProc').show()"
+                                         oncomplete="PF('dlgEnProc').hide()"
+                                         process="@this" partialSubmit="true"
+                                         async="true" global="false">
+                     <i class="fa fa-power-off"></i>
+                     <span>Acceder al sitio publico</span>  
+                </p:commandLink>
+                                    <br/>
+                                    <br/>
+                                     <br/>
+                                      <br/>
+                                       <br/>
+                                    <p:commandLink 
+                                        action="#{sesionController.cerrarSesion()}"
+                     onclick="PF('dlgEnProc').show()"
+                                         oncomplete="PF('dlgEnProc').hide()"
+                                         process="@this" partialSubmit="true"
+                                         async="true" global="false">
+                     <i class="fa fa-power-off"></i>
+                     <span>Volver a iniciar sesión</span>  
+                </p:commandLink>
+                                </h:panelGrid>
+                            </p:panel>
+                            
+
+                            
+                        </h:panelGrid>
+                    </p:panel>
+                </center>
+
+               
+
+            </div>
+        </h:form>
+
+    </h:body>
+</html>
+
+

@@ -1,0 +1,40 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:comp="http://java.sun.com/jsf/composite"
+              xmlns:h="http://java.sun.com/jsf/html">
+
+    <comp:interface shortDescription="Componente de ayuda">
+       <comp:attribute name="id" 
+                       required="false" 
+                       type="java.lang.String" /> 
+        <comp:attribute name="titulo"
+                        type="java.lang.String" 
+                        default=""
+                        required="false"/>
+        <comp:attribute name="texto"
+                        type="java.lang.String" 
+                        default=""
+                        required="true"/>
+       <comp:attribute name="icono"
+                        type="java.lang.String" 
+                        default=""
+                        required="false"/>   
+       <comp:attribute name="for"
+                        type="java.lang.String" 
+                        default=""
+                        required="false"/>      
+                               
+    </comp:interface>
+
+    <comp:implementation>
+    <div id="#{cc.clientId}" class="textCircle">
+    <h:outputText value="" styleClass="ui-icon fa fa-info" escape="false"/>
+    </div>
+    <p:tooltip for="#{cc.attrs.id}" 
+               value="#{cc.attrs.texto}" 
+               style="max-width: 300px; white-space:pre-wrap;" escape="false"/>
+    
+    </comp:implementation>
+</ui:component>

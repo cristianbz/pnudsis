@@ -103,8 +103,13 @@ public class DetailAdvanceGender {
 	
 	@Getter
 	@Setter
-	@JoinColumn(name = "gead_id")
+	@Transient
+	private String lineaAccion;
+	
+	@Getter
+	@Setter
+	@JoinColumn(name = "aepg_id")
 	@ManyToOne(fetch = FetchType.LAZY)	
-	private GenderAdvances genderAdvances;
+	private AdvanceExecutionProjectGender advanceExecutionProjectGender;
 }
 

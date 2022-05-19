@@ -33,5 +33,6 @@ public class CatalogFacade extends AbstractFacade<Catalog, Integer>{
 		return findByCreateQuery(sql, camposCondicion);
 	}
 	
+
 }
 
