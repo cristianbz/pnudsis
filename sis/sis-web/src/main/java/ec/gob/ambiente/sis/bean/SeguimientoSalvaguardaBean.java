@@ -150,6 +150,14 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	
 	@Getter
 	@Setter
+	private List<String> listadoEstados;
+	
+	@Getter
+	@Setter
+	private List<String> listadoConformacion;
+	
+	@Getter
+	@Setter
 	private List<String> listadoModalidades;
 	
 	@Getter
@@ -581,6 +589,13 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Getter
 	@Setter
 	private List<Catalogs> listaCatalogoActividad;
+	
+	@Getter
+	@Setter
+	private List<Catalogs> listaCatalogoEstado;
+	@Getter
+	@Setter
+	private List<Catalogs> listaCatalogoConformacion;
 	
 	@Getter
 	@Setter

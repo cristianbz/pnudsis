@@ -981,6 +981,7 @@
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['eliminaDatosTabla']}" width="250"
 			closable="false" resizable="false">
+			<p:outputLabel value="#{titulos['eliminaInfoTabla']}"/>
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaValoresTablaDatos()}"
@@ -3185,48 +3186,7 @@
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="componentetblB51"/>
 									</div>
-									<div class="p-field p-col-12 p-md-12">
-										<p:outputLabel value="#{titulos['beneficiarioa']}" styleClass="pregunta"/>
-									</div>
-									<div class="p-field p-col-12 p-md-12">
-										<p:outputLabel value="#{titulos['registroBeneficiario']}"/>
-									</div>
-									<div class="p-field p-col-12 p-md-12">
-										<p:outputLabel value="#{titulos['notaNoBeneficiario']}"/>
-									</div>
-									<div class="p-field p-col-12 p-md-11">
-										<p:dataTable id="tblAux51" var="tabla" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoSalvaguardaBean.tablaSalvaguardaB51Aux}">
-											<p:column headerText="#{etiquetas['numeroHombres']} *" styleClass="cabeceraTablaLarga" >
-												<p:inputNumber value="#{tabla.tareColumnNumberSix}"
-													decimalPlaces="0" id="benhombre51" 
-													tabindex="9" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" >
-													<p:ajax process="@this" />
-												</p:inputNumber>
-												<p:message for="benhombre51"/>
-											</p:column>
-											<p:column headerText="#{etiquetas['numeroMujeres']} *" styleClass="cabeceraTablaLarga" >
-												<p:inputNumber  id="benmujer51"
-													required="true" requiredMessage="#{mensajes['campoRequerido']}" decimalPlaces="0" 
-													tabindex="10" immediate="true" value="#{tabla.tareColumnNumberSeven}" >
-														<p:ajax process="@this" />
-												</p:inputNumber>
-												<p:message for="benmujer51"/>
-											</p:column>	
-											<p:column style="width:40px;">
-												<p:commandButton action="#{seguimientoSalvaguardaController.eliminaRegistroTblAux51()}" 
-													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-								                	update=":form:salvaguardas:tblAux51" icon="#{botones['icono.borrar']}"
-								                	process="@this :form:salvaguardas:tblAux51">
-								                	<f:setPropertyActionListener value="#{tabla}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"/>
-								                </p:commandButton>
-											</p:column>										
-										</p:dataTable>
-									</div>
-									<div class="p-field p-col-12 p-md-1">
-										<p:commandButton icon="#{botones['icono.mas']}" process="@this tblAux51" 
-											tabindex="8"
-											update="tblAux51" actionListener="#{seguimientoSalvaguardaController.agregaFilaTabla51Aux()}"/>
-									</div>
+									
 									
 									<div class="p-field p-col-12 p-md-4">
 									</div>
@@ -3876,13 +3836,14 @@
 									</div>
 									
 									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{etiquetas['beneficiario']}: " style="font-weight:bold;"/>
 										<p:outputLabel value="#{titulos['personasActividadForestal']}"/>
 									</div>
 									
 									<div class="p-field p-col-12 p-md-11">
 										<p:dataTable id="tblAux81" var="tabla" emptyMessage="#{mensajes['noRegistros']}" value="#{seguimientoSalvaguardaBean.tablaSalvaguardaB81Aux}">
 											<p:column headerText="#{etiquetas['numeroHombres']} *" styleClass="cabeceraTablaLarga" style="width:50px;">
-												<p:inputNumber value="#{tabla.tareColumnNumberSeven}" 
+												<p:inputNumber value="#{tabla.tareColumnNumberMens}" 
 													decimalPlaces="0" id="hombresB81"
 													tabindex="11" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" >
 													<p:ajax process="@this" />
@@ -3892,7 +3853,7 @@
 											<p:column headerText="#{etiquetas['numeroMujeres']} *" styleClass="cabeceraTablaLarga" style="width:50px;">
 												<p:inputNumber id="mujeresB81"
 													required="true" requiredMessage="#{mensajes['campoRequerido']}" decimalPlaces="0" 
-													tabindex="12" immediate="true" value="#{tabla.tareColumnNumberEight}" >
+													tabindex="12" immediate="true" value="#{tabla.tareColumnNumberWomen}" >
 														<p:ajax process="@this" />
 												</p:inputNumber>
 												<p:message for="mujeresB81"/>
@@ -3931,7 +3892,7 @@
 											<p:column style="width:40px;">
 												<p:commandButton action="#{seguimientoSalvaguardaController.eliminaRegistroTblAux81()}" 
 													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-								                	update=":form:salvaguardas:tblAux81" icon="#{botones['icono.borrar']}"
+								                	update=":form:salvaguardas:tblAux81" icon="#{botones['icono.borrar']}" immediate="true" 
 								                	process="@this :form:salvaguardas:tblAux81">
 								                	<f:setPropertyActionListener value="#{tabla}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"/>
 								                </p:commandButton>
@@ -4465,9 +4426,9 @@
 												<f:selectItem itemValue="#{null}"
 													itemLabel="#{mensajes['seleccionElemento']}" />
 												<f:selectItems
-													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tipoEstadoEnum}"
-													var="estado" itemLabel="#{estado.etiqueta}"
-													itemValue="#{estado.codigo}" />
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCatalogoEstado}"
+													var="estado" itemLabel="#{estado.cataText1}"
+													itemValue="#{estado.cataId}" />
 												<p:ajax process="@this " event="change"	/>
 										</p:selectOneMenu>
 									</div>
@@ -4853,9 +4814,9 @@
 												<f:selectItem itemValue="#{null}"
 													itemLabel="#{mensajes['seleccionElemento']}" />
 												<f:selectItems
-													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tipoConformacionEnum}"
-													var="conformacion" itemLabel="#{conformacion.etiqueta}"
-													itemValue="#{conformacion.codigo}" />
+													value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaCatalogoConformacion}"
+													var="conformacion" itemLabel="#{conformacion.cataText1}"
+													itemValue="#{conformacion.cataId}" />
 												<p:ajax process="@this " event="change"	/>
 										</p:selectOneMenu>
 										

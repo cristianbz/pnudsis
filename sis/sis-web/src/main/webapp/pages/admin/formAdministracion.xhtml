@@ -414,7 +414,7 @@
 							value="#{administracionBean.listaIndicadores}"
 							rows="10" paginator="true" 							 
 							var="indi">
-							<p:column headerText="#{etiquetas['indicador']}" style="width:100px;">
+							<p:column headerText="#{etiquetas['indicador']}" filterBy="#{indi.indiDescription}" filterMatchMode="contains" style="width:100px;">
 								#{indi.indiDescription}
 							</p:column> 	
 							<p:column headerText="#{etiquetas['tipo']}" style="width:40px;">

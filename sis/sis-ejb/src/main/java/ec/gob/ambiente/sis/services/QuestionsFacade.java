@@ -136,4 +136,16 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		return findByCreateQuery(sql, camposCondicion);
 	}
+	/**
+	 * Busca las preguntas por el codigo de la salvaguarda
+	 * @param codigoSalvaguarda
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Questions> buscaPreguntaPorCodigoSalvaguarda(String codigoSalvaguarda) throws Exception{
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeCode=:codigoSalvaguarda AND Q.quesIsGender = False AND Q.quesStatus=True order by Q.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
+		return findByCreateQuery(sql, camposCondicion);
+	}
 }
