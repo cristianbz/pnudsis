@@ -2506,7 +2506,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
             " CASE WHEN tr.tare_law_political IS NOT NULL THEN (SELECT cata_text2 FROM sis.catalogs WHERE cata_id = tr.tare_law_political) END as politicaley, " +             
             " CASE WHEN tr.tare_column_number_six IS NOT NULL THEN (SELECT cata_text2 FROM sis.catalogs WHERE cata_id = tr.tare_column_number_six) END as plangobierno, " + 
             " tr.tare_another_catalog, tr.tare_law_political  FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, " + 
-            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
             " AND sa.safe_code='A' AND aex.adex_id= " + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2553,7 +2553,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
             " CASE WHEN tr.tare_column_number_seven IS NOT NULL THEN (SELECT cata_text2 FROM sis.catalogs WHERE cata_id = tr.tare_column_number_seven) END as seven, " +
             " CASE WHEN tr.tare_code_component IS NOT NULL THEN (SELECT comp_name FROM sigma.components WHERE comp_id = tr.tare_code_component) END as componente " +            
             " FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, " + 
-            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
             " AND sa.safe_code='B' AND aex.adex_id= " + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2620,7 +2620,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
             " CASE WHEN tr.tare_code_component IS NOT NULL THEN (SELECT comp_name FROM sigma.components WHERE comp_id = tr.tare_code_component) END as componente, " +  
             " tr.tare_column_decimal_two,tr.tare_column_five,tr.tare_column_number_six,tr.tare_column_six " +
             " FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, " + 
-            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
             " AND sa.safe_code='C' AND aex.adex_id= " + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2697,7 +2697,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
            " tr.tare_column_generic_one,tr.tare_column_decimal_two " +
            " FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, "+  
            " sis.table_responses tr " +
-           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
            " AND sa.safe_code='D' AND aex.adex_id=" + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2767,7 +2767,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
            " tr.tare_column_generic_one,tr.tare_column_decimal_two,tr.tare_column_number_six " +
            " FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, "+  
            " sis.table_responses tr " +
-           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
            " AND sa.safe_code='E' AND aex.adex_id=" + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2838,7 +2838,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
            " tr.tare_column_generic_one,tr.tare_column_decimal_two,tr.tare_column_number_six,tr.tare_column_generic_two " +
            " FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, "+  
            " sis.table_responses tr " +
-           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
            " AND sa.safe_code='F' AND aex.adex_id=" + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);
@@ -2911,7 +2911,7 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
            " tr.tare_column_generic_one,tr.tare_column_decimal_two,tr.tare_column_number_six,tr.tare_column_generic_two " +
            " FROM sigma.projects p, sis.advance_execution_safeguards aex, sigma.safeguards sa, sis.questions q, "+  
            " sis.table_responses tr " +
-           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id " + 
+           " WHERE p.proj_id = aex.proj_id AND q.safe_id = sa.safe_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
            " AND sa.safe_code='G' AND aex.adex_id=" + codigoReporte + " ORDER BY sa.safe_code,q.ques_id,q.ques_question_order" ;
  
 		resultado = (List<Object[]>)consultaNativa(sql);

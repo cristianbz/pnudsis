@@ -33,6 +33,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
 import ec.gob.ambiente.sis.bean.SeguimientoSalvaguardaBean;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
+import ec.gob.ambiente.sis.model.AdvanceSummary;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.Sectors;
 import ec.gob.ambiente.sis.model.TableResponses;
@@ -3784,6 +3785,7 @@ public class ResumenPDF {
 					tabla2A.addCell(datosTablaA);
 				}
 				document.add(tabla2A);
+//				agregaResumenSalvaguarda(document, "RESUMEN DE LA SALVAGUARDA ", seguimientoSalvaguardas.getAvanceResumenA(), fontContenido);
 			}
 			//SALVAGUARDA B
 			if(seguimientoSalvaguardas.isSalvaguardaB()){	
@@ -4618,6 +4620,7 @@ public class ResumenPDF {
 					tablaOPB.addCell(datosTablaB);
 				}
 				document.add(tablaOPB);
+//				agregaResumenSalvaguarda(document, "RESUMEN DE LA SALVAGUARDA B", seguimientoSalvaguardas.getAvanceResumenB(), fontContenido);
 			}
 			//SALVAGUARDA C
 			if(seguimientoSalvaguardas.isSalvaguardaC()){
@@ -5464,6 +5467,8 @@ public class ResumenPDF {
 					tablaOPC.addCell(datosTablaC);
 				}
 				document.add(tablaOPC);
+//				agregaResumenSalvaguarda(document, "RESUMEN DE LA SALVAGUARDA C", seguimientoSalvaguardas.getAvanceResumenC(), fontContenido);
+
 
 			}
 			//SALVAGUARDA D
@@ -5698,7 +5703,7 @@ public class ResumenPDF {
 					tablaOPD.addCell(datosTablaD);
 				}
 				document.add(tablaOPD);
-
+//				agregaResumenSalvaguarda(document, "RESUMEN DE LA SALVAGUARDA D", seguimientoSalvaguardas.getAvanceResumenD(), fontContenido);
 			}	
 
 			//SALVAGUARDA E
@@ -8016,6 +8021,7 @@ public class ResumenPDF {
 					tablaOPE.addCell(datosTablaE);
 				}
 				document.add(tablaOPE);
+//				agregaResumenSalvaguarda(document, "RESUMEN DE LA SALVAGUARDA E", seguimientoSalvaguardas.getAvanceResumenE(), fontContenido);
 			}	
 			//SALVAGUARDA F
 
@@ -8454,6 +8460,8 @@ public class ResumenPDF {
 					tablaOPF.addCell(datosTablaF);
 				}
 				document.add(tablaOPF);
+//				agregaResumenSalvaguarda(document, "RESUMEN DE LA SALVAGUARDA F", seguimientoSalvaguardas.getAvanceResumenF(), fontContenido);
+
 			}
 			//SALVAGUARDA G
 
@@ -9048,35 +9056,11 @@ public class ResumenPDF {
 					tablaOPG.addCell(datosTablaG);
 				}
 				document.add(tablaOPG);
-
-				Paragraph resumenEjecutivo = new Paragraph();
-				resumenEjecutivo.add(new Phrase("RESUMEN EJECUTIVO", fontTitulos));
-				resumenEjecutivo.add(new Phrase(Chunk.NEWLINE));
-				resumenEjecutivo.add(new Phrase(Chunk.NEWLINE));
-				document.add(resumenEjecutivo);
-
-				PdfPTable tablaRE = new PdfPTable(new float[] { 10});
-				tablaRE.setWidthPercentage(100);
-				tablaRE.setHorizontalAlignment(Element.ALIGN_LEFT);
-				tablaRE.getDefaultCell().setPadding(3);
-				tablaRE.getDefaultCell().setUseAscender(true);
-				tablaRE.getDefaultCell().setUseDescender(true);
-				tablaRE.getDefaultCell().setBorderColor(BaseColor.BLACK);				
-				tablaRE.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-				
-				datosTablaG=new Paragraph();
-				datosTablaG.add(new Phrase(seguimientoSalvaguardas.getAdvanceExecutionSafeguards().getAdexExecutiveSummary(),fontContenidoTablas ));
-				tablaRE.addCell(datosTablaG);
-				document.add(tablaRE);
-
+//				agregaResumenSalvaguarda(document, "RESUMEN DE LA SALVAGUARDA G", seguimientoSalvaguardas.getAvanceResumenG(), fontContenido);
 			}
-
 			Paragraph saltoLinea=new Paragraph();
 			saltoLinea.add(new Phrase(Chunk.NEWLINE));
-
 			document.add(saltoLinea);
-
-
 			document.close();
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
@@ -9343,8 +9327,6 @@ public class ResumenPDF {
 				tabla3.addCell(datosTabla3);
 			}
 			document.add(tabla3);
-			
-			
 			preguntas = new Paragraph();
 			preguntas.add(new Phrase(Chunk.NEWLINE));
 			preguntas.add(new Phrase(Chunk.NEWLINE));
@@ -9519,19 +9501,12 @@ public class ResumenPDF {
 				tabla7.addCell(datosTabla7);
 				datosTabla7=new Paragraph();
 				datosTabla7.add(new Phrase(genero.getTareColumnFour() ,fontContenidoTablas));
-				tabla7.addCell(datosTabla7);
-				
+				tabla7.addCell(datosTabla7);				
 			}
 			document.add(tabla7);
-			
-			
-			
 			Paragraph saltoLinea=new Paragraph();
 			saltoLinea.add(new Phrase(Chunk.NEWLINE));
-
 			document.add(saltoLinea);
-
-
 			document.close();
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
@@ -9549,8 +9524,19 @@ public class ResumenPDF {
 		} 
 
 	}
-
 	
-		
+	public static void agregaResumenSalvaguarda(Document document, String resumen, AdvanceSummary avance, Font fuente ){
+		try {
+			Paragraph resumenSalvaguarda = new Paragraph();
+			resumenSalvaguarda.add(new Phrase(Chunk.NEWLINE));	
+			resumenSalvaguarda.add(new Phrase(resumen, fuente));
+			resumenSalvaguarda.add(new Phrase(Chunk.NEWLINE));	
+			resumenSalvaguarda.add(new Phrase(avance.getAdsuAdvance(),fuente));			
+			document.add(resumenSalvaguarda);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
 

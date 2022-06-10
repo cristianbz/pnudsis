@@ -142,6 +142,12 @@ public class AdvanceExecutionSafeguards {
 	
 	@Getter
 	@Setter
+	@OneToMany(mappedBy = "advanceExecutionSafeguards", fetch = FetchType.LAZY)
+	private List<AdvanceSummary> advanceSummaryList;
+
+	
+	@Getter
+	@Setter
 	@JoinColumn(name = "proj_id")
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Projects projects;

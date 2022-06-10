@@ -17,6 +17,7 @@ import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsSafeguards;
 import ec.gob.ambiente.sigma.model.Safeguards;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
+import ec.gob.ambiente.sis.model.AdvanceSummary;
 import ec.gob.ambiente.sis.model.Catalogs;
 import ec.gob.ambiente.sis.model.ProjectQuestions;
 import ec.gob.ambiente.sis.model.Questions;
@@ -83,6 +84,33 @@ public class SeguimientoSalvaguardaBean  implements Serializable{
 	@Setter
 	@Getter
 	private boolean esNuevoRegistroTbl81;
+	
+	@Setter
+	@Getter
+	private AdvanceSummary avanceResumenA;
+	@Setter
+	@Getter
+	private AdvanceSummary avanceResumenB;
+	@Setter
+	@Getter
+	private AdvanceSummary avanceResumenC;
+	@Setter
+	@Getter
+	private AdvanceSummary avanceResumenD;
+	@Setter
+	@Getter
+	private AdvanceSummary avanceResumenE;
+	@Setter
+	@Getter
+	private AdvanceSummary avanceResumenF;
+	@Setter
+	@Getter
+	private AdvanceSummary avanceResumenG;
+	
+	@Getter
+	@Setter
+	private List<AdvanceSummary> listaAvanceResumen;
+
 	
 	@Getter
 	@Setter

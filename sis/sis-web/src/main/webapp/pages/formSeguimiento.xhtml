@@ -58,7 +58,7 @@
 					<p:commandButton value="#{botones['aceptar']}"  
 						actionListener="#{seguimientoSalvaguardaController.finalizarReporteSalvaguardas}"
 						update="@form"	partialSubmit="true" oncomplete="PF('dlgPresentado').hide();" 
-							process="@this :form:panelsalvaguarda  :form:idResumenEjecutivo panelsalvaguarda" icon="#{botones['icono.check']}" />	
+							process="@this :form:panelsalvaguarda  panelsalvaguarda" icon="#{botones['icono.check']}" />	
 					<p:commandButton value="#{botones['cancelar']}" process="@this" oncomplete="PF('dlgPresentado').hide();" icon="#{botones['icono.cancelar']}"/>
 				</h:panelGrid>
 			</center>
@@ -555,23 +555,12 @@
 			hideEffect="fade" modal="true" appendTo="@(body)"
 			header="#{titulos['finalizarReporte']}" width="550"
 			closable="false" resizable="false">			
-			<p:outputLabel value="#{etiquetas['finReporteSeguimiento']}"/>
-			<h:panelGrid id="contenidoResumenEjecutivo">
-				<p:outputLabel value="#{etiquetas['resumenEjecutivo']}" />
-				<p:inputTextarea counter="resumenExecutive" id="idResumenEjecutivo"  
-					value="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexExecutiveSummary}"
-					counterTemplate="{0} caracteres restantes." maxlength="5000"
-					cols="60" rows="9">
-					<p:ajax process="@this "
-						event="blur"  />
-				</p:inputTextarea>
-				<h:outputLabel id="resumenExecutive" class="p-d-block" />
-			</h:panelGrid>
+			<p:outputLabel value="#{etiquetas['finReporteSeguimiento']}"/>			
 			<h:panelGrid columns="2" style="margin:0 auto;">
 					<p:commandButton value="#{botones['grabar']}" update="@form"	partialSubmit="true"					
 						action="#{seguimientoSalvaguardaController.finalizarReporteSalvaguardas}"
 						oncomplete="PF('dlgFinalizarReporteSalvaguarda').hide();" 
-						process="@this :form:panelsalvaguarda  :form:idResumenEjecutivo panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+						process="@this :form:panelsalvaguarda  panelsalvaguarda" icon="#{botones['icono.grabar']}" />
 					<p:commandButton icon="#{botones['icono.cancelar']}"
 						value="#{botones['cancelar']}"
 						oncomplete="PF('dlgFinalizarReporteSalvaguarda').hide();" process="@this" />
@@ -968,7 +957,7 @@
 					id="btngrabar" onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
 					oncomplete="PF('dlgGrabaReporteA').hide(); PF('dlgEnProc').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this :form:salvaguardas:tabSalvaguardaA" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}" 
 					oncomplete="PF('dlgGrabaReporteA').hide(); " process="@this" />
@@ -1845,7 +1834,7 @@
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaB}"
 					oncomplete="PF('dlgGrabaReporteB').hide(); PF('dlgEnProc').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this :form:salvaguardas:tabSalvaguardaB" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgGrabaReporteB').hide();" process="@this" />
@@ -1864,7 +1853,7 @@
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaC}"
 					oncomplete="PF('dlgGrabaReporteC').hide(); PF('dlgEnProc').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this :form:salvaguardas:tabSalvaguardaC" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgGrabaReporteC').hide();" process="@this" />
@@ -1882,7 +1871,7 @@
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaD}"
 					oncomplete="PF('dlgGrabaReporteD').hide(); PF('dlgEnProc').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this :form:salvaguardas:tabSalvaguardaD" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgGrabaReporteD').hide();" process="@this" />
@@ -1900,7 +1889,7 @@
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaE}"
 					oncomplete="PF('dlgGrabaReporteE').hide(); PF('dlgEnProc').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this :form:salvaguardas:tabSalvaguardaE" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgGrabaReporteE').hide();" process="@this" />
@@ -1919,7 +1908,7 @@
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaF}"
 					oncomplete="PF('dlgGrabaReporteF').hide(); PF('dlgEnProc').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this :form:salvaguardas:tabSalvaguardaF" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgGrabaReporteF').hide();" process="@this" />
@@ -1936,7 +1925,7 @@
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaG}"
 					oncomplete="PF('dlgGrabaReporteG').hide(); PF('dlgEnProc').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this :form:salvaguardas:tabSalvaguardaG" icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgGrabaReporteG').hide();" process="@this" />
@@ -2005,7 +1994,7 @@
 							value="#{botones['volverBusqueda']}"
 							icon="#{botones['icono.home']}" update="@form" 
 							actionListener="#{seguimientoSalvaguardaController.volverBuscarProyectos}"
-							partialSubmit="true" process="@this panelsalvaguarda :form:buscaProyectos:tablaReportados" />
+							partialSubmit="true" process="@this  :form:buscaProyectos:tablaReportados" />
 					</h:panelGrid>
 				</p:outputPanel>
 				<br />	
@@ -2042,7 +2031,7 @@
 						styleClass="fondoColorSigma"  activeIndex="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tabActual}" >
 						<p:ajax event="tabChange" listener="#{seguimientoSalvaguardaController.tabChange}" process=":form:salvaguardas" update=":form:salvaguardas"/>
 						<!-- SALVAGUARDA A -->
-						<p:tab title="#{titulos['salvaguardaA']}" 
+						<p:tab title="#{titulos['salvaguardaA']}" id="tabSalvaguardaA"
 							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaA}">
 							<div class="ui-fluid p-formgrid p-grid">
 
@@ -2615,6 +2604,21 @@
 
 							</div>							
 							<br/>
+							<!-- 
+							<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (A)" style="font-weight:bold;"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+											id="resumenA" counter="displayA" counterTemplate="{0} caracteres restantes" autoResize="false"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenA.adsuAdvance}" maxlength="2000">
+										</p:inputTextarea>
+										<p:outputLabel id="displayA"/>
+										<p:message for="resumenA"/>
+									</div>
+							</div>		
+							 -->
 							
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto" 
@@ -2623,16 +2627,16 @@
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
 										/>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto" 
-										icon="#{botones['icono.grabar']}" process="@this "
+										icon="#{botones['icono.grabar']}" process="@this :form:salvaguardas:tabSalvaguardaA"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(1)}"
-										update=" :form:growl"
+										update=" :form:growl :form:salvaguardas"
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										/>
 								<p:commandButton value="#{botones['siguiente']}" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio'); " 
-										icon="#{botones['icono.siguiente']}" process="@this :form:buscaProyectos:panelDatosProyecto :form:salvaguardas" styleClass="botonRegistroProyecto"
+										icon="#{botones['icono.siguiente']}" process="@this :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaA" styleClass="botonRegistroProyecto"
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(1)}" onstart="PF('dlgEnProc').show()"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}" 						
-										update=":form:salvaguardas :form:growl :form:buscaProyectos"
+										update=":form:salvaguardas  :form:growl :form:buscaProyectos"
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
@@ -2659,7 +2663,7 @@
 						
 						<!-- SALVAGUARDA B -->
 						
-						<p:tab title="#{titulos['salvaguardaB']}"
+						<p:tab title="#{titulos['salvaguardaB']}" id="tabSalvaguardaB"
 							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaB}">
 							
 							<div class="ui-fluid p-formgrid p-grid">
@@ -5670,25 +5674,39 @@
 								
 							</div>							
 							<br /> 
+							<!-- 
+							<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (B)" style="font-weight:bold;"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+											id="resumenB" counter="displayB" counterTemplate="{0} caracteres restantes" autoResize="false"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenB.adsuAdvance}" maxlength="2000">
+										</p:inputTextarea>
+										<p:outputLabel id="displayB"/>
+										<p:message for="resumenB"/>
+									</div>
+							</div>  -->
 							<br/>			
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.atras']}" process="@this  :form:panelsalvaguarda"
+										icon="#{botones['icono.atras']}" process="@this  "
 										update=" :form:growl :form:panelsalvaguarda"	oncomplete="goToAnchor('inicio')"														
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"					
 										/>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.grabar']}" process="@this  :form:panelsalvaguarda"
-										update=" :form:growl :form:panelsalvaguarda"															
+										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaB"
+										update=" :form:growl :form:salvaguardas"															
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(2)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas"
+										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaB"
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(2)}" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
-										update=" :form:growl :form:panelsalvaguarda :form:salvaguardas :form:buscaProyectos"															
+										update=" :form:growl  :form:salvaguardas :form:buscaProyectos"															
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
@@ -5735,7 +5753,7 @@
 						
 						<!-- SALVAGUARDA C -->
 						
-						<p:tab title="#{titulos['salvaguardaC']}"
+						<p:tab title="#{titulos['salvaguardaC']}" id="tabSalvaguardaC"
 							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaC}">
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel value="#{titulos['abordajeSalvaguardaC']}"
@@ -8625,23 +8643,36 @@
 									</h:panelGrid>
 								
 							</div>
-							<br/> 
+							<br/> <!-- 
+							<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (C)" style="font-weight:bold;"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+											id="resumenC" counter="displayC" counterTemplate="{0} caracteres restantes" autoResize="false"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenC.adsuAdvance}" maxlength="2000">
+										</p:inputTextarea>
+										<p:outputLabel id="displayC"/>
+										<p:message for="resumenC"/>
+									</div>
+							</div>   -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.atras']}" process="@this  :form:salvaguardas"										
+										icon="#{botones['icono.atras']}" process="@this  "										
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
 										/>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.grabar']}" process="@this  :form:panelsalvaguarda"
+										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaC"
 										update=" :form:growl :form:panelsalvaguarda"															
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(3)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas"	
+										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaC"	
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(3)}"	oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"								
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
 										update=" :form:growl :form:salvaguardas :form:buscaProyectos"
@@ -8691,7 +8722,7 @@
 						
 						<!-- SALVAGUARDA D --> 
 						
-						<p:tab title="#{titulos['salvaguardaD']}"
+						<p:tab title="#{titulos['salvaguardaD']}" id="tabSalvaguardaD"
 							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaD}">
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel value="#{titulos['abordajeSalvaguardaD']}"
@@ -9488,23 +9519,36 @@
 									</h:panelGrid>
 
 							</div>
-							<br/> 
+							<br/> <!-- 
+							<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (D)" style="font-weight:bold;"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+											id="resumenD" counter="displayD" counterTemplate="{0} caracteres restantes" autoResize="false"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenD.adsuAdvance}" maxlength="2000">
+										</p:inputTextarea>
+										<p:outputLabel id="displayD"/>
+										<p:message for="resumenD"/>
+									</div>
+							</div>   -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.atras']}" process="@this  :form:salvaguardas"										
+										icon="#{botones['icono.atras']}" process="@this  "										
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
 										/>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.grabar']}" process="@this  :form:panelsalvaguarda"
+										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaD"
 										update=" :form:growl :form:panelsalvaguarda"															
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(4)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas"	
+										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaD"	
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(4)}"	oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"							
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
 										update=" :form:growl :form:salvaguardas :form:buscaProyectos" 
@@ -9553,7 +9597,7 @@
 						
 						<!-- SALVAGUARDA E -->
 						
-						<p:tab title="#{titulos['salvaguardaE']}"
+						<p:tab title="#{titulos['salvaguardaE']}" id="tabSalvaguardaE"
 							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaE}">
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel value="#{titulos['abordajeSalvaguardaE']}"
@@ -13238,23 +13282,36 @@
 									</h:panelGrid>
 								
 							</div>
-							<br/> 
+							<br/> <!-- 
+							<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (E)" style="font-weight:bold;"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+											id="resumenE" counter="displayE" counterTemplate="{0} caracteres restantes" autoResize="false"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenE.adsuAdvance}" maxlength="2000">
+										</p:inputTextarea>
+										<p:outputLabel id="displayE"/>
+										<p:message for="resumenE"/>
+									</div>
+							</div>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.atras']}" process="@this  :form:salvaguardas"										
+										icon="#{botones['icono.atras']}" process="@this  "										
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
 										/>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.grabar']}" process="@this  :form:panelsalvaguarda"
-										update=" :form:growl :form:panelsalvaguarda"															
+										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaE"
+										update=" :form:growl :form:salvaguardas"															
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(5)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas"	
+										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaE"	
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(5)}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"								
 										update=" :form:growl :form:salvaguardas :form:buscaProyectos" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
@@ -13303,7 +13360,7 @@
 						</p:tab>
 						<!-- SALVAGUARDA F -->
 						
-						<p:tab title="#{titulos['salvaguardaF']}"
+						<p:tab title="#{titulos['salvaguardaF']}" id="tabSalvaguardaF"
 							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaF}">
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel value="#{titulos['abordajeSalvaguardaF']}"
@@ -14856,23 +14913,36 @@
 									</h:panelGrid>
 
 							</div>
-							<br/> 
+							<br/> <!-- 
+							<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (F)" style="font-weight:bold;"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+											id="resumenF" counter="displayF" counterTemplate="{0} caracteres restantes" autoResize="false"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenF.adsuAdvance}" maxlength="2000">
+										</p:inputTextarea>
+										<p:outputLabel id="displayF"/>
+										<p:message for="resumenF"/>
+									</div>
+							</div>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.atras']}" process="@this  :form:salvaguardas"										
+										icon="#{botones['icono.atras']}" process="@this  "										
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}" 
 								/>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.grabar']}" process="@this  :form:panelsalvaguarda"
-										update=" :form:growl :form:panelsalvaguarda"															
+										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaF"
+										update=" :form:growl :form:salvaguardas"															
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(6)}"					
 								/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas"		
+										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaF"		
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(6)}"							
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
 										update=" :form:growl :form:salvaguardas" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
@@ -14922,7 +14992,7 @@
 						
 						<!-- SALVAGUARDA G -->
 						
-						<p:tab title="#{titulos['salvaguardaG']}"
+						<p:tab title="#{titulos['salvaguardaG']}" id="tabSalvaguardaG"
 							rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.salvaguardaG}">
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel value="#{titulos['abordajeSalvaguardaG']}"
@@ -17063,24 +17133,37 @@
 									
 									
 							</div>
-							<br/> 
+							<br/> <!-- 
+							<div class="ui-fluid p-formgrid p-grid">																									
+									<div class="p-field p-col-12 p-md-12">
+										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (G)" style="font-weight:bold;"/>
+									</div>
+									<div class="p-field p-col-12 p-md-12">
+										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+											id="resumenG" counter="displayG" counterTemplate="{0} caracteres restantes" autoResize="false"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenG.adsuAdvance}" maxlength="2000">
+										</p:inputTextarea>
+										<p:outputLabel id="displayG"/>
+										<p:message for="resumenG"/>
+									</div>
+							</div>  -->
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.atras']}" process="@this  :form:panelsalvaguarda"										
+										icon="#{botones['icono.atras']}" process="@this  "										
 										update=" :form:growl :form:panelsalvaguarda"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}" oncomplete="goToAnchor('inicio')"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
 										/>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.grabar']}" process="@this  :form:panelsalvaguarda"
-										update=" :form:growl :form:panelsalvaguarda"															
+										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaG"
+										update=" :form:growl :form:salvaguardas"															
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"										
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(7)}"					
 										/>
 								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
-										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas"										
-										update=" :form:growl :form:buscaProyectos" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
+										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaG"										
+										update=" :form:growl :form:buscaProyectos :form:salvaguardas" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
 										/>
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"

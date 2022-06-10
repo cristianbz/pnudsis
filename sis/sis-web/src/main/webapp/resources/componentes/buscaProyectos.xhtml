@@ -802,7 +802,9 @@
 										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
 									</p:commandButton>	
 									 
-									<p:commandButton rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero}" ajax="false" process="@this" icon="#{botones['icono.pdf']}" style="background-color:#9dce2c;" action="#{cc.attrs.componenteBuscaProyectos.generarPdf}">
+									<p:commandButton rendered="#{not cc.attrs.componenteBuscaProyectos.esReporteGenero}" ajax="false" process="@this" 
+										title="#{tooltip['pdfAvanceEjecucion']}"
+										icon="#{botones['icono.pdf']}" style="background-color:#9dce2c;" action="#{cc.attrs.componenteBuscaProyectos.generarPdf}">
 										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
 									</p:commandButton>   																
 								</p:column>

@@ -5,6 +5,7 @@
 package ec.gob.ambiente.sis.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -13,19 +14,19 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.attach.impl.layout.HtmlPageBreak;
 import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.EncryptionConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.WriterProperties;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.IBlockElement;
@@ -77,12 +78,18 @@ public class GeneradorPdfHtml {
 	}
 	
 	public byte[] crearDocumentoPdf(String html) throws IOException {
+		html = html.replace("-webkit-xxx-large", "50").replace("o:p>", "p>");
+		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String url = ctx.getRealPath("/") + File.separator +  "resources"+ File.separator +  "images"+ File.separator;
 		ConverterProperties properties = new ConverterProperties();
+		properties.setBaseUri(url);
 		ByteArrayOutputStream file = new ByteArrayOutputStream();
-		PdfWriter writer = new PdfWriter(file);
+		PdfWriter writer = new PdfWriter(file);		
 		PdfDocument pdf = new PdfDocument(writer);
-		pdf.setDefaultPageSize(PageSize.A4);
-		Document document = HtmlConverter.convertToDocument(html, pdf, properties);
+		pdf.setDefaultPageSize(PageSize.A4.rotate());
+		CabeceraPiePaginaPdf piePagina = new CabeceraPiePaginaPdf(pdf);
+		pdf.addEventHandler(PdfDocumentEvent.END_PAGE, piePagina);
+		Document document = HtmlConverter.convertToDocument(html, pdf, properties);		
 		document.setStrokeWidth(80);
 		document.close();
 
