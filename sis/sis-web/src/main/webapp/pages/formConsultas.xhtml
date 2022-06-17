@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/primeflex/primeflex.css" />
+
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+
+	<script>
+	function goToAnchor(nombre) {
+		
+		window.location.hash = "";
+		window.location.hash = nombre;
+	}
+	</script>
+</h:head>
+<body>
+	<f:event listener="#{loginController.validarSesion()}"
+		type="preRenderView" />
+	<h:form prependId="true" id="form">
+		<p:growl id="growl" life="3000" showDetail="true" />
+
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-3"></div>
+			<div class="p-field p-col-12 p-md-6">
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-3">
+						<p:outputLabel value="#{etiquetas['tipoReporte']}" />
+					</div>
+					<div class="p-field p-col-12 p-md-9">
+						<p:selectOneRadio
+							value="#{reportesController.reportesBean.tipoCargaInformacion}"
+							unselectable="false">
+							<f:selectItem itemLabel="#{etiquetas['porSalvaguarda']}"
+								itemValue="1" />
+							<f:selectItem itemLabel="#{etiquetas['porProyecto']}"
+								itemValue="2" />
+							<p:ajax event="change" process="@this" update="panelSalvaguarda panelProyecto"/>
+						</p:selectOneRadio>
+					</div>
+				</div>
+				<p:outputPanel id="panelSalvaguarda">
+					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==1}" header="#{titulos['resumenAbordajeSalvaguarda']}">
+						<div class="ui-fluid p-formgrid p-grid">
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{etiquetas['anio']}" />
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:inputNumber decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" id="anio"
+									value="#{reportesController.reportesBean.anioReporte}" />
+								<p:message for="anio"/>	
+							</div>
+							<div class="p-field p-col-12 p-md-6"></div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{etiquetas['salvaguarda']}" />
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" id="salvaguarda"
+									value="#{reportesController.reportesBean.salvaguardaSeleccionada}">
+									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
+										itemValue="#{null}" />
+									<f:selectItems
+										value="#{reportesController.reportesBean.listaSalvaguardas}"
+										var="saf" itemLabel="#{saf.safeCode}" itemValue="#{saf}" />
+								</p:selectOneMenu>
+								<p:message for="salvaguarda"/>
+							</div>
+							<div class="p-field p-col-12 p-md-6"></div>
+
+						</div>
+					</p:panel>
+				</p:outputPanel>
+				<p:outputPanel id="panelProyecto">
+					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==2}" header="#{titulos['resumenAbordajeProyecto']}">
+						<div class="ui-fluid p-formgrid p-grid">
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{etiquetas['proyectos']}" />
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:selectOneMenu value="#{reportesController.reportesBean.proyectoSeleccionado}" var="pro" id="proyecto" 
+								requiredMessage="#{mensajes['campoRequerido']}" required="true"								
+								converter="selectOneMenuConverter" panelStyle="width:420px" style="width:400px;"
+								effect="fade">
+									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}" noSelectionOption="true"/>
+									<f:selectItems value="#{reportesController.reportesBean.listaProyectos}" var="p" itemLabel="#{p.projShortName}" itemValue="#{p}"/>									
+									<p:column width="80" headerText="#{etiquetas['proyecto']}">
+										<h:outputText value="#{pro.projTitle}" />
+									</p:column>
+									<p:column width="80" headerText="#{etiquetas['nombreCorto']}">
+										<h:outputText value="#{pro.projShortName}" />
+									</p:column>
+								</p:selectOneMenu>
+								<p:message for="proyecto"/>
+							</div>
+							<div class="p-field p-col-12 p-md-6"></div>
+
+						</div>
+					</p:panel>
+				</p:outputPanel>
+
+			</div>
+			<div class="p-field p-col-12 p-md-3"></div>
+		</div>
+
+	</h:form>
+</body>
+</html>

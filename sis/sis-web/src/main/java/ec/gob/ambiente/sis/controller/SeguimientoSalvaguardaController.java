@@ -2260,9 +2260,9 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143().setTareCodeComponent(getSeguimientoSalvaguardaBean().getCodigoComponente());
 				if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143().getTareId()==null){
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143().setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
-					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasB().get(22));	
+					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasB().get(20));	
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143().setTareStatus(true);
-					getTableResponsesFacade().agregaRespuestaTabla(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(10));
+					getTableResponsesFacade().agregaRespuestaTabla(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9));
 					getSeguimientoSalvaguardaBean().getTablaSalvaguardaB143().add(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143());
 				}else{
 					getTableResponsesFacade().edit(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB143());
@@ -2307,7 +2307,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				
 				if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().getTareId()==null){
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
-					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasB().get(18));
+					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasB().get(16));
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().setTareStatus(true);
 
 					if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().getTareColumnNumberFour() == CODIGO_IDENTIFICACION_INDIGENA){
@@ -2315,7 +2315,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().setTareGenericoCuatro(OperacionesCatalogo.ubicaDescripcionCatalogo(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().getTareColumnNumberFive(), getAplicacionBean().getListaPueblosNacionalidades()));	
 					}
 
-					getTableResponsesFacade().agregaRespuestaTabla(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(8));
+					getTableResponsesFacade().agregaRespuestaTabla(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7));
 					getSeguimientoSalvaguardaBean().getTablaSalvaguardaB121().add(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121());
 				}else{
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB121().setTareColumnTree(String.valueOf(getSeguimientoSalvaguardaBean().getCodigoAutoIdentificacion()));
@@ -2357,9 +2357,9 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131().setTareGenerico(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131().getTareAnotherCatalog());
 				if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131().getTareId()==null){
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131().setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
-					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasB().get(20));		
+					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasB().get(18));		
 					getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131().setTareStatus(true);
-					getTableResponsesFacade().agregaRespuestaTabla(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9));
+					getTableResponsesFacade().agregaRespuestaTabla(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131(), getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(8));
 					getSeguimientoSalvaguardaBean().getTablaSalvaguardaB131().add(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131());
 				}else{
 					getTableResponsesFacade().edit(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasB131());
@@ -4375,15 +4375,15 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			}
 			
-			getSeguimientoSalvaguardaBean().setTablaSalvaguardaB11(OperacionesListas.filtrar(listaSalvaguardaB, 23));
-			List<TableResponses> tabla = new ArrayList<>();
-			tabla = OperacionesListas.filtrar(listaSalvaguardaB, 9);
-			Collections.sort(tabla, new Comparator<TableResponses>(){
-				@Override
-				public int compare(TableResponses o1, TableResponses o2) {
-					return o1.getTareColumnNumberThree().compareTo(o2.getTareColumnNumberThree());
-				}
-			});
+//			getSeguimientoSalvaguardaBean().setTablaSalvaguardaB11(OperacionesListas.filtrar(listaSalvaguardaB, 23));
+//			List<TableResponses> tabla = new ArrayList<>();
+//			tabla = OperacionesListas.filtrar(listaSalvaguardaB, 9);
+//			Collections.sort(tabla, new Comparator<TableResponses>(){
+//				@Override
+//				public int compare(TableResponses o1, TableResponses o2) {
+//					return o1.getTareColumnNumberThree().compareTo(o2.getTareColumnNumberThree());
+//				}
+//			});
 			
 //			preparaDatosB51(tabla);
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaB61(OperacionesListas.filtrar(listaSalvaguardaB, 11));
@@ -6138,6 +6138,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				}
 			}
 		}
+		
 
 	}
 	public boolean validaSiguienteTab(int salvaguarda){
@@ -6436,25 +6437,25 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(6).isVaanYesnoAnswerValue()==false){
 				Mensaje.verDialogo("dlgEliminaDatosTabla");
 			}
-		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B11")){
-			if (validaDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB11()) 
-					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7).isVaanYesnoAnswerValue()==false){
-				Mensaje.verDialogo("dlgEliminaDatosTabla");
-			}
+//		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B11")){
+//			if (validaDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB11()) 
+//					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7).isVaanYesnoAnswerValue()==false){
+//				Mensaje.verDialogo("dlgEliminaDatosTabla");
+//			}
 		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B121")){
 			if (validaDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB121()) 
-					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(8).isVaanYesnoAnswerValue()==false){
+					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7).isVaanYesnoAnswerValue()==false){
 				Mensaje.verDialogo("dlgEliminaDatosTabla");
 			}
 		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B131")){
 			if (validaDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB131()) 
-					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9).isVaanYesnoAnswerValue()==false){
+					&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(8).isVaanYesnoAnswerValue()==false){
 				Mensaje.verDialogo("dlgEliminaDatosTabla");
 			}
 		}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B141")){
 			try{
 				if(validaDatosTabla(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB143())
-						&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(10).isVaanYesnoAnswerValue()==false){
+						&& getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9).isVaanYesnoAnswerValue()==false){
 					Mensaje.verDialogo("dlgEliminaDatosTabla");
 				}
 			}catch(Exception e){
@@ -6838,23 +6839,23 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().setTablaSalvaguardaB102(new ArrayList<>());
 				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
 				Mensaje.actualizarComponente(":form:salvaguardas:panelTablaB102");
-			}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B11")){
-				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB11(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7));
-				getSeguimientoSalvaguardaBean().setTablaSalvaguardaB11(new ArrayList<>());
-				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
-				Mensaje.actualizarComponente(":form:salvaguardas:panelTabla11B");
+//			}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B11")){
+//				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB11(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7));
+//				getSeguimientoSalvaguardaBean().setTablaSalvaguardaB11(new ArrayList<>());
+//				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
+//				Mensaje.actualizarComponente(":form:salvaguardas:panelTabla11B");
 			}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B121")){				
-				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB121(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(8));
+				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB121(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7));
 				getSeguimientoSalvaguardaBean().setTablaSalvaguardaB121(new ArrayList<>());				
 				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
 				Mensaje.actualizarComponente(":form:salvaguardas:panelTablaB121");				
 			}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B131")){				
-				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB131(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9));
+				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB131(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(8));
 				getSeguimientoSalvaguardaBean().setTablaSalvaguardaB131(new ArrayList<>());				
 				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
 				Mensaje.actualizarComponente(":form:salvaguardas:panelTablaB131");				
 			}else if(getSeguimientoSalvaguardaBean().getCodigoTablaDatos().equals("B141")){
-				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB143(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(10));
+				getTableResponsesFacade().eliminarDatosTablaActualizaValueAnswer(getSeguimientoSalvaguardaBean().getTablaSalvaguardaB143(),getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9));
 				getSeguimientoSalvaguardaBean().setCodigoTablaDatos("");
 				getSeguimientoSalvaguardaBean().setTablaSalvaguardaB143(new ArrayList<>());
 				Mensaje.actualizarComponente(":form:salvaguardas:panelTablaB143");
@@ -7872,30 +7873,30 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB81().size()==0){
 			informacionCompleta=false;
 			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(4, true);
-		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(5).isVaanYesnoAnswerValue() &&
+		}else if(!getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(5).isVaanYesnoAnswerValue() &&
 				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB9().size()==0){
-			informacionCompleta=true;
+			informacionCompleta=false;
 			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(5, true);
 		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(6).isVaanYesnoAnswerValue() &&
 				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB102().size()==0 ){
 			informacionCompleta=false;
 			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(6, true);
-		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7).isVaanYesnoAnswerValue() && 
-				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB11().size()==0){
+//		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7).isVaanYesnoAnswerValue() && 
+//				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB11().size()==0){
+//			informacionCompleta=false;
+//			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(7, true);
+		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(7).isVaanYesnoAnswerValue() &&
+				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB121().size()==0 ){
 			informacionCompleta=false;
 			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(7, true);
 		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(8).isVaanYesnoAnswerValue() &&
-				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB121().size()==0 ){
-			informacionCompleta=false;
-			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(8, true);
-		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9).isVaanYesnoAnswerValue() &&
 				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB131().size()==0 ){
 			informacionCompleta=false;
-			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(9, true);
-		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(10).isVaanYesnoAnswerValue() && (
+			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(8, true);
+		}else if(getSeguimientoSalvaguardaBean().getListaValoresRespuestasB().get(9).isVaanYesnoAnswerValue() && (
 				getSeguimientoSalvaguardaBean().getTablaSalvaguardaB143().size()==0)){
 			informacionCompleta=false;
-			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(10, true);
+			getSeguimientoSalvaguardaBean().getMensajeRequeridosTablasB().set(9, true);
 		}
 
 
@@ -8869,7 +8870,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				recuperaResumenAvance();
 			}else{
 				Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,   "",getMensajesController().getPropiedad("error.fechaPeriodoReporte"));
-				Mensaje.actualizarComponente(":form:growl");
+//				Mensaje.actualizarComponente(":form:growl");
 			}
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaDatosProyectoSeleccionado " + ": ").append(e.getMessage()));
@@ -9659,5 +9660,31 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "eliminarCobeneficio " + ": ").append(e.getMessage()));
 		}		
+	}
+	public void nuevoRegistroInfoOpcional(int salvaguarda){
+		switch (salvaguarda){
+		case 1:
+			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasOPA(new TableResponses());
+			break;
+		case 2:
+			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasOPB(new TableResponses());
+			break;	
+		case 3:
+			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasOPC(new TableResponses());
+			break;	
+		case 4:
+			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasOPD(new TableResponses());
+			break;	
+		case 5:
+			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasOPE(new TableResponses());
+			break;	
+		case 6:
+			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasOPF(new TableResponses());
+			break;	
+		case 7:
+			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasOPG(new TableResponses());
+			break;	
+		}
+		
 	}
 }

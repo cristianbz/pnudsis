@@ -796,7 +796,7 @@
 									<p:commandButton actionListener="#{cc.attrs.componenteBuscaProyectos.buscaAvanceEjecucionDelProyectoReportado(avance)}" title="#{tooltip['visualizaInformacion']}"
 										onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();" disabled="#{loginBean.tipoRol==3 and avance.adexReportedStatus.equals('P')}"
 										process="@this" partialSubmit="true" update="@form" icon="#{botones['icono.checkcirculo']}"/>		
-									<p:commandButton icon="#{botones['icono.editar']}" process="@this" rendered="#{loginBean.tipoRol==4  or loginBean.tipoRol==2}" 
+									<p:commandButton icon="#{botones['icono.editar']}" process="@this" rendered="#{loginBean.tipoRol==4}" 
 										action="#{cc.attrs.componenteBuscaProyectos.mostrarDialogoActivarReporte}"
 										title="#{tooltip['activarReporte']}" disabled="#{avance.adexReportedStatus.equals('I') }">
 										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>

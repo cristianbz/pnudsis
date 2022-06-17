@@ -62,8 +62,12 @@ public class GenerarPdfResumen {
 		   "     <td width: 50%'>{P:proyecto} </td>\r\n" +
 		   " </tr>\r\n" +
 		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
-		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Socio implementador:</td>\r\n" +
+		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Socio Implementador:</td>\r\n" +
 		   "     <td>{P:socioImplementador} </td>\r\n" +
+		   " </tr>\r\n" +
+		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
+		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Socio Estratégico:</td>\r\n" +
+		   "     <td>{P:socioEstrategico} </td>\r\n" +
 		   " </tr>\r\n" +
 		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
 		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Con qué sector se identifica:</td>\r\n" +
@@ -86,8 +90,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 	     "{P:infoAdicionalA}\r\n" +
 	     "<br/>\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA A.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenA}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA A.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenA}</p>\r\n" +
 	     "<br/>\r\n" +
 	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA B</p>\r\n" +
 	     "<p class='preguntas'>{P:pregunta4B}</p>\r\n" +
@@ -136,8 +140,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 	     "{P:infoAdicionalB}\r\n" +
 	     "<br/>\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA B.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenB}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA B.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenB}</p>\r\n" +
 	     "<br/>\r\n" +
 	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA C</p>\r\n" +
 	     "<p class='preguntas'>{P:pregunta20C}</p>\r\n" +
@@ -179,8 +183,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 	     "{P:infoAdicionalC}\r\n" +	     
 	     "<br/>\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA C.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenC}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA C.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenC}</p>\r\n" +
 	     "<br/>\r\n" +
 	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA D</p>\r\n" +
 	     "<p class='preguntas'>{P:pregunta32D}</p>\r\n" +
@@ -194,8 +198,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 	     "{P:infoAdicionalD}\r\n" +	     
 	     "<br/>\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA D.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenD}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA D.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenD}</p>\r\n" +
 	     "<br/>\r\n" +
 	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA E</p>\r\n" +
 	     "<p class='preguntas'>{P:pregunta34E}</p>\r\n" +
@@ -315,8 +319,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +	     
 	     "{P:infoAdicionalE}\r\n" +
 	     "<br/>\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA E.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenE}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA E.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenE}</p>\r\n" +
 	     "<br/>\r\n" +
 	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA F</p>\r\n" +	     
 	     "<p class='preguntas'>{P:pregunta41F}</p>\r\n" +
@@ -342,8 +346,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +	     
 	     "{P:infoAdicionalF}\r\n" +
 	     "<br/>\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA F.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenF}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA F.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenF}</p>\r\n" +
 	     "<br/>\r\n" +
 	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA G</p>\r\n" +
 	     "<p class='preguntas'>{P:pregunta46G}</p>\r\n" +
@@ -376,8 +380,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>{P:respuesta513G}</p>\r\n" +
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +	     
 	     "{P:infoAdicionalG}\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA G.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenG}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA G.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenG}</p>\r\n" +
 	     "<br/>\r\n" +
 	     "<table  width='100%' style='margin: 0 auto;border-style: none;border-collapse: collapse;font-size:12px;font-family: sans-serif' border='0'>\r\n" +
 			"<tr>\r\n" +
@@ -387,40 +391,7 @@ public class GenerarPdfResumen {
 		"</body>\r\n" +
 			"</html>";
 	
-	public static final String REPORTE_RESUMEN_SALVAGUARDAA="<table  width='80%' style='margin: 0 auto;border-style: none;border-collapse: collapse;font-size:12px;font-family: sans-serif' border='0'>\r\n" +
-			"<tr>\r\n" +
-		    "    <td><img src='{P:logoEscudo}' width='150' height='55'></td>\r\n" +
-		    "   <td style='background-color: #ffffff; width: 30%'> </td>\r\n" +
-		     "   <td><img src='{P:logoMae}' width='300' height='55'> </td>\r\n" +    
-		     "</tr>\r\n" +
-			"<tr style='margin: 0 auto;border-style: none;border-collapse: collapse;font-size:12px;background-color: #0da5c4;border-color: #ffffff;font-family: sans-serif'>\r\n" +
-		    "    <td>Sistema de Información de Salvaguardas SIS</td>\r\n" +
-		     "   <td style='background-color: #ffffff; width: 30%'> </td>\r\n" +    
-		     "   <td>Resumen de las salvaguardas reportadas</td>\r\n" +        
-		    "</tr>\r\n" +
-		    "<tr >\r\n" +
-		     "   <td style='background-color: #ffffff'></td>\r\n" +
-		      "  <td style='background-color: #ffffff'> </td>    \r\n" +
-		      "  <td style='background-color: #ffffff'>{P:fecha}</td>\r\n" +        
-		    "</tr>\r\n" +
-		"</table>\r\n" +		
-		"<br/>\r\n" +		
-		"<table  width='80%' style='margin: 0 auto;border-style: solid;border-collapse: collapse;font-size:10px;font-family: sans-serif;background-color: #0da5c4;' border='0'>\r\n" +
-		 "   <tr style='height:3px;border-color: #ffffff;'>\r\n" +
-		  "      <td style='font-weight: bold;vertical-align: baseline;text-align:right;' width: 50%'>Título del Plan de implementación, Programa o Proyecto:</td>\r\n" +
-		   "     <td width: 50%'>{P:proyecto} </td>\r\n" +
-		   " </tr>\r\n" +
-		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
-		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Socio implementador:</td>\r\n" +
-		   "     <td>{P:socioImplementador} </td>\r\n" +
-		   " </tr>\r\n" +
-		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
-		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Con qué sector se identifica:</td>\r\n" +
-		   "     <td>{P:sectores} </td>\r\n" +
-		   " </tr>\r\n" +
-		"</table>\r\n" +
-		"<br/>\r\n" +	     
-	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA A</p>\r\n" +
+	public static final String REPORTE_RESUMEN_SALVAGUARDAA="<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA A</p>\r\n" +
 	     "<p class='preguntas'>{P:pregunta1}</p>\r\n" +
 	     "<p class='preguntas'>Marco Jurídico Internacional</p>\r\n" +
 	     "{P:tablaJuridicoInternacional}\r\n" + 
@@ -435,8 +406,8 @@ public class GenerarPdfResumen {
 	     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 	     "{P:infoAdicionalA}\r\n" +
 	     "<br/>\r\n" +
-//	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA A.</p>\r\n" +
-//	     "<p class='contenido'>{P:resumenA}</p>\r\n" +
+	     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA A.</p>\r\n" +
+	     "<p class='contenido'>{P:resumenA}</p>\r\n" +
 	     "<br/>\r\n";
 	
 	public static final String REPORTE_RESUMEN_SALVAGUARDAB="<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA B</p>\r\n" +
@@ -462,11 +433,12 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>{P:tabla81B}</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta9B}</p>\r\n" +
 		     "<p class='preguntas'>{P:siNo9B}</p>\r\n" +
+		     "<p class='preguntas'>{P:pregunta91B}</p>\r\n" +
 		     "<p class='preguntas'>{P:tabla9B}</p>\r\n" +
-		     "<p class='preguntas'>{P:pregunta10B}</p>\r\n" +
-		     "<p class='preguntas'>{P:siNo10B}</p>\r\n" +
-		     "<p class='preguntas'>{P:pregunta101B}</p>\r\n" +
-		     "<p class='preguntas'>{P:tabla101B}</p>\r\n" +
+//		     "<p class='preguntas'>{P:pregunta10B}</p>\r\n" +
+//		     "<p class='preguntas'>{P:siNo10B}</p>\r\n" +
+//		     "<p class='preguntas'>{P:pregunta101B}</p>\r\n" +
+//		     "<p class='preguntas'>{P:tabla101B}</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta11B}</p>\r\n" +
 		     "<p class='preguntas'>{P:siNo11B}</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta111B}</p>\r\n" +
@@ -486,8 +458,8 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 		     "{P:infoAdicionalB}\r\n" +
 		     "<br/>\r\n" +
-//		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA B.</p>\r\n" +
-//		     "<p class='contenido'>{P:resumenB}</p>\r\n" +
+		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA B.</p>\r\n" +
+		     "<p class='contenido'>{P:resumenB}</p>\r\n" +
 		     "<br/>\r\n";
 	
 	public static final String REPORTE_RESUMEN_SALVAGUARDAC="<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA C</p>\r\n" +
@@ -530,8 +502,8 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 		     "{P:infoAdicionalC}\r\n" +	     
 		     "<br/>\r\n" +
-//		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA C.</p>\r\n" +
-//		     "<p class='contenido'>{P:resumenC}</p>\r\n" +
+		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA C.</p>\r\n" +
+		     "<p class='contenido'>{P:resumenC}</p>\r\n" +
 		     "<br/>\r\n" ;
 	public static final String REPORTE_RESUMEN_SALVAGUARDAD="<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA D</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta32D}</p>\r\n" +
@@ -545,8 +517,8 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +
 		     "{P:infoAdicionalD}\r\n" +	     
 		     "<br/>\r\n" +
-//		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA D.</p>\r\n" +
-//		     "<p class='contenido'>{P:resumenD}</p>\r\n" +
+		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA D.</p>\r\n" +
+		     "<p class='contenido'>{P:resumenD}</p>\r\n" +
 		     "<br/>\r\n" ;
 	public static final String REPORTE_RESUMEN_SALVAGUARDAE="<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA E</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta34E}</p>\r\n" +
@@ -666,8 +638,8 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +	     
 		     "{P:infoAdicionalE}\r\n" +
 		     "<br/>\r\n" +
-//		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA E.</p>\r\n" +
-//		     "<p class='contenido'>{P:resumenE}</p>\r\n" +
+		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA E.</p>\r\n" +
+		     "<p class='contenido'>{P:resumenE}</p>\r\n" +
 		     "<br/>\r\n" ;
 	public static final String REPORTE_RESUMEN_SALVAGUARDAF=	     "<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA F</p>\r\n" +	     
 		     "<p class='preguntas'>{P:pregunta41F}</p>\r\n" +
@@ -693,8 +665,8 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +	     
 		     "{P:infoAdicionalF}\r\n" +
 		     "<br/>\r\n" +
-//		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA F.</p>\r\n" +
-//		     "<p class='contenido'>{P:resumenF}</p>\r\n" +
+		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA F.</p>\r\n" +
+		     "<p class='contenido'>{P:resumenF}</p>\r\n" +
 		     "<br/>\r\n";
 	public static final String REPORTE_RESUMEN_SALVAGUARDAG="<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA G</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta46G}</p>\r\n" +
@@ -727,8 +699,8 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>{P:respuesta513G}</p>\r\n" +
 		     "<p class='preguntas'>INFORMACION ADICIONAL OPCIONAL</p>\r\n" +	     
 		     "{P:infoAdicionalG}\r\n" +
-//		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA G.</p>\r\n" +
-//		     "<p class='contenido'>{P:resumenG}</p>\r\n" +
+		     "<p class='preguntas'>RESUMEN DE LA SALVAGUARDA G.</p>\r\n" +
+		     "<p class='contenido'>{P:resumenG}</p>\r\n" +
 		     "<br/>\r\n" ;
 	public static final String REPORTE_RESUMEN_PIE="<table  width='100%' style='margin: 0 auto;border-style: none;border-collapse: collapse;font-size:12px;font-family: sans-serif' border='0'>\r\n" +
 			"<tr>\r\n" +
@@ -769,7 +741,44 @@ public class GenerarPdfResumen {
 			"</style>\r\n" +
 			"</head>\r\n" + 
 			"\r\n" + 
-			"<body>\r\n";			
+			"<body>\r\n" +
+			"<table  width='80%' style='margin: 0 auto;border-style: none;border-collapse: collapse;font-size:12px;font-family: sans-serif' border='0'>\r\n" +
+			"<tr>\r\n" +
+		    "    <td><img src='{P:logoEscudo}' width='150' height='55'></td>\r\n" +
+		    "   <td style='background-color: #ffffff; width: 30%'> </td>\r\n" +
+		     "   <td><img src='{P:logoMae}' width='300' height='55'> </td>\r\n" +    
+		     "</tr>\r\n" +
+			"<tr style='margin: 0 auto;border-style: none;border-collapse: collapse;font-size:12px;background-color: #0da5c4;border-color: #ffffff;font-family: sans-serif'>\r\n" +
+		    "    <td>Sistema de Información de Salvaguardas SIS</td>\r\n" +
+		     "   <td style='background-color: #ffffff; width: 30%'> </td>\r\n" +    
+		     "   <td>Resumen de las salvaguardas reportadas</td>\r\n" +        
+		    "</tr>\r\n" +
+		    "<tr >\r\n" +
+		     "   <td style='background-color: #ffffff'></td>\r\n" +
+		      "  <td style='background-color: #ffffff'> </td>    \r\n" +
+		      "  <td style='background-color: #ffffff'>{P:fecha}</td>\r\n" +        
+		    "</tr>\r\n" +
+		"</table>\r\n" +		
+		"<br/>\r\n" +		
+		"<table  width='80%' style='margin: 0 auto;border-style: solid;border-collapse: collapse;font-size:10px;font-family: sans-serif;background-color: #0da5c4;' border='0'>\r\n" +
+		 "   <tr style='height:3px;border-color: #ffffff;'>\r\n" +
+		  "      <td style='font-weight: bold;vertical-align: baseline;text-align:right;' width: 50%'>Título del Plan de implementación, Programa o Proyecto:</td>\r\n" +
+		   "     <td width: 50%'>{P:proyecto} </td>\r\n" +
+		   " </tr>\r\n" +
+		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
+		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Socio implementador:</td>\r\n" +
+		   "     <td>{P:socioImplementador} </td>\r\n" +
+		   " </tr>\r\n" +
+		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
+		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Socio Estratégico:</td>\r\n" +
+		   "     <td>{P:socioEstrategico} </td>\r\n" +
+		   " </tr>\r\n" +
+		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
+		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:right;'>Con qué sector se identifica:</td>\r\n" +
+		   "     <td>{P:sectores} </td>\r\n" +
+		   " </tr>\r\n" +
+		"</table>\r\n" +
+		"<br/>\r\n";
 	
 }
 

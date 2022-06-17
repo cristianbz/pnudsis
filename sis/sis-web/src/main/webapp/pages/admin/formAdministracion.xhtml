@@ -62,6 +62,7 @@
 				</div>
 				<p:tabView id="tabs">
 					<p:tab title="#{etiquetas['preguntasSalvaguardas']}">
+						<a name="preguntas"> </a>
 						<p:outputPanel id="panelPregunta">
 							<p:panel rendered="#{administracionBean.nuevaPregunta}" header="#{titulos['ingresoPreguntas']}">
 								<div class="ui-fluid p-formgrid p-grid">																									
@@ -203,7 +204,7 @@
 							</p:column>
 							<p:column width="40">
 								<p:commandButton icon="#{botones['icono.editar']}" 
-									title="#{tooltip['editar']}"
+									title="#{tooltip['editar']}" oncomplete="goToAnchor('preguntas');"
 									actionListener="#{administracionController.editarPregunta(pregunta)}"
 									process="@this :form:tabs:panelPregunta" update=":form:tabs:panelPregunta" />
 

@@ -267,7 +267,9 @@
 					</div>
 					<div class="p-field p-col-12 p-md-6">
 						<p:inputText required="true" tabindex="4"
+						counter="displaycomuniCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="comuniCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						<h:outputText id="displaycomuniCB" class="p-d-block" />	
 						
 					</div>
 					<div class="p-field p-col-12 p-md-3">
@@ -303,7 +305,9 @@
 					</div>
 					<div class="p-field p-col-12 p-md-6">
 						<p:inputText required="true" tabindex="4"
+						counter="displayespacioGCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"	
 							requiredMessage="#{mensajes['campoRequerido']}" id="espacioGCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						<h:outputText id="displayespacioGCB" class="p-d-block" />	
 						
 					</div>
 					<div class="p-field p-col-12 p-md-3">
@@ -316,8 +320,9 @@
 						<p:outputLabel value="#{etiquetas['riesgoAbordado']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputText required="true" tabindex="4"
+						<p:inputText required="true" tabindex="4" counter="displayriesgoACB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="riesgoACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						<h:outputText id="displayriesgoACB" class="p-d-block" />	
 						
 					</div>
 					<div class="p-field p-col-12 p-md-3">
@@ -330,8 +335,9 @@
 						<p:outputLabel value="#{etiquetas['capacidadesFortalecidas']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputText required="true" tabindex="4"
+						<p:inputText required="true" tabindex="4" counter="displaycapacidadFCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="capacidadFCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						<h:outputText id="displaycapacidadFCB" class="p-d-block" />		
 						
 					</div>
 					<div class="p-field p-col-12 p-md-3">
@@ -344,9 +350,9 @@
 						<p:outputLabel value="#{etiquetas['productosIncentivados']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayprodICB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="prodICB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displayprodICB" class="p-d-block" />	
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="prodICB"/>
@@ -358,9 +364,9 @@
 						<p:outputLabel value="#{etiquetas['orgFortalecida']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayorgFCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="orgFCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displayorgFCB" class="p-d-block" />	
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="orgFCB"/>
@@ -372,9 +378,9 @@
 						<p:outputLabel value="#{etiquetas['asoApoyada']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayasoACB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="asoACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displayasoACB" class="p-d-block" />	
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="asoACB"/>
@@ -400,9 +406,9 @@
 						<p:outputLabel value="#{etiquetas['fuenteIngApoyo']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayfuenteICB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="fuenteICB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displayfuenteICB" class="p-d-block" />	
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="fuenteICB"/>
@@ -414,9 +420,9 @@
 						<p:outputLabel value="#{etiquetas['comunidad']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displaycomunidadCB19" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="comunidadCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displaycomunidadCB19" class="p-d-block" />
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="comunidadCB"/>
@@ -428,9 +434,9 @@
 						<p:outputLabel value="#{etiquetas['capacidadesFortalecidas']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displaycapacidadF20CB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="capacidadF20CB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displaycapacidadF20CB" class="p-d-block" />
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="capacidadF20CB"/>
@@ -442,8 +448,9 @@
 						<p:outputLabel value="#{etiquetas['iniciativaTurApoyo']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayiniciativaTCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="iniciativaTCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						<h:outputText id="displayiniciativaTCB" class="p-d-block" />	
 						
 					</div>
 					<div class="p-field p-col-12 p-md-3">
@@ -456,8 +463,9 @@
 						<p:outputLabel value="#{etiquetas['instrumentoGobForestal']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayinstmecCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="instmecCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
+						<h:outputText id="displayinstmecCB" class="p-d-block" />	
 						
 					</div>
 					<div class="p-field p-col-12 p-md-3">
@@ -470,9 +478,9 @@
 						<p:outputLabel value="#{etiquetas['nombreOrgApoyada']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displaynomorgACB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="nomorgACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displaynomorgACB" class="p-d-block" />
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="nomorgACB"/>
@@ -484,9 +492,9 @@
 						<p:outputLabel value="#{etiquetas['especiesProtegidas']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayespeciesPCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="especiesPCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displayespeciesPCB" class="p-d-block" />
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="especiesPCB"/>
@@ -498,9 +506,9 @@
 						<p:outputLabel value="#{etiquetas['usosAlternativos']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayusosACB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="usosACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displayusosACB" class="p-d-block" />
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="usosACB"/>
@@ -510,9 +518,9 @@
 						<p:outputLabel value="#{etiquetas['serviciosValorados']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displayserviciosVCB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="serviciosVCB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnTwo}"/>
-						
+						<h:outputText id="displayserviciosVCB" class="p-d-block" />
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="serviciosVCB"/>
@@ -524,9 +532,9 @@
 						<p:outputLabel value="#{etiquetas['nombreOrgApoyada']} *" />
 					</div>
 					<div class="p-field p-col-12 p-md-6">
-						<p:inputTextarea required="true" tabindex="4"
+						<p:inputTextarea required="true" tabindex="4" counter="displaynameOACB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 							requiredMessage="#{mensajes['campoRequerido']}" id="nameOACB" value="#{seguimientoSalvaguardaBean.registroTablaCobeneficios.tareColumnOne}"/>
-						
+						<h:outputText id="displaynameOACB" class="p-d-block" />
 					</div>
 					<div class="p-field p-col-12 p-md-3">
 						<p:message for="nameOACB"/>
@@ -953,7 +961,7 @@
 			header="#{titulos['grabarReporteSalvaguardaA']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+				<p:commandButton value="#{botones['grabar']}" update=":form:salvaguardas growl"
 					id="btngrabar" onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaA}"
 					oncomplete="PF('dlgGrabaReporteA').hide(); PF('dlgEnProc').hide();"
@@ -974,8 +982,8 @@
 			<h:panelGrid columns="2" >
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaValoresTablaDatos()}"
-					oncomplete="PF('dlgEliminaDatosTabla').hide();" immediate="true"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					oncomplete="PF('dlgEliminaDatosTabla').hide();" immediate="true" partialSubmit="true"
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					actionListener="#{seguimientoSalvaguardaController.cancelaEliminaValoresTablaDatos()}"
@@ -1830,7 +1838,7 @@
 			header="#{titulos['grabarReporteSalvaguardaB']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+				<p:commandButton value="#{botones['grabar']}" update=":form:salvaguardas growl"
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaB}"
 					oncomplete="PF('dlgGrabaReporteB').hide(); PF('dlgEnProc').hide();"
@@ -1849,7 +1857,7 @@
 			header="#{titulos['grabarReporteSalvaguardaC']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+				<p:commandButton value="#{botones['grabar']}" update=":form:salvaguardas growl"
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaC}"
 					oncomplete="PF('dlgGrabaReporteC').hide(); PF('dlgEnProc').hide();"
@@ -1867,7 +1875,7 @@
 			header="#{titulos['grabarReporteSalvaguardaD']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+				<p:commandButton value="#{botones['grabar']}" update=":form:salvaguardas growl"
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaD}"
 					oncomplete="PF('dlgGrabaReporteD').hide(); PF('dlgEnProc').hide();"
@@ -1885,7 +1893,7 @@
 			header="#{titulos['grabarReporteSalvaguardaE']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+				<p:commandButton value="#{botones['grabar']}" update=":form:salvaguardas growl"
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaE}"
 					oncomplete="PF('dlgGrabaReporteE').hide(); PF('dlgEnProc').hide();"
@@ -1904,7 +1912,7 @@
 			header="#{titulos['grabarReporteSalvaguardaF']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+				<p:commandButton value="#{botones['grabar']}" update=":form:salvaguardas growl"
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaF}"
 					oncomplete="PF('dlgGrabaReporteF').hide(); PF('dlgEnProc').hide();"
@@ -1921,7 +1929,7 @@
 			header="#{titulos['grabarReporteSalvaguardaG']}" width="300"
 			closable="false" resizable="false">
 			<h:panelGrid columns="3" >
-				<p:commandButton value="#{botones['grabar']}" update="@form growl"
+				<p:commandButton value="#{botones['grabar']}" update=":form:salvaguardas growl"
 					onstart="PF('dlgEnProc').show();"
 					actionListener="#{seguimientoSalvaguardaController.grabarSalvaguardaG}"
 					oncomplete="PF('dlgGrabaReporteG').hide(); PF('dlgEnProc').hide();"
@@ -1988,7 +1996,7 @@
 						<p:commandButton
 							actionListener="#{seguimientoSalvaguardaController.cargaDatosProyectoSeleccionado()}"
 							process="@this :form:buscaProyectos:panelDatosProyecto :form:salvaguardas " onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();"
-							icon="#{botones['icono.check']}" update="@form" 
+							icon="#{botones['icono.check']}" update="panelsalvaguarda growl :form:buscaProyectos:panelDatosProyecto" 
 							value="#{botones['mostrarInformacion']}" />
 						<p:commandButton id="btnVolverInicio"
 							value="#{botones['volverBusqueda']}"
@@ -2089,10 +2097,12 @@
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelLey">
 									<p:inputTextarea id="textNuevaLey" 
-										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
+										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}" counter="displayNuevaLey"
+										counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLeySA.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaLey}">
 									
 									</p:inputTextarea>								
+									<h:outputText id="displayNuevaLey" class="p-d-block" />
 									<p:message for="textNuevaLey" />
 								</p:outputPanel>	
 								</div>
@@ -2155,11 +2165,13 @@
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelMJN">
-									<p:inputTextarea id="textNuevaLeyMJN" 
+									<p:inputTextarea id="textNuevaLeyMJN" counter="displayNuevaLeyMJN"
+										counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoMJN.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoIngresoMJN}">
 									
-									</p:inputTextarea>								
+									</p:inputTextarea>		
+									<h:outputText id="displayNuevaLeyMJN" class="p-d-block" />						
 									<p:message for="textNuevaLeyMJN" />
 								</p:outputPanel>	
 								</div>
@@ -2223,11 +2235,13 @@
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelNSN">
-									<p:inputTextarea id="textNuevaLeyNSN" 
+									<p:inputTextarea id="textNuevaLeyNSN" counter="displayNuevaLeyNSN"
+										counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaNormativaSN.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoIngresoNSN}">
 									
-									</p:inputTextarea>								
+									</p:inputTextarea>		
+									<h:outputText id="displayNuevaLeyNSN" class="p-d-block" />						
 									<p:message for="textNuevaLeyNSN"/>
 								</p:outputPanel>	
 								</div>
@@ -2289,11 +2303,13 @@
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-8">
 								<p:outputPanel id="panelPolitica">
-									<p:inputTextarea 
+									<p:inputTextarea counter="displayNuevaPolitica"
+										counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										cols="50" required="true" requiredMessage="#{mensajes['campoRequerido']}"
 										id="textNuevaPolitica" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPoliticaSA.cataText2}" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevaPolitica}">
 									
-									</p:inputTextarea>								
+									</p:inputTextarea>
+									<h:outputText id="displayNuevaPolitica" class="p-d-block" />								
 									<p:message for="textNuevaPolitica"/>
 								</p:outputPanel>	
 								</div>
@@ -2493,7 +2509,8 @@
 									<p:commandButton id="btnTablaOPA" styleClass="botonAgregaRegistro"
 										value="#{botones['agregar']}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-										icon="#{botones['icono.mas']}" process="@this panelIngresoOPA" update="panelIngresoOPA" title="#{tooltip['nuevoRegistro']}">										
+										action="#{seguimientoSalvaguardaController.nuevoRegistroInfoOpcional(1)}"
+										icon="#{botones['icono.mas']}" process="@this " update="panelIngresoOPA" title="#{tooltip['nuevoRegistro']}">										
 										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPA}"/>
 									</p:commandButton>	
 								</div>
@@ -2510,7 +2527,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPA.tareColumnOne}" id="actividadOPA"
+										counter="displayActividadOPA" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+									<h:outputText id="displayActividadOPA" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="actividadOPA"/>
@@ -2521,7 +2540,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPA.tareColumnTwo}" id="logroOPA"
+											counter="displayLogroOPA" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayLogroOPA" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="logroOPA"/>
@@ -2533,7 +2554,9 @@
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText 
 											id="linkOPA" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displayLinkOPA" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPA.tareColumnTree}"/>
+										<h:outputText id="displayLinkOPA" class="p-d-block" />			
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="linkOPA"/>
@@ -2549,7 +2572,7 @@
 															update="panelTablaOPA :form:growl panelIngresoOPA"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoOPA" update="panelIngresoOPA" immediate="true"
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this " update="panelIngresoOPA" immediate="true"
 										value="#{botones['cancelar']}" 
 										resetValues="true" title="#{tooltip['cancelar']} ">
 											
@@ -2604,7 +2627,7 @@
 
 							</div>							
 							<br/>
-							<!-- 
+							 
 							<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (A)" style="font-weight:bold;"/>
@@ -2618,7 +2641,7 @@
 										<p:message for="resumenA"/>
 									</div>
 							</div>		
-							 -->
+							 
 							
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto" 
@@ -2641,22 +2664,20 @@
 									<p:commandButton ajax="false" action="#{seguimientoSalvaguardaController.imprimirResumenSalvaguardas}" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}"
 										icon="#{botones['icono.imprimir']}" 
-										value="#{botones['vistaPrevia']}" process="@this">
-									
+										value="#{botones['vistaPrevia']}" process="@this">									
 									</p:commandButton>
-																	
 									<p:commandButton value="#{botones['finalizar']}" styleClass="botonRegistroProyecto" 
 										process="@this  :form:panelsalvaguarda" update=" :form:growl :form:panelsalvaguarda"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoFinalizarReporte(1)}" icon="#{botones['icono.check']}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton>
+									</p:commandButton> <!-- 
 									<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
 										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
 									
-									</p:commandButton>				
+									</p:commandButton>		 -->		
 							</h:panelGrid>
 							
 						</p:tab>
@@ -2869,8 +2890,10 @@
 										</p:selectOneMenu>
 										<br/>
 										<p:inputTextarea id="otrocatalogoB41" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoB41}"
-											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="7" 
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="7" counter="displayModalidad41B"
+											counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="50"
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareAnotherCatalog}"/>
+										<h:outputText id="displayModalidad41B" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comboModalidadActividad"/>
@@ -2895,8 +2918,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnOne}" tabindex="9" 
+												counter="displayComunidad41B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												id="comunidad41" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
-												
+											<h:outputText id="displayComunidad41B" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidad41"/>
@@ -3140,7 +3164,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputTextarea value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB51.tareColumnOne}" tabindex="4"
+											counter="displayInstitucion51B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											id="institucion51" required="true" requiredMessage="#{mensajes['campoRequerido']}" />
+										<h:outputText id="displayInstitucion51B" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="institucion51"/>
@@ -3151,7 +3177,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputTextarea value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB51.tareColumnTwo}" tabindex="5"
+											counter="displayActividad51B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="1000"
 											id="actividad51" required="true" requiredMessage="#{mensajes['campoRequerido']}" />
+										<h:outputText id="displayActividad51B" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="actividad51"/>
@@ -3163,7 +3191,9 @@
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputTextarea 
 											id="link51B" required="true" requiredMessage="#{mensajes['campoRequerido']}" 
-											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB51.tareColumnTree}" tabindex="6"/>											
+											counter="displayLink51B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB51.tareColumnTree}" tabindex="6"/>
+										<h:outputText id="displayLink51B" class="p-d-block" />													
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="link51B"/>
@@ -3367,7 +3397,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB61.tareColumnOne}" tabindex="3"
+											counter="displayInstitucion61B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											id="institucion61" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayInstitucion61B" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="institucion61"/>
@@ -3378,7 +3410,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB61.tareColumnTwo}" tabindex="4"
+											counter="displayActividad61B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="500"
 											id="objetivo61" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayActividad61B" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="objetivo61"/>
@@ -3390,7 +3424,9 @@
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											id="link61B" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB61.tareColumnTree}" tabindex="5"/>								
+											counter="displayLink61B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB61.tareColumnTree}" tabindex="5"/>
+										<h:outputText id="displayLink61B" class="p-d-block" />									
 									</div>	
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="link61B"/>
@@ -3528,8 +3564,10 @@
 									</div>									
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB71.tareColumnOne}" tabindex="1"
+											counter="displayInstrumento71B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											id="idInstrumentoB71"
-											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" />											
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" />
+										<h:outputText id="displayInstrumento71B" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="idInstrumentoB71"/>
@@ -3541,8 +3579,9 @@
 									</div>									
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB71.tareColumnTwo}" tabindex="2"
-											id="idrelevanciaB71"
-											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" />											
+											id="idrelevanciaB71" counter="displayRelevancia71B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" />		
+										<h:outputText id="displayRelevancia71B" class="p-d-block" />										
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="idrelevanciaB71"/>
@@ -3554,8 +3593,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB71.tareColumnTree}" tabindex="3"
-											id="idMecanismoB71"
-											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>												
+											id="idMecanismoB71" counter="displayMecanismo71B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>	
+										<h:outputText id="displayMecanismo71B" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="idMecanismoB71"/>
@@ -3567,8 +3607,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB71.tareColumnFour}" tabindex="4"
-											id="linkB71"
-											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>												
+											id="linkB71" counter="displayLink71B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>	
+										<h:outputText id="displayLink71B" class="p-d-block" />													
 									</div>	
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="linkB71"/>
@@ -3770,9 +3811,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea immediate="true" tabindex="4"
+												counter="displayComunidad81B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareColumnOne}">
 												<p:ajax process="@this" event="blur" />
 											</p:inputTextarea>
+											<h:outputText id="displayComunidad81B" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -3817,7 +3860,9 @@
 										<br/>
 										<p:inputTextarea id="otrocatalogoB81" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoB81}"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="8" 
+											counter="displayOtrocatalogoB81" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB81.tareAnotherCatalog}"/>
+										<h:outputText id="displayOtrocatalogoB81" class="p-d-block" />	
 										<p:message for="otrocatalogoB81"/>	
 									</div>
 									<div class="p-field p-col-12 p-md-1">
@@ -4014,7 +4059,13 @@
 								</p:selectOneRadio>
 							</div>
 							<br/>
-								
+									
+							<div class="ui-fluid p-formgrid p-grid">
+								<p:outputLabel
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(14).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(14).quesContentQuestionEnglish}"
+									styleClass="pregunta" />
+							</div>	
+							<br/>	
 							<div class="p-field p-col-12 p-md-12" style="background: #00AAC3;color: #FFFFFF;display: block;">
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-11" style="font-weight:bold;">
@@ -4150,9 +4201,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="6"
+												counter="displayComunidadB9" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												id="comunidadB9" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB9.tareColumnOne}">
 												<p:ajax process="@this" event="blur" />
 											</p:inputTextarea>
+											<h:outputText id="displayComunidadB9" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadB9"/>
@@ -4400,8 +4453,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="6"
+											counter="displayComunidadB102" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											 id="comunidadB102" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnOne}" />
-												
+											<h:outputText id="displayComunidadB102" class="p-d-block" />	
 									</div>								
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadB102"/>
@@ -4551,186 +4605,10 @@
 									</h:panelGrid>
 								</p:scrollPanel>
 							</div>
+
+							<!--
 							
-							<br />
-							<div class="ui-fluid p-formgrid p-grid">
-								<p:outputLabel value="#{titulos['salvaguardaB23']}" styleClass="etiquetaSubCategoria"/>
-							</div>
-							
-							<br/>
-							<div class="ui-fluid p-formgrid p-grid">
-								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(15).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(15).quesContentQuestionEnglish}"
-									styleClass="pregunta" />
-							</div>
-							<br />
-							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
-								id="msgTablaRequerida11B"
-								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(7)}"/>	
-							<br />
-							<a name="11B"> </a>
-							<div class="ui-fluid p-formgrid p-grid">
-								<p:selectOneRadio id="radiopSB8" styleClass="etiquetaSubtitulo"
-									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(7).vaanYesnoAnswerValue}"
-									unselectable="true">
-									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
-									<f:selectItem itemLabel="#{etiquetas['no']}"
-										itemValue="false" />
-									<p:ajax process="radiopSB8 @this " 
-										event="change" update=":form:salvaguardas:btnTablaB11"	
-										listener="#{seguimientoSalvaguardaController.mostrarDialogoEliminaDatosTabla('B11')}"									
-										partialSubmit="true" />
-								</p:selectOneRadio>
-							</div>	
-							<br/>
-							<div class="ui-fluid p-formgrid p-grid">
-								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(16).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(16).quesContentQuestionEnglish}"
-									styleClass="pregunta" />
-							</div>							
-							<br/>
-							<div class="p-field p-col-12 p-md-12" style="background: #00AAC3;color: #FFFFFF;display: block;">
-							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-11" style="font-weight:bold;">
-									<p:outputLabel value="#{etiquetas['ingresoInformacion']}"/>
-								</div>
-								<div class="p-field p-col-12 p-md-1" style="height:10px;">
-									 
-										<p:commandButton icon="#{botones['icono.mas']}"
-										process="@this :form:salvaguardas:panelIngreso11B" immediate="true" resetValues="true" partialSubmit="true"
-										id="btnTablaB11" styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
-										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(7).vaanYesnoAnswerValue or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
-										update=":form:salvaguardas:panelIngreso11B" 
-										title="#{tooltip['nuevoRegistro']}">
-										<f:setPropertyActionListener value="true"
-											target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB11}" />
-									</p:commandButton>	
-								</div>
-							</div>	
-							</div>
-							<p:outputPanel id="panelIngreso11B" >
-							
-							<p:panel id="panel11B" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB11}" header="#{titulos['datosSolicitados']}">
-							<div class="ui-fluid p-formgrid p-grid">
-																									
-									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
-										<p:outputLabel value="#{etiquetas['comoFunciona']} *"/>
-									</div>
-									<div class="p-field p-col-12 p-md-6">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnOne}" 
-											id="funcionaB11" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												tabindex="1"/>
-									</div>
-									<div class="p-field p-col-12 p-md-3">
-										<p:message for="funcionaB11"/>
-									</div>
-									
-									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
-										<p:outputLabel value="#{etiquetas['cuantosCasosReportados']} *"/>
-									</div>
-									<div class="p-field p-col-12 p-md-6">
-											<p:inputNumber decimalPlaces="0" id="casosreportadosB11"
-												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnGenericOne}" tabindex="2"/>
-									</div>									
-									<div class="p-field p-col-12 p-md-3">
-										<p:message for="casosreportadosB11"/>
-									</div>
-									
-									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
-										<p:outputLabel value="#{etiquetas['cuantosCasosAtendidos']} *"/>
-									</div>
-									<div class="p-field p-col-12 p-md-6">
-											<p:inputNumber decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
-											 	id="casosatendidosB11" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnGenericTwo}" tabindex="3"/>
-									</div>
-									<div class="p-field p-col-12 p-md-3">
-										<p:message for="casosatendidosB11"/>
-									</div>
-									
-									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
-										<p:outputLabel value="#{etiquetas['linkVerificador']} *"/>
-									</div>
-									<div class="p-field p-col-12 p-md-6">
-											<p:inputText id="linkB11"
-												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11.tareColumnTwo}" tabindex="4"/>
-												
-									</div>
-									<div class="p-field p-col-12 p-md-3">
-										<p:message for="linkB11"/>
-										<comp:ayuda texto="#{tooltip['reporteOMatriz']}"/>
-									</div>									
-									
-									
-									<div class="p-field p-col-12 p-md-4">
-									</div>
-									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla11B panelIngreso11B radiopSB8" value="#{botones['guardar']}"																							
-															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB11()}"
-															oncomplete="goToAnchor('11B');"
-															update="panelTabla11B :form:growl panelIngreso11B"/>
-									</div>						
-									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso11B" update="panelIngreso11B" immediate="true"
-											value="#{botones['cancelar']}" action="#{seguimientoSalvaguardaController.cancelaIngresoTablaB11}"
-											 resetValues="true">
-											
-											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB11}"/>
-										</p:commandButton>
-									</div>
-									<div class="p-field p-col-12 p-md-4">
-									</div>
-							</div>
-							</p:panel>
-							
-							</p:outputPanel>									
-							
-							<br/>
-							<div class="ui-fluid p-formgrid p-grid">
-								
-									<h:panelGrid id="panelTabla11B">
-										<p:dataTable styleClass="sinBordesAncho100" emptyMessage="#{mensajes['noRegistros']}" reflow="true" rows="5" paginator="true"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.tablaSalvaguardaB11}"
-											id="tablaB11"
-											var="tablarespuestas">
-											
-											<p:column headerText="#{etiquetas['comoFunciona']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnOne}" style="font-size:10px !important;"/>
-											</p:column>
-											<p:column headerText="#{etiquetas['cuantosCasosReportados']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnGenericOne}" style="font-size:10px !important;"/>
-											</p:column>
-											<p:column headerText="#{etiquetas['cuantosCasosAtendidos']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnGenericTwo}" style="font-size:10px !important;"/>
-											</p:column>	
-											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
-												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
-											</p:column>																							
-																																	
-											<p:column style="width:80px;">
-												
-								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
-								                	disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-													process="@this :form:salvaguardas:panelIngreso11B" update=":form:salvaguardas:panelIngreso11B">
-													<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB11}"/>
-													<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB11}"/>
-												</p:commandButton>
-												<p:commandButton action="#{seguimientoSalvaguardaController.eliminaRegistroTablaSalvaguarda(50)}"
-													disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}" 
-								                	update=":form:salvaguardas:panelTabla11B" icon="#{botones['icono.borrar']}"
-								                	process="@this :form:salvaguardas:panelTabla11B">
-								                	<f:setPropertyActionListener value="#{tablarespuestas}" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTabla}"></f:setPropertyActionListener>
-								                </p:commandButton>
-											</p:column>
-										</p:dataTable>
-									</h:panelGrid>
-																													
-									 
-								
-							</div>
-									
+							-->		
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel value="#{titulos['salvaguardaB24']}"
@@ -4740,19 +4618,19 @@
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestionEnglish}"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(15).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestionEnglish}"
 									styleClass="pregunta" />
 							</div>
 							<br />
 							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
 								id="msgTablaRequerida121B"
-								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(8)}"/>
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(7)}"/>
 							<br />
 							<a name="121B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB9" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(8).vaanYesnoAnswerValue}"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(7).vaanYesnoAnswerValue}"
 									unselectable="false">
 									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
 									<f:selectItem itemLabel="#{etiquetas['no']}"
@@ -4765,7 +4643,7 @@
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(18).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(18).quesContentQuestionEnglish}"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(16).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(18).quesContentQuestionEnglish}"
 									styleClass="pregunta" />
 							</div>							
 							<br/>
@@ -4778,7 +4656,7 @@
 								<div class="p-field p-col-12 p-md-1" style="height:10px;">
 									 
 										<p:commandButton icon="#{botones['icono.mas']}" id="btnTablaB121" styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
-										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(8).vaanYesnoAnswerValue or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
+										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(7).vaanYesnoAnswerValue or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										process="@this :form:salvaguardas:panelIngreso121B" immediate="true" resetValues="true"
 										update=":form:salvaguardas:panelIngreso121B" action="#{seguimientoSalvaguardaController.nuevaFilaTablaSalvaguardaB121()}"
 										title="#{tooltip['nuevoRegistro']}">
@@ -4799,7 +4677,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="1" id="nombreOrganizacionB121"
-										  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnOne}" />										  
+										counter="displayNombreOrganizacionB121" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+										  value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnOne}" />	
+										<h:outputText id="displayNombreOrganizacionB121" class="p-d-block" />  									  
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="nombreOrganizacionB121"/>
@@ -4917,8 +4797,10 @@
 										<p:message for="comboAccionImplementada"/>
 										<br/>
 										<p:inputTextarea id="otrocatalogo121" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogo121}"
+											counter="displayOtrocatalogo121" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="8" 
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareAnotherCatalog}"/>
+											<h:outputText id="displayOtrocatalogo121" class="p-d-block" />
 										<p:message for="otrocatalogo121"/>
 									</div>
 									<div class="p-field p-col-12 p-md-1">
@@ -4934,8 +4816,9 @@
 										
 										<p:inputText 
 											id="link121B" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displayLink121B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB121.tareColumnTwo}" tabindex="9"/>
-											
+										<h:outputText id="displayLink121B" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="link121B"/>
@@ -5026,19 +4909,19 @@
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(19).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(19).quesContentQuestionEnglish}"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(17).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(19).quesContentQuestionEnglish}"
 									styleClass="pregunta" />
 							</div>
 							<br />
 							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
 								id="msgTablaRequerida131B"
-								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(9)}"/>
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(8)}"/>
 							<br />
 							<a name="131B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB10" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(9).vaanYesnoAnswerValue}"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(8).vaanYesnoAnswerValue}"
 									unselectable="false">
 									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
 									<f:selectItem itemLabel="#{etiquetas['no']}"
@@ -5051,7 +4934,7 @@
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(20).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(20).quesContentQuestionEnglish}"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(18).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(20).quesContentQuestionEnglish}"
 									styleClass="pregunta" />
 							</div>							
 							<br/>
@@ -5065,7 +4948,7 @@
 									 
 										<p:commandButton icon="#{botones['icono.mas']}" id="btnTablaB131" immediate="true" resetValues="true" partialSubmit="true"
 										process="@this panelIngreso131B panel131B" styleClass="botonAgregaRegistro" value="#{botones['agregar']}"
-										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(9).vaanYesnoAnswerValue or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
+										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(8).vaanYesnoAnswerValue or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										update="panelIngreso131B panel131B" action="#{seguimientoSalvaguardaController.nuevaFilaTablaSalvaguardaB131()}"
 										title="#{tooltip['nuevoRegistro']}">
 										<f:setPropertyActionListener value="true"
@@ -5098,9 +4981,11 @@
 										<p:message for="modalidadtblB131"/>
 										<br/>
 										<p:inputTextarea id="otrocatalogoB131" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoB131}"
+											counter="displayOtrocatalogoB131" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="2" 
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareAnotherCatalog}"/>
-										<p:message for="otrocatalogoB131"/>	
+										<h:outputText id="displayOtrocatalogoB131" class="p-d-block" />	
+										<p:message for="displayOtrocatalogoB131"/>	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<componentes:ayuda texto="#{tooltip['nuevaActividad']}"/>										
@@ -5111,7 +4996,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputText required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"  tabindex="3"
+										counter="displaytematicatratadaB131" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 										id="tematicatratadaB131" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnOne}" />
+										<h:outputText id="displaytematicatratadaB131" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="tematicatratadaB131"/>
@@ -5186,7 +5073,9 @@
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputText 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnTwo}" tabindex="8" id="linkB131"/>										
+											counter="displaylinkB131" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB131.tareColumnTwo}" tabindex="8" id="linkB131"/>
+										<h:outputText id="displaylinkB131" class="p-d-block" />											
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkB131"/>
@@ -5275,19 +5164,19 @@
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestionEnglish}"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(19).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestionEnglish}"
 									styleClass="pregunta" />
 							</div>
 							<br />
 							<p:staticMessage severity="error" summary="ERROR" detail="#{mensajes['agregarRegistros']}" 
 								id="msgTablaRequerida143B"
-								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(10)}"/>
+								style="width: 100%" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.mensajeRequeridosTablasB.get(9)}"/>
 							<br />
 							<a name="143B"> </a>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:selectOneRadio id="radiopSB11" styleClass="etiquetaSubtitulo"
 									disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(10).vaanYesnoAnswerValue}"
+									value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(9).vaanYesnoAnswerValue}"
 									unselectable="false">
 									<f:selectItem itemLabel="#{etiquetas['si']}" itemValue="true" />
 									<f:selectItem itemLabel="#{etiquetas['no']}"
@@ -5301,7 +5190,7 @@
 							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(22).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(22).quesContentQuestionEnglish}"
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(20).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(22).quesContentQuestionEnglish}"
 									styleClass="pregunta" />
 							</div>
 							<br/>
@@ -5315,7 +5204,7 @@
 									 
 										<p:commandButton icon="#{botones['icono.mas']}" id="btnTablaB143" immediate="true" resetValues="true"
 										process="@this panelIngreso143B panel143B" styleClass="botonAgregaRegistro" value="#{botones['agregar']}" partialSubmit="true"
-										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(10).vaanYesnoAnswerValue or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
+										disabled="#{not seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaValoresRespuestasB.get(9).vaanYesnoAnswerValue or (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										update="panelIngreso143B panel143B" action="#{seguimientoSalvaguardaController.nuevaFilaTablaSalvaguardaB143()}"
 										title="#{tooltip['nuevoRegistro']}">
 										<f:setPropertyActionListener value="true"
@@ -5346,7 +5235,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputText required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="2"
-										id="comunidadB143" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB143.tareColumnOne}"/>																			
+										counter="displayComunidadB143" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+										id="comunidadB143" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB143.tareColumnOne}"/>	
+										<h:outputText id="displayComunidadB143" class="p-d-block" />																		
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadB143"/>									
@@ -5448,7 +5339,9 @@
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputText id="linkB143"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB143.tareColumnFour}" tabindex="10"/>										
+											counter="displayLinkB143" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB143.tareColumnFour}" tabindex="10"/>	
+										<h:outputText id="displayLinkB143" class="p-d-block" />										
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkB143"/>
@@ -5546,7 +5439,7 @@
 								</div>
 								<div class="p-field p-col-12 p-md-6">
 								<p:outputLabel id="preguntaOPB"
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(23).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(23).quesContentQuestionEnglish}" />
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(21).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasB.get(23).quesContentQuestionEnglish}" />
 								</div>	
 								<div class="p-field p-col-12 p-md-3">
 								</div>
@@ -5562,7 +5455,8 @@
 								<div class="p-field p-col-12 p-md-1" style="height:10px;">									 
 										<p:commandButton id="btnTablaOPB" styleClass="botonAgregaRegistro" value="#{botones['agregar']}" 	
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"									
-										icon="#{botones['icono.mas']}" process="@this panelIngresoOPB" update="panelIngresoOPB" title="#{tooltip['nuevoRegistro']}">										
+										action="#{seguimientoSalvaguardaController.nuevoRegistroInfoOpcional(2)}"
+										icon="#{botones['icono.mas']}" process="@this " update="panelIngresoOPB" title="#{tooltip['nuevoRegistro']}">										
 										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPB}"/>
 									</p:commandButton>		
 								</div>
@@ -5578,7 +5472,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPB.tareColumnOne}" tabindex="1"
+										counter="displayactividadOPB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										 id="actividadOPB"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayactividadOPB" class="p-d-block" /> 
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message  for="actividadOPB"/>
@@ -5590,7 +5486,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPB.tareColumnTwo}" tabindex="2"
+										counter="displaylogroOPB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="logroOPB" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displaylogroOPB" class="p-d-block" /> 	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message  for="logroOPB"/>
@@ -5602,8 +5500,9 @@
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText 
 											id="linkOPB" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaylinkOPB" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPB.tareColumnTree}" tabindex="3"/>
-											
+										<h:outputText id="displaylinkOPB" class="p-d-block" /> 	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 									
@@ -5619,7 +5518,7 @@
 															update="panelTablaOPB :form:growl panelIngresoOPB"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoOPB" update="panelIngresoOPB" immediate="true" 
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this " update="panelIngresoOPB" immediate="true" 
 											value="#{botones['cancelar']}"
 											tabindex="5" resetValues="true" title="#{tooltip['cancelar']} ">
 											
@@ -5674,7 +5573,7 @@
 								
 							</div>							
 							<br /> 
-							<!-- 
+							
 							<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (B)" style="font-weight:bold;"/>
@@ -5687,7 +5586,7 @@
 										<p:outputLabel id="displayB"/>
 										<p:message for="resumenB"/>
 									</div>
-							</div>  -->
+							</div>  
 							<br/>			
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -5702,7 +5601,7 @@
 										rendered="#{not (seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F')}"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(2)}"					
 										/>
-								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto"
+								<p:commandButton value="#{botones['siguiente']}" styleClass="botonRegistroProyecto" partialSubmit="true"
 										icon="#{botones['icono.siguiente']}" process="@this  :form:buscaProyectos:panelDatosProyecto :form:salvaguardas:tabSalvaguardaB"
 										actionListener="#{seguimientoSalvaguardaController.siguienteTab(2)}" oncomplete="PF('dlgEnProc').hide(); goToAnchor('inicio');" onstart="PF('dlgEnProc').show();"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?false:true}"
@@ -5720,12 +5619,12 @@
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton>
+									</p:commandButton> <!-- 
 									<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
 										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
 									
-									</p:commandButton>				
+									</p:commandButton>		 --> 		
 							</h:panelGrid>				
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-3">
@@ -5937,7 +5836,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnOne}" tabindex="6"
-											id="comunidadC201"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>	
+										counter="displaycomunidadC201" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+											id="comunidadC201"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displaycomunidadC201" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadC201"/>
@@ -6019,8 +5920,10 @@
 										<p:message for="recursoC201"/>
 										<br/>
 										<p:inputTextarea id="otrocatalogoC201" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoC201}"
+											counter="displayotrocatalogoC201" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="12" 
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoC201" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<comp:ayuda texto="#{tooltip['nuevoTipoAcceso']}"/>
@@ -6033,7 +5936,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" id="linkC201"
+											counter="displaylinkC201" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC201.tareColumnTwo}" tabindex="13"/>
+											<h:outputText id="displaylinkC201" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC201"/>
@@ -6070,7 +5975,7 @@
 									</div>
 									<div class="p-field p-col-12 p-md-2">						
 										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso201C" update="panelIngreso201C" tabindex="16" 
-											value="#{botones['cancelar']}"
+											value="#{botones['cancelar']}" oncomplete="goToAnchor('201C');"
 											immediate="true" resetValues="true">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC201}"/>
@@ -6332,9 +6237,10 @@
 										<p:outputLabel value="#{etiquetas['comunidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputTextarea tabindex="7"
+											<p:inputTextarea tabindex="7" 
+												counter="displayComunidadC211" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnOne}"/>
-												
+											<h:outputText id="displayComunidadC211" class="p-d-block" />	
 									</div>								
 									<div class="p-field p-col-12 p-md-3">
 									</div>	
@@ -6343,8 +6249,10 @@
 										<p:outputLabel value="#{etiquetas['practica']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnTwo}" tabindex="8"/>
-												
+											<p:inputTextarea 
+												counter="displayPracticaC211" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnTwo}" tabindex="8"/>
+											<h:outputText id="displayPracticaC211" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -6353,8 +6261,10 @@
 										<p:outputLabel value="#{etiquetas['comoSeReconocieronPracticas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnTree}" tabindex="9"/>
-												
+											<p:inputTextarea 
+												counter="displayComoC211" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="500"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnTree}" tabindex="9"/>
+											<h:outputText id="displayComoC211" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -6363,8 +6273,10 @@
 										<p:outputLabel value="#{etiquetas['comoPromuevePracticas']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnFour}" tabindex="10"/>
-												
+											<p:inputTextarea 
+												counter="displayPromueveC211" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="500"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnFour}" tabindex="10"/>
+											<h:outputText id="displayPromueveC211" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -6396,7 +6308,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText 
 												id="linkC211" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnFive}" tabindex="12"/>												
+												counter="displayLinkC211" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="500"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC211.tareColumnFive}" tabindex="12"/>	
+											<h:outputText id="displayLinkC211" class="p-d-block" />												
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC211"/>
@@ -6413,7 +6327,8 @@
 															update="panelTabla211C :form:growl panelIngreso211C"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso211C" immediate="true" resetValues="true" tabindex="14" value="#{botones['cancelar']}"
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso211C" immediate="true" 
+											resetValues="true" tabindex="14" value="#{botones['cancelar']}" oncomplete="goToAnchor('211C');"
 											update="panelIngreso211C" title="#{tooltip['cancelar']}">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC211}"/>
@@ -6566,7 +6481,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea rows="3" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnOne}" tabindex="2"
+												counter="displayorganizacionC241" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="500"
 												id="organizacionC241" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/> 
+											<h:outputText id="displayorganizacionC241" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="organizacionC241"/>
@@ -6601,7 +6518,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnTwo}" tabindex="5"
+											counter="displaytematicaC241" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="tematicaC241"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaytematicaC241" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="tematicaC241"/>
@@ -6612,7 +6531,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText id="linkC241" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnTree}" tabindex="6"/>												
+											counter="displaylinkC241" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC241.tareColumnTree}" tabindex="6"/>
+											<h:outputText id="displaylinkC241" class="p-d-block" />													
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC241"/>
@@ -6630,7 +6551,7 @@
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
 										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso241C" update="panelIngreso241C" value="#{botones['cancelar']}"
-											tabindex="8" immediate="true" resetValues="true" title="#{tooltip['cancelar']}">
+											oncomplete="goToAnchor('241C');" tabindex="8" immediate="true" resetValues="true" title="#{tooltip['cancelar']}">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC241}"/>
 										</p:commandButton>
@@ -6728,9 +6649,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="1"
+												counter="displaymedidasC242" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="500"
 												id="medidasC242" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC242.tareColumnOne}">
 												<p:ajax process="@this" event="blur" />
 											</p:inputTextarea>
+											<h:outputText id="displaymedidasC242" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="medidasC242"/>
@@ -6741,9 +6664,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="2" id="linkC242"
+												counter="displaylinkC242" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC242.tareColumnTwo}">
 												<p:ajax process="@this" event="blur" />
-											</p:inputText>											
+											</p:inputText>	
+											<h:outputText id="displaylinkC242" class="p-d-block" />										
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC242"/>
@@ -6899,7 +6824,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnOne}" tabindex="2"
+											counter="displaycomunidadC26" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												id="comunidadC26" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaycomunidadC26" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadC26"/>
@@ -6911,7 +6838,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnTwo}" tabindex="3"
+											counter="displayrepresentanteC26" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												id="representanteC26" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayrepresentanteC26" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="representanteC26"/>
@@ -6922,7 +6851,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnTree}" tabindex="4"
+											counter="displaycargoC26" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												id="cargoC26" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaycargoC26" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="cargoC26"/>
@@ -6954,7 +6885,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="6" id="linkC26" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnFour}"/>												
+											counter="displaylinkC26" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC26.tareColumnFour}"/>	
+											<h:outputText id="displaylinkC26" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC26"/>
@@ -6972,7 +6905,7 @@
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
 										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso26C " update="panelIngreso26C" immediate="true" 
-											tabindex="8" value="#{botones['cancelar']}"
+											tabindex="8" value="#{botones['cancelar']}" oncomplete="goToAnchor('26C');"
 											resetValues="true" title="#{tooltip['cancelar']}">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaC26}"/>
@@ -7155,7 +7088,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnOne}" tabindex="4"
+											counter="displaycomunidadC271" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											 id="comunidadC271"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaycomunidadC271" class="p-d-block" /> 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadC271"/>
@@ -7166,7 +7101,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnTwo}" tabindex="5"
+											counter="displayobjetoC271" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="500"
 											 id="objetoC271"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayobjetoC271" class="p-d-block" /> 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="objetoC271"/>
@@ -7212,7 +7149,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText id="linkC271" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnTree}" tabindex="8"/>											
+											counter="displaylinkC271" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC271.tareColumnTree}" tabindex="8"/>
+											<h:outputText id="displaylinkC271" class="p-d-block" />											
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC271"/>
@@ -7380,7 +7319,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC28.tareColumnOne}" tabindex="3"
+											counter="displayobjetoC28" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												id="objetoC28" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayobjetoC28" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="objetoC28"/>
@@ -7440,7 +7381,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC28.tareColumnTree}" tabindex="7"
+											counter="displayfomentoC28" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												id="fomentoC28" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayfomentoC28" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="fomentoC28"/>
@@ -7699,7 +7642,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="6" id="comunidadC291"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnOne}"
-												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>												
+												counter="displaycomunidadC291" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaycomunidadC291" class="p-d-block" />													
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadC291"/>
@@ -7732,7 +7677,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="8" id="linkC291" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnTwo}"/>												
+											counter="displaylinkC291" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnTwo}"/>
+											<h:outputText id="displaylinkC291" class="p-d-block" />													
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC291"/>
@@ -7745,8 +7692,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="9" 
+											counter="displayobjetoC291" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC291.tareColumnTree}"/>
-											
+											<h:outputText id="displayobjetoC291" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -7987,7 +7935,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnOne}" tabindex="4"
+											counter="displaycomunidadC301" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											 id="comunidadC301" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaycomunidadC301" class="p-d-block" /> 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadC301"/>
@@ -7998,7 +7948,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea rows="3" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnTwo}" tabindex="5"
+											counter="displaydanioC301" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="danioC301" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaydanioC301" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="danioC301"/>
@@ -8009,7 +7961,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea rows="3" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnTree}" tabindex="6"
+											counter="displayremediacionC301" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="remediacionC301" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayremediacionC301" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="remediacionC301"/>
@@ -8020,7 +7974,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea rows="3" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
+											counter="displaycompensacionC301" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="compensacionC301" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnFour}" tabindex="7"/>
+											<h:outputText id="displaycompensacionC301" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="compensacionC301"/>
@@ -8031,7 +7987,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="8" id="linkC301" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaylinkC301" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnFive}"/>
+											<h:outputText id="displaylinkC301" class="p-d-block" />	
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -8045,7 +8003,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="9" id="linkC301_2" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaylinkC301_2" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC301.tareColumnSix}"/>
+											<h:outputText id="displaylinkC301_2" class="p-d-block" />		
 												
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
@@ -8333,7 +8293,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="6"
+											counter="displaycomunidadC311" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											 id="comunidadC311"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadC311" class="p-d-block" /> 
 												
 									</div>								
 									<div class="p-field p-col-12 p-md-3">
@@ -8409,7 +8371,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="11" id="linkC311" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnTwo}"/>												
+											counter="displaylinkC311" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasC311.tareColumnTwo}"/>
+											<h:outputText id="displaylinkC311" class="p-d-block" />													
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkC311"/>
@@ -8534,8 +8498,9 @@
 									 
 									<p:commandButton id="btnTablaOPC" 
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"	
+									action="#{seguimientoSalvaguardaController.nuevoRegistroInfoOpcional(3)}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-										icon="#{botones['icono.mas']}" process="@this panelIngresoOPC" update="panelIngresoOPC" title="#{tooltip['nuevoRegistro']}">										
+										icon="#{botones['icono.mas']}" process="@this " update="panelIngresoOPC" title="#{tooltip['nuevoRegistro']}">										
 										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPC}"/>
 									</p:commandButton>	
 								</div>
@@ -8552,7 +8517,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPC.tareColumnOne}" tabindex="1"
+										counter="displayactividadOPC" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										 id="actividadOPC"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayactividadOPC" class="p-d-block" /> 
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="actividadOPC"/>
@@ -8563,7 +8530,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPC.tareColumnTwo}" tabindex="2"
+										counter="displaylogroOPC" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										 id="logroOPC"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displaylogroOPC" class="p-d-block" />  
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="logroOPC"/>
@@ -8574,8 +8543,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText id="linkOPC" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+										counter="displaylinkOPC" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPC.tareColumnTree}" tabindex="3"/>
-											
+										<h:outputText id="displaylinkOPC" class="p-d-block" /> 	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="linkOPC"/>
@@ -8590,7 +8560,7 @@
 															update="panelTablaOPC :form:growl panelIngresoOPC"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoOPC" update="panelIngresoOPC" value="#{botones['cancelar']}"
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this " update="panelIngresoOPC" value="#{botones['cancelar']}"
 											tabindex="5" immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPC}"/>
@@ -8643,7 +8613,7 @@
 									</h:panelGrid>
 								
 							</div>
-							<br/> <!-- 
+							<br/>  
 							<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (C)" style="font-weight:bold;"/>
@@ -8656,7 +8626,7 @@
 										<p:outputLabel id="displayC"/>
 										<p:message for="resumenC"/>
 									</div>
-							</div>   -->
+							</div>   
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -8689,12 +8659,12 @@
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton>
+									</p:commandButton> <!-- 
 									<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
 										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
 									
-									</p:commandButton>				
+									</p:commandButton>		 -->		
 							</h:panelGrid>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-3"></div>
@@ -8907,8 +8877,10 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea id="comunidadD321"
+											counter="displaycomunidadD321" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnOne}" tabindex="6"/>
+											<h:outputText id="displaycomunidadD321" class="p-d-block" />
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -8921,7 +8893,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea id="espacioD321" 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displayespacioD321" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnTwo}" tabindex="7"/>
+											<h:outputText id="displayespacioD321" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="espacioD321"/>
@@ -8960,8 +8934,10 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnTree}" 
+											counter="displayactorD321" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												id="actorD321" rows="3" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
 												tabindex="10"/>
+											<h:outputText id="displayactorD321" class="p-d-block" />	
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -8995,8 +8971,10 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText 
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+												counter="displaylinkD321" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD321.tareColumnFour}" id="linkD321"												
-												tabindex="11"/>																							 	
+												tabindex="11"/>			
+											<h:outputText id="displaylinkD321" class="p-d-block" />																					 	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkD321"/>
@@ -9187,7 +9165,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331.tareColumnOne}" tabindex="2"
+											counter="displayactorD331" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											 id="actorD331"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayactorD331" class="p-d-block" /> 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="actorD331"/>
@@ -9251,7 +9231,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331.tareColumnTwo}" tabindex="6"
+											counter="displayobjetivoD331" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											 id="objetivoD331"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayobjetivoD331" class="p-d-block" /> 
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="objetivoD331"/>
@@ -9297,7 +9279,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasD331.tareColumnFour}" tabindex="9"
-											 id="linkD331"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>											
+											counter="displaylinkD331" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											 id="linkD331"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaylinkD331" class="p-d-block" /> 											
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkD331"/>
@@ -9411,8 +9395,9 @@
 									 
 									<p:commandButton id="btnTablaOPD" 
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"	
+									action="#{seguimientoSalvaguardaController.nuevoRegistroInfoOpcional(4)}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-										icon="#{botones['icono.mas']}" process="@this panelIngresoOPD" update="panelIngresoOPD" title="#{tooltip['nuevoRegistro']}">										
+										icon="#{botones['icono.mas']}" process="@this " update="panelIngresoOPD" title="#{tooltip['nuevoRegistro']}">										
 										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPD}"/>
 									</p:commandButton>
 								</div>
@@ -9428,7 +9413,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPD.tareColumnOne}" tabindex="1"
+										counter="displayactividadOPD" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="actividadOPD" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayactividadOPD" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="actividadOPD"/>
@@ -9439,7 +9426,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPD.tareColumnTwo}" tabindex="2"
+										counter="displaylogroOPD" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="logroOPD" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displaylogroOPD" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="logroOPD"/>
@@ -9450,8 +9439,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText id="linkOPD" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+										counter="displaylinkOPD" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPD.tareColumnTree}" tabindex="3"/>
-											
+										<h:outputText id="displaylinkOPD" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="linkOPD"/>
@@ -9466,7 +9456,7 @@
 															update="panelTablaOPD :form:growl panelIngresoOPD"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoOPD" update="panelIngresoOPD" value="#{botones['cancelar']}"
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this " update="panelIngresoOPD" value="#{botones['cancelar']}"
 											tabindex="5" immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPD}"/>
@@ -9519,7 +9509,7 @@
 									</h:panelGrid>
 
 							</div>
-							<br/> <!-- 
+							<br/>  
 							<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (D)" style="font-weight:bold;"/>
@@ -9532,7 +9522,7 @@
 										<p:outputLabel id="displayD"/>
 										<p:message for="resumenD"/>
 									</div>
-							</div>   -->
+							</div>
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -9565,12 +9555,12 @@
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton>
+									</p:commandButton> <!-- 
 									<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
 										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
 									
-									</p:commandButton>							
+									</p:commandButton>		 -->					
 							</h:panelGrid>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-3"></div>
@@ -9744,7 +9734,10 @@
 										<p:outputLabel value="#{etiquetas['comunidad']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE341.tareColumnOne}" tabindex="4"/>
+											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE341.tareColumnOne}" 
+											counter="displaycomunidadE341" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+											tabindex="4"/>
+											<h:outputText id="displaycomunidadE341" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										
@@ -9754,7 +9747,10 @@
 										<p:outputLabel value="#{etiquetas['actoresInvolucrados']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE341.tareColumnTwo}" tabindex="5"/>
+											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE341.tareColumnTwo}" 
+											counter="displayactoresE341" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											tabindex="5"/>
+											<h:outputText id="displayactoresE341" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										
@@ -10006,7 +10002,9 @@
 										<br/>
 										<p:inputTextarea id="otrocatalogoE351" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoE351}"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="3" 
+											counter="displayotrocatalogoE351" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasE351.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoE351" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-1">	
 										<comp:ayuda texto="#{tooltip['nuevaHerramienta']}"/>
@@ -10022,7 +10020,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE351.tareColumnTwo}"
-											required="true" requiredMessage="#{mensajes['campoRequerido']}" id="linkE351" tabindex="4"/>											
+										counter="displaylinkE351" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											required="true" requiredMessage="#{mensajes['campoRequerido']}" id="linkE351" tabindex="4"/>
+										<h:outputText id="displaylinkE351" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkE351"/>
@@ -10290,7 +10290,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="6"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE361.tareColumnOne}"/>												
+											counter="displaycomunidadE361" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE361.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadE361" class="p-d-block" />													
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -10299,7 +10301,10 @@
 										<p:outputLabel value="#{etiquetas['actoresClave']}"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE361.tareColumnTwo}" tabindex="7"/>
+											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE361.tareColumnTwo}" 
+											counter="displayactorE361" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											tabindex="7"/>
+											<h:outputText id="displayactorE361" class="p-d-block" />
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -10552,7 +10557,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="4" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaycomunidadE371" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												id="comunidadE371" value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadE371" class="p-d-block" />	
 												
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
@@ -10576,7 +10583,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea 
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" id="temasE371"
+											counter="displaytemasE371" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareColumnTwo}" tabindex="6"/>
+											<h:outputText id="displaytemasE371" class="p-d-block" />
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -10626,8 +10635,10 @@
 											</p:selectOneMenu>
 											<br/>
 										<p:inputTextarea id="otrocatalogoE371" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoE371}"
+										counter="displayotrocatalogoE371" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="9" 
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoE371" class="p-d-block" />	
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="publicoE371"/>
@@ -10687,9 +10698,11 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="12" id="linkE371" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaylinkE371" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE371.tareColumnTree}">
 												<p:ajax process="@this" />
-											</p:inputText>											
+											</p:inputText>			
+											<h:outputText id="displaylinkE371" class="p-d-block" />								
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkE371"/>
@@ -10937,7 +10950,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="4" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaycomunidadE381" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											id="comunidadE381"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE381.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadE381" class="p-d-block" />
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -10966,8 +10981,11 @@
 										</p:selectOneMenu>
 										<br/>
 										<p:inputTextarea id="otrocatalogoE381" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoE381}"
+										counter="displayotrocatalogoE381" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"	
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="6" 
-											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasE381.tareAnotherCatalog}"/>												
+											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasE381.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoE381" class="p-d-block" />		
+																						
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="servicioE381"/>
@@ -11001,7 +11019,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="8" id="linkE381" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE381.tareColumnTwo}"/>																								
+											counter="displaylinkE381" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE381.tareColumnTwo}"/>
+											<h:outputText id="displaylinkE381" class="p-d-block" />																									
 									</div>									
 									<div class="p-field p-col-12 p-md-1">
 										<comp:ayuda texto="#{tooltip['resultadoInvestigacion']}"/>
@@ -11215,7 +11235,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="4" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaycomunidadE391" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											id="comunidadE391"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE391.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadE391" class="p-d-block" />
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -11243,8 +11265,10 @@
 										</p:selectOneMenu>
 										<br/>
 										<p:inputTextarea id="otrocatalogoE391" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoE391}"
+										counter="displayotrocatalogoE391" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="8" 
-											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasE391.tareAnotherCatalog}"/>											
+											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasE391.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoE391" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="recursoE391"/>
@@ -11298,7 +11322,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="9" id="linkE391" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE391.tareColumnTwo}"/>																								
+											counter="displaylinkE391" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE391.tareColumnTwo}"/>
+											<h:outputText id="displaylinkE391" class="p-d-block" />																									
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkE391"/>
@@ -13178,8 +13204,9 @@
 									 
 									<p:commandButton id="btnTablaOPE" 
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"	
+										action="#{seguimientoSalvaguardaController.nuevoRegistroInfoOpcional(5)}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
-										icon="#{botones['icono.mas']}" process="@this panelIngresoOPE" update="panelIngresoOPE" title="#{tooltip['nuevoRegistro']}">										
+										icon="#{botones['icono.mas']}" process="@this " update="panelIngresoOPE" title="#{tooltip['nuevoRegistro']}">										
 										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPE}"/>
 									</p:commandButton>	
 								</div>
@@ -13196,7 +13223,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-10">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPE.tareColumnOne}" tabindex="1"
+										counter="displayactividadOPE" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayactividadOPE" class="p-d-block" />	
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
@@ -13204,7 +13233,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-10">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPE.tareColumnTwo}" tabindex="2"
+										counter="displaylogroOPE" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displaylogroOPE" class="p-d-block" />		
 									</div>
 									
 									<div class="p-field p-col-12 p-md-2" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
@@ -13213,7 +13244,9 @@
 									<div class="p-field p-col-12 p-md-9">
 										<p:inputText 
 											id="linkOPE" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaylinkOPE" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPE.tareColumnTree}" tabindex="3"/>
+										<h:outputText id="displaylinkOPE" class="p-d-block" />	
 											
 									</div>
 									<div class="p-field p-col-12 p-md-1">
@@ -13228,7 +13261,7 @@
 															update="panelTablaOPE :form:growl panelIngresoOPE"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoOPE" update="panelIngresoOPE" 
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this " update="panelIngresoOPE" 
 											value="#{botones['cancelar']}"
 											immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
@@ -13282,7 +13315,7 @@
 									</h:panelGrid>
 								
 							</div>
-							<br/> <!-- 
+							<br/>  
 							<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (E)" style="font-weight:bold;"/>
@@ -13295,7 +13328,7 @@
 										<p:outputLabel id="displayE"/>
 										<p:message for="resumenE"/>
 									</div>
-							</div>  -->
+							</div>  
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -13328,12 +13361,12 @@
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton>
+									</p:commandButton> <!-- 
 								<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
 										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
 									
-								</p:commandButton>						
+								</p:commandButton>			 -->			
 							</h:panelGrid>
 							<div class="ui-fluid p-formgrid p-grid">
 							<div class="p-field p-col-12 p-md-3"></div>
@@ -13543,8 +13576,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="6" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
+											counter="displaycomunidadF411" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF411.tareColumnOne}"/>
-												
+											<h:outputText id="displaycomunidadF411" class="p-d-block" />	
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -13554,7 +13588,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="7" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF411.tareColumnTwo}"/>												
+											counter="displayriesgoF411" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF411.tareColumnTwo}"/>
+											<h:outputText id="displayriesgoF411" class="p-d-block" />													
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -13588,7 +13624,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="9" required="true" requiredMessage="#{mensajes['campoRequerido']}" id="linkF411"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF411.tareColumnTree}"/>																								
+											counter="displaylinkF411" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF411.tareColumnTree}"/>
+											<h:outputText id="displaylinkF411" class="p-d-block" />																									
 									</div>									
 									<div class="p-field p-col-12 p-md-1">
 										<comp:ayuda texto="#{tooltip['resultadoEstudioInvestigacion']}"/>
@@ -13846,7 +13884,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea tabindex="6" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF421.tareColumnOne}"/>												
+											counter="displaycomunidadF421" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF421.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadF421" class="p-d-block" />													
 									</div>									
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -13856,7 +13896,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
+											counter="displayriesgoF421" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF421.tareColumnTwo}" tabindex="7"/>
+											<h:outputText id="displayriesgoF421" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -13882,8 +13924,10 @@
 										</p:selectOneMenu>
 										<br/>
 										<p:inputTextarea id="otrocatalogoF421" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoF421}"
+											counter="displayotrocatalogoF421" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="9" 
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasF421.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoF421" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<comp:ayuda texto="#{tooltip['nuevaMedida']}"/>
@@ -13916,7 +13960,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText tabindex="11" required="true" requiredMessage="#{mensajes['campoRequerido']}" id="linkF421"
+											counter="displaylinkF421" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF421.tareColumnTree}"/>
+											<h:outputText id="displaylinkF421" class="p-d-block" />	
 																								
 									</div>									
 									<div class="p-field p-col-12 p-md-1">
@@ -14101,7 +14147,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF431.tareColumnOne}" tabindex="2"
+											counter="displayaccionF431" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayaccionF431" class="p-d-block" />	
 									</div>								
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -14121,7 +14169,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
+											counter="displayactorF431" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF431.tareColumnTwo}" tabindex="4"/>
+											<h:outputText id="displayactorF431" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -14131,7 +14181,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
+											counter="displayresultadoF431" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF431.tareColumnTree}" tabindex="5"/>
+											<h:outputText id="displayresultadoF431" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -14162,7 +14214,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText 
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" id="linkF431"
-												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF431.tareColumnFour}" tabindex="7"/>												
+												counter="displaylinkF431" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF431.tareColumnFour}" tabindex="7"/>	
+											<h:outputText id="displaylinkF431" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<comp:ayuda texto="#{tooltip['contratoConvenio']}"/>
@@ -14421,7 +14475,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
+											counter="displaycomunidadF441" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF441.tareColumnOne}" tabindex="6"/>
+											<h:outputText id="displaycomunidadF441" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -14450,7 +14506,9 @@
 										<br/>
 										<p:inputTextarea id="otrocatalogoF441" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoF441}"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="8" 
+											counter="displayotrocatalogoF441" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasF441.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoF441" class="p-d-block" />	
 											
 									</div>
 									<div class="p-field p-col-12 p-md-1">
@@ -14465,7 +14523,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" 
+										counter="displayactividadF441" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF441.tareColumnTwo}" tabindex="9"/>
+										<h:outputText id="displayactividadF441" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -14495,8 +14555,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 										<p:inputText required="true" requiredMessage="#{mensajes['campoRequerido']}"
-											id="linkF441" 
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF441.tareColumnTree}" tabindex="11"/>											
+											id="linkF441" counter="displaylinkF441" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF441.tareColumnTree}" tabindex="11"/>
+										<h:outputText id="displaylinkF441" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<comp:ayuda texto="#{tooltip['notaPrensa']}"/>
@@ -14669,7 +14730,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF452.tareColumnOne}" tabindex="2"
+											counter="displaysistemaF452" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaysistemaF452" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 									</div>
@@ -14699,8 +14762,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasF452.tareColumnTwo}" tabindex="5"
-												id="linkF452"
-												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>												
+												id="linkF452" counter="displaylinkF452" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>	
+											<h:outputText id="displaylinkF452" class="p-d-block" />												
 									</div>
 									<div class="p-field p-col-12 p-md-1">
 										<comp:ayuda texto="#{tooltip['matrizSeguimiento']}"/>
@@ -14802,9 +14866,10 @@
 								<div class="p-field p-col-12 p-md-1" style="height:10px;">
 									 
 									<p:commandButton id="btnTablaOPF" 
+									action="#{seguimientoSalvaguardaController.nuevoRegistroInfoOpcional(6)}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 									styleClass="botonAgregaRegistro" value="#{botones['agregar']}"	
-										icon="#{botones['icono.mas']}" process="@this panelIngresoOPF" update="panelIngresoOPF" title="#{tooltip['nuevoRegistro']}">										
+										icon="#{botones['icono.mas']}" process="@this " update="panelIngresoOPF" title="#{tooltip['nuevoRegistro']}">										
 										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPF}"/>
 									</p:commandButton>
 								</div>
@@ -14821,7 +14886,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPF.tareColumnOne}" tabindex="1"
+										counter="displayactividadOPF" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										 id="actividadOPF"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										 <h:outputText id="displayactividadOPF" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="actividadOPF"/>
@@ -14831,7 +14898,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPF.tareColumnTwo}" tabindex="2"
+										counter="displaylogroOPF" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										 id="logroOPF"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										 <h:outputText id="displaylogroOPF" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="logroOPF"/>
@@ -14842,7 +14911,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-8">
 										<p:inputText required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" id="linkOPF"
+										counter="displaylinkOPF" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPF.tareColumnTree}" tabindex="3"/>
+										<h:outputText id="displaylinkOPF" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 									
@@ -14861,7 +14932,7 @@
 									<div class="p-field p-col-12 p-md-2">						
 										<p:commandButton 
 											
-											icon="#{botones['icono.cancelar']}" process="@this panelIngresoOPF" update="panelIngresoOPF" immediate="true" value="#{botones['cancelar']}"
+											icon="#{botones['icono.cancelar']}" process="@this " update="panelIngresoOPF" immediate="true" value="#{botones['cancelar']}"
 											tabindex="5" resetValues="true" title="#{tooltip['cancelar']} ">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPF}"/>
@@ -14913,7 +14984,7 @@
 									</h:panelGrid>
 
 							</div>
-							<br/> <!-- 
+							<br/>  
 							<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (F)" style="font-weight:bold;"/>
@@ -14926,7 +14997,7 @@
 										<p:outputLabel id="displayF"/>
 										<p:message for="resumenF"/>
 									</div>
-							</div>  -->
+							</div>  
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -14959,12 +15030,12 @@
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton>
+									</p:commandButton> <!-- 
 									<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
 										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
 									
-									</p:commandButton>	
+									</p:commandButton>	 -->
 							</h:panelGrid>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-3"></div>
@@ -15092,7 +15163,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG461.tareColumnOne}" tabindex="2"
+											counter="displayresponsableG461" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"	
 											id="responsableG461" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayresponsableG461" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="responsableG461"/>	
@@ -15103,7 +15176,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG461.tareColumnTwo}" tabindex="3"
+											counter="displayautoresG461" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"	
 											id="autoresG461" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayautoresG461" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="autoresG461"/>	
@@ -15114,7 +15189,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG461.tareColumnTree}" tabindex="4"
+											counter="displayestudioG461" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											 id="estudioG461"	required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											 <h:outputText id="displayestudioG461" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="estudioG461"/>	
@@ -15142,8 +15219,10 @@
 										</p:selectOneMenu>
 										<br/>
 										<p:inputTextarea id="otrocatalogoG461" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoG461}"
+										counter="displayotrocatalogoG461" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="6" 
 											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasG461.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoG461" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comboRiesgoG461"/>	
@@ -15175,8 +15254,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG461.tareColumnFour}" tabindex="8"
-												id="linkG461"
-												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>												
+												id="linkG461" counter="displaylinkG461" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displaylinkG461" class="p-d-block" />													
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkG461"/>
@@ -15439,7 +15519,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" 
+											counter="displaycomunidadG471" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											id="comunidadG471"	value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnOne}" tabindex="6"/>
+											<h:outputText id="displaycomunidadG471" class="p-d-block" />
 																						
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -15470,8 +15552,10 @@
 											</p:selectOneMenu>
 											<br/>
 											<p:inputTextarea id="otrocatalogoG471" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoG471}"
+												counter="displayotrocatalogoG471" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="7" 
 												value="#{seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareAnotherCatalog}"/>
+											<h:outputText id="displayotrocatalogoG471" class="p-d-block" />	
 									</div>	
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comboControlVF471"/>	
@@ -15804,7 +15888,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" id="comunidadG481"
+											counter="displaycomunidadG481" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnOne}" tabindex="6"/>
+											<h:outputText id="displaycomunidadG481" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadG481"/>
@@ -15864,7 +15950,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"  id="resultadoG481"
+											counter="displayresultadoG481" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnTree}" tabindex="10"/>
+											<h:outputText id="displayresultadoG481" class="p-d-block" />
 											
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -15875,13 +15963,15 @@
 										<p:outputLabel value="#{etiquetas['linkVerificador']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
-											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnFour}" 
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG481.tareColumnFour}"
+											counter="displaylinkG481" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200" 
 												id="linkG481" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"
-												tabindex="11"/>
-											<p:tooltip for="linkG481" position="top" value="#{tooltip['notaPrensa']} "/>
+												tabindex="11"/>		
+											<h:outputText id="displaylinkG481" class="p-d-block" />										
 									</div>
 									<div class="p-field p-col-12 p-md-3">
-										<p:message for="linkG481"/>
+										<p:message for="linkG481"/>																			
+										<comp:ayuda texto="#{tooltip['notaPrensa']}"/>									
 									</div>
 									
 									<div class="p-field p-col-12 p-md-4">
@@ -16153,7 +16243,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea id="comunidadG491"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="6"
+											counter="displaycomunidadG491" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadG491" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="comunidadG491"/>
@@ -16165,7 +16257,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea 
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="7" id="organizacionG491"
+												counter="displayorganizacionG491" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnTwo}"/>
+											<h:outputText id="displayorganizacionG491" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="organizacionG491"/>
@@ -16196,7 +16290,9 @@
 										<br/>
 										<p:inputTextarea id="otrocatalogoG491" cols="50" rows="2" disabled="#{seguimientoSalvaguardaBean.otroCatalogoG491}"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="9" 
-											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareAnotherCatalog}"/>	
+											counter="displayotrocatalogoG491" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
+											value="#{seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareAnotherCatalog}"/>
+										<h:outputText id="displayotrocatalogoG491" class="p-d-block" />			
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										
@@ -16233,7 +16329,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText id="suportG491"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="13"
+												counter="displaysuportG491" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnTree}"/>
+											<h:outputText id="displaysuportG491" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="suportG491"/>
@@ -16266,7 +16364,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText id="linkG491" 
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="15"
+												counter="displaylinkG491" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG491.tareColumnFour}"/>
+											<h:outputText id="displaylinkG491" class="p-d-block" />	
 												
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -16443,7 +16543,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea id="actividadG501"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="1"
+											counter="displayactividadG501" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG501.tareColumnOne}"/>
+											<h:outputText id="displayactividadG501" class="p-d-block" />
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="actividadG501"/>
@@ -16467,7 +16569,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea id="resultadoG501"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="3"
+												counter="displayresultadoG501" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 												value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG501.tareColumnTwo}"/>
+											<h:outputText id="displayresultadoG501" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="resultadoG501"/>
@@ -16500,7 +16604,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputText  id="linkG501"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" tabindex="5"
-											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG501.tareColumnTree}"/>											
+											counter="displaylinkG501" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG501.tareColumnTree}"/>
+											<h:outputText id="displaylinkG501" class="p-d-block" />											
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="linkG501"/>
@@ -16757,7 +16863,9 @@
 									<div class="p-field p-col-12 p-md-6">
 											<p:inputTextarea id="comunidadG512"
 											required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" tabindex="6"
+											counter="displaycomunidadG512" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="100"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG512.tareColumnOne}"/>
+											<h:outputText id="displaycomunidadG512" class="p-d-block" />
 											
 									</div>
 									<div class="p-field p-col-12 p-md-3">
@@ -17025,8 +17133,9 @@
 									 
 									<p:commandButton id="btnTablaOPG" 
 										styleClass="botonAgregaRegistro" value="#{botones['agregar']}"	
+										action="#{seguimientoSalvaguardaController.nuevoRegistroInfoOpcional(7)}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"	
-										icon="#{botones['icono.mas']}" process="@this panelIngresoOPG" update="panelIngresoOPG" title="#{tooltip['nuevoRegistro']}">										
+										icon="#{botones['icono.mas']}" process="@this " update="panelIngresoOPG" title="#{tooltip['nuevoRegistro']}">										
 										<f:setPropertyActionListener value="true" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPG}"/>
 									</p:commandButton>		
 								</div>
@@ -17042,7 +17151,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPG.tareColumnOne}" tabindex="1"
+										counter="displayactividadOPG" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="actividadOPG" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displayactividadOPG" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="actividadOPG"/>
@@ -17053,7 +17164,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPG.tareColumnTwo}" tabindex="2"
+										counter="displaylogroOPG" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 											id="logroOPG" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+										<h:outputText id="displaylogroOPG" class="p-d-block" />		
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="logroOPG"/>
@@ -17064,7 +17177,9 @@
 									</div>
 									<div class="p-field p-col-12 p-md-7">
 										<p:inputText required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true" id="linkOPG" 
+										counter="displaylinkOPG" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
 										value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasOPG.tareColumnTree}" tabindex="3"/>
+										<h:outputText id="displaylinkOPG" class="p-d-block" />	
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:message for="linkOPG"/>
@@ -17079,7 +17194,7 @@
 															update="panelTablaOPG :form:growl panelIngresoOPG"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngresoOPG" update="panelIngresoOPG" value="#{botones['cancelar']}" 
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this " update="panelIngresoOPG" value="#{botones['cancelar']}" 
 											tabindex="5" immediate="true" resetValues="true" title="#{tooltip['cancelar']} ">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaOPG}"/>
@@ -17133,7 +17248,7 @@
 									
 									
 							</div>
-							<br/> <!-- 
+							<br/>  
 							<div class="ui-fluid p-formgrid p-grid">																									
 									<div class="p-field p-col-12 p-md-12">
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (G)" style="font-weight:bold;"/>
@@ -17146,7 +17261,7 @@
 										<p:outputLabel id="displayG"/>
 										<p:message for="resumenG"/>
 									</div>
-							</div>  -->
+							</div>  
 							<br/>
 							<h:panelGrid columns="4" style="margin: 0 auto;">
 								<p:commandButton value="#{botones['atras']}" styleClass="botonRegistroProyecto"
@@ -17177,12 +17292,12 @@
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoFinalizarReporte(7)}" icon="#{botones['icono.check']}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton>
+									</p:commandButton> <!-- 
 								<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
 										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
 										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
 									
-								</p:commandButton>						
+								</p:commandButton>			 -->			
 							</h:panelGrid>
 							<div class="ui-fluid p-formgrid p-grid">
 								<div class="p-field p-col-12 p-md-3"></div>

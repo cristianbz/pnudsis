@@ -18,6 +18,7 @@ public class DtoResumenSalvaguarda {
 	private String fecha;
 	private String proyecto;	
 	private String socioImplementador;
+	private String socioEstrategico;
 	private String sectores;
 	private String pregunta1;
 	private String pregunta2;
@@ -38,6 +39,7 @@ public class DtoResumenSalvaguarda {
 	private String siNo8B;
 	private String pregunta81B;
 	private String pregunta9B;
+	private String pregunta91B;
 	private String siNo9B;
 	private String pregunta10B;
 	private String siNo10B;
