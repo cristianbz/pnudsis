@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DtoResumenSalvaguarda {
-
+	private String periodo;
 	private String logoEscudo;
 	private String logoMae;
 	private String logoPie;

@@ -15,8 +15,11 @@ import javax.ejb.Stateless;
 
 import org.hibernate.Hibernate;
 
+import com.itextpdf.text.log.SysoCounter;
+
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.dto.DtoGenero;
+import ec.gob.ambiente.sis.dto.DtoResumenGenero;
 import ec.gob.ambiente.sis.dto.DtoTableResponses;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 
@@ -72,6 +75,7 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		listaTemp=findByCreateQuery(sql, camposCondicion);
 		for (AdvanceExecutionProjectGender aepg : listaTemp) {
 			Hibernate.initialize(aepg.getProjectGenderIndicator().getIndicators());
+			Hibernate.initialize(aepg.getAdvanceExecutionSafeguards());
 		}
 		return listaTemp;
 	}
@@ -199,5 +203,63 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		}
 		return lista;
 	}
+	
+	public List<DtoResumenGenero> listaResumenAvanceGenero(int codigoProyecto, int codigoAvance) throws Exception{
+		List<DtoResumenGenero> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT ct.caty_description,ca.cata_text2,indi.indi_description,indi.indi_id, indi.indi_type ,aepg.aepg_value_reached_one,aepg.aepg_value_reached_two, aepg.aepg_actions_done, pgindi.pgig_goals, pgindi.pgig_goal_value_one, pgindi.pgig_goal_value_two " + 
+					" FROM sis.projects_gender_info pginfo, sis.project_gender_indicator pgindi,sis.advance_execution_project_gender aepg, sis.catalogs ca,sis.indicators indi,sis.catalogs_types ct " +
+					" WHERE pginfo.pgin_id = pgindi.pgin_id AND ca.cata_id=pginfo.cata_id AND ca.caty_id=ct.caty_id AND pginfo.proj_id=" + codigoProyecto +
+					" AND indi.indi_id=pgindi.indi_id AND aepg.pgig_id= pgindi.pgig_id AND aepg.adex_id=" + codigoAvance +
+					" ORDER BY pginfo.pgin_id";
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoResumenGenero dto = new DtoResumenGenero();				
+				if(dataObj[0]!=null)
+					dto.setTema(dataObj[0].toString());					
+				if(dataObj[1]!=null)
+					dto.setLinea(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setIndicador(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setCodigoIndicador(dataObj[3].toString());
+				if(dataObj[4]!=null)
+					dto.setTipoIndicador(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setValorAlcanzadoUno(dataObj[5].toString());	
+				if(dataObj[6]!=null)
+					dto.setValorAlcanzadoDos(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setAcciones(dataObj[7].toString());
+				if(dataObj[8]!=null)
+					dto.setMeta(dataObj[8].toString());
+				if(dataObj[9]!=null)
+					dto.setValorMetaUno(dataObj[9].toString());
+				if(dataObj[10]!=null)
+					dto.setValorMetaDos(dataObj[10].toString());
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+	
+	public List<AdvanceExecutionProjectGender> listaIndicadoresReportadosProyecto(int codigoProyecto, int codigoIndicador)throws Exception{
+		List<AdvanceExecutionProjectGender> listaTemp=null;
+		String sql="SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.projects.projId=:codigoProyecto AND PGIN.indicators.indiId=:codigoIndicador ORDER BY AEPG.advanceExecutionSafeguards.adexTermFrom";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoProyecto", codigoProyecto);
+		camposCondicion.put("codigoIndicador", codigoIndicador);		
+		listaTemp=findByCreateQuery(sql, camposCondicion);
+		for (AdvanceExecutionProjectGender aepg : listaTemp) {
+			Hibernate.initialize(aepg.getProjectGenderIndicator().getIndicators());	
+			Hibernate.initialize(aepg.getAdvanceExecutionSafeguards());
+		}
+		
+		return listaTemp;
+	}
+	
 }
 

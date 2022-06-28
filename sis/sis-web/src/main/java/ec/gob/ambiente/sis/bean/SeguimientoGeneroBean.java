@@ -95,7 +95,7 @@ public class SeguimientoGeneroBean implements Serializable{
 	
 //	@Getter
 //	@Setter
-//	private List<DetailAdvanceGender> tablaDetalleGenero1;
+//	private List<AdvanceExecutionProjectGender> tablaAvanceGenero;
 	
 	@Getter
 	@Setter

@@ -678,7 +678,10 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					valoresRespuestas.setVaanStatus(true);
 					valoresRespuestas.setVaanNumericAnswerValue(0);
 					valoresRespuestas.setVaanTextAnswerValue("");
-					valoresRespuestas.setVaanYesnoAnswerValue(false);
+					if(valoresRespuestas.getQuestions().getQuesId()==17)
+						valoresRespuestas.setVaanYesnoAnswerValue(true);
+					else
+						valoresRespuestas.setVaanYesnoAnswerValue(false);
 					listaRespuestas.add(valoresRespuestas);
 					if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null)
 						getValueAnswersFacade().agregarNuevaInformacionRespuesta(valoresRespuestas);
@@ -8806,6 +8809,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 									}
 								}
 							}
+							iniciaResumenAvance();
 						}else{
 							
 							getSeguimientoSalvaguardaBean().setDatosAvanceEjecucion(false);

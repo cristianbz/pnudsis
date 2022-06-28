@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
@@ -31,7 +32,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.IElement;
-
+@Stateless
 public class GeneradorPdfHtml {
 	public String procesar(String html, Object dto) {
 		Class<?> noparams[] = {};
@@ -77,7 +78,7 @@ public class GeneradorPdfHtml {
 
 	}
 	
-	public byte[] crearDocumentoPdf(String html) throws IOException {
+	public byte[] crearDocumentoPdf(String html,int posicion) throws IOException {
 		html = html.replace("-webkit-xxx-large", "50").replace("o:p>", "p>");
 		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 		String url = ctx.getRealPath("/") + File.separator +  "resources"+ File.separator +  "images"+ File.separator;
@@ -86,7 +87,10 @@ public class GeneradorPdfHtml {
 		ByteArrayOutputStream file = new ByteArrayOutputStream();
 		PdfWriter writer = new PdfWriter(file);		
 		PdfDocument pdf = new PdfDocument(writer);
-		pdf.setDefaultPageSize(PageSize.A4.rotate());
+		if(posicion==1)
+			pdf.setDefaultPageSize(PageSize.A4);
+		else
+			pdf.setDefaultPageSize(PageSize.A4.rotate());
 		CabeceraPiePaginaPdf piePagina = new CabeceraPiePaginaPdf(pdf);
 		pdf.addEventHandler(PdfDocumentEvent.END_PAGE, piePagina);
 		Document document = HtmlConverter.convertToDocument(html, pdf, properties);		

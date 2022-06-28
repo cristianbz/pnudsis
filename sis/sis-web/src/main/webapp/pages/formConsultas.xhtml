@@ -34,47 +34,65 @@
 			<div class="p-field p-col-12 p-md-3"></div>
 			<div class="p-field p-col-12 p-md-6">
 				<div class="ui-fluid p-formgrid p-grid">
-					<div class="p-field p-col-12 p-md-3">
+					<div class="p-field p-col-12 p-md-12"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+						<p:outputLabel value="#{titulos['reportesAbordajeSalvaguardas']}"
+							style="font-size:18px;font-weight:bold;" />
+					</div>
+				</div>
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
 						<p:outputLabel value="#{etiquetas['tipoReporte']}" />
 					</div>
 					<div class="p-field p-col-12 p-md-9">
-						<p:selectOneRadio
+						<p:selectOneRadio 
 							value="#{reportesController.reportesBean.tipoCargaInformacion}"
 							unselectable="false">
 							<f:selectItem itemLabel="#{etiquetas['porSalvaguarda']}"
 								itemValue="1" />
 							<f:selectItem itemLabel="#{etiquetas['porProyecto']}"
 								itemValue="2" />
-							<p:ajax event="change" process="@this" update="panelSalvaguarda panelProyecto"/>
+							<p:ajax event="change" process="@this" update="panelSalvaguarda panelProyecto" />
 						</p:selectOneRadio>
 					</div>
 				</div>
 				<p:outputPanel id="panelSalvaguarda">
 					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==1}" header="#{titulos['resumenAbordajeSalvaguarda']}">
 						<div class="ui-fluid p-formgrid p-grid">
-							<div class="p-field p-col-12 p-md-3">
-								<p:outputLabel value="#{etiquetas['anio']}" />
+							
+							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:outputLabel value="#{etiquetas['salvaguarda']}:*" />
 							</div>
 							<div class="p-field p-col-12 p-md-3">
-								<p:inputNumber decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" id="anio"
-									value="#{reportesController.reportesBean.anioReporte}" />
-								<p:message for="anio"/>	
-							</div>
-							<div class="p-field p-col-12 p-md-6"></div>
-
-							<div class="p-field p-col-12 p-md-3">
-								<p:outputLabel value="#{etiquetas['salvaguarda']}" />
-							</div>
-							<div class="p-field p-col-12 p-md-3">
-								<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" id="salvaguarda"
+								<p:selectOneMenu required="true" requiredMessage="#{mensajes['campoRequerido']}" id="salvaguarda" tabindex="2"
+									converter="selectOneMenuConverter"
 									value="#{reportesController.reportesBean.salvaguardaSeleccionada}">
-									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}"
-										itemValue="#{null}" />
+									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
 									<f:selectItems
 										value="#{reportesController.reportesBean.listaSalvaguardas}"
 										var="saf" itemLabel="#{saf.safeCode}" itemValue="#{saf}" />
+									<p:ajax event="blur" process="@this"/>	
 								</p:selectOneMenu>
 								<p:message for="salvaguarda"/>
+							</div>
+							<div class="p-field p-col-12 p-md-6"></div>
+							
+							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:outputLabel value="#{etiquetas['anio']}:*" />
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:inputNumber decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" id="anio" tabindex="1"
+									value="#{reportesController.reportesBean.anio}" />
+								<p:message for="anio"/>	
+							</div>
+							<div class="p-field p-col-12 p-md-6"></div>
+							
+							
+							<div class="p-field p-col-12 p-md-3">
+								
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:commandButton value="#{botones['descargarInfo']}" process="@this anioProyecto salvaguarda" ajax="false" action="#{reportesController.generarPdfResumenAbordajePorSalvaguarda()}" icon="#{botones['icono.descargar']}"/>
 							</div>
 							<div class="p-field p-col-12 p-md-6"></div>
 
@@ -84,8 +102,8 @@
 				<p:outputPanel id="panelProyecto">
 					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==2}" header="#{titulos['resumenAbordajeProyecto']}">
 						<div class="ui-fluid p-formgrid p-grid">
-							<div class="p-field p-col-12 p-md-3">
-								<p:outputLabel value="#{etiquetas['proyectos']}" />
+							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:outputLabel value="#{etiquetas['proyectos']}:*" />
 							</div>
 							<div class="p-field p-col-12 p-md-3">
 								<p:selectOneMenu value="#{reportesController.reportesBean.proyectoSeleccionado}" var="pro" id="proyecto" 
@@ -104,7 +122,23 @@
 								<p:message for="proyecto"/>
 							</div>
 							<div class="p-field p-col-12 p-md-6"></div>
-
+							
+							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:outputLabel value="#{etiquetas['anio']}:*" />
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:inputNumber decimalPlaces="0" required="true" requiredMessage="#{mensajes['campoRequerido']}" id="anioProyecto" tabindex="2"
+									value="#{reportesController.reportesBean.anio}" />
+								<p:message for="anioProyecto"/>	
+							</div>
+							<div class="p-field p-col-12 p-md-6"></div>
+							
+							<div class="p-field p-col-12 p-md-3">								
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:commandButton value="#{botones['descargarInfo']}" process="@this anioProyecto" ajax="false" action="#{reportesController.generarPdfResumenAbordajePorProyecto()}" icon="#{botones['icono.descargar']}"/>
+							</div>
+							<div class="p-field p-col-12 p-md-6"></div>
 						</div>
 					</p:panel>
 				</p:outputPanel>
@@ -112,7 +146,13 @@
 			</div>
 			<div class="p-field p-col-12 p-md-3"></div>
 		</div>
-
+						<h:panelGrid style="margin:0 auto;"
+					rendered="#{not cc.attrs.componenteBuscaProyectos.buscaProyectosBean.datosProyecto}">
+					<p:commandButton id="btnVolverInicio"
+						value="#{botones['volverInicio']}" icon="fa fa-home"
+						action="#{sesionController.redireccionarAPagina('','inicio')}"
+						process="@this" />
+				</h:panelGrid>
 	</h:form>
 </body>
 </html>

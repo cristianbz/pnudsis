@@ -30,6 +30,7 @@ import ec.gob.ambiente.sigma.model.Projects;
 import ec.gob.ambiente.sigma.model.ProjectsStrategicPartners;
 import ec.gob.ambiente.sigma.services.ComponentsFacade;
 import ec.gob.ambiente.sigma.services.ProjectsSpecificObjectivesFacade;
+import ec.gob.ambiente.sigma.services.ProjectsStrategicPartnersFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
 import ec.gob.ambiente.sis.bean.SeguimientoGeneroBean;
@@ -127,6 +128,9 @@ public class SeguimientoGeneroController implements Serializable{
 	@EJB
 	@Getter
 	private ProjectsGenderInfoFacade projectsGenderInfoFacade;
+	@EJB
+	@Getter
+	private ProjectsStrategicPartnersFacade projectsStrategicPartnersFacade;
 
 	@EJB
 	@Getter
@@ -206,7 +210,8 @@ public class SeguimientoGeneroController implements Serializable{
 							getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setAdexTermTo(String.valueOf(getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte()).concat("-").concat("12"));
 							if(getSeguimientoGeneroBean().getCodigoStrategicPartner() != null){
 								ProjectsStrategicPartners psp = new ProjectsStrategicPartners();
-								psp.setPspaId(getSeguimientoGeneroBean().getCodigoStrategicPartner());
+//								psp.setPspaId(getSeguimientoGeneroBean().getCodigoStrategicPartner());
+								psp= getProjectsStrategicPartnersFacade().partnerEstrategico(getSeguimientoGeneroBean().getCodigoStrategicPartner());
 								getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setProjectsStrategicPartners(psp);
 							}else{
 								getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().setProjectsStrategicPartners(null);
@@ -265,6 +270,9 @@ public class SeguimientoGeneroController implements Serializable{
 					getSeguimientoGeneroBean().setListaLineasGenero(getAdvanceExecutionProjectGenderFacade().listaIndicadoresReportados(avance.getAdexId()));
 					for (AdvanceExecutionProjectGender aepg : getSeguimientoGeneroBean().getListaLineasGenero()) {
 						aepg.getProjectGenderIndicator().getProjectsGenderInfo().setComponentesGenero(armaComponentes(aepg.getProjectGenderIndicator().getProjectsGenderInfo().getPginComponents()));
+						aepg.setListaReportesAnteriores(new ArrayList<>());
+						aepg.setListaReportesAnteriores(getAdvanceExecutionProjectGenderFacade().listaIndicadoresReportadosProyecto(aepg.getAdvanceExecutionSafeguards().getProjects().getProjId(), aepg.getProjectGenderIndicator().getIndicators().getIndiId()));
+//						System.out.println(aepg.getListaReportesAnteriores().size());
 					}
 					Collections.sort(getSeguimientoGeneroBean().getListaLineasGenero(), new Comparator<AdvanceExecutionProjectGender>(){
 						@Override
@@ -732,7 +740,7 @@ public class SeguimientoGeneroController implements Serializable{
 				getSeguimientoGeneroBean().getFilaTabla6().setTareCanton(ubicaProvinciaCantonParroquia(getSeguimientoGeneroBean().getFilaTabla6().getTareColumnNumberTwo(), 2));
 				getSeguimientoGeneroBean().getFilaTabla6().setTareParroquia(ubicaProvinciaCantonParroquia(getSeguimientoGeneroBean().getFilaTabla6().getTareColumnNumberThree(), 3));
 				getSeguimientoGeneroBean().getFilaTabla6().setTareColumnNumberFour(getSeguimientoGeneroBean().getCodigoAutoIdentificacion());
-				getSeguimientoGeneroBean().getFilaTabla6().setTareColumnNumberFive(0);
+				getSeguimientoGeneroBean().getFilaTabla6().setTareColumnNumberFive(getSeguimientoGeneroBean().getCodigoPuebloNacionalidad());
 				getSeguimientoGeneroBean().getFilaTabla6().setTareGenerico(OperacionesCatalogo.ubicaDescripcionCatalogo(getSeguimientoGeneroBean().getFilaTabla6().getTareColumnNumberFour(),getAplicacionBean().getListaAutoIdentificacion()));
 				if(getSeguimientoGeneroBean().getFilaTabla6().getTareId()== null){				
 					getSeguimientoGeneroBean().getFilaTabla6().setAdvanceExecutionSaveguards(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards());

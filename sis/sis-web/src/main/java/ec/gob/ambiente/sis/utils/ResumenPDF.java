@@ -3526,7 +3526,7 @@ public class ResumenPDF {
 			String pattern = "MMM yy HH:mm";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());
-
+			String periodo = seguimientoSalvaguardas.getAdvanceExecutionSafeguards().getAdexTermFrom().substring(0, 4).concat(" Enero - Diciembre");
 			Document document = new Document();
 			document.setPageSize(PageSize.A4.rotate());
 			document.setMargins(35, 35, 78, 88);//iz dere arriba abajo
@@ -3658,9 +3658,21 @@ public class ResumenPDF {
 			celda.setBorderColor(BaseColor.WHITE);
 			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tablaCabecera.addCell(celda);
-
-
 			document.add(tablaCabecera);
+			PdfPTable tablaPeriodo = new PdfPTable(new float[] { 2,5 });			
+			tablaPeriodo.setWidthPercentage(20);
+			tablaPeriodo.setHorizontalAlignment(Element.ALIGN_LEFT);
+			celda = new PdfPCell(new Phrase("PERIODO:", fontTitulos));
+			celda.setBorderColor(BaseColor.WHITE);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
+			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+			tablaPeriodo.addCell(celda);
+			celda = new PdfPCell(new Phrase(periodo, fontContenido));
+			celda.setBorderColor(BaseColor.WHITE);
+//			celda.setBackgroundColor(new BaseColor(13, 165, 196));
+			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+			tablaPeriodo.addCell(celda);
+			document.add(tablaPeriodo);
 
 			if(seguimientoSalvaguardas.isSalvaguardaA()){				
 				Paragraph salvaguardaA = new Paragraph();
@@ -3872,6 +3884,7 @@ public class ResumenPDF {
 			String pattern = "MMM yy HH:mm";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());
+			String periodo = beanGenero.getAdvanceExecutionSafeguards().getAdexTermFrom().substring(0, 4).concat(" Enero - Diciembre");
 			
 			String tema="";			
 			Document document = new Document();
@@ -3886,53 +3899,6 @@ public class ResumenPDF {
 			writer.setPageEvent(event);
 			document.open();
 
-//			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
-//			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
-//			Font fontTitulosSalvaguardas = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 12);
-//			Font fontCabeceraTabla = new Font(FontFamily.HELVETICA, 7, Font.BOLD, BaseColor.BLACK);
-//			Font fontContenidoTablas = new Font(FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
-//			Paragraph parrafoHoja = new Paragraph();
-//			parrafoHoja.add(new Phrase("RESUMEN DE GENERO", fontTitulosSalvaguardas));
-//			parrafoHoja.add(new Phrase(Chunk.NEWLINE));
-//			parrafoHoja.setAlignment(Element.ALIGN_CENTER);
-//			parrafoHoja.add(new Phrase(Chunk.NEWLINE));			
-//			document.add(parrafoHoja);
-//
-//			PdfPTable tablaCabecera = new PdfPTable(2);
-//			PdfPCell celda = new PdfPCell(new Phrase("Título del Plan de implementación, Programa o Proyecto:", fontTitulos));
-//			celda.setBorderColor(BaseColor.WHITE);
-//			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-//			tablaCabecera.addCell(celda);
-//			celda = new PdfPCell(new Phrase(beanGenero.getProyectoSeleccionado().getProjTitle(), fontContenido));
-//			celda.setBorderColor(BaseColor.WHITE);
-//			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
-//			tablaCabecera.addCell(celda);
-//
-//			celda = new PdfPCell(new Phrase("Socio implementador: ", fontTitulos));			
-//			celda.setBorderColor(BaseColor.WHITE);
-//			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-//			tablaCabecera.addCell(celda);
-//
-//			if(beanGenero.getSocioImplementador()!=null)
-//				celda = new PdfPCell(new Phrase(beanGenero.getSocioImplementador().getPartName(), fontContenido));
-//			else
-//				celda = new PdfPCell(new Phrase("", fontContenido));
-//
-//			celda.setBorderColor(BaseColor.WHITE);
-//			celda.setHorizontalAlignment(Element.ALIGN_LEFT);			
-//			tablaCabecera.addCell(celda);
-//
-//			celda = new PdfPCell(new Phrase("Periodo a reportar: ", fontTitulos));			
-//			celda.setBorderColor(BaseColor.WHITE);
-//			celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-//			tablaCabecera.addCell(celda);
-//
-//			celda = new PdfPCell(new Phrase(beanGenero.getAdvanceExecutionSafeguards().getAdexTermFrom().substring(0, 4).concat(" Enero-Diciembre"), fontContenido));
-//			celda.setBorderColor(BaseColor.WHITE);
-//			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
-//			tablaCabecera.addCell(celda);
-//
-//			document.add(tablaCabecera);
 			Font fontCabecera = new Font(FontFamily.HELVETICA, 9, Font.NORMAL, BaseColor.BLACK);
 			Font fontContenido = new Font(FontFamily.HELVETICA, 7, Font.NORMAL, BaseColor.BLACK);
 			Font fontTitulos = FontFactory.getFont(FontFactory.HELVETICA_BOLD.toString(), 7);
@@ -4028,12 +3994,26 @@ public class ResumenPDF {
 				celda.setHorizontalAlignment(Element.ALIGN_LEFT);
 				tablaCabecera.addCell(celda);
 			}
-
-
-			
-
-
 			document.add(tablaCabecera);
+			
+			PdfPTable tablaPeriodo = new PdfPTable(new float[] { 2,5 });
+			
+			tablaPeriodo.setWidthPercentage(20);
+			tablaPeriodo.setHorizontalAlignment(Element.ALIGN_LEFT);
+			celda = new PdfPCell(new Phrase("PERIODO:", fontTitulos));
+			celda.setBorderColor(BaseColor.WHITE);
+			celda.setBackgroundColor(new BaseColor(13, 165, 196));
+			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+			tablaPeriodo.addCell(celda);
+
+
+			celda = new PdfPCell(new Phrase(periodo, fontContenido));
+			celda.setBorderColor(BaseColor.WHITE);
+//			celda.setBackgroundColor(new BaseColor(13, 165, 196));
+			celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+			tablaPeriodo.addCell(celda);
+			document.add(tablaPeriodo);
+			
 
 			Paragraph temaAbarcado = new Paragraph();
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
@@ -4043,7 +4023,7 @@ public class ResumenPDF {
 			temaAbarcado.add(new Phrase(Chunk.NEWLINE));
 			document.add(temaAbarcado);
 
-			PdfPTable tabla1 = new PdfPTable(new float[] { 5, 5, 5, 5 ,5 });
+			PdfPTable tabla1 = new PdfPTable(new float[] { 5, 5, 5, 5,5 ,5 });
 			tabla1.setWidthPercentage(100);
 			tabla1.setHorizontalAlignment(Element.ALIGN_LEFT);
 			tabla1.getDefaultCell().setPadding(3);
@@ -4060,7 +4040,10 @@ public class ResumenPDF {
 			tabla1.addCell(encabezadoTabla1);
 			encabezadoTabla1=new Paragraph();	
 			encabezadoTabla1.add(new Phrase("Indicador",fontCabeceraTabla));
-			tabla1.addCell(encabezadoTabla1);			
+			tabla1.addCell(encabezadoTabla1);
+			encabezadoTabla1=new Paragraph();	
+			encabezadoTabla1.add(new Phrase("Meta",fontCabeceraTabla));
+			tabla1.addCell(encabezadoTabla1);
 			encabezadoTabla1=new Paragraph();	
 			encabezadoTabla1.add(new Phrase("Valor alcanzado",fontCabeceraTabla));
 			tabla1.addCell(encabezadoTabla1);
@@ -4085,11 +4068,32 @@ public class ResumenPDF {
 
 				datosTabla1=new Paragraph();
 				StringBuilder valorIndicador=new StringBuilder();
+				valorIndicador.append(ga.getProjectGenderIndicator().getPgigGoals()).append("\n\n");
 				if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("G")){
 					if(ga.getProjectGenderIndicator().getIndicators().getIndiId() == 9 || ga.getProjectGenderIndicator().getIndicators().getIndiId() == 10)
-						valorIndicador.append("Valor Hombres: ").append(ga.getAepgValueReachedOne()).append(" Valor Mujeres: ").append(ga.getAepgValueReachedTwo());
+						valorIndicador.append("Valor Hombres: ").append(ga.getProjectGenderIndicator().getPgigGoalValueOne()).append("\n").append("Valor Mujeres: ").append(ga.getProjectGenderIndicator().getPgigGoalValueTwo());
 					else
-						valorIndicador.append("Nro Hombres: ").append(ga.getAepgValueReachedOne()).append(" Nro Mujeres: ").append(ga.getAepgValueReachedTwo());
+						valorIndicador.append("Nro Hombres: ").append(ga.getProjectGenderIndicator().getPgigGoalValueOne()).append("\n").append("Nro Mujeres: ").append(ga.getProjectGenderIndicator().getPgigGoalValueTwo());
+				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("N")){
+					valorIndicador.append("Valor: ").append(ga.getProjectGenderIndicator().getPgigGoalValueOne());
+				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("B")){
+					if(ga.getAepgValueReachedOne()!=null)
+						valorIndicador.append("Valor: ").append(ga.getProjectGenderIndicator().getPgigGoalValueOne()==1?"Si":"No");
+					else
+						valorIndicador.append("Valor: ");
+				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("O")){
+					valorIndicador.append("Valor: ").append(ga.getProjectGenderIndicator().getPgigAnotherIndicator());
+				}
+				datosTabla1.add(new Phrase(valorIndicador.toString(),fontContenidoTablas));
+				tabla1.addCell(datosTabla1);
+				
+				datosTabla1=new Paragraph();
+				valorIndicador=new StringBuilder();
+				if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("G")){
+					if(ga.getProjectGenderIndicator().getIndicators().getIndiId() == 9 || ga.getProjectGenderIndicator().getIndicators().getIndiId() == 10)
+						valorIndicador.append("Valor Hombres: ").append(ga.getAepgValueReachedOne()).append("\n").append("Valor Mujeres: ").append(ga.getAepgValueReachedTwo());
+					else
+						valorIndicador.append("Nro Hombres: ").append(ga.getAepgValueReachedOne()!=null?ga.getAepgValueReachedOne():0).append("\n").append("Nro Mujeres: ").append(ga.getAepgValueReachedTwo()!=null?ga.getAepgValueReachedTwo():0);
 				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("N")){
 					valorIndicador.append("Valor: ").append(ga.getAepgValueReachedOne());
 				}else if(ga.getProjectGenderIndicator().getIndicators().getIndiType().equals("B")){
@@ -4102,6 +4106,7 @@ public class ResumenPDF {
 				}
 				datosTabla1.add(new Phrase(valorIndicador.toString(),fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
+				
 				datosTabla1=new Paragraph();
 				datosTabla1.add(new Phrase(ga.getAepgActionsDone() ,fontContenidoTablas));
 				tabla1.addCell(datosTabla1);
@@ -4210,10 +4215,10 @@ public class ResumenPDF {
 				datosTabla3=new Paragraph();
 				datosTabla3.add(new Phrase(String.valueOf(genero.getTareColumnNumberSeven()) ,fontContenidoTablas));
 				tabla3.addCell(datosTabla3);
-
 				datosTabla3=new Paragraph();
-				datosTabla3.add(new Phrase(genero.getTareColumnSix() ,fontContenidoTablas));
-				tabla3.addCell(datosTabla3);
+				PdfPCell celdaLink = new PdfPCell(new Phrase(genero.getTareColumnSix(),fontContenidoTablas));
+				celdaLink.setCellEvent(new LinkInCell(genero.getTareColumnSix()));
+				tabla3.addCell(celdaLink);
 			}
 			document.add(tabla3);
 			preguntas = new Paragraph();
@@ -4299,9 +4304,11 @@ public class ResumenPDF {
 				datosTabla6=new Paragraph();
 				datosTabla6.add(new Phrase(genero.getTareColumnFive() ,fontContenidoTablas));
 				tabla6.addCell(datosTabla6);
+
 				datosTabla6=new Paragraph();
-				datosTabla6.add(new Phrase(genero.getTareColumnSix() ,fontContenidoTablas));
-				tabla6.addCell(datosTabla6);
+				PdfPCell celdaLink = new PdfPCell(new Phrase(genero.getTareColumnSix(),fontContenidoTablas));
+				celdaLink.setCellEvent(new LinkInCell(genero.getTareColumnSix()));
+				tabla6.addCell(celdaLink);
 			}
 			document.add(tabla6);
 
@@ -4388,9 +4395,11 @@ public class ResumenPDF {
 				datosTabla7=new Paragraph();
 				datosTabla7.add(new Phrase(String.valueOf(genero.getTareColumnNumberSeven()) ,fontContenidoTablas));
 				tabla7.addCell(datosTabla7);
+
 				datosTabla7=new Paragraph();
-				datosTabla7.add(new Phrase(genero.getTareColumnFour() ,fontContenidoTablas));
-				tabla7.addCell(datosTabla7);				
+				PdfPCell celdaLink = new PdfPCell(new Phrase(genero.getTareColumnFour(),fontContenidoTablas));
+				celdaLink.setCellEvent(new LinkInCell(genero.getTareColumnFour()));
+				tabla7.addCell(celdaLink);
 			}
 			document.add(tabla7);
 			Paragraph saltoLinea=new Paragraph();
@@ -4587,8 +4596,6 @@ public class ResumenPDF {
 				datosTablaB.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
 				tablaB51.addCell(datosTablaB);
 				datosTablaB=new Paragraph();
-				//					datosTablaB.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
-				//					tablaB51.addCell(datosTablaB);
 				PdfPCell celdaLink = new PdfPCell(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
 				celdaLink.setCellEvent(new LinkInCell(tabla.getTareColumnTree()));
 				tablaB51.addCell(celdaLink);

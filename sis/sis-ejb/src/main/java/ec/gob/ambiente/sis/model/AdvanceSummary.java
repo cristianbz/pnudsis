@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,6 +26,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "advance_summary", schema = "sis")
+@NamedQueries({
+	@NamedQuery(name = "ASU",query = "SELECT ASU FROM AdvanceSummary ASU WHERE ASU.advanceExecutionSafeguards.adexTermFrom =:x AND ASU.safeguards.safeCode=:C ORDER BY ASU.advanceExecutionSafeguards.projects.projShortName"),
+	@NamedQuery(name = "ASU2",query = "SELECT ASU FROM AdvanceSummary ASU WHERE ASU.advanceExecutionSafeguards.projects.projId =:x AND ASU.advanceExecutionSafeguards.adexTermFrom =:desde ORDER BY ASU.safeguards.safeCode")
+})
 public class AdvanceSummary {
 
 	@Getter

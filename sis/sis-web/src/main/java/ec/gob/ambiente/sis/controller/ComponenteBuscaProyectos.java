@@ -45,7 +45,9 @@ import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.BuscaProyectosBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
+import ec.gob.ambiente.sis.dto.DtoGenero;
 import ec.gob.ambiente.sis.dto.DtoRespuestasSalvaguardas;
+import ec.gob.ambiente.sis.dto.DtoResumenGenero;
 import ec.gob.ambiente.sis.dto.DtoResumenSalvaguarda;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.AdvanceExecutionSafeguards;
@@ -366,24 +368,27 @@ public class ComponenteBuscaProyectos implements Serializable{
 			for (RolesUser ru : getLoginBean().getListaRolesUsuario()) {
 				if(ru.getRousId() == getBuscaProyectosBean().getRolUsuarioSeleccionado().getRousId()){
 					if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_tecnico.getEtiqueta()) ){
-
+						
 						getLoginBean().setTipoRol(4);
+						getBuscaProyectosBean().setTipoRol(getLoginBean().getTipoRol());
 						break;
 					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_estrategico.getEtiqueta()) ){
 
 						getLoginBean().setListaProyectosDelSocioEstrategico(getProjectsStrategicPartnersFacade().listaProyectosSocioEstrategico(ru.getRousDescription()));					
 						getLoginBean().setTipoRol(3);
+						getBuscaProyectosBean().setTipoRol(getLoginBean().getTipoRol());
 						seleccionaProyectosdelUsuario(getLoginBean().getTipoRol());
 						break;
 					}else if(ru.getRole().getRoleName().equals(TipoRolesUsuarioEnum.SIS_socio_implementador.getEtiqueta())){
 
 						getLoginBean().setListaProyectosDelSocioImplementador(getProjectsFacade().listarProyectosSocioImplementador(ru.getRousDescription()));
 						getLoginBean().setTipoRol(2);
+						getBuscaProyectosBean().setTipoRol(getLoginBean().getTipoRol());
 						seleccionaProyectosdelUsuario(getLoginBean().getTipoRol());
 						break;
 					}else{
-
 						getLoginBean().setTipoRol(1);
+						getBuscaProyectosBean().setTipoRol(getLoginBean().getTipoRol());
 						break;
 					}
 				}
@@ -1486,6 +1491,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			String pattern = "MMM yy HH:mm";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());
+			String periodo = getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0, 4).concat(" Enero - Diciembre");
 //			List<Questions> preguntasActivas = getQuestionsFacade().buscaPreguntaPorCodigoSalvaguarda("A");
 			List<Questions> preguntasActivas = new ArrayList<>();
 			ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
@@ -1506,6 +1512,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			dto.setFecha(date);
 			dto.setProyecto(getBuscaProyectosBean().getAdvanceExecution().getProjects().getProjTitle());
 			dto.setSocioImplementador(getBuscaProyectosBean().getAdvanceExecution().getProjects().getPartners().getPartName());
+			dto.setPeriodo(periodo);
 			if(getBuscaProyectosBean().getAdvanceExecution().getProjectsStrategicPartners()!=null)
 				dto.setSocioEstrategico(getBuscaProyectosBean().getAdvanceExecution().getProjectsStrategicPartners().getPartners().getPartName());
 			StringBuffer sectores= new StringBuffer();
@@ -1685,7 +1692,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			String html = getGeneradorPdfHtml().procesar(htmlReporte, dto);
 
 //			byte[] array = getGeneradorPdfHtml().crearPdf(html, 25, 25, 25, 25, null);
-			byte[] array = getGeneradorPdfHtml().crearDocumentoPdf(html);
+			byte[] array = getGeneradorPdfHtml().crearDocumentoPdf(html,2);
 			descargarReporte("application/pdf", "resumenSalvaguardas" , array);
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarPdf " + ": ").append(e.getMessage()));
@@ -2741,5 +2748,119 @@ public class ComponenteBuscaProyectos implements Serializable{
 		}
 		return avance;
 	}
+
+	public void generarResumenGeneroPdf(){
+		try{
+//			List<AdvanceSummary> listaAvances = new ArrayList<>();
+			String htmlReporte = GenerarPdfResumen.REPORTE_RESUMEN_ENCABEZADO_GENERO;
+			String pattern = "MMM yy HH:mm";
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+			String date = simpleDateFormat.format(new Date());
+			String periodo="";
+			List<Questions> preguntasActivas = getQuestionsFacade().buscaPreguntasGenero();			
+//			listaAvances = getAdvanceSummaryFacade().listaAvancesPorAvanceEjecucion(getBuscaProyectosBean().getAdvanceExecution().getAdexId());			
+			DtoResumenGenero dto = new DtoResumenGenero();
+			dto.setLogoEscudo("escudoE.png");
+			dto.setLogoMae("mae.png");
+			dto.setLogoPie("pieAmbiente.png");
+			dto.setFecha(date);
+			dto.setProyecto(getBuscaProyectosBean().getAdvanceExecution().getProjects().getProjTitle());
+			dto.setSocioImplementador(getBuscaProyectosBean().getAdvanceExecution().getProjects().getPartners().getPartName());
+			periodo = getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0, 4).concat(" Enero - Diciembre");
+			dto.setPeriodo(periodo);
+			if(getBuscaProyectosBean().getAdvanceExecution().getProjectsStrategicPartners()!=null)
+				dto.setSocioEstrategico(getBuscaProyectosBean().getAdvanceExecution().getProjectsStrategicPartners().getPartners().getPartName());
+			llenaTablaIndicadoresGenero(dto,preguntasActivas);
+			htmlReporte += GenerarPdfResumen.REPORTE_RESUMEN_GENERO_CONTENIDO;
+			htmlReporte += GenerarPdfResumen.REPORTE_RESUMEN_PIE;			
+			String html = getGeneradorPdfHtml().procesar(htmlReporte, dto);
+			byte[] array = getGeneradorPdfHtml().crearDocumentoPdf(html,2);
+			descargarReporte("application/pdf", "resumenGenero" , array);
+		}catch(Exception e){
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarResumenGeneroPdf" + ": ").append(e.getMessage()));			
+		}
+	}
 	
+	public void llenaTablaIndicadoresGenero(DtoResumenGenero genero,List<Questions> preguntasActivas){
+		try{
+			List<DtoRespuestasSalvaguardas> lista = getTableResponsesFacade().resumenPreguntasGenero(getBuscaProyectosBean().getAdvanceExecution().getAdexId());
+			List<DtoResumenGenero> listaDatos = getAdvanceExecutionProjectGenderFacade().listaResumenAvanceGenero(getBuscaProyectosBean().getAdvanceExecution().getProjects().getProjId(), getBuscaProyectosBean().getAdvanceExecution().getAdexId());
+			String tabla="";
+			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Temas</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Línea de acción</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Indicador</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Meta</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Valor alcanzado</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Acciones implementadas</td></tr>\r\n";
+			for (DtoResumenGenero valores : listaDatos) {
+				StringBuilder valorMeta = new StringBuilder();
+				StringBuilder valorAlcanzado = new StringBuilder();	
+				String acciones ="";
+				if(valores.acciones==null)
+					acciones="";
+				else
+					acciones = valores.acciones;
+				if(valores.tipoIndicador.equals("G") && (Integer.valueOf(valores.codigoIndicador)==9 || Integer.valueOf(valores.codigoIndicador) == 10)  ){
+					valorMeta.append("<br/>").append("Hombres: ").append(valores.valorMetaUno).append(", ").append("Mujeres: ").append(valores.valorMetaDos);
+				}else if(valores.tipoIndicador.equals("G")){
+					valorMeta.append("<br/>").append("Nro hombres: ").append(valores.valorMetaUno).append(", ").append("Nro mujeres: ").append(valores.valorMetaDos);
+				}else if(valores.tipoIndicador.equals("B")){
+					valorMeta.append("<br/>").append("Valor: ").append(Integer.valueOf(valores.valorMetaUno)==1?"Si":"No");
+				}else if(valores.tipoIndicador.equals("N")){
+					valorMeta.append("<br/>").append("Valor: ").append(valores.valorMetaUno);
+				}
+				
+				if(valores.tipoIndicador.equals("G") && (Integer.valueOf(valores.codigoIndicador)==9 || Integer.valueOf(valores.codigoIndicador) == 10)  ){
+					valorAlcanzado.append("<br/>").append("Hombres: ").append(valores.getValorAlcanzadoUno()!=null?valores.getValorAlcanzadoUno():0).append(", ").append("Mujeres: ").append(valores.valorAlcanzadoDos!=null?valores.getValorAlcanzadoDos():0);
+				}else if(valores.tipoIndicador.equals("G")){
+					valorAlcanzado.append("<br/>").append("Nro hombres: ").append(valores.getValorAlcanzadoUno()!=null?valores.getValorAlcanzadoUno():0).append(", ").append("Nro mujeres: ").append(valores.valorAlcanzadoDos!=null?valores.getValorAlcanzadoDos():0);
+				}else if(valores.tipoIndicador.equals("B")){
+					String valAlcanzado="";
+					if(valores.valorAlcanzadoUno!=null){
+						if(valores.valorAlcanzadoUno.equals("1"))
+							valAlcanzado="Si";
+						else
+							valAlcanzado="No";
+					}else{
+						valAlcanzado="No";
+					}
+					valorAlcanzado.append("<br/>").append("Valor: ").append(valAlcanzado);
+				}else if(valores.tipoIndicador.equals("N")){
+					valorAlcanzado.append("<br/>").append("Valor: ").append(valores.valorAlcanzadoUno!=null?valores.valorAlcanzadoUno:0);
+				}
+				tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.tema+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.linea+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.indicador+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.meta.concat(valorMeta.toString())  + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valorAlcanzado.toString() + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + acciones + "</td></tr>\r\n";
+			}
+			tabla += "</table>\r\n";
+			genero.setTablaTemas(tabla);
+			tabla="";
+			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:10px;font-family: sans-serif;table-layout: fixed;'>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Espacio identificado</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Tipo de organización</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Fin/rol de la organización </td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Acciones implementadas para fortalecer a la organización</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro mujeres beneficiarias</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
+			for (DtoRespuestasSalvaguardas valores : lista) {
+				if(preguntasActivas.get(0).getQuesId().equals(valores.getCodigoPregunta()))
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto5()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto6() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto6(),valores.getTexto6().length()) + "</td></tr>\r\n";
+			}
+			tabla += "</table>\r\n";
+			genero.setTablaUno(tabla);
+			tabla="";
+			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:10px;font-family: sans-serif;table-layout: fixed;'>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nombre de la lideresa identificada </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Espacio de Diálogo/Participación </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Rol que cumple en el espacio de diálogo/participación</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Acciones de fortalecimiento de la lideresa en el espacio de diálogo/participación</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
+			for (DtoRespuestasSalvaguardas valores : lista) {
+				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta()))
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto5()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto6() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto6(),valores.getTexto6().length()) + "</td></tr>\r\n";
+			}
+			tabla += "</table>\r\n";
+			genero.setTablaDos(tabla);
+			tabla="";
+			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:10px;font-family: sans-serif;table-layout: fixed;'>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Acción </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Resultado </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro Mujeres beneficiarias</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Nro Hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
+			for (DtoRespuestasSalvaguardas valores : lista) {
+				if(preguntasActivas.get(2).getQuesId().equals(valores.getCodigoPregunta()))
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+			}
+			tabla += "</table>\r\n";
+			genero.setTablaTres(tabla);
+			genero.setPreguntaUno(preguntasActivas.get(0).getQuesContentQuestion());
+			genero.setPreguntaDos(preguntasActivas.get(1).getQuesContentQuestion());
+			genero.setPreguntaTres(preguntasActivas.get(2).getQuesContentQuestion());
+		}catch(Exception e){
+//			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "llenaTablaIndicadoresGenero" + ": ").append(e.getMessage()));
+			e.printStackTrace();
+		}
+	}
 }

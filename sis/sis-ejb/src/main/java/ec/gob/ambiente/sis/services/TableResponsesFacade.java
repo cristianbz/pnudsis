@@ -2966,4 +2966,59 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return lista;
 	}
+	
+	public List<DtoRespuestasSalvaguardas> resumenPreguntasGenero(int codigoReporte) throws Exception{
+		List<DtoRespuestasSalvaguardas> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT q.ques_id, tr.tare_column_one, tr.tare_column_two," + 
+            " tr.tare_column_three, tr.tare_column_four,tr.tare_column_five,tr.tare_column_six," + 
+            " CASE WHEN tr.tare_column_number_one IS NOT NULL THEN (SELECT gelo_name FROM geographical_locations WHERE gelo_id = tr.tare_column_number_one) END as prov ," + 
+            " CASE WHEN tr.tare_column_number_two IS NOT NULL THEN (SELECT gelo_name FROM geographical_locations WHERE gelo_id = tr.tare_column_number_two) END as canton, " +
+            " CASE WHEN tr.tare_column_number_three IS NOT NULL THEN (SELECT gelo_name FROM geographical_locations WHERE gelo_id = tr.tare_column_number_three) END as parro, " +
+            " CASE WHEN tr.tare_column_number_four IS NOT NULL THEN (SELECT cata_text2 FROM sis.catalogs WHERE cata_id = tr.tare_column_number_four) END as pueblo, " +
+            " CASE WHEN tr.tare_column_number_five IS NOT NULL THEN (SELECT cata_text2 FROM sis.catalogs WHERE cata_id = tr.tare_column_number_five) END as nacion, " +              
+            " tr.tare_column_number_mens,tr.tare_column_number_women " + 
+            " FROM sigma.projects p, sis.advance_execution_safeguards aex, sis.questions q, " + 
+            " sis.table_responses tr WHERE p.proj_id = aex.proj_id AND tr.ques_id = q.ques_id AND tr.adex_id = aex.adex_id AND tr.tare_status = TRUE " + 
+            " AND aex.adex_id= " + codigoReporte + " ORDER BY q.ques_id,q.ques_question_order ";
+ 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoRespuestasSalvaguardas dto = new DtoRespuestasSalvaguardas();				
+				if(dataObj[0]!=null)
+					dto.setCodigoPregunta(Integer.valueOf(dataObj[0].toString()));					
+				if(dataObj[1]!=null)
+					dto.setTexto1(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setTexto2(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setTexto3(dataObj[3].toString());				
+				if(dataObj[4]!=null)
+					dto.setTexto4(dataObj[4].toString());
+				if(dataObj[5]!=null)
+					dto.setTexto5(dataObj[5].toString());	
+				if(dataObj[6]!=null)
+					dto.setTexto6(dataObj[6].toString());
+				if(dataObj[7]!=null)
+					dto.setProvincia(dataObj[7].toString());
+				if(dataObj[8]!=null)
+					dto.setCanton(dataObj[8].toString());
+				if(dataObj[9]!=null)
+					dto.setParroquia(dataObj[9].toString());
+				if(dataObj[10]!=null)
+					dto.setPueblo(dataObj[10].toString());
+				if(dataObj[11]!=null)
+					dto.setNacionalidad(dataObj[11].toString());
+				if(dataObj[12]!=null)
+					dto.setNumeroHombres(Integer.parseInt(dataObj[12].toString()));
+				if(dataObj[13]!=null)
+					dto.setNumeroMujeres(Integer.parseInt(dataObj[13].toString()));				
+				lista.add(dto);
+			}
+		}
+		return lista;
+	}
+
 }

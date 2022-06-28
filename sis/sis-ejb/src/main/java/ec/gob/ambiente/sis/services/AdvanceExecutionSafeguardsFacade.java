@@ -325,16 +325,16 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		if (codigoSocio == null && codigoPeriodo!=null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL AND AE.adexStatus=TRUE";
 			camposCondicion.put("codigoPeriodo", codigoPeriodo);
 		}else if(codigoSocio == null && codigoPeriodo==null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL";			
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.projectsStrategicPartners.pspaId IS NULL AND AE.adexStatus=TRUE";			
 		}else if(codigoSocio != null && codigoPeriodo != null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.adexStatus=TRUE";
 			camposCondicion.put("codigoSocio", codigoSocio);
 			camposCondicion.put("codigoPeriodo", codigoPeriodo);
 		}else if(codigoSocio != null && codigoPeriodo == null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = FALSE AND AE.adexStatus=TRUE";
 			camposCondicion.put("codigoSocio", codigoSocio);			
 		}
 		camposCondicion.put("codigoProyecto", codigoProyecto);		
@@ -348,16 +348,16 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		if (codigoSocio == null && codigoPeriodo!=null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.projectsStrategicPartners.pspaId IS NULL";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.projectsStrategicPartners.pspaId IS NULL AND AE.adexStatus=TRUE";
 			camposCondicion.put("codigoPeriodo", codigoPeriodo);
 		}else if(codigoSocio == null && codigoPeriodo==null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.projectsStrategicPartners.pspaId IS NULL";			
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.projectsStrategicPartners.pspaId IS NULL AND AE.adexStatus=TRUE";			
 		}else if(codigoSocio != null && codigoPeriodo != null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexTermFrom=:codigoPeriodo AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.adexStatus=TRUE";
 			camposCondicion.put("codigoSocio", codigoSocio);
 			camposCondicion.put("codigoPeriodo", codigoPeriodo);
 		}else if(codigoSocio != null && codigoPeriodo == null){
-			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE";
+			sql="SELECT AE FROM Projects P, AdvanceExecutionSafeguards AE WHERE AE.projects.projId = P.projId AND P.projStatus=TRUE AND P.projId= :codigoProyecto AND AE.projectsStrategicPartners.pspaId=:codigoSocio AND AE.adexReportedStatus=:codigoEstado AND AE.adexIsGender = TRUE AND AE.adexStatus=TRUE";
 			camposCondicion.put("codigoSocio", codigoSocio);			
 		}
 		camposCondicion.put("codigoProyecto", codigoProyecto);		

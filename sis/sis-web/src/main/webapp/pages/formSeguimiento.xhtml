@@ -32,7 +32,12 @@
  	<f:event listener="#{loginController.validarSesion()}" type="preRenderView" />
 	<h:form prependId="true" id="form">
 		<p:growl id="growl" life="3000" showDetail="true" />
-		
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="#{botones['si']}" type="button"
+					styleClass="ui-confirmdialog-yes" icon="#{botones['icono.check']}" />
+				<p:commandButton value="#{botones['no']}" type="button"
+					styleClass="ui-confirmdialog-no" icon="#{botones['icono.cancelar']}" />
+			</p:confirmDialog>
 		<p:dialog widgetVar="dlgReportesNoCerrados" width="450" 
 			header="#{titulos['seguimientoReportes']}"
 			closable="true" modal="true" resizable="false">
@@ -1017,7 +1022,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(1)}"
 					oncomplete="PF('dlgEliminaItemTablaA').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaA').hide();" process="@this" />
@@ -1033,7 +1038,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(2)}"
 					oncomplete="PF('dlgEliminaItemTablaB41').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB41').hide();" process="@this" />
@@ -1049,7 +1054,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(3)}"
 					oncomplete="PF('dlgEliminaItemTablaB51').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB51').hide();" process="@this" />
@@ -1065,7 +1070,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(47)}"
 					oncomplete="PF('dlgEliminaItemTablaB61').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB61').hide();" process="@this" />
@@ -1081,7 +1086,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(48)}"
 					oncomplete="PF('dlgEliminaItemTablaB62').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB62').hide();" process="@this" />
@@ -1097,7 +1102,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(4)}"
 					oncomplete="PF('dlgEliminaItemTablaB71').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB71').hide();" process="@this" />
@@ -1113,7 +1118,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(5)}"
 					oncomplete="PF('dlgEliminaItemTablaB81').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB81').hide();" process="@this" />
@@ -1129,7 +1134,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(49)}"
 					oncomplete="PF('dlgEliminaItemTablaB9').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB9').hide();" process="@this" />
@@ -1145,7 +1150,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(6)}"
 					oncomplete="PF('dlgEliminaItemTablaB102').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB102').hide();" process="@this" />
@@ -1161,7 +1166,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(7)}"
 					oncomplete="PF('dlgEliminaItemTablaB103').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB103').hide();" process="@this" />
@@ -1177,7 +1182,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(50)}"
 					oncomplete="PF('dlgEliminaItemTablaB11').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB11').hide();" process="@this" />
@@ -1194,7 +1199,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(8)}"
 					oncomplete="PF('dlgEliminaItemTablaB121').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB121').hide();" process="@this" />
@@ -1210,7 +1215,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(9)}"
 					oncomplete="PF('dlgEliminaItemTablaB131').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB131').hide();" process="@this" />
@@ -1226,7 +1231,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(51)}"
 					oncomplete="PF('dlgEliminaItemTablaB143').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaB143').hide();" process="@this" />
@@ -1242,7 +1247,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(10)}"
 					oncomplete="PF('dlgEliminaItemTablaC201').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC201').hide();" process="@this" />
@@ -1258,7 +1263,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(11)}"
 					oncomplete="PF('dlgEliminaItemTablaC211').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC211').hide();" process="@this" />
@@ -1274,7 +1279,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(12)}"
 					oncomplete="PF('dlgEliminaItemTablaC241').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC241').hide();" process="@this" />
@@ -1290,7 +1295,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(52)}"
 					oncomplete="PF('dlgEliminaItemTablaC242').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC242').hide();" process="@this" />
@@ -1306,7 +1311,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(13)}"
 					oncomplete="PF('dlgEliminaItemTablaC26').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC26').hide();" process="@this" />
@@ -1322,7 +1327,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(14)}"
 					oncomplete="PF('dlgEliminaItemTablaC271').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC271').hide();" process="@this" />
@@ -1338,7 +1343,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(15)}"
 					oncomplete="PF('dlgEliminaItemTablaC28').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC28').hide();" process="@this" />
@@ -1354,7 +1359,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(16)}"
 					oncomplete="PF('dlgEliminaItemTablaC291').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC291').hide();" process="@this" />
@@ -1370,7 +1375,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(17)}"
 					oncomplete="PF('dlgEliminaItemTablaC293').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC293').hide();" process="@this" />
@@ -1386,7 +1391,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(18)}"
 					oncomplete="PF('dlgEliminaItemTablaC301').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC301').hide();" process="@this" />
@@ -1402,7 +1407,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(19)}"
 					oncomplete="PF('dlgEliminaItemTablaC311').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaC311').hide();" process="@this" />
@@ -1418,7 +1423,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(21)}"
 					oncomplete="PF('dlgEliminaItemTablaD331').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaD331').hide();" process="@this" />
@@ -1434,7 +1439,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(20)}"
 					oncomplete="PF('dlgEliminaItemTablaD321').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaD321').hide();" process="@this" />
@@ -1450,7 +1455,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(22)}"
 					oncomplete="PF('dlgEliminaItemTablaE341').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaE341').hide();" process="@this" />
@@ -1466,7 +1471,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(23)}"
 					oncomplete="PF('dlgEliminaItemTablaE351').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaE351').hide();" process="@this" />
@@ -1482,7 +1487,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(24)}"
 					oncomplete="PF('dlgEliminaItemTablaE361').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaE361').hide();" process="@this" />
@@ -1498,7 +1503,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(25)}"
 					oncomplete="PF('dlgEliminaItemTablaE371').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaE371').hide();" process="@this" />
@@ -1514,7 +1519,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(26)}"
 					oncomplete="PF('dlgEliminaItemTablaE381').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaE381').hide();" process="@this" />
@@ -1530,7 +1535,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(27)}"
 					oncomplete="PF('dlgEliminaItemTablaE391').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaE391').hide();" process="@this" />
@@ -1545,7 +1550,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(28)}"
 					oncomplete="PF('dlgEliminaItemTablaF411').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaF411').hide();" process="@this" />
@@ -1560,7 +1565,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(29)}"
 					oncomplete="PF('dlgEliminaItemTablaF421').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaF421').hide();" process="@this" />
@@ -1575,7 +1580,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(30)}"
 					oncomplete="PF('dlgEliminaItemTablaF431').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaF431').hide();" process="@this" />
@@ -1590,7 +1595,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(31)}"
 					oncomplete="PF('dlgEliminaItemTablaF441').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaF441').hide();" process="@this" />
@@ -1605,7 +1610,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(32)}"
 					oncomplete="PF('dlgEliminaItemTablaF452').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaF452').hide();" process="@this" />
@@ -1620,7 +1625,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(33)}"
 					oncomplete="PF('dlgEliminaItemTablaG461').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaG461').hide();" process="@this" />
@@ -1636,7 +1641,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(34)}"
 					oncomplete="PF('dlgEliminaItemTablaG471').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaG471').hide();" process="@this" />
@@ -1651,7 +1656,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(35)}"
 					oncomplete="PF('dlgEliminaItemTablaG472').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaG472').hide();" process="@this" />
@@ -1666,7 +1671,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(36)}"
 					oncomplete="PF('dlgEliminaItemTablaG481').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaG481').hide();" process="@this" />
@@ -1681,7 +1686,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(37)}"
 					oncomplete="PF('dlgEliminaItemTablaG491').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaG491').hide();" process="@this" />
@@ -1696,7 +1701,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(38)}"
 					oncomplete="PF('dlgEliminaItemTablaG501').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaG501').hide();" process="@this" />
@@ -1712,7 +1717,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(40)}"
 					oncomplete="PF('dlgEliminaItemTablaOPA').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaOPA').hide();" process="@this" />
@@ -1728,7 +1733,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(41)}"
 					oncomplete="PF('dlgEliminaItemTablaOPB').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaOPB').hide();" process="@this" />
@@ -1744,7 +1749,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(42)}"
 					oncomplete="PF('dlgEliminaItemTablaOPC').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaOPC').hide();" process="@this" />
@@ -1760,7 +1765,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(43)}"
 					oncomplete="PF('dlgEliminaItemTablaOPD').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaOPD').hide();" process="@this" />
@@ -1776,7 +1781,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(44)}"
 					oncomplete="PF('dlgEliminaItemTablaOPE').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaOPE').hide();" process="@this" />
@@ -1792,7 +1797,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(45)}"
 					oncomplete="PF('dlgEliminaItemTablaOPF').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaOPF').hide();" process="@this" />
@@ -1808,7 +1813,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(46)}"
 					oncomplete="PF('dlgEliminaItemTablaOPG').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaOPG').hide();" process="@this" />
@@ -1824,7 +1829,7 @@
 				<p:commandButton value="#{botones['borrar']}" update="panelsalvaguarda growl"					
 					actionListener="#{seguimientoSalvaguardaController.eliminaRegistroTabla(39)}"
 					oncomplete="PF('dlgEliminaItemTablaG512').hide();"
-					process="@this panelsalvaguarda" icon="#{botones['icono.grabar']}" />
+					process="@this " icon="#{botones['icono.grabar']}" />
 				<p:commandButton icon="#{botones['icono.cancelar']}"
 					value="#{botones['cancelar']}"
 					oncomplete="PF('dlgEliminaItemTablaG512').hide();" process="@this" />
@@ -2633,7 +2638,7 @@
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (A)" style="font-weight:bold;"/>
 									</div>
 									<div class="p-field p-col-12 p-md-12">
-										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+										<p:inputTextarea rows="10" required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}"
 											id="resumenA" counter="displayA" counterTemplate="{0} caracteres restantes" autoResize="false"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenA.adsuAdvance}" maxlength="2000">
 										</p:inputTextarea>
@@ -2648,7 +2653,9 @@
 										icon="#{botones['icono.atras']}" process="@this "										
 										update=" :form:growl" oncomplete="goToAnchor('inicio')"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
-										/>
+								>
+									<p:confirm header="#{titulos['confirmacion']}" message="#{titulos['salvaguardaAtras']}" icon="pi pi-exclamation-triangle"/>
+								</p:commandButton>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto" 
 										icon="#{botones['icono.grabar']}" process="@this :form:salvaguardas:tabSalvaguardaA"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoGrabarSalvaguarda(1)}"
@@ -5579,7 +5586,7 @@
 										<p:outputLabel value="#{titulos['resumenSalvaguarda']} (B)" style="font-weight:bold;"/>
 									</div>
 									<div class="p-field p-col-12 p-md-12">
-										<p:inputTextarea required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}" rows="10"
+										<p:inputTextarea rows="10" required="true" requiredMessage="#{mensajes['resumenSalvaguarda']}"
 											id="resumenB" counter="displayB" counterTemplate="{0} caracteres restantes" autoResize="false"
 											value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.avanceResumenB.adsuAdvance}" maxlength="2000">
 										</p:inputTextarea>
@@ -5594,7 +5601,9 @@
 										update=" :form:growl :form:panelsalvaguarda"	oncomplete="goToAnchor('inicio')"														
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"					
-										/>
+										>
+										<p:confirm header="#{titulos['confirmacion']}" message="#{titulos['salvaguardaAtras']}" icon="pi pi-exclamation-triangle"/>
+								</p:commandButton>		
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
 										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaB"
 										update=" :form:growl :form:salvaguardas"															
@@ -8634,7 +8643,9 @@
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
-										/>
+								>
+									<p:confirm header="#{titulos['confirmacion']}" message="#{titulos['salvaguardaAtras']}" icon="pi pi-exclamation-triangle"/>
+								</p:commandButton>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
 										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaC"
 										update=" :form:growl :form:panelsalvaguarda"															
@@ -9530,7 +9541,9 @@
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
-										/>
+										>
+										<p:confirm header="#{titulos['confirmacion']}" message="#{titulos['salvaguardaAtras']}" icon="pi pi-exclamation-triangle"/>
+								</p:commandButton>		
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
 										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaD"
 										update=" :form:growl :form:panelsalvaguarda"															
@@ -13336,7 +13349,9 @@
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
-										/>
+										>
+										<p:confirm header="#{titulos['confirmacion']}" message="#{titulos['salvaguardaAtras']}" icon="pi pi-exclamation-triangle"/>
+								</p:commandButton>		
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
 										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaE"
 										update=" :form:growl :form:salvaguardas"															
@@ -15005,7 +15020,9 @@
 										update=" :form:growl :form:salvaguardas" oncomplete="goToAnchor('inicio')"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}" 
-								/>
+								>
+									<p:confirm header="#{titulos['confirmacion']}" message="#{titulos['salvaguardaAtras']}" icon="pi pi-exclamation-triangle"/>
+								</p:commandButton>
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
 										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaF"
 										update=" :form:growl :form:salvaguardas"															
@@ -17269,7 +17286,9 @@
 										update=" :form:growl :form:panelsalvaguarda"
 										actionListener="#{seguimientoSalvaguardaController.atrasTabs()}" oncomplete="goToAnchor('inicio')"
 										rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()>0?true:false}"
-										/>
+										>
+										<p:confirm header="#{titulos['confirmacion']}" message="#{titulos['salvaguardaAtras']}" icon="pi pi-exclamation-triangle"/>
+								</p:commandButton>		
 								<p:commandButton value="#{botones['grabar']}" styleClass="botonRegistroProyecto"
 										icon="#{botones['icono.grabar']}" process="@this  :form:salvaguardas:tabSalvaguardaG"
 										update=" :form:growl :form:salvaguardas"															

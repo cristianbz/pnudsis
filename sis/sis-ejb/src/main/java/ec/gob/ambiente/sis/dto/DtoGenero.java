@@ -6,16 +6,14 @@ package ec.gob.ambiente.sis.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-
-public class DtoGenero {
-	@Getter
-	@Setter
-	public String tema;
-	@Getter
-	@Setter
-	public int numero;
-	@Getter
-	@Setter
+@Getter
+@Setter
+public class DtoGenero {	
+	public String tema;	
+	public int numero;	
 	public String acciones;
+	public String indicador;
+	public String meta;
+
 }
 

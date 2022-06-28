@@ -27,7 +27,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "advance_execution_project_gender", schema = "sis")
 @NamedQueries({
-	@NamedQuery(name = "c1",query = "SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.adexId=:codigoAvance")
+	@NamedQuery(name = "c1",query = "SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.adexId=:codigoAvance"),
+	@NamedQuery(name = "c2",query = "SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.projects.projId=:codigoProyecto AND PGIN.indicators.indiId=:codigoIndicador ORDER BY AEPG.advanceExecutionSafeguards.adexTermFrom")
 		
 })
 public class AdvanceExecutionProjectGender {
@@ -87,5 +88,10 @@ public class AdvanceExecutionProjectGender {
     @Getter
     @Setter
     private boolean aepgBooleanValue;
+    
+    @Transient
+    @Getter
+    @Setter
+    private List<AdvanceExecutionProjectGender> listaReportesAnteriores;
 }
 

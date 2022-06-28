@@ -36,7 +36,7 @@
 						<h:panelGrid columns="2">
 							<p:commandButton value="#{botones['aceptar']}" 
 								action="#{cc.attrs.componenteBuscaProyectos.seleccionaProyectosRolUsuario}" 
-								process="@this tituloBusq pnlCritBusq roles" onstart="PF('dlgEnProc').show()"
+								process="@this tituloBusq pnlCritBusq roles listadoProyectos" onstart="PF('dlgEnProc').show()"
 								update="listadoProyectos :form:growl codSocioBusq tituloBusq"
 								oncomplete="PF('dlgEnProc').hide()" partialSubmit="true"
 								async="true" global="false" 
@@ -356,9 +356,9 @@
 					</h:panelGrid>
 					<h:panelGrid style="margin:0 auto;" columns="2">
 						<p:commandButton value="#{botones['aceptar']}"
-							update="selSocios :form:growl panelDatosProyecto panelBusquedaProyecto :form:panelOpcionesProyecto "
+							update=" :form:growl panelDatosProyecto panelBusquedaProyecto :form:panelOpcionesProyecto "
 							actionListener="#{cc.attrs.componenteBuscaProyectos.nuevaInformacionAvanceEjecucion}"
-							process="@this selSocios panelBusquedaProyecto panelDatosProyecto :form:panelOpcionesProyecto "
+							process="@this selSocios  panelDatosProyecto :form:panelOpcionesProyecto "
 							async="true" global="false"
 							partialSubmit="true" icon="#{botones['icono.check']}" />
 						<p:commandButton value="#{botones['cancelar']}"
@@ -378,9 +378,9 @@
 				closable="false" resizable="false">
 				<p:outputLabel value="#{titulos['asignaSalvaguarda']}"/>
 				<h:panelGrid columns="2" style="margin:0 auto;">
-					<p:commandButton value="#{botones['grabar']}" update="@form"
+					<p:commandButton value="#{botones['grabar']}" update="panelBusquedaProyecto panelAsignacion :form:panelOpcionesProyecto"
 						actionListener="#{cc.attrs.componenteBuscaProyectos.grabarAsignacionSalvaguardas}"
-						oncomplete="PF('dlgAsignaSalvaguardas').hide();" process="@this "
+						oncomplete="PF('dlgAsignaSalvaguardas').hide();" process="@this :form:panelOpcionesProyecto"
 						icon="#{botones['icono.grabar']}" />
 					<p:commandButton icon="#{botones['icono.cancelar']}"
 						value="#{botones['cancelar']}"
@@ -488,6 +488,7 @@
 								<!-- Acciones como socio estrategico -->
 								<p:column width="30"
 									rendered="#{(cc.attrs.componenteBuscaProyectos.esReporteGenero or cc.attrs.componenteBuscaProyectos.esReporteSalvaguardas) and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol==3}">									
+									
 									<p:commandButton id="btnProyEditGeneroSocios"
 										icon="#{botones['icono.nuevo']}"
 										title="#{tooltip['nuevoReporte']}"
@@ -528,13 +529,14 @@
 								<!-- Acciones como socio implementador -->
 								<p:column width="30"
 									rendered="#{(cc.attrs.componenteBuscaProyectos.esReporteSalvaguardas or cc.attrs.componenteBuscaProyectos.esReporteGenero) and cc.attrs.componenteBuscaProyectos.buscaProyectosBean.tipoRol!=3}">									
+									
 									<p:commandButton id="btnNuevoProyecto"
 										icon="#{botones['icono.nuevo']}"
 										title="#{tooltip['nuevoReporte']}"
 										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyectoAdminSocioImpl(proyecto)}"
-										process="@this :form:buscaProyectos:tablaReportados" partialSubmit="true"										
+										process="@this :form:buscaProyectos:sociosReportar" partialSubmit="true" update=":form:buscaProyectos:sociosReportar"										
 										 async="true"
-										global="false" update="@form" />
+										global="false"  />
 									<br />
 									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} " oncomplete="goToAnchor('busqueda'); "
 										process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero"
@@ -806,7 +808,12 @@
 										title="#{tooltip['pdfAvanceEjecucion']}"
 										icon="#{botones['icono.pdf']}" style="background-color:#9dce2c;" action="#{cc.attrs.componenteBuscaProyectos.generarPdf}">
 										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
-									</p:commandButton>   																
+									</p:commandButton>  
+									<p:commandButton rendered="#{cc.attrs.componenteBuscaProyectos.esReporteGenero}" ajax="false" process="@this" 
+										title="#{tooltip['pdfAvanceEjecucion']}"
+										icon="#{botones['icono.pdf']}" style="background-color:#9dce2c;" action="#{cc.attrs.componenteBuscaProyectos.generarResumenGeneroPdf}">
+										<f:setPropertyActionListener value="#{avance}" target="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.advanceExecution}"></f:setPropertyActionListener>
+									</p:commandButton>  																
 								</p:column>
 							</p:dataTable>
 						</h:panelGrid>
