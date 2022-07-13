@@ -94,7 +94,9 @@ public class GenerarDatosSitioPublico implements Serializable {
 
 			listaTempComunidades = new ArrayList<>();
 			listaTempComunidades = getTableResponsesFacade().listaMaximoHombresMujeresSalvaguardaB();
-
+			dtoSalvaguardaB.setTotalPersonasAccesoInfo(getTableResponsesFacade().totalPersonasAccesoInfoB());
+			dtoSalvaguardaB.setNumeroAlianzas(getTableResponsesFacade().numeroAlianzasB());
+			dtoSalvaguardaB.setNumeroEventosRendicion(getTableResponsesFacade().numeroEventosRendicionB());			
 			for(TableResponses tr: listaTempComunidades){
 				if(tr.getTareColumnNumberOne() != null)
 					dtoSalvaguardaB.setNumeroHombresB(tr.getTareColumnNumberOne());
@@ -118,25 +120,34 @@ public class GenerarDatosSitioPublico implements Serializable {
 			}			
 			dtoSalvaguardaC.setNumeroComunidadesC(listaComunidades.size());
 			dtoSalvaguardaC.setNumeroPracticas(getTableResponsesFacade().listaSaberesAncestralesSalvaguardaC());
+			dtoSalvaguardaC.setNumeroOrganizacionIndigenaC(getTableResponsesFacade().numeroOrganizacionIndigenaC());
+			dtoSalvaguardaC.setNumeroEventosCPLIC(getTableResponsesFacade().numeroEventosCPLIC());
 
 			///// D
 			DtoDatosSitioPublicoD dtoSalvaguardaD = new DtoDatosSitioPublicoD("D");
 
-			dtoSalvaguardaD.setTotalEventosHombres(getMeetingsFacade().listaEventosFortalecimientoHombres());
-			dtoSalvaguardaD.setTotalEventosMujeres(getMeetingsFacade().listaEventosFortalecimientoMujeres());
+//			dtoSalvaguardaD.setTotalEventosHombres(getMeetingsFacade().listaEventosFortalecimientoHombres());
+//			dtoSalvaguardaD.setTotalEventosMujeres(getMeetingsFacade().listaEventosFortalecimientoMujeres());
+			dtoSalvaguardaD.setTotalEspaciosD(getTableResponsesFacade().numeroEspaciosCapacitacionD());
+			dtoSalvaguardaD.setTotalPersonasParticipacionD(getTableResponsesFacade().totalPersonasParticipacionD());
+			dtoSalvaguardaD.setNumeroOrganizacionesLocalesD(getTableResponsesFacade().numeroOrganizacionesLocalesD());
 
 			// E
 			DtoDatosSitioPublicoE dtoSalvaguardaE = new DtoDatosSitioPublicoE("E");
 			listaTempProvincias = getTableResponsesFacade().listaFomentoGestionComunitariaE();
 
-			dtoSalvaguardaE.setNumeroFomentoGestionComunitaria(listaTempProvincias.size());
-			dtoSalvaguardaE.setTotalHectareasCobertura(getTableResponsesFacade().totalHectareasCoberturaE());
+//			dtoSalvaguardaE.setNumeroFomentoGestionComunitaria(listaTempProvincias.size());
+//			dtoSalvaguardaE.setTotalHectareasCobertura(getTableResponsesFacade().totalHectareasCoberturaE());
+			dtoSalvaguardaE.setTotalHectareasConservadoE(getTableResponsesFacade().totalHectareasConservacionE());
+			dtoSalvaguardaE.setTotalHectareasRestauradoE(getTableResponsesFacade().totalHectareasRestauracionE());
+			dtoSalvaguardaE.setNumeroInvestigacionesE(getTableResponsesFacade().numeroInvestigacionesE());
 
 			// F
 			DtoDatosSitioPublicoF dtoSalvaguardaF = new DtoDatosSitioPublicoF("F");			
 			dtoSalvaguardaF.setTotalAccionesReversion(getTableResponsesFacade().numeroAccionesEvitarRiesgos_F());
 			dtoSalvaguardaF.setListadoMedidasTomadas(getTableResponsesFacade().listaMedidasTomadas_F());
-
+			dtoSalvaguardaF.setNumeroInvestigacionesF(getTableResponsesFacade().numeroInvestigacionesF());
+			dtoSalvaguardaF.setNumeroAccionesFortalecimientoF(getTableResponsesFacade().numeroAccionesFortalecimientoF());
 			// G
 			DtoDatosSitioPublicoG dtoSalvaguardaG = new DtoDatosSitioPublicoG("G");
 			listaTempComunidades = getTableResponsesFacade().listaComunidadesSalvaguardaB_C_G(136);
@@ -150,6 +161,7 @@ public class GenerarDatosSitioPublico implements Serializable {
 
 			dtoSalvaguardaG.setNumeroAcciones(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
 			dtoSalvaguardaG.setNumeroComunidades(listaComunidades.size());
+			dtoSalvaguardaG.setNumeroActividadesControl(getTableResponsesFacade().numeroActividadesControlG());
 			
 			DtoDatosSitioPublicoGenero dtoGenero = new DtoDatosSitioPublicoGenero("GENERO");
 			List<DtoGenero> listTempTemas = getAvanceExecutionFacade().listaTemasGenero();

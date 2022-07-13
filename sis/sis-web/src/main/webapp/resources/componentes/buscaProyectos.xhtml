@@ -458,8 +458,8 @@
 								actionListener="#{cc.attrs.componenteBuscaProyectos.validarRol}"
 								icon="#{botones['icono.buscar']}"
 								onclick="PF('dlgEnProc').show()"
-								process="@this tituloBusq pnlCritBusq listadoProyectos"
-								update="listadoProyectos :form:growl codSocioBusq tituloBusq"
+								process="@this tituloBusq pnlCritBusq listadoProyectos panelOpcionesBusqueda panelOpcionesBusquedaGenero"
+								update="listadoProyectos :form:growl codSocioBusq tituloBusq panelOpcionesBusqueda panelOpcionesBusquedaGenero"
 								oncomplete="PF('dlgEnProc').hide()" partialSubmit="true"
 								async="true" global="false" />
 						</h:panelGrid>
@@ -498,9 +498,10 @@
 										oncomplete="PF('dlgEnProc').hide()" async="true"
 										global="false" update="@form " />
 									<br />
+									
 									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} " oncomplete="goToAnchor('busqueda'); "
-										process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda"
-										update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda"
+										process="@this :form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero"
+										update=":form:buscaProyectos:tablaReportados :form:buscaProyectos:panelOpcionesBusqueda :form:buscaProyectos:panelOpcionesBusquedaGenero"
 										partialSubmit="true"
 										actionListener="#{cc.attrs.componenteBuscaProyectos.mostrarPanelBusquedaProyectos(proyecto)}" />
 								</p:column>

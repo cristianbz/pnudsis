@@ -125,6 +125,10 @@ public class GenerarPdfResumenAbordaje {
 		  "      <td style='font-weight: bold;vertical-align: baseline;text-align:left;' width: 20%'>Proyecto:</td>\r\n" +
 		   "     <td style='width: 60%;'>{P:proyecto} </td>\r\n" +
 		   " </tr>\r\n" +
+		   "   <tr style='height:3px;border-color: #ffffff;'>\r\n" +
+			  "      <td style='font-weight: bold;vertical-align: baseline;text-align:left;' width: 20%'>Proyecto nombre corto:</td>\r\n" +
+			   "     <td style='width: 60%;'>{P:proyectoNombreCorto} </td>\r\n" +
+			   " </tr>\r\n" +
 		   " <tr style='height:3px;border-color: #ffffff;'>\r\n" +
 		   "     <td style='font-weight: bold;vertical-align: baseline;text-align:left;width:20%;'>Socio Implementador:</td>\r\n" +
 		   "     <td style='width: 60%'>{P:socioImplementador} </td>\r\n" +

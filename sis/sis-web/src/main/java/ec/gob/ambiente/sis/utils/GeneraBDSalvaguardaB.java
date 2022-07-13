@@ -38,6 +38,7 @@ public class GeneraBDSalvaguardaB {
 			ResourceBundle rb;
 			rb = ResourceBundle.getBundle("resources.indicadores");
 			List<Questions> listaPreguntas = servicioPreguntas.buscaPreguntaPorSalvaguarda(2);
+			
 			int cuentaFila = 0;
 			
 			HSSFWorkbook workbook = new HSSFWorkbook();			
@@ -1623,7 +1624,7 @@ public class GeneraBDSalvaguardaB {
 			
 			row = sheet.createRow(3);			
 			cell = row.createCell(0);
-			cell.setCellValue(listaPreguntas.get(22).getQuesContentQuestion());
+			cell.setCellValue(listaPreguntas.get(21).getQuesContentQuestion());
 			cell.setCellStyle(styleBold);
 			
 			row = sheet.createRow(5);			
@@ -1676,7 +1677,7 @@ public class GeneraBDSalvaguardaB {
 			cell.setCellStyle(styleBold);
 			
 			lista = new ArrayList<>();
-			lista = servicio.listaPreguntas_B_14(listaPreguntas.get(22).getQuesId());
+			lista = servicio.listaPreguntas_B_14(listaPreguntas.get(21).getQuesId());
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {				
 				row = sheet.createRow(cuentaFila);			
@@ -1815,6 +1816,7 @@ public class GeneraBDSalvaguardaB {
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
 			LOG.error(new StringBuilder().append("GeneraBDSalvaguardaB " + "." + "generaArchivoSalvaguardaB" + ": ").append(e.getMessage()));
+			e.printStackTrace();
 		}
 	}	
 }

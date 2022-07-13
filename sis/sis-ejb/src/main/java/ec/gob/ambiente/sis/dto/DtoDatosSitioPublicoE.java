@@ -28,6 +28,15 @@ public class DtoDatosSitioPublicoE extends DtoSitioPublico implements Jsonable {
 	@Getter
 	@Setter
 	private BigDecimal totalHectareasCobertura;
+	@Getter
+	@Setter
+	private BigDecimal totalHectareasConservadoE;
+	@Getter
+	@Setter
+	private BigDecimal totalHectareasRestauradoE;
+	@Getter
+	@Setter
+	private Integer numeroInvestigacionesE;
 
 	@Override
 	public String toJson() {
@@ -45,8 +54,11 @@ public class DtoDatosSitioPublicoE extends DtoSitioPublico implements Jsonable {
 	public void toJson(Writer writer) throws IOException {
         final JsonObject json = new JsonObject();
         json.put("salvaguarda", super.salvaguarda);
-        json.put("numeroFomentoGestionComunitariaE", getNumeroFomentoGestionComunitaria());
-        json.put("totalHectareasCoberturaE", getTotalHectareasCobertura());              
+        json.put("numeroFomentoGestionComunitaria", getNumeroFomentoGestionComunitaria());
+        json.put("totalHectareasCoberturaE", getTotalHectareasCobertura());
+        json.put("totalHectareasConservadoE", getTotalHectareasConservadoE());
+        json.put("totalHectareasRestauradoE", getTotalHectareasRestauradoE());
+        json.put("numeroInvestigacionesE", getNumeroInvestigacionesE());
         json.toJson(writer);
     }
 

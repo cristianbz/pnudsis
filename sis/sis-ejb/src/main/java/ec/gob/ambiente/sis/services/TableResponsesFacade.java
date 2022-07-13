@@ -222,6 +222,57 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		return listaResultado;
 	}
 	/**
+	 * Total de personas que acceden a iformación de acciones REDD+
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer totalPersonasAccesoInfoB() throws Exception{
+		List<Object[]> resultado= null;
+		Integer valor = 0;		
+		String sql ="SELECT (tr.tare_column_number_mens + tr.tare_column_number_women) AS total FROM sis.table_responses tr, sis.questions q WHERE q.ques_id= tr.ques_id AND tr.tare_status = TRUE AND q.ques_id = 7;";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = Integer.valueOf(obj.toString());
+			}
+		}
+		return valor;
+	}
+	/**
+	 * Numero de alianzas de capacidades en gobernanza forestal
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroAlianzasB() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=11 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Número de eventos rendición de cuentas
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroEventosRendicionB() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=31 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	
+	/**
 	 * Maximo valor de hombres y mujeres salvaguarda B
 	 * @return
 	 * @throws Exception
@@ -243,6 +294,38 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		return listaResultado;
 	}
 	/**
+	 * Número de organizaciones indigenas en iniciativas REDD+
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroOrganizacionIndigenaC() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=54 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Numero eventos CPLI completados
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroEventosCPLIC() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=57 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
 	 * Numero de practicas o saberes ancestrales
 	 * @return
 	 * @throws Exception
@@ -251,6 +334,108 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		Integer valor= new Integer(0);
 		List<Object[]> resultado= null;		
 		String sql ="SELECT COUNT(tr.tare_id) FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p WHERE tr.ques_id=45 AND tr.tare_status= TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE;";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Número de espacios de capacitación
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroEspaciosCapacitacionD() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=65 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Total de hombres y mujeres en espacios de capacitacion
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer totalPersonasParticipacionD() throws Exception{
+		List<Object[]> resultado= null;
+		Integer valor = 0;		
+		String sql ="SELECT (tr.tare_column_number_mens + tr.tare_column_number_women) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=65 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = Integer.valueOf(obj.toString());
+			}
+		}
+		return valor;
+	}
+	/**
+	 * Número de organizaciones locales participan en iniciativas REDD+.
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroOrganizacionesLocalesD() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=67 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE ";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Total de hectareas de bosque conservado
+	 * @return
+	 * @throws Exception
+	 */
+	public BigDecimal totalHectareasConservacionE() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT SUM(tr.tare_column_decimal_one) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=113 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE AND tr.tare_column_number_six=1";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
+	/**
+	 * Total de hectareas de bosque restaurado
+	 * @return
+	 * @throws Exception
+	 */
+	public BigDecimal totalHectareasRestauracionE() throws Exception{
+		List<Object[]> resultado= null;
+		BigDecimal valor= new BigDecimal(0);		
+		String sql ="SELECT SUM(tr.tare_column_decimal_one) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=69 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE AND tr.tare_column_number_six=2";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				if(obj != null)
+					valor = new BigDecimal(obj.toString());
+			}
+		}
+		return valor;
+	}
+	/**
+	 * Numero de investigaciones en áreas REDD+
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroInvestigacionesE() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=78 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE";
 		resultado = (List<Object[]>)consultaNativa(sql);		
 		if(resultado.size()>0){
 			for(Object obj:resultado)
@@ -295,7 +480,39 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 		}
 		return valor;
 	}
-	
+	/**
+	 * Número de investigaciones
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroInvestigacionesF() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=113 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+	/**
+	 * Número de acciones de fortalecimiento
+	 * @return
+	 * @throws Exception
+	 */
+	public int numeroAccionesFortalecimientoF() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=117 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
+		}
+		return valor;
+	}
+
 	public BigDecimal listaRecursosInvertidosF() throws Exception{
 		List<Object[]> resultado= null;
 		BigDecimal valor= new BigDecimal(0);		
@@ -306,6 +523,18 @@ public class TableResponsesFacade extends AbstractFacade<TableResponses, Integer
 				if(obj != null)
 					valor = new BigDecimal(obj.toString());
 			}
+		}
+		return valor;
+	}
+	
+	public int numeroActividadesControlG() throws Exception{
+		Integer valor= new Integer(0);
+		List<Object[]> resultado= null;		
+		String sql ="SELECT COUNT(tr.tare_id) as total FROM sis.table_responses tr, sis.advance_execution_safeguards aex,sigma.projects p  WHERE tr.ques_id=126 AND tr.tare_status = TRUE AND tr.adex_id = aex.adex_id AND p.proj_id = aex.proj_id AND p.proj_status = TRUE";
+		resultado = (List<Object[]>)consultaNativa(sql);		
+		if(resultado.size()>0){
+			for(Object obj:resultado)
+				valor = Integer.valueOf(obj.toString());
 		}
 		return valor;
 	}

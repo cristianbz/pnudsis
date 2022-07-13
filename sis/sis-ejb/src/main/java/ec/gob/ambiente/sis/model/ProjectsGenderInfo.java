@@ -17,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -28,7 +30,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "sis.projects_gender_info")
-
+@NamedQueries({
+	@NamedQuery(name = "qg1",query = "SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.projects.projId=:codigoProyecto AND PGIN.indicators.indiId=:codigoIndicador AND AEPG.advanceExecutionSafeguards.adexTermFrom<:periodo AND PGINF.cataId.cataId=:catalogo ORDER BY AEPG.advanceExecutionSafeguards.adexTermFrom")	
+})
 public class ProjectsGenderInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

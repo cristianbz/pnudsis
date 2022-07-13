@@ -29,6 +29,9 @@ public class DtoDatosSitioPublicoG extends DtoSitioPublico implements Jsonable {
 	@Getter
 	@Setter
 	private Integer totalBeneficiarios;
+	@Getter
+	@Setter
+	private Integer numeroActividadesControl;
 
 	@Override
 	public String toJson() {
@@ -48,6 +51,7 @@ public class DtoDatosSitioPublicoG extends DtoSitioPublico implements Jsonable {
         json.put("salvaguarda", super.salvaguarda);
         json.put("numeroComunidadesG", getNumeroComunidades());
         json.put("numeroAccionesG", getNumeroAcciones());
+        json.put("numeroActividadesControl", getNumeroActividadesControl());
         json.put("totalBeneficiariosG", getTotalBeneficiarios());
         json.toJson(writer);
     }

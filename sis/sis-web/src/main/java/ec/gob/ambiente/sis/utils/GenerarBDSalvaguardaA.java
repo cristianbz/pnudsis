@@ -77,7 +77,7 @@ public class GenerarBDSalvaguardaA {
 			row = sheet.createRow(1);
 			cell = row.createCell(3);
 			cell = row.createCell(0);
-			cell.setCellValue(listaPreguntas.get(1).getQuesContentQuestion());
+			cell.setCellValue(listaPreguntas.get(0).getQuesContentQuestion());
 			cell.setCellStyle(styleBold);
 			
 			
@@ -109,7 +109,7 @@ public class GenerarBDSalvaguardaA {
 
 			
 			List<DtoTableResponses> lista = new ArrayList<>();
-			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(1).getQuesId(),3);
+			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(0).getQuesId(),3);
 			cuentaFila = 6;
 			for (DtoTableResponses dt : lista) {
 				row = sheet.createRow(cuentaFila);			
@@ -159,7 +159,7 @@ public class GenerarBDSalvaguardaA {
 
 			
 			lista = new ArrayList<>();
-			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(1).getQuesId(),24);
+			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(0).getQuesId(),24);
 			cuentaFila++;
 			for (DtoTableResponses dt : lista) {
 				row = sheet.createRow(cuentaFila);			
@@ -208,7 +208,7 @@ public class GenerarBDSalvaguardaA {
 			cell.setCellStyle(styleBold);
 			
 			lista = new ArrayList<>();
-			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(1).getQuesId(),25);
+			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(0).getQuesId(),25);
 			cuentaFila++;
 			for (DtoTableResponses dt : lista) {
 				row = sheet.createRow(cuentaFila);			
@@ -239,7 +239,7 @@ public class GenerarBDSalvaguardaA {
 			cuentaFila=1;
 			row = sheet.createRow(1);			
 			cell = row.createCell(0);
-			cell.setCellValue(listaPreguntas.get(3).getQuesContentQuestion());
+			cell.setCellValue(listaPreguntas.get(1).getQuesContentQuestion());
 			cell.setCellStyle(styleBold);
 			
 			cuentaFila++;
@@ -265,7 +265,7 @@ public class GenerarBDSalvaguardaA {
 			cell.setCellStyle(styleBold);
 			
 			lista = new ArrayList<>();
-			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(3).getQuesId(),2);
+			lista = servicio.listaPoliticasLeyes(listaPreguntas.get(1).getQuesId(),2);
 			cuentaFila++;
 			for (DtoTableResponses dt : lista) {
 				row = sheet.createRow(cuentaFila);			
@@ -297,7 +297,7 @@ public class GenerarBDSalvaguardaA {
 			cuentaFila=1;
 			row = sheet.createRow(1);			
 			cell = row.createCell(0);
-			cell.setCellValue(listaPreguntas.get(4).getQuesContentQuestion());
+			cell.setCellValue(listaPreguntas.get(2).getQuesContentQuestion());
 			cell.setCellStyle(styleBold);
 			
 			cuentaFila++;
@@ -434,6 +434,7 @@ public class GenerarBDSalvaguardaA {
 		}catch(Exception e){
 			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR, "","Ocurrio un error al generar el archivo");
 			LOG.error(new StringBuilder().append("GenerarBDSalvaguardaA " + "." + "generaArchivoSalvaguardaA" + ": ").append(e.getMessage()));
+			e.printStackTrace();
 		}
 
 	}

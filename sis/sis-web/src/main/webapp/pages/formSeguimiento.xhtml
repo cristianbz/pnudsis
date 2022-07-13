@@ -19,7 +19,7 @@
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
-	
+	<script type="text/javascript" src="../resources/js/atras.js"></script>
 	<script>
 	function goToAnchor(nombre) {
 		
@@ -2060,7 +2060,7 @@
 							 
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel styleClass="pregunta" id="pregunta2"
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestionEnglish}" />
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(0).quesContentQuestionEnglish}" />
 							</div>
 							<br />
 							
@@ -2276,7 +2276,7 @@
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel styleClass="pregunta" id="pregunta4"
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestionEnglish}" />
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(1).quesContentQuestionEnglish}" />
 							</div>
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
@@ -2349,7 +2349,7 @@
 							<br />
 							<div class="ui-fluid p-formgrid p-grid">
 								<p:outputLabel styleClass="pregunta" id="pregunta5"
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(4).quesContentQuestionEnglish}" />
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(2).quesContentQuestionEnglish}" />
 							</div>
 							<br/>
 							
@@ -2495,7 +2495,7 @@
 								</div>
 								<div class="p-field p-col-12 p-md-6">
 								<p:outputLabel id="pregunta6"
-									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(5).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(5).quesContentQuestionEnglish}" />
+									value="#{seleccionaIdiomaController.lenguaje.equals('es_ES')?seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestion:seguimientoSalvaguardaController.seguimientoSalvaguardaBean.listaPreguntasA.get(3).quesContentQuestionEnglish}" />
 								
 								
 								</div>	
@@ -2673,18 +2673,15 @@
 										icon="#{botones['icono.imprimir']}" 
 										value="#{botones['vistaPrevia']}" process="@this">									
 									</p:commandButton>
+									
 									<p:commandButton value="#{botones['finalizar']}" styleClass="botonRegistroProyecto" 
 										process="@this  :form:panelsalvaguarda" update=" :form:growl :form:panelsalvaguarda"
 										actionListener="#{seguimientoSalvaguardaController.mostrarDialogoFinalizarReporte(1)}" icon="#{botones['icono.check']}"
 										disabled="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}"
 										rendered="#{seguimientoSalvaguardaController.numeroSalvaguardas - seguimientoSalvaguardaController.seguimientoSalvaguardaBean.getTabActual()==1?true:false}">
 									
-									</p:commandButton> <!-- 
-									<p:commandButton value="#{botones['resumenEjecutivo']}" icon="#{botones['icono.resumen']}"
-										process="@this" oncomplete="PF('dlgResumenEjecutivo').show();" styleClass="botonRegistroProyecto"
-										rendered="#{seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexIsReported==true and seguimientoSalvaguardaBean.advanceExecutionSafeguards.adexReportedStatus == 'F'}">
-									
-									</p:commandButton>		 -->		
+									</p:commandButton> 
+											
 							</h:panelGrid>
 							
 						</p:tab>
@@ -2959,16 +2956,29 @@
 										<p:message for="mujeres41"/>
 									</div>
 									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['linkVerificador']} *"/>
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB41.tareColumnTwo}" tabindex="12" 
+												counter="displayLink41B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												id="link41B" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayLink41B" class="p-d-block" />	
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+										<p:message for="link41B"/>
+									</div>
+									
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso41B radiopSB1" title="#{tooltip['grabar']}" tabindex="12"																							
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB71 panelIngreso41B radiopSB1" title="#{tooltip['grabar']}" tabindex="13"																							
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB41()}" value="#{botones['guardar']}" oncomplete="goToAnchor('41B');"
 															update="panelTablaB41 :form:growl panelIngreso41B"/>
 									</div>
 									<div class="p-field p-col-12 p-md-2">
 										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso41B" update="panelIngreso41B" immediate="true" 
-											tabindex="13"  value="#{botones['cancelar']}"
+											tabindex="14"  value="#{botones['cancelar']}"
 											resetValues="true" title="#{tooltip['cancelar']}">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB41}"/>
@@ -3021,8 +3031,10 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnNumberMens}" style="font-size:10px !important;"/>													
 											</p:column>
 											<p:column headerText="#{etiquetas['numeroMujeres']}" styleClass="cabeceraTablaLarga" width="30" > 
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
-													
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>													
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTablaLarga">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>													
 											</p:column>
 											<p:column style="width:80px;">
 												
@@ -4525,17 +4537,30 @@
 										<p:message for="mujeresB102"/>
 									</div>
 									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['linkVerificador']} *"/>
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasB102.tareColumnTwo}" tabindex="11" 
+												counter="displayLink41B" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200"
+												id="link102B" required="true" requiredMessage="#{mensajes['campoRequerido']}" immediate="true"/>
+											<h:outputText id="displayLink102B" class="p-d-block" />	
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+										<p:message for="link102B"/>
+									</div>
+									
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-											<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB102 panelIngreso102B radiopSB7" title="#{tooltip['grabar']}"	tabindex="11"																						
+											<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTablaB102 panelIngreso102B radiopSB7" title="#{tooltip['grabar']}"	tabindex="12"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaB102()}" value="#{botones['guardar']}"
 															oncomplete="goToAnchor('102B');"
 															update="panelTablaB102 :form:growl panelIngreso102B"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
 											<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso102B" update="panelIngreso102B" title="#{tooltip['cancelar']}" 
-											tabindex="12" value="#{botones['cancelar']}"
+											tabindex="13" value="#{botones['cancelar']}"
 												immediate="true" resetValues="true">
 														<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaB102}"/>
 											</p:commandButton>
@@ -4588,8 +4613,10 @@
 													
 											</p:column>
 											<p:column headerText="#{etiquetas['nroMujeresBeneficiarias']}" styleClass="cabeceraTablaLarga" width="42">
-												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>
-													
+												<p:outputLabel value="#{tablarespuestas.tareColumnNumberWomen}" style="font-size:10px !important;"/>													
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTablaLarga">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>													
 											</p:column>
 											<p:column style="width:80px;">
 												
@@ -9672,6 +9699,9 @@
 							<p:outputPanel id="panelIngreso341E" >
 							
 							<p:panel id="panel341E" rendered="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaE341}" header="#{titulos['datosSolicitados']}">
+							<p:outputLabel value="#{titulos['unRegistroComunidad']}"/>
+							<br/>
+							<br/>
 							<div class="ui-fluid p-formgrid p-grid">
 																									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
@@ -9821,15 +9851,28 @@
 										<p:message for="componentetblE341"/>
 									</div>
 									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE341.tareColumnTree}" 
+												id="linktblE341" counter="displaylinkE341" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200" required="true" requiredMessage="#{mensajes['campoRequerido']}" 
+												tabindex="9"/>
+											<h:outputText id="displaylinkE341" class="p-d-block" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">	
+										<p:message for="linktblE341"/>									
+									</div>
+									
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla341E panelIngreso341E radiopSE1"	tabindex="9" value="#{botones['guardar']}"																						
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla341E panelIngreso341E radiopSE1"	tabindex="10" value="#{botones['guardar']}"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE341()}" oncomplete="goToAnchor('341E');"
 															update="panelTabla341E :form:growl panelIngreso341E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso341E" update="panelIngreso341E" tabindex="10" 
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso341E" update="panelIngreso341E" tabindex="11" 
 											value="#{botones['cancelar']}"
 											immediate="true" resetValues="true">
 											
@@ -9877,7 +9920,11 @@
 											</p:column>
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareComponente}" style="font-size:10px !important;"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>																						
+																																	
 											<p:column style="width:80px;">
 												
 								                <p:commandButton icon="#{botones['icono.editar']}" title="#{tooltip['editar']}" 
@@ -10042,13 +10089,22 @@
 										<comp:ayuda texto="#{tooltip['ordenanzaProyecto']}"/>
 									</div>
 									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['hectareas']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+											<p:inputNumber value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE351.tareColumnDecimalOne}" tabindex="5"/>
+												
+									</div>
+									<div class="p-field p-col-12 p-md-3">
+									</div>									
 									
 									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
 										<p:outputLabel value="#{etiquetas['componente']} *"/>
 									</div>
 									<div class="p-field p-col-12 p-md-6">
 											<p:selectOneMenu
-												value="#{seguimientoSalvaguardaBean.codigoComponente}" tabindex="5"
+												value="#{seguimientoSalvaguardaBean.codigoComponente}" tabindex="6"
 												required="true" requiredMessage="#{mensajes['campoRequerido']}" 
 												id="componentetblE351">
 												<f:selectItem itemValue="#{null}"
@@ -10062,19 +10118,19 @@
 									</div>
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="componentetblE351"/>
-									</div>		
+									</div>	
 									
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla351E panelIngreso351E radiopSE2" tabindex="6" value="#{botones['guardar']}"																						
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla351E panelIngreso351E radiopSE2" tabindex="7" value="#{botones['guardar']}"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE351()}" oncomplete="goToAnchor('351E');"
 															update="panelTabla351E :form:growl panelIngreso351E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						
 										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso351E" update="panelIngreso351E" 
 											value="#{botones['cancelar']}"
-											tabindex="7" immediate="true" resetValues="true">
+											tabindex="8" immediate="true" resetValues="true">
 											
 											<f:setPropertyActionListener value="false" target="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.nuevoRegistroTablaE351}"/>
 										</p:commandButton>
@@ -10103,6 +10159,9 @@
 											</p:column>
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareComponente}" style="font-size:10px !important;"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['hectareas']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnDecimalOne}" style="font-size:10px !important;"/>
 											</p:column>
 											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
@@ -10355,16 +10414,28 @@
 									<div class="p-field p-col-12 p-md-3">
 										<p:message for="componentetblE361"/>
 									</div>
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasE361.tareColumnTree}" 
+												id="linktblE361" counter="displaylinkE361" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200" required="true" requiredMessage="#{mensajes['campoRequerido']}" 
+												tabindex="10"/>
+											<h:outputText id="displaylinkE361" class="p-d-block" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">	
+										<p:message for="linktblE361"/>									
+									</div>
 									
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla361E panelIngreso361E radiopSE3"	tabindex="10" value="#{botones['guardar']}"																						
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla361E panelIngreso361E radiopSE3"	tabindex="11" value="#{botones['guardar']}"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaE361()}" oncomplete="goToAnchor('361E');"
 															update="panelTabla361E :form:growl panelIngreso361E"/>
 									</div>						
 									<div class="p-field p-col-12 p-md-2">						 
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso361E" update="panelIngreso361E" tabindex="11" 
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso361E" update="panelIngreso361E" tabindex="12" 
 											value="#{botones['cancelar']}"
 											immediate="true" resetValues="true">
 											
@@ -10415,6 +10486,9 @@
 											</p:column>																		
 											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTabla">
 												<p:outputLabel value="#{tablarespuestas.tareComponente}" style="font-size:10px !important;"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTabla">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTree}" style="font-size:10px !important;"/>
 											</p:column>																						
 											<p:column style="width:80px;">
 												
@@ -15639,16 +15713,29 @@
 										<p:message for="componentetblF471"/>
 									</div>
 									
+									<div class="p-field p-col-12 p-md-3" style="background: #00AAC3;color: #FFFFFF;display: block;text-align:right;">
+										<p:outputLabel value="#{etiquetas['linkVerificador']}"/>
+									</div>
+									<div class="p-field p-col-12 p-md-6">
+											<p:inputText value="#{seguimientoSalvaguardaController.seguimientoSalvaguardaBean.registroTablaRespuestasG471.tareColumnTwo}" 
+												id="linktblG471" counter="displaylinkG471" counterTemplate="#{mensajes['caracteresFaltantes']}" maxlength="200" required="true" requiredMessage="#{mensajes['campoRequerido']}" 
+												tabindex="13"/>
+											<h:outputText id="displaylinkG471" class="p-d-block" />
+									</div>
+									<div class="p-field p-col-12 p-md-3">	
+										<p:message for="linktblG471"/>									
+									</div>
+									
 									<div class="p-field p-col-12 p-md-4">
 									</div>
 									<div class="p-field p-col-12 p-md-2">
-										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla471G panelIngreso471G radiopSG2"	title="#{tooltip['grabar']}" tabindex="13"																						
+										<p:commandButton icon="#{botones['icono.grabar']}" process="@this panelTabla471G panelIngreso471G radiopSG2"	title="#{tooltip['grabar']}" tabindex="14"																						
 															actionListener="#{seguimientoSalvaguardaController.agregarFilasTablaSalvaguardaG471()}" value="#{botones['guardar']}" 
 															 oncomplete="goToAnchor('471G');"
 															update="panelTabla471G :form:growl panelIngreso471G"/>
 									</div>						 
 									<div class="p-field p-col-12 p-md-2">						
-										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso471G" update="panelIngreso471G" title="#{tooltip['cancelar']}" tabindex="14"
+										<p:commandButton icon="#{botones['icono.cancelar']}" process="@this panelIngreso471G" update="panelIngreso471G" title="#{tooltip['cancelar']}" tabindex="15"
 											value="#{botones['cancelar']}"
 											resetValues="true"	immediate="true">
 											
@@ -15704,6 +15791,12 @@
 												<p:outputLabel value="#{tablarespuestas.tareColumnNine}" id="fechaG471" style="font-size:10px !important;">
 													<f:convertDateTime for="fechaG471" pattern="yyyy-MM-dd"/>
 												</p:outputLabel>
+											</p:column>
+											<p:column headerText="#{etiquetas['componente']}" styleClass="cabeceraTablaLarga">
+												<p:outputLabel value="#{tablarespuestas.tareComponente}" style="font-size:10px !important;"/>
+											</p:column>
+											<p:column headerText="#{etiquetas['linkVerificador']}" styleClass="cabeceraTablaLarga">
+												<p:outputLabel value="#{tablarespuestas.tareColumnTwo}" style="font-size:10px !important;"/>
 											</p:column>
 											
 											<p:column style="width:80px;">

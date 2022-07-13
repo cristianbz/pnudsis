@@ -220,7 +220,10 @@ public class SeguimientoGeneroController implements Serializable{
 
 							getSeguimientoGeneroBean().setListaLineasGenero(getAdvanceExecutionProjectGenderFacade().listaIndicadoresReportados(getSeguimientoGeneroBean().getAdvanceExecutionSafeguards().getAdexId()));
 							for (AdvanceExecutionProjectGender aepg : getSeguimientoGeneroBean().getListaLineasGenero()) {
-								aepg.getProjectGenderIndicator().getProjectsGenderInfo().setComponentesGenero(armaComponentes(aepg.getProjectGenderIndicator().getProjectsGenderInfo().getPginComponents()));															
+								aepg.getProjectGenderIndicator().getProjectsGenderInfo().setComponentesGenero(armaComponentes(aepg.getProjectGenderIndicator().getProjectsGenderInfo().getPginComponents()));
+								aepg.setListaReportesAnteriores(new ArrayList<>());
+								aepg.setListaReportesAnteriores(getAdvanceExecutionProjectGenderFacade().listaIndicadoresReportadosProyecto(aepg.getAdvanceExecutionSafeguards().getProjects().getProjId(), aepg.getProjectGenderIndicator().getIndicators().getIndiId(),aepg.getAdvanceExecutionSafeguards().getAdexTermFrom(),aepg.getProjectGenderIndicator().getProjectsGenderInfo().getCataId().getCataId()));
+
 							}
 							Collections.sort(getSeguimientoGeneroBean().getListaLineasGenero(), new Comparator<AdvanceExecutionProjectGender>(){
 								@Override
@@ -271,7 +274,7 @@ public class SeguimientoGeneroController implements Serializable{
 					for (AdvanceExecutionProjectGender aepg : getSeguimientoGeneroBean().getListaLineasGenero()) {
 						aepg.getProjectGenderIndicator().getProjectsGenderInfo().setComponentesGenero(armaComponentes(aepg.getProjectGenderIndicator().getProjectsGenderInfo().getPginComponents()));
 						aepg.setListaReportesAnteriores(new ArrayList<>());
-						aepg.setListaReportesAnteriores(getAdvanceExecutionProjectGenderFacade().listaIndicadoresReportadosProyecto(aepg.getAdvanceExecutionSafeguards().getProjects().getProjId(), aepg.getProjectGenderIndicator().getIndicators().getIndiId()));
+						aepg.setListaReportesAnteriores(getAdvanceExecutionProjectGenderFacade().listaIndicadoresReportadosProyecto(aepg.getAdvanceExecutionSafeguards().getProjects().getProjId(), aepg.getProjectGenderIndicator().getIndicators().getIndiId(),aepg.getAdvanceExecutionSafeguards().getAdexTermFrom(),aepg.getProjectGenderIndicator().getProjectsGenderInfo().getCataId().getCataId()));
 //						System.out.println(aepg.getListaReportesAnteriores().size());
 					}
 					Collections.sort(getSeguimientoGeneroBean().getListaLineasGenero(), new Comparator<AdvanceExecutionProjectGender>(){
@@ -290,6 +293,7 @@ public class SeguimientoGeneroController implements Serializable{
 			}	
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "cargaDatosProyectoSeleccionado" + ": ").append(e.getMessage()));
+			e.printStackTrace();
 		}
 
 	}
@@ -1111,15 +1115,18 @@ public class SeguimientoGeneroController implements Serializable{
 		if(getSeguimientoGeneroBean().getCodigoTablaDatos().equals("G3")){
 			getSeguimientoGeneroBean().getListaValoresRespuestas().get(0).setVaanYesnoAnswerValue(true);
 			getSeguimientoGeneroBean().setCodigoTablaDatos("");
-			Mensaje.actualizarComponente(":form:tabs:radiopSB1");			
+			Mensaje.actualizarComponente(":form:tabs:radiopSB1");	
+			Mensaje.actualizarComponente(":form:tabs:btnTablaGen3");
 		}else if(getSeguimientoGeneroBean().getCodigoTablaDatos().equals("G6")){
 			getSeguimientoGeneroBean().getListaValoresRespuestas().get(1).setVaanYesnoAnswerValue(true);
 			getSeguimientoGeneroBean().setCodigoTablaDatos("");
 			Mensaje.actualizarComponente(":form:tabs:radiopSB4"); 
+			Mensaje.actualizarComponente(":form:tabs:btnTablaGen6");
 		}else if(getSeguimientoGeneroBean().getCodigoTablaDatos().equals("G7")){
 			getSeguimientoGeneroBean().getListaValoresRespuestas().get(2).setVaanYesnoAnswerValue(true);
 			getSeguimientoGeneroBean().setCodigoTablaDatos("");
 			Mensaje.actualizarComponente(":form:tabs:radiopSB5"); 
+			Mensaje.actualizarComponente(":form:tabs:btnTablaGen7");
 		}
 	}
 	

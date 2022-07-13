@@ -31,6 +31,15 @@ public class DtoDatosSitioPublicoF extends DtoSitioPublico implements Jsonable {
 	@Getter
 	@Setter
 	private Integer totalAccionesReversion;
+	@Getter
+	@Setter
+	private Integer numeroInvestigacionesF;
+	@Getter
+	@Setter
+	private Integer numeroMitigacionesF;
+	@Getter
+	@Setter
+	private Integer numeroAccionesFortalecimientoF;
 	
 	@Getter
 	@Setter
@@ -60,6 +69,9 @@ public class DtoDatosSitioPublicoF extends DtoSitioPublico implements Jsonable {
         final JsonObject json = new JsonObject();
         json.put("salvaguarda", super.salvaguarda);
         json.put("totalAccionesReversionF", getTotalAccionesReversion());
+        json.put("numeroInvestigacionesF", getNumeroInvestigacionesF());
+        json.put("numeroMitigacionesF", getNumeroMitigacionesF());
+        json.put("numeroAccionesFortalecimientoF", getNumeroAccionesFortalecimientoF());
 //        json.put("medidasTomadas", listadoMedidasTomadas.toArray());
         json.put("medidasTomadas", jsonArray);
         json.toJson(writer);

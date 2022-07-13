@@ -7,6 +7,7 @@ package ec.gob.ambiente.sis.dto;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.math.BigDecimal;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsonable;
@@ -30,6 +31,15 @@ public class DtoDatosSitioPublicoB extends DtoSitioPublico implements Jsonable{
 	@Getter
 	@Setter
 	private Integer numeroMujeresB;
+	@Getter
+	@Setter
+	private Integer totalPersonasAccesoInfo;
+	@Getter
+	@Setter
+	private Integer numeroAlianzas;
+	@Getter
+	@Setter
+	private Integer numeroEventosRendicion;
 
 	@Override
 	public String toJson() {
@@ -51,6 +61,9 @@ public class DtoDatosSitioPublicoB extends DtoSitioPublico implements Jsonable{
         json.put("numeroComunidadesB", getNumeroComunidadesB());
         json.put("numeroHombresB", getNumeroHombresB());
         json.put("numeroMujeresB", getNumeroMujeresB());        
+        json.put("totalPersonasAccesoInfo", getTotalPersonasAccesoInfo());
+        json.put("numeroAlianzas", getNumeroAlianzas());
+        json.put("numeroEventosRendicion", getNumeroEventosRendicion());
         json.toJson(writer);
 
     }

@@ -889,7 +889,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareAnotherCatalog());
 			if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareId()==null){
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
-				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(4));
+				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(2));
 				
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareColumnDecimalOne(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnDecimalOne());
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareStatus(true);
@@ -926,7 +926,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().setValueAnswersList(getSeguimientoSalvaguardaBean().getListaValoresRespuestasA());
 			
 			for (TableResponses tr : getSeguimientoSalvaguardaBean().getTablaSalvaguardaA()) {
-				tr.setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(4));
+				tr.setQuestions(getSeguimientoSalvaguardaBean().getListaPreguntasA().get(2));
 				tr.setAdvanceExecutionSaveguards(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards());
 				getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getTableResponsesList().add(tr);
 			}
@@ -5239,7 +5239,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				if(res.getTareColumnNumberFour() == CODIGO_IDENTIFICACION_INDIGENA){
 					res.setTareGenericoDos(ubicaPuebloNacionalidad(res.getTareColumnNumberFive()));
 				}
-
+				res.setTareComponente(ubicaComponente(res.getTareCodeComponent()));
 			}
 
 			getSeguimientoSalvaguardaBean().setTablaSalvaguardaG481(OperacionesListas.filtrar(listaSalvaguardaG, 129));
@@ -8745,6 +8745,53 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 		getComponenteBuscarProyectos().getBuscaProyectosBean().setTipoSocio(1);
 	}
 	/**
+	 * Valida nuevas salvaguardas asignadas con el resumen del avance
+	 * @param adex AvanceDeEjecucion
+	 * @param listaAvance Lista del resumen del avance
+	 * @return
+	 */
+	public List<AdvanceSummary> validaSalvaguardasAsignadas(AdvanceExecutionSafeguards adex,List<AdvanceSummary> listaAvance){
+		List<AdvanceSummary> listaTemp = listaAvance;
+		try{			
+			Map<String,ProjectQuestions> mapaTemp=new HashMap<String,ProjectQuestions>();
+			List<ProjectQuestions> listaSalvaguardasAsignadas= new ArrayList<>();
+			List<Safeguards> listaSalvaguardas= new ArrayList<>();
+			if(adex.getProjects()==null)
+				listaSalvaguardasAsignadas = getProjectQuestionsFacade().listaPreguntasPartnerSeleccionadas(adex.getProjectsStrategicPartners().getPspaId());
+			else
+				listaSalvaguardasAsignadas = getProjectQuestionsFacade().listaPreguntasProyectoSeleccionadas(adex.getProjects().getProjId());
+			for(ProjectQuestions sa:listaSalvaguardasAsignadas){
+				mapaTemp.put(sa.getSafeguards().getSafeCode(), sa);
+			}
+			for(Entry<String,ProjectQuestions> sa:mapaTemp.entrySet()){
+				listaSalvaguardas.add(sa.getValue().getSafeguards());
+			}
+			for (Safeguards sa : listaSalvaguardas) {
+				boolean encontrado=false;
+				for (AdvanceSummary asu : listaAvance) {
+					if(sa.getSafeCode().equals(asu.getSafeguards().getSafeCode())){
+						encontrado = true;
+						break;
+					}
+				}
+				if(!encontrado){
+					AdvanceSummary avance= new AdvanceSummary();										
+					avance.setSafeguards(sa);
+					avance.setAdsuStatus(true);
+					avance.setAdsuCreationDate(new Date());
+					avance.setAdsuCreatorUser(getLoginBean().getUser().getUserName());
+					avance.setAdvanceExecutionSafeguards(adex);
+					getAdvanceSummaryFacade().create(avance);
+					listaTemp.add(avance);
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return listaTemp;	
+	}
+	
+	/**
 	 * Carga la información de las salvaguardas del proyecto seleccionado.
 	 */
 	public void cargaDatosProyectoSeleccionado(){
@@ -8753,9 +8800,10 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			getSeguimientoSalvaguardaBean().setProyectoSeleccionado(getComponenteBuscarProyectos().getBuscaProyectosBean().getProyectoSeleccionado());
 			
 			getSeguimientoSalvaguardaBean().setListaAvanceResumen(new ArrayList<>());
-			if(getComponenteBuscarProyectos().getAdvanceExecution().getAdexId()!=null)
+			if(getComponenteBuscarProyectos().getAdvanceExecution().getAdexId()!=null){				
 				getSeguimientoSalvaguardaBean().setListaAvanceResumen(getAdvanceSummaryFacade().listaAvancesPorAvanceEjecucion(getComponenteBuscarProyectos().getAdvanceExecution().getAdexId()));
-			
+				getSeguimientoSalvaguardaBean().setListaAvanceResumen(validaSalvaguardasAsignadas(getComponenteBuscarProyectos().getAdvanceExecution(), getSeguimientoSalvaguardaBean().getListaAvanceResumen()));
+			}
 			if(validaPeriodoReporteProyecto(getSeguimientoSalvaguardaBean().getProyectoSeleccionado(), getComponenteBuscarProyectos().getBuscaProyectosBean().getAnioReporte())){
 				getSeguimientoSalvaguardaBean().setCodigoStrategicPartner(getComponenteBuscarProyectos().getBuscaProyectosBean().getCodigoStrategicPartner());
 				if(getLoginBean().getTipoRol()==3)

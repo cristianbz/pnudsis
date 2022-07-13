@@ -19,6 +19,7 @@ public class DtoResumenAbordajeSalvaguarda {
 	private String socioImplementador;
 	private String resumenSocioImplementador;
 	private String proyecto;
+	private String proyectoNombreCorto;
 	private String tablaResumenSociosEstrategicos;
 	private String tablaResumenSalvaguardas;
 }

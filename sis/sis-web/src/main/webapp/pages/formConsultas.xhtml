@@ -15,7 +15,7 @@
 		name="font-awesome/5.12.0/css/all.min-jsf.css" />
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
-
+	<script type="text/javascript" src="../resources/js/atras.js"></script>
 	<script>
 	function goToAnchor(nombre) {
 		
@@ -40,6 +40,7 @@
 							style="font-size:18px;font-weight:bold;" />
 					</div>
 				</div>
+				
 				<div class="ui-fluid p-formgrid p-grid">
 					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
 						<p:outputLabel value="#{etiquetas['tipoReporte']}" />
@@ -57,7 +58,7 @@
 					</div>
 				</div>
 				<p:outputPanel id="panelSalvaguarda">
-					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==1}" header="#{titulos['resumenAbordajeSalvaguarda']}">
+					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==1}" header="#{titulos['reportesPorSalvaguarda']}">
 						<div class="ui-fluid p-formgrid p-grid">
 							
 							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
@@ -88,19 +89,30 @@
 							<div class="p-field p-col-12 p-md-6"></div>
 							
 							
-							<div class="p-field p-col-12 p-md-3">
-								
+							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:outputLabel value="#{etiquetas['resumenAbordajeSalvaguarda']}"/>
 							</div>
 							<div class="p-field p-col-12 p-md-3">
 								<p:commandButton value="#{botones['descargarInfo']}" process="@this anioProyecto salvaguarda" ajax="false" action="#{reportesController.generarPdfResumenAbordajePorSalvaguarda()}" icon="#{botones['icono.descargar']}"/>
 							</div>
 							<div class="p-field p-col-12 p-md-6"></div>
+							
+							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:outputLabel value="#{etiquetas['consolidadoPreguntas']}"/>
+							</div>
+							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:commandButton value="#{botones['descargarInfo']}" process="@this" ajax="false" partialSubmit="true" 
+									action="#{reportesController.generarPdfConsolidadoPreguntas()}" icon="#{botones['icono.descargar']}"/>
+							</div>
+							<div class="p-field p-col-12 p-md-6" >
+								
+							</div>
 
 						</div>
 					</p:panel>
 				</p:outputPanel>
 				<p:outputPanel id="panelProyecto">
-					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==2}" header="#{titulos['resumenAbordajeProyecto']}">
+					<p:panel rendered="#{reportesController.reportesBean.tipoCargaInformacion==2}" header="#{titulos['reportesPorProyecto']}">
 						<div class="ui-fluid p-formgrid p-grid">
 							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
 								<p:outputLabel value="#{etiquetas['proyectos']}:*" />
@@ -142,7 +154,7 @@
 						</div>
 					</p:panel>
 				</p:outputPanel>
-
+							
 			</div>
 			<div class="p-field p-col-12 p-md-3"></div>
 		</div>

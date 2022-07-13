@@ -69,7 +69,7 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 	 */
 	public List<AdvanceExecutionProjectGender> listaIndicadoresReportados(int codigoAvance)throws Exception{
 		List<AdvanceExecutionProjectGender> listaTemp=null;
-		String sql="SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.adexId=:codigoAvance";
+		String sql="SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.adexId=:codigoAvance AND AEPG.advanceExecutionSafeguards.adexStatus= TRUE";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoAvance", codigoAvance);		
 		listaTemp=findByCreateQuery(sql, camposCondicion);
@@ -246,12 +246,14 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		return lista;
 	}
 	
-	public List<AdvanceExecutionProjectGender> listaIndicadoresReportadosProyecto(int codigoProyecto, int codigoIndicador)throws Exception{
+	public List<AdvanceExecutionProjectGender> listaIndicadoresReportadosProyecto(int codigoProyecto, int codigoIndicador,String periodo,int catalogo)throws Exception{
 		List<AdvanceExecutionProjectGender> listaTemp=null;
-		String sql="SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.projects.projId=:codigoProyecto AND PGIN.indicators.indiId=:codigoIndicador ORDER BY AEPG.advanceExecutionSafeguards.adexTermFrom";
+		String sql="SELECT AEPG FROM AdvanceExecutionProjectGender AEPG, ProjectGenderIndicator PGIN, ProjectsGenderInfo PGINF WHERE AEPG.projectGenderIndicator.pgigId = PGIN.pgigId AND PGINF.pginId = PGIN.projectsGenderInfo.pginId AND AEPG.aepgStatus= TRUE AND AEPG.advanceExecutionSafeguards.projects.projId=:codigoProyecto AND PGIN.indicators.indiId=:codigoIndicador AND AEPG.advanceExecutionSafeguards.adexTermFrom<:periodo AND PGINF.cataId.cataId=:catalogo AND AEPG.advanceExecutionSafeguards.adexStatus= TRUE ORDER BY AEPG.advanceExecutionSafeguards.adexTermFrom";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoProyecto", codigoProyecto);
-		camposCondicion.put("codigoIndicador", codigoIndicador);		
+		camposCondicion.put("codigoIndicador", codigoIndicador);
+		camposCondicion.put("periodo", periodo);
+		camposCondicion.put("catalogo", catalogo);
 		listaTemp=findByCreateQuery(sql, camposCondicion);
 		for (AdvanceExecutionProjectGender aepg : listaTemp) {
 			Hibernate.initialize(aepg.getProjectGenderIndicator().getIndicators());	

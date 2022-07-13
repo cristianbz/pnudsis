@@ -352,6 +352,8 @@ public class ComponenteBuscaProyectos implements Serializable{
 	 * Valida si el usuario tiene mas roles
 	 */
 	public void validarRol(){
+		getBuscaProyectosBean().setMostrarOpcionesBusqueda(false);
+		getBuscaProyectosBean().setMostrarOpcionesBusquedaGenero(false);
 		getBuscaProyectosBean().setListaProyectos(new ArrayList<>());
 		if(getLoginBean().getListaRolesUsuario().size()>1 && !getBuscaProyectosBean().isMenuAdministrador()){
 			Mensaje.verDialogo("dlgTipoRol");
@@ -891,6 +893,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 				}
 
 				getBuscaProyectosBean().setListaProyectosReportados(new ArrayList<>());
+				
 				getBuscaProyectosBean().setListaProyectosReportados(getAdvanceExecutionSafeguardsFacade().listarProyReportadosConCriteriosBusqueda(getBuscaProyectosBean().getProyectoSeleccionado().getProjId(), getBuscaProyectosBean().getCodigoStrategicPartner(),  periodoReporte, getBuscaProyectosBean().getEstadoReporte()));
 				Collections.sort(getBuscaProyectosBean().getListaProyectosReportados(), new Comparator<AdvanceExecutionSafeguards>(){
 					@Override
@@ -980,9 +983,24 @@ public class ComponenteBuscaProyectos implements Serializable{
 					}
 				});
 			}else{
-				if(getLoginBean().getTipoRol() == 3)
-					cargaProyectosReportados(proyecto);
-				else{
+				if(getLoginBean().getTipoRol() == 3){
+//					cargaProyectosReportados(proyecto);			
+//					getBuscaProyectosBean().setTipoSocio(1);
+					getBuscaProyectosBean().setNuevoSeguimiento(false);
+					getBuscaProyectosBean().setListaProyectosReportados(new ArrayList<>());
+					getBuscaProyectosBean().setMostrarOpcionesBusquedaGenero(true);
+					getBuscaProyectosBean().setProyectoSeleccionado(proyecto);
+//					getBuscaProyectosBean().setListaPartnersProyectos(new ArrayList<>());		
+					getBuscaProyectosBean().setCodigoStrategicPartner(null);
+					getBuscaProyectosBean().setAnioReporte(null);
+//					getBuscaProyectosBean().setListaPartnersProyectos(getProjectsStrategicPartnersFacade().listaPartnersActivos(proyecto.getProjId()));
+//					Collections.sort(getBuscaProyectosBean().getListaPartnersProyectos(), new Comparator<ProjectsStrategicPartners>(){
+//						@Override
+//						public int compare(ProjectsStrategicPartners o1, ProjectsStrategicPartners o2) {
+//							return o1.getPartners().getPartName().compareToIgnoreCase(o2.getPartners().getPartName());
+//						}
+//					});
+				}else{
 					getBuscaProyectosBean().setTipoSocio(1);
 					getBuscaProyectosBean().setNuevoSeguimiento(false);
 					getBuscaProyectosBean().setListaProyectosReportados(new ArrayList<>());
@@ -1320,6 +1338,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 				}
 		
 		}catch(Exception e){
+			Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "", getMensajesController().getPropiedad("error.grabar"));
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "grabarLineasAccion " + ": ").append(e.getMessage()));
 		}	
 	}
@@ -1523,9 +1542,9 @@ public class ComponenteBuscaProyectos implements Serializable{
 			
 			if(localizaSalvaguardaAsignada("A")){
 				preguntasActivas = getQuestionsFacade().buscaPreguntaPorCodigoSalvaguarda("A");
-				dto.setPregunta1(preguntasActivas.get(1).getQuesContentQuestion());
-				dto.setPregunta2(preguntasActivas.get(3).getQuesContentQuestion());
-				dto.setPregunta3A(preguntasActivas.get(4).getQuesContentQuestion());			
+				dto.setPregunta1(preguntasActivas.get(0).getQuesContentQuestion());
+				dto.setPregunta2(preguntasActivas.get(1).getQuesContentQuestion());
+				dto.setPregunta3A(preguntasActivas.get(2).getQuesContentQuestion());			
 				dto.setResumenA(ubicaAvaneResumen("A", listaAvances).getAdsuAdvance());			
 				llenarTablasPdfA(dto,preguntasActivas);
 				htmlReporte += GenerarPdfResumen.REPORTE_RESUMEN_SALVAGUARDAA;
@@ -1795,7 +1814,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='80%' > Plan/Proyecto del Gobierno Nacional</td> <td class='tablaborder' bgcolor='#FFFFFF' width='20%'> Presupuesto asignado</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : listaA) {
-					if(preguntasActivas.get(4).getQuesId().equals(valores.getCodigoPregunta())){
+					if(preguntasActivas.get(2).getQuesId().equals(valores.getCodigoPregunta())){
 						String catalogo="";
 						if(valores.getCatalogo1()!=null && valores.getCatalogo1().length()>0)
 							catalogo = valores.getCatalogo1();
@@ -1812,7 +1831,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='40%' >Actividad que aporta a la salvaguarda</td> <td class='tablaborder' bgcolor='#FFFFFF' width='30%'>Logro alcanzado que se reporta</td><td class='tablaborder' bgcolor='#FFFFFF' width='30%'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : listaA) {
-					if(preguntasActivas.get(5).getQuesId().equals(valores.getCodigoPregunta())){
+					if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta())){
 						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='40%'>" + valores.getTexto1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='30%'>" + valores.getTexto2()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='30%'><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
 					}
 				
@@ -1836,10 +1855,14 @@ public class ComponenteBuscaProyectos implements Serializable{
 			
 			String tabla="";
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
-			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Modalidad</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Fecha</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Provincia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Autoidentificación étnica</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nro hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nro mujeres</td></tr>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='8%' >Modalidad</td> <td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Fecha</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Provincia</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Autoidentificación étnica</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='5%'>Nro hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='5%'>Nro mujeres</td><td class='tablaborder' bgcolor='#FFFFFF' width='15%'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-					if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta()))
-						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCatalogo1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getFecha()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='5%'>" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='5%'>" + valores.getNumeroMujeres()+ "</td></tr>\r\n";
+					if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta())){
+						String nacionalidad="";
+						if(valores.getNacionalidad() != null)
+							nacionalidad =valores.getNacionalidad();
+						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + valores.getCatalogo1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + valores.getFecha()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + valores.getProvincia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + nacionalidad  + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='5%'>" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='5%'>" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' style='width:15%;'> <a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td></tr>\r\n";
+					}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo4B(listaSiNo.get(0).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -1890,18 +1913,26 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='20%'>Provincia</td><td class='tablaborder' bgcolor='#FFFFFF' width='20%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='20%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Comunidad</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-					if(preguntasActivas.get(11).getQuesId().equals(valores.getCodigoPregunta()))
-						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td></tr>\r\n";					
+					if(preguntasActivas.get(11).getQuesId().equals(valores.getCodigoPregunta())){
+						String nacionalidad="";
+						if(valores.getNacionalidad() != null)
+							nacionalidad =valores.getNacionalidad();
+						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td></tr>\r\n";
+					}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo9B(listaSiNo.get(5).isVaanYesnoAnswerValue()?"SI":"NO");
 			dtoResumen.setTabla9B(tabla);
 			tabla="";
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
-			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Provincia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Hectáreas</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Estado</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nro Hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nro Mujeres beneficiarias</td></tr>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Provincia</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Hectáreas</td><td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Estado</td><td class='tablaborder' bgcolor='#FFFFFF' width='6%'>Nro Hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='6%'>Nro Mujeres beneficiarias</td><td class='tablaborder' bgcolor='#FFFFFF' width='15%'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-					if(preguntasActivas.get(13).getQuesId().equals(valores.getCodigoPregunta()))												
-						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td></tr>\r\n";					
+					if(preguntasActivas.get(13).getQuesId().equals(valores.getCodigoPregunta())){
+						String nacionalidad="";
+						if(valores.getNacionalidad() != null)
+							nacionalidad =valores.getNacionalidad();
+						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td></tr>\r\n";
+					}
 			}
 //			tabla += "</table>\r\n";
 //			dtoResumen.setSiNo10B(listaSiNo.get(6).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -1920,8 +1951,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nombre de la organización Beneficiaria</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Acciones implementadas</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Conformación de la organización</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro mujeres</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-					if(preguntasActivas.get(16).getQuesId().equals(valores.getCodigoPregunta()))												
-						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td></tr>\r\n";					
+					if(preguntasActivas.get(16).getQuesId().equals(valores.getCodigoPregunta())){
+						String nacionalidad="";
+						if(valores.getNacionalidad() != null)
+							nacionalidad =valores.getNacionalidad();
+						tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td></tr>\r\n";
+					}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo12B(listaSiNo.get(7).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -1974,8 +2009,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Nro Hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Nro Mujeres beneficiarias</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Hectareas</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Presupuesto asignado a la actividad</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Tipo de acceso</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getCatalogo1()+ "</td></tr>\r\n";
+				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getCatalogo1()+ "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo20C(listaSiNo.get(0).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -1984,8 +2023,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Práctica o Saber ancestral</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>¿Cómo se reconocieron estas prácticas?</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>¿Cómo se han promovido estas prácticas?</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto5() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto5(),valores.getTexto5().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto5() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto5(),valores.getTexto5().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo21C(listaSiNo.get(1).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2022,8 +2065,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Objeto del convenio</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Hectáreas bajo actividad REDD+</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(10).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(10).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo25C(listaSiNo.get(3).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2034,12 +2081,15 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Etnia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Objeto de contratación</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Figura de contratación</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Presupuesto</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cómo se están promoviendo y fomentando el derecho laboral en pueblos indígenas a través del PDI, programa y/ proyecto</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Componente</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
 				if(preguntasActivas.get(11).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
 					String objeto="";
 					if (valores.getTexto2().equals("PERSONALPLANTA"))
 						objeto= "PERSONAL PLANTA";
 					else
 						objeto= "PERSONAL CONSULTORIA";	
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getPueblo()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + objeto+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getComponente()+ "</td></tr>\r\n";
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getPueblo()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + objeto+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getComponente()+ "</td></tr>\r\n";
 				}
 			}
 			tabla += "</table>\r\n";
@@ -2050,12 +2100,15 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Resultado</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Link documento respaldo</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Objeto del acuerdo</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Componente</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
 				if(preguntasActivas.get(13).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
 					String resultado="";
 					if(valores.getSinCatalogo()!=null && valores.getSinCatalogo()==1)
 						resultado="Se firmó acuerdo de consentimiento";
 					else
 						resultado="No se firmó acuerdo de consentimiento";
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" +  valores.getPueblo() + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + resultado+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10' nowrap><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getComponente()+ "</td></tr>\r\n";
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" +  valores.getPueblo() + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + resultado+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10' nowrap><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getComponente()+ "</td></tr>\r\n";
 				}
 			}
 			tabla += "</table>\r\n";
@@ -2076,8 +2129,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Fecha</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Asistentes hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Asistentes mujeres</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador participantes</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(17).getQuesId().equals(valores.getCodigoPregunta()))					
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" +  valores.getPueblo() + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getFecha()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' style='font-size:9px;'><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(17).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" +  valores.getPueblo() + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getFecha()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' style='font-size:9px;'><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td></tr>\r\n";
+				}
 				
 			}
 			tabla += "</table>\r\n";
@@ -2109,8 +2166,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Espacio de difusión de la información</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Actores que participan en el proceso de acceso a la información</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Asistentes hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Asistentes mujeres</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo32D(listaSiNo.get(0).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2119,8 +2180,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Actor / Organización</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Actividad que realiza la comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Presupuesto asignado a la actividad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Nivel de involucramiento</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo33D(listaSiNo.get(1).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2150,7 +2215,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			List<ValueAnswers> listaSiNo = getValueAnswersFacade().buscarPorAvanceEjecucionYSalvaguardaCode(getBuscaProyectosBean().getAdvanceExecution().getAdexId(), "E");
 			String tabla="";
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
-			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Actores involucrados clave</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Hectáreas</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Tipo de área consolidada</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Componente</td></tr>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Actores involucrados clave</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Hectáreas</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Tipo de área consolidada</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
 				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta())){
 					String tipo="";
@@ -2162,7 +2227,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 						tipo="Producción Sostenible";
 					else if(valores.getSinCatalogo()==4)
 						tipo="Conectividad de Areas";
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + tipo+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td></tr>\r\n";
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + tipo+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
 				}
 			}
 			tabla += "</table>\r\n";
@@ -2191,10 +2256,14 @@ public class ComponenteBuscaProyectos implements Serializable{
 			dtoResumen.setTabla351E(tabla);				
 			tabla="";
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
-			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Actores clave</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Hectareas</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Componente</td></tr>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Actores clave</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Hectareas</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(5).getQuesId().equals(valores.getCodigoPregunta()))					
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td></tr>\r\n";				
+				if(preguntasActivas.get(5).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo36E(listaSiNo.get(2).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2235,8 +2304,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nro Beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Nro Beneficiarias</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nacionalidad</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(14).getQuesId().equals(valores.getCodigoPregunta()))					
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNumeroHombres()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNacionalidad()+ "</td></tr>\r\n";				
+				if(preguntasActivas.get(14).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNumeroHombres()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + nacionalidad + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setTabla401E(tabla);
@@ -2596,8 +2669,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Riesgo</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo41F(listaSiNo.get(0).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2606,8 +2683,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Riesgo asociado</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Medida tomada</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo42F(listaSiNo.get(1).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2626,8 +2707,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Riesgo</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Actividad para mitigar</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(7).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(7).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto3() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto3(),valores.getTexto3().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo44F(listaSiNo.get(3).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2672,10 +2757,14 @@ public class ComponenteBuscaProyectos implements Serializable{
 			dtoResumen.setTabla461G(tabla);
 			tabla="";
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
-			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Actividad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nro hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nro mujeres</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Fecha</td></tr>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='8%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='8%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Actividad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nro hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nro mujeres</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Fecha</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getFecha()+ "</td></tr>\r\n";
+				if(preguntasActivas.get(3).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getFecha()+ "</td><td class='tablaborder' bgcolor='#FFFFFF'>" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto2() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto2(),valores.getTexto2().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo47G(listaSiNo.get(1).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2684,8 +2773,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Institución acompaña</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Actividad ilícita reportada</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Resultado</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Fecha</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(6).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getFecha()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(6).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getFecha()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo48G(listaSiNo.get(2).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2694,8 +2787,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Organización Beneficiaria</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Tipo de incentivo</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Nro Hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Nro Mujeres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Support value chain</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(8).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(8).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo49G(listaSiNo.get(3).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2714,8 +2811,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='10%'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nro hombres</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Nro mujeres</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Monitoreo remoto</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Monitoreo in situ</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Periodicidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>Componente</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(12).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td></tr>\r\n";
+				if(preguntasActivas.get(12).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' width='10%'>" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' width='7%'>" + valores.getComponente()+ "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo51G(listaSiNo.get(5).isVaanYesnoAnswerValue()?"SI":"NO");
@@ -2832,8 +2933,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:10px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Espacio identificado</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Tipo de organización</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Fin/rol de la organización </td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Acciones implementadas para fortalecer a la organización</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro mujeres beneficiarias</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(0).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto5()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto6() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto6(),valores.getTexto6().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(0).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto5()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto6() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto6(),valores.getTexto6().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			genero.setTablaUno(tabla);
@@ -2841,8 +2946,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:10px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nombre de la lideresa identificada </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Espacio de Diálogo/Participación </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Rol que cumple en el espacio de diálogo/participación</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Acciones de fortalecimiento de la lideresa en el espacio de diálogo/participación</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto5()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto6() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto6(),valores.getTexto6().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(1).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto4()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto5()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto6() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto6(),valores.getTexto6().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			genero.setTablaDos(tabla);
@@ -2850,8 +2959,12 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:10px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Acción </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Resultado </td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nro Mujeres beneficiarias</td><td class='tablaborder' bgcolor='#FFFFFF' width='40px;'>Nro Hombres beneficiarios</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
 			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(2).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNacionalidad()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				if(preguntasActivas.get(2).getQuesId().equals(valores.getCodigoPregunta())){
+					String nacionalidad="";
+					if(valores.getNacionalidad() != null)
+						nacionalidad =valores.getNacionalidad();
+					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getProvincia()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCanton()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getParroquia()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getPueblo()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + nacionalidad + "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroMujeres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getNumeroHombres()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+				}
 			}
 			tabla += "</table>\r\n";
 			genero.setTablaTres(tabla);

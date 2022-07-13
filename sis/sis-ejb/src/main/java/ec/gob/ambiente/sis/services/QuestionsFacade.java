@@ -1,5 +1,6 @@
 package ec.gob.ambiente.sis.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import ec.gob.ambiente.sis.dao.AbstractFacade;
+import ec.gob.ambiente.sis.dto.DtoPreguntasPartners;
+import ec.gob.ambiente.sis.dto.DtoRespuestasSalvaguardas;
 import ec.gob.ambiente.sis.model.Questions;
 
 @Stateless
@@ -143,9 +146,59 @@ public class QuestionsFacade extends AbstractFacade<Questions, Integer>  {
 	 * @throws Exception
 	 */
 	public List<Questions> buscaPreguntaPorCodigoSalvaguarda(String codigoSalvaguarda) throws Exception{
-		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeCode=:codigoSalvaguarda AND Q.quesIsGender = False AND Q.quesStatus=True order by Q.quesQuestionOrder";
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeCode=:codigoSalvaguarda AND Q.quesIsGender = False AND Q.quesStatus=True ORDER BY Q.quesQuestionOrder";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
 		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
 		return findByCreateQuery(sql, camposCondicion);
+	}
+	/**
+	 * Devuelve las preguntas principales
+	 * 
+	 */
+	public List<Questions> buscaPreguntaPrincipalPorCodigoSalvaguarda(String codigoSalvaguarda) throws Exception{
+		String sql="SELECT Q FROM Questions Q WHERE Q.safeguards.safeCode=:codigoSalvaguarda AND Q.quesIsGender = False AND Q.quesStatus=True AND Q.quesPrincipalQuestion = TRUE  ORDER BY Q.quesQuestionOrder";
+		Map<String, Object> camposCondicion=new HashMap<String, Object>();
+		camposCondicion.put("codigoSalvaguarda", codigoSalvaguarda);
+		return findByCreateQuery(sql, camposCondicion);
+	}
+	/***
+	 * Obtiene las preguntas registradas por los partners
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoPreguntasPartners> preguntasPartners(String salvaguarda, String periodo) throws Exception{
+		List<DtoPreguntasPartners> lista = new ArrayList<>();
+		List<Object[]> resultado= null;
+		String sql ="SELECT * FROM sis.view_questions_partners WHERE safe_code='" + salvaguarda + "' AND adex_term_from = '" + periodo +"' ORDER BY ques_id,proj_title;";		
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoPreguntasPartners dto = new DtoPreguntasPartners();				
+				if(dataObj[0]!=null)
+					dto.setId(Integer.valueOf(dataObj[0].toString()));					
+				if(dataObj[1]!=null)
+					dto.setPregunta(dataObj[1].toString());
+				if(dataObj[2]!=null)
+					dto.setPartner(dataObj[2].toString());
+				if(dataObj[3]!=null)
+					dto.setSalvaguarda(dataObj[3].toString());	
+				if(dataObj[4]!=null)
+					dto.setSocioEstrategico("SI");
+				else
+					dto.setSocioEstrategico("NO");
+				if(dataObj[5]!=null)
+					dto.setNombreProyecto(dataObj[5].toString());
+				if(dataObj[6]!=null)
+					dto.setNombreCorto(dataObj[6].toString());
+				else
+					dto.setNombreCorto("");
+//				if(dataObj[7]!=null)
+//					dto.setPeriodo(dataObj[7].toString());
+				
+				lista.add(dto);
+			}
+		}
+		return lista;
 	}
 }

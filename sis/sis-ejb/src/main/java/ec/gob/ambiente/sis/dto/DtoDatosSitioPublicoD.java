@@ -20,12 +20,21 @@ public class DtoDatosSitioPublicoD extends DtoSitioPublico implements Jsonable {
 		super(salvaguarda);
 		// TODO Auto-generated constructor stub
 	}
+//	@Getter
+//	@Setter
+//	private Integer totalEventosHombres;
+//	@Getter
+//	@Setter
+//	private Integer totalEventosMujeres;
 	@Getter
 	@Setter
-	private Integer totalEventosHombres;
+	private Integer totalEspaciosD;
 	@Getter
 	@Setter
-	private Integer totalEventosMujeres;
+	private Integer totalPersonasParticipacionD;
+	@Getter
+	@Setter
+	private Integer numeroOrganizacionesLocalesD;
 	
 	@Override
 	public String toJson() {
@@ -43,8 +52,11 @@ public class DtoDatosSitioPublicoD extends DtoSitioPublico implements Jsonable {
 	public void toJson(Writer writer) throws IOException {
         final JsonObject json = new JsonObject();
         json.put("salvaguarda", super.salvaguarda);
-        json.put("totalEventosHombresD", getTotalEventosHombres());
-        json.put("totalEventosMujeresD", getTotalEventosMujeres());              
+//        json.put("totalEventosHombresD", getTotalEventosHombres());
+//        json.put("totalEventosMujeresD", getTotalEventosMujeres());
+        json.put("totalEspaciosD", getTotalEspaciosD());
+        json.put("totalPersonasParticipacionD", getTotalPersonasParticipacionD());
+        json.put("numeroOrganizacionesLocalesD", getNumeroOrganizacionesLocalesD());  
         json.toJson(writer);
     }
 

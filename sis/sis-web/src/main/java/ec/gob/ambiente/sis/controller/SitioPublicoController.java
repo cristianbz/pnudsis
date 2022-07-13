@@ -135,14 +135,14 @@ public class SitioPublicoController implements Serializable{
 			pieModel = new PieChartModel();
 			barModel = new BarChartModel();
 			iniciaColores();
-			getSitioPublicoBean().setDescripcionSalvaguardaA("Las iniciativas REDD+ deben aportar al cumplimiento de las leyes nacionales, política pública nacional para la protección de los bosques del país y los instrumentos de planificación local. De igual manera, REDD+ debe fortalecer el cumplimiento de los acuerdos internacionales suscritos y ratificados por el Ecuador.");
-			getSitioPublicoBean().setDescripcionSalvaguardaB("La transparencia y eficacia en REDD+ están asociados al acceso a la información, el marco operativo de REDD+, el buen manejo de los recursos, la rendición de cuentas y el fortalecimiento de la gobernanza forestal local a través de alianzas estratégicas con actores clave.");
-			getSitioPublicoBean().setDescripcionSalvaguardaC("Las acciones REDD+ deben fortalecer el enfoque de derechos y promover el respeto a los sistemas de vida local, fundamentalmente de pueblos y nacionalidades indígenas, con especial atención en garantizar la participación voluntaria de los actores, el respeto a libre determinación y la garantía de los derechos colectivos");
-			getSitioPublicoBean().setDescripcionSalvaguardaD("Las iniciativas REDD+ deben fortalecer las capacidades y conocimiento de actores locales con el objetivo de generar espacios de participación en igualdad de condiciones. Además, promoverá la inclusión de mujeres, jóvenes y pueblos indígenas en la implementación de iniciativas REDD+ y su participación en espacios de toma de decisiones relacionados con la implementación de REDD+ a nivel nacional.");
-			getSitioPublicoBean().setDescripcionSalvaguardaE("Las iniciativas REDD+ deben promover la conservación de bosques naturales y la diversidad biológica que habita en estos ecosistemas. De igual manera, las iniciativas REDD+ promoverán la conservación de los servicios que brindan los ecosistemas de bosque. Finalmente, REDD+ promoverá cobeneficios asociados con su implementación tales como el fortalecimiento de la gobernanza forestal local, promover iniciativas de manejo forestal, el fortalecimiento de liderazgos locales, entre otras");
-			getSitioPublicoBean().setDescripcionSalvaguardaF("Esta salvaguarda debe promover actividades que fomenten la sostenibilidad de las áreas de bosque nativo bajo conservación en iniciativas REDD+, con el objetivo de evitar su deforestación en el futuro y una reversión de las emisiones evitadas.");
-			getSitioPublicoBean().setDescripcionSalvaguardaG("Los riesgos de fugas se producen cuando la deforestación se desplaza de una jurisdicción o país que implementa actividades REDD+ a otra que no cuentan con iniciativas REDD+.");
-			getSitioPublicoBean().setDescripcionSalvaguardaGE("Es uno de los ejes principales dentro de la implementación estratégica de REDD+, que tiene por objetivo mejorar las condiciones de vida de hombres y mujeres en las zonas en las que se interviene, con lo que se garantiza participación equitativa de los beneficios de REDD+ en el país, promover el mejoramiento en el acceso y control de medios de producción, el financiamiento, capacitación y acceso a la información por parte de las mujeres a través de acciones culturalmente adecuadas, que no profundicen las brechas existentes y su vulnerabilidad frente a los efectos negativos del cambio climático. ");
+			getSitioPublicoBean().setDescripcionSalvaguardaA(rb.getString("TITULO_SALVAGUARDA_A"));
+			getSitioPublicoBean().setDescripcionSalvaguardaB(rb.getString("TITULO_SALVAGUARDA_B"));
+			getSitioPublicoBean().setDescripcionSalvaguardaC(rb.getString("TITULO_SALVAGUARDA_C"));
+			getSitioPublicoBean().setDescripcionSalvaguardaD(rb.getString("TITULO_SALVAGUARDA_D"));
+			getSitioPublicoBean().setDescripcionSalvaguardaE(rb.getString("TITULO_SALVAGUARDA_E"));
+			getSitioPublicoBean().setDescripcionSalvaguardaF(rb.getString("TITULO_SALVAGUARDA_F"));
+			getSitioPublicoBean().setDescripcionSalvaguardaG(rb.getString("TITULO_SALVAGUARDA_G"));
+			getSitioPublicoBean().setDescripcionSalvaguardaGE(rb.getString("TITULO_DESCRIBE_GENERO"));
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init " + ": ").append(e.getMessage()));
 		}
@@ -396,23 +396,36 @@ public class SitioPublicoController implements Serializable{
 						
 						break;
 					case 1:
-						getSitioPublicoBean().setNumeroHombresSalvaguardaB(Integer.valueOf(obj.get("numeroHombresB").toString()));
-						getSitioPublicoBean().setNumeroMujeresSalvaguardaB(Integer.valueOf(obj.get("numeroMujeresB").toString()));
+//						getSitioPublicoBean().setNumeroHombresSalvaguardaB(Integer.valueOf(obj.get("numeroHombresB").toString()));
+//						getSitioPublicoBean().setNumeroMujeresSalvaguardaB(Integer.valueOf(obj.get("numeroMujeresB").toString()));
+						getSitioPublicoBean().setTotalPersonasAccesoInfoB(new BigDecimal(obj.get("totalPersonasAccesoInfo").toString()));
+						getSitioPublicoBean().setNumeroAlianzasB(Integer.valueOf(obj.get("numeroAlianzas").toString()));
+						getSitioPublicoBean().setNumeroEventosRendicionB(Integer.valueOf(obj.get("numeroEventosRendicion").toString()));
 						break;
 					case 2:
 						getSitioPublicoBean().setNumeroComunidadesSalvaguardaC(Integer.valueOf(obj.get("numeroComunidadesC").toString()));			
 						getSitioPublicoBean().setNumeroPracticasAncestralesC(Integer.valueOf(obj.get("numeroPracticasC").toString()));	
+						getSitioPublicoBean().setNumeroOrganizacionIndigenaC(Integer.valueOf(obj.get("numeroOrganizacionIndigenaC").toString()));
+						getSitioPublicoBean().setNumeroEventosCPLIC(Integer.valueOf(obj.get("numeroEventosCPLIC").toString()));
 						break;
 					case 3:
-						getSitioPublicoBean().setTotalEventosFortalecimientoHomD(Integer.valueOf(obj.get("totalEventosHombresD").toString()));
-						getSitioPublicoBean().setTotalEventosFortalecimientoMujD(Integer.valueOf(obj.get("totalEventosMujeresD").toString()));
+//						getSitioPublicoBean().setTotalEventosFortalecimientoHomD(Integer.valueOf(obj.get("totalEventosHombresD").toString()));
+//						getSitioPublicoBean().setTotalEventosFortalecimientoMujD(Integer.valueOf(obj.get("totalEventosMujeresD").toString()));
+						getSitioPublicoBean().setTotalEspaciosD(Integer.valueOf(obj.get("totalEspaciosD").toString()));
+						getSitioPublicoBean().setTotalPersonasParticipacionD(Integer.valueOf(obj.get("totalPersonasParticipacionD").toString()));
+						getSitioPublicoBean().setNumeroOrganizacionesLocalesD(Integer.valueOf(obj.get("numeroOrganizacionesLocalesD").toString()));
 						break;
 					case 4:
-						getSitioPublicoBean().setNumeroFomentoGestionComunitariaE(Integer.valueOf(obj.get("numeroFomentoGestionComunitariaE").toString()));
-						getSitioPublicoBean().setTotalHectareasCoberturaE(new BigDecimal(obj.get("totalHectareasCoberturaE").toString()));
+//						getSitioPublicoBean().setNumeroFomentoGestionComunitariaE(Integer.valueOf(obj.get("numeroFomentoGestionComunitaria").toString()));
+//						getSitioPublicoBean().setTotalHectareasCoberturaE(new BigDecimal(obj.get("totalHectareasCoberturaE").toString()));
+						getSitioPublicoBean().setTotalHectareasConservadoE(new BigDecimal(obj.get("totalHectareasConservadoE").toString()));
+						getSitioPublicoBean().setTotalHectareasRestauradoE(new BigDecimal(obj.get("totalHectareasRestauradoE").toString()));
+						getSitioPublicoBean().setNumeroInvestigacionesE(Integer.valueOf(obj.get("numeroInvestigacionesE").toString()));
 						break;
 					case 5:
 						getSitioPublicoBean().setTotalAccionesReversionF(Integer.valueOf(obj.get("totalAccionesReversionF").toString()));
+						getSitioPublicoBean().setNumeroInvestigacionesF(Integer.valueOf(obj.get("numeroInvestigacionesF").toString()));
+						getSitioPublicoBean().setNumeroAccionesFortalecimientoF(Integer.valueOf(obj.get("numeroAccionesFortalecimientoF").toString()));
 //						getSitioPublicoBean().setListadoMedidasTomadasF(new ArrayList<>());
 //						JsonArray vectorF =(JsonArray) obj.get("medidasTomadas");
 //						if (vectorF != null) { 
@@ -435,6 +448,7 @@ public class SitioPublicoController implements Serializable{
 					case 6:
 						getSitioPublicoBean().setNumeroComunidadesSalvaguardaG(Integer.valueOf(obj.get("numeroComunidadesG").toString()));
 						getSitioPublicoBean().setNumeroAccionesGeneradasG(Integer.valueOf(obj.get("numeroAccionesG").toString()));
+						getSitioPublicoBean().setNumeroActividadesControlG(Integer.valueOf(obj.get("numeroActividadesControl").toString()));
 						break;
 					case 7:
 						getSitioPublicoBean().setNumeroTemasGenero(Integer.valueOf(obj.get("totalTemasAplicados").toString()));
@@ -527,8 +541,8 @@ public class SitioPublicoController implements Serializable{
 			///// D
 			DtoDatosSitioPublicoD dtoSalvaguardaD = new DtoDatosSitioPublicoD("D");
 
-			dtoSalvaguardaD.setTotalEventosHombres(getMeetingsFacade().listaEventosFortalecimientoHombres());
-			dtoSalvaguardaD.setTotalEventosMujeres(getMeetingsFacade().listaEventosFortalecimientoMujeres());
+//			dtoSalvaguardaD.setTotalEventosHombres(getMeetingsFacade().listaEventosFortalecimientoHombres());
+//			dtoSalvaguardaD.setTotalEventosMujeres(getMeetingsFacade().listaEventosFortalecimientoMujeres());
 
 			// E
 			DtoDatosSitioPublicoE dtoSalvaguardaE = new DtoDatosSitioPublicoE("E");
@@ -707,7 +721,7 @@ public class SitioPublicoController implements Serializable{
 						}
 						out.flush();
 						out.close();
-						System.out.println("\nDescargado\n");
+//						System.out.println("\nDescargado\n");
 						fctx.responseComplete();
 					}
 				}else{
