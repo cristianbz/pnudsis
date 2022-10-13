@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
@@ -78,6 +79,7 @@ import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaE;
 import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaF;
 import ec.gob.ambiente.sis.utils.GenerarBDSalvaguardaG;
 import ec.gob.ambiente.sis.utils.Mensaje;
+import ec.gob.ambiente.sis.utils.enumeraciones.TipoCatalogoEnum;
 import ec.gob.ambiente.sis.utils.enumeraciones.TipoRolesUsuarioEnum;
 import ec.gob.ambiente.suia.service.RoleFacade;
 import ec.gob.ambiente.suia.service.UsersFacade;
@@ -451,6 +453,7 @@ public class AdministracionController implements Serializable{
 					return o1.getCatalogsType().getCatyDescription().compareToIgnoreCase(o2.getCatalogsType().getCatyDescription());
 				}
 			});
+			cargacatalogos();
 			getAdministracionBean().setNuevoCatalogo(false);
 			Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.infoGrabada"));						
 		}catch(Exception e){
@@ -615,6 +618,88 @@ public class AdministracionController implements Serializable{
 		GenerarBDGenero.generaArchivoGenero(getTableResponsesFacade(),getGeneroFacade(), getQuestionsFacade(),getAdministracionBean().getListaCatalogos(),getAplicacionBean().getListaProvincias(),getAplicacionBean().getListaTodosCantones(),getAplicacionBean().getListaTodasParroquias(),getAdministracionBean().getListaComponentes());
 		Mensaje.verMensaje(FacesMessage.SEVERITY_INFO, "",getMensajesController().getPropiedad("info.generaArchivo"));
 	}
-
+	
+	public void cargacatalogos(){
+		try{
+    		getAplicacionBean().setListaPueblosNacionalidades(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PUEBLOSNACIONALIDADES.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaPueblosNacionalidades(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		
+    		
+    		getAplicacionBean().setListaAutoIdentificacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.AUTOIDENTIFICACION.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaAutoIdentificacion(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaPublico(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PUBLICO.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaPublico(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaMetodo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.METODO.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaMetodo(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaCatalogoRiesgo(new ArrayList<>());
+    		getAplicacionBean().setListaCatalogoRiesgo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.RIESGO.getCodigo()));
+    		getAplicacionBean().setListaRecursos(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.RECURSOS.getCodigo()));
+    		getAplicacionBean().setListaRecursos(getAplicacionBean().getListaRecursos().stream().sorted((r1,r2)->r1.getCataText1().compareTo(r2.getCataText1())).collect(Collectors.toList()));
+    		Collections.sort(getAplicacionBean().getListaRecursos(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaPeriodicidad(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.PERIODICIDAD.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaPeriodicidad(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaSistemas(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.SISTEMAS.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaSistemas(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaAccion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.ACCION.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaAccion(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaSalvaguardas(getSafeguardsFacade().listarSalvaguardas());
+    		getAplicacionBean().setListaAlternativaEconomica(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.ALTERNATIVAECONOMICA.getCodigo()));
+    		Collections.sort(getAplicacionBean().getListaAlternativaEconomica(), new Comparator<Catalogs>(){
+				@Override
+				public int compare(Catalogs o1, Catalogs o2) {
+					return o1.getCataText1().compareToIgnoreCase(o2.getCataText1());
+				}
+			});
+    		getAplicacionBean().setListaMonitoreoRemoto(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOREMOTO.getCodigo()));
+    		getAplicacionBean().setListaMonitoreoInSitu(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MONITOREOINSITU.getCodigo()));
+    		getAplicacionBean().setListaLineaAccion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.LINEAACCION.getCodigo()));
+    		getAplicacionBean().setListaControlVigilancia(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.CONTROLVIGILANCIA.getCodigo()));
+    		getAplicacionBean().setListaTipoOrganizacion(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOORGANIZACION.getCodigo()));
+    		getAplicacionBean().setListaTipoIncentivo(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOINCENTIVO.getCodigo()));
+    		getAplicacionBean().setListaInstitucionAcompania(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.TIPOINSTITUCION.getCodigo()));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }
 

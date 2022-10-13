@@ -552,7 +552,7 @@
 							<p:column headerText="#{etiquetas['descripcionCorta']}">
 								#{cata.cataText1}
 							</p:column>
-							<p:column headerText="#{etiquetas['descripcionLarga']}">
+							<p:column headerText="#{etiquetas['descripcionLarga']}" filterMatchMode="contains" filterBy="#{cata.cataText2}">
 								#{cata.cataText2}
 							</p:column>
 

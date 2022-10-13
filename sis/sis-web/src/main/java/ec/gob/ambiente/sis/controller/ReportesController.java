@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +34,7 @@ import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.ReportesBean;
 import ec.gob.ambiente.sis.dto.DtoPreguntasPartners;
 import ec.gob.ambiente.sis.dto.DtoResumenAbordajeSalvaguarda;
+import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
 import ec.gob.ambiente.sis.model.AdvanceSummary;
 import ec.gob.ambiente.sis.model.Questions;
 import ec.gob.ambiente.sis.reporteria.DatosConsolidado;
@@ -180,36 +183,88 @@ public class ReportesController implements Serializable{
 		return resumen;
 	}
 	
+//	public String llenarPreguntasPartner(List<DtoPreguntasPartners> lista,DatosConsolidado dto,Questions pregunta){
+//		String proyecto="";
+//		String resumen="";		
+//		StringBuilder partnersImp=new StringBuilder();
+//		StringBuilder partnersEst = new StringBuilder();
+//		String socio="";
+//		String estrategico="";
+//		resumen += "<tr><td class='tablaborder' bgcolor='#FFFFFF' >" + pregunta.getQuesContentQuestion() + "</td> <td class='tablaborder' bgcolor='#FFFFFF'>\r\n";
+//		resumen += "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
+//		resumen += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='25%' >Proyecto</td><td class='tablaborder' bgcolor='#FFFFFF' width='75%'>Socios</td></tr>\r\n";
+//		partnersImp.append("SOCIO IMPLEMENTADOR: ");
+//		partnersEst.append("SOCIOS ESTRATEGICOS: ");
+//		
+//		for(DtoPreguntasPartners ppar:lista){					
+//			if(ppar.getId() == pregunta.getQuesId()){
+//				proyecto=ppar.getNombreProyecto();
+//				if(ppar.getSocioEstrategico().equals("NO"))
+//					socio="IMPLEMENTADOR: " + ppar.getPartner();
+//				else
+//					socio="ESTRATEGICO: " + ppar.getPartner();
+//				
+//				resumen += "<tr><td class='tablaborder' bgcolor='#FFFFFF' style ='font-size:10px;'>" + ppar.getNombreProyecto() + "[ " + ppar.getNombreCorto() + " ]" + "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + socio + "</td></tr>\r\n";
+//			}
+//			
+//		}
+//		resumen +="</table></td>\r\n";
+//		return resumen;
+//	}
+
 	public String llenarPreguntasPartner(List<DtoPreguntasPartners> lista,DatosConsolidado dto,Questions pregunta){
+		List<DtoPreguntasPartners> listaAux=new ArrayList<>();
+		for (DtoPreguntasPartners dpp : lista) {
+			if(dpp.getId() == pregunta.getQuesId())
+				listaAux.add(dpp);
+		}
+		Collections.sort(listaAux, new Comparator<DtoPreguntasPartners>(){
+			@Override
+			public int compare(DtoPreguntasPartners o1, DtoPreguntasPartners o2) {
+				return o1.getNombreProyecto().compareToIgnoreCase(o2.getNombreProyecto());
+			}
+		});
 		String proyecto="";
 		String resumen="";		
 		StringBuilder partnersImp=new StringBuilder();
 		StringBuilder partnersEst = new StringBuilder();
 		String socio="";
 		String estrategico="";
-//		resumen += "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
-//		resumen += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='25%' >Pregunta</td><td class='tablaborder' bgcolor='#FFFFFF' width='75%'>Proyecto/Socios</td></tr>\r\n";
 		resumen += "<tr><td class='tablaborder' bgcolor='#FFFFFF' >" + pregunta.getQuesContentQuestion() + "</td> <td class='tablaborder' bgcolor='#FFFFFF'>\r\n";
-		resumen += "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
-		resumen += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='25%' >Proyecto</td><td class='tablaborder' bgcolor='#FFFFFF' width='75%'>Socios</td></tr>\r\n";
+		resumen += "<table class='tablasinborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
+//		resumen += "<tr class='titulotabla'>\r\n" + " <td class='tablasinborder' bgcolor='#FFFFFF' width='35%' >Proyecto</td><td class='tablasinborder' bgcolor='#FFFFFF' width='65%'>Socios</td></tr>\r\n";
 		partnersImp.append("SOCIO IMPLEMENTADOR: ");
 		partnersEst.append("SOCIOS ESTRATEGICOS: ");
+		if(listaAux.size()>0){
+			proyecto=listaAux.get(0).getNombreProyecto();
+			resumen += "<tr><td class='tablasinborder' bgcolor='#FFFFFF' style ='font-size:10px;'>" + listaAux.get(0).getNombreProyecto() + " [ " + listaAux.get(0).getNombreCorto() + " ]" + "</td><td class='tablasinborder' bgcolor='#FFFFFF' >\r\n";
+		}
 		
-		for(DtoPreguntasPartners ppar:lista){					
+		for(DtoPreguntasPartners ppar:listaAux){					
 			if(ppar.getId() == pregunta.getQuesId()){
-				proyecto=ppar.getNombreProyecto();
-				if(ppar.getSocioEstrategico().equals("NO"))
-					socio="IMPLEMENTADOR: " + ppar.getPartner();
-				else
-					socio="ESTRATEGICO: " + ppar.getPartner();
-				
-				resumen += "<tr><td class='tablaborder' bgcolor='#FFFFFF' style ='font-size:10px;'>" + ppar.getNombreProyecto() + "[ " + ppar.getNombreCorto() + " ]" + "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + socio + "</td></tr>\r\n";
+				if(proyecto.equals(ppar.getNombreProyecto())){					
+					if(ppar.getSocioEstrategico().equals("NO"))
+						socio="IMPLEMENTADOR: " + ppar.getPartner()+"<br/>";
+					else
+						socio="ESTRATEGICO: " + ppar.getPartner()+"<br/>";				
+					resumen += socio;
+				}else{
+					proyecto = ppar.getNombreProyecto();
+					resumen += "</td></tr><tr><td class='tablasinborder' bgcolor='#FFFFFF' style ='font-size:10px;'>" + ppar.getNombreProyecto() + " [ " + ppar.getNombreCorto() + " ]" + "</td>\r\n";
+					if(ppar.getSocioEstrategico().equals("NO"))
+						socio="IMPLEMENTADOR: " + ppar.getPartner()+"<br/>";
+					else
+						socio="ESTRATEGICO: " + ppar.getPartner()+"<br/>";				
+					resumen += "<td class='tablasinborder' bgcolor='#FFFFFF' style ='font-size:10px;'>" + socio;
+				}
 			}
 			
 		}
-		resumen +="</table></td>\r\n";
+		resumen +="</td></tr></table></td>\r\n";
 		return resumen;
+		
 	}
+
 	
 	public void generarPdfConsolidadoPreguntas(){
 		try{
@@ -217,7 +272,7 @@ public class ReportesController implements Serializable{
 			String contenidoTabla="";
 			String contenidoTablaInterna="";
 			String htmlReporte = GenerarPdfConsolidado.REPORTE_RESUMEN_ENCABEZADO_PREGUNTAS;
-			String pattern = "MMM yy HH:mm";
+			String pattern = "yyyy-MM-dd";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());		
 			String anio = getReportesBean().getAnio().toString().concat("-01");	
@@ -228,7 +283,7 @@ public class ReportesController implements Serializable{
 			List<Questions> preguntasSalvaguarda=new ArrayList<>();			
 			preguntasSalvaguarda=getQuestionsFacade().buscaPreguntaPrincipalPorCodigoSalvaguarda(getReportesBean().getSalvaguardaSeleccionada().getSafeCode());
 			contenidoTabla += "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
-			contenidoTabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='25%' >Pregunta</td><td class='tablaborder' bgcolor='#FFFFFF' width='75%'>Proyecto/Socios</td></tr>\r\n";
+			contenidoTabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='25%' >Pregunta</td><td class='tablaborder' bgcolor='#FFFFFF' width='75%'>Proyecto - Socios</td></tr>\r\n";
 			for (Questions q : preguntasSalvaguarda) {			
 				contenidoTablaInterna+=llenarPreguntasPartner(lista,dto,q);
 				contenidoTablaInterna+="</tr>\r\n";
@@ -248,8 +303,8 @@ public class ReportesController implements Serializable{
 			byte[] array = getGeneradorPdfHtml().crearDocumentoPdf(html,1);
 			descargarReporte("application/pdf", "resumenAbordaje" , array);
 		}catch(Exception e){
-//			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarPdfResumenAbordajePorProyecto" + ": ").append(e.getMessage()));
-			e.printStackTrace();
+			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "generarPdfResumenAbordajePorProyecto" + ": ").append(e.getMessage()));
+//			e.printStackTrace();
 		}
 	}
 	
@@ -257,7 +312,7 @@ public class ReportesController implements Serializable{
 		try{
 			
 			String htmlReporte = GenerarPdfResumenAbordaje.REPORTE_RESUMEN_ENCABEZADO_POR_PROYECTO;
-			String pattern = "MMM yy HH:mm";
+			String pattern = "yyyy-MM-dd";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());
 			String periodo="";
@@ -290,7 +345,7 @@ public class ReportesController implements Serializable{
 		try{
 			Map<Integer,Projects> mapaTemp=new HashMap<Integer,Projects>();
 			String htmlReporte = GenerarPdfResumenAbordaje.REPORTE_RESUMEN_ENCABEZADO_POR_SALVAGUARDA;
-			String pattern = "MMM yy HH:mm";
+			String pattern = "yyyy-MM-dd";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());
 			String periodo="";
@@ -353,7 +408,6 @@ public class ReportesController implements Serializable{
 			
 		}
 		dto.setTablaResumenSalvaguardas(html);
-//		return html;
 	}
 	
 	private void descargarReporte(String mimeType, String nombreArchivo, byte[] bs) throws IOException {

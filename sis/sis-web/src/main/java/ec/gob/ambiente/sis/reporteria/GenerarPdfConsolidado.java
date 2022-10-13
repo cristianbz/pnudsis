@@ -30,6 +30,12 @@ public class GenerarPdfConsolidado {
 			"border-collapse:collapse;\r\n" +
 			"height: auto;\r\n" +						
 			"}\r\n" +
+			".tablasinborder {\r\n" +
+			"border: 0px solid black;\r\n" +
+			"border-collapse:separate;\r\n" +
+			"border-spacing: 10px 15px;\r\n" +
+			"height: auto;\r\n" +						
+			"}\r\n" +
 			".contenido {\r\n" +
 			"font-family: sans-serif;\r\n" +
 			"font-size: 11px;\r\n" +			

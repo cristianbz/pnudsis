@@ -199,8 +199,7 @@
 					<div class="p-field p-col-12 p-md-11">
 						<p:dataTable value="#{cc.attrs.componenteBuscaProyectos.buscaProyectosBean.listadoProyectoGeneroIndicador}"
 							style="font-size:10px !important;" emptyMessage="#{mensajes['noRegistros']}"
-							id="tablaIndicadores"  rows="2" paginator="true"
-						var="pgi">
+							id="tablaIndicadores"  var="pgi">
 						<p:column headerText="#{etiquetas['indicador']}" style="font-size:10px !important;">
 							<p:selectOneMenu id="temasObj" 
 									value="#{pgi.indicators}" 
@@ -215,19 +214,21 @@
 									<p:column width="80">
 										<h:outputText value="#{c.indiDescription}" style="font-size:10px !important;"/>
 									</p:column>
-									<p:ajax event="change"  
-										update=":form:buscaProyectos:tablaIndicadores" resetValues="true" 									
+									<p:ajax event="change"  process="@this "
+										update=":form:buscaProyectos:tablaIndicadores" resetValues="true" 	listener="#{cc.attrs.componenteBuscaProyectos.vaciaInfoIndicador(pgi)}"								
 										partialSubmit="true" 
 										/>									
 							</p:selectOneMenu>
 							<p:inputTextarea value="#{pgi.pgigAnotherIndicator}" requiredMessage="#{mensajes['campoRequerido']}"  
 								required="true"  rows="2" style="font-size:10px !important;" maxlength="200"  counter="displayLongOtroIndicador" counterTemplate="{0} caracteres restantes."
-								rendered="#{pgi.indicators.indiType.equals('O')}" id="otroIndicador">							
+								rendered="#{pgi.indicators.indiType.equals('O')}" id="otroIndicador">
+								<p:ajax event="blur" process="@this" partialSubmit="true"/>							
 							</p:inputTextarea>							
 							<h:outputText id="displayLongOtroIndicador" class="p-d-block" rendered="#{pgi.indicators.indiType.equals('O')}"/>
 						</p:column>
 						<p:column headerText="#{etiquetas['lineaBase']}" style="font-size:10px !important;">
 							<p:inputTextarea value="#{pgi.pgigBaseLine}" rows="2" style="font-size:10px !important;" maxlength="200" counter="displayLongLineaBase" counterTemplate="{0} caracteres restantes.">
+								<p:ajax event="blur" process="@this" partialSubmit="true"/>
 							</p:inputTextarea>
 							<h:outputText id="displayLongLineaBase" class="p-d-block" />
 						</p:column>
@@ -235,6 +236,7 @@
 							<p:inputTextarea value="#{pgi.pgigGoals}" rows="2" id="metas" maxlength="200"
 								required="true" requiredMessage="#{mensajes['campoRequerido']}"
 								style="font-size:10px !important;" counter="displayLongMeta" counterTemplate="{0} caracteres restantes.">
+								<p:ajax event="blur" process="@this" partialSubmit="true"/>
 							</p:inputTextarea>
 							<h:outputText id="displayLongMeta" class="p-d-block" />
 							<p:message for="metas"/>
@@ -243,15 +245,23 @@
 							<p:outputLabel value="#{pgi.indicators.indiId==9 or pgi.indicators.indiId==10?etiquetas['hombres']:etiquetas['numeroHombres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
 							<p:outputLabel value="#{etiquetas['valor']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('O') or pgi.indicators.indiType.equals('N')}"/>
 							<p:outputLabel value="#{etiquetas['valorSiNo']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('B')}"/>							
-							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorUno" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<p:ajax event="blur" process="@this" partialSubmit="true"/>
+							</p:inputNumber>							
 							<p:message for="valorUno"/>
 							<p:outputLabel value="#{pgi.indicators.indiId==9 or pgi.indicators.indiId==10?etiquetas['mujeres']:etiquetas['numeroMujeres']}: " style="font-size:10px !important;" rendered="#{pgi.indicators.indiType.equals('G')}"/>
-							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueTwo}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueTwo}" rendered="#{pgi.indicators.indiType.equals('G')}" id="valorDos" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<p:ajax event="blur" process="@this" partialSubmit="true"/>
+							</p:inputNumber>							
 							<p:message for="valorDos"/>
-							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>							
+							<p:inputNumber decimalPlaces="0" value="#{pgi.pgigGoalValueOne}" rendered="#{pgi.indicators.indiType.equals('N')}" id="valorTres" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<p:ajax event="blur" process="@this" partialSubmit="true"/>
+							</p:inputNumber>							
 							<p:message for="valorTres"/>
 							<p:toggleSwitch value="#{pgi.pgigBooleanValue}" rendered="#{pgi.indicators.indiType.equals('B')}" id="valorCuatro"/>
-							<p:inputText value="#{pgi.pgigValueAnotherIndicator}" rendered="#{pgi.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}"/>
+							<p:inputText value="#{pgi.pgigValueAnotherIndicator}" rendered="#{pgi.indicators.indiType.equals('O')}" id="valorCinco" required="true" requiredMessage="#{mensajes['campoRequerido']}">
+								<p:ajax event="blur" process="@this" partialSubmit="true"/>
+							</p:inputText>
 							<p:message for="valorCinco"/>
 						</p:column>
 						<p:column style="font-size:10px !important; width:40px;">
@@ -1286,7 +1296,9 @@
 								<p:outputLabel value="#{lineas.componentesGenero}"/>
 								<br/>
 								<p:outputLabel value="#{etiquetas['presupuesto']}: " styleClass="estiloHeaderCampoTabla"/>
-								<p:outputLabel value="#{lineas.pginBudget}"/>
+								<p:outputLabel value="#{lineas.pginBudget}" id="idPresupuesto">
+									<f:convertNumber for="idPresupuesto" type="number" pattern="#,##0.00" minFractionDigits="2" locale="en_US"/>
+								</p:outputLabel>
 								<br/>																
 								<p:outputLabel value="#{titulos['indicadoresIngresados']}" styleClass="estiloHeaderCampoTabla"/>
 								<br/>

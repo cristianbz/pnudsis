@@ -44,7 +44,8 @@ public enum TipoCatalogoEnum {
 	LINEAGENERO3(35,"LINEA DE GENERO 3"),
 	TIPOINSTITUCION(36,"TIPO INSTITUCION"),
 	ESTADO(37,"Estado"),
-	CONFORMACION(38,"Conformacion");
+	CONFORMACION(38,"Conformacion"),
+	PROYECTOEMBLEMATICO(39,"Proyectos emblematicos");
 	@Getter
 	private final int codigo;
 	@Getter

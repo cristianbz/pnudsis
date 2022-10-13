@@ -89,18 +89,22 @@
 							<div class="p-field p-col-12 p-md-6"></div>
 							
 							
-							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+							<div class="p-field p-col-12 p-md-6" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
 								<p:outputLabel value="#{etiquetas['resumenAbordajeSalvaguarda']}"/>
 							</div>
-							<div class="p-field p-col-12 p-md-3">
+							<div class="p-field p-col-12 p-md-6"></div>
+							
+							<div class="p-field p-col-12 p-md-6">
 								<p:commandButton value="#{botones['descargarInfo']}" process="@this anioProyecto salvaguarda" ajax="false" action="#{reportesController.generarPdfResumenAbordajePorSalvaguarda()}" icon="#{botones['icono.descargar']}"/>
 							</div>
 							<div class="p-field p-col-12 p-md-6"></div>
 							
-							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+							<div class="p-field p-col-12 p-md-6" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
 								<p:outputLabel value="#{etiquetas['consolidadoPreguntas']}"/>
 							</div>
-							<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+							<div class="p-field p-col-12 p-md-6"></div>
+							
+							<div class="p-field p-col-12 p-md-6" >
 								<p:commandButton value="#{botones['descargarInfo']}" process="@this" ajax="false" partialSubmit="true" 
 									action="#{reportesController.generarPdfConsolidadoPreguntas()}" icon="#{botones['icono.descargar']}"/>
 							</div>
@@ -145,9 +149,12 @@
 							</div>
 							<div class="p-field p-col-12 p-md-6"></div>
 							
-							<div class="p-field p-col-12 p-md-3">								
+							<div class="p-field p-col-12 p-md-6" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+								<p:outputLabel value="#{etiquetas['resumenAbordajeProyecto']}"/>
 							</div>
-							<div class="p-field p-col-12 p-md-3">
+							<div class="p-field p-col-12 p-md-6"></div>
+							
+							<div class="p-field p-col-12 p-md-6">
 								<p:commandButton value="#{botones['descargarInfo']}" process="@this anioProyecto" ajax="false" action="#{reportesController.generarPdfResumenAbordajePorProyecto()}" icon="#{botones['icono.descargar']}"/>
 							</div>
 							<div class="p-field p-col-12 p-md-6"></div>

@@ -45,7 +45,6 @@ import ec.gob.ambiente.sigma.services.SafeguardsFacade;
 import ec.gob.ambiente.sis.bean.AplicacionBean;
 import ec.gob.ambiente.sis.bean.BuscaProyectosBean;
 import ec.gob.ambiente.sis.bean.LoginBean;
-import ec.gob.ambiente.sis.dto.DtoGenero;
 import ec.gob.ambiente.sis.dto.DtoRespuestasSalvaguardas;
 import ec.gob.ambiente.sis.dto.DtoResumenGenero;
 import ec.gob.ambiente.sis.dto.DtoResumenSalvaguarda;
@@ -1119,6 +1118,9 @@ public class ComponenteBuscaProyectos implements Serializable{
 			for (Components c : getBuscaProyectosBean().getListadoComponentes()) {
 				if(c.getCompId() == Integer.valueOf(codigos[x].trim())){
 					componentes.append(c.getCompName()).append(",");
+				}else if(Integer.valueOf(codigos[x].trim()) == 1000){
+					componentes.append("Componentes Operativos").append(",");
+					break;
 				}
 			}
 		}
@@ -1295,6 +1297,14 @@ public class ComponenteBuscaProyectos implements Serializable{
 		
 	}
 
+	public void vaciaInfoIndicador(ProjectGenderIndicator e ){
+		ProjectGenderIndicator indicador =  e;
+		indicador.setPgigGoalValueOne(0);
+		indicador.setPgigGoalValueTwo(0);
+		indicador.setPgigValueAnotherIndicator("");
+		
+	}
+	
 	public void grabarLineasAccion(){
 		try{
 			StringBuilder cmp = new StringBuilder();
@@ -1397,7 +1407,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 	
 	public int ubicaComponente(String componente){
 		int codigo=0;
-		for (Components comp : getBuscaProyectosBean().getListadoComponentes()) {
+		for (Components comp : getBuscaProyectosBean().getListadoComponentes()) {			
 			if(comp.getCompName().equals(componente)){
 				codigo=comp.getCompId();
 				break;
@@ -1507,7 +1517,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 		try{
 			List<AdvanceSummary> listaAvances = new ArrayList<>();
 			String htmlReporte = GenerarPdfResumen.REPORTE_RESUMEN_ENCABEZADO;
-			String pattern = "MMM yy HH:mm";
+			String pattern = "yyyy-MM-dd";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());
 			String periodo = getBuscaProyectosBean().getAdvanceExecution().getAdexTermFrom().substring(0, 4).concat(" Enero - Diciembre");
@@ -2854,7 +2864,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 		try{
 //			List<AdvanceSummary> listaAvances = new ArrayList<>();
 			String htmlReporte = GenerarPdfResumen.REPORTE_RESUMEN_ENCABEZADO_GENERO;
-			String pattern = "MMM yy HH:mm";
+			String pattern = "yyyy-MM-dd";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String date = simpleDateFormat.format(new Date());
 			String periodo="";
@@ -2888,7 +2898,7 @@ public class ComponenteBuscaProyectos implements Serializable{
 			List<DtoResumenGenero> listaDatos = getAdvanceExecutionProjectGenderFacade().listaResumenAvanceGenero(getBuscaProyectosBean().getAdvanceExecution().getProjects().getProjId(), getBuscaProyectosBean().getAdvanceExecution().getAdexId());
 			String tabla="";
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
-			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Temas</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Línea de acción</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Indicador</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Meta</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Valor alcanzado</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Acciones implementadas</td></tr>\r\n";
+			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Tema</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Línea de acción</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Indicador</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Meta</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Valor alcanzado</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Acciones implementadas</td></tr>\r\n";
 			for (DtoResumenGenero valores : listaDatos) {
 				StringBuilder valorMeta = new StringBuilder();
 				StringBuilder valorAlcanzado = new StringBuilder();	

@@ -441,9 +441,29 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 						getSeguimientoSalvaguardaBean().setListaPreguntasA(new ArrayList<>());
 						getSeguimientoSalvaguardaBean().setListaPreguntasA(getQuestionsFacade().buscaPreguntaPorSalvaguarda(salvaguardaA));
 						getSeguimientoSalvaguardaBean().setCatalogoPoliticas(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.POLITICAS.getCodigo()));
+						Collections.sort(getSeguimientoSalvaguardaBean().getCatalogoPoliticas(), new Comparator<Catalogs>() {
+							public int compare(Catalogs o1, Catalogs o2) {
+								return o1.getCataText2().compareTo(o2.getCataText2());
+							}							
+						});
 						getSeguimientoSalvaguardaBean().setCatalogoLeyes(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MARCOJURIDICOINTERNACIONAL.getCodigo()));
+						Collections.sort(getSeguimientoSalvaguardaBean().getCatalogoLeyes(), new Comparator<Catalogs>() {
+							public int compare(Catalogs o1, Catalogs o2) {
+								return o1.getCataText2().compareTo(o2.getCataText2());
+							}							
+						});
 						getSeguimientoSalvaguardaBean().setCatalogoMarcoJuridicoNacional(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.MARCOJURIDICONACIONAL.getCodigo()));
+						Collections.sort(getSeguimientoSalvaguardaBean().getCatalogoMarcoJuridicoNacional(), new Comparator<Catalogs>() {
+							public int compare(Catalogs o1, Catalogs o2) {
+								return o1.getCataText2().compareTo(o2.getCataText2());
+							}							
+						});
 						getSeguimientoSalvaguardaBean().setCatalogoNormativaSecundariaNacional(getCatalogsFacade().buscaCatalogosPorTipo(TipoCatalogoEnum.NORMATIVASECUNDARIANACIONAL.getCodigo()));
+						Collections.sort(getSeguimientoSalvaguardaBean().getCatalogoNormativaSecundariaNacional(), new Comparator<Catalogs>() {
+							public int compare(Catalogs o1, Catalogs o2) {
+								return o1.getCataText2().compareTo(o2.getCataText2());
+							}							
+						});
 						getSeguimientoSalvaguardaBean().setListaValoresRespuestasA(new ArrayList<>());
 						if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards()!=null && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId()!=null){
 							getSeguimientoSalvaguardaBean().setListaValoresRespuestasA(getValueAnswersFacade().buscarPorAvanceEjecucionYSalvaguarda(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getAdexId(), salvaguarda.getSafeId()));
