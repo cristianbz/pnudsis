@@ -904,7 +904,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 
 			getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareColumnNumberSix(getSeguimientoSalvaguardaBean().getCodigoPlanGobierno());
 			if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnNumberSix()>0)
-				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPlanGobierno(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnNumberSix()));
+				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPoliticas(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnNumberSix()));
 			else
 				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareAnotherCatalog());
 			if(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareId()==null){
@@ -916,7 +916,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 				getTableResponsesFacade().create(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
 				getSeguimientoSalvaguardaBean().getTablaSalvaguardaA().add(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
 			}else{
-				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPlanGobierno(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnNumberSix()));
+				getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().setTareCatPlanGobierno(buscaCatalogoPoliticas(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA().getTareColumnNumberSix()));
 				getTableResponsesFacade().edit(getSeguimientoSalvaguardaBean().getRegistroTablaRespuestasA());
 			}
 			getSeguimientoSalvaguardaBean().setRegistroTablaRespuestasA(new TableResponses());
@@ -1158,7 +1158,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 			
 			for (TableResponses res : getSeguimientoSalvaguardaBean().getTablaSalvaguardaA()) {
 				if(res.getTareColumnNumberSix()>0)
-					res.setTareCatPlanGobierno(buscaCatalogoPlanGobierno(res.getTareColumnNumberSix()));
+					res.setTareCatPlanGobierno(buscaCatalogoPoliticas(res.getTareColumnNumberSix()));
 				else
 					res.setTareCatPlanGobierno(res.getTareAnotherCatalog());
 			}
@@ -5538,6 +5538,16 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public String buscaCatalogoPlanGobierno(int codigo){
 		Catalogs catalogo;
 		catalogo= getSeguimientoSalvaguardaBean().getCatalogoPlanGobierno().stream().filter(pg->pg.getCataId().equals(codigo)).findFirst().get();
+		return catalogo.getCataText2();
+	}
+	/**
+	 * Busca el catálogo de políticas
+	 * @param codigo
+	 * @return
+	 */
+	public String buscaCatalogoPoliticas(int codigo){
+		Catalogs catalogo;
+		catalogo= getSeguimientoSalvaguardaBean().getCatalogoPoliticas().stream().filter(pg->pg.getCataId().equals(codigo)).findFirst().get();
 		return catalogo.getCataText2();
 	}
 	/**

@@ -73,7 +73,7 @@ public class GenerarPdfConsolidado {
 		   " </tr>\r\n" +		   
 		"</table>\r\n" +    
 		"<br/>\r\n" +					
-		"<p style='text-align:center;font-size:15px;font-family: sans-serif;'>REPORTE CONSOLIDADO POR PREGUNTA</p>\r\n";
+		"<p style='text-align:center;font-size:15px;font-family: sans-serif;'>REPORTE CONSOLIDADO DE SOCIOS QUE RESPONDIERON CADA PREGUNTA POR SALVAGUARDA</p>\r\n";
 	
 	public static final String REPORTE_CONTENIDO_PREGUNTAS="<p style='color: #0da5c4; font-family: sans-serif;font-size: 13;font-weight: bold;'>SALVAGUARDA {P:salvaguarda}</p>\r\n" +
 	     "{P:tablaDatos}\r\n";

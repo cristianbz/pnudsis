@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -644,7 +645,7 @@ public class SitioPublicoController implements Serializable{
 	}
 	
 	public void dialogoProyectosA(){
-		int color=0;
+	
 		pieModel = new PieChartModel();
 		ChartData data = new ChartData();
 		PieChartDataSet dataSet = new PieChartDataSet();
@@ -661,7 +662,7 @@ public class SitioPublicoController implements Serializable{
 		bgColors.add("rgb(128,128,128)");
 		bgColors.add("rgb(128,0,0)");
 		for (DtoSalvaguardaA dto : getSitioPublicoBean().getListadoProyectosConservacion()) {
-			dataSet.getData().add(dto.getPresupuesto());
+			dataSet.getData().add(dto.getPresupuesto());			
 			data.setLabels(dto.getProyecto());
 		}
 		dataSet.setBackgroundColor(bgColors);
@@ -744,12 +745,14 @@ public class SitioPublicoController implements Serializable{
 		List<String> bgColors = new ArrayList<>();
 		int cont = 0;
 		for (DtoSalvaguardaA dto : getSitioPublicoBean().getListadoProyectosConservacion()) {
+//			DecimalFormat df = new DecimalFormat("###,###,###");
+//			values.add(Double.parseDouble( df.format(dto.getPresupuesto())));
 			values.add(dto.getPresupuesto());
 			labels.add(dto.getProyecto());
 			bgColors.add(getSitioPublicoBean().getColores().get(cont));
 			cont++;
 		}        
-		dataSet.setData(values);
+		dataSet.setData(values);		
 
 		dataSet.setBackgroundColor(bgColors);
 
