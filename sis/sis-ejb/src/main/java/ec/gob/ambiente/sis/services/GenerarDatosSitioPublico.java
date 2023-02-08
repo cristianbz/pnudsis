@@ -162,9 +162,11 @@ public class GenerarDatosSitioPublico implements Serializable {
 			dtoSalvaguardaG.setNumeroAcciones(getTableResponsesFacade().listaAccionesGeneradasSalvaguardaG());
 			dtoSalvaguardaG.setNumeroComunidades(listaComunidades.size());
 			dtoSalvaguardaG.setNumeroActividadesControl(getTableResponsesFacade().numeroActividadesControlG());
+			//GENERO
 			
 			DtoDatosSitioPublicoGenero dtoGenero = new DtoDatosSitioPublicoGenero("GENERO");
 			List<DtoGenero> listTempTemas = getAvanceExecutionFacade().listaTemasGenero();
+			List<DtoGenero> listProyectosTemas = getAvanceExecutionFacade().listaProyectosTemas();
 			List<String> listTempAcciones = getAvanceExecutionFacade().listadoAccionesGenero();
 			dtoGenero.setTotalPresupuesto(getAvanceExecutionFacade().presupuestoGenero());
 			int totalTemas = 0;			

@@ -503,10 +503,10 @@
 										icon="#{botones['icono.nuevo']}"
 										title="#{tooltip['nuevoReporte']}"
 										actionListener="#{cc.attrs.componenteBuscaProyectos.nuevoSeguimientoProyectoSocioEstrategico(proyecto)}"
-										process="@this " partialSubmit="true"
+										process="@this :form:buscaProyectos:sectores :form:buscaProyectos:anioReporte :form:buscaProyectos:periodoReporte" partialSubmit="true"
 										onclick="PF('dlgEnProc').show()"
 										oncomplete="PF('dlgEnProc').hide()" async="true"
-										global="false" update="@form " />
+										update="@form " />
 									<br />
 									
 									<p:commandButton icon="#{botones['icono.buscar']}" title="#{tooltip['buscaReportados']} " oncomplete="goToAnchor('busqueda'); "

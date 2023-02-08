@@ -14,6 +14,6 @@ public class DtoGenero {
 	public String acciones;
 	public String indicador;
 	public String meta;
-
+	public String proyecto;
 }
 

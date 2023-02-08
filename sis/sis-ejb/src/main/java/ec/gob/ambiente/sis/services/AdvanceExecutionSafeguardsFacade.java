@@ -199,34 +199,6 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 			}
 		}
 	}
-	/**
-	 * Registra el avance de ejecucion para genero
-	 * @param avanceEjecucion
-	 * @return
-	 * @throws Exception
-	 */
-//	public AdvanceExecutionSafeguards grabarEditarAvanceEjecucionGenero(AdvanceExecutionSafeguards avanceEjecucion, GenderAdvances avanceGenero,ExecutiveSummaries resumenEjecutivo)throws Exception{
-//		if (avanceEjecucion.getAdexId() == null){
-//			create(avanceEjecucion);
-//			for (ValueAnswers respuestas : avanceEjecucion.getValueAnswersList()) { 
-//				respuestas.setAdvanceExecutionSaveguards(avanceEjecucion);
-//				if(respuestas.getVaanId()==null)
-//					valueAnswersFacade.create(respuestas);
-//				else
-//					valueAnswersFacade.edit(respuestas);
-//			}
-//			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);	
-//			genderAdvancesFacade.create(avanceGenero);
-//			executiveSummariesFacade.create(resumenEjecutivo);
-//		}else{
-//
-//			edit(avanceEjecucion);
-//			avanceGenero.setAdvanceExecutionSafeguards(avanceEjecucion);
-//			genderAdvancesFacade.edit(avanceGenero);
-//			executiveSummariesFacade.edit(resumenEjecutivo);
-//		}
-//		return avanceEjecucion;
-//	}
 	
 	/**
 	 * Registra el avance de ejecucion para genero
@@ -374,7 +346,6 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 	 */
 	public List<AdvanceExecutionSafeguards> listadoProyectosPresentadosIniciados(AdvanceExecutionSafeguards adex, int tipoProyecto) throws Exception{
 		List<AdvanceExecutionSafeguards> listaTemp=new ArrayList<AdvanceExecutionSafeguards>();
-//		boolean respuesta=false;
 		String sql ="";
 		if(tipoProyecto ==1)
 			sql ="SELECT AE FROM AdvanceExecutionSafeguards AE WHERE AE.projects.projId=:codigoProyecto AND AE.adexIsGender=false AND AE.adexIsReported=false AND AE.adexStatus=true AND (AE.adexReportedStatus = 'I' OR AE.adexReportedStatus = 'P') AND AE.adexTermFrom=:desde AND AE.adexTermTo=:hasta AND AE.projectsStrategicPartners IS NOT NULL";
@@ -385,12 +356,7 @@ public class AdvanceExecutionSafeguardsFacade extends AbstractFacade<AdvanceExec
 		camposCondicion.put("desde", adex.getAdexTermFrom());
 		camposCondicion.put("hasta", adex.getAdexTermTo());
 		listaTemp = findByCreateQuery(sql, camposCondicion);
-//		if(listaTemp.size()==0)
-//			respuesta = true;
-//		else{
-//			respuesta = false;
-//			listadoProyectosPresentadosIniciados(listaTemp);
-//		}
+
 		return listaTemp;
 	}
 	/**

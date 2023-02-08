@@ -264,10 +264,10 @@ public class GenerarPdfResumen {
 		     "<p class='preguntas'>{P:siNo42F}</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta421F}</p>\r\n" +
 		     "<p class='preguntas'>{P:tabla421F}</p>\r\n" +
-		     "<p class='preguntas'>{P:pregunta43F}</p>\r\n" +
-		     "<p class='preguntas'>{P:siNo43F}</p>\r\n" +
-		     "<p class='preguntas'>{P:pregunta431F}</p>\r\n" +
-		     "<p class='preguntas'>{P:tabla431F}</p>\r\n" +
+//		     "<p class='preguntas'>{P:pregunta43F}</p>\r\n" +
+//		     "<p class='preguntas'>{P:siNo43F}</p>\r\n" +
+//		     "<p class='preguntas'>{P:pregunta431F}</p>\r\n" +
+//		     "<p class='preguntas'>{P:tabla431F}</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta44F}</p>\r\n" +
 		     "<p class='preguntas'>{P:siNo44F}</p>\r\n" +
 		     "<p class='preguntas'>{P:pregunta441F}</p>\r\n" +

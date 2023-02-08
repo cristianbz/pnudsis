@@ -19,6 +19,8 @@
 	<h:outputStylesheet library="webjars"
 		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
 	<script type="text/javascript" src="../resources/js/atras.js"></script>	
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/js/calendario/calendar_es.js"></script>
 	<script>
 	function goToAnchor(nombre) {
 		
@@ -381,8 +383,12 @@
 			</p:scrollPanel>
 			</p:outputPanel>
 			<h:panelGrid style="margin: 0 auto;">
-				<p:commandButton oncomplete="PF('dlgAsignaBeneficiarios').hide();" icon="#{botones['icono.cancelar']}"
-					value="#{botones['cancelar']}" process="@this" />
+				<p:commandButton oncomplete="PF('dlgAsignaBeneficiarios').hide();" icon="#{botones['icono.cancelar']}" partialSubmit="true"
+					immediate="true" resetValues="true"
+					value="#{botones['cerrar']}" process="@this :form:detalleBeneGenero" update=":form:detalleBeneGenero">
+					<f:setPropertyActionListener value="false"
+							target="#{seguimientoGeneroBean.nuevoDetalleGenero}" />
+				</p:commandButton>	
 			</h:panelGrid>
 		</p:dialog>
 

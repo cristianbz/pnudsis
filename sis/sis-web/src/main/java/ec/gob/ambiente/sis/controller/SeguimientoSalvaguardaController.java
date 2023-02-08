@@ -8709,7 +8709,7 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 					Mensaje.verDialogo("dlgPresentado");
 				else
 					validaFinalizarReporte();
-//					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
+
 			}
 		}
 
@@ -8717,20 +8717,13 @@ public class SeguimientoSalvaguardaController  implements Serializable{
 	public void validaFinalizarReporte(){
 		try{
 			if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null){
-//				Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
 				getSeguimientoSalvaguardaBean().setListaPresentadosIniciados(new ArrayList<>());
-//				List<AdvanceExecutionSafeguards> listaTemp= new ArrayList<>();
 				getSeguimientoSalvaguardaBean().setListaPresentadosIniciados(getAdvanceExecutionSafeguardsFacade().listadoProyectosPresentadosIniciados(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards(), 1));
 				if(getSeguimientoSalvaguardaBean().getListaPresentadosIniciados().size()==0 && getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() == null)
 					Mensaje.verDialogo("dlgFinalizarReporteSalvaguarda");
-				else{
-					
-//					Mensaje.verMensaje(FacesMessage.SEVERITY_ERROR,  "",getMensajesController().getPropiedad("error.cerrarProyectos"));
-//					Mensaje.actualizarComponente("growl");
-					
+				else{					
 					Mensaje.verDialogo("dlgReportesNoCerrados");
-					Mensaje.actualizarComponente(":form:listaSegEstado");
-					
+					Mensaje.actualizarComponente(":form:listaSegEstado");					
 				}
 					
 			}else if(getSeguimientoSalvaguardaBean().getAdvanceExecutionSafeguards().getProjectsStrategicPartners() != null)

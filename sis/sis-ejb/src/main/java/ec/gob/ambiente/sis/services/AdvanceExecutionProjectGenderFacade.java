@@ -15,10 +15,9 @@ import javax.ejb.Stateless;
 
 import org.hibernate.Hibernate;
 
-import com.itextpdf.text.log.SysoCounter;
-
 import ec.gob.ambiente.sis.dao.AbstractFacade;
 import ec.gob.ambiente.sis.dto.DtoGenero;
+import ec.gob.ambiente.sis.dto.DtoLineaAccionProyecto;
 import ec.gob.ambiente.sis.dto.DtoResumenGenero;
 import ec.gob.ambiente.sis.dto.DtoTableResponses;
 import ec.gob.ambiente.sis.model.AdvanceExecutionProjectGender;
@@ -124,8 +123,29 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){
 			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;				
+				listaResultado.add(dataObj[1].toString());				
+			}
+		}
+		return listaResultado;
+	}
+	
+	public List<DtoLineaAccionProyecto> listadoLineaAccionProyecto() throws Exception{
+		List<Object[]> resultado= null;
+		List<DtoLineaAccionProyecto> listaResultado = new ArrayList<>();
+		String sql ="SELECT DISTINCT proj.proj_short_name, c.cata_text2 FROM sis.advance_execution_safeguards aes, sis.advance_execution_project_gender aepg," 
+					+ " sis.project_gender_indicator pgig, sis.projects_gender_info pgi, sis.catalogs c ,sigma.projects proj "
+					 + " WHERE c.cata_id = pgi.cata_id AND pgig.pgin_id = pgi.pgin_id AND aepg.adex_id = aes.adex_id AND "
+					 + " pgig.pgig_id = aepg.pgig_id AND aepg.aepg_status = TRUE AND proj.proj_id= aes.proj_id "
+					 + " ORDER BY c.cata_text2"; 
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
 				Object[] dataObj = (Object[]) obj;
-				listaResultado.add(dataObj[1].toString());
+				DtoLineaAccionProyecto dto= new DtoLineaAccionProyecto();
+				dto.setProyecto(dataObj[1].toString());
+				dto.setLinea(dataObj[1].toString());				
+				listaResultado.add(dto);
 			}
 		}
 		return listaResultado;
@@ -262,6 +282,30 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		
 		return listaTemp;
 	}
-	
+	/**
+	 * Lista de proyectos por temas de genero
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DtoGenero> listaProyectosTemas() throws Exception{
+		List<Object[]> resultado= null;
+		List<DtoGenero> listaResultado = new ArrayList<DtoGenero>();
+		String sql ="SELECT DISTINCT proj.proj_short_name, c.cata_text2 FROM sis.advance_execution_safeguards aes, sis.advance_execution_project_gender aepg, " 
+					+ " sis.project_gender_indicator pgig, sis.projects_gender_info pgi, sis.catalogs c ,sigma.projects proj "
+					 + " WHERE c.cata_id = pgi.cata_id AND pgig.pgin_id = pgi.pgin_id AND aepg.adex_id = aes.adex_id AND " 
+					 + " pgig.pgig_id = aepg.pgig_id AND aepg.aepg_status = TRUE AND proj.proj_id= aes.proj_id "
+					 + " ORDER BY c.cata_text2";
+		resultado = (List<Object[]>)consultaNativa(sql);
+		if(resultado.size()>0){
+			for(Object obj:resultado){
+				Object[] dataObj = (Object[]) obj;
+				DtoGenero genero = new DtoGenero();
+				genero.setProyecto(dataObj[0].toString());
+				genero.setTema(dataObj[1].toString());
+				listaResultado.add(genero);
+			}
+		}
+		return listaResultado;
+	}
 }
 

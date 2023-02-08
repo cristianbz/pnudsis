@@ -8945,80 +8945,80 @@ public class ResumenPDF {
 			}
 			document.add(tablaF421);
 
-			salvaguardaF = new Paragraph();
-			salvaguardaF.add(new Phrase(Chunk.NEWLINE));	
-			salvaguardaF.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasF().get(4).getQuesContentQuestion(), fontTitulos));
-			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
-			if(seguimientoSalvaguardas.getListaValoresRespuestasF().get(2).isVaanYesnoAnswerValue())
-				salvaguardaF.add(new Phrase("SI", fontTitulos));
-			else
-				salvaguardaF.add(new Phrase("NO", fontContenido));					
-			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
-			salvaguardaF.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasF().get(5).getQuesContentQuestion(), fontTitulos));
-			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
-			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
-			document.add(salvaguardaF);
-
-			PdfPTable tablaF431 = new PdfPTable(new float[] { 5, 3, 3,3 ,3, 3,3});
-			tablaF431.setWidthPercentage(100);
-			tablaF431.setHorizontalAlignment(Element.ALIGN_LEFT);
-			tablaF431.getDefaultCell().setPadding(3);
-			tablaF431.getDefaultCell().setUseAscender(true);
-			tablaF431.getDefaultCell().setUseDescender(true);
-			tablaF431.getDefaultCell().setBorderColor(BaseColor.BLACK);				
-			tablaF431.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-
-			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Sistemas REDD+",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);
-			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Acciones tomadas",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);
-			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Recursos invertidos",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);
-			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Actores clave",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);
-			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Resultado",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);
-			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);
-			encabezadoTablaF=new Paragraph();	
-			encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
-			tablaF431.addCell(encabezadoTablaF);
-
-			datosTablaF=new Paragraph();
-			for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaF431()){
-
-				datosTablaF=new Paragraph();
-				datosTablaF.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
-				tablaF431.addCell(datosTablaF);
-				datosTablaF=new Paragraph();
-				datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
-				tablaF431.addCell(datosTablaF);					
-				datosTablaF=new Paragraph();
-				datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
-				tablaF431.addCell(datosTablaF);
-				datosTablaF=new Paragraph();
-				datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
-				tablaF431.addCell(datosTablaF);
-				datosTablaF=new Paragraph();
-				datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
-				tablaF431.addCell(datosTablaF);
-				datosTablaF=new Paragraph();
-				datosTablaF.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
-				tablaF431.addCell(datosTablaF);
-				//					datosTablaF=new Paragraph();
-				//					datosTablaF.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
-				PdfPCell celdaLink = new PdfPCell(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
-				celdaLink.setCellEvent(new LinkInCell(tabla.getTareColumnFour()));
-				tablaF431.addCell(celdaLink);						
-				datosTablaF=new Paragraph();
-			}
-			document.add(tablaF431);
+//			salvaguardaF = new Paragraph();
+//			salvaguardaF.add(new Phrase(Chunk.NEWLINE));	
+//			salvaguardaF.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasF().get(4).getQuesContentQuestion(), fontTitulos));
+//			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
+//			if(seguimientoSalvaguardas.getListaValoresRespuestasF().get(2).isVaanYesnoAnswerValue())
+//				salvaguardaF.add(new Phrase("SI", fontTitulos));
+//			else
+//				salvaguardaF.add(new Phrase("NO", fontContenido));					
+//			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
+//			salvaguardaF.add(new Phrase(seguimientoSalvaguardas.getListaPreguntasF().get(5).getQuesContentQuestion(), fontTitulos));
+//			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
+//			salvaguardaF.add(new Phrase(Chunk.NEWLINE));
+//			document.add(salvaguardaF);
+//
+//			PdfPTable tablaF431 = new PdfPTable(new float[] { 5, 3, 3,3 ,3, 3,3});
+//			tablaF431.setWidthPercentage(100);
+//			tablaF431.setHorizontalAlignment(Element.ALIGN_LEFT);
+//			tablaF431.getDefaultCell().setPadding(3);
+//			tablaF431.getDefaultCell().setUseAscender(true);
+//			tablaF431.getDefaultCell().setUseDescender(true);
+//			tablaF431.getDefaultCell().setBorderColor(BaseColor.BLACK);				
+//			tablaF431.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+//
+//			encabezadoTablaF=new Paragraph();	
+//			encabezadoTablaF.add(new Phrase("Sistemas REDD+",fontCabeceraTabla));
+//			tablaF431.addCell(encabezadoTablaF);
+//			encabezadoTablaF=new Paragraph();	
+//			encabezadoTablaF.add(new Phrase("Acciones tomadas",fontCabeceraTabla));
+//			tablaF431.addCell(encabezadoTablaF);
+//			encabezadoTablaF=new Paragraph();	
+//			encabezadoTablaF.add(new Phrase("Recursos invertidos",fontCabeceraTabla));
+//			tablaF431.addCell(encabezadoTablaF);
+//			encabezadoTablaF=new Paragraph();	
+//			encabezadoTablaF.add(new Phrase("Actores clave",fontCabeceraTabla));
+//			tablaF431.addCell(encabezadoTablaF);
+//			encabezadoTablaF=new Paragraph();	
+//			encabezadoTablaF.add(new Phrase("Resultado",fontCabeceraTabla));
+//			tablaF431.addCell(encabezadoTablaF);
+//			encabezadoTablaF=new Paragraph();	
+//			encabezadoTablaF.add(new Phrase("Componente",fontCabeceraTabla));
+//			tablaF431.addCell(encabezadoTablaF);
+//			encabezadoTablaF=new Paragraph();	
+//			encabezadoTablaF.add(new Phrase("Link verificador",fontCabeceraTabla));
+//			tablaF431.addCell(encabezadoTablaF);
+//
+//			datosTablaF=new Paragraph();
+//			for(TableResponses tabla: seguimientoSalvaguardas.getTablaSalvaguardaF431()){
+//
+//				datosTablaF=new Paragraph();
+//				datosTablaF.add(new Phrase(tabla.getTareGenerico(),fontContenidoTablas));
+//				tablaF431.addCell(datosTablaF);
+//				datosTablaF=new Paragraph();
+//				datosTablaF.add(new Phrase(tabla.getTareColumnOne(),fontContenidoTablas));
+//				tablaF431.addCell(datosTablaF);					
+//				datosTablaF=new Paragraph();
+//				datosTablaF.add(new Phrase(String.valueOf(tabla.getTareColumnDecimalOne()),fontContenidoTablas));
+//				tablaF431.addCell(datosTablaF);
+//				datosTablaF=new Paragraph();
+//				datosTablaF.add(new Phrase(tabla.getTareColumnTwo(),fontContenidoTablas));
+//				tablaF431.addCell(datosTablaF);
+//				datosTablaF=new Paragraph();
+//				datosTablaF.add(new Phrase(tabla.getTareColumnTree(),fontContenidoTablas));
+//				tablaF431.addCell(datosTablaF);
+//				datosTablaF=new Paragraph();
+//				datosTablaF.add(new Phrase(tabla.getTareComponente(),fontContenidoTablas));
+//				tablaF431.addCell(datosTablaF);
+//				//					datosTablaF=new Paragraph();
+//				//					datosTablaF.add(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+//				PdfPCell celdaLink = new PdfPCell(new Phrase(tabla.getTareColumnFour(),fontContenidoTablas));
+//				celdaLink.setCellEvent(new LinkInCell(tabla.getTareColumnFour()));
+//				tablaF431.addCell(celdaLink);						
+//				datosTablaF=new Paragraph();
+//			}
+//			document.add(tablaF431);
 
 			salvaguardaF = new Paragraph();
 			salvaguardaF.add(new Phrase(Chunk.NEWLINE));	

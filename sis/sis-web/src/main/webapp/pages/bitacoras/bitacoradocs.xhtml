@@ -1,0 +1,506 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+		<link rel="stylesheet" type="text/css"
+		href="../../resources/css/estilos.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../../resources/css/primeflex/primeflex.css" />
+
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	<script type="text/javascript" src="../../resources/js/atras.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/js/calendario/calendar_es.js"></script>
+	<script>
+	function goToAnchor(nombre) {
+		
+		window.location.hash = "";
+		window.location.hash = nombre;
+	}
+	</script>
+</h:head> 
+<body> 
+		<f:event listener="#{loginController.validarSesion()}"
+		type="preRenderView" />
+	<h:form prependId="true" id="form">
+		<p:growl id="growl" life="3000" showDetail="true" />
+		<p:dialog widgetVar="dlgEnProc" draggable="false" modal="true"
+			resizable="false" closable="false" responsive="true" header="En proceso"
+			style="font-size: 10px;">
+			<h:graphicImage value="/resources/images/loading3.gif" width="150" height="150"/>
+		</p:dialog>
+		<p:dialog widgetVar="dlgEliminaDatosTabla" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['eliminaDatosTabla']}" width="250" closable="false"
+			resizable="false">
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{botones['borrar']}"
+					update="tablabitacora growl"
+					actionListener="#{bitacoradocumentosController.eliminarRegistro()}"
+					oncomplete="PF('dlgEliminaDatosTabla').hide();" immediate="true"
+					process="@this tablabitacora"
+					icon="#{botones['icono.grabar']}" />
+				<p:commandButton icon="#{botones['icono.cancelar']}"
+					value="#{botones['cancelar']}"					
+					oncomplete="PF('dlgEliminaDatosTabla').hide();" process="@this" />
+			</h:panelGrid>
+		</p:dialog>
+		<p:dialog widgetVar="dlgNuevaBitacora" showEffect="fade" 
+				hideEffect="fade" modal="true" appendTo="@(body)" 
+				header="#{titulos['regBitacora']}" width="350px;" 
+				closable="false" resizable="false" responsive="true">
+				<p:scrollPanel mode="native" style="max-height:400px; max-width:800px;" >
+				<p:outputPanel id="panelBitacora" >
+				<div class="ui-fluid p-formgrid p-grid">	
+					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['destinatario']}:"/>
+					</div>
+					<div class="p-field p-col-12 p-md-9">
+						 
+							<p:selectOneRadio layout="grid" columns="1" tabindex="1" id="tipoOficio"
+								value="#{bitacoradocumentosController.bitacora.tipoOficio}"
+								unselectable="false">
+								<f:selectItem itemLabel="#{etiquetas['pdiPrograma']}"
+									itemValue="1" />
+								<f:selectItem itemLabel="#{etiquetas['otro']}"
+									itemValue="2" />
+								<p:ajax event="change" partialSubmit="true" process="@this "  update="idproyecto panelBitacora" listener="#{bitacoradocumentosController.habilitaPorProyecto()}"/>
+							</p:selectOneRadio>		
+						 
+					</div>														
+					<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+						<p:outputLabel value="#{etiquetas['proyecto']}:*" rendered="#{bitacoradocumentosController.bitacora.habilitaPorProyecto}"/>
+					</div>
+					<div class="p-field p-col-12 p-md-7">
+						<p:outputLabel value="#{bitacoradocumentosController.bitacora.proyectoSeleccionado.projTitle}"/>
+						<p:selectOneMenu id="idproyecto" rendered="#{bitacoradocumentosController.bitacora.habilitaPorProyecto}"
+									 tabindex="2" requiredMessage="#{mensajes['seleccionProyecto']}" required="true" 
+									value="#{bitacoradocumentosController.bitacora.proyectoSeleccionado}"
+									converter="selectOneMenuConverter"
+									panelStyle="width:420px;" effect="fade" var="c" 
+									style="width:420px;">
+									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
+									<f:selectItems value="#{bitacoradocumentosController.bitacora.listaProyectos}"
+										var="obj"
+										itemLabel="#{obj.projTitle}"
+										itemValue="#{obj.projId}" />
+									<p:column width="80">
+										<h:outputText value="#{c.projTitle}" />
+									</p:column>
+									<p:ajax event="change" process="@this " 
+										partialSubmit="true" 
+										 />							
+						</p:selectOneMenu>
+						<p:selectOneMenu id="proyid">
+							
+						</p:selectOneMenu>
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:message id="msgproyecto" for="idproyecto" rendered="#{bitacoradocumentosController.bitacora.habilitaPorProyecto}"/>
+					</div>
+								
+				<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['dirigidoA']}:*" rendered="#{bitacoradocumentosController.bitacora.habilitaPorDestinatario}"/>
+				</div>
+				<div class="p-field p-col-12 p-md-7">
+					<p:inputText value="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.dcloAddressee}"
+						requiredMessage="#{mensajes['campoRequerido']}" required="true" maxlength="30"
+						tabindex="3" id="destinatario" rendered="#{bitacoradocumentosController.bitacora.habilitaPorDestinatario}"
+						/>
+				</div>
+				<div class="p-field p-col-12 p-md-2">
+					<p:message id="msgdestinatario" for="destinatario" rendered="#{bitacoradocumentosController.bitacora.habilitaPorDestinatario}"/>
+				</div>
+								
+				<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['fecha']}:*"/>
+				</div>
+				<div class="p-field p-col-12 p-md-7">
+					<p:datePicker value="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.dcloSendDate}"
+						requiredMessage="#{mensajes['campoRequerido']}" required="true" id="fecha" locale="es"
+						tabindex="4" pattern="yyyy-MM-dd"/>
+				</div>
+				<div class="p-field p-col-12 p-md-2">
+					<p:message id="msgfecha" for="fecha"/>
+				</div>
+				
+				<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['nroOficio']}:*"/>
+				</div>
+				<div class="p-field p-col-12 p-md-7">
+					<p:inputText value="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.dcloDocumentNumber}" id="nrooficio" maxlength="25"
+						requiredMessage="#{mensajes['campoRequerido']}" required="true" tabindex="5"/>
+				</div>
+				<div class="p-field p-col-12 p-md-2">
+					<p:message id="msgnrooficio" for="nrooficio"/>
+				</div>	
+				
+				<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['remitente']}:*"/>
+				</div>
+				<div class="p-field p-col-12 p-md-7">
+					<p:inputText value="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.dcloSender}" id="remitente" maxlength="30"
+						requiredMessage="#{mensajes['campoRequerido']}" required="true" tabindex="6"/>
+				</div>
+				<div class="p-field p-col-12 p-md-2">
+					<p:message id="msgremitente" for="remitente"/>
+				</div>
+				
+				<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['institucion']}:*"/>
+				</div>
+				<div class="p-field p-col-12 p-md-7">
+					<p:inputText value="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.dcloInstitution}" id="institucion" maxlength="30"
+						requiredMessage="#{mensajes['campoRequerido']}" required="true" tabindex="7"/>
+				</div>
+				<div class="p-field p-col-12 p-md-2">
+					<p:message id="msginstitucion" for="institucion"/>
+				</div>
+				
+				<div class="p-field p-col-12 p-md-3" style="background: #00AAC3; color: #FFFFFF; display: block; text-align: right;">
+					<p:outputLabel value="#{etiquetas['asunto']}:*"/>
+				</div>
+				<div class="p-field p-col-12 p-md-7">
+					<p:inputTextarea value="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.dcloSubject}" id="asunto" maxlength="50"
+					requiredMessage="#{mensajes['campoRequerido']}" required="true" tabindex="8"/>
+				</div>
+				<div class="p-field p-col-12 p-md-2">
+					<p:message id="msgasunto" for="asunto"/>
+				</div>	
+				
+				
+				<div class="p-field p-col-12 p-md-3">
+				</div>
+				<div class="p-field p-col-12 p-md-3">
+					<p:commandButton value="#{botones['agregar']}" partialSubmit="true" update="msgasunto msgremitente msgnrooficio msgfecha msgdestinatario msgproyecto pnltablabitacora" tabindex="9"
+					process="@this panelBitacora " actionListener="#{bitacoradocumentosController.grabarBitacora()}"/>
+				</div>
+				<div class="p-field p-col-12 p-md-3">
+					<p:commandButton value="#{botones['cancelar']}" actionListener="#{bitacoradocumentosController.cancelaEdicionNuevo()}" process="@this" oncomplete="PF('dlgNuevaBitacora').hide();" tabindex="10"/>
+				</div>
+				<div class="p-field p-col-12 p-md-3">
+				</div>
+				</div>
+			</p:outputPanel>	
+			</p:scrollPanel>
+		</p:dialog>
+		
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-2"></div>
+			<div class="p-field p-col-12 p-md-6"></div>
+			<div class="p-field p-col-12 p-md-2">
+				<p:outputLabel value="#{etiquetas['cambiarIdioma']}" />
+
+				<h:selectOneMenu value="#{seleccionaIdiomaController.localeCode}"
+					onchange="submit()"
+					valueChangeListener="#{seleccionaIdiomaController.countryLocaleCodeChanged}">
+					<f:selectItems value="#{seleccionaIdiomaController.countriesInMap}" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+		<div class="ui-fluid p-formgrid p-grid">
+			<div class="p-field p-col-12 p-md-3"></div>
+			<div class="p-field p-col-12 p-md-6">
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-12"
+						style="background: #00AAC3; color: #FFFFFF; display: block; text-align: left;">
+						<p:outputLabel value="#{titulos['bitacoraOficios']}"
+							style="font-size:18px;font-weight:bold;" />
+					</div>
+				</div>
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-5"></div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:commandButton value="#{botones['nuevo']}" process="@this" update="panelBitacora" icon="#{botones['icono.nuevo']}" partialSubmit="true"
+							actionListener="#{bitacoradocumentosController.nuevoRegistro()}"/>
+					</div>
+					<div class="p-field p-col-12 p-md-5"></div>
+				</div>
+				
+				<p:fieldset legend="#{etiquetas['buscarPor']}">
+				<div class="ui-fluid p-formgrid p-grid">					
+					<div class="p-field p-col-12 p-md-3">						
+							<p:selectOneRadio layout="grid" columns="1"
+								value="#{bitacoradocumentosController.bitacora.tipoBusqueda}"
+								unselectable="false">
+								<f:selectItem itemLabel="#{etiquetas['todo']}"
+									itemValue="1" />
+								<f:selectItem itemLabel="#{etiquetas['porFecha']}"
+									itemValue="2" />
+								<p:ajax event="change" process="@this"  resetValues="true"
+									partialSubmit="true"
+									update="fechaDesde fechaHasta msgDesde msgHasta " listener="#{bitacoradocumentosController.habilitaBuscaFechas()}"/>
+							</p:selectOneRadio>							
+					</div>
+					<div class="p-field p-col-12 p-md-9">
+						<div class="ui-fluid p-formgrid p-grid">					
+							<div class="p-field p-col-12 p-md-12">
+								<h:inputHidden />
+							</div>
+						</div>
+						<div class="ui-fluid p-formgrid p-grid">					
+							<div class="p-field p-col-12 p-md-12">
+								<h:inputHidden />
+							</div>
+						</div>
+						<div class="ui-fluid p-formgrid p-grid">					
+							<div class="p-field p-col-12 p-md-2">
+								<p:outputLabel value="#{etiquetas['desde']}:"/>
+							</div>
+							<div class="p-field p-col-12 p-md-2">
+								<p:datePicker value="#{bitacoradocumentosController.bitacora.fechaDesde}"
+									requiredMessage="#{mensajes['campoRequerido']}" required="true" locale="es" pattern="yyyy-MM-dd"
+									disabled="#{bitacoradocumentosController.bitacora.habilitaPorFecha}" id="fechaDesde"/>
+							</div>
+							<div class="p-field p-col-12 p-md-8">
+								<p:message for="fechaDesde" id="msgDesde"/>
+							</div>
+							
+							<div class="p-field p-col-12 p-md-2">
+								<p:outputLabel value="#{etiquetas['hasta']}:"/>
+							</div>
+							<div class="p-field p-col-12 p-md-2">
+								<p:datePicker disabled="#{bitacoradocumentosController.bitacora.habilitaPorFecha}" locale="es" pattern="yyyy-MM-dd"
+									value="#{bitacoradocumentosController.bitacora.fechaHasta}"
+									requiredMessage="#{mensajes['campoRequerido']}" required="true"
+									id="fechaHasta"/>
+							</div>
+							<div class="p-field p-col-12 p-md-6">
+								<p:message for="fechaHasta" id="msgHasta"/>
+							</div>
+							<div class="p-field p-col-12 p-md-2">
+								<p:commandButton process="@this fechaDesde fechaHasta idotroFiltro idproyectoFiltro idoficioFiltro idremitenteFiltro idasuntoFiltro idinstitucionFiltro" 
+									update="tablabitacora msgDesde msgHasta msgfiltroproyecto msgfiltrootro msgfiltrooficio msgfiltroremitente msgfiltroasunto msgfiltroinstitucion" 
+									value="#{botones['buscar']}" onstart="PF('dlgEnProc').show();" oncomplete="PF('dlgEnProc').hide();"
+									actionListener="#{bitacoradocumentosController.buscaBitacoras()}"
+									icon="#{botones['icono.buscar']}" partialSubmit="true"/>
+							</div>
+						</div>	
+					</div>
+					
+				</div>
+				
+				<div class="ui-fluid p-formgrid p-grid">					
+					<div class="p-field p-col-12 p-md-1">
+						<p:selectBooleanCheckbox value="#{bitacoradocumentosController.bitacora.filtroPorProyecto}" id="checkproyecto" 
+							disabled="#{bitacoradocumentosController.bitacora.filtroPorOtro}">
+							<p:ajax process="@this idotroFiltro checkotro" event="change" 
+								listener="#{bitacoradocumentosController.vaciaProyecto()}"
+								update="idproyectoFiltro idotroFiltro checkotro"/>
+						</p:selectBooleanCheckbox>									
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:outputLabel value="#{etiquetas['pdiPrograma']}:"/>
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:selectOneMenu id="idproyectoFiltro" disabled="#{bitacoradocumentosController.bitacora.filtroPorOtro or not bitacoradocumentosController.bitacora.filtroPorProyecto}"
+									 tabindex="6" requiredMessage="#{mensajes['seleccionProyecto']}" required="true" 
+									value="#{bitacoradocumentosController.bitacora.proyectoSeleccionado}"
+									converter="selectOneMenuConverter"
+									panelStyle="width:420px;" effect="fade" var="c" 
+									style="width:420px;">
+									<f:selectItem itemLabel="#{mensajes['seleccionElemento']}" itemValue="#{null}"/>
+									<f:selectItems value="#{bitacoradocumentosController.bitacora.listaProyectos}"
+										var="obj"
+										itemLabel="#{obj.projTitle}"
+										itemValue="#{obj}" />
+									<p:column width="80">
+										<h:outputText value="#{c.projTitle}" />
+									</p:column>
+									<p:ajax event="change" process="@this idproyectoFiltro" 
+										partialSubmit="true" 
+										 />							
+						</p:selectOneMenu>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="idproyectoFiltro" id="msgfiltroproyecto"/>			
+					</div>
+					
+					<div class="p-field p-col-12 p-md-1">
+						<p:selectBooleanCheckbox value="#{bitacoradocumentosController.bitacora.filtroPorOtro}" tabindex="7" id="checkotro"							
+							disabled="#{bitacoradocumentosController.bitacora.filtroPorProyecto}">
+							<p:ajax process="@this" event="change" immediate="true" 
+								listener="#{bitacoradocumentosController.vaciaOtro()}"
+								update="idproyectoFiltro idotroFiltro checkotro checkproyecto"/>
+						</p:selectBooleanCheckbox>											
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:outputLabel value="#{etiquetas['otro']}:"/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:inputText tabindex="8" value="#{bitacoradocumentosController.bitacora.valorFiltroOtro}" 
+							id="idotroFiltro" requiredMessage="#{mensajes['campoRequerido']}" required="true"
+							disabled="#{bitacoradocumentosController.bitacora.filtroPorProyecto or not bitacoradocumentosController.bitacora.filtroPorOtro}"/>
+					</div>										
+					<div class="p-field p-col-12 p-md-1">
+						<p:selectBooleanCheckbox value="#{bitacoradocumentosController.bitacora.filtroNroOficio}" tabindex="9" id="checkoficio">
+							<p:ajax process="@this " event="change" partialSubmit="true" 
+								listener="#{bitacoradocumentosController.vaciaOficio()}"
+								immediate="true" update="idoficioFiltro"/>
+						</p:selectBooleanCheckbox>											
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:outputLabel value="#{etiquetas['nroOficio']}:"/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:inputText tabindex="10" value="#{bitacoradocumentosController.bitacora.valorFiltroNroOficio}" 
+							id="idoficioFiltro" requiredMessage="#{mensajes['campoRequerido']}" required="true"
+							disabled="#{not bitacoradocumentosController.bitacora.filtroNroOficio}"/>
+					</div>
+					
+					<div class="p-field p-col-12 p-md-3">
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="idotroFiltro" id="msgfiltrootro"/>			
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+					</div>					
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="idoficioFiltro" id="msgfiltrooficio"/>			
+					</div>
+					
+					<div class="p-field p-col-12 p-md-1">
+						<p:selectBooleanCheckbox value="#{bitacoradocumentosController.bitacora.filtroRemitente}" tabindex="11" id="checkremitente">
+							<p:ajax process="@this " event="change" partialSubmit="true" 
+								listener="#{bitacoradocumentosController.vaciaRemitente()}"
+								immediate="true" update="idremitenteFiltro"/>
+						</p:selectBooleanCheckbox>											
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:outputLabel value="#{etiquetas['remitente']}:"/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:inputText tabindex="12" value="#{bitacoradocumentosController.bitacora.valorFiltroRemitente}" 
+							id="idremitenteFiltro" requiredMessage="#{mensajes['campoRequerido']}" required="true"
+							disabled="#{not bitacoradocumentosController.bitacora.filtroRemitente}"/>
+					</div>
+					<div class="p-field p-col-12 p-md-1">
+						<p:selectBooleanCheckbox value="#{bitacoradocumentosController.bitacora.filtroPorAsunto}" tabindex="13" id="checkasunto">
+							<p:ajax process="@this " event="change" partialSubmit="true" 
+							listener="#{bitacoradocumentosController.vaciaAsunto()}"
+							immediate="true" update="idasuntoFiltro"/>
+						</p:selectBooleanCheckbox>											
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:outputLabel value="#{etiquetas['asunto']}:"/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:inputText tabindex="14" value="#{bitacoradocumentosController.bitacora.valorFiltroAsunto}" 
+							id="idasuntoFiltro" requiredMessage="#{mensajes['campoRequerido']}" required="true"
+							disabled="#{not bitacoradocumentosController.bitacora.filtroPorAsunto}"/>
+					</div>
+					
+					<div class="p-field p-col-12 p-md-3">
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="idremitenteFiltro" id="msgfiltroremitente"/>			
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:message for="idasuntoFiltro" id="msgfiltroasunto"/>			
+					</div>
+					
+					<div class="p-field p-col-12 p-md-1">
+						<p:selectBooleanCheckbox value="#{bitacoradocumentosController.bitacora.filtroInstitucion}" tabindex="14" id="checkinstitucion">
+							<p:ajax process="@this " event="change" partialSubmit="true" 
+								listener="#{bitacoradocumentosController.vaciaInstitucion()}"
+								immediate="true" update="idinstitucionFiltro"/>
+						</p:selectBooleanCheckbox>											
+					</div>
+					<div class="p-field p-col-12 p-md-2">
+						<p:outputLabel value="#{etiquetas['institucion']}:"/>
+					</div>
+					<div class="p-field p-col-12 p-md-3">
+						<p:inputText tabindex="15" value="#{bitacoradocumentosController.bitacora.valorFiltroInstitucion}" 
+							id="idinstitucionFiltro" requiredMessage="#{mensajes['campoRequerido']}" required="true"
+							disabled="#{not bitacoradocumentosController.bitacora.filtroInstitucion}"/>
+					</div>
+					<div class="p-field p-col-12 p-md-6">
+						<p:message for="idinstitucionFiltro" id="msgfiltroinstitucion"/>			
+					</div>
+					
+				</div>	
+				
+				</p:fieldset>
+				<br/>
+				<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col-12 p-md-12">
+						<p:outputPanel id="pnltablabitacora">
+						<p:dataTable value="#{bitacoradocumentosController.bitacora.listaBitacoras}" emptyMessage="#{mensajes['noRegistros']}"
+							paginator="true" rows="10"
+							var="bitacora" id="tablabitacora">
+							<f:facet name="header">
+								<p:outputLabel value="#{titulos['listaOficios']}"/>
+							</f:facet>
+							<p:column headerText="#{etiquetas['destinatario']}">
+								<p:outputLabel value="#{bitacora.projects!=null?bitacora.projects.projShortName:bitacora.dcloAddressee}"/>
+							</p:column>
+							<p:column headerText="#{etiquetas['fecha']}" width="100px;" sortBy="#{bitacora.dcloSendDate}" >
+								<p:outputLabel value="#{bitacora.dcloSendDate}" id="idfecha">
+									<f:convertDateTime for="idfecha" pattern="yyyy-MM-dd"/>
+								</p:outputLabel>
+							</p:column>
+							<p:column headerText="#{etiquetas['nroOficio']}" width="80px;">
+								<p:outputLabel value="#{bitacora.dcloDocumentNumber}"/>
+							</p:column>
+							<p:column headerText="#{etiquetas['remitente']}">
+								<p:outputLabel value="#{bitacora.dcloSender}"/>
+							</p:column>
+							<p:column headerText="#{etiquetas['asunto']}">
+								<p:outputLabel value="#{bitacora.dcloSubject}"/>
+							</p:column>
+							<p:column headerText="#{etiquetas['institucion']}">
+								<p:outputLabel value="#{bitacora.dcloInstitution}"/>
+							</p:column>
+							<p:column width="80px;">
+								<p:commandButton icon="#{botones['icono.editar']}"
+									title="#{tooltip['editar']}" partialSubmit="true" 
+									action="#{bitacoradocumentosController.editarRegistro2}"
+									process="@this " update=":form:panelBitacora ">
+									<f:setPropertyActionListener value="#{bitacora}"
+										target="#{bitacoradocumentosController.bitacora.bitacoraDocumentos}" />
+									<f:setPropertyActionListener value="#{bitacora.projects}" 
+										target="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.projects}" />	
+								</p:commandButton>
+								<p:commandButton icon="#{botones['icono.editar']}"
+									title="#{tooltip['editar']}" partialSubmit="true" 
+									actionListener="#{bitacoradocumentosController.editarRegistro(bitacora)}"
+									process="@this :form:idproyecto" >
+								</p:commandButton>
+								<p:commandButton									
+									action="#{bitacoradocumentosController.mostrarDlgEliminar()}"
+									icon="#{botones['icono.borrar']}" process="@this">
+									<f:setPropertyActionListener value="#{bitacora}"
+										target="#{bitacoradocumentosController.bitacora.bitacoraDocumentos}" />
+								</p:commandButton>
+
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>	
+					</div>
+					<div class="p-field p-col-12 p-md-9">
+						
+					</div>
+				</div>
+							
+			</div>
+			<div class="p-field p-col-12 p-md-3"></div>
+		</div>
+				<h:panelGrid style="margin:0 auto;">
+					<p:commandButton id="btnVolverInicio"
+						value="#{botones['volverInicio']}" icon="fa fa-home"
+						action="#{sesionController.redireccionarAPagina('','inicio')}"
+						process="@this" />
+				</h:panelGrid>
+	</h:form>	
+</body> 
+</html>

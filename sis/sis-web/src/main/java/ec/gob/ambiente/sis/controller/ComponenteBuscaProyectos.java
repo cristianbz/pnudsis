@@ -2703,16 +2703,16 @@ public class ComponenteBuscaProyectos implements Serializable{
 			tabla += "</table>\r\n";
 			dtoResumen.setSiNo42F(listaSiNo.get(1).isVaanYesnoAnswerValue()?"SI":"NO");
 			dtoResumen.setTabla421F(tabla);
-			tabla="";
-			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
-			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Sistemas REDD+</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Acciones tomadas</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Recursos invertidos</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Actores clave</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Resultado</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
-			for (DtoRespuestasSalvaguardas valores : lista) {
-				if(preguntasActivas.get(5).getQuesId().equals(valores.getCodigoPregunta()))
-					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
-			}
-			tabla += "</table>\r\n";
-			dtoResumen.setSiNo43F(listaSiNo.get(2).isVaanYesnoAnswerValue()?"SI":"NO");
-			dtoResumen.setTabla431F(tabla);
+//			tabla="";
+//			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
+//			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='65px;' >Sistemas REDD+</td> <td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Acciones tomadas</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Recursos invertidos</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Actores clave</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Resultado</td><td class='tablaborder' bgcolor='#FFFFFF' width='65px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
+//			for (DtoRespuestasSalvaguardas valores : lista) {
+//				if(preguntasActivas.get(5).getQuesId().equals(valores.getCodigoPregunta()))
+//					tabla += "  <tr>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getCatalogo1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto1()+ "</td> <td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getDecimal1()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto2()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getTexto3()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' >" + valores.getComponente()+ "</td><td class='tablaborder' bgcolor='#FFFFFF' ><a href=" + valores.getTexto4() + " target='_blank'>" + UtilsCadenas.romperCadena(valores.getTexto4(),valores.getTexto4().length()) + "</td></tr>\r\n";
+//			}
+//			tabla += "</table>\r\n";
+//			dtoResumen.setSiNo43F(listaSiNo.get(2).isVaanYesnoAnswerValue()?"SI":"NO");
+//			dtoResumen.setTabla431F(tabla);
 			tabla="";
 			tabla = "<table class='tablaborder' width='100%' style='margin-left: 3em;font-size:11px;font-family: sans-serif;table-layout: fixed;'>\r\n";
 			tabla += "<tr class='titulotabla'>\r\n" + " <td class='tablaborder' bgcolor='#FFFFFF' width='60px;' >Provincia</td> <td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Cantón</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Parroquia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Etnia</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Nacionalidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Comunidad</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Riesgo</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Actividad para mitigar</td><td class='tablaborder' bgcolor='#FFFFFF' width='60px;'>Componente</td><td class='tablaborder' bgcolor='#FFFFFF' width='100px;'>Link verificador</td></tr>\r\n";
