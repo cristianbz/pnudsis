@@ -293,7 +293,7 @@ public class AdvanceExecutionProjectGenderFacade extends AbstractFacade<AdvanceE
 		String sql ="SELECT DISTINCT proj.proj_short_name, c.cata_text2 FROM sis.advance_execution_safeguards aes, sis.advance_execution_project_gender aepg, " 
 					+ " sis.project_gender_indicator pgig, sis.projects_gender_info pgi, sis.catalogs c ,sigma.projects proj "
 					 + " WHERE c.cata_id = pgi.cata_id AND pgig.pgin_id = pgi.pgin_id AND aepg.adex_id = aes.adex_id AND " 
-					 + " pgig.pgig_id = aepg.pgig_id AND aepg.aepg_status = TRUE AND proj.proj_id= aes.proj_id "
+					 + " pgig.pgig_id = aepg.pgig_id AND aepg.aepg_status = TRUE AND proj.proj_id= aes.proj_id AND proj.proj_status= TRUE"
 					 + " ORDER BY c.cata_text2";
 		resultado = (List<Object[]>)consultaNativa(sql);
 		if(resultado.size()>0){

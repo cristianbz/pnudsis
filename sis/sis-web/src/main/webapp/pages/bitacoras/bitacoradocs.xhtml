@@ -98,9 +98,7 @@
 										partialSubmit="true" 
 										 />							
 						</p:selectOneMenu>
-						<p:selectOneMenu id="proyid">
-							
-						</p:selectOneMenu>
+						
 					</div>
 					<div class="p-field p-col-12 p-md-2">
 						<p:message id="msgproyecto" for="idproyecto" rendered="#{bitacoradocumentosController.bitacora.habilitaPorProyecto}"/>
@@ -470,11 +468,6 @@
 										target="#{bitacoradocumentosController.bitacora.bitacoraDocumentos}" />
 									<f:setPropertyActionListener value="#{bitacora.projects}" 
 										target="#{bitacoradocumentosController.bitacora.bitacoraDocumentos.projects}" />	
-								</p:commandButton>
-								<p:commandButton icon="#{botones['icono.editar']}"
-									title="#{tooltip['editar']}" partialSubmit="true" 
-									actionListener="#{bitacoradocumentosController.editarRegistro(bitacora)}"
-									process="@this :form:idproyecto" >
 								</p:commandButton>
 								<p:commandButton									
 									action="#{bitacoradocumentosController.mostrarDlgEliminar()}"

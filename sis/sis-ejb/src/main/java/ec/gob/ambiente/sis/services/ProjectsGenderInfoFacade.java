@@ -167,11 +167,6 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 	public List<Object[]> listadoNuevosProyectosAgregados(int codigoProyecto,int codigoPartner,int codigoAvance) throws Exception{
 		String sql="";		
 		if(codigoProyecto>0 && codigoPartner == 0){
-//			sql="SELECT ga.pgin_id as pgi1,pgi.pgin_id as pgi2,pgi.cata_id,pgi.indi_id,pgi.pgin_other_line,pgi.pgin_another_indicator "
-//				+",pgi.pgin_results_type,pgi.pgin_associated_results, pgi.pgin_budget,pgi.pspa_id " 
-//				+" FROM sis.gender_advances ga RIGHT JOIN sis.projects_gender_info pgi "
-//				+" ON ga.pgin_id = pgi.pgin_id  WHERE pgi.pgin_status=TRUE AND pgi.pgin_associated_results is not null AND pgi.proj_id=" +codigoProyecto
-//				+ " AND pgi.pspa_id IS NULL";
 			sql = "SELECT ga.pgin_id as pgi1,pgi.pgin_id as pgi2,pgi.cata_id,pgi.indi_id,pgi.pgin_other_line,pgi.pgin_another_indicator " 
 					+",pgi.pgin_results_type,pgi.pgin_associated_results, pgi.pgin_budget,pgi.pspa_id FROM sis.gender_advances ga INNER JOIN sis.advance_execution_safeguards aes "
 					+" ON aes.adex_id= ga.adex_id AND ga.adex_id="+codigoAvance
@@ -179,11 +174,6 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 					+" ON pgi.pgin_id=ga.pgin_id WHERE pgi.proj_id=" + codigoProyecto
 					+ " AND pgi.pgin_status=TRUE";
 		}else if(codigoProyecto>0 && codigoPartner > 0){
-//			sql="SELECT ga.pgin_id as pgi1,pgi.pgin_id as pgi2,pgi.cata_id,pgi.indi_id,pgi.pgin_other_line,pgi.pgin_another_indicator "
-//					+",pgi.pgin_results_type,pgi.pgin_associated_results, pgi.pgin_budget,pgi.pspa_id " 
-//					+" FROM sis.gender_advances ga RIGHT JOIN sis.projects_gender_info pgi "
-//					+" ON ga.pgin_id = pgi.pgin_id  WHERE pgi.pgin_status=TRUE AND pgi.pgin_associated_results is not null AND pgi.proj_id="+codigoProyecto
-//					+ " AND pgi.pspa_id="+codigoPartner;
 			sql = "SELECT ga.pgin_id as pgi1,pgi.pgin_id as pgi2,pgi.cata_id,pgi.indi_id,pgi.pgin_other_line,pgi.pgin_another_indicator " 
 					+",pgi.pgin_results_type,pgi.pgin_associated_results, pgi.pgin_budget,pgi.pspa_id FROM sis.gender_advances ga INNER JOIN sis.advance_execution_safeguards aes "
 					+" ON aes.adex_id= ga.adex_id AND ga.adex_id="+codigoAvance
@@ -192,6 +182,31 @@ public class ProjectsGenderInfoFacade extends AbstractFacade<ProjectsGenderInfo,
 					+ " AND pgi.proj_id=" + codigoProyecto
 					+ " AND pgi.pgin_status=TRUE";
 		}		
+		return consultaNativa(sql);
+	}
+	/**
+	 * Retorna el aporte de cada PDI,Programa o proyecto a género
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Object[]> listaAporteProyectoGenero() throws Exception{
+		String sql="SELECT DISTINCT proj.proj_short_name, pginfo.pgin_budget FROM sis.projects_gender_info pginfo, sis.project_gender_indicator pgin, sis.advance_execution_project_gender ag, "
+				+" sis.advance_execution_safeguards avance, sigma.projects proj"
+				+" WHERE pginfo.pgin_id = pgin.pgin_id AND ag.pgig_id = pgin.pgig_id"
+				+" AND avance.adex_id = ag.adex_id	AND avance.adex_is_gender = TRUE AND proj.proj_id = avance.proj_id AND proj.proj_status=TRUE ORDER BY proj.proj_short_name";
+		return consultaNativa(sql);
+	}
+	/**
+	 * Devuelve las linea de accion y los proyectos que la ejecutan
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Object[]> listaLineaAccionProyecto() throws Exception{
+		String sql="SELECT DISTINCT cata.cata_text2, pginfo.pgin_other_line, proj.proj_short_name FROM sis.projects_gender_info pginfo, sis.catalogs cata, "
+				+"sis.project_gender_indicator pgin, sis.advance_execution_project_gender ag, "
+				+"sis.advance_execution_safeguards avance, sigma.projects proj "
+				+"WHERE pginfo.pgin_id = pgin.pgin_id AND ag.pgig_id = pgin.pgig_id AND pginfo.cata_id=cata.cata_id "
+				+"AND avance.adex_id = ag.adex_id	AND avance.adex_is_gender = TRUE AND proj.proj_id = avance.proj_id AND proj.proj_status=TRUE ORDER BY cata.cata_text2, proj.proj_short_name";
 		return consultaNativa(sql);
 	}
 	

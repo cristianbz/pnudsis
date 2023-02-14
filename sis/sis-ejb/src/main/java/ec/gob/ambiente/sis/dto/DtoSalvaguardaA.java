@@ -6,13 +6,11 @@ package ec.gob.ambiente.sis.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-
+@Getter
+@Setter
 public class DtoSalvaguardaA {
-	@Getter
-	@Setter
-	public String proyecto;
-	@Getter
-	@Setter
+	
+	public String proyecto;	
 	public double presupuesto;
 }
 

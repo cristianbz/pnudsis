@@ -53,6 +53,10 @@ public class GenerarDatosSitioPublico implements Serializable {
 	
 	@EJB
 	@Getter
+	private ProjectsGenderInfoFacade projectsGenderFacade;
+	
+	@EJB
+	@Getter
 	private AdvanceExecutionProjectGenderFacade avanceExecutionFacade;
 	
 	@EJB
@@ -170,16 +174,16 @@ public class GenerarDatosSitioPublico implements Serializable {
 			List<String> listTempAcciones = getAvanceExecutionFacade().listadoAccionesGenero();
 			dtoGenero.setTotalPresupuesto(getAvanceExecutionFacade().presupuestoGenero());
 			int totalTemas = 0;			
-			if(listTempTemas!=null && listTempTemas.size()>0){
-				dtoGenero.setListaTemasGenero(listTempTemas);
-				for (DtoGenero genero : listTempTemas) {
-					totalTemas = totalTemas + genero.getNumero();
-				}
-				dtoGenero.setTotalTemasAplicados(totalTemas);
-			}else{
-				dtoGenero.setTotalTemasAplicados(0);
-				dtoGenero.setListaTemasGenero(null);
-			}
+//			if(listTempTemas!=null && listTempTemas.size()>0){
+//				dtoGenero.setListaTemasGenero(listTempTemas);
+//				for (DtoGenero genero : listTempTemas) {
+//					totalTemas = totalTemas + genero.getNumero();
+//				}
+//				dtoGenero.setTotalTemasAplicados(totalTemas);
+//			}else{
+//				dtoGenero.setTotalTemasAplicados(0);
+//				dtoGenero.setListaTemasGenero(null);
+//			}
 			
 			if(listTempAcciones!=null && listTempAcciones.size()>0){
 				dtoGenero.setListaAccionesGenero(listTempAcciones);
@@ -188,6 +192,9 @@ public class GenerarDatosSitioPublico implements Serializable {
 				dtoGenero.setListaAccionesGenero(new ArrayList<>());
 				dtoGenero.setTotalAccionesImplementadas(0);
 			}
+			dtoGenero.setListaLineasAccionProyecto(procesaLineasAccionProyectoGenero(getProjectsGenderFacade().listaLineaAccionProyecto()));
+			dtoGenero.setListaAporteProyectoGenero(procesaAporteProyectoGenero(getProjectsGenderFacade().listaAporteProyectoGenero()));
+			
 			String archivoJSON = new StringBuilder().append(this.webPath).append(File.separator).append("archivo").append(".json").toString();
 //			String archivoCSVA = new StringBuilder().append(this.webPath).append(File.separator).append("salvaguardaA").append(".csv").toString();
 	
@@ -203,18 +210,95 @@ public class GenerarDatosSitioPublico implements Serializable {
 		}
 	}
 	
-	public void generarcsv(String path){
-		try{			 				
-			CSVWriter writer = new CSVWriter(new FileWriter(path));			        
-			//Create record
-			String [] record = "4,David,Miller,Australia,30".split(",");
-			//Write the record to file
-			writer.writeNext(record);				        
-			//close the writer
-			writer.close();            
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	public List<DtoGenero> procesaLineasAccionProyectoGenero(List<Object[]> lista){
+		List<DtoGenero> listaTemp = new ArrayList<>();
+		List<DtoGenero> listaFinal = new ArrayList<>();
+		if(lista.size()>0){
+			for(Object obj:lista){
+				Object[] dataObj = (Object[]) obj;
+				DtoGenero genero = new DtoGenero();
+				genero.setLineaAccion(dataObj[0].toString());
+				if(genero.getLineaAccion().equals("Otro"))
+					genero.setLineaAccion(dataObj[1].toString());
+				genero.setProyecto(dataObj[2].toString());
+				listaTemp.add(genero);
+			}
+			String lineaAccion= listaTemp.get(0).lineaAccion;
+			StringBuilder proyecto= new StringBuilder();
+			DtoGenero genero = new DtoGenero();
+			for (DtoGenero dtoGenero : listaTemp) {
+				if(dtoGenero.getLineaAccion().equals(lineaAccion)){
+					genero.setLineaAccion(dtoGenero.getLineaAccion());
+					proyecto.append(dtoGenero.getProyecto()).append(",");
+				}else{
+					genero.setProyecto(proyecto.toString());
+					listaFinal.add(genero);
+					genero=new DtoGenero();
+					lineaAccion = dtoGenero.getLineaAccion();
+					genero.setLineaAccion(lineaAccion);
+					proyecto = new StringBuilder();
+					proyecto.append(dtoGenero.getProyecto()).append(",");
+				}
+					
+			}
+			return listaFinal;
+		}else
+			return null;
 	}
+	
+	public  List<DtoGenero> procesaAporteProyectoGenero(List<Object[]> lista){
+		List<DtoGenero> listaTemp = new ArrayList<>();
+		List<DtoGenero> listaFinal = new ArrayList<>();
+		if(lista.size()>0){
+			for(Object obj:lista){
+				Object[] dataObj = (Object[]) obj;
+				DtoGenero genero = new DtoGenero();
+				genero.setProyecto(dataObj[0].toString());				
+				genero.setPresupuesto((BigDecimal)dataObj[1]);
+				listaTemp.add(genero);
+			}
+			String proyecto= listaTemp.get(0).proyecto;
+			BigDecimal monto= BigDecimal.ZERO;
+			DtoGenero genero = new DtoGenero();
+			int contador=0;
+			for (DtoGenero dtoGenero : listaTemp) {
+				if(dtoGenero.getProyecto().equals(proyecto)){
+					genero.setProyecto(dtoGenero.getProyecto());
+					monto = monto.add(dtoGenero.getPresupuesto());
+				}else{
+					genero.setPresupuesto(monto);
+					listaFinal.add(genero);
+					genero=new DtoGenero();
+					proyecto = dtoGenero.getProyecto();
+					genero.setProyecto(proyecto);
+					monto = BigDecimal.ZERO;
+					monto = monto.add( dtoGenero.getPresupuesto());
+				}
+				contador++;	
+				if(listaTemp.size()==1 || listaTemp.size() == contador){
+					genero.setPresupuesto(monto);
+					listaFinal.add(genero);
+				}
+				
+			}
+			return listaFinal;
+		}else
+			return null;
+		
+	}
+	
+//	public void generarcsv(String path){
+//		try{			 				
+//			CSVWriter writer = new CSVWriter(new FileWriter(path));			        
+//			//Create record
+//			String [] record = "4,David,Miller,Australia,30".split(",");
+//			//Write the record to file
+//			writer.writeNext(record);				        
+//			//close the writer
+//			writer.close();            
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
 }
 

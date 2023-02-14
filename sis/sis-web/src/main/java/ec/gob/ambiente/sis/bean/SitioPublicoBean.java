@@ -80,5 +80,7 @@ public class SitioPublicoBean implements Serializable{
 	private BigDecimal totalPresupuestoGenero;
 	private List<String> listadoAccionesGenero;
 	private List<String> colores;
+	private List<DtoGenero> listaAportesProyectoGenero;
+	private List<DtoGenero> listaLineasProyectoGenero;
 }
 

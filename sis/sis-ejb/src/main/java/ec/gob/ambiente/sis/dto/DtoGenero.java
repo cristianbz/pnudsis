@@ -4,6 +4,8 @@
 **/
 package ec.gob.ambiente.sis.dto;
 
+import java.math.BigDecimal;
+
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -15,5 +17,8 @@ public class DtoGenero {
 	public String indicador;
 	public String meta;
 	public String proyecto;
+	public BigDecimal presupuesto;
+	public String otraLineaAccion;
+	public String lineaAccion;
 }
 

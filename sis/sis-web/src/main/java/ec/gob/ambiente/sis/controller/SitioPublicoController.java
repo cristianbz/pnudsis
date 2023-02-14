@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.axes.cartesian.CartesianScales;
 import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
@@ -69,6 +72,7 @@ import ec.gob.ambiente.sis.model.TableResponses;
 import ec.gob.ambiente.sis.services.AdvanceExecutionProjectGenderFacade;
 import ec.gob.ambiente.sis.services.TableResponsesFacade;
 import ec.gob.ambiente.sis.utils.Mensaje;
+import ec.gob.ambiente.sis.utils.ObtenerPropiedades;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -78,7 +82,9 @@ public class SitioPublicoController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(SitioPublicoController.class);
-
+	@Getter
+	private ObtenerPropiedades retrieveProperties;
+	
 	@Inject
 	@Getter
 	private SitioPublicoBean sitioPublicoBean;
@@ -452,25 +458,47 @@ public class SitioPublicoController implements Serializable{
 						getSitioPublicoBean().setNumeroActividadesControlG(Integer.valueOf(obj.get("numeroActividadesControl").toString()));
 						break;
 					case 7:
-						getSitioPublicoBean().setNumeroTemasGenero(Integer.valueOf(obj.get("totalTemasAplicados").toString()));
+//						getSitioPublicoBean().setNumeroTemasGenero(Integer.valueOf(obj.get("totalTemasAplicados").toString()));
 						getSitioPublicoBean().setNumeroAccionesGenero(Integer.valueOf(obj.get("totalAccionesImplementadas").toString()));
 						getSitioPublicoBean().setTotalPresupuestoGenero(new BigDecimal(obj.get("totalPresupuesto").toString()));
 						getSitioPublicoBean().setListadoAccionesGenero(new ArrayList<>());
 						getSitioPublicoBean().setListaTemasGenero(new ArrayList<>());
+						getSitioPublicoBean().setListaLineasProyectoGenero(new ArrayList<>());
+						getSitioPublicoBean().setListaAportesProyectoGenero(new ArrayList<>());
 						JsonArray vectorGEN =(JsonArray) obj.get("accionesImplementadas");
 						if (vectorGEN != null) { 
 							for (int n=0;n<vectorGEN.size();n++){ 	            				    
 								getSitioPublicoBean().getListadoAccionesGenero().add(vectorGEN.getString(n));
 							} 
 						}
-						JsonArray vectorTemas =(JsonArray) obj.get("listaTemasGenero");
+//						JsonArray vectorTemas =(JsonArray) obj.get("listaTemasGenero");
+//						if (vectorTemas != null) { 
+//							for (int n=0;n<vectorTemas.size();n++){
+//								DtoGenero objGenero = new DtoGenero();
+//								JsonObject objeto= (JsonObject) vectorTemas.get(n);
+//								objGenero.setTema(objeto.get("tema").toString());
+//								objGenero.setNumero(Integer.valueOf(objeto.get("numero").toString()));
+//								getSitioPublicoBean().getListaTemasGenero().add(objGenero);
+//							} 
+//						}
+						JsonArray vectorTemas =(JsonArray) obj.get("listaLineasAccionProyecto");
 						if (vectorTemas != null) { 
 							for (int n=0;n<vectorTemas.size();n++){
 								DtoGenero objGenero = new DtoGenero();
 								JsonObject objeto= (JsonObject) vectorTemas.get(n);
-								objGenero.setTema(objeto.get("tema").toString());
-								objGenero.setNumero(Integer.valueOf(objeto.get("numero").toString()));
-								getSitioPublicoBean().getListaTemasGenero().add(objGenero);
+								objGenero.setLineaAccion(objeto.get("linea").toString());
+								objGenero.setProyecto(objeto.get("proyectos").toString());
+								getSitioPublicoBean().getListaLineasProyectoGenero().add(objGenero);
+							} 
+						}
+						JsonArray vectorAporteProyecto =(JsonArray) obj.get("listaAporteProyectoGenero");
+						if (vectorAporteProyecto != null) { 
+							for (int n=0;n<vectorAporteProyecto.size();n++){
+								DtoGenero objGenero = new DtoGenero();
+								JsonObject objeto= (JsonObject) vectorAporteProyecto.get(n);
+								objGenero.setPresupuesto((BigDecimal)objeto.get("presupuesto"));
+								objGenero.setProyecto(objeto.get("proyecto").toString());
+								getSitioPublicoBean().getListaAportesProyectoGenero().add(objGenero);
 							} 
 						}
 						break;
@@ -576,16 +604,16 @@ public class SitioPublicoController implements Serializable{
 			List<String> listTempAcciones = getAvanceExecutionFacade().listadoAccionesGenero();
 			dtoGenero.setTotalPresupuesto(getAvanceExecutionFacade().presupuestoGenero());
 			int totalTemas = 0;			
-			if(listTempTemas!=null && listTempTemas.size()>0){
-				dtoGenero.setListaTemasGenero(listTempTemas);
-				for (DtoGenero genero : listTempTemas) {
-					totalTemas = totalTemas + genero.getNumero();
-				}
-				dtoGenero.setTotalTemasAplicados(totalTemas);
-			}else{
-				dtoGenero.setTotalTemasAplicados(0);
-				dtoGenero.setListaTemasGenero(null);
-			}
+//			if(listTempTemas!=null && listTempTemas.size()>0){
+//				dtoGenero.setListaTemasGenero(listTempTemas);
+//				for (DtoGenero genero : listTempTemas) {
+//					totalTemas = totalTemas + genero.getNumero();
+//				}
+//				dtoGenero.setTotalTemasAplicados(totalTemas);
+//			}else{
+//				dtoGenero.setTotalTemasAplicados(0);
+//				dtoGenero.setListaTemasGenero(null);
+//			}
 
 			if(listTempAcciones!=null && listTempAcciones.size()>0){
 				dtoGenero.setListaAccionesGenero(listTempAcciones);
@@ -829,6 +857,95 @@ public class SitioPublicoController implements Serializable{
 		getSitioPublicoBean().getColores().add("rgb(128,0,128)");
 		getSitioPublicoBean().getColores().add("rgb(0,128,128)");
 		getSitioPublicoBean().getColores().add("rgb(0,0,128)");
+	}
+	
+	public void mostrarDlglineasProyectoGenero(){
+		Mensaje.verDialogo("dlgLineasProyectoGenero");
+	}
+	
+	public void mostrarDlgPresupuestoProyectoGenero(){
+		barraPresupuestoProyectoGenero();
+		Mensaje.verDialogo("dlgPresupuesProyectoGenero");
+	}
+	
+	public void barraPresupuestoProyectoGenero(){
+
+	        barModel = new BarChartModel();
+	        ChartData data = new ChartData();
+
+	        BarChartDataSet barDataSet = new BarChartDataSet();
+	        barDataSet.setLabel("Proyectos");
+
+	        List<String> labels = new ArrayList<>();
+	        List<Number> values = new ArrayList<>();
+	        for (DtoGenero genero : getSitioPublicoBean().getListaAportesProyectoGenero()) {
+				values.add(genero.getPresupuesto());
+				labels.add(genero.getProyecto());
+			}
+
+	        barDataSet.setData(values);
+
+	        List<String> bgColor = new ArrayList<>();
+	        bgColor.add("rgba(255, 99, 132, 0.2)");
+	        bgColor.add("rgba(255, 159, 64, 0.2)");
+	        bgColor.add("rgba(255, 205, 86, 0.2)");
+	        bgColor.add("rgba(75, 192, 192, 0.2)");
+	        bgColor.add("rgba(54, 162, 235, 0.2)");
+	        bgColor.add("rgba(153, 102, 255, 0.2)");
+	        bgColor.add("rgba(201, 203, 207, 0.2)");
+	        barDataSet.setBackgroundColor(bgColor);
+
+	        List<String> borderColor = new ArrayList<>();
+	        borderColor.add("rgb(255, 99, 132)");
+	        borderColor.add("rgb(255, 159, 64)");
+	        borderColor.add("rgb(255, 205, 86)");
+	        borderColor.add("rgb(75, 192, 192)");
+	        borderColor.add("rgb(54, 162, 235)");
+	        borderColor.add("rgb(153, 102, 255)");
+	        borderColor.add("rgb(201, 203, 207)");
+	        barDataSet.setBorderColor(borderColor);
+	        barDataSet.setBorderWidth(1);
+
+	        data.addChartDataSet(barDataSet);
+
+	        data.setLabels(labels);
+	        barModel.setData(data);
+
+	        //Options
+	        BarChartOptions options = new BarChartOptions();
+	        CartesianScales cScales = new CartesianScales();
+	        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
+	        linearAxes.setOffset(true);
+//	        linearAxes.setBeginAtZero(true);
+	        CartesianLinearTicks ticks = new CartesianLinearTicks();
+	        linearAxes.setTicks(ticks);
+	        cScales.addYAxesData(linearAxes);
+	        options.setScales(cScales);
+	        
+//	        barModel.setExtender("ext");
+
+	        Title title = new Title();
+	        title.setDisplay(true);
+//	        title.setText("Proyectos");
+	        options.setTitle(title);
+
+	        Legend legend = new Legend();
+	        legend.setDisplay(true);
+	        legend.setPosition("top");
+	        LegendLabel legendLabels = new LegendLabel();
+	        legendLabels.setFontStyle("italic");
+	        legendLabels.setFontColor("#2980B9");
+	        legendLabels.setFontSize(24);
+	        legend.setLabels(legendLabels);
+	        options.setLegend(legend);
+
+	        // disable animation
+//	        Animation animation = new Animation();
+//	        animation.setDuration(0);
+//	        options.setAnimation(animation);
+
+	        barModel.setOptions(options);
+	    
 	}
 }
 

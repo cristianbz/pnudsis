@@ -31,9 +31,17 @@ public class DtoDatosSitioPublicoGenero extends DtoSitioPublico implements Jsona
 	@Setter
 	private BigDecimal totalPresupuesto;
 	
+//	@Getter
+//	@Setter
+//	private List<DtoGenero> listaTemasGenero;
+	
 	@Getter
 	@Setter
-	private List<DtoGenero> listaTemasGenero;
+	private List<DtoGenero> listaLineasAccionProyecto;
+	
+	@Getter
+	@Setter
+	private List<DtoGenero> listaAporteProyectoGenero;
 	
 	@Getter
 	@Setter
@@ -58,20 +66,35 @@ public class DtoDatosSitioPublicoGenero extends DtoSitioPublico implements Jsona
 
 	@Override
 	public void toJson(Writer writer) throws IOException {		
-		final JsonArray jsonArray = new JsonArray();
-		for (DtoGenero dtoGenero : listaTemasGenero) {
+		final JsonArray jsonArrayLA = new JsonArray();
+		final JsonArray jsonArrayAP = new JsonArray();
+//		for (DtoGenero dtoGenero : listaTemasGenero) {
+//			JsonObject json = new JsonObject();
+//			json.put("tema",dtoGenero.tema);
+//			json.put("numero", dtoGenero.numero);
+//			jsonArray.add(json);
+//		}
+		for (DtoGenero dtoGenero : listaLineasAccionProyecto) {
 			JsonObject json = new JsonObject();
-			json.put("tema",dtoGenero.tema);
-			json.put("numero", dtoGenero.numero);
-			jsonArray.add(json);
+			json.put("linea",dtoGenero.lineaAccion);
+			json.put("proyectos", dtoGenero.proyecto);
+			jsonArrayLA.add(json);
+		}
+		for (DtoGenero dtoGenero : listaAporteProyectoGenero) {
+			JsonObject json = new JsonObject();
+			json.put("presupuesto",dtoGenero.presupuesto);
+			json.put("proyecto", dtoGenero.proyecto);
+			jsonArrayAP.add(json);
 		}
 		 final JsonObject json = new JsonObject();
 	        json.put("salvaguarda", super.salvaguarda);
 	        json.put("totalAccionesImplementadas", getTotalAccionesImplementadas());
 	        json.put("totalTemasAplicados", getTotalTemasAplicados());
-	        json.put("listaTemasGenero", jsonArray);
-	        json.put("accionesImplementadas", listaAccionesGenero.toArray());
+//	        json.put("listaTemasGenero", jsonArray);
+//	        json.put("accionesImplementadas", listaAccionesGenero.toArray());
 	        json.put("totalPresupuesto", getTotalPresupuesto());
+	        json.put("listaLineasAccionProyecto", jsonArrayLA);
+	        json.put("listaAporteProyectoGenero", jsonArrayAP);
 	        json.toJson(writer);		
 	}
 

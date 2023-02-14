@@ -20,6 +20,14 @@
 		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
 
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<script>
+            function ext() {
+                this.cfg.axes.yaxis.tickOptions.formatString = "R$%'#.0f";
+                $.jqplot.sprintf.thousandsSeparator = '.';
+                $.jqplot.sprintf.decimalMark = ','; 
+
+            }
+	</script>
 </h:head>
 <h:body>
 	<h:form id="frm" enctype="multipart/form-data">
@@ -45,6 +53,27 @@
 					#{med.textoDos}
 				</p:column>
 			</p:dataTable>
+		</p:dialog>
+		
+		<p:dialog widgetVar="dlgLineasProyectoGenero"  resizable="false" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['listaProyectos']}"   
+			width="50%" closable="true" >
+			<p:dataTable value="#{sitioPublicoBean.listaLineasProyectoGenero}" var="genero" id="tbllineas" paginator="true" rows="6" emptyMessage="#{mensajes['noRegistros']}">
+				<p:column headerText="#{etiquetas['lineaAccion']}">
+					#{genero.lineaAccion}
+				</p:column>
+				<p:column headerText="#{etiquetas['proyectos']}">
+					#{genero.proyecto}
+				</p:column>
+			</p:dataTable>
+		</p:dialog>
+		
+		<p:dialog widgetVar="dlgPresupuesProyectoGenero"  resizable="false" showEffect="fade"
+			hideEffect="fade" modal="true" appendTo="@(body)"
+			header="#{titulos['presupuestoAsignado']}"   
+			width="50%" closable="true" >
+			<p:barChart model="#{sitioPublicoController.barModel}" style="width: 100%; height: 500px;" id="aportesProyecto" />
 		</p:dialog>
 		
 		<p:dialog widgetVar="dlgAccionesGenero"  resizable="false" showEffect="fade"
@@ -298,7 +327,7 @@
 										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Temas abordados" 
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											style="margin-left: 3em;"
-											actionListener="#{sitioPublicoController.createPieModel()}" update=" chart" partialSubmit="true"/>	
+											actionListener="#{sitioPublicoController.mostrarDlglineasProyectoGenero()}" update=" tbllineas" partialSubmit="true"/>	
 									</div>
 											
 								</div>				
@@ -409,7 +438,12 @@
 											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
 											style="font-weight: bold;color: yellow;margin-left: 1em;font-size:45px;" >
 											<f:convertNumber for="presupuestoGen" pattern="###,###.##" locale="es_ES"/>
-										</p:outputLabel>	
+										</p:outputLabel>
+										<br/>	
+										<p:commandButton icon="#{botones['icono.info']}" process="@this" title="Aportes proyecto" 
+											rendered="#{sitioPublicoBean.codigoSalvaguarda.equals('GE')?true:false}"
+											style="margin-left: 3em;"
+											actionListener="#{sitioPublicoController.mostrarDlgPresupuestoProyectoGenero()}" update=" aportesProyecto" partialSubmit="true"/>		
 									</div>
 								</div>			
 							</div>
