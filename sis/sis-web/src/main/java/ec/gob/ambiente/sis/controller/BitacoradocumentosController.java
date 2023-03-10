@@ -77,6 +77,7 @@ public class BitacoradocumentosController implements Serializable{
 	@PostConstruct
 	public void init(){
 		try{
+			getBitacora().setListadoPDIProgramas(new ArrayList<>());
 			getBitacora().setListaBitacoras(new ArrayList<>());
 			getBitacora().setListaProyectos(new ArrayList<>());
 			getBitacora().setListaProyectos(getProjectsFacade().buscarTodosLosProyectos());
@@ -91,12 +92,16 @@ public class BitacoradocumentosController implements Serializable{
 			getBitacora().setFiltroNroOficio(false);
 			getBitacora().setFiltroInstitucion(false);
 			getBitacora().setFiltroRemitente(false);
+			for (Projects project: getBitacora().getListaProyectos()) {
+				getBitacora().getListadoPDIProgramas().add(project.getProjShortName());
+			}
 		}catch(Exception e){
 			LOG.error(new StringBuilder().append(this.getClass().getName() + "." + "init" + ": ").append(e.getMessage()));
 		}
 	}
 	public void nuevoRegistro(){
-		getBitacora().setBitacoraDocumentos(new Documentslog());		
+		getBitacora().setBitacoraDocumentos(new Documentslog());	
+		getBitacora().setListadoPDIProgramasSeleccionados(new ArrayList<>());
 		Mensaje.verDialogo("dlgNuevaBitacora");
 	}
 	/**
@@ -104,15 +109,45 @@ public class BitacoradocumentosController implements Serializable{
 	 */
 	public void grabarBitacora(){
 		try{
+			getBitacora().setListaBitacoras(new ArrayList<>());			
 			getBitacora().getBitacoraDocumentos().setDcloStatus(true);
 			getBitacora().getBitacoraDocumentos().setDcloCreationDate(new Date());
 			getBitacora().getBitacoraDocumentos().setDcloCreatorUser(getLoginBean().getUser().getUserName());
-			if(getBitacora().getTipoOficio()==1)
-				getBitacora().getBitacoraDocumentos().setProjects(getBitacora().getProyectoSeleccionado());
-			else
-				getBitacora().getBitacoraDocumentos().setProjects(null);
-			getDocumentLogServicio().agregarActualizar(getBitacora().getBitacoraDocumentos());
+			Documentslog docLog= getBitacora().getBitacoraDocumentos();
+			if(docLog.getDcloId()==null){
+				if(getBitacora().getTipoOficio()==1){
+					for (String proj : getBitacora().getListadoPDIProgramasSeleccionados()) {
+						for (Projects p : getBitacora().getListaProyectos()) {
+							if(proj.equals(p.getProjShortName())){
+								getBitacora().setBitacoraDocumentos(new Documentslog());
+								getBitacora().getBitacoraDocumentos().setDcloAddressee(docLog.getDcloAddressee());
+								getBitacora().getBitacoraDocumentos().setDcloCreationDate(docLog.getDcloCreationDate());
+								getBitacora().getBitacoraDocumentos().setDcloCreatorUser(docLog.getDcloCreatorUser());
+								getBitacora().getBitacoraDocumentos().setDcloDocumentNumber(docLog.getDcloDocumentNumber());
+								getBitacora().getBitacoraDocumentos().setDcloInstitution(docLog.getDcloInstitution());
+								getBitacora().getBitacoraDocumentos().setDcloSendDate(docLog.getDcloSendDate());
+								getBitacora().getBitacoraDocumentos().setDcloSender(docLog.getDcloSender());
+								getBitacora().getBitacoraDocumentos().setDcloSenderCharge(docLog.getDcloSenderCharge());
+								getBitacora().getBitacoraDocumentos().setDcloReferringInstitution(docLog.getDcloReferringInstitution());
+								getBitacora().getBitacoraDocumentos().setDcloCharge(docLog.getDcloCharge());
+								getBitacora().getBitacoraDocumentos().setDcloStatus(docLog.isDcloStatus());
+								getBitacora().getBitacoraDocumentos().setDcloSubject(docLog.getDcloSubject());
+								getBitacora().getBitacoraDocumentos().setProjects(p);
+								getBitacora().getListaBitacoras().add(getBitacora().getBitacoraDocumentos());
+								break;
+							}
+						}
+					}
+					getDocumentLogServicio().agregarActualizar(getBitacora().getListaBitacoras());
+				}else{
+					getBitacora().getBitacoraDocumentos().setProjects(null);
+					getDocumentLogServicio().agregarActualizar(getBitacora().getBitacoraDocumentos());
+				}
+			}else{
+				actualizaBitacora(getBitacora().getTipoOficio());
+			}
 			getBitacora().setProyectoSeleccionado(null);
+			getBitacora().setListadoPDIProgramasSeleccionados(new ArrayList<>());
 			getBitacora().setListaBitacoras(getDocumentLogServicio().listaBitacorasFiltros(getBitacora().getFechaDesde(), getBitacora().getFechaHasta(), getBitacora().getProyectoSeleccionado(), getBitacora().getValorFiltroOtro(),
 					getBitacora().getValorFiltroNroOficio(), getBitacora().getValorFiltroRemitente(), getBitacora().getValorFiltroAsunto(), getBitacora().getValorFiltroInstitucion()));
 			Mensaje.ocultarDialogo("dlgNuevaBitacora");
@@ -138,37 +173,61 @@ public class BitacoradocumentosController implements Serializable{
 		}
 	}
 	
-	public void editarRegistro(Documentslog bitacora){
-		System.out.println(bitacora.getProjects().getProjCode() + ".........");
-		if(bitacora.getProjects()!=null){
-			getBitacora().setProyectoSeleccionado(bitacora.getProjects());
-			getBitacora().setTipoOficio(1);
-			getBitacora().setHabilitaPorDestinatario(false);
-			getBitacora().setHabilitaPorProyecto(true);
-		}else{
-			getBitacora().setTipoOficio(2);
-			getBitacora().setHabilitaPorDestinatario(true);
-			getBitacora().setHabilitaPorProyecto(false);
+	public void capturaProyectosSeleccionados(){
+		getBitacora().setListadoPDIProgramasSeleccionados(new ArrayList<>());
+		for (Projects proyecto : getBitacora().getListaProyectos()) {
+			if(proyecto.getProjId() == getBitacora().getProyectoSeleccionado().getProjId()){
+				getBitacora().getListadoPDIProgramasSeleccionados().add(proyecto.getProjShortName());
+				break;
+			}
 		}
-		getBitacora().setBitacoraDocumentos(bitacora);
-		Mensaje.verDialogo("dlgNuevaBitacora");		
+
 	}
-	public void editarRegistro2(){
-		getBitacora().setProyectoSeleccionado(new Projects());
+	public void editarRegistro(){
+		getBitacora().setProyectoSeleccionado(new Projects());		
 		if(getBitacora().getBitacoraDocumentos().getProjects()== null){
-//			System.out.println(getBitacora().getBitacoraDocumentos().getProjects().getProjShortName());
+
 			getBitacora().setProyectoSeleccionado(null);
 			getBitacora().setTipoOficio(2);
 			getBitacora().setHabilitaPorDestinatario(true);
 			getBitacora().setHabilitaPorProyecto(false);
 			Mensaje.verDialogo("dlgNuevaBitacora");		
 		}else{
-			System.out.println(getBitacora().getBitacoraDocumentos().getProjects().getProjShortName());
+
 			getBitacora().setProyectoSeleccionado(getBitacora().getBitacoraDocumentos().getProjects());
 			getBitacora().setTipoOficio(1);
 			getBitacora().setHabilitaPorDestinatario(false);
 			getBitacora().setHabilitaPorProyecto(true);
+			capturaProyectosSeleccionados();
 			Mensaje.verDialogo("dlgNuevaBitacora");
+		}
+	}
+	/**
+	 * Actualiza la bitacora
+	 * @param tipoOficio
+	 */
+	public void actualizaBitacora(int tipoOficio){	
+		try{
+		getBitacora().getBitacoraDocumentos().setDcloUpdateDate(new Date());
+		getBitacora().getBitacoraDocumentos().setDcloUpdateUser(getLoginBean().getUser().getUserName());
+		if(tipoOficio==1){
+			getBitacora().setListaBitacoras(new ArrayList<>());		
+			for (String proj : getBitacora().getListadoPDIProgramasSeleccionados()) {
+				for (Projects p : getBitacora().getListaProyectos()) {
+					if(proj.equals(p.getProjShortName())){
+						getBitacora().getBitacoraDocumentos().setProjects(p);
+						getBitacora().getListaBitacoras().add(getBitacora().getBitacoraDocumentos());
+						break;
+					}
+				}
+			}
+			getDocumentLogServicio().agregarActualizar(getBitacora().getListaBitacoras());
+		}else{			
+			getBitacora().getBitacoraDocumentos().setProjects(null);
+			getDocumentLogServicio().agregarActualizar(getBitacora().getBitacoraDocumentos());
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	
@@ -199,7 +258,7 @@ public class BitacoradocumentosController implements Serializable{
 			getBitacora().setValorFiltroOtro(null);
 	}
 	public void vaciaProyecto(){
-		if(getBitacora().isFiltroPorProyecto())
+		if(!getBitacora().isFiltroPorProyecto())
 			getBitacora().setProyectoSeleccionado(null);
 	}
 	public void vaciaOficio(){

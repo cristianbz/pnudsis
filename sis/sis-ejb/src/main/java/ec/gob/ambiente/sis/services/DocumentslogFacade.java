@@ -32,6 +32,15 @@ public class DocumentslogFacade extends AbstractFacade<Documentslog, Integer>{
 		return documento;
 	}
 	
+	public void agregarActualizar(List<Documentslog> lista)throws Exception{
+		for (Documentslog doclog : lista) {
+			if(doclog.getDcloId() == null)
+				create(doclog);
+			else
+				edit(doclog);
+		}
+	}
+	
 	public List<Documentslog> listaBitacorasTodas() throws Exception{
 		String sql="SELECT D FROM Documentslog D WHERE D.dcloStatus=TRUE";
 		Map<String, Object> camposCondicion=new HashMap<String, Object>();
@@ -72,24 +81,28 @@ public class DocumentslogFacade extends AbstractFacade<Documentslog, Integer>{
 			camposCondicion.put("proyecto", proyecto.getProjId());
 		}
 		if(destinatario !=null){
-			sql = sql +" AND D.dcloAddressee = :destinatario ";
-			camposCondicion.put("destinatario", destinatario);
+			sql = sql +" AND D.dcloInstitution LIKE :destinatario ";
+//			camposCondicion.put("destinatario", destinatario);
+			camposCondicion.put("destinatario", "%"+destinatario+"%");
 		}
 		if(nroOficio !=null){
 			sql = sql +" AND D.dcloDocumentNumber = :nrooficio ";
 			camposCondicion.put("nrooficio", nroOficio);
 		}
 		if(remitente !=null){
-			sql = sql +" AND D.dcloSender = :remitente ";
-			camposCondicion.put("remitente", remitente);
+			sql = sql +" AND D.dcloSender LIKE :remitente ";
+//			camposCondicion.put("remitente", remitente);
+			camposCondicion.put("remitente", "%"+remitente+"%");
 		}
 		if(asunto !=null){
-			sql = sql +" AND D.dcloSubject = :asunto ";
-			camposCondicion.put("asunto", asunto);
+			sql = sql +" AND D.dcloSubject LIKE :asunto ";
+//			camposCondicion.put("asunto", asunto);
+			camposCondicion.put("asunto", "%"+asunto+"%");
 		}
 		if(institucion !=null){
-			sql = sql +" AND D.dcloInstitution = :institucion ";
-			camposCondicion.put("institucion", institucion);
+			sql = sql +" AND D.dcloReferringInstitution LIKE :institucion ";
+//			camposCondicion.put("institucion", institucion);
+			camposCondicion.put("institucion", "%"+institucion+"%");
 		}
 		sql = sql + " ORDER BY D.dcloSendDate";
 		return findByCreateQuery(sql, camposCondicion);

@@ -7,11 +7,7 @@ package ec.gob.ambiente.sis.utils;
 import java.io.IOException;
 import java.io.Serializable;
 
-import com.google.zxing.WriterException;
-import com.itextpdf.io.font.FontConstants;
 import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -25,8 +21,6 @@ import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.pdf.PdfPCell;
 
 
 public class CabeceraPiePaginaPdf implements Serializable, IEventHandler{
